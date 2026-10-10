@@ -1,0 +1,11 @@
+{
+  "sources": ["src/pilot_part_stats.c"],
+  "hooks": [
+    {
+      "at": "0x08042B58",
+      "to": "Inject_GetPartStats",
+      "replaces": "GetPartStats (36 bytes up to its literal at 0x08042B7C, which stays)",
+      "max_bytes": 36
+    }
+  ]
+}

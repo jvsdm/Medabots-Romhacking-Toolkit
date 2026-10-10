@@ -1,0 +1,759 @@
+type	/	ActionId	EnumDB	1
+enumval	ActionId	Sword	0
+enumval	ActionId	Hammer	1
+enumval	ActionId	Rifle	2
+enumval	ActionId	Chain_Gun	3
+enumval	ActionId	Laser	4
+enumval	ActionId	Beam	5
+enumval	ActionId	Missile	6
+enumval	ActionId	Napalm	7
+enumval	ActionId	Break	8
+enumval	ActionId	Press	9
+enumval	ActionId	Grap_Trap	10
+enumval	ActionId	Shot_Trap	11
+enumval	ActionId	Attack_Clr	12
+enumval	ActionId	Bug	13
+enumval	ActionId	Virus	14
+enumval	ActionId	Thunder	15
+enumval	ActionId	Freeze	16
+enumval	ActionId	Wave	17
+enumval	ActionId	Hold	18
+enumval	ActionId	Fire	19
+enumval	ActionId	Melt	20
+enumval	ActionId	Break_Form	21
+enumval	ActionId	Stability	22
+enumval	ActionId	Force_Bind	23
+enumval	ActionId	CancelOptic	24
+enumval	ActionId	CancelBomb	25
+enumval	ActionId	CancelGrav	26
+enumval	ActionId	Defense	27
+enumval	ActionId	Full_Block	28
+enumval	ActionId	Half_Block	29
+enumval	ActionId	Recovery	30
+enumval	ActionId	AutoRecover	31
+enumval	ActionId	Repair	32
+enumval	ActionId	Reactivate	33
+enumval	ActionId	Anti_Air	34
+enumval	ActionId	Anti_Sea	35
+enumval	ActionId	Scout	36
+enumval	ActionId	Conceal	37
+enumval	ActionId	Boost_Chrg	38
+enumval	ActionId	Rapid_Chrg	39
+enumval	ActionId	Accel_Chrg	40
+enumval	ActionId	Drain_Chrg	41
+enumval	ActionId	Pushover	42
+enumval	ActionId	Impair	43
+enumval	ActionId	Confusion	44
+enumval	ActionId	Use_Drain	45
+enumval	ActionId	No_Escape	46
+enumval	ActionId	No_Defense	47
+enumval	ActionId	Destroy	48
+enumval	ActionId	Sacrifice	49
+enumval	ActionId	Forcedrain	50
+enumval	ActionId	Team_Form	51
+enumval	ActionId	TeamAttack	52
+enumval	ActionId	Strengthen	53
+enumval	ActionId	CntrAttk	54
+enumval	ActionId	Change	55
+enumval	ActionId	ItrpChange	56
+enumval	ActionId	AttkChange	57
+enumval	ActionId	DEF_Change	58
+enumval	ActionId	HealChange	59
+type	/	ActionResultFlowFlags	EnumDB	1
+enumval	ActionResultFlowFlags	ATTACKER_AFFINITY_RESULT	2
+enumval	ActionResultFlowFlags	DEFENDER_AFFINITY_RESULT	4
+type	/	ActionResultKind	EnumDB	1
+enumval	ActionResultKind	RESULT_NONE	0
+enumval	ActionResultKind	RESULT_OPTIC	2
+enumval	ActionResultKind	RESULT_BOMB	3
+enumval	ActionResultKind	RESULT_GRAV	4
+enumval	ActionResultKind	RESULT_MATCH_1C	5
+enumval	ActionResultKind	RESULT_OTHER_6	6
+type	/	ActiveMapObjectEntry	StructureDB	8
+field	ActiveMapObjectEntry	+0x0	tile_x	byte	
+field	ActiveMapObjectEntry	+0x1	tile_y	byte	
+field	ActiveMapObjectEntry	+0x2	record_kind_and_event_id	word	
+field	ActiveMapObjectEntry	+0x4	render_slot_and_flags	byte	
+field	ActiveMapObjectEntry	+0x5	facing_variant	byte	
+field	ActiveMapObjectEntry	+0x6	reserved_06	byte	
+field	ActiveMapObjectEntry	+0x7	reserved_07	byte	
+type	/	AttributeId	EnumDB	1
+enumval	AttributeId	Grapple	0
+enumval	AttributeId	Shooting	1
+enumval	AttributeId	Optic	2
+enumval	AttributeId	Bomb	3
+enumval	AttributeId	Gravity	4
+enumval	AttributeId	Formation	5
+enumval	AttributeId	Movement	6
+enumval	AttributeId	Stop	7
+enumval	AttributeId	Bind	8
+enumval	AttributeId	Flow	9
+enumval	AttributeId	Release	10
+enumval	AttributeId	Cancel	11
+enumval	AttributeId	Defense	12
+enumval	AttributeId	Heal	13
+enumval	AttributeId	Revive	14
+enumval	AttributeId	AntiAir	15
+enumval	AttributeId	AntiSea	16
+enumval	AttributeId	Scout	17
+enumval	AttributeId	Conceal	18
+enumval	AttributeId	Time	19
+enumval	AttributeId	Interrupt	20
+enumval	AttributeId	Destroy	21
+enumval	AttributeId	Regenerate	22
+enumval	AttributeId	Teamwork	23
+enumval	AttributeId	Counterattack	24
+enumval	AttributeId	Transform	25
+enumval	AttributeId	NothingCat	26
+enumval	AttributeId	NothingQuestion	27
+enumval	AttributeId	NothingExclamation	28
+enumval	AttributeId	NothingBotro	29
+type	/	BattleBotStateRecord	StructureDB	256
+field	BattleBotStateRecord	+0x0	state_flags	byte	
+field	BattleBotStateRecord	+0x1	medal_id	MedalId	
+field	BattleBotStateRecord	+0x2	reserved_02_03	byte[2]	
+field	BattleBotStateRecord	+0x4	medal_class_id	byte	
+field	BattleBotStateRecord	+0x5	medal_level	byte	
+field	BattleBotStateRecord	+0x6	primary_speciality	SkillId	
+field	BattleBotStateRecord	+0x7	part_compatibility_bonus	byte	
+field	BattleBotStateRecord	+0x8	reserved_08	byte	
+field	BattleBotStateRecord	+0x9	speciality_cycle_reset	byte	
+field	BattleBotStateRecord	+0xa	reserved_0A_17	byte[14]	
+field	BattleBotStateRecord	+0x18	speciality_action_table	byte[8]	
+field	BattleBotStateRecord	+0x20	strike_speciality_level	byte	
+field	BattleBotStateRecord	+0x21	berserk_speciality_level	byte	
+field	BattleBotStateRecord	+0x22	shoot_speciality_level	byte	
+field	BattleBotStateRecord	+0x23	aim_shot_speciality_level	byte	
+field	BattleBotStateRecord	+0x24	defend_speciality_level	byte	
+field	BattleBotStateRecord	+0x25	heal_speciality_level	byte	
+field	BattleBotStateRecord	+0x26	support_speciality_level	byte	
+field	BattleBotStateRecord	+0x27	interrupt_speciality_level	byte	
+field	BattleBotStateRecord	+0x28	strike_speciality_experience	byte	
+field	BattleBotStateRecord	+0x29	berserk_speciality_experience	byte	
+field	BattleBotStateRecord	+0x2a	shoot_speciality_experience	byte	
+field	BattleBotStateRecord	+0x2b	aim_shot_speciality_experience	byte	
+field	BattleBotStateRecord	+0x2c	defend_speciality_experience	byte	
+field	BattleBotStateRecord	+0x2d	heal_speciality_experience	byte	
+field	BattleBotStateRecord	+0x2e	support_speciality_experience	byte	
+field	BattleBotStateRecord	+0x2f	interrupt_speciality_experience	byte	
+field	BattleBotStateRecord	+0x30	reserved_30_3E	byte[15]	
+field	BattleBotStateRecord	+0x3f	current_speciality_cycle_index	byte	
+field	BattleBotStateRecord	+0x40	is_active	byte	
+field	BattleBotStateRecord	+0x41	broken_part_fallback_glyph_index	byte	
+field	BattleBotStateRecord	+0x42	reserved_42_47	byte[6]	
+field	BattleBotStateRecord	+0x48	parts	BattlePartState[4]	
+field	BattleBotStateRecord	+0xa8	reserved_A8_BA	byte[19]	
+field	BattleBotStateRecord	+0xbb	action_charge_meter	byte	
+field	BattleBotStateRecord	+0xbc	defender_resolution_flags	DefenderResolutionFlags	
+field	BattleBotStateRecord	+0xbd	reaction_status_flags	ReactionStatusFlags	
+field	BattleBotStateRecord	+0xbe	reserved_BE_BF	byte[2]	
+field	BattleBotStateRecord	+0xc0	reaction_state_flags	ReactionStateFlags	
+field	BattleBotStateRecord	+0xc1	medaforce_charge_or_token	byte	
+field	BattleBotStateRecord	+0xc2	secondary_effect_state	SecondaryEffectState	
+field	BattleBotStateRecord	+0xc9	null	PendingEffectKind_v2	
+field	BattleBotStateRecord	+0xca	pending_effect_stage_or_part_slot	byte	
+field	BattleBotStateRecord	+0xcb	pending_effect_value_0	byte	
+field	BattleBotStateRecord	+0xcc	pending_effect_value_1	byte	
+field	BattleBotStateRecord	+0xcd	reserved_CD_CF	byte[3]	
+field	BattleBotStateRecord	+0xd0	flat_damage_bonus	byte	
+field	BattleBotStateRecord	+0xd1	reserved_D1_D2	byte[2]	
+field	BattleBotStateRecord	+0xd3	proximity_damage_bonus	byte	
+field	BattleBotStateRecord	+0xd4	remoteness_damage_bonus	byte	
+field	BattleBotStateRecord	+0xd5	reserved_D5	byte	
+field	BattleBotStateRecord	+0xd6	optic_bomb_grav_bonus_flags	byte	
+field	BattleBotStateRecord	+0xd7	reserved_D7_DC	byte[6]	
+field	BattleBotStateRecord	+0xdd	selected_action_source	byte	
+field	BattleBotStateRecord	+0xde	reaction_source_part_id	byte	
+field	BattleBotStateRecord	+0xdf	reaction_source_action_kind	byte	
+field	BattleBotStateRecord	+0xe0	selected_target_bot_id	byte	
+field	BattleBotStateRecord	+0xe1	selected_target_part_id	byte	
+field	BattleBotStateRecord	+0xe2	tail_E2_FF	byte[30]	
+type	/	BattleMedalStateRecord	StructureDB	64
+field	BattleMedalStateRecord	+0x0	state_flags	byte	
+field	BattleMedalStateRecord	+0x1	medal_id	MedalId	
+field	BattleMedalStateRecord	+0x2	next_level_exp	ushort	
+field	BattleMedalStateRecord	+0x4	medal_class_id	byte	
+field	BattleMedalStateRecord	+0x5	medal_level	byte	
+field	BattleMedalStateRecord	+0x6	speciality	SpecialityId	
+field	BattleMedalStateRecord	+0x7	part_compatibility_bonus	byte	
+field	BattleMedalStateRecord	+0x8	medal_rank	byte	
+field	BattleMedalStateRecord	+0x9	speciality_cycle_reset	byte	
+field	BattleMedalStateRecord	+0xa	reserved_0A_1F	byte[22]	
+field	BattleMedalStateRecord	+0x20	strike_speciality_level	byte	
+field	BattleMedalStateRecord	+0x21	berserk_speciality_level	byte	
+field	BattleMedalStateRecord	+0x22	shoot_speciality_level	byte	
+field	BattleMedalStateRecord	+0x23	aim_shot_speciality_level	byte	
+field	BattleMedalStateRecord	+0x24	defend_speciality_level	byte	
+field	BattleMedalStateRecord	+0x25	heal_speciality_level	byte	
+field	BattleMedalStateRecord	+0x26	support_speciality_level	byte	
+field	BattleMedalStateRecord	+0x27	interrupt_speciality_level	byte	
+field	BattleMedalStateRecord	+0x28	strike_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x29	berserk_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x2a	shoot_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x2b	aim_shot_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x2c	defend_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x2d	heal_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x2e	support_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x2f	interrupt_speciality_experience	byte	
+field	BattleMedalStateRecord	+0x30	tail	byte[16]	
+type	/	BattlePartState	StructureDB	24
+field	BattlePartState	+0x0	attribute_id	AttributeId	
+field	BattlePartState	+0x1	action_or_leg_type	byte	
+field	BattlePartState	+0x2	skill_id	SkillId	
+field	BattlePartState	+0x3	gender	GenderId	
+field	BattlePartState	+0x4	armor	byte	
+field	BattlePartState	+0x5	success_or_propulsion	byte	
+field	BattlePartState	+0x6	power_or_evasion	byte	
+field	BattlePartState	+0x7	charge_or_defense	byte	
+field	BattlePartState	+0x8	uses_or_proximity	byte	
+field	BattlePartState	+0x9	cooldown_or_remoteness	byte	
+field	BattlePartState	+0xa	set_shared_value_0A	byte	
+field	BattlePartState	+0xb	price_hundreds	byte	
+field	BattlePartState	+0xc	attack_damage_scalar	byte	
+field	BattlePartState	+0xd	runtime_0D	byte	
+field	BattlePartState	+0xe	target_bot_id	byte	
+field	BattlePartState	+0xf	target_part_id	byte	
+field	BattlePartState	+0x10	head_uses_spent_or_runtime_10	byte	
+field	BattlePartState	+0x11	current_armor	byte	
+field	BattlePartState	+0x12	effective_propulsion_or_success	byte	
+field	BattlePartState	+0x13	effective_power_or_evasion	byte	
+field	BattlePartState	+0x14	effective_charge_or_defense	byte	
+field	BattlePartState	+0x15	effective_proximity_or_uses	byte	
+field	BattlePartState	+0x16	effective_remoteness_or_cooldown	byte	
+field	BattlePartState	+0x17	part_id	PartSetId	
+type	/	BattleSideState	StructureDB	768
+field	BattleSideState	+0x0	bots	BattleBotStateRecord[3]	
+type	/	DefenderResolutionFlags	EnumDB	1
+enumval	DefenderResolutionFlags	SPECIALITY_FLAG_0	1
+enumval	DefenderResolutionFlags	SPECIALITY_FLAG_1	2
+enumval	DefenderResolutionFlags	BYPASS_EVASION	4
+enumval	DefenderResolutionFlags	BYPASS_DEFENSE	8
+enumval	DefenderResolutionFlags	ZERO_ROS_TRIGGERED	16
+enumval	DefenderResolutionFlags	CRITICAL_HIT	64
+type	/	EventScriptRuntimeState	StructureDB	112
+field	EventScriptRuntimeState	+0x0	vm_state	byte	
+field	EventScriptRuntimeState	+0x1	vm_substate	byte	
+field	EventScriptRuntimeState	+0x2	queued_action_timers	byte[8]	
+field	EventScriptRuntimeState	+0xa	queued_action_phases	byte[8]	
+field	EventScriptRuntimeState	+0x12	queued_action_bytes	byte[64]	
+field	EventScriptRuntimeState	+0x52	queued_action_count	byte	
+field	EventScriptRuntimeState	+0x53	unknown_53	byte	
+field	EventScriptRuntimeState	+0x54	queued_action_actor_slots	byte[8]	
+field	EventScriptRuntimeState	+0x5c	queued_action_substeps	byte[8]	
+field	EventScriptRuntimeState	+0x64	reserved_64	byte	
+field	EventScriptRuntimeState	+0x65	choice_selected_index	byte	
+field	EventScriptRuntimeState	+0x66	choice_page_or_mode	byte	
+field	EventScriptRuntimeState	+0x67	choice_layout_flags	byte	
+field	EventScriptRuntimeState	+0x68	reserved_68	byte[4]	
+field	EventScriptRuntimeState	+0x6c	choice_cursor_x_tiles	byte	
+field	EventScriptRuntimeState	+0x6d	choice_cursor_y_tiles	byte	
+field	EventScriptRuntimeState	+0x6e	choice_scroll_or_page	byte	
+field	EventScriptRuntimeState	+0x6f	choice_flags	byte	
+type	/	FightActionScriptState	StructureDB	24
+field	FightActionScriptState	+0x0	action_script_id	byte	
+field	FightActionScriptState	+0x1	unknown_A9	byte	
+field	FightActionScriptState	+0x2	action_sequence_state	byte	
+field	FightActionScriptState	+0x3	action_arg_selector	byte	
+field	FightActionScriptState	+0x4	action_script_inline_args	byte[8]	
+field	FightActionScriptState	+0xc	reserved_B4	byte	
+field	FightActionScriptState	+0xd	action_handler_complete_flag	byte	
+field	FightActionScriptState	+0xe	reserved_B6	byte	
+field	FightActionScriptState	+0xf	defender_followup_flags	byte	
+field	FightActionScriptState	+0x10	action_result_flow_flags	ActionResultFlowFlags	
+field	FightActionScriptState	+0x11	action_dispatch_status	byte	
+field	FightActionScriptState	+0x12	reserved_BA_BB	byte[2]	
+field	FightActionScriptState	+0x14	action_script_cursor	ushort	
+field	FightActionScriptState	+0x16	attacker_affinity_result_kind	ActionResultKind	
+field	FightActionScriptState	+0x17	defender_affinity_result_kind	ActionResultKind	
+type	/	FightBotLoadout	StructureDB	12
+field	FightBotLoadout	+0x0	head_id	PartSetId	
+field	FightBotLoadout	+0x1	left_arm_id	PartSetId	
+field	FightBotLoadout	+0x2	right_arm_id	PartSetId	
+field	FightBotLoadout	+0x3	legs_id	PartSetId	
+field	FightBotLoadout	+0x4	medal_id	MedalId	
+field	FightBotLoadout	+0x5	medal_level	byte	
+field	FightBotLoadout	+0x6	speciality_proficiency_nibbles_packed	byte[4]	
+field	FightBotLoadout	+0xa	unknown_0A	byte	
+field	FightBotLoadout	+0xb	unknown_0B	byte	
+type	/	FightCombatResolutionScratch	StructureDB	11
+field	FightCombatResolutionScratch	+0x0	total_ros	ushort	
+field	FightCombatResolutionScratch	+0x2	pre_damage_value	ushort	
+field	FightCombatResolutionScratch	+0x4	accumulated_damage	ushort	
+field	FightCombatResolutionScratch	+0x6	ros_reduction	ushort	
+field	FightCombatResolutionScratch	+0x8	unknown_F0	byte	
+field	FightCombatResolutionScratch	+0x9	resolved_ros_or_damage	ushort	
+type	/	FightInformation	StructureDB	356
+field	FightInformation	+0x0	template	FightTemplate	
+field	FightInformation	+0x28	support_bonus_state	FightSupportBonusState	
+field	FightInformation	+0x3c	left_blend_enabled	byte	
+field	FightInformation	+0x3d	left_blend_alpha_a	byte	
+field	FightInformation	+0x3e	left_blend_alpha_b	byte	
+field	FightInformation	+0x3f	unknown_3F_to_76	byte[56]	
+field	FightInformation	+0x77	right_blend_enabled	byte	
+field	FightInformation	+0x78	right_blend_alpha_a	byte	
+field	FightInformation	+0x79	right_blend_alpha_b	byte	
+field	FightInformation	+0x7a	unknown_7A_to_86	byte[13]	
+field	FightInformation	+0x87	active_side_index	byte	
+field	FightInformation	+0x88	selected_slot_index	byte	
+field	FightInformation	+0x89	support_bonus_context	FightSupportBonusContext	
+field	FightInformation	+0x8b	last_action_kind	byte	
+field	FightInformation	+0x8c	preview_loadout_cache	FightPreviewLoadoutCache	
+field	FightInformation	+0xa8	action_script_state	FightActionScriptState	
+field	FightInformation	+0xc0	part_resolution_scratch	FightPartResolutionScratch	
+field	FightInformation	+0xe8	combat_resolution	FightCombatResolutionScratch	
+field	FightInformation	+0xf3	unknown_F3_to_F5	byte[3]	
+field	FightInformation	+0xf6	side_state_flags	byte	
+field	FightInformation	+0xf7	unknown_F7	byte	
+field	FightInformation	+0xf8	preview_orientation_flags	byte	
+field	FightInformation	+0xf9	preview_scene_selector_and_tail	byte[6]	
+field	FightInformation	+0xff	preview_layer_flags	byte	
+field	FightInformation	+0x100	preview_sequence_state	FightPreviewSequenceState	
+field	FightInformation	+0x114	left_screen_offset	byte	
+field	FightInformation	+0x115	right_screen_offset	byte	
+field	FightInformation	+0x116	unknown_116_to_153	byte[62]	
+field	FightInformation	+0x154	left_anchor_x	ushort	
+field	FightInformation	+0x156	right_anchor_x	ushort	
+field	FightInformation	+0x158	left_anchor_y	ushort	
+field	FightInformation	+0x15a	right_anchor_y	ushort	
+field	FightInformation	+0x15c	action_team_index	byte	
+field	FightInformation	+0x15d	action_slot_index	byte	
+field	FightInformation	+0x15e	action_target_team_index	byte	
+field	FightInformation	+0x15f	action_target_slot_index	byte	
+field	FightInformation	+0x160	unknown_160_to_161	byte[2]	
+field	FightInformation	+0x162	mirrored_action_kind	byte	
+field	FightInformation	+0x163	unknown_163	byte	
+type	/	FightPartResolutionScratch	StructureDB	32
+field	FightPartResolutionScratch	+0x0	head_break_bot_queue	byte[3]	
+field	FightPartResolutionScratch	+0x3	reserved_C3_C7	byte[5]	
+field	FightPartResolutionScratch	+0x8	current_resolution_amount	ushort	
+field	FightPartResolutionScratch	+0xa	leftover_resolution_amount	ushort	
+field	FightPartResolutionScratch	+0xc	applied_resolution_amount	ushort	
+field	FightPartResolutionScratch	+0xe	reserved_CE_CF	byte[2]	
+field	FightPartResolutionScratch	+0x10	selected_overflow_target_part	byte	
+field	FightPartResolutionScratch	+0x11	multi_target_part_highbit_flag	byte	
+field	FightPartResolutionScratch	+0x12	multi_target_part_selection_flags	byte[3]	
+field	FightPartResolutionScratch	+0x15	reserved_D5	byte	
+field	FightPartResolutionScratch	+0x16	multi_target_applied_amounts	ushort[3]	
+field	FightPartResolutionScratch	+0x1c	reserved_DC_DD	byte[2]	
+field	FightPartResolutionScratch	+0x1e	followup_source_bot_slot	byte	
+field	FightPartResolutionScratch	+0x1f	followup_source_action_kind	byte	
+type	/	FightPreviewBotParts	StructureDB	4
+field	FightPreviewBotParts	+0x0	head_part_id	byte	
+field	FightPreviewBotParts	+0x1	right_arm_part_id	byte	
+field	FightPreviewBotParts	+0x2	left_arm_part_id	byte	
+field	FightPreviewBotParts	+0x3	legs_part_id	byte	
+type	/	FightPreviewLoadoutCache	StructureDB	28
+field	FightPreviewLoadoutCache	+0x0	player_leg_icon_indices	byte[3]	
+field	FightPreviewLoadoutCache	+0x3	player_preview_bots	FightPreviewBotParts[3]	
+field	FightPreviewLoadoutCache	+0xf	selection_context	FightPreviewSelectionContext	
+type	/	FightPreviewSelectionContext	StructureDB	13
+field	FightPreviewSelectionContext	+0x0	reserved_0F_19	byte[11]	
+field	FightPreviewSelectionContext	+0xb	action_text_kind	byte	
+field	FightPreviewSelectionContext	+0xc	selected_part_index	byte	
+type	/	FightPreviewSequenceState	StructureDB	20
+field	FightPreviewSequenceState	+0x0	sequence_cursor	ushort	
+field	FightPreviewSequenceState	+0x2	sequence_arg_0	ushort	
+field	FightPreviewSequenceState	+0x4	sequence_arg_1	ushort	
+field	FightPreviewSequenceState	+0x6	sequence_arg_2	ushort	
+field	FightPreviewSequenceState	+0x8	sequence_arg_3	ushort	
+field	FightPreviewSequenceState	+0xa	sequence_arg_4	ushort	
+field	FightPreviewSequenceState	+0xc	sequence_arg_5	ushort	
+field	FightPreviewSequenceState	+0xe	sequence_oam_attr_base	ushort	
+field	FightPreviewSequenceState	+0x10	sequence_object_set_id	ushort	
+field	FightPreviewSequenceState	+0x12	left_preview_step_flags	byte	
+field	FightPreviewSequenceState	+0x13	right_preview_step_flags	byte	
+type	/	FightSupportBonusContext	StructureDB	2
+field	FightSupportBonusContext	+0x0	support_bonus_slot_index	byte	
+field	FightSupportBonusContext	+0x1	mirrored_support_bonus_slot_index	byte	
+type	/	FightSupportBonusSlot	StructureDB	8
+field	FightSupportBonusSlot	+0x0	scout_ros_bonus	byte	
+field	FightSupportBonusSlot	+0x1	reserved_01	byte	
+field	FightSupportBonusSlot	+0x2	summary_active	byte	
+field	FightSupportBonusSlot	+0x3	summary_action_kind	byte	
+field	FightSupportBonusSlot	+0x4	summary_ros_or_count	byte	
+field	FightSupportBonusSlot	+0x5	summary_damage_or_bonus	byte	
+field	FightSupportBonusSlot	+0x6	reserved_06	byte	
+field	FightSupportBonusSlot	+0x7	reserved_07	byte	
+type	/	FightSupportBonusState	StructureDB	20
+field	FightSupportBonusState	+0x0	team_slots	FightSupportBonusSlot[2]	
+field	FightSupportBonusState	+0x10	reserved_10_13	byte[4]	
+type	/	FightTemplate	StructureDB	40
+field	FightTemplate	+0x0	character_id	byte	
+field	FightTemplate	+0x1	unknown_01	byte	
+field	FightTemplate	+0x2	bot_count	byte	
+field	FightTemplate	+0x3	template_flags	byte	
+field	FightTemplate	+0x4	bots	FightBotLoadout[3]	
+type	/	GenderId	EnumDB	1
+enumval	GenderId	Male	0
+enumval	GenderId	Female	1
+type	/	LegTypeId	EnumDB	1
+enumval	LegTypeId	Flying	100
+enumval	LegTypeId	Hover	101
+enumval	LegTypeId	MultiLeg	102
+enumval	LegTypeId	Bipedal	103
+enumval	LegTypeId	Wheeled	104
+enumval	LegTypeId	Tank	105
+enumval	LegTypeId	Aquatic	106
+type	/	MapDirectionalTriggerRecord	StructureDB	4
+field	MapDirectionalTriggerRecord	+0x0	tile_x	byte	
+field	MapDirectionalTriggerRecord	+0x1	tile_y	byte	
+field	MapDirectionalTriggerRecord	+0x2	allowed_direction_mask	byte	
+field	MapDirectionalTriggerRecord	+0x3	trigger_id	byte	
+type	/	MapEncounter	StructureDB	4
+field	MapEncounter	+0x0	common_battle_id	byte	
+field	MapEncounter	+0x1	uncommon_battle_id	byte	
+field	MapEncounter	+0x2	rare_battle_id	byte	
+field	MapEncounter	+0x3	very_rare_battle_id	byte	
+type	/	MapEntitySpawnEntry	StructureDB	8
+field	MapEntitySpawnEntry	+0x0	tile_x	byte	
+field	MapEntitySpawnEntry	+0x1	tile_y	byte	
+field	MapEntitySpawnEntry	+0x2	record_kind_and_event_id	word	
+field	MapEntitySpawnEntry	+0x4	sprite_and_facing_packed	byte	
+field	MapEntitySpawnEntry	+0x5	spawn_group_index	byte	
+field	MapEntitySpawnEntry	+0x6	chapter_visibility_mask	word	
+type	/	MapEventTriggerRecord	StructureDB	8
+field	MapEventTriggerRecord	+0x0	tile_x	byte	
+field	MapEventTriggerRecord	+0x1	tile_y	byte	
+field	MapEventTriggerRecord	+0x2	trigger_flags_and_event_id	word	
+field	MapEventTriggerRecord	+0x4	marker_sprite_and_facing_packed	byte	
+field	MapEventTriggerRecord	+0x5	marker_state	byte	
+field	MapEventTriggerRecord	+0x6	unknown_06	byte	
+field	MapEventTriggerRecord	+0x7	unknown_07	byte	
+type	/	MapTransitionState	StructureDB	40
+field	MapTransitionState	+0x0	reserved_00_02	byte[3]	
+field	MapTransitionState	+0x3	transition_kind	byte	
+field	MapTransitionState	+0x4	reserved_04_11	byte[14]	
+field	MapTransitionState	+0x12	scene_mode_id	byte	
+field	MapTransitionState	+0x13	reserved_13	byte	
+field	MapTransitionState	+0x14	transition_phase	byte	
+field	MapTransitionState	+0x15	reserved_15_25	byte[17]	
+field	MapTransitionState	+0x26	queued_map_id	ushort	
+type	/	MapWarpRecord	StructureDB	8
+field	MapWarpRecord	+0x0	tile_x	byte	
+field	MapWarpRecord	+0x1	tile_y	byte	
+field	MapWarpRecord	+0x2	destination_map_id	byte	
+field	MapWarpRecord	+0x3	arrival_facing_and_transition_kind	byte	
+field	MapWarpRecord	+0x4	reserved_04	byte	
+field	MapWarpRecord	+0x5	reserved_05	byte	
+field	MapWarpRecord	+0x6	destination_tile_x	byte	
+field	MapWarpRecord	+0x7	destination_tile_y	byte	
+type	/	MedalId	EnumDB	1
+enumval	MedalId	Kuwagata	0
+enumval	MedalId	Kabuto	1
+enumval	MedalId	Tortoise	2
+enumval	MedalId	Jellyfish	3
+enumval	MedalId	Bear	4
+enumval	MedalId	Spider	5
+enumval	MedalId	Snake	6
+enumval	MedalId	Queen	7
+enumval	MedalId	Squid	8
+enumval	MedalId	Phoenix	9
+enumval	MedalId	Unicorn	10
+enumval	MedalId	Ghost	11
+enumval	MedalId	Knight	12
+enumval	MedalId	Mermaid	13
+enumval	MedalId	Penguin	14
+enumval	MedalId	Bat	15
+enumval	MedalId	Kappa	16
+enumval	MedalId	Mouse	17
+enumval	MedalId	Chameleon	18
+enumval	MedalId	Rabbit	19
+enumval	MedalId	Monkey	20
+enumval	MedalId	Devil	21
+enumval	MedalId	Angel	22
+enumval	MedalId	Dragon	23
+enumval	MedalId	Ninja	24
+enumval	MedalId	Alien	25
+enumval	MedalId	Cat	26
+enumval	MedalId	Questionmark	27
+enumval	MedalId	Botro	28
+enumval	MedalId	Exclamationmark	29
+type	/	PartSetId	EnumDB	1
+enumval	PartSetId	Noctobat	0
+enumval	PartSetId	Wonder_Angel	1
+enumval	PartSetId	Air_Ptera	2
+enumval	PartSetId	Paradiver	3
+enumval	PartSetId	Dragonfly	4
+enumval	PartSetId	Crimson_King	5
+enumval	PartSetId	Utopian	6
+enumval	PartSetId	Windsail	7
+enumval	PartSetId	Draken	8
+enumval	PartSetId	Propolis	9
+enumval	PartSetId	Phoenix	10
+enumval	PartSetId	Femjet	11
+enumval	PartSetId	Rappy	12
+enumval	PartSetId	Churlybear	13
+enumval	PartSetId	Haniwa	14
+enumval	PartSetId	Gorem	15
+enumval	PartSetId	Spitfire	16
+enumval	PartSetId	Specter	17
+enumval	PartSetId	Moai	18
+enumval	PartSetId	Jorat	19
+enumval	PartSetId	Sunwitch	20
+enumval	PartSetId	Saldron	21
+enumval	PartSetId	Redlace	22
+enumval	PartSetId	Mistyghost	23
+enumval	PartSetId	Volume10	24
+enumval	PartSetId	Botafly	25
+enumval	PartSetId	Rockflower	26
+enumval	PartSetId	Babyblu	27
+enumval	PartSetId	Spidar	28
+enumval	PartSetId	Octoclam	29
+enumval	PartSetId	Magdosnake	30
+enumval	PartSetId	Floro	31
+enumval	PartSetId	Mega_Emperor	32
+enumval	PartSetId	Chimerator	33
+enumval	PartSetId	Mantaprey	34
+enumval	PartSetId	Poison_Copy	35
+enumval	PartSetId	Robo_Emperor	36
+enumval	PartSetId	Redmatador	37
+enumval	PartSetId	Tentaclam	38
+enumval	PartSetId	Acehorn	39
+enumval	PartSetId	Multikolor	40
+enumval	PartSetId	Kuraba	41
+enumval	PartSetId	Rokusho	42
+enumval	PartSetId	Metabee	43
+enumval	PartSetId	Krosserdog	44
+enumval	PartSetId	Turnmonkey	45
+enumval	PartSetId	Zorin	46
+enumval	PartSetId	Bayonet	47
+enumval	PartSetId	Belzelga	48
+enumval	PartSetId	Peppercat	49
+enumval	PartSetId	Neutranurse	50
+enumval	PartSetId	Brass	51
+enumval	PartSetId	Sumilidon	52
+enumval	PartSetId	Warbandit	53
+enumval	PartSetId	Attack_Tyrano	54
+enumval	PartSetId	Banisher	55
+enumval	PartSetId	Stonemirror	56
+enumval	PartSetId	Circulis	57
+enumval	PartSetId	Pretty_Prime	58
+enumval	PartSetId	Nin_Ninja	59
+enumval	PartSetId	Foxuno	60
+enumval	PartSetId	Kintaro	61
+enumval	PartSetId	Agadama	62
+enumval	PartSetId	Samurai	63
+enumval	PartSetId	Cyandog	64
+enumval	PartSetId	Wigwamo	65
+enumval	PartSetId	Rabudo	66
+enumval	PartSetId	Cosmo_Alien	67
+enumval	PartSetId	Blackram	68
+enumval	PartSetId	Sailormate	69
+enumval	PartSetId	Auroraqueen	70
+enumval	PartSetId	Icknite	71
+enumval	PartSetId	Hopstar	72
+enumval	PartSetId	Papyrak	73
+enumval	PartSetId	Ambiguous	74
+enumval	PartSetId	Greatmotha	75
+enumval	PartSetId	Twinkle	76
+enumval	PartSetId	Armorparadeen	77
+enumval	PartSetId	Sabotina	78
+enumval	PartSetId	Spiralle	79
+enumval	PartSetId	Rollerman	80
+enumval	PartSetId	Antacker	81
+enumval	PartSetId	Antldier	82
+enumval	PartSetId	Toybox	83
+enumval	PartSetId	Face_Lantern	84
+enumval	PartSetId	Landmotor	85
+enumval	PartSetId	Stingray	86
+enumval	PartSetId	Komandog	87
+enumval	PartSetId	Magiclown	88
+enumval	PartSetId	Tankar	89
+enumval	PartSetId	Dr_Bokchoy	90
+enumval	PartSetId	Snailoader	91
+enumval	PartSetId	Cordy	92
+enumval	PartSetId	Totalizer	93
+enumval	PartSetId	Gentleheart	94
+enumval	PartSetId	Landbrachio	95
+enumval	PartSetId	Dashbutton	96
+enumval	PartSetId	Snowbro	97
+enumval	PartSetId	Soniktank	98
+enumval	PartSetId	Giggly_Jelly	99
+enumval	PartSetId	Shamen	100
+enumval	PartSetId	Earthkrono	101
+enumval	PartSetId	Gloomeg	102
+enumval	PartSetId	Megaphant	103
+enumval	PartSetId	Digmole	104
+enumval	PartSetId	King_Pharaoh	105
+enumval	PartSetId	Eggy	106
+enumval	PartSetId	Aquamar	107
+enumval	PartSetId	Kappalord	108
+enumval	PartSetId	Flatstick	109
+enumval	PartSetId	Fligflag	110
+enumval	PartSetId	Orkamar	111
+enumval	PartSetId	Aviking	112
+enumval	PartSetId	Starpeda	113
+enumval	PartSetId	Fireflash	114
+enumval	PartSetId	Aquacrown	115
+enumval	PartSetId	Sharkkan	116
+enumval	PartSetId	Oceana	117
+enumval	PartSetId	Pingen	118
+enumval	PartSetId	Wolfeel	119
+type	/	PendingEffectKind	EnumDB	1
+enumval	PendingEffectKind	EFFECT_NONE	0
+enumval	PendingEffectKind	EFFECT_0D	13
+enumval	PendingEffectKind	EFFECT_0E	14
+enumval	PendingEffectKind	EFFECT_0F	15
+enumval	PendingEffectKind	EFFECT_10	16
+enumval	PendingEffectKind	EFFECT_11	17
+enumval	PendingEffectKind	EFFECT_12	18
+enumval	PendingEffectKind	EFFECT_13	19
+enumval	PendingEffectKind	EFFECT_14	20
+enumval	PendingEffectKind	EFFECT_1B	27
+enumval	PendingEffectKind	EFFECT_1C	28
+enumval	PendingEffectKind	EFFECT_1D	29
+enumval	PendingEffectKind	EFFECT_2E	46
+enumval	PendingEffectKind	EFFECT_2F	47
+type	/	PendingEffectKind_v2	EnumDB	1
+enumval	PendingEffectKind_v2	NONE	0
+enumval	PendingEffectKind_v2	BUG	13
+enumval	PendingEffectKind_v2	VIRUS	14
+enumval	PendingEffectKind_v2	THUNDER	15
+enumval	PendingEffectKind_v2	FREEZE	16
+enumval	PendingEffectKind_v2	WAVE	17
+enumval	PendingEffectKind_v2	HOLD	18
+enumval	PendingEffectKind_v2	FIRE	19
+enumval	PendingEffectKind_v2	MELT	20
+enumval	PendingEffectKind_v2	DEFENSE	27
+enumval	PendingEffectKind_v2	FULL_BLOCK	28
+enumval	PendingEffectKind_v2	HALF_BLOCK	29
+enumval	PendingEffectKind_v2	IMPAIR	43
+enumval	PendingEffectKind_v2	CONFUSION	44
+enumval	PendingEffectKind_v2	NO_ESCAPE	46
+enumval	PendingEffectKind_v2	NO_DEFENSE	47
+type	/	ReactionStateFlags	EnumDB	1
+enumval	ReactionStateFlags	ALLOW_RANDOM_FOLLOWUP	1
+enumval	ReactionStateFlags	ACTION34_AFFINITY_GATE	2
+enumval	ReactionStateFlags	BLOCK_THRESHOLD_REACTION	4
+type	/	ReactionStatusFlags	EnumDB	1
+enumval	ReactionStatusFlags	PHASE_HANDLED	2
+enumval	ReactionStatusFlags	MIN_DAMAGE_MODE	4
+enumval	ReactionStatusFlags	STORED_REACTION_SOURCE	8
+enumval	ReactionStatusFlags	THRESHOLD_REACTION_SOURCE	16
+enumval	ReactionStatusFlags	DEFENSE_REDUCTION_TRIGGERED	32
+type	/	RomMedalInfo	StructureDB	16
+field	RomMedalInfo	+0x0	medal_id	MedalId	
+field	RomMedalInfo	+0x1	medal_class_id	byte	
+field	RomMedalInfo	+0x2	null	SpecialityId	
+field	RomMedalInfo	+0x3	rank_threshold_1	byte	
+field	RomMedalInfo	+0x4	rank_threshold_2	byte	
+field	RomMedalInfo	+0x5	rank_threshold_3	byte	
+field	RomMedalInfo	+0x6	rank_threshold_4	byte	
+field	RomMedalInfo	+0x7	part_compatibility_bonus	byte	
+field	RomMedalInfo	+0x8	strike_speciality_base	byte	
+field	RomMedalInfo	+0x9	berserk_speciality_base	byte	
+field	RomMedalInfo	+0xa	shoot_speciality_base	byte	
+field	RomMedalInfo	+0xb	aim_shot_speciality_base	byte	
+field	RomMedalInfo	+0xc	defend_speciality_base	byte	
+field	RomMedalInfo	+0xd	heal_speciality_base	byte	
+field	RomMedalInfo	+0xe	support_speciality_base	byte	
+field	RomMedalInfo	+0xf	interrupt_speciality_base	byte	
+type	/	RomPartRecord	StructureDB	16
+field	RomPartRecord	+0x0	attribute_id	AttributeId	
+field	RomPartRecord	+0x1	action_or_leg_type	byte	
+field	RomPartRecord	+0x2	skill_id	SkillId	
+field	RomPartRecord	+0x3	gender	GenderId	
+field	RomPartRecord	+0x4	armor	byte	
+field	RomPartRecord	+0x5	success_or_propulsion	byte	
+field	RomPartRecord	+0x6	power_or_evasion	byte	
+field	RomPartRecord	+0x7	charge_or_defense	byte	
+field	RomPartRecord	+0x8	uses_or_proximity	byte	
+field	RomPartRecord	+0x9	cooldown_or_remoteness	byte	
+field	RomPartRecord	+0xa	set_shared_value_0A	byte	
+field	RomPartRecord	+0xb	price_hundreds	byte	
+field	RomPartRecord	+0xc	attack_damage_scalar	byte	
+field	RomPartRecord	+0xd	padding_0D	byte	
+field	RomPartRecord	+0xe	padding_0E	byte	
+field	RomPartRecord	+0xf	padding_0F	byte	
+type	/	SecondaryEffectKind	EnumDB	1
+enumval	SecondaryEffectKind	NONE	0
+enumval	SecondaryEffectKind	AUTO_RECOVER	31
+enumval	SecondaryEffectKind	BOOST_CHARGE	38
+enumval	SecondaryEffectKind	DRAIN_CHARGE	41
+type	/	SecondaryEffectState	StructureDB	7
+field	SecondaryEffectState	+0x0	reserved_c2	byte	
+field	SecondaryEffectState	+0x1	reserved_c3	byte	
+field	SecondaryEffectState	+0x2	null	SecondaryEffectKind	
+field	SecondaryEffectState	+0x3	secondary_effect_stage	byte	
+field	SecondaryEffectState	+0x4	secondary_effect_value_0	byte	
+field	SecondaryEffectState	+0x5	secondary_effect_value_1	byte	
+field	SecondaryEffectState	+0x6	reserved_c8	byte	
+type	/	SkillId	EnumDB	1
+enumval	SkillId	Strike	0
+enumval	SkillId	Berserk	1
+enumval	SkillId	Shoot	2
+enumval	SkillId	AimShot	3
+enumval	SkillId	Defend	4
+enumval	SkillId	Heal	5
+enumval	SkillId	Support	6
+enumval	SkillId	Interrupt	7
+type	/	SpecialityId	EnumDB	1
+enumval	SpecialityId	Strike	0
+enumval	SpecialityId	Berserk	1
+enumval	SpecialityId	Shoot	2
+enumval	SpecialityId	Aim_shot	3
+enumval	SpecialityId	Defend	4
+enumval	SpecialityId	Heal	5
+enumval	SpecialityId	Support	6
+enumval	SpecialityId	Interrupt	7
+type	/	TechniqueId	EnumDB	1
+enumval	TechniqueId	Sword	0
+enumval	TechniqueId	Hammer	1
+enumval	TechniqueId	Rifle	2
+enumval	TechniqueId	Chain_Gun	3
+enumval	TechniqueId	Laser	4
+enumval	TechniqueId	Beam	5
+enumval	TechniqueId	Missile	6
+enumval	TechniqueId	Napalm	7
+enumval	TechniqueId	Break	8
+enumval	TechniqueId	Press	9
+enumval	TechniqueId	Grap_Trap	10
+enumval	TechniqueId	Shot_Trap	11
+enumval	TechniqueId	Attack_Clr	12
+enumval	TechniqueId	Bug	13
+enumval	TechniqueId	Virus	14
+enumval	TechniqueId	Thunder	15
+enumval	TechniqueId	Freeze	16
+enumval	TechniqueId	Wave	17
+enumval	TechniqueId	Hold	18
+enumval	TechniqueId	Fire	19
+enumval	TechniqueId	Melt	20
+enumval	TechniqueId	Break_Form	21
+enumval	TechniqueId	Stability	22
+enumval	TechniqueId	Force_Bind	23
+enumval	TechniqueId	CancelOptic	24
+enumval	TechniqueId	CancelBomb	25
+enumval	TechniqueId	CancelGrav	26
+enumval	TechniqueId	Defense	27
+enumval	TechniqueId	Full_Block	28
+enumval	TechniqueId	Half_Block	29
+enumval	TechniqueId	Recovery	30
+enumval	TechniqueId	AutoRecover	31
+enumval	TechniqueId	Repair	32
+enumval	TechniqueId	Reactivate	33
+enumval	TechniqueId	Anti_Air	34
+enumval	TechniqueId	Anti_Sea	35
+enumval	TechniqueId	Scout	36
+enumval	TechniqueId	Conceal	37
+enumval	TechniqueId	Boost_Chrg	38
+enumval	TechniqueId	Rapid_Chrg	39
+enumval	TechniqueId	Accel_Chrg	40
+enumval	TechniqueId	Drain_Chrg	41
+enumval	TechniqueId	Pushover	42
+enumval	TechniqueId	Impair	43
+enumval	TechniqueId	Confusion	44
+enumval	TechniqueId	Use_Drain	45
+enumval	TechniqueId	No_Escape	46
+enumval	TechniqueId	No_Defense	47
+enumval	TechniqueId	Destroy	48
+enumval	TechniqueId	Sacrifice	49
+enumval	TechniqueId	Forcedrain	50
+enumval	TechniqueId	Team_Form	51
+enumval	TechniqueId	TeamAttack	52
+enumval	TechniqueId	Strengthen	53
+enumval	TechniqueId	CntrAttk	54
+enumval	TechniqueId	Change	55
+enumval	TechniqueId	ItrpChange	56
+enumval	TechniqueId	AttkChange	57
+enumval	TechniqueId	DEF_Change	58
+enumval	TechniqueId	HealChange	59

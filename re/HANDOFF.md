@@ -133,3 +133,15 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
   0x0804D83C (achar evento N x EventScript_ReadNextByte).
 - Achado: menu de debug embutido (`debug_menu_subroutines` 0x083ACA5C, 59 rotinas). Bom candidato de analise para a nuvem.
 - Para a nuvem: tarefas 2-5 agora sao de conferencia; prioridade nova = formato das animacoes (0x083D1E40) e o menu de debug.
+
+### 2026-10-10 - sessao local (3): injecao de C funcionando
+- Pipeline em `inject/` (ver `inject/README.md`): Arm GNU Toolchain 14.3, simbolos gerados do CSV, structs geradas
+  dos tipos do Simon (todos os offsets conferidos por _Static_assert), build que grava codigo + hooks na ROM.
+- Piloto: `GetPartStats` reescrita em C e desviada; 182 chamadas no jogo a partir de um save na tela de pecas, tela
+  igual a original. Funciona na ROM original e na expandida.
+- Teste no emulador: mgba-mcp (mGBA 0.11 noturno) com `MGBA_EXTRA_ARGS="-C fpsTarget=6000 -C audioSync=0"`
+  (30 mil quadros em ~40 s). Nao e deterministico entre execucoes (IWRAM 0x03001408-0x0300167F varia).
+- Para a nuvem: ao propor codigo novo, escrever em `inject/src/` + `patches.json` e deixar o teste para a sessao
+  local. Proximo alvo sugerido: acao de batalha nova via `gTechniqueActionValidationHandlerTable`/`Setup...` -
+  precisa entender a assinatura dos handlers (decompilar 2-3 handlers e documentar aqui).
+
