@@ -294,6 +294,7 @@ address,name,kind,count,comment
 0x0800BA74,DebugMenu_Exit,func_thumb,,passo 2: volta para gDebugReturnScene/gDebugReturnStep
 0x0800BAB8,DebugMenu_RunOption,func_thumb,,passo 3: chama a tabela 0x083ACA80 [gDebugMenuOption]
 0x0800BAF8,debug_process,func_thumb,,Simon/Rokusho
+0x0800D710,DebugMotion_Main,func_thumb,,"opcao Motion do debug: monta 2 bots (BuildCompositePreviewSpriteLayerWithOffset), START/SELECT trocam o bot (0-121), A avanca"
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
 0x0800EE34,PartSetPreview_DrawAttributeMatchMarkers,func_thumb,,Simon/Rokusho: Draw per-slot attribute match markers for the four parts in the selected part set. The marker is controlled by RomPartRecord.attribute_id.
 0x0800F6CC,PartDetail_GetCurrentSelectionLegIconIndex,func_thumb,,Simon/Rokusho
@@ -599,7 +600,7 @@ address,name,kind,count,comment
 0x08043C94,Encounter_RollPercent0To99,func_thumb,,"Simon/Rokusho: Returns a 0..99-style roll by scaling generate_random__() through signed division by 0xFF. Used by encounter and fight template selection threshold logic (<0x28, <0x46, <0x5A, else last entry)."
 0x080446B4,BuildCompositePreviewSpriteLayer,func_thumb,,Simon/Rokusho
 0x080447EC,BuildCompositePreviewSpriteLayerWithOffset,func_thumb,,"Simon/Rokusho: Generic fight-preview side-sprite helper. It maps param_10 to BuildFourPartLargePreviewComposite mode bit 0x1/0x2 and param_11==1 to mode bit 0x4, then calls BuildFourPartLargePreviewComposite with flags 1/2/5/6. Important finding: the left-facing side-sprite renderer is not always the same mode as RenderBattlePreviewLargePortraitFrame (which uses fixed mode 5)."
-0x08044A3C,site_MoveStyleRead,label,,le gMoveScriptTable[kind*7 + gMoveStyle[bot das pernas]]
+0x08044A3C,MotionPlayStep,func_thumb,,"antes site_MoveStyleRead: roteiro = gMoveScriptTable[tipo*7 + gMoveStyle[bot]], toca um passo; le gMoveScriptTable[kind*7 + gMoveStyle[bot das pernas]]"
 0x08044B58,site_StarterBot,label,,rotina do bot inicial
 0x08044DA8,SetCompositePreviewOamShapeAndSize,func_thumb,,Simon/Rokusho
 0x08045120,ExpandCompositePreviewTemplateEntryToOam,func_thumb,,"Simon/Rokusho: ExpandCompositePreviewTemplateEntryToOam writes the first expanded 8-byte OAM record immediately after the 12-byte template header. The centered/affine branch in RenderCompositePreviewDescriptorRecursive later reads entry+0x0C / +0x0E from this expanded payload, so those values are derived OAM attributes, not direct descriptor bytes."
@@ -626,6 +627,7 @@ address,name,kind,count,comment
 0x08046CC8,FlipSyntheticCompositePreviewDescriptorOffsets,func_thumb,,Simon/Rokusho
 0x08046D1C,BuildFourPartLargePreviewComposite,func_thumb,,"Simon/Rokusho: Builds/updates the four-part large Medabot preview. Large-portrait setup stores the side in the preview state; render/load uses that side as the variant selector. On side 1 the ROM does not blindly swap arm variants: it first loads each selected part row, then runs two graphics-only arm copy passes. Each pass copies from the opposite arm appearance table at the same part ordinal only when byte 1 of the target row entry is non-negative. CopyCompositePreviewDescriptorGraphics replaces tile graphics only; descriptor geometry, palette bank, and palette pointer remain attached to the target descriptor."
 0x08047414,CompositePreviewContext_Init,func_thumb,,"Simon/Rokusho: CompositePreviewContext_Init layout confirmed from selected Medawatch preview path: [0] runtime object state pointer, [1] descriptor pointer table base, [2] per-descriptor template/OAM table base. In the saved Medawatch frame this is {0x02024000, 0x083D1D98, 0x020260D0}."
+0x08047428,MotionInterpolateKeyframe,func_thumb,,"interpola angulo (+0x1C) e posicao 8.8 (+0x18/+0x1A) do estado por molde (16 B, 0x410 B por lado) para 63 moldes"
 0x08047574,EventScript_ClearGlobals,func_thumb,,"Simon/Rokusho: Clears the core event-engine globals before a new game/map/event-system bring-up. Confirmed blocks: gEventScriptDataBasePtr (installed ROM script base), gEventFlagListPtr (pointer to gEventFlagList), gEventFlagList (main event/game state blob), gEventScriptArguments (opcode argument buffer filled by EventScript_ReadBytes), gEventScriptRuntimeState (active script cursor/branch/temp state), and gEventObjectWorkArea (0x200-byte per-object/event actor work array). Remaining cleared blocks are auxiliary event/overworld work areas that still need field-level RE."
 0x0804763C,MainState1,func_thumb,,estado 1
 0x08047878,GameState_StartFlowByCommand,func_thumb,,Simon/Rokusho: Start a top-level flow selected by a command id. Important confirmed cases: command 0x20 starts a scripted/forced battle flow (sets gCurrentBattleSourceFlag = 1); command 0x21 starts the random encounter battle flow (sets gCurrentBattleSourceFlag = 0); command 3 opens a shop using param_2 as shop id.
@@ -966,7 +968,7 @@ address,name,kind,count,comment
 0x0807F610,gPreviewRightArm,data,1952,preview braco direito: 122 x 16 B
 0x0807FDB0,gPreviewLeftArm,data,1952,preview braco esquerdo: 122 x 16 B
 0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable
-0x08081490,sCompositePreviewMirroredDescriptorMap,label,,Simon/Rokusho em 0x080814B0
+0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083AC2C8,menu_list,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
@@ -994,8 +996,10 @@ address,name,kind,count,comment
 0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B; Simon: gMapEncounterBattleTable; Simon: map_encounters
 0x083C1B80,gBattlePointerTable,ptr,246,batalhas; Simon: list_of_all_fights
 0x083CAD78,gMoveStyle,data,122,estilo de deslocamento em batalha (0-6) por bot das pernas
-0x083D1D78,gMoldTable,ptr,50,moldes de preview: registros de 0x18 B; Simon: sCompositePreviewDescriptorPointerTable; Simon: sLargePartDisplayDescriptorPointerTable
-0x083D1E40,gBattleAnimTable_Unk,label,,provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
+0x083D1D78,gMoldTable,ptr,50,"registros 0x18 B: +0 artes, +0x0F/+0x10 filhos, +0x11 paleta, +0x12/+0x13 tamanho, +0x15 forma OBJ; 1-2 raizes, 3-6 juntas RAM (cabeca/bracos/pernas); 64 posicoes funcionam com espelho+movimento estendidos; moldes de preview: registros de 0x18 B; Simon: sCompositePreviewDescriptorPointerTable; Simon: sLargePartDisplayDescriptorPointerTable"
+0x083D1E40,gMotionAngleTable,ptr,59,roteiro -> s16 angulo [molde 1..49][N quadros-chave] (1/65536 volta); o tocador le 63 moldes; provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
+0x083D1F2C,gMotionOffsetTable,ptr,59,"roteiro -> (s8 x, s8 y) [molde 1..49][N]"
+0x083D2018,gMotionDurationTable,ptr,59,"roteiro -> duracao (quadros) de cada quadro-chave, fim 0; N = tamanho"
 0x083D222C,gEventOpcodeTableA,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable
 0x083D2630,gEventOpcodeTableB,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa

@@ -555,6 +555,34 @@ mapa; até o maior uso original é seguro.
   em `tools/mgba-mcp-windows.patch`. Janela minimizada gera print vazio.
 - Banco do Simon (Rokusho E): portado para o CSV em 2026-10-10 (866 símbolos, tipos em `re/types/`); ver `re/HANDOFF.md`.
 
+## 15. Esqueleto, moldes e animações de batalha
+
+### 15.1 Árvore de moldes (esqueleto)
+- Tabela `0x083D1D78`: 50 ponteiros para registros de 0x18 B. `+0x00` lista de artes (pares imagem/paleta),
+  `+0x0F`/`+0x10` **dois moldes filhos** (percorridos recursivamente), `+0x11` paleta, `+0x12`/`+0x13`
+  largura/altura em px, `+0x15` forma do sprite. `+0x04..+0x0E` parecem pontos de encaixe.
+- Árvore: 1 → 2 → juntas 3-6 (na RAM: cabeça, braços, pernas, ligadas ao 1º molde de cada peça). Cabeça 7-13,
+  braço direito 14-16, esquerdo 17-19, pernas 20-49 (seis variações por tipo).
+- Peça do bot (u32): bits 0-5 molde, 6-12 arte (8 bits com o patch), bit 14 espelho, bit 15 variante.
+- **Cada pedaço = um sprite de hardware: no máximo 64×64 px.** Bot maior/mais complexo = mais pedaços (moldes).
+
+### 15.2 Animação de movimento
+- Roteiro = `gMoveScriptTable[tipo×7 + gMoveStyle[bot das pernas]]` (59 roteiros). Por roteiro:
+  `0x083D2018` duração de cada quadro-chave (bytes, fim 0; N = quantidade), `0x083D1E40` ângulo s16
+  [molde][N] (1/65536 volta), `0x083D1F2C` deslocamento (s8 x, s8 y) [molde][N]. Os dados têm **49 linhas
+  (moldes 1-49)**.
+- O tocador (`0x08047428`) interpola para **63 moldes** no estado por molde (`0x020260D0`, 16 B por molde,
+  0x410 B por lado = 65 posições).
+
+### 15.3 Moldes novos (50-63) — resolvido (2026-10-10)
+O bloqueio antigo não era o vetor de estado (ele tem 65 posições por lado), e sim **dados**:
+1. tabela de moldes com 50 posições (logo depois vêm os ponteiros de ângulo);
+2. **mapa de espelhamento** `0x08081490` (50 B; troca os braços para o lado direito): moldes ≥50 viravam 0 e
+   sumiam do lado direito;
+3. **roteiros de movimento** com 49 linhas: moldes ≥50 liam dados do bloco seguinte e as peças "voavam".
+`tools/mold_lab.py` estende os três (64 / 64 / 63 linhas) e faz a cabeça do bot 0 usar clones 50/51: no
+visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois lados.
+
 ## Créditos e referências
 
 - [Medabots-Romhacking-Toolkit](https://github.com/STulling/Medabots-Romhacking-Toolkit), [Medabots-Randomizer](https://github.com/STulling/Medabots-Randomizer), [MedabotsLib](https://github.com/STulling/MedabotsLib) — STulling

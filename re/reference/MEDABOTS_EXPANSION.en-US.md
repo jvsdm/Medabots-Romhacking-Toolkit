@@ -558,6 +558,33 @@ largest original use is safe.
   `tools/mgba-mcp-windows.patch`. A minimized window gives empty screenshots.
 - Simon's database (Rokusho E): ported to the CSV on 2026-10-10 (866 symbols, types in `re/types/`); see `re/HANDOFF.md`.
 
+## 15. Skeleton, molds and battle animation
+
+### 15.1 Mold tree (skeleton)
+- Table `0x083D1D78`: 50 pointers to 0x18-byte records. `+0x00` art list (image/palette pairs), `+0x0F`/`+0x10`
+  **two child molds** (walked recursively), `+0x11` palette, `+0x12`/`+0x13` width/height in px, `+0x15` sprite
+  shape. `+0x04..+0x0E` look like attachment points.
+- Tree: 1 → 2 → joints 3-6 (in RAM: head, arms, legs, linked to each part's first mold). Head 7-13, right arm
+  14-16, left arm 17-19, legs 20-49 (six variations by leg type).
+- Bot part entry (u32): bits 0-5 mold, 6-12 art (8 bits with the patch), bit 14 mirror, bit 15 variant.
+- **Each piece is one hardware sprite: at most 64×64 px.** A bigger/more complex bot needs more pieces (molds).
+
+### 15.2 Movement animation
+- Script = `gMoveScriptTable[kind×7 + gMoveStyle[legs bot]]` (59 scripts). Per script: `0x083D2018` duration of
+  each keyframe (bytes, 0-terminated; N keyframes), `0x083D1E40` s16 angle [mold][N] (1/65536 turn),
+  `0x083D1F2C` offset (s8 x, s8 y) [mold][N]. The data has **49 rows (molds 1-49)**.
+- The player (`0x08047428`) interpolates **63 molds** into the per-mold state (`0x020260D0`, 16 B per mold,
+  0x410 B per side = 65 slots).
+
+### 15.3 New molds (50-63) — solved (2026-10-10)
+The old blocker was not the state array (65 slots per side) but **data**:
+1. the mold table has 50 slots (the angle pointers follow it);
+2. the **mirror map** `0x08081490` (50 B; swaps the arms for the right side): molds ≥50 became 0 and vanished on
+   the right side;
+3. the **movement scripts** have 49 rows: molds ≥50 read the next block and pieces "flew".
+`tools/mold_lab.py` extends all three (64 / 64 / 63 rows) and makes bot 0's head use clones 50/51: in the debug
+menu's Motion viewer the bot is identical to the original on both sides.
+
 ## Credits and references
 
 - [Medabots-Romhacking-Toolkit](https://github.com/STulling/Medabots-Romhacking-Toolkit), [Medabots-Randomizer](https://github.com/STulling/Medabots-Randomizer), [MedabotsLib](https://github.com/STulling/MedabotsLib) — STulling

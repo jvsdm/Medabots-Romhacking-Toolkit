@@ -154,3 +154,14 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
   0x08047428) e a arvore de moldes (registro de 0x18 B: +0x0F/+0x10 filhos, +0x12/+0x13 tamanho, +0x15 forma do
   sprite; cada pedaco = 1 sprite de hardware, max 64x64).
 
+### 2026-10-10 - sessao local (5): animacoes e moldes 50-63
+- Decodificados o esqueleto (arvore de moldes) e os roteiros de movimento: ver `re/reference/` secao 15.
+- Moldes 50-63 funcionam com 3 mudancas so de dados (tabela de moldes 64, mapa de espelho 0x08081490 com 64,
+  roteiros de movimento com 63 linhas). `re/tools/mold_lab.py` gera a ROM de teste; conferido no visualizador
+  Motion do debug: identico ao original nos dois lados. A explicacao antiga ("vetor de 50 invade o inimigo")
+  estava errada: o vetor tem 65 posicoes por lado.
+- Proximo (local): levar isso ao Toolkit (expansao de moldes + visualizador/editor de arvore e animacao), depois
+  bots com mais pedacos e o Medachange.
+- Para a nuvem (sem ROM, barato): nada urgente. Se acionada: revisar `re/tools/mold_lab.py` e propor o desenho
+  da classe C# `MoldExpander` no estilo de `src/Medabots.Rom/Maps/MapExpander.cs`.
+
