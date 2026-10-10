@@ -1,0 +1,149 @@
+address,name,kind,count,comment
+0x02023000,gShopQuantities,label,,quantidade por item na loja (1 byte por bot)
+0x020260D0,gBattlePartState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois
+0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
+0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
+0x02040000,gShopItems,label,,itens da loja: 8 B (bot qtd preco*100)
+0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
+0x03001780,gFrameCount,label,,contador de frames (AgbMain)
+0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0
+0x03002B88,gPlayTimeFrames,label,,tempo de jogo em frames; trava em 21599999 (99:59:59)
+0x03004C40,gInventory,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2)
+0x03005590,gEventDbBase,label,,base do banco de eventos em RAM
+0x03005FDE,gCurrentMapId,label,,ID do mapa atual (base 0x030057E0 + 0x7FE)
+0x03006D14,gMapLayerBufferPtr,label,,ponteiro do buffer de camadas descomprimidas
+0x03007F00,sp_usr,label,,stack do modo System
+0x03007FA0,sp_irq,label,,stack do modo IRQ
+0x03007FFC,INTR_VECTOR,label,,endereco do IntrMain
+0x04000000,REG_DISPCNT,label,,
+0x04000004,REG_DISPSTAT,label,,
+0x04000006,REG_VCOUNT,label,,
+0x04000008,REG_BG0CNT,label,,
+0x0400000A,REG_BG1CNT,label,,
+0x0400000C,REG_BG2CNT,label,,
+0x0400000E,REG_BG3CNT,label,,
+0x04000010,REG_BG0HOFS,label,,
+0x04000012,REG_BG0VOFS,label,,
+0x04000014,REG_BG1HOFS,label,,
+0x04000016,REG_BG1VOFS,label,,
+0x04000018,REG_BG2HOFS,label,,
+0x0400001A,REG_BG2VOFS,label,,
+0x0400001C,REG_BG3HOFS,label,,
+0x0400001E,REG_BG3VOFS,label,,
+0x04000040,REG_WIN0H,label,,
+0x04000042,REG_WIN1H,label,,
+0x04000044,REG_WIN0V,label,,
+0x04000046,REG_WIN1V,label,,
+0x04000048,REG_WININ,label,,
+0x0400004A,REG_WINOUT,label,,
+0x0400004C,REG_MOSAIC,label,,
+0x04000050,REG_BLDCNT,label,,
+0x04000052,REG_BLDALPHA,label,,
+0x04000054,REG_BLDY,label,,
+0x04000080,REG_SOUNDCNT_L,label,,
+0x04000082,REG_SOUNDCNT_H,label,,
+0x04000084,REG_SOUNDCNT_X,label,,
+0x04000088,REG_SOUNDBIAS,label,,
+0x040000A0,REG_FIFO_A,label,,
+0x040000A4,REG_FIFO_B,label,,
+0x040000B0,REG_DMA0SAD,label,,
+0x040000B4,REG_DMA0DAD,label,,
+0x040000B8,REG_DMA0CNT,label,,
+0x040000BC,REG_DMA1SAD,label,,
+0x040000C0,REG_DMA1DAD,label,,
+0x040000C4,REG_DMA1CNT,label,,
+0x040000C8,REG_DMA2SAD,label,,
+0x040000CC,REG_DMA2DAD,label,,
+0x040000D0,REG_DMA2CNT,label,,
+0x040000D4,REG_DMA3SAD,label,,
+0x040000D8,REG_DMA3DAD,label,,
+0x040000DC,REG_DMA3CNT,label,,
+0x04000100,REG_TM0CNT,label,,
+0x04000104,REG_TM1CNT,label,,
+0x04000108,REG_TM2CNT,label,,
+0x0400010C,REG_TM3CNT,label,,
+0x04000120,REG_SIOMULTI0,label,,
+0x04000122,REG_SIOMULTI1,label,,
+0x04000124,REG_SIOMULTI2,label,,
+0x04000126,REG_SIOMULTI3,label,,
+0x04000128,REG_SIOCNT,label,,
+0x0400012A,REG_SIOMLT_SEND,label,,
+0x04000130,REG_KEYINPUT,label,,
+0x04000132,REG_KEYCNT,label,,
+0x04000134,REG_RCNT,label,,
+0x04000200,REG_IE,label,,
+0x04000202,REG_IF,label,,
+0x04000204,REG_WAITCNT,label,,
+0x04000208,REG_IME,label,,
+0x080000A0,header_title,label,,MEDABOTSMTBV
+0x080000AC,header_gamecode,label,,A8BP
+0x080000C0,crt0,func_arm,,inicializacao do SDK: stacks + INTR_VECTOR + AgbMain
+0x08000104,IntrMain,func_arm,,tratador de interrupcoes (le REG_IE/REG_IF)
+0x08000258,MainStateNop,func_thumb,,estados 4 e 5 de gMainStateTable
+0x0800025C,AgbMain,func_thumb,,loop principal
+0x08002534,MainState0,func_thumb,,estado 0 (soft reset volta para ca)
+0x0804763C,MainState1,func_thumb,,estado 1
+0x0805BBE0,MainState2,func_thumb,,estado 2
+0x08068440,MainState3,func_thumb,,estado 3 (estado inicial no boot)
+0x0807CCE8,VBlankWait,func_thumb,,provavel: espera VBlank no inicio de cada frame
+0x0807CCF0,CallViaR0,func_thumb,,chama o ponteiro em r0
+0x08040144,TextItalicFont_Use,label,,codigo de texto que le a fonte italica (0x40144-0x40504)
+0x08042238,site_TinpetCreate,label,,criacao do Medabot pelado; imediato do TinpetId
+0x08042B58,GetPartStats,func_thumb,,"GetPartStats(bot, kind, dest): copia 16 B de gPartStats + bot*64 + kind*16"
+0x080436AC,site_PartCycle,label,,ciclo de pecas (cmp #0x78 = Tinpet macho)
+0x08043820,site_BotCountValidator,label,,imediato do validador de Medabot (BotCount)
+0x08044A3C,site_MoveStyleRead,label,,le gMoveScriptTable[kind*7 + gMoveStyle[bot das pernas]]
+0x08044B58,site_StarterBot,label,,rotina do bot inicial
+0x08045E6C,PartPreviewPiece,label,,calcula seletor de imagem: ((entrada>>6)+variante)&0x7F; patch de 8 bits em 0x45ECC
+0x08047BDC,GetBotName,func_thumb,,gBotNames[bot]
+0x08047BEC,GetPartName,func_thumb,,"GetPartName(kind, bot): gPartNames[bot*4 + kind]"
+0x0804A2F0,site_NewGameClear,label,,limpeza do inventario no new game
+0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos
+0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
+0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
+0x0804B124,lit_EventDbBase3,label,,literal da base do banco de eventos
+0x0804D83C,site_GetEventScript,label,,acha evento N em base + banco[N]*0x4000 + (ponteiro[N] - 0x4000)
+0x0805DF18,site_LoadGame,label,,load do save (inventario como halfword no original)
+0x0805E010,site_SaveGame,label,,save (inventario como halfword no original)
+0x0807E8EC,gMoveScriptTable,label,,roteiros de deslocamento em batalha: [kind*7 + estilo]
+0x0807EE70,gPreviewHead,data,1952,preview cabeca: 122 x 16 B
+0x0807F610,gPreviewRightArm,data,1952,preview braco direito: 122 x 16 B
+0x0807FDB0,gPreviewLeftArm,data,1952,preview braco esquerdo: 122 x 16 B
+0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B
+0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
+0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros
+0x083B62D8,gMedals,data,480,medalhas: 16 B cada (27 ou 30 entradas - confirmar)
+0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B
+0x083BA658,gBotNames,ptr,120,nomes dos bots
+0x083BBB4C,gPartNames,ptr,480,nomes das pecas (bot*4 + kind)
+0x083BE868,gTechniqueNames,ptr,60,nomes das tecnicas
+0x083BEB94,gPaletteFamily,data,122,familia de paleta = banco OBJ do mini sprite
+0x083BEC10,gMapEncounters,data,1536,encontros por mapa: 192 x 8 B
+0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B
+0x083C1B80,gBattlePointerTable,ptr,246,batalhas
+0x083CAD78,gMoveStyle,data,122,estilo de deslocamento em batalha (0-6) por bot das pernas
+0x083D1D78,gMoldTable,ptr,50,moldes de preview: registros de 0x18 B
+0x083D2B6B,gMapArea,data,192,area/regiao por mapa
+0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B
+0x083F8A80,gMapTilesetGfx,ptr,192,graficos do tileset (LZ77)
+0x083F8D80,gMapColorAttr,ptr,192,atributos de cor
+0x083F9080,gMapLayers,ptr,576,camadas: 192 x 3 ponteiros LZ77
+0x083F9980,gMapTilesetPal,ptr,192,paletas do tileset (0x200 B)
+0x08404334,gMapCollision,ptr,192,colisao (1 B por metatile 16x16)
+0x08409480,gMapBlockA,ptr,192,bloco por mapa A
+0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B)
+0x08412E60,gMapWarps,ptr,192,warps (8 B cada; fim 0xFF)
+0x08413160,gMapSprites,ptr,192,sprites usados no mapa (fim 0xFF)
+0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto
+0x0847E644,gMapMusic,data,192,musica por mapa
+0x08483234,gMapPeople,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF)
+0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B)
+0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio)
+0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
+0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
+0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
+0x0850F498,gMiniSpritePalettes,data,128,4 paletas OBJ do mini sprite (a 4a zerada)
+0x08765EC0,gEventDb,label,,base do banco de eventos (header: offsets das tabelas)
+0x08769EC0,gEventPointerTable,label,,tabela de ponteiros de eventos (base + 0x4000)
+0x087852CF,gStarterData,label,,dados do bot inicial
+0x087F5500,gTextDump,label,,inicio do texto
