@@ -552,6 +552,11 @@ largest original use is safe.
   captures, in-game tests, the WPF editor — and pushes what it confirmed back to the repository.
 - GhidraMCP 1.4 (LaurieWired) installed on Ghidra 12.1.4 (extension version adjusted; the release targets
   11.3.2); bridge at `tools/ghidra_mcp/bridge_mcp_ghidra.py`, server `http://127.0.0.1:8080/`.
+- **mgba-mcp** (struktured-labs): each call opens mGBA with a Lua script, runs N frames, reads memory / OAM / takes a
+  screenshot and closes. It needs `--script`, which only mGBA 0.11 has (portable nightly in `tools/mgba-nightly/mGBA/`;
+  the installed 0.10.5 lacks it). Windows patch (no xvfb, `taskkill`, unfocused window) in
+  `tools/mgba-mcp-windows.patch`. A minimized window gives empty screenshots.
+- Simon's database (Rokusho E): ported to the CSV on 2026-10-10 (866 symbols, types in `re/types/`); see `re/HANDOFF.md`.
 
 ## Credits and references
 

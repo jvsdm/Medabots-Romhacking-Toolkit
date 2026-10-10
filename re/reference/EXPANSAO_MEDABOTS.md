@@ -549,6 +549,11 @@ mapa; até o maior uso original é seguro.
   capturas, testes no jogo, editor WPF — e devolve o que confirmou para o repositório.
 - GhidraMCP 1.4 (LaurieWired) instalado no Ghidra 12.1.4 (extensão com a versão ajustada; o release é para
   11.3.2); bridge em `tools/ghidra_mcp/bridge_mcp_ghidra.py`, servidor `http://127.0.0.1:8080/`.
+- **mgba-mcp** (struktured-labs): cada chamada abre o mGBA com um script Lua, roda N quadros, lê memória / OAM /
+  tira print e fecha. Precisa de `--script`, que só existe no mGBA 0.11 (build noturna portátil em
+  `tools/mgba-nightly/mGBA/`; o 0.10.5 instalado não tem). Patch para Windows (sem xvfb, `taskkill`, janela sem foco)
+  em `tools/mgba-mcp-windows.patch`. Janela minimizada gera print vazio.
+- Banco do Simon (Rokusho E): portado para o CSV em 2026-10-10 (866 símbolos, tipos em `re/types/`); ver `re/HANDOFF.md`.
 
 ## Créditos e referências
 
