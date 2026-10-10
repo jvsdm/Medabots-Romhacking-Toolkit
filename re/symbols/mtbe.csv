@@ -1,9 +1,9 @@
 address,name,kind,count,comment
+0x02000000,gShopItems,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000"
 0x02023000,gShopQuantities,label,,quantidade por item na loja (1 byte por bot)
 0x020260D0,gBattlePartState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
 0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
-0x02040000,gShopItems,label,,itens da loja: 8 B (bot qtd preco*100)
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
 0x03001780,gFrameCount,label,,contador de frames (AgbMain)
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0
@@ -82,11 +82,6 @@ address,name,kind,count,comment
 0x08000258,MainStateNop,func_thumb,,estados 4 e 5 de gMainStateTable
 0x0800025C,AgbMain,func_thumb,,loop principal
 0x08002534,MainState0,func_thumb,,estado 0 (soft reset volta para ca)
-0x0804763C,MainState1,func_thumb,,estado 1
-0x0805BBE0,MainState2,func_thumb,,estado 2
-0x08068440,MainState3,func_thumb,,estado 3 (estado inicial no boot)
-0x0807CCE8,VBlankWait,func_thumb,,provavel: espera VBlank no inicio de cada frame
-0x0807CCF0,CallViaR0,func_thumb,,chama o ponteiro em r0
 0x08040144,TextItalicFont_Use,label,,codigo de texto que le a fonte italica (0x40144-0x40504)
 0x08042238,site_TinpetCreate,label,,criacao do Medabot pelado; imediato do TinpetId
 0x08042B58,GetPartStats,func_thumb,,"GetPartStats(bot, kind, dest): copia 16 B de gPartStats + bot*64 + kind*16"
@@ -95,6 +90,7 @@ address,name,kind,count,comment
 0x08044A3C,site_MoveStyleRead,label,,le gMoveScriptTable[kind*7 + gMoveStyle[bot das pernas]]
 0x08044B58,site_StarterBot,label,,rotina do bot inicial
 0x08045E6C,PartPreviewPiece,label,,calcula seletor de imagem: ((entrada>>6)+variante)&0x7F; patch de 8 bits em 0x45ECC
+0x0804763C,MainState1,func_thumb,,estado 1
 0x08047BDC,GetBotName,func_thumb,,gBotNames[bot]
 0x08047BEC,GetPartName,func_thumb,,"GetPartName(kind, bot): gPartNames[bot*4 + kind]"
 0x0804A2F0,site_NewGameClear,label,,limpeza do inventario no new game
@@ -103,8 +99,12 @@ address,name,kind,count,comment
 0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
 0x0804B124,lit_EventDbBase3,label,,literal da base do banco de eventos
 0x0804D83C,site_GetEventScript,label,,acha evento N em base + banco[N]*0x4000 + (ponteiro[N] - 0x4000)
+0x0805BBE0,MainState2,func_thumb,,estado 2
 0x0805DF18,site_LoadGame,label,,load do save (inventario como halfword no original)
 0x0805E010,site_SaveGame,label,,save (inventario como halfword no original)
+0x08068440,MainState3,func_thumb,,estado 3 (estado inicial no boot)
+0x0807CCE8,VBlankWait,func_thumb,,provavel: espera VBlank no inicio de cada frame
+0x0807CCF0,CallViaR0,func_thumb,,chama o ponteiro em r0
 0x0807E8EC,gMoveScriptTable,label,,roteiros de deslocamento em batalha: [kind*7 + estilo]
 0x0807EE70,gPreviewHead,data,1952,preview cabeca: 122 x 16 B
 0x0807F610,gPreviewRightArm,data,1952,preview braco direito: 122 x 16 B
