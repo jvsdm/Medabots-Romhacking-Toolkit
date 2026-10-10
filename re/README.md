@@ -7,6 +7,8 @@ Simbolos e scripts do Ghidra versionados em texto. O projeto do Ghidra (`.gpr`/`
 | `symbols/mtbe.csv` | enderecos conhecidos: funcoes, tabelas, variaveis de RAM, registradores de IO |
 | `ghidra/MedabotsSetup.java` | prepara o programa: blocos de RAM, limpeza de codigo falso, aplica o CSV |
 | `ghidra/MedabotsExportSymbols.java` | grava os nomes dados no Ghidra de volta no CSV |
+| `symbols/simon_skipped.csv` | nomes do banco do Simon (Rokusho) que nao foram portados, com o motivo |
+| `types/medabots_simon.gdt` | tipos do Simon (structs/enums de batalha, medalha, peca, mapa) para o Data Type Manager |
 
 Enderecos no CSV sao de memoria GBA (`0x08...` = ROM, offset de arquivo + `0x08000000`).
 

@@ -1,0 +1,42 @@
+rokusho_address,name,reason
+080048e0,FUN_080048e0_partset_init_candidate,nome generico
+08004980,FUN_08004980_partset_ref,nome generico
+08006f90,FUN_08006f90_partset_medal_setup,nome generico
+08007080,FUN_08007080_partset_medal_setup,nome generico
+0801827c,GetSelectedMedabotPreviewWindowX,bytes diferentes na Metabee
+0801c0bc,Fight_RunActionFamilySubsequenceA,bytes diferentes na Metabee
+0801c154,Fight_RunActionFamilySubsequenceB,bytes diferentes na Metabee
+0801cffc,Fight_LoadActionSequenceBackdropVariant,bytes diferentes na Metabee
+0801d2f0,Fight_DispatchActionSequenceTable0,bytes diferentes na Metabee
+0801d380,Fight_DispatchActionSequenceTable1,bytes diferentes na Metabee
+0801d40c,Fight_DispatchActionSequenceTable2,bytes diferentes na Metabee
+0801d434,ActionFamily_Wave_Handler,bytes diferentes na Metabee
+0801d544,Fight_WaitForFollowupSourceIconAnimation,bytes diferentes na Metabee
+0801d580,Fight_DispatchFollowupSourceSequence,bytes diferentes na Metabee
+0801de1c,Fight_DispatchActionSequenceTable3,bytes diferentes na Metabee
+0801dee4,Fight_DispatchActionSequenceTable4,bytes diferentes na Metabee
+0801fa40,Fight_DispatchEndOfActionSequenceTable0,bytes diferentes na Metabee
+0801fdec,Fight_DispatchEndOfActionSequenceTable1,bytes diferentes na Metabee
+0802036c,Fight_ShowActionTargetMarker,bytes diferentes na Metabee
+08033074,Fight_GetRandomThreeWayIndex,bytes diferentes na Metabee
+08034e94,Fight_ReadActionScriptByte,bytes diferentes na Metabee
+0803d424,FightPreview_GetCurrentSequenceValue,bytes diferentes na Metabee
+080421c0,FUN_080421c0_partset_init,nome generico
+08042208,FUN_08042208_partset_update,nome generico
+08042234,FUN_08042234_partset_update,nome generico
+08042268,FUN_08042268_partset_update,nome generico
+08042b58,CopyPartRecordToBuffer,bytes diferentes na Metabee
+08043620,FUN_08043620_battle_medal_state_ref,nome generico
+08043ff0,FUN_08043ff0_maybe_equip,nome generico
+08044b58,Equip_rokusho_parts,bytes diferentes na Metabee
+08047bdc,Part_GetNamePointerById,bytes diferentes na Metabee
+08047fac,FUN_08047fac_partset,nome generico
+08048210,Map_ResolveEventObjectGraphicSetId,bytes diferentes na Metabee
+0804830c,Map_LoadCurrentTilesetPalettes,bytes diferentes na Metabee
+08048684,Map_GetEventObjectPaletteSetIdBySpawnIndex,bytes diferentes na Metabee
+080487c8,Map_UpdateObjectRenderModeFromPaletteSet,bytes diferentes na Metabee
+0804dc0c,EventScript_RunContinuationOpcodeHandler,bytes diferentes na Metabee
+08051940,Overworld_GetObjectStepSpeed,bytes diferentes na Metabee
+080529ac,Map_GetDimensionsInMetaTiles,bytes diferentes na Metabee
+0805b188,LoadCompositeBattleSpriteComponentTiles,bytes diferentes na Metabee
+0805d980,FUN_0805d980_battle_medal_state_save_ref,nome generico

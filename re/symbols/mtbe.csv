@@ -1,18 +1,179 @@
 address,name,kind,count,comment
 0x02000000,gShopItems,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000"
 0x02023000,gShopQuantities,label,,quantidade por item na loja (1 byte por bot)
-0x020260D0,gBattlePartState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois
+0x02024B84,gBattlePreviewCachedOamList,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x020260D0,gBattlePartState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois; Simon: gSelectedMedabotPreviewTemplateTable
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
 0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
 0x03000440,gTextState,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra"
+0x03000448,current_dialog_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x0300044C,current_character_in_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x0300045A,text_speed,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300047D,currently_selected_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03000491,selected_tinpet_in_menu,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03000493,selected_tinpet_has_all_parts,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300049A,selected_tinpet_selected_part,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004C9,gDeterministicRandom,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1]"
+0x030004CC,random_number,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004CD,gDeterministicRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004CE,menu_selected_item,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004D7,tinpet_sel_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004D8,selected_tinpet_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004D9,selected_tinpet_left_arm,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004DA,selected_tinpet_right_arm,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004DB,selected_tinpet_legs,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
+0x0300058C,just_pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03000590,gPlayerBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
+0x03000591,battle_robot_1_medalID,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000594,battle_robot_1_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000595,battle_robot_1_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000597,battle_robot_1_medal_compatibility_bonus,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300059A,battle_robot_1_name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005A8,battle_robot_1_autobattle_rotation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005B0,battle_robot_1_medal_stats,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005D3,battle_robot_1_head_partId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005D8,battle_robot_1_head_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005D9,battle_robot_1_head_animation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005DA,battle_robot_1_head_speciality,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005DC,battle_robot_1_head_max_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005DD,battle_robot_1_head_RoS,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005DE,battle_robot_1_head_power,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005E0,battle_robot_1_head_max_amount_of_uses,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005E8,battle_robot_1_head_uses,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005E9,battle_robot_1_head_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000601,battle_robot_1_left_arm_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000619,battle_robot_1_right_arm_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000621,battle_robot_1_legs_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000624,battle_robot_1_legs_max_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000631,battle_robot_1_legs_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000632,battle_robot_1_legs_propulsion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000633,battle_robot_1_legs_evasion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000634,battle_robot_1_legs_defense,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000635,battle_robot_1_legs_proximity,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000636,battle_robot_1_legs_remoteness,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000637,battle_robot_1_legs_part_cosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000649,player_1_conceal_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000651,battle_robot_1_current_medaforce,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000659,battle_robot_1_status_effect,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000666,battle_robot_1_form,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000890,gEnemyBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
+0x03000BE0,gBattleMedalStateTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleMedalStateRecord[30][1920]"
+0x03000BE1,first_medal_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000BE4,first_medal_attribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000BE5,first_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000BE6,first_medal_aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000BE7,first_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000BEA,first_medal_name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300137C,gamestate_subroutine,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03001780,gFrameCount,label,,contador de frames (AgbMain)
-0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0
+0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state
+0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03001798,pressed_buttons_03001798,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356]"
+0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001828,team_1_scout_score,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300182B,team_1_trap,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300182C,team_1_trap_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001882,DPAD_press,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001887,robot_doing_an_action,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001888,index_of_targetted_robot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001889,attacking_team,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300188A,defending_team,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300188B,targetted_bodypart,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018A7,part_doing_an_action,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018AA,battle_cinematic_current_state,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018C8,part_damage_counter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018CA,leftover_damage,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018CC,amount_of_damage_to_part,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018D1,part_gets_broken_from_damage,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018E8,TotalROS,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018EA,TotalROS_4,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018EC,damage,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018EE,enemy_ROS_reduction,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030018F2,ROS_after_defense_calc,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001968,won_bodypart_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03001969,won_bodypart_id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03002420,current_shop,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03002B64,held_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03002B88,gPlayTimeFrames,label,,tempo de jogo em frames; trava em 21599999 (99:59:59)
-0x03004C40,gInventory,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2)
-0x03005590,gEventDbBase,label,,base do banco de eventos em RAM
+0x03002B8C,gamestate_menu,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03004C40,gInventory,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory
+0x03005310,gOverworldAffineState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300534C,gOverworldAffineFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03005350,gOverworldUiState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03005590,gEventDbBase,label,,base do banco de eventos em RAM; Simon: gEventScriptDataBasePtr
+0x030055A0,gEventObjectWorkArea,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030057A0,gMapTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo MapTransitionState[40]"
+0x030057D8,gEventFlagListPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x030057DC,gMapScratchBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x030057E0,event_flag_list,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]; Simon: gEventFlagList"
+0x03005DBC,gActiveMapObjectTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo ActiveMapObjectEntry[64][512]"
+0x03005DBD,first_event_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03005DBE,first_event_eventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005FDE,gCurrentMapId,label,,ID do mapa atual (base 0x030057E0 + 0x7FE)
-0x03006D14,gMapLayerBufferPtr,label,,ponteiro do buffer de camadas descomprimidas
+0x03005FDF,gCurrentChapter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03005FE0,map_width,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03005FE2,map_height,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03005FF0,gMapCollisionOccupancyBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1024][1024]; Simon: map_data"
+0x03006409,gCurrentMapHasEncounters,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1]"
+0x0300640A,gCurrentBattleId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300640B,gRandomEncounterStepCounter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
+0x0300640C,gRandomEncounterModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300640D,gCurrentBattleSourceFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300640E,gPostBattleModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300640F,gCurrentBattleModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006417,gRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300642A,gEventFlagList_selectedEncounterBattleId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03006432,ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03006434,ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03006436,ikki_tile_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006437,gOverworldFacingDirection,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006438,ikki_walk_cooldown,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006439,ikki_look_dir,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300643B,gCurrentMapSceneVariant,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300643D,gOverworldEventModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300643E,gOverworldEventModeFlagsBackup,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300644E,str_ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03006450,str_ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006468,gCurrentEventPendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006469,gCurrentEventStateByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300646A,gCurrentEventScriptCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x0300646C,gCurrentEventAuxWord646C,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x0300646E,gCurrentEventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
+0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
+0x03006472,gCurrentEventOpcodeByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006473,gCurrentEventOpcodeSubstate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006484,gTrackedObjectSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32]"
+0x03006494,gCurrentEventActiveMapObjectIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064A0,gEventScriptRuntimeState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state"
+0x030064A1,gEventScriptRuntimeState_vm_substate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064AA,gEventScriptRuntimeState_queued_action_phases,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064B2,gEventScriptRuntimeState_queued_action_bytes,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064F2,gEventScriptRuntimeState_queued_action_count,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064F4,gEventScriptRuntimeState_queued_action_actor_slots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064FC,gEventScriptRuntimeState_queued_action_substeps,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03006505,gEventScriptRuntimeState_choice_selected_index,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03006506,gEventScriptRuntimeState_choice_page_or_mode,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03006507,gEventScriptRuntimeState_choice_layout_flags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300650C,gEventScriptRuntimeState_choice_cursor_x_tiles,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300650D,gEventScriptRuntimeState_choice_cursor_y_tiles,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300650E,gEventScriptRuntimeState_choice_scroll_or_page,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300650F,gEventScriptRuntimeState_choice_flags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03006D14,gMapLayerBufferPtr,label,,ponteiro do buffer de camadas descomprimidas; Simon: gMapTilemapBufferPtr
+0x03006D20,gEventScriptArguments_03006D20,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03007F00,sp_usr,label,,stack do modo System
 0x03007FA0,sp_irq,label,,stack do modo IRQ
 0x03007FFC,INTR_VECTOR,label,,endereco do IntrMain
@@ -76,87 +237,792 @@ address,name,kind,count,comment
 0x04000202,REG_IF,label,,
 0x04000204,REG_WAITCNT,label,,
 0x04000208,REG_IME,label,,
+0x08000000,entry,func_thumb,,Simon/Rokusho
 0x080000A0,header_title,label,,MEDABOTSMTBV
 0x080000AC,header_gamecode,label,,A8BP
-0x080000C0,crt0,func_arm,,inicializacao do SDK: stacks + INTR_VECTOR + AgbMain
+0x080000C0,crt0,func_arm,,inicializacao do SDK: stacks + INTR_VECTOR + AgbMain; Simon: RunMainLoopForever
 0x08000104,IntrMain,func_arm,,tratador de interrupcoes (le REG_IE/REG_IF)
 0x08000258,MainStateNop,func_thumb,,estados 4 e 5 de gMainStateTable
-0x0800025C,AgbMain,func_thumb,,loop principal
+0x0800025C,AgbMain,func_thumb,,loop principal; Simon: Game_Loop
+0x08000458,InitializeInterruptsAndDefaultHandlers,func_thumb,,"Simon/Rokusho: Initialize interrupt vectors, default handler pointers, DISPSTAT/IME, and a small amount of global interrupt state. This is the common low-level startup/interrupt init path."
+0x080004E0,ResetHardwareAndMemory,func_thumb,,Simon/Rokusho: Reset GBA hardware-facing memory regions and initialize default video/palette state. Clears VRAM/IWRAM-facing state and prepares the system for the main loop.
+0x08000540,ClearOamAndVramShadow,func_thumb,,Simon/Rokusho: Clear OAM and the engine's VRAM shadow buffers to a default empty state. Used during low-level video reset/init.
+0x08000840,NoOpActionHandler,func_thumb,,"Simon/Rokusho: First-stage action-family placeholder. In the ActionId dispatch table, many actions map here, meaning this specific phase does nothing for them and their real behavior is implemented in later shared state machines, generic attack resolution, or other action-sequence tables."
+0x08000844,get_player_inputs,func_thumb,,Simon/Rokusho
+0x08000964,is_input_soft_reset,func_thumb,,Simon/Rokusho
+0x080009BC,decompress_and_store,func_thumb,,Simon/Rokusho
+0x08001520,BuildShadowOamFromObjectState,func_thumb,,"Simon/Rokusho: Build shadow OAM from the engine's object state table. Scans active object entries, transforms them according to object mode/affine/visibility flags, emits OAM entries, and clears the unused tail of shadow OAM."
+0x08001CAC,SetObjectAffineMatrixFromAngleAndScale,func_thumb,,Simon/Rokusho: Compute and write an object's affine matrix entries from angle and scale inputs. Handles both fixed default-scale and externally supplied scale sources.
+0x08001EA8,SetObjectScaleVectorFromMode,func_thumb,,Simon/Rokusho: Set one object's scale vector entries according to the current object transform mode and scale source. Writes the two scale components used by affine OAM objects.
+0x08001FF8,RotateObjectOffsetByAffineAngle,func_thumb,,"Simon/Rokusho: Rotate an (x,y) object offset vector using the affine angle stored in the object state record."
+0x08002060,SortActiveObjectIndicesByPriority,func_thumb,,Simon/Rokusho: Sort the temporary active-object index list by the secondary priority byte stored in each 4-byte entry. Used before building shadow OAM.
+0x080020C8,InitializeLinkTransferState,func_thumb,,"Simon/Rokusho: Initialize the serial/link transfer state machine, clear its ring buffers, set up the packet queues, and enable the serial interrupt."
+0x080021F4,UpdateLinkTransferState,func_thumb,,"Simon/Rokusho: Advance the serial/link transfer state machine. Handles handshake state, starts timed transfers when appropriate, and returns a packed status bitfield describing the current link state."
+0x080022DC,QueueLinkTransferPacket,func_thumb,,"Simon/Rokusho: Queue one outbound serial/link packet into the current transmit buffer, including header/checksum fields, and mark the packet as pending for transmission."
 0x08002534,MainState0,func_thumb,,estado 0 (soft reset volta para ca)
-0x0803F41C,LoadPortrait_Unk,func_thumb,,provavel: carrega retrato (gPortraitImages[personagem*9 + expressao]) e paleta para buffer
+0x08003A38,InitializeBattleStatusScreen,func_thumb,,"Simon/Rokusho: Initialize the battle status/details screen state machine. Sets up BG layers, decompresses status-screen graphics/tilemaps, loads palettes, initializes the relevant screen widgets, and advances the current game subroutine state."
+0x0800406C,InitializeBattleSceneScreen,func_thumb,,"Simon/Rokusho: Initialize the main battle scene screen. Configures BG layers, decompresses battle scene graphics/tilemaps, loads composite battle sprite resources, builds the sprite objects, initializes supporting scene widgets, and advances the current game subroutine state."
+0x080048D8,FightPreview_CachePlayerLoadoutForScene,func_thumb,,"Simon/Rokusho: Cache the current player-side preview loadout into fight_information.preview_loadout_cache. For each of the three player preview bots, store the leg icon index plus the four part ids used later by the preview/battle-intro scene."
+0x08004FD0,LoadBattlePreviewSpriteTilesForAllSlots,func_thumb,,Simon/Rokusho: Load composite preview sprite tile graphics for every active battle/menu preview slot. Each active slot contributes one four-part Medabot preview sprite.
+0x08005000,BuildBattlePreviewSpriteObjectsForAllSlots,func_thumb,,Simon/Rokusho: Build the composite preview sprite OAM objects for every battle/menu preview slot. Inactive slots are masked out; active slots get a 4-object composite sprite.
+0x0800508C,DrawBattlePreviewPartIcons,func_thumb,,"Simon/Rokusho: Draw the part icon tile blocks for every battle/menu preview slot. Uses the legs/part-set preview id when valid, otherwise draws the placeholder icon."
+0x08005118,DrawBattlePreviewMedalLabel,func_thumb,,Simon/Rokusho: Draw the medal label for the currently selected battle preview entry. Uses a generic placeholder label for some entry types and otherwise renders the actual medal text.
+0x0800519C,DrawBattlePreviewNameLabel,func_thumb,,Simon/Rokusho: Draw the name label for the currently selected battle preview entry. Uses a placeholder string for generic entries and otherwise copies the actual name text before rendering it as OAM text.
+0x0800522C,DrawBattlePreviewPortraitTileBlock,func_thumb,,Simon/Rokusho: Draw the portrait/face tile block for the currently selected battle preview entry. Loads either the placeholder portrait tiles or the actual portrait tiles and stamps the 2x2 tile block into the BG tilemap.
+0x0800529C,InitializeBattlePreviewPortraitRenderer,func_thumb,,"Simon/Rokusho: Initialize the software/auxiliary portrait renderer used by the battle preview screen. Clears the working buffers, initializes the renderer state, and draws the first preview portrait frame for the selected entry."
+0x080053C8,RenderBattlePreviewPortraitFrame,func_thumb,,"Simon/Rokusho: Battle preview small portrait uses the same side split as the large portrait caller: side flag at menu state +0x5E selects param_12 0/1 and changes the destination cached OAM span buffer offset, while the CompositePreviewContext still points at 0x02026000/0x020260D0."
+0x080054C0,RenderBattlePreviewLargePortraitFrame,func_thumb,,"Simon/Rokusho: RenderBattlePreviewLargePortraitFrame calls BuildFourPartLargePreviewComposite(..., param_10=8, mode=5, side=0/1). Because param_10 low bit is 0, this large-portrait path does not request the appearance-row variant increment used by LoadCompositePreviewDescriptorRecursive."
+0x08005588,HandleBattleMenuDirectionalInput,func_thumb,,"Simon/Rokusho: Handle directional input in the battle menu/status UI. Updates the current selection through a small transition table, plays the cursor sound, and refreshes the dependent UI widgets when the selection changes."
+0x08005628,InitializeBattlePreviewComparisonSprites,func_thumb,,Simon/Rokusho: Initialize the small comparison/overlay composite sprites used by the battle preview toggle state. Clears four sprite slots and prepares them through the shared preview-sprite setup helper.
+0x080056A4,UpdateBattlePreviewComparisonSpriteSlot,func_thumb,,"Simon/Rokusho: Update one comparison/overlay preview sprite slot by recomputing its position, frame selection, and affine state from the current preview-toggle selection."
+0x08005798,RefreshBattlePreviewComparisonSprites,func_thumb,,Simon/Rokusho: Refresh the four comparison/overlay preview sprite slots. Either hides them when preview compare mode is off or updates their visible state and per-slot animation when compare mode is active.
+0x080058A4,HandleBattlePartPreviewToggle,func_thumb,,"Simon/Rokusho: Handle the button press that toggles the part-preview/compare state in the battle menu. Swaps preview data when needed, rebuilds the dependent widgets, and refreshes the preview sprite."
+0x08005948,RefreshBattlePartPreviewSprite,func_thumb,,Simon/Rokusho: Refresh the currently selected battle part preview sprite. Validates the selected part-id set and enables animation on the corresponding composite sprite if the ids are valid.
+0x08005D1C,PartDetail_UpdateHeadAttributeMatchMarker,func_thumb,,Simon/Rokusho: Update the head-part UI marker based on whether the selected head part's RomPartRecord.attribute_id matches the currently selected medal's required/compatible attribute.
+0x08006154,PartDetail_UpdateLegsAttributeMatchMarker,func_thumb,,Simon/Rokusho: Update the legs-part UI marker based on whether the selected legs part's RomPartRecord.attribute_id matches the currently selected medal's required/compatible attribute.
+0x0800656C,InitializeAlternateCompositePreviewFrame,func_thumb,,Simon/Rokusho
+0x0800667C,RenderAlternateCompositePreviewFrame,func_thumb,,Simon/Rokusho
+0x08006764,RenderAlternateCompositePreviewLargeFrame,func_thumb,,Simon/Rokusho
+0x08006F44,PartSet_UpdateFromCurrentLoadoutMaybe,func_thumb,,Simon/Rokusho
+0x08006FA0,PartSet_EquipCurrentLoadoutMaybe,func_thumb,,Simon/Rokusho
+0x0800B938,controls_in_debug_menu,func_thumb,,Simon/Rokusho
+0x0800BAF8,debug_process,func_thumb,,Simon/Rokusho
+0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
+0x0800EE34,PartSetPreview_DrawAttributeMatchMarkers,func_thumb,,Simon/Rokusho: Draw per-slot attribute match markers for the four parts in the selected part set. The marker is controlled by RomPartRecord.attribute_id.
+0x0800F6CC,PartDetail_GetCurrentSelectionLegIconIndex,func_thumb,,Simon/Rokusho
+0x0800F6E4,PartDetail_DrawCurrentSelectionPartName,func_thumb,,Simon/Rokusho
+0x0800F77C,PartDetail_DrawCurrentSelectionAttributeName,func_thumb,,"Simon/Rokusho: Draw the current part's Attribute name by indexing gPartAttributeNamePointerTable with RomPartRecord.attribute_id, copying the custom-encoded glyph stream, then rendering it through BuildObjectTextFromGlyphStream. Confirmed decoded attribute strings in the English Rokusho ROM include Grapple, Shoot, Optic, Bomb, Gravity, Formation, Movement, Stop, Bind, Flow, Release, Cancel, Defense, Heal, Revive, Anti-Air, Anti-Sea, Scout, Conceal, Time, Interrupt, Destroy, Regenerate, Teamwork, Counterattack, Transform, and Nothing."
+0x0800F844,PartDetail_DrawCurrentSelectionDescription,func_thumb,,Simon/Rokusho: Draw the current part description text from the part-description pointer table. Separate from RomPartRecord: the description is not stored inline in the 16-byte raw part record.
+0x0800F8A0,PartDetail_DrawCurrentSelectionGenderBadge,func_thumb,,Simon/Rokusho: Draw the current part's gender/female compatibility badge using the copied RomPartRecord.gender byte.
+0x0800F8D8,PartDetail_DrawStatLabelsForSlot,func_thumb,,"Simon/Rokusho: Draw the stat label set for the currently selected slot. Head, arm, and legs parts use different label templates because the same raw RomPartRecord bytes map to different gameplay meanings by slot."
+0x0800FA7C,PartDetail_DrawCurrentSelectionStats,func_thumb,,"Simon/Rokusho: Draw the numeric part stats for the currently selected part. This screen uses the copied RomPartRecord bytes at +0xEE and renders offsets +4..+9 as the slot-specific stat list: armor, ROS/propulsion, power/evasion, chain-or-defense, uses-or-proximity, and charge-or-remoteness."
+0x0800FC60,PartDetail_CountAvailablePartsForCurrentAttributeFilter,func_thumb,,"Simon/Rokusho: Count parts available to the current part-detail menu state, with an optional filter that checks RomPartRecord.attribute_id against the currently selected medal/attribute filter."
+0x0800FDD8,PartDetail_HandleSelectionChangeInput,func_thumb,,Simon/Rokusho
+0x08010A7C,Overworld_ReloadMapSceneAndAdvanceGameState,func_thumb,,"Simon/Rokusho: Reload the current map scene for a scripted/game-state transition, refresh map rendering, create the player object sprite, clear the transition latch, and advance the owning game-state subroutine."
+0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,,Simon/Rokusho: Post-battle reward handler keyed by gPostBattleModeFlags low nibble. Low nibble 0 runs the normal reward grant path; nonzero clears the mode byte and jumps directly to subroutine 0x3E.
+0x08011E20,Fight_SelectTemplateForCurrentEncounter,func_thumb,,"Simon/Rokusho: Selects the active FightTemplate for the current encounter, copies it into fight_information.template, and if template_flags == 0 rerolls each bot's head/right/left/legs part ids. The bot loop indexes the copied template as raw bytes because the code memcpy's the 0x28-byte template into RAM first; offsets +4..+7 within each 0x0C bot record are the four part ids, not stat_nibbles_packed."
+0x08011F20,Fight_SelectTierPartId,func_thumb,,"Simon/Rokusho: Chooses one of four part ids by encounter rarity tier using the same random-roll thresholds as encounter battle selection: <0x28 common, <0x46 uncommon, <0x5A rare, else very rare."
+0x08013E30,UpdateSelectedMedabotPreviewScreen,func_thumb,,"Simon/Rokusho: Selected-Medabot/Medawatch full preview update loop. Refreshes the preview renderer, responds to button state, updates displayed part ids, and redraws both the small and large selected-bot previews for the current cursor position."
+0x08014F90,Fight_InitializePartStates,func_thumb,,"Simon/Rokusho: Initialize the four live BattlePartState records for each bot. The first 0x0D bytes of each BattlePartState come from the ROM part_information subrecord for head/right/left/legs. Runtime fields are then populated, including current_durability and part_id. The head/right/left/legs part records live at BattleBotStateRecord.parts[0..3]."
+0x080150FC,Fight_InitializeBotFromTemplate,func_thumb,,"Simon/Rokusho: Initialize one enemy-side BattleBotStateRecord from the copied FightTemplate in fight_information. The function copies a RomMedalInfo record into gBattleScratchBuffer, transfers selected medal metadata into BattleBotHeader, copies the head-part ROM record into the live bot state, expands the 4 packed speciality seed bytes from the template into 8 raw speciality levels, then scales those 8 levels through the medal's speciality base table and medal level to produce the final live speciality levels."
+0x08015358,Fight_SelectActionFromCycleOrPendingOverride,func_thumb,,"Simon/Rokusho: Select an action source from the current speciality cycle, unless pending effect kind 0x2C forces the fallback priority-list selector path immediately."
+0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,,"Simon/Rokusho: Resolve the current action entry from BattleBotStateRecord.speciality_action_table[current_speciality_cycle_index]. Values 1..3 try the part slots, value 4 falls back to head selection, and values 5..7 try medaforce slots."
+0x08015464,Fight_SelectFallbackActionFromPriorityList,func_thumb,,"Simon/Rokusho: Choose a fallback action source when the current speciality-cycle entry cannot be used directly. This scans the 4-byte priority list in fight_information and falls back to Fight_SelectActionSource(bot, 0) when no usable entry exists."
+0x080154E0,Fight_IsPartActionLockedByPendingEffect,func_thumb,,Simon/Rokusho: Return nonzero when pending effect kind 0x2B targets the requested part slot. This is used by action availability and description UI to show an override/locked state for that slot.
+0x08015508,Fight_IsHeadActionUnavailable,func_thumb,,Simon/Rokusho
+0x08015528,Fight_IsPartActionUnavailable,func_thumb,,Simon/Rokusho
+0x08015564,Fight_SelectActionSource,func_thumb,,Simon/Rokusho: Select the current action source for the bot. Values 1..3 target BattlePartState_Clean entries (head/right/left) and copy BattlePartState_Clean.target_bot_id / target_part_id into the bot's selected target fields.
+0x080155A8,Fight_TrySelectMedaforceAction,func_thumb,,"Simon/Rokusho: Try to select a medaforce action source. This checks battle-state restrictions, medal level thresholds, and optional random medaforce slot choice before committing selection through Fight_SelectMedaforceActionSource."
+0x08015648,Fight_IsMedaforceSelectionBlockedByBattleState,func_thumb,,Simon/Rokusho
+0x08015668,Fight_SelectMedaforceActionSource,func_thumb,,"Simon/Rokusho: Commit a medaforce action source selection. This caches the medal medaforce list, copies the selected medaforce descriptor into battle scratch, and selects action source values 4..6."
+0x080156F8,Fight_IsPartActionAvailable,func_thumb,,"Simon/Rokusho: Return nonzero when a requested part action slot is currently available. This first honors the pending effect that locks a specific part slot, then rejects broken/unusable parts, then runs the shared part-action validation path."
+0x08015838,Fight_GetDisplayedPartIdsOrBrokenGlyphs,func_thumb,,Simon/Rokusho: Build four display bytes for a bot's visible parts. Broken parts use a fallback broken-part glyph derived from BattleBotStateRecord.broken_part_fallback_glyph_index; intact parts use BattlePartState.part_id.
+0x080158F8,Fight_RefreshDisplayedPartSpritesForActiveBots,func_thumb,,"Simon/Rokusho: For each active bot on both sides, refresh the displayed part sprites so broken parts and broken-head glyphs are reflected in the battle UI after damage, repair, or replacement logic."
+0x08015924,Fight_ShouldMirrorReactionIndicatorX,func_thumb,,Simon/Rokusho: Return whether the small reaction indicator should be mirrored on the X axis for this bot slot. The logic is driven by reaction_status_flags bit 0x04 and the bot side.
+0x08015A00,Fight_RefreshBotDisplayedPartSprites,func_thumb,,"Simon/Rokusho: Rebuild the displayed part sprite set for a single bot using Fight_GetDisplayedPartIdsOrBrokenGlyphs, then place the resulting composite sprite objects at the provided screen coordinates. This is a presentation refresh step used after armor/part state changes."
+0x08016AD8,Fight_DrawSelectedActionDescription,func_thumb,,Simon/Rokusho: Draw the currently selected action's description text. Uses the selected part's technique and the action metadata bytes to pick text variants or failure text.
+0x08016C0C,Fight_DrawSelectedActionStatusText,func_thumb,,"Simon/Rokusho: Draw the selected action's status/override text. This chooses between generic action description text, support/utility text variants, and the pending-effect override text shown when effect kind 0x2B targets the selected part slot."
+0x08016E5C,Fight_IsPartTechniqueSupportUtilityClass,func_thumb,,"Simon/Rokusho: Check whether a part's technique belongs to the support/utility bucket used by the action description and availability UI. Current confirmed members are CancelOptic, CancelBomb, CancelGrav, Accel_Chrg, and Strengthen."
+0x08018074,SetSelectedMedabotPreviewPartIds,func_thumb,,Simon/Rokusho: Stores the currently selected Medabot's head/right-arm/left-arm/legs part ids into the shared preview state block at +0x98..0x9B before the selected-bot preview renderer consumes them.
+0x08018098,InitializeSelectedMedabotPreviewRenderer,func_thumb,,"Simon/Rokusho: Selected Medawatch preview init clears context at 0x02026000, clears template/OAM workspace at 0x020260D0, and seeds CompositePreviewContext as { runtime_state = 0x02024000, descriptor_table = 0x083D1D98, template_table = 0x020260D0 } before calling BuildFourPartLargePreviewComposite."
+0x08018180,RenderSelectedMedabotPreviewFrame,func_thumb,,Simon/Rokusho: Renders one updated selected-Medabot preview frame from the part ids stored at +0x98..0x9B in the shared menu state block. This is the non-battle preview path used by the selection UI.
+0x08018218,RenderSelectedMedabotLargePreviewFrame,func_thumb,,"Simon/Rokusho: Renders the larger selected-Medabot full-body preview at anchor (0x44,0x2A) using the same runtime template/OAM path as the smaller selected-Medabot preview."
+0x080182D0,AdvanceSelectedMedabotPreviewAnimationSlot,func_thumb,,Simon/Rokusho
+0x080183A4,HandleSelectedMedabotPreviewCursorInput,func_thumb,,"Simon/Rokusho: Cursor handler for the selected-Medabot preview screen. On cursor moves it refreshes displayed part ids, calls SetSelectedMedabotPreviewPartIds, then redraws the selected-bot preview frame via RenderSelectedMedabotPreviewFrame."
+0x08018900,Fight_IncrementActionUsageCounter,func_thumb,,"Simon/Rokusho: Increment a per-technique / per-medaforce usage counter for the acting bot's current action source. For part actions, indexes by the selected part's technique_or_leg_type."
+0x08018A18,Fight_ApplyPostBattleMode20PlayerSideState,func_thumb,,"Simon/Rokusho: Special post-battle mode hook. If gPostBattleModeFlags high nibble is 0x20, seed the three player-side battle state entries with 0x50 before the result flow continues."
+0x08018A54,Fight_PlayBattleResultMusicByPostBattleMode,func_thumb,,"Simon/Rokusho: Select battle-result music/scene family from gPostBattleModeFlags. High nibble 0x00 uses the default per-battle mapping, 0x10 forces family 0x0C, and 0x20+ falls into family 0x0D."
+0x08018C38,Fight_TickSecondaryEffectTimers,func_thumb,,Simon/Rokusho: Tick the secondary long-lived battle effect block on a slower timer. This is separate from pending_effect_kind and currently feeds the repair-over-time style handler at +0xC4..+0xC7.
+0x08018CBC,Fight_TickActiveBotStatusEffects,func_thumb,,Simon/Rokusho: Tick per-bot active status effects. This advances pending-effect timers/values for each active bot and applies any ongoing per-turn status damage or secondary effect output.
+0x08018D0C,Fight_TickSecondaryRepairEffectAndEmitResult,func_thumb,,"Simon/Rokusho: Advance the secondary repair-style effect block at +0xC4..+0xC7. Effect kind 0x1F repairs damaged parts over time, accumulates the applied total, and emits a result summary back into fight_information."
+0x08018DF4,Fight_TickPendingEffectDurationAndEmitResult,func_thumb,,"Simon/Rokusho: Advance the pending effect timer/value block. Fire/Melt (0x13/0x14) also tick damage across intact parts and emit the applied total back into fight_information, while values below 4 clear the whole pending-effect state."
+0x08018EE0,Fight_FindDamagedPartIndex1Based,func_thumb,,Simon/Rokusho: Return the first part index + 1 whose BattlePartState.current_armor is nonzero and less than BattlePartState.armor. Returns 0 if no repairable part exists.
+0x08018F0C,Fight_AddPartArmorClampOverflow,func_thumb,,"Simon/Rokusho: Add repair/heal value to BattlePartState.current_armor for the selected bot part, clamping to BattlePartState.armor. Returns leftover amount encoded for the caller when the heal overflows past max armor."
+0x08018F6C,Fight_FindNextPartWithArmorForPendingEffect,func_thumb,,Simon/Rokusho: Find the next part slot with remaining armor for a pending-effect damage application. The search starts from the pending-effect stage/slot when present and wraps through the four part slots.
+0x08018FF0,Fight_ApplyPendingEffectDamageToPart,func_thumb,,Simon/Rokusho: Apply a pending-effect damage amount to one part slot and return both the applied amount and any leftover amount in the high byte of the packed result.
+0x080191A4,Fight_SubtractActionChargeMeterClampZero,func_thumb,,Simon/Rokusho
+0x08019440,Fight_AdvanceTargetResolutionIndicatorForBot,func_thumb,,Simon/Rokusho
+0x08019544,Fight_UpdateTargetResolutionIndicatorAnimation,func_thumb,,Simon/Rokusho
+0x08019600,Fight_UpdateSecondaryEffectIndicatorObjects,func_thumb,,"Simon/Rokusho: Update indicator objects for the secondary long-lived effect block. Current confirmed kinds are AutoRecover (0x1F), Boost_Chrg (0x26), and Drain_Chrg (0x29)."
+0x08019B40,Fight_DrawReactionSourceIcon,func_thumb,,"Simon/Rokusho: Render the small reaction-source icon for a bot. Uses reaction_status_flags, reaction_source_part_id, and reaction_source_action_kind to choose the icon and sprite frame."
+0x0801A0D0,Fight_RefreshReactionIndicatorsForActiveBots,func_thumb,,"Simon/Rokusho: For each active bot on both sides, refresh the small reaction/status indicator objects using the current bot coordinates. This is a presentation-wide follow-up step after part-state changes and resolution updates."
+0x0801A640,Fight_SetSupportBonusSlotIndicesForCurrentTeam,func_thumb,,Simon/Rokusho: Derive support-bonus slot indices for the current acting team. support_bonus_slot_index selects the acting team's support/Scout slot block and mirrored_support_bonus_slot_index selects the opposite block.
+0x0801B274,Fight_ResetBotActionSelectionState,func_thumb,,Simon/Rokusho: Reset per-bot action-selection state. Caches the current selected action source part into reaction_source_part_id and seeds reaction_source_action_kind from that part's technique when the source is a normal part action. Also clears per-part target metadata and normalizes reaction-status bits.
+0x0801B3AC,Fight_CommitStagedPartReplacement,func_thumb,,"Simon/Rokusho: Commit a previously staged part replacement from fight_information back into the selected live BattlePartState. Restores the staged part fields including attack_damage_scalar and part_id, refreshes action metadata, then clears the staging flag."
+0x0801B5FC,Fight_ResetBotResolutionAndActionScratch,func_thumb,,"Simon/Rokusho: Reset one bot's defender-resolution flags and shared action scratch. Clears defender_resolution_flags, clears transient reaction_status_flags bits 0x02/0x08/0x10, and zeroes the shared fight_information action-script / result scratch regions."
+0x0801B69C,Fight_SelectRecoveryTargetFromPendingEffect,func_thumb,,"Simon/Rokusho: When Confusion (pending effect kind 0x2C) is active, choose a new recovery/target part and overwrite the bot's selected target metadata. This is a control-disruption retargeting path, not direct damage math."
+0x0801B76C,Fight_UpdateActionSlotAvailabilityState,func_thumb,,"Simon/Rokusho: Update the three action-slot availability state bytes in fight_information. Each slot is classified as broken/unavailable, support-utility, locked by pending effect kind 0x2B, or normally usable."
+0x0801BC04,Fight_CreateTargetResolutionIndicatorObject,func_thumb,,Simon/Rokusho
+0x0801BE48,Fight_GainPartProficiencyExperience,func_thumb,,"Simon/Rokusho: Award speciality experience for the bot's current action category. The 8 speciality experience bytes correspond to Strike, Berserk, Shoot, Aim Shot, Defend, Heal, Support, and Interrupt. On overflow, increment the matching speciality level and sync both blocks back into medal state."
+0x0801BF14,Fight_SyncBotProficienciesToMedalState,func_thumb,,Simon/Rokusho
+0x0801C524,Fight_HandleRangeMismatchFailure,func_thumb,,Simon/Rokusho: Handle action failure when the current selected part's speciality class mismatches the required range class from fight_information. Distinguishes proximity-class (Strike/Berserk/Defend/Heal) from remoteness-class (Shoot/Aim Shot/Support/Interrupt).
+0x0801D318,ActionFamily_SwordHammer_Handler,func_thumb,,"Simon/Rokusho: Shared action-family entry for Sword and Hammer. If the referenced selected-action source part is already broken, write result code 0x05 and continue the action state. Otherwise mark the current substep complete immediately."
+0x0801D36C,ActionFamily_ImmediateAdvance_Handler,func_thumb,,Simon/Rokusho
+0x0801D3A8,ActionFamily_Press_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Press. If the currently targeted defender part is already broken, write result code 0x0C and continue the action state. Otherwise mark the substep complete and defer to later resolution logic."
+0x0801D3F8,ActionFamily_AttackClear_Handler,func_thumb,,Simon/Rokusho
+0x0801D45C,ActionFamily_HoldHandler,func_thumb,,Simon/Rokusho
+0x0801D524,ActionFamily_FireHandler,func_thumb,,Simon/Rokusho
+0x0801D5A8,Fight_FindAllyFollowupActionSource,func_thumb,,"Simon/Rokusho: Search the acting bot's allied side for a valid chained/follow-up action source. Records a 1-based source bot slot in fight_information[0xDE] and the source bot's pending action/effect kind in fight_information[0xDF], then either advances the action sequence or marks the step complete."
+0x0801D6A4,ActionFamily_CancelGravHandler,func_thumb,,Simon/Rokusho
+0x0801D738,Fight_PrepareFollowupSourceDisplay,func_thumb,,"Simon/Rokusho: Prepare the chained/follow-up source bot for display. Copies the source bot's live battle state into a temporary display area, rebuilds its displayed part ids, and creates the temporary composite sprite used for the follow-up presentation."
+0x0801D878,Fight_AnimateFollowupSourceIntro,func_thumb,,"Simon/Rokusho: Animate the follow-up source bot's temporary display sprite into view. When the intro completes, seeds the temporary bot state for the follow-up action and advances the action sequence."
+0x0801D95C,Fight_AdvanceFollowupSourceApproach,func_thumb,,Simon/Rokusho: Advance the temporary follow-up source display toward its next staged position while animating its composite sprite.
+0x0801D9DC,ActionFamily_Recovery_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Recovery. Drives a temporary source/target movement or presentation step, then advances into the later follow-up/repair-state pipeline once the animated approach reaches its threshold."
+0x0801DAEC,ActionFamily_AutoRecover_Handler,func_thumb,,"Simon/Rokusho: Finalize the follow-up source presentation, refresh the displayed parts, reset temporary motion fields, and advance after the source sprite reaches its commit position."
+0x0801DC74,ActionFamily_Repair_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Repair. Waits on a timer-like presentation counter, then creates the temporary repair indicator object and advances into the repair-family resolution pipeline."
+0x0801DD30,ActionFamily_Reactivate_Handler,func_thumb,,Simon/Rokusho
+0x0801DD74,ActionFamily_AntiAir_Handler,func_thumb,,"Simon/Rokusho: Show the follow-up source part label/text for the currently selected chained-action source, then advance once the text object setup is ready."
+0x0801DDDC,ActionFamily_Scout_Handler,func_thumb,,Simon/Rokusho: Commit the chained/follow-up action source into active battle state. Transfers the selected source relationship into the main acting bot state and marks the outer action-sequence step complete.
+0x0801DE44,ActionFamily_DrainCharge_Handler,func_thumb,,Simon/Rokusho: Queue text for the selected part action by copying both action-description text keyed by BattlePartState_Clean.speciality and technique text keyed by BattlePartState_Clean.technique_or_leg_type.
+0x0801DED4,ActionFamily_Impair_Handler,func_thumb,,Simon/Rokusho
+0x0801DF0C,ActionFamily_Sacrifice_Handler,func_thumb,,Simon/Rokusho
+0x0801E09C,ActionFamily_TeamAttack_Handler,func_thumb,,Simon/Rokusho
+0x0801E200,ActionFamily_Strengthen_Handler,func_thumb,,Simon/Rokusho
+0x0801E2B8,ActionFamily_Confusion_Handler,func_thumb,,Simon/Rokusho: Action-family entry for Confusion in the later sequence table. Advances the preview/side sprite sequence and then marks the current handler step complete.
+0x0801E300,ActionFamily_Counterattack_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Counterattack in the later sequence table. Loads the dedicated presentation assets, initializes the mirrored side-preview objects and per-side object state, then advances the action state."
+0x0801E3C0,Fight_AdvanceSequenceFromResultFlags,func_thumb,,Simon/Rokusho: Advance the outer action-sequence state machine based on defender_followup_flags and action_result_flow_flags. Successful normal resolution increments action usage and Medaforce charge; affinity-result and follow-up cases branch into dedicated sequence states.
+0x0801E43C,ActionFamily_InterruptChange_Handler,func_thumb,,Simon/Rokusho
+0x0801E474,ActionFamily_AttackChange_Handler,func_thumb,,Simon/Rokusho: Action-family entry for Attack Change. Builds a temporary indicator object and seeds its position from the current preview anchors before advancing the action state.
+0x0801E54C,ActionFamily_DefenseChange_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Defense Change. Waits for a helper-driven condition, then seeds a short delay counter and advances the action state."
+0x0801E9E0,ActionFamily_InterruptChange_Handler_V2,func_thumb,,Simon/Rokusho
+0x0801E9FC,ActionFamily_AttackChange_Handler_V2,func_thumb,,Simon/Rokusho
+0x0801EBF8,Fight_QueueDefenderHeadBreakIfHeadZero,func_thumb,,"Simon/Rokusho: If the current defender's head armor is zero, queue that bot in fight_information.part_resolution_scratch.head_break_bot_queue for later head-break consequence handling. Otherwise skip directly to the later post-action state."
+0x0801F390,Fight_AdvanceRepairTickWithStatusRefresh,func_thumb,,"Simon/Rokusho: Advance one repair tick, refresh the affected bot's status display, and advance the action sequence when the repair amount has been fully consumed."
+0x0801F4AC,Fight_TryStartRepairFollowup,func_thumb,,"Simon/Rokusho: Attempt to start a repair-style follow-up action. If the acting bot has the required follow-up flags and the target is valid, choose the repair target part, clamp repair to missing armor, and jump the outer action-sequence state machine to the repair branch."
+0x0801F9EC,Fight_CommitPendingEffectFromCurrentAction,func_thumb,,"Simon/Rokusho: Commit the current action's pending-effect payload into the acting bot. The committed pending_effect_kind is the selected part's technique id, so shared status behavior can be mapped directly back to action families such as Bug, Virus, Thunder, Freeze, Fire, Melt, Impair, Confusion, No_Escape, and No_Defense."
+0x0801FEE8,Fight_ShowActionSourceMarker,func_thumb,,Simon/Rokusho: Show a marker object at the current action source position. Used during end-of-action/result presentation to highlight the acting source.
+0x08020248,Fight_AdvanceMirroredCounterTransition,func_thumb,,"Simon/Rokusho: Advance the mirrored-counter transition. When defender_followup_flags == 3, start the mirrored counter phase, clear object slot 10, raise action_arg_selector, and advance action_sequence_state; otherwise jump directly to sequence state 6."
+0x080202E0,Fight_AdvanceActionSequenceAnimationStep,func_thumb,,"Simon/Rokusho: Per-frame action-sequence animation step. Advance a countdown/position accumulator until the local animation reaches state 0x28, then reset action_arg_selector and advance action_sequence_state."
+0x080205A4,Fight_ShowInlineEffectTextForCurrentPart,func_thumb,,Simon/Rokusho: Spawn inline effect/result text objects near the currently selected part slot for the current action result.
+0x08020728,Fight_ForceBreakSelectedPart,func_thumb,,"Simon/Rokusho: Force the currently selected defender part to break by subtracting 0xFF armor, refreshing battle state, and triggering the defender-side part-break consequence path for head breaks."
+0x08020844,Fight_ResolveSelectedPartAttackBaseStep,func_thumb,,Simon/Rokusho: Selected-part attack entry step. | Flow: | 1. validate chosen part exists and is not broken | 2. compute base ROS via Fight_GetPartProficiencyBase | 3. apply virus/bug ROS penalty | 4. require ROS > 31 after Fight_CheckRosMeetsMinimumThreshold | 5. precompute attack-value scalar via Fight_ScaleAttackValueByPartScalar | 6. increment usage counter and continue action sequence | Failure paths set scripted result codes instead.
+0x08020928,Fight_SelectRepairTargetPart,func_thumb,,"Simon/Rokusho: Pick a repair target part for the defender/selected bot and clamp the requested repair amount to the target's missing armor. If no valid repair target exists, just continue the outer action sequence."
+0x080209D8,Fight_ResolveSelectedPartAttackBaseStepIfUsable,func_thumb,,"Simon/Rokusho: Variant of the selected-part attack base step that first requires the chosen part to be usable/intact. Then computes base ROS, applies virus/bug penalties, enforces the ROS floor, and scales by the part damage scalar before continuing."
+0x08020AD0,Fight_SelectBrokenPartDamageTarget,func_thumb,,"Simon/Rokusho: Choose a broken-or-missing target part to receive overflow damage. Restores the defender's effective leg-derived stats first, then either picks a broken target and clamps the overflow damage to that part's current armor or skips ahead if no valid target exists."
+0x08020B4C,Fight_AdvanceRepairTickWithEffects,func_thumb,,Simon/Rokusho: Advance one repair tick and spawn the accompanying repair effects/particles. Uses different display/effect paths depending on side orientation before advancing the action sequence.
+0x08021300,Fight_EnsureMirroredSupportSummaryMatchesCurrentAction,func_thumb,,Simon/Rokusho
+0x08021418,Fight_AccumulateActionResultStatsByActionSlot,func_thumb,,"Simon/Rokusho: Accumulate per-action-slot result stats in fight_information. For a new action slot, add full total_ros and (accumulated_damage + attacker reserved_D5 bonus); for a repeated slot, add half total_ros and half (accumulated_damage + attacker reserved_D5 bonus). Also stores a use-count path for one special action class. This appears to drive battle result/stat summaries rather than the live damage formula itself."
+0x08021774,Fight_EnsureMirroredSupportSummaryMatchesTeamForm,func_thumb,,Simon/Rokusho
+0x08022748,Fight_EnableStoredReactionSourceFromCurrentPart,func_thumb,,"Simon/Rokusho: Enable a stored defender reaction source from the current part. Sets reaction_status_flags bit 0x08, caches the current part technique/effect id into reaction_source_action_kind, and stores the current damage scratch as the reaction threshold."
+0x08022C28,Fight_CommitAutoRecoverSecondaryEffect,func_thumb,,Simon/Rokusho: Commit the secondary AutoRecover effect (0x1F). This seeds the secondary long-lived effect block from total_ros and accumulated_damage.
+0x08022F50,Fight_CommitDirectRepairToHead,func_thumb,,"Simon/Rokusho: Commit a direct repair action to the target head slot. Clamps the repair amount, writes the resulting armor value back to the live battle state, marks the part runtime as active, and refreshes dependent battle state."
+0x08023A48,Fight_CommitBoostChargeSecondaryEffect,func_thumb,,Simon/Rokusho: Commit the secondary Boost Charge effect (0x26). This seeds the secondary long-lived effect block from total_ros and accumulated_damage.
+0x08023FB8,Fight_CommitDrainChargePrimaryAndSecondaryEffects,func_thumb,,Simon/Rokusho: Commit the Drain Charge effect (0x29) into both the primary pending-effect block and the secondary long-lived effect block.
+0x08026678,Fight_ApplyRandomPartReplacementEffect,func_thumb,,"Simon/Rokusho: Apply the in-battle random part replacement effect to the currently selected bot/part. Saves the old BattlePartState into fight_information staging, selects a replacement part id via Fight_SelectReplacementPartIdByIconFamily, copies the replacement ROM part fields into the live part state, refreshes action metadata, and advances the outer action sequence."
+0x08026CBC,Fight_QueueHeadBreakIfDefenderHeadZero,func_thumb,,"Simon/Rokusho: Queue the current defender in fight_information.part_resolution_scratch.head_break_bot_queue if its head armor has reached zero, then advance the action state machine."
+0x08027494,Fight_CommitMarkedTargetDamageResults,func_thumb,,"Simon/Rokusho: For each marked target in fight_information.part_resolution_scratch, subtract the already computed multi_target_applied_amount from the selected part, apply broken-leg stat penalties, and queue a head-break consequence if the selected part was the head and its armor reached zero."
+0x08028130,Fight_AccumulateTeamFormSupportSummary,func_thumb,,Simon/Rokusho
+0x08029B84,Fight_ApplyRepairAcrossMarkedTargets,func_thumb,,Simon/Rokusho: Iterate the allies previously marked in fight_information.part_resolution_scratch and spend the current repair pool across the most damaged repairable parts. current_resolution_amount is reused as the remaining repair pool and multi_target_applied_amounts accumulates the repaired amount per target.
+0x08029F50,Fight_MarkTargetsWithBrokenPartsForDamageOverflow,func_thumb,,"Simon/Rokusho: Mark each ally in the acting bot's side that is active, still has a living head, and also has at least one broken or missing part. The marks and per-target applied totals are stored in fight_information.part_resolution_scratch for the later overflow-damage pass."
+0x08029FE0,Fight_ApplyDamageOverflowAcrossMarkedTargets,func_thumb,,"Simon/Rokusho: Iterate the allies previously marked in fight_information.part_resolution_scratch and spend the current leftover damage pool across randomly chosen broken/missing parts. Each step updates current_resolution_amount, leftover_resolution_amount, applied_resolution_amount, and the per-target multi_target_applied_amounts entry."
+0x0802CB34,Fight_CommitBoostChargeSecondaryEffectToMarkedTargets,func_thumb,,Simon/Rokusho
+0x0802E1C8,Fight_ApplySelectedPartDamageToMarkedTargets,func_thumb,,"Simon/Rokusho: For each marked target, choose a target part, apply the scripted/direct damage amount, record the selected part id plus the shared high-bit flag in multi_target_part_selection_flags, store the applied amount in multi_target_applied_amounts, then queue head-break handling if the target head reaches zero armor."
+0x080305E0,ActionFamily_StatusCheckFamily_Handler,func_thumb,,Simon/Rokusho
+0x08030608,ActionFamily_TrapFamily_Handler,func_thumb,,Simon/Rokusho
+0x08030624,ActionFamily_HealChange_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Heal Change. Waits on either a button press or a countdown, clears the temporary object slot when done, and advances the action state."
+0x080306B8,ActionFamily_Change_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Change. Waits for either a confirm-button press or a countdown, then clears all active temporary object slots in the tracked range and advances the action state."
+0x08031A3C,Fight_BuildPartActionMetadataForAllParts,func_thumb,,"Simon/Rokusho: For the acting bot, iterate head/right/left parts and run the per-technique setup/validation dispatch for each one. This populates per-part action metadata through Fight_SetPartActionMetadata."
+0x08031AFC,Fight_SetupTargetSelectionBySpeciality,func_thumb,,Simon/Rokusho: Build target/action metadata for techniques that select an active enemy bot with at least one intact part matching the acting bot's primary speciality bucket.
+0x08031BCC,Fight_SetupTargetSelectionRequireStatus64,func_thumb,,Simon/Rokusho: Technique-setup family used by Anti-Air-style actions. Prefer targets whose bot byte at +0x91 is 0x64 before weaker fallbacks.
+0x08031D7C,Fight_SetupTargetSelectionRequireStatus6A,func_thumb,,Simon/Rokusho: Technique-setup family used by Anti-Sea-style actions. Prefer targets whose bot byte at +0x91 is 0x6A before weaker fallbacks.
+0x08031F2C,Fight_SetupTargetSelectionRequirePendingEffect,func_thumb,,"Simon/Rokusho: Build target/action metadata for techniques that prefer enemy bots already carrying a pending effect and lacking technique-0x16 parts, then select a target/part pair and store it through Fight_SetPartActionMetadata."
+0x08032100,Fight_SetupTargetSelectionRequireDamagedPart,func_thumb,,"Simon/Rokusho: Technique-setup family used by Recovery-style actions. Prefer targets with damaged parts matching the acting bot's speciality bucket, then choose a damaged part if possible before storing action metadata."
+0x08032478,Fight_SetupTargetSelectionRequireBrokenPart,func_thumb,,"Simon/Rokusho: Technique-setup family used by Repair-style actions. Prefer targets with broken/missing parts matching the acting bot's speciality bucket, then choose a broken part if possible before storing action metadata."
+0x08032640,Fight_SetupTargetSelectionRequireStateBA2,func_thumb,,"Simon/Rokusho: Technique-setup family likely used by Reactivate-style actions. Prefer targets whose bot byte at +0xBA equals 2, then store target metadata for a same-side action."
+0x0803279C,Fight_SetupTargetSelectionExcludeSelf,func_thumb,,"Simon/Rokusho: Technique-setup family for a same-side move that explicitly excludes the acting bot from candidate targets, then selects a same-side target and stores action metadata."
+0x080328B8,Fight_SetupTargetSelectionRequireNoTechnique16AndClearPending,func_thumb,,Simon/Rokusho: Technique-setup family for a same-side move that requires no technique-0x16 parts and a clear pending-action/effect state (+0xC9).
+0x08032A68,Fight_SetupTargetSelectionRequireUsableHeadAction,func_thumb,,Simon/Rokusho: Technique-setup family for a head-action-usable targeting move. Requires the target bot's head-action usability byte (+0x58) and always stores part index 1 (head).
+0x08032C08,Fight_SetupTargetSelectionRequireMedaforceToken,func_thumb,,Simon/Rokusho: Technique-setup family for a move that requires the target bot's medaforce/token byte (+0xC1) to be nonzero before storing action metadata.
+0x08032DA0,Fight_SetupPartTargetSelectionRequireNoTechnique16AndClearPending,func_thumb,,"Simon/Rokusho: Technique-setup family for a move that requires no technique-0x16 parts and a clear pending-action/effect state, then selects an intact target part explicitly."
+0x08032F64,Fight_ClearPartActionMetadata,func_thumb,,Simon/Rokusho: Clear BattlePartState_Clean.target_bot_id and BattlePartState_Clean.target_part_id for the currently selected bot part.
+0x08032FB8,Fight_GetOpponentSideBaseIndex,func_thumb,,"Simon/Rokusho: Return the base bot index of the opposing three-bot side: 3 for player-side actors, 0 for enemy-side actors."
+0x08032FC4,Fight_GetAllySideBaseIndex,func_thumb,,"Simon/Rokusho: Return the base bot index of the acting bot's own three-bot side: 0 for player-side actors, 3 for enemy-side actors."
+0x08032FD0,Fight_HasActivePartWithSpeciality,func_thumb,,Simon/Rokusho: Return nonzero if the bot has any intact head/right/left part whose BattlePartState_Clean.speciality matches the requested SpecialityId.
+0x08032FFC,Fight_HasAnyCandidateTarget,func_thumb,,Simon/Rokusho: Return nonzero when the three candidate target slots in fight_information[0x61..0x63] contain at least one nonzero bot id.
+0x08033090,Fight_PickRandomActiveBotInSide,func_thumb,,"Simon/Rokusho: Pick a random active bot within a three-bot side, retrying nearby slots if the first random choice is inactive."
+0x080330F4,Fight_PickRandomIntactPart,func_thumb,,Simon/Rokusho: Pick a random intact part among head/right/left for the given bot. Skips parts whose current armor is zero.
+0x08033154,Fight_SetPartActionMetadata,func_thumb,,Simon/Rokusho: Write per-part target metadata from fight_information scratch into BattlePartState_Clean.target_bot_id and BattlePartState_Clean.target_part_id for the selected bot part.
+0x08033184,Fight_PickMostDamagedRepairablePart1Based,func_thumb,,Simon/Rokusho: Return the 1-based slot id of the most damaged repairable part. Damage is measured as max_armor - current_armor; a zero return means no part is both present and missing armor.
+0x080331F8,Fight_HasNoTechnique16Part,func_thumb,,Simon/Rokusho: Return 0 if the bot has any intact head/right/left part with technique id 0x16; otherwise return 1.
+0x08033224,Fight_IsBotMedaforceInactive,func_thumb,,Simon/Rokusho: Return true when the bot's medaforce / special state at +0xC4 is inactive.
+0x08033240,Fight_IsBotPendingActionClear,func_thumb,,Simon/Rokusho: Return true when the bot's pending action/effect kind at +0xC9 is clear.
+0x0803325C,Fight_PickRandomBrokenOrMissingPart1Based,func_thumb,,Simon/Rokusho: Pick a random head/right/left/legs slot whose current armor is zero and return it as a 1-based part index. Returns 0 if no broken/missing part is found.
+0x080332B4,Fight_IsHeadActionUsable,func_thumb,,Simon/Rokusho: Return true when the bot's head action usability byte at +0x58 is nonzero.
+0x080332D0,Fight_IsBotMedaforceTokenActive,func_thumb,,Simon/Rokusho: Return true when the bot's medaforce/token byte at +0xC1 is nonzero. This is the only specialized action-validation predicate in the technique validation table.
+0x08033318,Fight_BeginPartActionValidation,func_thumb,,"Simon/Rokusho: Begin validation for a selected part action. Stores the acting bot and part in fight_information scratch, then dispatches through an action-validator table keyed by BattlePartState_Clean.technique_or_leg_type."
+0x08033364,Fight_ValidateActionRequiresMedaforceState,func_thumb,,Simon/Rokusho: Validation helper for actions that require a specific medal-state slot in fight_information to be nonzero.
+0x080333E4,Fight_ValidateActionRequiresMultipleActiveBots,func_thumb,,Simon/Rokusho: Validation helper for actions that require at least two active allied bots.
+0x08033490,Fight_ValidateReferencedActionBot,func_thumb,,Simon/Rokusho: Validate a part action whose BattlePartState_Clean.target_bot_id points at another live bot record. Reject when the referenced record is inactive or invalid.
+0x080334E0,Fight_ValidateReferencedActionBotPendingState,func_thumb,,Simon/Rokusho: Validate a part action whose BattlePartState_Clean.target_bot_id points at another live bot record and whose pending-action state must also be clear.
+0x08033698,Fight_ValidateActionRequiresSpecificMedalState,func_thumb,,"Simon/Rokusho: Validation helper for actions that require a specific medal-state value, including an exact type/state byte match."
+0x080336DC,Fight_ValidateActionRequiresEnemyPartSpeciality,func_thumb,,Simon/Rokusho: Validation helper for actions that require an enemy bot to have an active part with a matching speciality bucket.
+0x08033754,Fight_ValidateEnemyHasPartWithSpeciality23,func_thumb,,Simon/Rokusho
+0x080337CC,Fight_ValidateAllyHasTechnique4Part,func_thumb,,Simon/Rokusho
+0x08033840,Fight_RunActionScriptLoop,func_thumb,,"Simon/Rokusho: Run the action-script interpreter loop. Repeatedly reads opcodes from the current action script, skips high-bit-prefixed control bytes, and dispatches via gActionScriptOpcodeHandlerTable until the current script marks completion."
+0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,,Simon/Rokusho
+0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,,Simon/Rokusho
+0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,,"Simon/Rokusho: Ensure the acting bot has selected target metadata. If selected_target_bot_id or selected_target_part_id is zero, populate them through helper routines before continuing the action flow."
+0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,,"Simon/Rokusho: When a referenced target bot id is stored in the acting bot's selected action state, copy that bot's graphics/state blocks into the UI/work area and refresh battle presentation."
+0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,,Simon/Rokusho: Apply battle-status / damage flags based on the selected part's SpecialityId. Proximity-class specialities set one flag family; remoteness-class specialities set another.
+0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,,Simon/Rokusho: Action-script phase: compute total ROS for the current action and store it in fight_information.combat_resolution.total_ros.
+0x08033C20,Fight_ApplyPendingEffectStatusFlags,func_thumb,,"Simon/Rokusho: Apply pending-effect and speciality-derived defender-resolution flags. No_Escape (0x2E) forces BYPASS_EVASION, No_Defense (0x2F) forces BYPASS_DEFENSE, and Thunder/Freeze (0x0F/0x10) force both. SPECIALITY_FLAG_0/1 are also promoted into those bypass bits."
+0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,,Simon/Rokusho: Action-script phase: update the current action argument selector from defender state before later conditional action-script checks.
+0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,,Simon/Rokusho: Action-script phase: seed the pre-damage value from total ROS by taking total_ros >> 2 before later damage accumulation and modifiers.
+0x08033D30,Fight_AccumulateBaseDamage,func_thumb,,Simon/Rokusho: Accumulate final damage into fight_information.combat_resolution.accumulated_damage (+0xEC). | Formula skeleton: | 1. damage = pre_damage_value (+0xEA) | 2. + selected_part.power_or_evasion | 3. + attacker.flat_damage_bonus | 4. + close-range or long-range attacker bonus based on part.skill_id | 5. + extra half of attacker.effective_charge_or_defense for Berserk skill | 6. + selected_part.power_or_evasion again for Laser/Beam actions | 7. + selected_part.power_or_evasion again if optic/bomb/grav affinity bonus flag bit 0x01 is set | 8. + special action-script additive case for action kind 0x34 | 9. + strengthen damage bonus from active Strengthen parts | 10. - defender flat damage reduction byte at bot +0xD1 | 11. - extra pending-effect reduction when follow-up effect kind 0x1B is active | Result stays in +0xEC before clamp-to-armor/application.
+0x08033F04,Fight_HandleActionScriptOpcode1D,func_thumb,,Simon/Rokusho: Action-script opcode 0x1D handler. Uses current damage/ROS scratch and defender threshold data to set a small action-script result code in fight_information.
+0x08033F64,Fight_HandleActionScriptOpcode1C,func_thumb,,Simon/Rokusho: Action-script opcode 0x1C handler. Sets a small action-script result code in fight_information when the currently referenced action matches the expected state.
+0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,,"Simon/Rokusho: If the defender has the required status bit and the currently referenced part is still active, compare current damage scratch against the defender threshold and raise defender_followup_flags when the threshold condition is met."
+0x080345E8,Fight_ClearMirroredSupportSummary,func_thumb,,Simon/Rokusho
+0x080349D8,Fight_SelectReactionTargetFromOpponentState,func_thumb,,Simon/Rokusho: Choose a target bot/part for reaction-driven targeting. Prefer an opponent that currently advertises a usable reaction source; otherwise fall back to a random active opponent and random target part. Writes selected_target_bot_id and selected_target_part_id.
+0x08034EB8,Fight_ReadActionScriptInlineArgs,func_thumb,,Simon/Rokusho: Decode the current action-script opcode's inline argument payload into fight_information.action_script_inline_args[0..].
+0x08034F08,Fight_AdvanceActionScriptCursor,func_thumb,,Simon/Rokusho: Advance fight_information.action_script_cursor past the current opcode byte and its inline argument payload length. Also clears the action-script repeat/continue byte at +0xAA.
+0x08034F68,do_damage_on_part,func_thumb,,Simon/Rokusho
+0x08035164,Fight_SubtractPartArmor,func_thumb,,"Simon/Rokusho: Subtract damage from BattlePartState.current_armor for the selected bot part, clamping at zero."
+0x08035194,Fight_ApplyBrokenLegStatPenalty,func_thumb,,"Simon/Rokusho: If the legs are broken (parts[3].current_durability == 0), halve the copied legs-derived effective stats: propulsion, evasion, defense, proximity, and remoteness."
+0x080351E8,Fight_RestoreLegEffectiveStats,func_thumb,,"Simon/Rokusho: Restore the live copied legs stats from BattlePartState.parts[3]: effective_propulsion_or_success, effective_power_or_evasion, effective_charge_or_defense, effective_proximity_or_uses, and effective_remoteness_or_cooldown. In damage/ROS formulas these act as the defender's/equipped legs propulsion, evasion, defense, proximity, and remoteness values."
+0x08035234,Fight_QueueHeadBrokenBotForResolution,func_thumb,,"Simon/Rokusho: If the bot's head armor is zero, queue bot_index + 1 into the first free head_break_bot_queue slot in fight_information.part_resolution_scratch. This defers bot-KO/head-break consequence handling until the current resolution sequence processes the queue."
+0x08035478,Fight_SelectLowestPriorityTargetBot,func_thumb,,Simon/Rokusho: Choose a target bot id and store it into BattleBotStateRecord_Annotated.selected_target_bot_id. Prefers the lowest/highest priority target metric depending on side.
+0x08035528,Fight_SelectRandomTargetPartForSelectedBot,func_thumb,,"Simon/Rokusho: For the bot stored in selected_target_bot_id, pick a random target part slot and store it into selected_target_part_id."
+0x080355C4,Fight_CopySelectedTargetToFightInfo,func_thumb,,Simon/Rokusho: Copy the acting bot's selected target bot/part ids into fight_information[0x88] and fight_information[0x8B] as zero-based target bot/part indices.
+0x08035694,Fight_ShowObjectSlot,func_thumb,,Simon/Rokusho
+0x080356B4,Fight_HideObjectSlot,func_thumb,,Simon/Rokusho
+0x080356CC,Fight_UpdateFollowerObjectSlot,func_thumb,,Simon/Rokusho: Keep one follower/linked object slot visually attached to another object slot while it remains within the visible range; otherwise hide the follower slot.
+0x08035740,safe_add,func_thumb,,Simon/Rokusho
+0x08035754,safe_subtract,func_thumb,,Simon/Rokusho
+0x0803576C,Fight_GetMedalPartCompatibilityBonus,func_thumb,,Simon/Rokusho: Sum the part_compatibility_bonus of all equipped parts whose BattlePartState.medal_compatibility matches the bot's medal class.
+0x0803579C,Fight_GetPartProficiencyBase,func_thumb,,Simon/Rokusho: Base ROS term for a selected part. | Formula: | base = part.success_or_propulsion |      + Fight_GetMedalPartCompatibilityBonus(attacker) |      + rand(0..7) |      + attacker.skill_level[part.skill_id] |      + attacker.legs_range_bonus(part.skill_id) | where legs_range_bonus picks effective_proximity_or_uses for close-range skills and effective_remoteness_or_cooldown for ranged skills.
+0x08035814,Fight_ApplyVirusBugRosPenalty,func_thumb,,"Simon/Rokusho: Apply the ROS penalty from Bug/Virus pending effects. When pending_effect_kind is Bug (0x0D) or Virus (0x0E), subtract pending_effect_value_1 from total ROS."
+0x08035844,Fight_GetBaseDefenderRosReduction,func_thumb,,Simon/Rokusho: Base defender ROS reduction term. | Formula: | reduction = defender.legs.success_or_propulsion |           + Fight_GetMedalPartCompatibilityBonus(defender) |           + rand(0..7) | This scratch term is then extended by Fight_ApplyEvasionReductionToRos or Fight_ApplyDefenseReductionToRos.
+0x08035880,Fight_IsAntiAirAgainstAirTarget,func_thumb,,Simon/Rokusho: True when the current selected part uses the Anti-Air technique and the defender is in the air movement state.
+0x080358B8,Fight_IsAntiSeaAgainstSeaTarget,func_thumb,,Simon/Rokusho: True when the current selected part uses the Anti-Sea technique and the defender is in the sea movement state.
+0x080358F0,Fight_AddStrengthenRosBonus,func_thumb,,Simon/Rokusho
+0x08035928,Fight_SetSelectedTargetBot,func_thumb,,Simon/Rokusho: Set the selected target bot for the acting bot and mirror the result into fight_information.selected_slot_index / active target state.
+0x08035944,Fight_SetSelectedTargetPart,func_thumb,,Simon/Rokusho: Set the selected target part for the acting bot and mirror the result into fight_information.last selected target-part state.
+0x0803598C,Fight_IsOpticClassAction,func_thumb,,"Simon/Rokusho: Return nonzero when the current action should be treated as optic-class. True for Laser/Beam techniques or when BattleBotStateRecord_Clean.optic_bomb_grav_bonus_flags bit 0 is set, and only if the target side has the matching optic marker."
+0x080359D8,Fight_IsBombClassAction,func_thumb,,"Simon/Rokusho: Return nonzero when the current action should be treated as bomb-class. True for Missile/Napalm techniques or when BattleBotStateRecord_Clean.optic_bomb_grav_bonus_flags bit 1 is set, and only if the target side has the matching bomb marker."
+0x08035A24,Fight_IsGravClassAction,func_thumb,,"Simon/Rokusho: Return nonzero when the current action should be treated as grav-class. True for Break/Press techniques or when BattleBotStateRecord_Clean.optic_bomb_grav_bonus_flags bit 2 is set, and only if the target side has the matching grav marker."
+0x08035A70,Fight_TargetHasAction34ReactionAffinity,func_thumb,,Simon/Rokusho: Special-case affinity check used by the action-result classification path. Returns true when the defender exposes reaction_state_flags.ACTION34_AFFINITY_GATE and the acting part's action kind is 0x34.
+0x08035AAC,Fight_TargetHasOpticAffinity,func_thumb,,Simon/Rokusho: Return nonzero when the selected action is optic-class and the target bot has the matching optic affinity flag set.
+0x08035AFC,Fight_TargetHasBombAffinity,func_thumb,,Simon/Rokusho: Return nonzero when the selected action is bomb-class and the target bot has the matching bomb affinity flag set.
+0x08035B4C,Fight_TargetHasGravAffinity,func_thumb,,Simon/Rokusho: Return nonzero when the selected action is grav-class and the target bot has the matching grav affinity flag set.
+0x08035B9C,Fight_AddStrengthenDamageBonus,func_thumb,,Simon/Rokusho: Add strengthen-style damage bonus from equipped parts with technique id 0x05. Uses BattlePartState.power_or_evasion.
+0x08035BFC,Fight_ScaleDamageByPartScalar,func_thumb,,Simon/Rokusho: Scale the current damage value by BattlePartState.attack_damage_scalar. This uses the same shared ROM part coefficient seen in attack-value scaling.
+0x08035C70,FightPreview_InitializeSideSprites,func_thumb,,Simon/Rokusho: Initializes both fight-preview side sprite groups. Side 0 and side 1 call BuildCompositePreviewSpriteLayerWithOffset with different mode tuples; this is a separate renderer family from the plain battle large portrait caller.
+0x08035DE8,FightPreview_UpdateSingleLayerSideSprites,func_thumb,,"Simon/Rokusho: Single-layer fight-preview update path. Side 1 redraw uses BuildCompositePreviewSpriteLayerWithOffset(..., param10=1, param11=1), which becomes BuildFourPartLargePreviewComposite mode 6 instead of the plain large-portrait mode 5."
+0x08035F20,FightPreview_UpdateDualLayerSideSprites,func_thumb,,"Simon/Rokusho: Dual-layer fight-preview update path. Side 1 invokes BuildCompositePreviewSpriteLayerWithOffset twice with mode 6 and mode 6/5-style layering semantics, reinforcing that the mirrored side can be rendered through a different BuildFourPartLargePreviewComposite mode than the plain battle portrait path."
+0x08036120,FightPreview_LoadDisplayedPartIdsForSide,func_thumb,,Simon/Rokusho: Load the displayed part ids or broken-part glyph ids for the requested preview side into fight_information. Which bot is sampled depends on preview_orientation_flags and whether a mirrored/follow-up presentation flag is active.
+0x080361A8,FightPreview_ResetSequenceStepFlags,func_thumb,,Simon/Rokusho: Reset the left and right preview step-flag bytes in fight_information.preview_sequence_state to 0x29 before beginning a fresh side-preview sequence.
+0x080361C4,FightPreview_AdvanceLeftSideSequenceStep,func_thumb,,Simon/Rokusho
+0x08036218,FightPreview_AdvanceRightSideSequenceStep,func_thumb,,Simon/Rokusho
+0x08036270,Fight_IncrementActionUsageCounter_08036270,func_thumb,,Simon/Rokusho: Increment the action usage counter for the currently active action entry in fight_information. Used after a successful action base step.
+0x0803628C,Fight_AddMedaforceChargeFromAction,func_thumb,,Simon/Rokusho: Add Medaforce charge/token progress for the acting bot after a successful action. Uses a larger gain when the relevant battle-status bit is set and clamps the total at 0x50.
+0x08036CCC,Fight_ClampRepairToMissingArmor,func_thumb,,Simon/Rokusho
+0x08036D24,Fight_RepairPartTick,func_thumb,,Simon/Rokusho
+0x08036E54,Fight_ClampDisplayValue1To99,func_thumb,,Simon/Rokusho
+0x08036E64,Fight_SetPendingActionEffect,func_thumb,,"Simon/Rokusho: Store a pending status/effect payload in the acting bot runtime. In the shared commit path, pending_effect_kind is just the originating technique id: Bug/Virus/Thunder/Freeze/Wave/Hold/Fire/Melt/Defense/Full_Block/Half_Block/Impair/Confusion/No_Escape/No_Defense."
+0x08036FA0,Fight_ResetBotActionRuntimeState,func_thumb,,"Simon/Rokusho: Reset the transient per-bot action runtime state before or after resolving an action. Clears active/action flags, resets small dispatch state bytes, and zeroes the short scratch blocks near +0xC4 and +0xDC."
+0x08036FF8,Fight_SpawnInlineEffectTextObjects,func_thumb,,Simon/Rokusho: Spawn a short row of inline effect/status text objects at the given position. Used by battle actions to show compact effect labels or status result markers.
+0x0803713C,Fight_StartMirroredCounterActionPhase,func_thumb,,"Simon/Rokusho: Begin a mirrored/counter-style action phase using the defender's last action kind. Seeds selected target bot/part from the acting bot, copies that target into fight_information, flips side/layout flags, resets action_result_flags, and recomputes attacker/defender affinity result codes from the mirrored action."
+0x08037230,does_part_exist_or_is_broken,func_thumb,,Simon/Rokusho
+0x0803725C,Fight_CheckRosMeetsMinimumThreshold,func_thumb,,Simon/Rokusho
+0x08037280,Fight_ScaleAttackValueByPartScalar,func_thumb,,"Simon/Rokusho: Scale the current attack value by BattlePartState.attack_damage_scalar. This ROM part byte is shared across many action handlers after base ROS/proficiency calculation. The exact in-game stat name is still unresolved, but the field clearly acts as an action power/scale coefficient rather than a one-off runtime flag."
+0x080372D4,Fight_ClampDamageToCurrentArmor,func_thumb,,Simon/Rokusho: Clamp accumulated damage against the target part's current armor. | If damage > current_armor: | - applied_damage_to_part = current_armor   (stored at +0xC8 and +0xCC) | - overflow_damage = damage - current_armor (stored at +0xCA) | Else: | - applied_damage_to_part = damage | - overflow_damage = 0
+0x08037498,Fight_ClampHeadUsesToRemaining,func_thumb,,"Simon/Rokusho: Clamp a requested head-part use consumption value to the remaining head uses, and store both the applied amount and overflow remainder in fight_information scratch."
+0x08037578,Fight_SelectReplacementPartIdByIconFamily,func_thumb,,Simon/Rokusho: Select a replacement part id for the given slot using a ROM lookup table keyed by the current displayed icon family. Used by the in-battle random part replacement effect. The chosen part id is later copied through CopyPartRecordToBuffer into the live BattlePartState.
+0x0803769C,Fight_GetActionProficiencyBase,func_thumb,,Simon/Rokusho
+0x08037798,Fight_FindBotWithReactionSource,func_thumb,,Simon/Rokusho: Search a side's three bots for a live bot that currently exposes a usable reaction source. Requires the reaction-status bits (0x08 or 0x10) and a still-intact reaction_source_part_id. Returns 0xFF if none are available.
+0x0803836C,Fight_ClearMultiTargetResolutionScratch,func_thumb,,Simon/Rokusho
+0x08038394,Fight_ClearPrimaryAndSecondaryEffectBlocks,func_thumb,,Simon/Rokusho: Clear the primary pending-effect block (+0xC9..+0xCC) and/or the secondary long-lived effect block (+0xC4..+0xC7). param_2 bit 0 clears the primary block; bit 1 clears the secondary block.
+0x08038BC0,Fight_ComputeTotalRos,func_thumb,,"Simon/Rokusho: Compute total ROS / attack strength. This includes a direct Scout/support additive term from fight_information.support_bonus_slots[slot_index * 8 + 0], where slot_index comes from fight_information[0x89]. Scout therefore has a real shared ROS/success bonus in the core formula."
+0x08038D30,Fight_HandleDefenderFollowupFlags,func_thumb,,"Simon/Rokusho: Post-ROS follow-up handler for the defender. Uses selected target metadata, total ROS scratch, and defender flags to set follow-up state bits and possibly pick a retaliatory target part."
+0x08038E54,Fight_ResolveDefenderRosReductions,func_thumb,,"Simon/Rokusho: Resolve the defender-side ROS reduction phase. If defender_resolution_flags does not already bypass both evasion and defense, run evasion reduction first and only run defense reduction if evasion did not fully terminate the ROS path. Otherwise fall back to the critical-override check."
+0x08038E9C,Fight_TryApplyCriticalRosOverrideByActionKind,func_thumb,,"Simon/Rokusho: Compute the critical threshold from the current action family. Anti-Air vs air and Anti-Sea vs sea use the current ROS reduction scratch directly; skill_id 3 doubles the threshold, skill_id 0 quadruples it, and all other skills scale it by 8 before calling Fight_TryApplyCriticalRosOverride."
+0x08038F34,Fight_TryApplyCriticalRosOverride,func_thumb,,"Simon/Rokusho: Critical override helper. | If the critical threshold beats current total_ros: | - clear ROS reduction scratch | - set defender_resolution_flags bits 0x04 | 0x08 | 0x40 (bypass evasion, bypass defense, critical hit) | - preserve resolved_ros = total_ros | Because the defender reduction path is bypassed, head-redirect logic that normally occurs during defense reduction may also be bypassed."
+0x08038F84,Fight_ApplyEvasionReductionToRos,func_thumb,,"Simon/Rokusho: Apply evasion-side ROS reduction. | Formula: | reduction = Fight_GetBaseDefenderRosReduction(defender) |           + defender.effective_legs_evasion |           - (8 unless defense bypass flag already set) | Then try critical override. If no crit override, total_ros = max(0, total_ros - reduction). | If total_ros reaches 0 and the action is not Laser/Beam and the defender lacks the related affinity bypass flag, set ZERO_ROS_TRIGGERED."
+0x08039068,Fight_ApplyDefenseReductionToRos,func_thumb,,"Simon/Rokusho: Apply defense-side ROS reduction unless bypassed. | Formula: | reduction = Fight_GetBaseDefenderRosReduction(defender) |           + defender.effective_legs_defense |           - (8 unless evasion bypass already set) | If no critical override and reduction > 31: | - total_ros = max(0, total_ros - reduction) | - set defender defense-reaction flag | - if defender has only one surviving part, keep that current target | - otherwise retarget to Fight_PickHighestArmorNonHeadPart1Based(defender) | This is the main non-critical path that redirects damage away from the head."
+0x08039134,get_amount_of_bodyparts_that_have_hp,func_thumb,,Simon/Rokusho
+0x08039158,Fight_PickHighestArmorNonHeadPart1Based,func_thumb,,"Simon/Rokusho: Return the 1-based non-head part with the highest current armor among right arm, left arm, and legs. This is used by the defense-side ROS reduction path to redirect damage away from the head when multiple parts are still alive."
+0x08039188,Fight_UpdateActionArgSelectorFromDefenderState,func_thumb,,"Simon/Rokusho: Update the action-script argument selector from defender state. When the acting bot has the relevant defender follow-up status bit set, select inline arg index 1 and raise defender_followup_flags; otherwise leave selector at 0."
+0x080391C4,Fight_SetAttackerAffinityResultFromSelectedAction,func_thumb,,"Simon/Rokusho: Classify the selected action into an attacker-side affinity result family. Writes action_result_flow_flags.ATTACKER_AFFINITY_RESULT and the attacker_affinity_result_kind classifier when optic, bomb, grav, or action-kind-0x34 affinity applies."
+0x08039250,Fight_SetAttackerAffinityResultFromMirroredAction,func_thumb,,Simon/Rokusho
+0x080392D8,Fight_SetDefenderAffinityResultFromSelectedAction,func_thumb,,"Simon/Rokusho: Classify the selected defender target into a defensive affinity result family. Writes action_result_flow_flags.DEFENDER_AFFINITY_RESULT and the defender_affinity_result_kind classifier when optic, bomb, or grav defender affinity applies."
+0x0803934C,Fight_SetDefenderAffinityResultFromMirroredAction,func_thumb,,Simon/Rokusho
+0x08039E00,FightPreview_BeginSideEntranceSequence,func_thumb,,"Simon/Rokusho: Begin one side of the battle preview entrance sequence. Initialize anchor/screen positions for the chosen side, load displayed part ids, spawn the side sprite layers, seed the per-side preview step flag byte with 0x29, and start the first preview movement step."
+0x0803D450,FightPreview_UnpackSequenceEntry,func_thumb,,Simon/Rokusho: Unpack the current preview sequence entry selected by fight_information.preview_sequence_state.sequence_cursor and the scene table keyed by fight_information.turn_side_flags low byte. Writes the variable-length entry data into sequence_arg_0..sequence_arg_6 for later preview step handlers.
+0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,"Simon/Rokusho: Advance the preview sequence cursor to the next table entry, skipping the current entry header plus its variable-length payload. Used by the side-preview scene step handlers after consuming sequence_arg_0..sequence_arg_6."
+0x0803EED8,Battle_CheckExitShortcut,func_thumb,,"Simon/Rokusho: Battle-level early-exit shortcut check. If the current battle state allows it and the relevant input bit is pressed, return to the main menu/battle exit state."
+0x0803F41C,get_portrait,func_thumb,,provavel: carrega retrato (gPortraitImages[personagem*9 + expressao]) e paleta para buffer; antes LoadPortrait_Unk; Simon/Rokusho
 0x0803F480,LoadPortraitToVram_Unk,func_thumb,,"provavel: retrato em VRAM 0x06000F80, paleta em 0x050001A0"
-0x0803F51C,ShowPortrait_Unk,func_thumb,,provavel: carrega retrato se gTextState+0xE == 0
+0x0803F51C,Move_Character_Portraits,func_thumb,,provavel: carrega retrato se gTextState+0xE == 0; antes ShowPortrait_Unk; Simon/Rokusho
+0x0803FD28,Parse_text,func_thumb,,Simon/Rokusho
 0x08040144,TextItalicFont_Use,label,,codigo de texto que le a fonte italica (0x40144-0x40504)
 0x080402B4,TextMeasureWord,func_thumb,,mede a proxima palavra ate o espaco inclusive; se x + largura > 208 (0xD0) marca quebra (linha 2 ou caixa nova)
+0x08040CD0,ClearObjectAttributeEntries,func_thumb,,Simon/Rokusho
+0x08040D0C,MaskObjectAttribute0ForEntries,func_thumb,,Simon/Rokusho
+0x08040DB8,BuildObjectTextFromGlyphStream,func_thumb,,"Simon/Rokusho: Build a sequence of object/OAM text glyph entries from a Medabots custom-encoded glyph stream terminated by 0xFE. The glyph byte values map through the game's custom alphabet table rather than ASCII. Used by part, shop, battle, and map UI text renderers once a string pointer table has been resolved."
+0x08041D04,memcpy,func_thumb,,Simon/Rokusho
+0x08041D3C,BattleMedalState_FindRecordIndexByMedalId,func_thumb,,Simon/Rokusho
+0x08041D70,BattleMedalState_AllocateForMedal,func_thumb,,"Simon/Rokusho: Allocate a free BattleMedalStateRecord for the given medal. Copies medal metadata from RomMedalInfo, assigns a median battle medal level, derives medal_rank from the 4 ROM thresholds, seeds next_level_exp, and initializes the 8 speciality levels from the medal's base values scaled by level."
+0x08041FE4,BattleMedalState_ClearByMedalId,func_thumb,,"Simon/Rokusho: Find the BattleMedalStateRecord for a medal id and clear it, preserving only the low state bits in state_flags."
+0x08042028,BattleMedalState_CopyIntoFreeRecord,func_thumb,,Simon/Rokusho: Copy an existing 0x40-byte BattleMedalStateRecord into the first free slot of gBattleMedalStateTable.
+0x0804206C,BattleMedalState_GetMedianLevel,func_thumb,,"Simon/Rokusho: Collect medal levels from active BattleMedalStateRecord entries, sort them, and return the median level used when allocating a new medal-state record."
+0x08042114,PartInventory_GetOwnedAndEquippedCounts,func_thumb,,"Simon/Rokusho: Return owned/equipped inventory counters for (partSetId, partSlot). Address = slot * 0xF0 + partSetId * 2. The 0xF0 stride is the central hardcoded 120-family cap for inventory-backed part ownership."
+0x0804213C,PartInventory_AddOwnedCount,func_thumb,,"Simon/Rokusho: Add to owned inventory count for one (partSetId, partSlot) entry. Inventory addressing is slot * 0xF0 + partSetId * 2; 0xF0 is 120 part-set ids times two counters. This hardcodes the current 120-family inventory capacity unless the save/RAM inventory block and every 0xF0 stride user are patched."
+0x08042170,PartInventory_RemoveOwnedCount,func_thumb,,"Simon/Rokusho: Subtract from owned inventory count for one (partSetId, partSlot) entry. Uses the same hardcoded inventory layout as add/get: slot * 0xF0 + partSetId * 2, so expanding beyond 120 part-set ids requires changing this stride and the backing save/RAM inventory layout."
 0x08042238,site_TinpetCreate,label,,criacao do Medabot pelado; imediato do TinpetId
+0x080424B8,randbyte,func_thumb,,Simon/Rokusho
+0x0804253C,SetGpuBlendMode,func_thumb,,Simon/Rokusho: Set the GPU blend mode/targets and initialize BLDALPHA/BLDY for a small set of predefined blend presets.
+0x08042678,BuildRepeatedGlyphString,func_thumb,,Simon/Rokusho
+0x08042698,FillBgTilemapRectSequential,func_thumb,,Simon/Rokusho: Fill a rectangular background tilemap region with sequential tile ids starting at the given base tile id.
 0x08042B58,GetPartStats,func_thumb,,"GetPartStats(bot, kind, dest): copia 16 B de gPartStats + bot*64 + kind*16"
-0x080436AC,site_PartCycle,label,,ciclo de pecas (cmp #0x78 = Tinpet macho)
+0x08042B80,Speciality_IsRemotenessClass,func_thumb,,"Simon/Rokusho: Return nonzero for remoteness-class specialities (Shoot, Aim Shot, Support, Interrupt) and 0 for proximity-class specialities (Strike, Berserk, Defend, Heal). Used to select legs-derived proximity vs remoteness bonuses."
+0x08042CA0,ComputeBattleSpriteStatOffsets,func_thumb,,Simon/Rokusho
+0x08042D94,LoadCompositeBattleSpriteTiles,func_thumb,,Simon/Rokusho: Load a composite battle sprite's tile graphics by decompressing one base resource plus five component resources into the selected VRAM/tile block.
+0x08042E58,CreateCompositeBattleSpriteObjects,func_thumb,,Simon/Rokusho: Create a 4-object composite battle sprite from four component tile indices. Writes object attributes for the assembled sprite using the selected palette/tile base and flip state.
+0x0804305C,BuildCompositeBattleSpriteObjects,func_thumb,,"Simon/Rokusho: Instantiate the four OAM objects that make up a composite Medabot battle sprite using head/right-arm/left-arm/legs palette-family bytes and the selected tile block. Used by battle preview, part selection, and fight presentation refresh paths."
+0x08043240,SetCompositeBattleSpriteAnimationSpeed,func_thumb,,Simon/Rokusho
+0x080432A0,AnimateCompositeBattleSpriteObjects,func_thumb,,Simon/Rokusho: Animate the 4-object composite battle sprite group by advancing the orbit/pose subobjects around the anchor object and updating their frame/tile selection.
+0x08043560,AdjustInventoryPartCount,func_thumb,,Simon/Rokusho: Increase or decrease the inventory count for a specific part entry. Addition saturates at 99; subtraction decrements directly.
+0x080435B0,DrawPartIconTileBlock,func_thumb,,Simon/Rokusho: Draw a 2x2 BG tile block for a part icon. The icon id comes from part-record metadata or a placeholder value and indexes a preloaded part-icon tile sheet rather than a per-part compressed pointer table.
+0x080436AC,Part_FindNextOwnedPartWithMatchingGender,func_thumb,,"ciclo de pecas (cmp #0x78 = Tinpet macho); antes site_PartCycle; Simon/Rokusho: Cycle through owned part-set ids for equip/detail UI. Hardcoded boundary values 0x78/0x79 define the end/sentinel behavior for the current 120-family set, and the function also indexes the 0xF0-stride inventory block."
+0x08043814,AreBattleSpritePartIdsValid,func_thumb,,"Simon/Rokusho: Validate composite battle sprite family ids. Rejects ids above 0x77 (119), so adding battle sprites for new Medabot families requires patching this guard plus expanding the composite sprite pointer/palette tables."
 0x08043820,site_BotCountValidator,label,,imediato do validador de Medabot (BotCount)
+0x0804387C,reset_step_and_get_encounter_flag,func_thumb,,Simon/Rokusho
+0x080438C4,Overworld_ShouldTriggerRandomEncounter,func_thumb,,"Simon/Rokusho: Return whether the current landing tile should trigger a random encounter. Random encounters are blocked when gRandomEncounterModeFlags bit 0 is set, when encounter disable bytes are nonzero, or when the map's encounter enable byte is zero."
+0x08043C94,Encounter_RollPercent0To99,func_thumb,,"Simon/Rokusho: Returns a 0..99-style roll by scaling generate_random__() through signed division by 0xFF. Used by encounter and fight template selection threshold logic (<0x28, <0x46, <0x5A, else last entry)."
+0x080446B4,BuildCompositePreviewSpriteLayer,func_thumb,,Simon/Rokusho
+0x080447EC,BuildCompositePreviewSpriteLayerWithOffset,func_thumb,,"Simon/Rokusho: Generic fight-preview side-sprite helper. It maps param_10 to BuildFourPartLargePreviewComposite mode bit 0x1/0x2 and param_11==1 to mode bit 0x4, then calls BuildFourPartLargePreviewComposite with flags 1/2/5/6. Important finding: the left-facing side-sprite renderer is not always the same mode as RenderBattlePreviewLargePortraitFrame (which uses fixed mode 5)."
 0x08044A3C,site_MoveStyleRead,label,,le gMoveScriptTable[kind*7 + gMoveStyle[bot das pernas]]
 0x08044B58,site_StarterBot,label,,rotina do bot inicial
-0x08045E6C,PartPreviewPiece,label,,calcula seletor de imagem: ((entrada>>6)+variante)&0x7F; patch de 8 bits em 0x45ECC
+0x08044DA8,SetCompositePreviewOamShapeAndSize,func_thumb,,Simon/Rokusho
+0x08045120,ExpandCompositePreviewTemplateEntryToOam,func_thumb,,"Simon/Rokusho: ExpandCompositePreviewTemplateEntryToOam writes the first expanded 8-byte OAM record immediately after the 12-byte template header. The centered/affine branch in RenderCompositePreviewDescriptorRecursive later reads entry+0x0C / +0x0E from this expanded payload, so those values are derived OAM attributes, not direct descriptor bytes."
+0x08045328,InitCompositePreviewTemplateEntry,func_thumb,,"Simon/Rokusho: Composite preview template entry header is 12 bytes: +0x00 span pointer/base, +0x04 descriptor-linked state, +0x08 signed sort key from descriptor byte +0x06, +0x0A/+0x0B span grid dimensions. RenderCompositePreviewDescriptorRecursive then reads entry+0x0C as the first expanded OAM halfword immediately following this header, not a separately seeded static field."
+0x0804538C,ShiftCompositePreviewTemplateEntryX,func_thumb,,Simon/Rokusho: Shifts every OAM record generated from one composite-preview template entry along X while preserving the entry tile ordering. Used after insertion/reordering in the preview renderer.
+0x080454F0,FindCompositePreviewOamInsertionIndex,func_thumb,,Simon/Rokusho: Binary-search helper over 8-byte OAM records sorted by their Y field. Returns the insertion index used by the composite-preview renderer before it pushes later records down with FUN_08045588.
+0x08045588,InsertCompositePreviewOamSpanBySortKey,func_thumb,,"Simon/Rokusho: InsertCompositePreviewOamSpanBySortKey performs the actual stable insertion of cached OAM records by the final 16-bit sort key. If leg overlap is still wrong after recursive ordering fixes, this cache insertion path is the next missing parity point."
+0x080455E0,CopyCompositePreviewTemplateEntryOam,func_thumb,,"Simon/Rokusho: Copies the already-expanded OAM records referenced by one composite-preview template entry into the destination OAM list, preserving the entry sort key at +0x08. Does not initialize the unknown halfword at +0x0C, so that field must be seeded earlier."
+0x08045680,QueueCompositePreviewTemplateEntryOam,func_thumb,,"Simon/Rokusho: QueueCompositePreviewTemplateEntryOam inserts one expanded template-entry OAM span into the live preview cache using the signed sort key at entry+0x08, then patches palette/page/side bits per emitted 8-byte record. This is a stricter z-order path than the toolkit's current per-descriptor recursive approximation."
+0x08045858,EmitCompositePreviewTemplateEntriesSortedByY,func_thumb,,Simon/Rokusho
+0x0804589C,InitCompositePreviewTemplatePointerList,func_thumb,,Simon/Rokusho
+0x080458A4,AppendCompositePreviewTemplatePointer,func_thumb,,Simon/Rokusho
+0x080458B8,EmitCompositePreviewTemplatePointerListOam,func_thumb,,Simon/Rokusho
+0x080459A4,OffsetCompositePreviewTemplateEntry,func_thumb,,Simon/Rokusho: Offsets one composite-preview template entry before ShiftCompositePreviewTemplateEntryX applies the X delta to every OAM record generated from that entry. Mode 1 derives position from the first OAM record; the alternate mode derives it from the auxiliary descriptor/anchor struct at entry+4.
+0x08045A40,IsCompositePreviewPointOnScreen,func_thumb,,Simon/Rokusho
+0x08045AEC,QueueVisibleCompositePreviewTemplateEntry,func_thumb,,"Simon/Rokusho: Queues one composite-preview template entry only if the requested screen point is on-screen. Offsets the entry, emits its OAM via QueueCompositePreviewTemplateEntryOam, and optionally writes a 4-halfword bounds/attachment record for the caller."
+0x08045B68,QueueVisibleCompositePreviewTemplateEntryWithBounds,func_thumb,,Simon/Rokusho
+0x08045C30,QueueVisibleCompositePreviewTemplateEntryWithAffineBounds,func_thumb,,Simon/Rokusho
+0x08045D34,BuildCompositePreviewOamTemplate,func_thumb,,"Simon/Rokusho: Builds the per-descriptor OAM template record used by the composite-preview renderer. It converts descriptor size/divisor bits into GBA OBJ shape/size fields, writes tile base / palette-bank data, and stores the template that later drives final sprite placement in FUN_080465b8."
+0x08045E6C,PartPreviewPiece,label,,calcula seletor de imagem: ((entrada>>6)+variante)&0x7F; patch de 8 bits em 0x45ECC; Simon: LoadCompositePreviewDescriptorRecursive
+0x08046034,CopyCompositePreviewDescriptorGraphics,func_thumb,,Simon/Rokusho
+0x080465B8,RenderCompositePreviewDescriptorRecursive,func_thumb,,"Simon/Rokusho: Side-1 centered (appearance bit 0x4000) descriptors do not use the non-centered mirrored X formula. The centered branch recomputes placement through the affine path after adjusting the first expanded OAM halfword at entry+0x0C, so mirrored side arms should keep logical appearance source ids but use centered-side placement distinct from plain width-rawX mirroring."
+0x08046A60,LoadPartLargeDisplaySpriteFromAppearanceTable,func_thumb,,"Simon/Rokusho: Part large-display loader: for side!=0, right/left arm rows are copied across opposite appearance tables before recursive rendering. Matching entries with appearance bit 0x4000 go through the centered/affine branch in RenderCompositePreviewDescriptorRecursive, so mirrored-side fallback should treat the per-entry 0x4000 bit as the mirror policy rather than special-casing only the arm root descriptor."
+0x08046CC8,FlipSyntheticCompositePreviewDescriptorOffsets,func_thumb,,Simon/Rokusho
+0x08046D1C,BuildFourPartLargePreviewComposite,func_thumb,,"Simon/Rokusho: Builds/updates the four-part large Medabot preview. Large-portrait setup stores the side in the preview state; render/load uses that side as the variant selector. On side 1 the ROM does not blindly swap arm variants: it first loads each selected part row, then runs two graphics-only arm copy passes. Each pass copies from the opposite arm appearance table at the same part ordinal only when byte 1 of the target row entry is non-negative. CopyCompositePreviewDescriptorGraphics replaces tile graphics only; descriptor geometry, palette bank, and palette pointer remain attached to the target descriptor."
+0x08047414,CompositePreviewContext_Init,func_thumb,,"Simon/Rokusho: CompositePreviewContext_Init layout confirmed from selected Medawatch preview path: [0] runtime object state pointer, [1] descriptor pointer table base, [2] per-descriptor template/OAM table base. In the saved Medawatch frame this is {0x02024000, 0x083D1D98, 0x020260D0}."
+0x08047574,EventScript_ClearGlobals,func_thumb,,"Simon/Rokusho: Clears the core event-engine globals before a new game/map/event-system bring-up. Confirmed blocks: gEventScriptDataBasePtr (installed ROM script base), gEventFlagListPtr (pointer to gEventFlagList), gEventFlagList (main event/game state blob), gEventScriptArguments (opcode argument buffer filled by EventScript_ReadBytes), gEventScriptRuntimeState (active script cursor/branch/temp state), and gEventObjectWorkArea (0x200-byte per-object/event actor work array). Remaining cleared blocks are auxiliary event/overworld work areas that still need field-level RE."
 0x0804763C,MainState1,func_thumb,,estado 1
+0x08047878,GameState_StartFlowByCommand,func_thumb,,Simon/Rokusho: Start a top-level flow selected by a command id. Important confirmed cases: command 0x20 starts a scripted/forced battle flow (sets gCurrentBattleSourceFlag = 1); command 0x21 starts the random encounter battle flow (sets gCurrentBattleSourceFlag = 0); command 3 opens a shop using param_2 as shop id.
+0x08047BA8,Overworld_StartMapTransitionEffect,func_thumb,,Simon/Rokusho: Start the map-transition effect selected by the current warp/event transition state. Commonly triggered when a matched MapWarpRecord requests a non-zero transition kind.
 0x08047BDC,GetBotName,func_thumb,,gBotNames[bot]
 0x08047BEC,GetPartName,func_thumb,,"GetPartName(kind, bot): gPartNames[bot*4 + kind]"
-0x0804A2F0,site_NewGameClear,label,,limpeza do inventario no new game
+0x08047E4C,Overworld_NoOpStateHandler,func_thumb,,Simon/Rokusho
+0x08047E50,PartSet_GetLegIconIndexForMatchingSlotPartId,func_thumb,,"Simon/Rokusho: Search the predefined 9 part sets for a set containing the given part id in the requested slot, then return that set's legs icon index. This is used by preview UIs that need a stable set-level icon even when only one slot's part id is currently selected."
+0x08047EF0,PartSet_HasMatchingSlotPartId,func_thumb,,Simon/Rokusho: Check whether one of the predefined 9 part sets contains the given part id in the requested slot. Used by the preview/replacement UI to map a selected part back to a full four-part set.
+0x08047F9C,PartSet_CountCompleteEntries,func_thumb,,Simon/Rokusho: Count entries in gPartSetTable whose state byte is 3 (complete set).
+0x08047FBC,PartSet_HasCompleteMonochromeEntry,func_thumb,,Simon/Rokusho: Return whether gPartSetTable contains a complete set entry whose four part ids (head/right/left/legs) all match the supplied monochrome part id.
+0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
+0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
+0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area."
+0x0804842C,Overworld_ApplyMapSceneModePolicy,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling.
+0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,,Simon/Rokusho: Load the palette set used by event objects / overworld NPC sprites for the current map. Resolves the per-slot sprite palette ids for the current map and copies each palette block into the shared object palette staging area.
+0x08048830,Overworld_ResetMapSceneBlendState,func_thumb,,Simon/Rokusho: Reset the map-scene blend registers and cached screen-transition blend coefficients before showing the rebuilt overworld scene.
+0x08048864,Map_InitializeObjectRenderSlot,func_thumb,,"Simon/Rokusho: Initialize one map/object render slot descriptor with a base tile resource id, palette/graphic set id, and mode bytes."
+0x08048888,Map_ResetObjectRenderSlot,func_thumb,,Simon/Rokusho
+0x08048CF0,Map_CopyTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Copy a decompressed 16-bit tilemap into the four BG screenblock quadrants, applying a base tile offset."
+0x08048E24,Map_ExpandMetaTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Expand a compact metatile/attribute map into BG screenblock tile entries, handling quadrant selection within 2x2 metatiles."
+0x08049318,Map_ResetRenderAffineState,func_thumb,,Simon/Rokusho: Reset the per-map affine/render scratch state before rebuilding visible map object and overlay transforms.
+0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,,Simon/Rokusho: Recompute the affine/render coefficients for one map render entry from its angle/scale scratch values.
+0x08049420,Map_SetObjectAnimationVariant,func_thumb,,Simon/Rokusho: Set the active animation variant for one map/object render slot and reset its local frame timers.
+0x08049714,set_zeros,func_thumb,,Simon/Rokusho
+0x08049728,fill_memory,func_thumb,,Simon/Rokusho: Fill param2 bytes with param3 at address param1 | 
+0x08049780,Random_NextScaled,func_thumb,,"Simon/Rokusho: Advance the byte-sized RNG index using sRandomAdvanceTable and the current overworld affine/frame counter, store the updated byte to gRandomIndex, then return the result reduced modulo the supplied bound."
+0x080497C0,mem_copy,func_thumb,,Simon/Rokusho
+0x08049D0C,Overworld_ResetScreenTransitionResources,func_thumb,,Simon/Rokusho
+0x08049D18,Overworld_StartScreenTransitionEffect,func_thumb,,Simon/Rokusho: Start a screen-transition effect using the supplied resource/config ids without first resetting the transition resource state.
+0x08049D90,Overworld_ResetAndStartScreenTransitionEffect,func_thumb,,"Simon/Rokusho: Reset screen-transition resources, then start a configured screen-transition effect for a map load / transition sequence."
+0x08049E08,Overworld_RunScreenTransitionStep,func_thumb,,Simon/Rokusho: Advance one step of the overworld screen-transition interpolator. Updates two screen-space coordinates toward their targets and returns nonzero when the transition completes.
+0x0804A210,GameState_AdvanceSubroutine,func_thumb,,Simon/Rokusho
+0x0804A220,EventScript_RunCurrent,func_thumb,,"Simon/Rokusho: Main overworld event VM tick. |  | State model: | - gCurrentEventPendingFlag == 0: run overworld startup/map-scene subroutine table | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte == 0: run one event-initialization opcode | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte != 0: dispatch the current normal event opcode |  | The VM is two-level: | - gCurrentEventOpcodeByte selects the current opcode handler | - gCurrentEventOpcodeSubstate is per-opcode local state used by multi-step normal opcode handlers |  | The event script stream is addressed through the installed event database, gCurrentEventId, and gCurrentEventScriptCursor."
+0x0804A2F0,new_game_start,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported.
 0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos
 0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
+0x0804A764,Overworld_InitMapScene,func_thumb,,"Simon/Rokusho: Primary overworld map-scene initialization. Clears OAM/VRAM shadow state, resets event/object work areas, installs the core overworld/map/event pointers, loads the current map and entities, clamps the camera, and enables the main overworld rendering path."
 0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
+0x0804A944,Overworld_ReloadMapSceneAfterReset,func_thumb,,"Simon/Rokusho: Reload the current map scene after a heavier display/reset step. Clears OAM/object state, resets blend state, rebuilds the current map scene, reclamps the camera, restores the main display configuration, and resumes the overworld scene loop."
+0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene.
 0x0804B124,lit_EventDbBase3,label,,literal da base do banco de eventos
-0x0804D83C,site_GetEventScript,label,,acha evento N em base + banco[N]*0x4000 + (ponteiro[N] - 0x4000)
+0x0804B1B0,Map_UpdateEventObjectDepthAndMarkerState,func_thumb,,Simon/Rokusho: Refresh per-object depth/marker bytes after the current map scene loads or updates. Converts live event object screen-space positions into depth buckets and updates a couple of special marker slots when the player and overlay markers align.
+0x0804B248,Map_ClearOamShadowViaDma,func_thumb,,Simon/Rokusho: Clear the shadow OAM buffer with DMA before rebuilding overworld/map object sprites.
+0x0804B298,Map_ClearBgTilemapVram,func_thumb,,Simon/Rokusho: Clear the BG tilemap VRAM region used by the current map layers before rebuilding them.
+0x0804B2B0,Map_LoadCurrentMapLayers,func_thumb,,"Simon/Rokusho: Load the current map's visual and collision layers. Reads the current map id from the event/game-state blob, resolves compact width/height metadata, decompresses BG layers or falls back to a generated blank map path, copies the collision/metatile table, and refreshes the map rendering support tables."
+0x0804B6E0,Overworld_IsUiSceneStateComplete,func_thumb,,Simon/Rokusho
+0x0804B6F4,EventScript_FetchAndRunPrimaryOpcodeHandler,func_thumb,,"Simon/Rokusho: Fetch the next event opcode byte from the script stream and dispatch it through the primary opcode table at 0x083D224C. This table is not init-only: it contains the first-phase handlers for the normal event VM, including immediate opcodes and setup handlers for deferred opcodes like 0x31, 0x32, and 0x33."
+0x0804B73C,EventInitOpcode00_NoOp,func_thumb,,Simon/Rokusho
+0x0804B740,EventInitOpcode01_Skip3BytesAndMarkInitialized,func_thumb,,Simon/Rokusho
+0x0804B74C,EventInitOpcode02_Skip3BytesAndMarkInitialized,func_thumb,,Simon/Rokusho
+0x0804B758,EventInit_Skip3BytesAndMarkInitialized,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 01 and 02. Reads and discards 3 bytes from the event stream, then sets gCurrentEventStateByte = 1 to move the event VM out of initialization dispatch."
+0x0804B778,EventInitOpcode03_MarkInitialized,func_thumb,,Simon/Rokusho
+0x0804B78C,EventInitOpcode04_ReadByteAndMarkInitialized,func_thumb,,Simon/Rokusho
+0x0804B7B4,EventInitOpcode05_MarkInitialized,func_thumb,,Simon/Rokusho
+0x0804B7C8,EventInitOpcode06_ResetOverworldStateAndMarkInitialized,func_thumb,,Simon/Rokusho
+0x0804B858,EventInitOpcode07_ResetAndStartScreenTransition,func_thumb,,"Simon/Rokusho: Read one byte from the event stream, clamp it into the transition-duration range 1..16, convert it through the screen-transition timing helper, then reset and start a screen transition effect. Marks the event as initialized afterward."
+0x0804B8AC,EventInitOpcode08_StartScreenTransition,func_thumb,,"Simon/Rokusho: Read one byte from the event stream, clamp it into the transition-duration range 1..16, convert it through the screen-transition timing helper, then start a screen transition effect without the reset variant. Marks the event as initialized afterward."
+0x0804B900,EventInitOpcode09_ResetAndStartScreenTransitionWithArgs,func_thumb,,Simon/Rokusho
+0x0804B958,EventInitOpcode0A_StartScreenTransitionWithArgs,func_thumb,,Simon/Rokusho
+0x0804B9B0,EventInitOpcode0B_SetConfigFlagAndRead5Bytes,func_thumb,,Simon/Rokusho
+0x0804B9CC,EventInitOpcode0C_ClearConfigFlagAndRead5Bytes,func_thumb,,Simon/Rokusho
+0x0804B9E8,EventInit_Read5ConfigBytesAndMarkInitialized,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 0A and 0B. Reads 5 configuration bytes from the event stream into a small overworld/event config block, snapshots the current player facing into a sixth byte, then sets gCurrentEventStateByte = 1."
+0x0804BA5C,EventInitOpcode0D_ReadFacingAndApplyToPlayer,func_thumb,,Simon/Rokusho
+0x0804BA9C,EventInitOpcode0E_StartMapTransitionFromStoredState,func_thumb,,Simon/Rokusho
+0x0804BAEC,EventInitOpcode0F_ReadByteAndMarkInitialized,func_thumb,,Simon/Rokusho
+0x0804BB14,EventInitOpcode10_ResetMovementQueueFromArgs,func_thumb,,"Simon/Rokusho: Read 4 bytes of init-time movement/config payload, clear held input and queued movement scratch, rebuild the player animation/movement state from the updated config bytes, refresh player facing, and mark the event initialized."
+0x0804BBA0,EventInitOpcode11_ReadByteAndMarkInitialized,func_thumb,,Simon/Rokusho
+0x0804BBC8,EventInitOpcode12_ClearEventFlagByPackedId,func_thumb,,Simon/Rokusho
+0x0804BBF4,EventInitOpcode13_SetEventFlagByPackedId,func_thumb,,Simon/Rokusho
+0x0804BC20,EventInitOpcode14_ClearCurrentEventActiveObjectIfMatched,func_thumb,,"Simon/Rokusho: If current_event matches an active object's low-12-bit record id, clear that ActiveMapObjectEntry from the live table."
+0x0804BC6C,EventInitOpcode15_ClearCurrentEventActiveFlag,func_thumb,,"Simon/Rokusho: Clear bit 0x80 in the current event object's render_slot_and_flags byte. If bit 0x40 remains set, the object owns an auxiliary paired render slot and both render slots are reset."
+0x0804BCD4,EventInitOpcode16_ClearActiveObjectByPackedId,func_thumb,,Simon/Rokusho
+0x0804BD08,EventInitOpcode17_SetEventFlagFieldByPackedId,func_thumb,,Simon/Rokusho
+0x0804BD44,EventInitOpcode18_IncrementEventFlagFieldByPackedId,func_thumb,,Simon/Rokusho
+0x0804BD70,EventInitOpcode19_CacheActiveObjectIdAndFacingVariant,func_thumb,,"Simon/Rokusho: Read a packed active-object id from the init stream, store it in event scratch, clear a companion word, then look up the matching active-object slot. If found, cache the derived facing/variant byte for later event-side use."
+0x0804BDD8,EventInitOpcode1A_ApplyCurrentEventFacingVariant,func_thumb,,Simon/Rokusho
+0x0804BE50,EventInitOpcode1B_UpdateCurrentEventFacingVariantFromInput,func_thumb,,"Simon/Rokusho: If current_event matches an active object, update that object's facing_variant from directional input."
+0x0804BEC4,EventInitOpcode1C_ReadFacingVariantAndApplyToCurrentEvent,func_thumb,,Simon/Rokusho
+0x0804BF34,EventInitOpcode1D_StartTransitionForCurrentEventObject,func_thumb,,"Simon/Rokusho: If current_event matches an active object, use its render slot to seed event-script arguments and start a map transition effect associated with that object."
+0x0804BFB4,EventInitOpcode1E_SetTransitionArgsForCurrentEventObject,func_thumb,,Simon/Rokusho
+0x0804C02C,EventOpcode1F_InitiateMovingActorA_Setup,func_thumb,,Simon/Rokusho
+0x0804C078,EventOpcode20_InitiateMovingActorB_Setup,func_thumb,,Simon/Rokusho
+0x0804C0C4,EventOpcode21_InitiateActor_Setup,func_thumb,,"Simon/Rokusho: Primary setup for EventOpcode21 Initiate_Actor. | Reads packed_actor_id, sprite_id, x, and y from the event stream, then spawns a tracked object immediately. | packed_actor_id uses low nibble as tracked-object slot selector; high bits carry spawn/remove flags used by the tracked-object helpers."
+0x0804C100,EventOpcode22_RotateActor_Setup,func_thumb,,"Simon/Rokusho: Primary setup for EventOpcode22 Rotate_Actor. | Reads tracked_object_slot and facing variant, then resolves the logical tracked-object slot to its live render slot and applies the facing variant immediately."
+0x0804C130,EventOpcode23_MoveActorA_Setup,func_thumb,,"Simon/Rokusho: Primary setup for EventOpcode23 Move_Actor_A. | Reads tracked_object_slot and move, resolves the logical tracked-object slot through the tracked-object slot table into a live render slot, caches that render slot in gEventScriptArguments[10], then enters deferred actor-step execution."
+0x0804C168,EventOpcode24_MoveActorB_Setup,func_thumb,,Simon/Rokusho
+0x0804C1A0,EventOpcode25_UnloadActor_Setup,func_thumb,,Simon/Rokusho: Primary setup for EventOpcode25 Unload_Actor. | Reads packed_actor_id and removes the tracked object identified by its low-nibble slot selector. | High bits of packed_actor_id are honored by Map_RemoveTrackedObjectByPackedId for transition-effect behavior.
+0x0804C1C0,EventOpcode26_FlickerActor_Setup,func_thumb,,"Simon/Rokusho: Primary setup for EventOpcode26 Flicker_Actor. | Reads tracked_object_slot and frames, resolves the logical tracked-object slot to a live render slot, caches that render slot in gEventScriptArguments[10], seeds flicker arguments, then enters deferred flicker execution."
+0x0804C210,EventOpcode27_ActorDoAnimation_Setup,func_thumb,,"Simon/Rokusho: Primary setup for EventOpcode27 Actor_Do_Animation. | Reads tracked_object_slot, facing variant, and animation/timing args, resolves the logical tracked-object slot to a live render slot, then enters deferred animation execution."
+0x0804C26C,EventOpcode28_HopActor_Setup,func_thumb,,"Simon/Rokusho: Primary setup for EventOpcode28 Hop_Actor. | Reads tracked_object_slot, resolves the logical tracked-object slot to a live render slot, seeds hop state from the current object Y position, then enters deferred hop execution."
+0x0804C2C8,EventOpcode29_SetNpcWalkAnimation,func_thumb,,Simon/Rokusho
+0x0804C2F0,EventOpcode2A_SetNpcAnimationFrame,func_thumb,,Simon/Rokusho
+0x0804C318,EventOpcode2B_ConfigureActorAttachment,func_thumb,,Simon/Rokusho
+0x0804C364,EventOpcode2C_SetActorPriority,func_thumb,,Simon/Rokusho
+0x0804C3AC,EventOpcode2D_SetActorTileOffset,func_thumb,,Simon/Rokusho
+0x0804C478,EventOpcode30_RelativeLongJump,func_thumb,,Simon/Rokusho
+0x0804C4B4,EventOpcode31_YesOrNoBox_Setup,func_thumb,,Simon/Rokusho
+0x0804C4F8,EventOpcode32_NoOrYesBox_Setup,func_thumb,,Simon/Rokusho
+0x0804C53C,EventOpcode33_StartBattle_Setup,func_thumb,,"Simon/Rokusho: Primary/setup handler for Start_Battle (opcode 0x33). Reads three inline bytes from the event stream and stores them as current battle id, current battle mode flags, and post-battle mode flags before entering deferred mode."
+0x0804C588,EventOpcode34_RotateNpc,func_thumb,,Simon/Rokusho
+0x0804C5E4,EventOpcode35_SetTrackedActorsFacingVariant,func_thumb,,Simon/Rokusho
+0x0804C648,EventOpcode36_GetItem_Setup,func_thumb,,Simon/Rokusho
+0x0804C678,EventOpcode37_LoseItem_Setup,func_thumb,,Simon/Rokusho
+0x0804C6A8,EventOpcode38_GetPart_Setup,func_thumb,,Simon/Rokusho
+0x0804C6C8,EventOpcode39_LosePart_Setup,func_thumb,,Simon/Rokusho
+0x0804C6E8,EventOpcode3A_GetMoney_Setup,func_thumb,,Simon/Rokusho
+0x0804C708,EventOpcode3B_LoseMoney_Setup,func_thumb,,Simon/Rokusho
+0x0804C728,EventOpcode3C_GetMedal_Setup,func_thumb,,Simon/Rokusho
+0x0804C750,EventOpcode3D_GetTinpet_Setup,func_thumb,,Simon/Rokusho
+0x0804C928,EventOpcode42_NoOpWithArgs,func_thumb,,Simon/Rokusho
+0x0804C9A0,EventOpcode43_ApplyMapSceneModePolicy3,func_thumb,,"Simon/Rokusho: Primary handler for opcode 0x43. Reads one byte and forwards it to Overworld_ApplyMapSceneModePolicy(command 3, arg). This was previously mislabeled as a later PlayPersistentMusic opcode due to table drift."
+0x0804C9C4,EventOpcode44_ApplyMapSceneModePolicy4,func_thumb,,"Simon/Rokusho: Primary handler for opcode 0x44. Forwards directly to Overworld_ApplyMapSceneModePolicy(command 4, 0). This was previously mislabeled as a later PlayMapMusic opcode due to table drift."
+0x0804CAD8,EventOpcode4B_JumpIfItemCountBelowAmount,func_thumb,,"Simon/Rokusho: Primary handler for opcode 0x4B. Reads item id / amount / jump, then branches when the current item count is zero or less than the requested amount. The old parser name 'Jump_If_More_Than_Amount_of_Item' was backwards."
+0x0804CB04,EventOpcode4C_JumpIfMissingPart,func_thumb,,Simon/Rokusho: Primary handler for opcode 0x4C. Reads bot / part / jump and branches when the requested part is missing rather than present. On success it caches a matching slot index into event runtime state.
+0x0804CB94,EventOpcode4F_JumpIfPreviousSceneCommandFailed,func_thumb,,Simon/Rokusho
+0x0804CC5C,EventOpcode50_JumpIfCurrentActiveObjectIndexNotEqual,func_thumb,,"Simon/Rokusho: Primary event opcode 0x50. Reads two inline bytes: active_object_index and jump. If the current active-object index (after the engine's 0x46 bias adjustment) does not match the requested index, it applies the relative jump by rewriting gCurrentEventScriptCursor."
+0x0804CCAC,EventOpcode51_RandomJump,func_thumb,,Simon/Rokusho: Primary event opcode 0x51. Reads two inline bytes: reserved and jump. Uses Random_NextScaled(0xFF) and applies the relative jump when the sampled low nibble is nonzero. The first byte is still unresolved and does not currently appear in the visible control flow of this handler.
+0x0804CCF4,EventOpcode52_EnterDeferredState,func_thumb,,"Simon/Rokusho: Primary event opcode 0x52. Sets gCurrentEventStateByte to enter deferred/continuation mode. Continuation handler is currently empty, so another subsystem likely clears or advances the event state externally."
+0x0804CD60,EventOpcode53_SetObjectRenderMode,func_thumb,,Simon/Rokusho: Primary event opcode 0x53. Reads two inline bytes: target_flags and render_mode. Updates tracked-object/player render-mode or palette/priority state depending on the target selector bits in target_flags.
+0x0804CD64,EventOpcode54_ReadByteAndEnterDeferredState,func_thumb,,"Simon/Rokusho: Primary event opcode 0x54. Reads 1 inline byte, then sets gCurrentEventStateByte to enter deferred/continuation mode. Continuation handler is currently empty; likely waits on external state."
+0x0804CD68,EventOpcode55_EnterDeferredState,func_thumb,,Simon/Rokusho: Primary event opcode 0x55. Enters deferred/continuation mode by setting gCurrentEventStateByte. Continuation handler is currently empty; likely a wait/start opcode whose completion is driven externally.
+0x0804CD7C,EventOpcode56_Primary,func_thumb,,Simon/Rokusho: Primary event opcode 0x56. Reads one 8-byte entity record into the event runtime batch buffer. Continuation handler rebuilds active object/render/collision state and reloads entity spawns before ending the opcode.
+0x0804CD80,EventOpcode57_Primary,func_thumb,,Simon/Rokusho: Primary event opcode 0x57. Enters deferred/continuation mode by setting gCurrentEventStateByte. Continuation handler is currently empty; likely an externally-completed wait/start opcode.
+0x0804CD84,EventOpcode58_Primary,func_thumb,,Simon/Rokusho
+0x0804CDA4,EventOpcode5A_SetSecondaryMarkerFacingVariant,func_thumb,,"Simon/Rokusho: Primary event opcode 0x59 setup reads one byte into gEventScriptArguments[0] as the shop id, mirrors it into the paired scene-command argument byte, updates object 0x30's facing/animation variant, and primes the shop continuation handler."
+0x0804CE04,EventOpcode5B_JumpIfFewerThanThreeCompletePartSets,func_thumb,,Simon/Rokusho: Primary event opcode 0x5A. Reads one inline jump byte and applies it when PartSet_CountCompleteEntries() is less than 3.
+0x0804CE44,EventOpcode5C_JumpIfMissingCompleteMonochromePartSet,func_thumb,,"Simon/Rokusho: Primary event opcode 0x5B. Reads monochrome_part_id and jump, and applies the jump when PartSet_HasCompleteMonochromeEntry(monochrome_part_id) returns false."
+0x0804CE90,EventOpcode5D_UpdateOverworldEventModeFlags,func_thumb,,Simon/Rokusho: Primary event opcode 0x5C. Updates gOverworldEventModeFlags and a companion mode byte from one control byte. High-bit forms toggle bit 0x20 in gOverworldEventModeFlags; low-bit forms update the companion nibble-sized mode selector. Keep conservative until the authored script operand layout is fully reconciled.
+0x0804CEF8,EventOpcode5E_SetOverworldEventModeBit0,func_thumb,,"Simon/Rokusho: Primary event opcode 0x5D. Reads one byte into gEventScriptArguments[0], then sets or clears bit 0 of gOverworldEventModeFlags. Current best evidence: this is a low-level overworld/event mode flag toggle, not a standalone story action."
+0x0804CF40,EventOpcode5F_SetRandomEncounterModeFlags,func_thumb,,"Simon/Rokusho: Primary event opcode 0x5E. Reads one byte into gEventScriptArguments[0] and copies it into gRandomEncounterModeFlags, which gates random encounters in Overworld_ShouldTriggerRandomEncounter."
+0x0804CF5C,EventOpcode60_FocusEventObject,func_thumb,,Simon/Rokusho: Primary event opcode 0x5F. Reads one byte target_mode and focuses the event camera/render staging on either the cached tracked object path or the current active-object path before returning to the script. Raw script sites use a single operand byte (0 or 1).
+0x0804D00C,EventOpcode61_RestoreFocusedEventModeFlags,func_thumb,,Simon/Rokusho
+0x0804D018,EventOpcode62_EquipStarterParts,func_thumb,,Simon/Rokusho
+0x0804D024,EventOpcode63_ShowEffect,func_thumb,,Simon/Rokusho
+0x0804D084,EventOpcode64_ResetOverworldUiRenderState,func_thumb,,Simon/Rokusho: Primary event opcode 0x64. Immediately resets overworld UI/render affine state via Overworld_ResetUiRenderState() and returns.
+0x0804D090,EventOpcode65_NoOp,func_thumb,,Simon/Rokusho: Primary event opcode 0x65. No-op stub; primary and continuation behavior are both inert.
+0x0804D094,EventOpcode66_AnimateTrackedObjectTransition_Setup,func_thumb,,"Simon/Rokusho: Primary event opcode 0x66. Reads one inline tracked_object_index byte, resolves the tracked-object render slot into gEventScriptArguments[10], clears the transition state byte for that slot, and enters deferred mode."
+0x0804D0E0,EventOpcode67_Primary,func_thumb,,Simon/Rokusho
+0x0804D100,EventOpcode68_ClearCollisionForPackedObject,func_thumb,,"Simon/Rokusho: Event opcode 0x68. Reads a packed object id, matches it against the current active map object record, and clears collision at that object's map tile via set_collision(x, y, 0)."
+0x0804D158,EventOpcode69_SetMapSceneVariant,func_thumb,,"Simon/Rokusho: Primary event opcode 0x69. Reads variant and skip_full_reload. If the requested map-scene variant differs from gCurrentMapSceneVariant, toggles the active scene variant, applies the matching scroll preset, and unless skip_full_reload is nonzero refreshes the current tile-behavior row and related map-scene bytes."
+0x0804D204,EventOpcode6A_Primary,func_thumb,,Simon/Rokusho
+0x0804D208,EventOpcode6B_SetCurrentChapter,func_thumb,,Simon/Rokusho: Event opcode 0x6B. Reads one byte from the script and stores it in the shared progression/chapter state byte used by scene progression.
+0x0804D270,EventOpcode6D_Primary,func_thumb,,Simon/Rokusho
+0x0804D2A8,EventOpcode6E_Primary,func_thumb,,Simon/Rokusho
+0x0804D2F4,EventOpcode6F_Primary,func_thumb,,Simon/Rokusho
+0x0804D32C,EventOpcode70_Primary,func_thumb,,Simon/Rokusho
+0x0804D340,EventOpcode71_Primary,func_thumb,,Simon/Rokusho
+0x0804D354,EventOpcode72_Primary,func_thumb,,Simon/Rokusho
+0x0804D368,EventOpcode73_Primary,func_thumb,,Simon/Rokusho
+0x0804D39C,EventOpcode78_RunSceneCommand10IfAtLeastThreeCompletePartSets,func_thumb,,Simon/Rokusho
+0x0804D400,EventOpcode79_RunSceneCommand12_Setup,func_thumb,,"Simon/Rokusho: Primary event opcode 0x79. Reads one scene argument byte, stores it into runtime state, and enters deferred mode; continuation runs scene command 0x12."
+0x0804D424,EventOpcode7A_RunSceneCommand11_Setup,func_thumb,,Simon/Rokusho
+0x0804D438,EventOpcode7B_JumpIfNoSparePart,func_thumb,,Simon/Rokusho
+0x0804D48C,EventOpcode7C_ReservedNoOp,func_thumb,,Simon/Rokusho
+0x0804D4AC,EventOpcode7E_MoveAllTrackedActorsC_Setup,func_thumb,,Simon/Rokusho
+0x0804D4FC,EventOpcode80_BeginBatchedObjectCommandBlock,func_thumb,,"Simon/Rokusho: Reset the event-script runtime block at gEventScriptRuntimeState, fetch the first event opcode byte into gCurrentEventOpcodeByte, clear the event initialization/state byte and opcode substate, and dispatch the initialization handler for the new event."
+0x0804D580,EventOpcode81_QueueBatchedObjectCommand,func_thumb,,Simon/Rokusho
+0x0804D584,EventOpcode02_RunEmbeddedInitOpcodeWithSavedArgs,func_thumb,,"Simon/Rokusho: Normal event opcode 0x02. |  | Reads an inline argument block, pushes it into the embedded-init runtime stack, then immediately runs one embedded initialization opcode through Event_RunEmbeddedInitOpcode. |  | This explains why some event behaviors that look like 'normal opcodes' actually route through the initialization-opcode table."
+0x0804D59C,Event_RunEmbeddedInitOpcode,func_thumb,,"Simon/Rokusho: Run one embedded event-initialization opcode using a saved 8-byte argument block. |  | Copies a saved argument record into gEventScriptArguments, fetches the next byte as an init opcode, clears gCurrentEventStateByte and gCurrentEventOpcodeSubstate, then dispatches through sEventInitializationOpcodeHandlerTable. |  | This is the bridge between the normal event VM and the initialization-opcode VM."
+0x0804D5DC,EventOpcode82_ExecuteBatchedObjectCommandBlock_Setup,func_thumb,,Simon/Rokusho
+0x0804D5F0,EventOpcode53_Primary,func_thumb,,Simon/Rokusho
+0x0804D758,EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp,func_thumb,,"Simon/Rokusho: Primary handler for event opcode 0x84. Reads one byte argument (map scene variant), marks the opcode as deferred, and lets the continuation wait until the player facing byte reaches 0 before committing the requested map scene variant to the same runtime byte used by opcode 0x69."
+0x0804D7AC,EventOpcode56_Primary_0804D7AC,func_thumb,,Simon/Rokusho
+0x0804D7E4,EventOpcode57_Primary_0804D7E4,func_thumb,,Simon/Rokusho
+0x0804D83C,EventScript_ReadNextByte,func_thumb,,acha evento N em base + banco[N]*0x4000 + (ponteiro[N] - 0x4000); antes site_GetEventScript; Simon/Rokusho: Read one byte from the current event script stream. |  | Database model: | - installed event script database base pointer | - per-event offset table near base + 0x0000 | - per-event bank table near base + 0x4000 | - gCurrentEventId selects the event entry | - gCurrentEventScriptCursor is the byte offset within that event's script stream |  | The cursor is incremented after each read.
+0x0804D8CC,EventScript_ReadBytes,func_thumb,,Simon/Rokusho: Read N consecutive bytes from the current event script stream into gEventScriptArguments[0..N-1]. Used by both primary and continuation event opcode handlers to materialize inline operands.
+0x0804D8F4,Map_FindActiveObjectIndexByPackedId,func_thumb,,Simon/Rokusho
+0x0804D938,Map_FindActiveObjectByPackedId,func_thumb,,Simon/Rokusho: Scan gActiveMapObjectTable for an active runtime object whose packed_flags_and_event_id matches the requested packed id under the current mask. Returns the matching ActiveMapObjectEntry or null.
+0x0804D980,Map_ClearActiveObjectEntry,func_thumb,,"Simon/Rokusho: Clear one ActiveMapObjectEntry from the live map object table, restore the underlying map collision value for its tile, reset any associated render slots, then zero the 8-byte entry. render_slot_and_flags low 5 bits identify the primary slot; bit 0x40 indicates an auxiliary paired slot is in use."
+0x0804D9F8,Map_FocusEventObjectRenderSlot,func_thumb,,"Simon/Rokusho: Reset special object render slots 0x30 and 0x5A, copy the chosen event object's render/object state into those staging slots, update tile/camera anchor bytes, refresh facing/animation, and set gOverworldEventModeFlags to a temporary focus value while caching the previous byte in gOverworldEventModeFlagsBackup."
+0x0804DB80,Map_RestoreFocusedEventModeFlags,func_thumb,,Simon/Rokusho: Restore gOverworldEventModeFlags from gOverworldEventModeFlagsBackup after Map_FocusEventObjectRenderSlot tears down the temporary focus presentation slots.
+0x0804DBB4,Map_ClearTrackedObjectSlotByIndex,func_thumb,,Simon/Rokusho: Clear the tracked active object slot mapping for a small selector id.
+0x0804DBD0,Map_SetTrackedObjectSlotByIndex,func_thumb,,Simon/Rokusho: Map tracked-object slot mapping table writer. | Stores active object slot + 1 for a small logical tracked-object slot id so 0 remains the sentinel for no mapping.
+0x0804DBF0,Map_GetTrackedObjectSlotByIndex,func_thumb,,"Simon/Rokusho: Map tracked-object slot mapping table reader. | Returns the active object slot associated with a logical tracked-object slot id, or -1 if unmapped."
+0x0804DC34,NoOp,func_thumb,,Simon/Rokusho
+0x0804DC38,EventOpcode01_ShowMessageA,func_thumb,,Simon/Rokusho
+0x0804DCF8,EventOpcode02_AdvanceEmbeddedInitOpcode,func_thumb,,Simon/Rokusho
+0x0804DD04,EventOpcode03_CloseMessageBox,func_thumb,,Simon/Rokusho
+0x0804DD18,EventOpcode04_WaitFrames,func_thumb,,Simon/Rokusho
+0x0804DD3C,EventOpcode05_WaitForButtonPress,func_thumb,,Simon/Rokusho
+0x0804DD5C,EventOpcode07_FadeToBlack,func_thumb,,Simon/Rokusho
+0x0804DD70,EventOpcode08_FadeFromBlack,func_thumb,,Simon/Rokusho
+0x0804DD84,EventOpcode09_FadeToWhite,func_thumb,,Simon/Rokusho
+0x0804DD9C,EventOpcode0A_FadeFromWhite,func_thumb,,Simon/Rokusho
+0x0804DDB4,EventOpcode0B_WarpA_ReloadDestinationScene,func_thumb,,Simon/Rokusho
+0x0804DDC0,EventOpcode0C_WarpB_ReloadDestinationScene,func_thumb,,Simon/Rokusho
+0x0804DDCC,Overworld_ReloadWarpDestinationScene,func_thumb,,"Simon/Rokusho: Reload the active map scene after a warp has changed the current map and player coordinates. Rebuild palettes/layers, reset encounter state, refresh markers, restore player facing, sync follower position, reload sprite graphics, and clear pending transition counters."
+0x0804DE74,EventOpcode0E_PlayerHopInPlace,func_thumb,,Simon/Rokusho
+0x0804DF40,EventOpcode0F_PlayerHopInDirection,func_thumb,,"Simon/Rokusho: Perform a directed player hop / short forced movement setup. |  | Seeds a temporary movement sequence, forces facing/input bits for one direction, animates the player hop motion, then cleans up and ends the current event opcode."
+0x0804E134,EventOpcode10_MovePlayer,func_thumb,,"Simon/Rokusho: Execute a scripted player movement path. |  | Uses per-opcode local state and an inline movement sequence buffer to emit up to four directional movement steps, updating live tile coordinates and held-direction state until the scripted path completes."
+0x0804E370,EventOpcode11_ChangePlayerCostume,func_thumb,,"Simon/Rokusho: Change the player visual/costume variant. |  | Loads the new scene/player visual selector into live event/map state, reloads map object palettes and overworld sprite graphics for the current map, copies the matching palette resource, then ends the current event opcode."
+0x0804E43C,EventOpcode1A_NpcDoAnimation,func_thumb,,Simon/Rokusho
+0x0804E450,EventOpcode1D_HopEventNpc,func_thumb,,Simon/Rokusho
+0x0804E464,EventOpcode1E_FlickerEventNpc,func_thumb,,Simon/Rokusho
+0x0804E480,EventOpcode1F_InitiateMovingActorA,func_thumb,,Simon/Rokusho
+0x0804E48C,EventOpcode20_InitiateMovingActorB,func_thumb,,Simon/Rokusho
+0x0804E498,Event_RunInitiateMovingActorSequence,func_thumb,,"Simon/Rokusho: Shared actor-initiation sequence used by EventOpcode1F and EventOpcode20. |  | Spawns a tracked object at the requested tile, starts a directional object step sequence for the spawned render slot, then waits until the step sequence completes before ending the current event opcode."
+0x0804E51C,EventOpcode23_MoveActorA,func_thumb,,Simon/Rokusho
+0x0804E528,EventOpcode24_MoveActorB,func_thumb,,Simon/Rokusho
+0x0804E534,Event_RunActorStepSequence,func_thumb,,"Simon/Rokusho: Shared existing-actor movement sequence used by EventOpcode23 and EventOpcode24. |  | Starts a directional step on the target actor render slot, then ticks the object-step state until the movement completes."
+0x0804E58C,EventOpcode26_FlickerActor,func_thumb,,Simon/Rokusho
+0x0804E5A8,EventOpcode27_ActorDoAnimation,func_thumb,,Simon/Rokusho
+0x0804E5BC,EventOpcode28_HopActor,func_thumb,,Simon/Rokusho
+0x0804E5D0,EventOpcode29_MoveAllActorsA,func_thumb,,Simon/Rokusho
+0x0804E5E0,EventOpcode2A_MoveAllActorsB,func_thumb,,Simon/Rokusho
+0x0804E5F0,Event_RunAllTrackedActorsStepSequence,func_thumb,,"Simon/Rokusho: Shared multi-actor movement sequence. |  | Iterates the four tracked actor slots, starts or ticks a directional step sequence on each active actor, and ends the current opcode when all participating actors are finished."
+0x0804E700,EventOpcode2B_InitiateActor,func_thumb,,Simon/Rokusho
+0x0804E784,EventOpcode2D_RotateActor,func_thumb,,Simon/Rokusho
+0x0804E7DC,EventOpcode2E_NoOp,func_thumb,,Simon/Rokusho
+0x0804E7E0,EventOpcode2F_NoOp,func_thumb,,Simon/Rokusho
+0x0804E7E4,EventOpcode30_NoOp,func_thumb,,Simon/Rokusho
+0x0804E7E8,EventOpcode31_YesOrNoBox_Continuation,func_thumb,,"Simon/Rokusho: Continuation-phase handler for opcode 0x31. The primary/setup phase lives in the first opcode table at 0x083D224C (0x0804C4B4), which reads the jump byte and enters deferred mode."
+0x0804E860,EventOpcode32_NoOrYesBox_Continuation,func_thumb,,"Simon/Rokusho: Continuation-phase handler for opcode 0x32. The primary/setup phase lives in the first opcode table at 0x083D224C (0x0804C4F8), which reads the jump byte and enters deferred mode."
+0x0804E8C4,EventOpcode33_StartBattle_Continuation,func_thumb,,"Simon/Rokusho: Continuation-phase handler for opcode 0x33. Resets the scene-command step, then runs Event_RunSceneCommandSequence(command 0x20, 0). Command 0x20 marks the upcoming battle as a scripted/forced battle (as opposed to random encounter flow 0x21), so this continuation belongs to Start_Battle rather than a choice box."
+0x0804E928,EventOpcode36_GetItem,func_thumb,,Simon/Rokusho
+0x0804EA18,EventOpcode37_LoseItem,func_thumb,,Simon/Rokusho
+0x0804EB0C,EventOpcode38_GetPart,func_thumb,,Simon/Rokusho
+0x0804EC38,EventOpcode39_LosePart,func_thumb,,Simon/Rokusho
+0x0804ED88,EventOpcode3A_GetMoney,func_thumb,,Simon/Rokusho
+0x0804EE00,EventOpcode3B_LoseMoney,func_thumb,,Simon/Rokusho
+0x0804EE8C,EventOpcode3C_GetMedal,func_thumb,,Simon/Rokusho
+0x0804EF5C,EventOpcode3D_GetTinpet,func_thumb,,Simon/Rokusho
+0x0804EFFC,EventOpcode40_RunPulsedScreenTransitionLoop,func_thumb,,Simon/Rokusho
+0x0804F0A4,EventOpcode41_FlickerAllActors,func_thumb,,Simon/Rokusho: Tick flicker state for all active tracked actors and end the opcode when all participating actors are finished.
+0x0804F110,EventOpcode42_MovePlayerOneStep,func_thumb,,"Simon/Rokusho: Perform a one-step forced player movement using the current facing/direction nibble, then wait for the movement helper to report completion before ending the opcode."
+0x0804F3F8,EventOpcode43_ShakeCamera,func_thumb,,"Simon/Rokusho: Run a timed camera shake on X or Y, updating map scroll and player/secondary markers each tick until the shake duration expires."
+0x0804F5C8,NoOp_0804F5C8,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub."
+0x0804F5CC,NoOp_0804F5CC,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub."
+0x0804F5D0,NoOp_0804F5D0,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific immediate/deferred meaning belongs on the table entry, not this shared stub."
+0x0804F5D4,NoOp_0804F5D4,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub."
+0x0804F5D8,NoOp_0804F5D8,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub."
+0x0804F5DC,EventOpcode56_LoadEntities,func_thumb,,"Simon/Rokusho: Continuation handler for event opcode 0x56. Rebuilds encounter NPC snapshot, clears object/render state, reloads the compact tile-byte grid, loads entity spawns for the current map, refreshes visible event-object sprites, and ends the opcode."
+0x0804F674,NoOp_0804F674,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub."
+0x0804F678,NoOp_0804F678,func_thumb,,Simon/Rokusho
+0x0804F67C,EventOpcode59_OpenShop,func_thumb,,Simon/Rokusho
+0x0804F6C4,NoOp_0804F6C4,func_thumb,,Simon/Rokusho
+0x0804F6C8,NoOp_0804F6C8,func_thumb,,Simon/Rokusho
+0x0804F6CC,NoOp_0804F6CC,func_thumb,,Simon/Rokusho
+0x0804F6D0,NoOp_0804F6D0,func_thumb,,Simon/Rokusho
+0x0804F6D4,NoOp_0804F6D4,func_thumb,,Simon/Rokusho
+0x0804F6D8,NoOp_0804F6D8,func_thumb,,Simon/Rokusho
+0x0804F6DC,NoOp_0804F6DC,func_thumb,,Simon/Rokusho
+0x0804F83C,EventOpcode66_AnimateTrackedObjectTransition,func_thumb,,Simon/Rokusho: Continuation handler for event opcode 0x66. Ticks the tracked-object transition/arc effect started by the setup half and ends the opcode once the transition completes.
+0x0804F860,NoOp_0804F860,func_thumb,,Simon/Rokusho
+0x0804FA1C,EventOpcode70_RunSceneCommand13,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x13, 0) until completion before ending the opcode."
+0x0804FB1C,EventOpcode76_RunFlow4ThenSceneCommand5,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Starts top-level flow command 4, conditionally resets the scene-command step, then runs Event_RunSceneCommandSequence(command 5, 0) before ending the opcode. This is a strong battle/link/menu-flow candidate, but the exact gameplay-facing action is not yet proven from ROM alone."
+0x0804FB8C,EventOpcode78_RunSceneCommand10,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x10, 0). On completion it may set gOverworldAffineState[0x39] before ending the opcode."
+0x0804FBDC,EventOpcode79_RunSceneCommand12,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x12, 0) until completion before ending the opcode."
+0x0804FC6C,EventOpcode7E_MoveAllTrackedActorsC,func_thumb,,Simon/Rokusho
+0x0804FD10,EventOpcode82_ExecuteBatchedObjectCommandBlock,func_thumb,,Simon/Rokusho
+0x0804FE6C,EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation,func_thumb,,Simon/Rokusho
+0x080500BC,Map_StartObjectStep,func_thumb,,Simon/Rokusho
+0x08050168,Overworld_AdvanceObjectWalkAnimationBySpeed,func_thumb,,Simon/Rokusho: Advance an overworld object's walk animation frame sequence by its current movement speed. Calls the per-frame animation step helper once per moved pixel.
+0x0805018C,Map_TickObjectStep,func_thumb,,Simon/Rokusho
+0x08050290,Event_EndOpcode,func_thumb,,"Simon/Rokusho: Shared normal-event helper used when the current opcode finishes. |  | It clears the opcode-local runtime bytes used by many normal event handlers. The actual next opcode fetch happens elsewhere in the VM flow, so this is an opcode-completion/reset helper, not a pure transition helper."
+0x08050300,Overworld_GetObjectAnimationIndexForFacing,func_thumb,,"Simon/Rokusho: Return the animation index for an overworld object slot given its current facing/direction variant. Used by follower, marker, and map-scene sprite refresh code."
+0x08050358,Map_SpawnTrackedObjectAtTile,func_thumb,,Simon/Rokusho
+0x08050554,Map_RemoveTrackedObjectByPackedId,func_thumb,,Simon/Rokusho
+0x080505FC,Overworld_BuildEncounterNpcSnapshot,func_thumb,,Simon/Rokusho: Build a compact snapshot of nearby active NPC/object state for use by the encounter/transition path. Converts active event objects into tile coordinates plus facing/type flags and stores them in a 6-entry packed table.
+0x080506BC,Overworld_RebuildActiveObjectRenderSlots,func_thumb,,Simon/Rokusho: Rebuild the active overworld object render slots from the currently active map/entity records after a map load or reset.
+0x08050710,Map_FindFreeTrackedObjectSlot,func_thumb,,Simon/Rokusho
+0x0805076C,Map_SetTrackedObjectFacingVariant,func_thumb,,Simon/Rokusho
+0x0805082C,Map_TickObjectFlicker,func_thumb,,Simon/Rokusho
+0x080508B4,Map_TickObjectAnimation,func_thumb,,Simon/Rokusho
+0x08050918,Map_TickObjectHop,func_thumb,,Simon/Rokusho
+0x080509EC,Map_TickTrackedObjectTransition,func_thumb,,"Simon/Rokusho: Tick the per-slot tracked-object transition used by event opcode 0x66. Initializes facing/animation and starts a map-transition effect on the first tick, then advances the object's vertical arc and render mode until the effect completes."
+0x08050BC8,Overworld_RunMapLoadCommandState,func_thumb,,Simon/Rokusho: Run one step of the event-script-driven map-load command state machine until the underlying overworld UI scene state reports completion.
+0x08050C94,Overworld_ResetUiRenderState,func_thumb,,Simon/Rokusho
+0x08050CC0,Event_ResetSceneCommandStep,func_thumb,,Simon/Rokusho
+0x08050CCC,Event_RunSceneCommandSequence,func_thumb,,"Simon/Rokusho: Run a multi-step scene/event command sequence selected by a small command id. |  | This helper is not map-load-specific. Depending on the command id, it can: | - launch top-level game/menu flows through GameState_StartFlowByCommand | - run scene transitions | - trigger side-effect commands through 0x0804842C | - advance an internal step byte in gEventScriptArguments[0x0B] |  | Returns nonzero when the sequence has finished."
+0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions."
+0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
+0x080517F0,Map_InitPlayerMapMarker,func_thumb,,"Simon/Rokusho: Initialize the player's map marker / cursor UI after a map load. Converts the player's world position to tile coordinates, loads the marker graphics, seeds the marker sprite state, and sets the initial on-screen position relative to the current camera."
+0x0805196C,Overworld_ClearFollowerQueuedMove,func_thumb,,"Simon/Rokusho: Clear the follower's queued movement/facing state, then reset the follower animation queue helper used when the player changes facing without taking a full step."
+0x08051988,Overworld_AdvancePlayerStep,func_thumb,,"Simon/Rokusho: Advance the player's current step in one of the four cardinal directions. Move the player's world X/Y toward the target tile by the current step speed, nudge the camera when the player crosses the screen-centering threshold, and once the step timer expires update tile coordinates and run the map-side post-step checks: walk-over triggers, warps, and random encounters."
+0x08051C64,Map_RemapInputDirectionByConveyorTile,func_thumb,,Simon/Rokusho: Remap the raw held-input direction based on the current floor tile when standing on one of the directional conveyor / forced-movement tiles.
+0x08051CB8,Overworld_HandlePlayerWalkInput,func_thumb,,"Simon/Rokusho: Read held directional input and drive overworld walking. Resolve the facing direction, optionally remap it by the current floor tile, test movement blockers, seed the step timer from the object's current speed, advance the player step, and keep the follower animation in sync."
+0x08051EFC,Overworld_UpdateFollowerFacingAndAnimation,func_thumb,,Simon/Rokusho: Update the follower / companion facing and animation state so it turns toward its movement delta relative to the player. Also refreshes the follower sprite animation when the visible facing changes.
+0x0805203C,Overworld_AdvanceFollowerStep,func_thumb,,"Simon/Rokusho: Advance the follower / companion step in lockstep with the player's movement direction. Uses the follower object's current speed, updates world position, advances its walk animation, and refreshes follower tile coordinates when the follower step timer expires."
+0x0805218C,Map_SetEventMarkerFacingVariant,func_thumb,,Simon/Rokusho: Set the displayed facing / animation variant for an ActiveMapObjectEntry. Updates the shared facing-dependent sprite selection and writes the chosen variant back to ActiveMapObjectEntry.marker_state.
+0x080521A8,Map_UpdateIdleFacingEventAnimation,func_thumb,,Simon/Rokusho: Update idle facing-trigger animation markers. Periodically picks a random active facing event marker and changes its displayed facing/animation variant when the event entry is marked as animation-capable.
+0x08052204,Map_RefreshType6MarkerAnimations,func_thumb,,"Simon/Rokusho: Refresh the animation for active objects whose record kind is 6, using the current event/object state to decide whether their type-6 marker animation should advance."
+0x08052284,Map_CheckFacingEventTriggerAhead,func_thumb,,Simon/Rokusho: Check for a facing-triggered map event or facing-sensitive marker immediately in front of the player. ActiveMapObjectEntry.record_kind_and_event_id high nibble selects whether the record arms an event or only updates marker facing.
+0x08052400,Map_CheckWalkOverTrigger,func_thumb,,Simon/Rokusho: Scan the live ActiveMapObjectEntry table for a walk-over trigger at the player's current tile. record_kind_and_event_id high nibble 0x8 denotes a walk-over event trigger; low 12 bits become current_event.
+0x080524C8,Map_GetAdjacentCollisionTileByDirection,func_thumb,,Simon/Rokusho: Return the collision/metatile byte for the tile adjacent to the player in the requested direction using the current map collision layer.
+0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,,Simon/Rokusho
+0x08052624,Map_FindDirectionalTriggerAtAdjacentTile,func_thumb,,"Simon/Rokusho: Compute the tile immediately in front of the player, clamp it against the current map bounds, then scan a per-map list of 4-byte directional trigger records {x, y, allowed_direction_mask, trigger_id}. Returns the matching trigger id or -1 when no directional trigger is active for the current facing."
+0x0805273C,ikki_x_to_tile,func_thumb,,Simon/Rokusho
+0x08052760,ikki_y_to_tile,func_thumb,,Simon/Rokusho
+0x08052784,Map_UpdateVisibleEventObjectSprites,func_thumb,,"Simon/Rokusho: Refresh the subset of event/NPC object sprites that are currently visible within the camera window. Hides sprites that move off-screen, updates screen-space positions for visible objects, and selects the correct sprite frame / marker overlay."
+0x080528F8,Map_CenterCameraForSmallMaps,func_thumb,,Simon/Rokusho: Center the camera when the current map is smaller than the visible viewport. Uses compact map width/height metadata and writes X/Y camera offsets into the event/game-state blob.
+0x080529DC,Map_GetInitialScrollTileOrigin,func_thumb,,"Simon/Rokusho: Read the decompressed map layer header and return the initial scroll tile origin. selector=0 returns the first layer origin pair, selector=1 returns the second pair."
+0x08052A10,Map_SetCameraScrollX,func_thumb,,Simon/Rokusho: Write the shared map camera X scroll value to all mirrored scroll slots used by the active map renderer.
+0x08052A30,Map_SetCameraScrollY,func_thumb,,Simon/Rokusho: Write the shared map camera Y scroll value to all mirrored scroll slots used by the active map renderer.
+0x08052A50,Map_GetCameraScrollX,func_thumb,,Simon/Rokusho: Return the current shared map camera X scroll value.
+0x08052A64,Map_GetCameraScrollY,func_thumb,,Simon/Rokusho: Return the current shared map camera Y scroll value.
+0x08052A78,Map_AddCameraScrollX,func_thumb,,Simon/Rokusho
+0x08052AA4,Map_ClampCameraToLoadedMap,func_thumb,,"Simon/Rokusho: Clamp the camera scroll to the currently loaded map bounds around the player position. Uses compact map dimensions and the current player tile position, then writes the final X/Y scroll into the shared camera scroll slots."
+0x08052B44,Map_AddCameraScrollY,func_thumb,,Simon/Rokusho
+0x08052B70,Map_UpdatePlayerMarkerScreenPosition,func_thumb,,Simon/Rokusho: Recompute the player's map marker screen position from the player's world coordinates and the current camera scroll.
+0x08052BEC,Map_ApplySceneVariantScrollPreset,func_thumb,,Simon/Rokusho: Apply the small scene-variant-specific scroll/camera preset used when gCurrentMapSceneVariant toggles between variant 0 and 1.
+0x08052C68,Map_FindWarpTriggerAtTile,func_thumb,,"Simon/Rokusho: Scan the current map's MapWarpRecord list for a warp at the given tile. On match, cache the high nibble of arrival_facing_and_transition_kind into the map-transition scratch state so the caller can decide whether to start an animated transition effect."
+0x08052CC0,Overworld_CheckMovementCollision,func_thumb,,Simon/Rokusho
+0x08052D90,Map_SetObjectRenderSlotFacingVariant,func_thumb,,Simon/Rokusho
+0x08052E0C,Overworld_SetPlayerFacingAndRefreshFollower,func_thumb,,"Simon/Rokusho: Set the player's facing direction in overworld state, refresh the player object's facing-dependent sprite data, and immediately resync follower facing/animation."
+0x08052E58,set_collision,func_thumb,,Simon/Rokusho
+0x08052E88,Overworld_ApplyWarpAtCurrentTile,func_thumb,,"Simon/Rokusho: Apply the MapWarpRecord matching the player's current tile: switch destination map, set the player's arrival facing from the low bits of arrival_facing_and_transition_kind, place the player on destination_tile_x/y, clamp the camera, then resync follower state for the new map. Bytes 4 and 5 in the record remain unresolved."
+0x08052F64,Map_InitSecondaryMarkerOverlay,func_thumb,,"Simon/Rokusho: Initialize a secondary marker / overlay tied to current map state. Loads its graphics, seeds tile coordinates and sprite state, and places it relative to the current camera."
+0x0805309C,Overworld_SyncFollowerPositionAfterWarp,func_thumb,,"Simon/Rokusho: After a successful warp, copy the player's new pixel position into the follower/secondary marker position cache and refresh its facing/animation state."
+0x08053108,Map_UpdateSecondaryMarkerScreenPosition,func_thumb,,Simon/Rokusho: Recompute the secondary marker / overlay screen position from its world coordinates and the current camera scroll.
+0x08053168,EventFlag_ClearIndexedFlagByPackedId,func_thumb,,Simon/Rokusho: Clear one indexed event-flag bit from the event flag list using a packed 16-bit id. The low bit selects which bit family is targeted; the remaining bits select the byte index.
+0x080531A0,EventFlag_SetIndexedFlagByPackedId,func_thumb,,Simon/Rokusho: Set one indexed event-flag bit in the event flag list using a packed 16-bit id. The low bit selects which bit family is targeted; the remaining bits select the byte index.
+0x080531E0,EventFlag_IsSetByPackedId,func_thumb,,Simon/Rokusho: Return whether the event flag identified by a packed flag id is set. Used by map spawn loading to suppress entity records whose activation flag is already active.
+0x08053238,EventFlag_SetIndexedFieldByPackedId,func_thumb,,Simon/Rokusho: Write a small 3-bit field into the event flag list using a packed 16-bit id. The low bit selects which nibble/bitfield family is targeted; the remaining bits select the byte index.
+0x08053280,EventFlag_IncrementIndexedFieldByPackedId,func_thumb,,Simon/Rokusho: Increment a small indexed field in the event flag list using a packed 16-bit id. The low bit selects which field family is targeted; the remaining bits select the byte index.
+0x080533E4,Overworld_BeginUiSceneState,func_thumb,,"Simon/Rokusho: Begin an overworld UI/scene-state sequence with the supplied state id, optional position parameters, and extra mode argument."
+0x0805424C,Overworld_DispatchUiSceneState,func_thumb,,"Simon/Rokusho: Dispatch one step of the current overworld UI/scene-state machine using gOverworldUiState.{state,substate}."
+0x080594C8,Overworld_RunPostTransitionMapSpriteReload,func_thumb,,"Simon/Rokusho: Consume the MapTransitionState written by warp/event transition logic. transition_phase gates the reload flow, scene_mode_id selects special post-transition sprite reload cases, and queued_map_id is used by earlier map-switch setup."
+0x0805B0D8,Shop_BuildSellablePartList,func_thumb,,"Simon/Rokusho: Build the sellable-part list for the current player inventory. Each entry stores the part id, available count, a category/gender byte from RomPartRecord, and the sell price computed as RomPartRecord.price_hundreds * 100."
 0x0805BBE0,MainState2,func_thumb,,estado 2
 0x0805DF18,site_LoadGame,label,,load do save (inventario como halfword no original)
 0x0805E010,site_SaveGame,label,,save (inventario como halfword no original)
+0x080619B0,Shop_InitPartSelectionScreen,func_thumb,,"Simon/Rokusho: Initialize the shop part-selection screen. Builds either the sellable inventory list or the current shop stock list, and computes each listed part's displayed price as RomPartRecord.price_hundreds * 100."
 0x08068440,MainState3,func_thumb,,estado 3 (estado inicial no boot)
-0x0807CCE8,VBlankWait,func_thumb,,provavel: espera VBlank no inicio de cada frame
-0x0807CCF0,CallViaR0,func_thumb,,chama o ponteiro em r0
+0x08068F50,FightPreview_LoadCachedAndEncounterLoadouts,func_thumb,,Simon/Rokusho: Load battle preview/composite sprites using the cached player preview loadout from fight_information.preview_loadout_cache and the selected encounter fight templates from list_of_all_fights. Also seeds the preview scene state before handing control to the scene-specific main loop.
+0x0807CCC0,CPUFastSet,func_thumb,,Simon/Rokusho em 0x0807CCE0
+0x0807CCC4,CPUSet,func_thumb,,Simon/Rokusho em 0x0807CCE4
+0x0807CCC8,Div,func_thumb,,Simon/Rokusho em 0x0807CCE8
+0x0807CCD0,SWI_Div,func_thumb,,Simon/Rokusho em 0x0807CCF0
+0x0807CCD8,LZ77UnCompVRAM,func_thumb,,Simon/Rokusho em 0x0807CCF8
+0x0807CCDC,LZ77UnCompWRAM,func_thumb,,Simon/Rokusho em 0x0807CCFC
+0x0807CCE0,ObjAffineSet,func_thumb,,Simon/Rokusho em 0x0807CD00
+0x0807CCE8,VBlankWait,func_thumb,,provavel: espera VBlank no inicio de cada frame; Simon: VBlankIntrWait
+0x0807CCF0,CallViaR0,func_thumb,,chama o ponteiro em r0; Simon: CallFunctionPointer
 0x0807E8EC,gMoveScriptTable,label,,roteiros de deslocamento em batalha: [kind*7 + estilo]
 0x0807EE70,gPreviewHead,data,1952,preview cabeca: 122 x 16 B
 0x0807F610,gPreviewRightArm,data,1952,preview braco direito: 122 x 16 B
 0x0807FDB0,gPreviewLeftArm,data,1952,preview braco esquerdo: 122 x 16 B
-0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B
+0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable
+0x08081490,sCompositePreviewMirroredDescriptorMap,label,,Simon/Rokusho em 0x080814B0
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
-0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite
-0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato
-0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros
+0x083AC2C8,menu_list,label,,Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
+0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
+0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]
+0x083ACBA0,debug_menu_text,label,,Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]
+0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
+0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
+0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
+0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images
+0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato; Simon: Portrait_Pallettes
+0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable
+0x083B29EC,gRandomLUT,label,,Simon/Rokusho em 0x083B2A0C
 0x083B4E08,gFontWidths,data,512,larguras da fonte do dialogo: 2 B por glifo (o 1o e o avanco)
 0x083B5008,gItalicFontWidths,data,512,larguras da fonte italica
-0x083B62D8,gMedals,data,480,medalhas: 16 B cada (27 ou 30 entradas - confirmar)
-0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B
-0x083BA658,gBotNames,ptr,120,nomes dos bots
+0x083B62D8,gMedals,data,480,medalhas: 16 B cada (27 ou 30 entradas - confirmar); Simon: rom_medal_information
+0x083B66EC,gPartAttributeNamePointerTable,label,,Simon/Rokusho em 0x083B670C; tipo undefined *32[4]
+0x083B7F8C,medal_medaforce_list,label,,Simon/Rokusho em 0x083B7FAC
+0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B; Simon: gRomPartRecordTable
+0x083BA658,gBotNames,ptr,120,nomes dos bots; Simon: gPartNamePointerTable
 0x083BBB4C,gPartNames,ptr,480,nomes das pecas (bot*4 + kind)
 0x083BE868,gTechniqueNames,ptr,60,nomes das tecnicas
-0x083BEB94,gPaletteFamily,data,122,familia de paleta = banco OBJ do mini sprite
-0x083BEC10,gMapEncounters,data,1536,encontros por mapa: 192 x 8 B
-0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B
-0x083C1B80,gBattlePointerTable,ptr,246,batalhas
+0x083BEB94,gPaletteFamily,data,122,familia de paleta = banco OBJ do mini sprite; Simon: sCompositeBattleSpritePaletteFamilyTable
+0x083BEC10,gMapEncounters,data,1536,encontros por mapa: 192 x 8 B; Simon: map_has_enemies_list
+0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B; Simon: gMapEncounterBattleTable; Simon: map_encounters
+0x083C1B80,gBattlePointerTable,ptr,246,batalhas; Simon: list_of_all_fights
 0x083CAD78,gMoveStyle,data,122,estilo de deslocamento em batalha (0-6) por bot das pernas
-0x083D1D78,gMoldTable,ptr,50,moldes de preview: registros de 0x18 B
+0x083D1D78,gMoldTable,ptr,50,moldes de preview: registros de 0x18 B; Simon: sCompositePreviewDescriptorPointerTable; Simon: sLargePartDisplayDescriptorPointerTable
 0x083D1E40,gBattleAnimTable_Unk,label,,provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
-0x083D222C,gEventOpcodeTableA,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler)
-0x083D2630,gEventOpcodeTableB,label,,a outra tabela dos 137 opcodes de evento
+0x083D222C,gEventOpcodeTableA,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable
+0x083D2630,gEventOpcodeTableB,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
-0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B
-0x083F8A80,gMapTilesetGfx,ptr,192,graficos do tileset (LZ77)
-0x083F8D80,gMapColorAttr,ptr,192,atributos de cor
-0x083F9080,gMapLayers,ptr,576,camadas: 192 x 3 ponteiros LZ77
-0x083F9980,gMapTilesetPal,ptr,192,paletas do tileset (0x200 B)
-0x08404334,gMapCollision,ptr,192,colisao (1 B por metatile 16x16)
-0x08409480,gMapBlockA,ptr,192,bloco por mapa A
+0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
+0x083F7E80,Overworld_Sprites,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4]
+0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B; Simon: sMapDimensionsInMetaTilesTable
+0x083F8A80,gMapTilesetGfx,ptr,192,graficos do tileset (LZ77); Simon: sMapTilesetGraphicsPointerTable
+0x083F8D80,gMapColorAttr,ptr,192,atributos de cor; Simon: sMapColorAttributePointerTable
+0x083F9080,gMapLayers,ptr,576,camadas: 192 x 3 ponteiros LZ77; Simon: sMapLayerTilemapPointerTable
+0x083F9980,gMapTilesetPal,ptr,192,paletas do tileset (0x200 B); Simon: sMapTilesetPaletteDataPointerTable
+0x08404334,gMapCollision,ptr,192,colisao (1 B por metatile 16x16); Simon: collision_table
+0x08409480,gMapBlockA,ptr,192,bloco por mapa A; Simon: sMapBackgroundAnimationPointerTable
 0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B)
-0x08412E60,gMapWarps,ptr,192,warps (8 B cada; fim 0xFF)
-0x08413160,gMapSprites,ptr,192,sprites usados no mapa (fim 0xFF)
+0x08412E60,gMapWarps,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable
+0x08413160,gMapSprites,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable
 0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto
+0x0847E388,get_item_text,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4]
 0x0847E644,gMapMusic,data,192,musica por mapa
-0x08483234,gMapPeople,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF)
+0x08483234,gMapPeople,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable
 0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B)
-0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio)
+0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents
 0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias)"
 0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
+0x084C4BDC,sPartDetailTileSheetA,label,,Simon/Rokusho em 0x084C4C00
 0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
+0x084C8034,sShopPartScreenUiTileSheet,label,,Simon/Rokusho em 0x084C8058
+0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
 0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
-0x0850F498,gMiniSpritePalettes,data,128,4 paletas OBJ do mini sprite (a 4a zerada)
+0x0850F2F8,sCompositeBattleSpritePaletteSet,label,,Simon/Rokusho em 0x0850F31C
+0x0850F318,sPartScreenObjPaletteBlockA,label,,Simon/Rokusho em 0x0850F33C
+0x0850F378,sPartScreenObjPaletteBlockB,label,,Simon/Rokusho em 0x0850F39C
+0x0850F498,gMiniSpritePalettes,data,128,4 paletas OBJ do mini sprite (a 4a zerada); Simon: sPartSelectionComponentPaletteSet
 0x08765EC0,gEventDb,label,,base do banco de eventos (header: offsets das tabelas)
+0x08765EC4,event_operation_list,label,,Simon/Rokusho em 0x08765EE4
 0x08769EC0,gEventPointerTable,label,,tabela de ponteiros de eventos (base + 0x4000)
 0x087852CF,gStarterData,label,,dados do bot inicial
+0x08785FB4,sSharedPartScreenTileSheet,label,,Simon/Rokusho em 0x08785FD8
 0x087F5500,gTextDump,label,,inicio do texto
