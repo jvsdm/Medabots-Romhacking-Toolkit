@@ -15,7 +15,7 @@ public sealed class MapLayerPatcher
         ArgumentNullException.ThrowIfNull(patch);
         ArgumentException.ThrowIfNullOrWhiteSpace(description);
 
-        session.ApplyPatches(BuildRewriteActions(session.RomFile, patch, description, new FreeSpaceAllocator(FreeSpaceAllocator.AlignUp(Math.Max(session.RomFile.Length, 0x800000), 4))));
+        session.ApplyPatches(BuildRewriteActions(session.RomFile, patch, description, FreeSpaceAllocator.ForRom(session.RomFile.Data)));
     }
 
     public IReadOnlyList<RomPatchAction> BuildRewriteActions(RomFile romFile, MapLayerPatch patch, string description, FreeSpaceAllocator allocator)
@@ -26,7 +26,7 @@ public sealed class MapLayerPatcher
 
         Span<byte> pointerBytes = stackalloc byte[sizeof(uint)];
         GbaPointer.WriteFileOffset(pointerBytes, 0, destination);
-        var pointerOffset = MedabotsRomSchema.MapLayerTilemapPointerTableOffset + ((patch.MapId * MedabotsRomSchema.MapLayerCount + patch.LayerIndex) * sizeof(uint));
+        var pointerOffset = romFile.Layout.MapLayerTilemapPointerTableOffset + ((patch.MapId * MedabotsRomSchema.MapLayerCount + patch.LayerIndex) * sizeof(uint));
         return
         [
             RomPatchAction.Create(destination, payload, description),

@@ -69,7 +69,8 @@ public partial class MainWindow : Window
     }
 
     private List<SpriteBrowserNode> BuildSpriteTreeNodes() =>
-        new SpriteBrowserTreeBuilder(_session?.RomFile, _loadedParts, _metadata, _imageAssetRepository, _mapTilesetRepository).BuildTreeNodes();
+        new SpriteBrowserTreeBuilder(_session?.RomFile, _loadedParts, _metadata, _imageAssetRepository, _mapTilesetRepository,
+            PortraitCharacterCount(), new Dictionary<int, string>(_project.PortraitNames), _session?.RomFile.Layout.PortraitCount ?? MedabotsRomSchema.PortraitCharacterCount).BuildTreeNodes();
 
     private bool ShouldForceSplitLargeDisplay(int partId)
     {
@@ -309,6 +310,7 @@ public partial class MainWindow : Window
             var preview = GetOrBuildSpritePreviewState(node);
             SpritePreviewImage.Source = preview.Bitmap;
             UpdateSpritePreviewLayout(preview.Bitmap.PixelWidth, preview.Bitmap.PixelHeight);
+            CenterSpritePreviewIfNew();
             SpriteSummaryLabel.Text = preview.Summary;
             SpritePaletteSummaryLabel.Text = preview.PaletteSummary;
             SpritePaletteItemsControl.ItemsSource = preview.Swatches;
@@ -1158,7 +1160,7 @@ public partial class MainWindow : Window
             throw new InvalidOperationException("Open a ROM before reading map tilesets.");
         }
 
-        var asset = _mapTilesetRepository.ReadMap(_session.RomFile, mapId, _metadata.GetMapName(mapId));
+        var asset = _mapTilesetRepository.ReadMap(MapSourceRom(), mapId, MapDisplayName(mapId));
         _mapTilesetCache[mapId] = asset;
         return asset;
     }
@@ -1176,7 +1178,7 @@ public partial class MainWindow : Window
             throw new InvalidOperationException("No ROM session is open.");
         }
 
-        return _imageAssetRepository.ReadPortrait(_session.RomFile, characterId, portraitIndex);
+        return _imageAssetRepository.ReadPortrait(MapAdditionsRom(), characterId, portraitIndex);       // staged new characters included
     }
 
     private BattleCompositeSpriteComponentAsset GetCurrentBattleCompositeComponentAsset(int medabotId, int componentIndex)
@@ -1529,6 +1531,12 @@ public partial class MainWindow : Window
         SpriteToolPencilButton.IsChecked = tool == SpriteEditorTool.Pencil;
         SpriteToolEraserButton.IsChecked = tool == SpriteEditorTool.Eraser;
         SpriteToolPickerButton.IsChecked = tool == SpriteEditorTool.Picker;
+        SpriteToolLineButton.IsChecked = tool == SpriteEditorTool.Line;
+        SpriteToolRectangleButton.IsChecked = tool == SpriteEditorTool.Rectangle;
+        SpriteToolFilledRectangleButton.IsChecked = tool == SpriteEditorTool.FilledRectangle;
+        SpriteToolBucketButton.IsChecked = tool == SpriteEditorTool.Bucket;
+        _spriteShapeStart = null;
+        ClearSpriteShapePreview();
     }
 
     private void SetSpriteZoom(int nextZoom, ScrollViewer? scrollViewer = null, WpfPoint? pointer = null)
@@ -1582,6 +1590,7 @@ public partial class MainWindow : Window
         {
             UpdateSpritePreviewLayout(bitmap.PixelWidth, bitmap.PixelHeight);
             UpdateSpriteGridOverlay(bitmap.PixelWidth, bitmap.PixelHeight);
+            CenterSpritePreview();
         }
     }
 
@@ -1690,7 +1699,7 @@ public partial class MainWindow : Window
         var updated = asset with
         {
             PaletteFamily = family,
-            PaletteOffset = MedabotsRomSchema.PartSelectionComponentPaletteSetOffset + (family * ImageAssetRepository.PaletteSize),
+            PaletteOffset = _session.RomFile.Layout.PartSelectionComponentPaletteSetOffset + (family * ImageAssetRepository.PaletteSize),
             PaletteSelector = (byte)(family + 4),
             Image = asset.Image with { PaletteBytes = paletteBytes }
         };
@@ -1899,6 +1908,11 @@ public partial class MainWindow : Window
         _isPaintingSprite = true;
         _hasCapturedUndoForCurrentStroke = false;
         SpritePreviewImage.CaptureMouse();
+        if (BeginSpriteShapeTool(e.GetPosition(SpritePreviewImage)))
+        {
+            return;
+        }
+
         ApplySpriteToolAtPoint(e.GetPosition(SpritePreviewImage));
     }
 
@@ -1909,17 +1923,23 @@ public partial class MainWindow : Window
             return;
         }
 
+        if (UpdateSpriteShapeTool(e.GetPosition(SpritePreviewImage)) || _selectedSpriteEditorTool == SpriteEditorTool.Bucket)
+        {
+            return;
+        }
+
         ApplySpriteToolAtPoint(e.GetPosition(SpritePreviewImage));
     }
 
     private void OnSpritePreviewMouseLeftButtonUp(object? sender, MouseButtonEventArgs e)
     {
         _isPaintingSprite = false;
+        EndSpriteShapeTool();
         _hasCapturedUndoForCurrentStroke = false;
         SpritePreviewImage.ReleaseMouseCapture();
     }
 
-    private void ApplySpriteToolAtPoint(WpfPoint point)
+    private void ApplySpriteToolAtPoint(WpfPoint point, bool invalidate = true)
     {
         if (_selectedSpriteNode is null)
         {
@@ -1999,7 +2019,10 @@ public partial class MainWindow : Window
                 return;
         }
 
-        InvalidateSelectedSpritePreview();
+        if (invalidate)
+        {
+            InvalidateSelectedSpritePreview();
+        }
     }
 
     private bool TryResolveSpritePixel(WpfPoint point, out int pixelX, out int pixelY)
@@ -2681,7 +2704,27 @@ public partial class MainWindow : Window
             return;
         }
 
+        var current = CaptureSelectedSpriteSnapshot();
         var snapshot = history.Pop();
+        if (current is not null)
+        {
+            history.PushRedo(current);
+        }
+
+        RestoreSelectedSpriteSnapshot(snapshot);
+
+        _hasCapturedUndoForCurrentStroke = false;
+        InvalidateSelectedSpritePreview();
+        SpritePatchStatusLabel.Text = "Status: reverted the last draft edit for this asset.";
+    }
+
+    private void RestoreSelectedSpriteSnapshot(SpriteEditSnapshot snapshot)
+    {
+        if (_selectedSpriteNode is null)
+        {
+            return;
+        }
+
         switch (_selectedSpriteNode.AssetKind)
         {
             case SpriteAssetKind.OverworldEventObject:
@@ -2729,10 +2772,6 @@ public partial class MainWindow : Window
                 break;
             }
         }
-
-        _hasCapturedUndoForCurrentStroke = false;
-        InvalidateSelectedSpritePreview();
-        SpritePatchStatusLabel.Text = "Status: reverted the last draft edit for this asset.";
     }
 
     private async void OnRevertSelectedSpriteChangesClicked(object? sender, RoutedEventArgs e)

@@ -6,7 +6,7 @@ Instrucoes para o Claude Code local, com o Ghidra aberto e o GhidraMCP conectado
 
 - Jogo: Medabots: Metabee (Europe), GBA, `MEDABOTSMTBVA8BPE9`. Mesma engine de Rokusho e de Shingata Medarot.
 - Objetivo: mapear a engine para hacks no estilo CFRU (C injetado + hooks) e alimentar o Toolkit (schema de tabelas no estilo HexManiacAdvance).
-- Documento tecnico de referencia: `EXPANSAO_MEDABOTS.md` (expansao de 181 bots, enderecos em offset de arquivo da Metabee E). Pedir ao usuario se nao estiver no repo.
+- Documento tecnico de referencia: `re/reference/EXPANSAO_MEDABOTS.md` (PT) e `re/reference/MEDABOTS_EXPANSION.en-US.md` (EN), copias sincronizadas do vault local (a fonte e o vault; enderecos em offset de arquivo da Metabee E). Secao 14: quebra de linha do dialogo, retratos, divisao de trabalho.
 - Fonte da verdade dos nomes: `re/symbols/mtbe.csv`. O banco do Ghidra e descartavel.
 
 ## Estado do projeto Ghidra
@@ -15,6 +15,20 @@ Instrucoes para o Claude Code local, com o Ghidra aberto e o GhidraMCP conectado
 - `re/ghidra/MedabotsSetup.java` ja rodou: blocos EWRAM/IWRAM/IO/PAL/VRAM/OAM, ROM dividida em `ROM` (0x08000000-0x0807FFFF, exec) e `ROM_DATA` (0x08080000+, sem exec), 148 simbolos aplicados.
 - Auto-analise rodou com Aggressive Instruction Finder (2) e Non-Returning Functions - Discovered desligados.
 - Validado: `GetPartStats` (0x08042B58) decompila para `&gPartStats + bot*0x40 + kind*0x10`, copia 16 B.
+
+## Protocolo nuvem <-> local
+
+- **Nuvem** (este repo, sem ROM nem Ghidra): analise estatica pesada. Le o codigo com as ferramentas que tiver,
+  propoe nomes, struct e hipoteses; grava no CSV (comentario "provavel" quando nao confirmado) e numa secao
+  "Achados" no fim deste arquivo, com o que precisa ser testado localmente.
+- **Local** (maquina do usuario: Ghidra 12.1.4 + GhidraMCP, mGBA com scripts Lua de captura, ROMs, editor WPF):
+  confirma no Ghidra e no jogo, faz as mudancas no Toolkit, atualiza o vault e devolve aqui o que confirmou
+  (tira o "provavel" do CSV, move o item de "Achados" para "Fatos ja estabelecidos").
+- Cada lado registra no fim deste arquivo o que fez e o que deixou para o outro (secao "Diario").
+- **Toolkit**: o trabalho de expansao (bots ate 236, mapas ate 255, eventos, mensagens com quebra de linha,
+  retratos ate 256, editor WPF) foi publicado nesta branch num commit unico (2026-10-10), igual a branch local
+  `medabots-expansion`. A sessao local continua sendo onde o editor e testado; na nuvem, mudar o Toolkit so com
+  testes (`tests/Medabots.Rom.Tests`, que precisam das ROMs e por isso rodam aqui).
 
 ## Regras
 
@@ -79,3 +93,18 @@ Demais enderecos: ver `re/symbols/mtbe.csv`.
 ## Objetivo de medio prazo
 
 Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca do Medabot em batalha pelos de um bot-forma, somar armadura ao entrar e dividir ao sair, gatilho via Medaforce. Depende das tarefas 2, 3 e 4.
+
+## Diario
+
+### 2026-10-10 - sessao local
+- GhidraMCP 1.4 instalado (extensao ajustada para o Ghidra 12.1.4; release original e para 11.3.2). Falta o
+  usuario ativar o plugin (File > Configure > Developer > GhidraMCPPlugin) e reiniciar o Claude Code.
+- Conferido no codigo: `GetPartName` (0x08047BEC) le 0x083BBB4C com (bot*4 + tipo)*4 -> `gPartNames` correto;
+  o `tbl_SpritePointers` do script antigo estava errado (pendencia resolvida).
+- CSV: +13 simbolos ja confirmados localmente (texto do dialogo, retratos, fontes, tabelas de opcode de evento).
+- Docs sincronizados em `re/reference/`.
+- Toolkit da expansao publicado nesta branch (commit unico, autor jvsdm).
+- GhidraMCP testado: o plugin responde em http://127.0.0.1:8080/ com o programa Medabots aberto.
+- Para a nuvem: tarefas 1-5 deste arquivo continuam valendo. Sugestao de proxima analise pesada: tarefa 2
+  (dispatch das 60 acoes) e o formato da tabela 0x083D1E40 (animacao de batalha por molde, base para um editor
+  de animacao).

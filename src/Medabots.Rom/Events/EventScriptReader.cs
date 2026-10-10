@@ -17,7 +17,7 @@ public sealed class EventScriptReader
         ArgumentNullException.ThrowIfNull(romFile);
         ArgumentNullException.ThrowIfNull(profile);
 
-        var installedTable = ResolveInstalledEventTable(romFile.Data, profile);
+        var installedTable = ResolveInstalledEventTable(romFile, profile);
         if (eventId < 0 || eventId >= installedTable.EventCount)
         {
             throw new ArgumentOutOfRangeException(nameof(eventId), $"Event id must be between 0 and {installedTable.EventCount - 1}.");
@@ -116,57 +116,40 @@ public sealed class EventScriptReader
         }
     }
 
-    public static (int EventTableOffset, int EventCount) ResolveInstalledEventTable(byte[] romData, MedabotsRomTextProfile profile)
+    /// <summary>
+    /// Event pointer table and count, read from the database the game code points at (header 00 40,
+    /// table at +0x4000). Follows databases relocated by the editor; falls back to the profile.
+    /// </summary>
+    public static (int EventTableOffset, int EventCount) ResolveInstalledEventTable(RomFile romFile, MedabotsRomTextProfile profile)
     {
-        var bestEventTableOffset = profile.EventTableOffset;
-        var bestEventCount = profile.EventCount;
-        var originalDatabaseBase = profile.EventTableOffset - MedabotsRomSchema.EventBankBaseAddress;
-        EvaluateDatabaseCandidate(originalDatabaseBase);
+        ArgumentNullException.ThrowIfNull(romFile);
+        return ResolveInstalledEventTable(romFile.Data, romFile.Layout, profile);
+    }
 
-        for (var databaseBaseOffset = Math.Max(0x800000, originalDatabaseBase + 4); databaseBaseOffset <= romData.Length - 4; databaseBaseOffset += 4)
+    public static (int EventTableOffset, int EventCount) ResolveInstalledEventTable(byte[] romData, MedabotsRomTextProfile profile) =>
+        ResolveInstalledEventTable(romData, Layout.RomLayout.Resolve(romData), profile);
+
+    private static (int EventTableOffset, int EventCount) ResolveInstalledEventTable(byte[] romData, Layout.RomLayout layout, MedabotsRomTextProfile profile)
+    {
+        ArgumentNullException.ThrowIfNull(profile);
+        if (!layout.TryGet("EventScriptDatabase", out var databaseBase) ||
+            databaseBase < 0 || databaseBase + 4 > romData.Length ||
+            romData[databaseBase] != 0x00 || romData[databaseBase + 1] != 0x40)
         {
-            EvaluateDatabaseCandidate(databaseBaseOffset);
+            return (profile.EventTableOffset, profile.EventCount);
         }
 
-        return (bestEventTableOffset, bestEventCount);
-
-        void EvaluateDatabaseCandidate(int databaseBaseOffset)
+        var bankTableRelativeOffset = romData[databaseBase + 2] | (romData[databaseBase + 3] << 8);
+        var pointerTableLength = bankTableRelativeOffset - EventScriptDatabaseHeaderSize;
+        var eventCount = pointerTableLength / 2;
+        var eventTableOffset = databaseBase + EventScriptDatabaseHeaderSize;
+        if (pointerTableLength <= 0 || (pointerTableLength & 1) != 0 ||
+            databaseBase + bankTableRelativeOffset + eventCount > romData.Length)
         {
-            if (databaseBaseOffset < 0 || databaseBaseOffset > romData.Length - 4)
-            {
-                return;
-            }
-
-            if (romData[databaseBaseOffset] != 0x00 || romData[databaseBaseOffset + 1] != 0x40)
-            {
-                return;
-            }
-
-            var bankTableRelativeOffset = romData[databaseBaseOffset + 2] | (romData[databaseBaseOffset + 3] << 8);
-            if (bankTableRelativeOffset < EventScriptDatabaseHeaderSize)
-            {
-                return;
-            }
-
-            var pointerTableLength = bankTableRelativeOffset - EventScriptDatabaseHeaderSize;
-            if ((pointerTableLength & 1) != 0)
-            {
-                return;
-            }
-
-            var eventCount = pointerTableLength / 2;
-            var eventTableOffset = databaseBaseOffset + EventScriptDatabaseHeaderSize;
-            var bankTableOffset = databaseBaseOffset + bankTableRelativeOffset;
-            if (eventCount < bestEventCount ||
-                eventTableOffset + (eventCount * 2) > romData.Length ||
-                bankTableOffset + eventCount > romData.Length)
-            {
-                return;
-            }
-
-            bestEventTableOffset = eventTableOffset;
-            bestEventCount = eventCount;
+            return (profile.EventTableOffset, profile.EventCount);
         }
+
+        return (eventTableOffset, eventCount);
     }
 
     private static int ResolveEventOffset(byte[] romData, int eventTableOffset, int eventCount, short eventId)

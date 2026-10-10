@@ -12,30 +12,40 @@
         Width="1540"
         MinHeight="760"
         MinWidth="1200"
-        Background="#FFF3F4F6">
+        Background="{DynamicResource Theme.WindowBackground}"
+        Foreground="{DynamicResource Theme.TextPrimary}">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <localModels:ColorToBrushConverter x:Key="ColorToBrushConverter" />
-        <Style TargetType="TextBox">
+        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="Padding" Value="6,4" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
-        <Style TargetType="Button">
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Padding" Value="10,5" />
             <Setter Property="Margin" Value="0" />
         </Style>
         <Style x:Key="PanelBorderStyle" TargetType="Border">
-            <Setter Property="BorderBrush" Value="#FFD1D5DB" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Theme.Border}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource Theme.PanelBackground}" />
             <Setter Property="Padding" Value="12" />
             <Setter Property="CornerRadius" Value="2" />
         </Style>
         <DataTemplate x:Key="BrowserItemChangeTemplate" DataType="{x:Type editorModels:BrowserItem}">
-            <TextBlock Text="{Binding Title}"
-                       Foreground="{Binding TextColor, Converter={StaticResource ColorToBrushConverter}}"
-                       TextWrapping="Wrap" />
+            <TextBlock Text="{Binding Title}" TextWrapping="Wrap">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource Theme.TextPrimary}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsModified}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource Theme.Changed}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </DataTemplate>
         <DataTemplate x:Key="BattleLoadoutOptionTemplate" DataType="{x:Type localModels:BattleLoadoutOption}">
             <Grid Margin="0,1,0,1">
@@ -43,12 +53,12 @@
                     <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Border Width="36" Height="36" BorderBrush="#FFD1D5DB" BorderThickness="1" Background="Transparent" VerticalAlignment="Center">
+                <Border Width="36" Height="36" BorderBrush="{DynamicResource Theme.Border}" BorderThickness="1" Background="Transparent" VerticalAlignment="Center">
                     <Image Source="{Binding Thumbnail}" Width="36" Height="36" Stretch="Fill" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                 </Border>
                 <StackPanel Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center">
                     <TextBlock FontWeight="SemiBold" Text="{Binding Title}" TextWrapping="Wrap" />
-                    <TextBlock Margin="0,2,0,0" FontSize="11" Foreground="#FF6B7280" Text="{Binding Subtitle}" TextWrapping="Wrap" />
+                    <TextBlock Margin="0,2,0,0" FontSize="11" Foreground="{DynamicResource Theme.TextMuted}" Text="{Binding Subtitle}" TextWrapping="Wrap" />
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -57,23 +67,23 @@
         </ItemsPanelTemplate>
         <DataTemplate x:Key="MapSpawnSpriteOptionTemplate" DataType="{x:Type localModels:MapSpawnSpriteOption}">
             <StackPanel Width="92" Margin="2">
-                <Border Width="48" Height="72" HorizontalAlignment="Center" BorderBrush="#FFD1D5DB" BorderThickness="1" Background="Transparent">
+                <Border Width="48" Height="72" HorizontalAlignment="Center" BorderBrush="{DynamicResource Theme.Border}" BorderThickness="1" Background="Transparent">
                     <Image Source="{Binding Thumbnail}" Width="48" Height="72" Stretch="Fill" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                 </Border>
-                <TextBlock Margin="0,4,0,0" FontSize="11" FontWeight="SemiBold" Foreground="#FF111827" Text="{Binding Title}" TextAlignment="Center" TextWrapping="Wrap" />
-                <TextBlock Margin="0,2,0,0" FontSize="10" Foreground="#FF6B7280" Text="{Binding Subtitle}" TextAlignment="Center" TextWrapping="Wrap" />
+                <TextBlock Margin="0,4,0,0" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" Text="{Binding Title}" TextAlignment="Center" TextWrapping="Wrap" />
+                <TextBlock Margin="0,2,0,0" FontSize="10" Foreground="{DynamicResource Theme.TextMuted}" Text="{Binding Subtitle}" TextAlignment="Center" TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="MapSpawnFacingOptionTemplate" DataType="{x:Type localModels:MapSpawnFacingOption}">
             <StackPanel Width="86" Margin="2">
-                <Border Width="48" Height="72" HorizontalAlignment="Center" BorderBrush="#FFD1D5DB" BorderThickness="1" Background="Transparent">
+                <Border Width="48" Height="72" HorizontalAlignment="Center" BorderBrush="{DynamicResource Theme.Border}" BorderThickness="1" Background="Transparent">
                     <Image Source="{Binding Thumbnail}" Width="48" Height="72" Stretch="Fill" RenderOptions.BitmapScalingMode="NearestNeighbor" />
                 </Border>
-                <TextBlock Margin="0,4,0,0" FontSize="11" FontWeight="SemiBold" Foreground="#FF111827" Text="{Binding Title}" TextAlignment="Center" TextWrapping="Wrap" />
+                <TextBlock Margin="0,4,0,0" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" Text="{Binding Title}" TextAlignment="Center" TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="MapSpriteSlotOptionTemplate" DataType="{x:Type localModels:MapSpriteSlotOption}">
-            <Border Width="24" Height="32" Margin="0.5" Padding="0" BorderBrush="#FFD1D5DB" BorderThickness="1" Background="#FFFFFFFF" ToolTip="{Binding Subtitle}">
+            <Border Width="24" Height="32" Margin="0.5" Padding="0" BorderBrush="{DynamicResource Theme.Border}" BorderThickness="1" Background="{DynamicResource Theme.PanelBackground}" ToolTip="{Binding Subtitle}">
                 <Image HorizontalAlignment="Center"
                        Width="16"
                        Height="24"
@@ -98,19 +108,23 @@
             <ProgressBar x:Name="LoadingProgressBar" Visibility="Collapsed" />
         </Grid>
 
-        <Menu DockPanel.Dock="Top" Background="#FFF8F8F8">
+        <Menu DockPanel.Dock="Top" Background="{DynamicResource Theme.WindowBackground}">
             <MenuItem Header="_File">
                 <MenuItem x:Name="OpenRomCommandButton" Header="Open ROM..." Click="OnOpenRomClicked" />
                 <MenuItem x:Name="OpenProjectCommandButton" Header="Open Project..." Click="OnLoadProjectClicked" />
+                <MenuItem x:Name="GenerateExpandedRomCommandButton" Header="Generate Expanded ROM..." Click="OnGenerateExpandedRomClicked" />
                 <Separator />
                 <MenuItem x:Name="SaveProjectCommandButton" Header="Save Project" Click="OnSaveProjectClicked" />
                 <MenuItem x:Name="ExportRomCommandButton" Header="Export ROM" Click="OnSaveCopyClicked" />
                 <Separator />
                 <MenuItem Header="E_xit" Click="OnExitClicked" />
             </MenuItem>
+            <MenuItem Header="_View" SubmenuOpened="OnViewMenuOpened">
+                <MenuItem x:Name="DarkModeMenuItem" Header="_Dark mode" IsCheckable="True" Click="OnDarkModeClicked" />
+            </MenuItem>
         </Menu>
 
-        <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom" Background="{DynamicResource Theme.PanelBackground}">
             <StatusBarItem Width="420">
                 <TextBlock x:Name="FooterProjectLabel" TextTrimming="CharacterEllipsis" />
             </StatusBarItem>
@@ -167,11 +181,20 @@
                                     <TextBlock Grid.Column="2" Margin="16,0,8,0" VerticalAlignment="Center">Index</TextBlock>
                                     <TextBox x:Name="IndexEntry" Grid.Column="3" />
                                 </Grid>
-                                <TextBox x:Name="MessageTextEditor" Margin="0,12,0,0" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" MinHeight="560" />
+                                <TextBox x:Name="MessageTextEditor" Margin="0,12,0,0" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" MinHeight="160" MaxHeight="320" TextChanged="OnMessageTextEditorTextChanged" />
                                 <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
                                     <Button Margin="0,0,8,0" Click="OnSavePatchChangesClicked">Save Patch</Button>
                                     <Button Click="OnRemovePatchClicked">Remove Patch</Button>
                                 </StackPanel>
+                                <TextBlock Margin="0,18,0,0" Text="Preview (as the game shows it)" FontWeight="SemiBold" FontSize="14" />
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                    <Button Content="&#x25C0; Previous box" Padding="10,3" Click="OnMessagePreviewPreviousClicked" />
+                                    <Button Content="Next box &#x25B6;" Padding="10,3" Margin="6,0,0,0" Click="OnMessagePreviewNextClicked" />
+                                </StackPanel>
+                                <Border Margin="0,8,0,0" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{DynamicResource Theme.Border}">
+                                    <Image x:Name="MessagePreviewImage" Width="480" Height="320" Stretch="Fill" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                </Border>
+                                <TextBlock x:Name="MessagePreviewLabel" Margin="0,6,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
@@ -198,11 +221,11 @@
                                          TextChanged="OnEventFilterChanged"
                                          ToolTip="Plain text search, or use op:0x84 / opcode:Focus_Event_Object" />
                                 <TextBlock Margin="0,6,0,0"
-                                           Foreground="#FF6B7280"
+                                           Foreground="{DynamicResource Theme.TextMuted}"
                                            FontSize="11"
                                            Text="Search text, or filter by opcode with op:0x84 or opcode:Focus_Event_Object." />
                             </StackPanel>
-                            <Grid Grid.Row="1" Margin="0,10,0,8" Background="#FFF3F4F6">
+                            <Grid Grid.Row="1" Margin="0,10,0,8" Background="{DynamicResource Theme.WindowBackground}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60" />
                                     <ColumnDefinition Width="*" />
@@ -250,7 +273,7 @@
                                 <ListBox x:Name="EventInstructionCollectionView" Grid.Column="0" SelectionChanged="OnEventInstructionSelectionChanged">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Padding="8" BorderBrush="#FFE5E7EB" BorderThickness="0,0,0,1" Tag="{Binding}">
+                                            <Border Padding="8" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="0,0,0,1" Tag="{Binding}">
                                                 <Border.ContextMenu>
                                                     <ContextMenu>
                                                         <MenuItem Header="Rename Label" Click="OnRenameEventLabelMenuClicked" CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
@@ -272,10 +295,10 @@
                                                             <Border Background="{Binding CategoryBackgroundColor}" Padding="7,2" CornerRadius="2" DockPanel.Dock="Left" Margin="0,0,8,0" Visibility="{Binding HasCategory, Converter={StaticResource BoolToVisibilityConverter}}">
                                                                 <TextBlock Text="{Binding Category}" Foreground="{Binding CategoryTextColor}" FontSize="10" FontWeight="SemiBold" />
                                                             </Border>
-                                                            <TextBlock Text="{Binding LabelDisplay, StringFormat={}{0}:}" Foreground="#FF2563EB" FontSize="11" FontWeight="SemiBold" />
+                                                            <TextBlock Text="{Binding LabelDisplay, StringFormat={}{0}:}" Foreground="{DynamicResource Theme.Accent}" FontSize="11" FontWeight="SemiBold" />
                                                         </DockPanel>
-                                                        <TextBlock Margin="0,4,0,0" Text="{Binding Summary}" TextWrapping="Wrap" Foreground="#FF111827" />
-                                                        <TextBlock Margin="0,4,0,0" Text="{Binding Detail}" TextWrapping="Wrap" Foreground="#FF6B7280" />
+                                                        <TextBlock Margin="0,4,0,0" Text="{Binding Summary}" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextPrimary}" />
+                                                        <TextBlock Margin="0,4,0,0" Text="{Binding Detail}" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
                                                     </StackPanel>
                                                 </Grid>
                                             </Border>
@@ -299,10 +322,10 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="Selected Action" FontWeight="SemiBold" />
                                         <TextBlock x:Name="EventActionTitleLabel" Grid.Row="1" Margin="0,8,0,0" TextWrapping="Wrap" />
-                                        <TextBlock x:Name="EventActionHintLabel" Grid.Row="2" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="#FF6B7280" />
+                                        <TextBlock x:Name="EventActionHintLabel" Grid.Row="2" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
                                         <StackPanel Grid.Row="3" Margin="0,8,0,0">
-                                            <TextBlock Text="Known Labels" FontWeight="SemiBold" Foreground="#FF6B7280" />
-                                            <TextBlock x:Name="EventKnownLabelsLabel" Margin="0,4,0,0" TextWrapping="Wrap" Foreground="#FF2563EB" />
+                                            <TextBlock Text="Known Labels" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextMuted}" />
+                                            <TextBlock x:Name="EventKnownLabelsLabel" Margin="0,4,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.Accent}" />
                                         </StackPanel>
                                         <Grid Grid.Row="4" Margin="0,10,0,0">
                                             <Grid.ColumnDefinitions>
@@ -319,7 +342,7 @@
                                                 </Button.ContextMenu>
                                             </Button>
                                         </Grid>
-                                        <TextBlock Grid.Row="5" Margin="0,8,0,0" Text="Labels can be used directly in jump arguments." Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                        <TextBlock Grid.Row="5" Margin="0,8,0,0" Text="Labels can be used directly in jump arguments." Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         <local:EventStructuralActionsControl Grid.Row="6"
                                                                             InsertNopBeforeClick="OnSelectedEventInsertNopBeforeClicked"
                                                                             InsertNopAfterClick="OnSelectedEventInsertNopAfterClicked"
@@ -333,7 +356,7 @@
                                                 <DataTemplate>
                                                     <StackPanel Margin="0,0,0,10">
                                                         <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
-                                                        <TextBlock Text="{Binding TypeName}" Foreground="#FF6B7280" FontSize="11" />
+                                                        <TextBlock Text="{Binding TypeName}" Foreground="{DynamicResource Theme.TextMuted}" FontSize="11" />
                                                         <TextBox Margin="0,4,0,0" Text="{Binding ValueText, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsPlainValueEditor, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                         <ComboBox Margin="0,4,0,0" ItemsSource="{Binding EnumOptions}" SelectedIndex="{Binding SelectedEnumIndex}" Visibility="{Binding IsEnumEditor, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                         <Grid Margin="0,4,0,0" Visibility="{Binding IsMoveEditor, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -362,15 +385,15 @@
                                                         </Grid>
                                                         <StackPanel Margin="0,4,0,0" Visibility="{Binding IsJumpTargetEditor, Converter={StaticResource BoolToVisibilityConverter}}">
                                                             <ComboBox ItemsSource="{Binding JumpTargetOptions}" SelectedIndex="{Binding SelectedJumpTargetIndex}" />
-                                                            <TextBlock Margin="0,4,0,0" Text="{Binding HelpText}" FontSize="11" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                                            <TextBlock Margin="0,4,0,0" Text="{Binding HelpText}" FontSize="11" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                                         </StackPanel>
-                                                        <TextBlock Margin="0,4,0,0" Text="{Binding HelpText}" FontSize="11" Foreground="#FF6B7280" TextWrapping="Wrap" Visibility="{Binding ShowStandardHelpText, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                        <TextBlock Margin="0,4,0,0" Text="{Binding HelpText}" FontSize="11" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" Visibility="{Binding ShowStandardHelpText, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
                                         <Button Grid.Row="8" Margin="0,10,0,0" HorizontalAlignment="Left" Click="OnApplyEventActionClicked">Apply Action Changes</Button>
-                                        <TextBlock x:Name="EventPatchStatusLabel" Grid.Row="9" Margin="0,8,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                        <TextBlock x:Name="EventPatchStatusLabel" Grid.Row="9" Margin="0,8,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                     </Grid>
                                 </Border>
                             </Grid>
@@ -413,10 +436,10 @@
                                     <TextBlock Text="Robobattle Details" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" />
                                     <Button Grid.Column="1" HorizontalAlignment="Right" Click="OnResetBattleClicked">Reset</Button>
                                 </Grid>
-                                <Border Margin="0,12,0,0" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="10" Background="#FFF9FAFB">
+                                <Border Margin="0,12,0,0" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="10" Background="{DynamicResource Theme.PanelAltBackground}">
                                     <StackPanel>
                                         <TextBlock x:Name="BattleOverviewLabel" FontWeight="SemiBold" TextWrapping="Wrap" />
-                                        <TextBlock x:Name="BattleOverviewHintLabel" Margin="0,6,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                        <TextBlock x:Name="BattleOverviewHintLabel" Margin="0,6,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                     </StackPanel>
                                 </Border>
 
@@ -457,7 +480,7 @@
 
                                 <TextBlock Margin="0,14,0,0" Text="Bots" FontWeight="SemiBold" />
 
-                                <Border x:Name="BattleBot1Panel" Margin="0,8,0,0" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="10">
+                                <Border x:Name="BattleBot1Panel" Margin="0,8,0,0" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="10">
                                     <StackPanel>
                                         <TextBlock Text="Bot 1" FontWeight="SemiBold" />
                                         <TextBlock x:Name="BattleBot1PresenceLabel" Visibility="Collapsed" />
@@ -497,10 +520,10 @@
                                                 <TextBlock Margin="0,10,0,0" Text="Cycle Reset Value" FontWeight="SemiBold" />
                                                 <TextBox x:Name="BattleBot1CycleResetEntry" Margin="0,4,0,0" TextChanged="OnBattleEditorValueChanged" />
                                             </StackPanel>
-                                            <Border Grid.Column="4" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="8" Background="#FFF9FAFB">
+                                            <Border Grid.Column="4" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="8" Background="{DynamicResource Theme.PanelAltBackground}">
                                                 <StackPanel>
                                                     <TextBlock Text="Derived Medal Stats" FontWeight="SemiBold" />
-                                                    <TextBlock x:Name="BattleBot1DerivedLabel" Margin="0,6,0,0" Foreground="#FF374151" TextWrapping="Wrap" />
+                                                    <TextBlock x:Name="BattleBot1DerivedLabel" Margin="0,6,0,0" Foreground="{DynamicResource Theme.TextSecondary}" TextWrapping="Wrap" />
                                                     <TextBlock x:Name="BattleBot1Unknown1Entry" Visibility="Collapsed" />
                                                     <TextBlock x:Name="BattleBot1Unknown3Entry" Visibility="Collapsed" />
                                                     <TextBlock x:Name="BattleBot1Unknown5Entry" Visibility="Collapsed" />
@@ -516,7 +539,7 @@
                                     </StackPanel>
                                 </Border>
 
-                                <Border x:Name="BattleBot2Panel" Margin="0,12,0,0" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="10">
+                                <Border x:Name="BattleBot2Panel" Margin="0,12,0,0" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="10">
                                     <StackPanel>
                                         <TextBlock Text="Bot 2" FontWeight="SemiBold" />
                                         <TextBlock x:Name="BattleBot2PresenceLabel" Visibility="Collapsed" />
@@ -543,9 +566,9 @@
                                                 <Grid Margin="0,6,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><TextBlock x:Name="BattleBot2Cycle8Label" VerticalAlignment="Center" /><ComboBox x:Name="BattleBot2Cycle8ComboBox" Grid.Column="1" /></Grid>
                                                 <TextBlock Margin="0,10,0,0" Text="Cycle Reset Value" FontWeight="SemiBold" /><TextBox x:Name="BattleBot2CycleResetEntry" Margin="0,4,0,0" TextChanged="OnBattleEditorValueChanged" />
                                             </StackPanel>
-                                            <Border Grid.Column="4" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="8" Background="#FFF9FAFB">
+                                            <Border Grid.Column="4" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="8" Background="{DynamicResource Theme.PanelAltBackground}">
                                                 <StackPanel>
-                                                    <TextBlock Text="Derived Medal Stats" FontWeight="SemiBold" /><TextBlock x:Name="BattleBot2DerivedLabel" Margin="0,6,0,0" Foreground="#FF374151" TextWrapping="Wrap" />
+                                                    <TextBlock Text="Derived Medal Stats" FontWeight="SemiBold" /><TextBlock x:Name="BattleBot2DerivedLabel" Margin="0,6,0,0" Foreground="{DynamicResource Theme.TextSecondary}" TextWrapping="Wrap" />
                                                     <TextBlock x:Name="BattleBot2Unknown1Entry" Visibility="Collapsed" /><TextBlock x:Name="BattleBot2Unknown3Entry" Visibility="Collapsed" /><TextBlock x:Name="BattleBot2Unknown5Entry" Visibility="Collapsed" />
                                                     <TextBlock x:Name="BattleBot2Cycle4ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot2Cycle5ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot2Cycle6ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot2Cycle7ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot2Cycle8ValueLabel" Visibility="Collapsed" />
                                                     <TextBox x:Name="BattleBot2ReservedEntry" Visibility="Collapsed" />
@@ -555,7 +578,7 @@
                                     </StackPanel>
                                 </Border>
 
-                                <Border x:Name="BattleBot3Panel" Margin="0,12,0,0" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="10">
+                                <Border x:Name="BattleBot3Panel" Margin="0,12,0,0" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="10">
                                     <StackPanel>
                                         <TextBlock Text="Bot 3" FontWeight="SemiBold" />
                                         <TextBlock x:Name="BattleBot3PresenceLabel" Visibility="Collapsed" />
@@ -582,9 +605,9 @@
                                                 <Grid Margin="0,6,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><TextBlock x:Name="BattleBot3Cycle8Label" VerticalAlignment="Center" /><ComboBox x:Name="BattleBot3Cycle8ComboBox" Grid.Column="1" /></Grid>
                                                 <TextBlock Margin="0,10,0,0" Text="Cycle Reset Value" FontWeight="SemiBold" /><TextBox x:Name="BattleBot3CycleResetEntry" Margin="0,4,0,0" TextChanged="OnBattleEditorValueChanged" />
                                             </StackPanel>
-                                            <Border Grid.Column="4" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="8" Background="#FFF9FAFB">
+                                            <Border Grid.Column="4" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="8" Background="{DynamicResource Theme.PanelAltBackground}">
                                                 <StackPanel>
-                                                    <TextBlock Text="Derived Medal Stats" FontWeight="SemiBold" /><TextBlock x:Name="BattleBot3DerivedLabel" Margin="0,6,0,0" Foreground="#FF374151" TextWrapping="Wrap" />
+                                                    <TextBlock Text="Derived Medal Stats" FontWeight="SemiBold" /><TextBlock x:Name="BattleBot3DerivedLabel" Margin="0,6,0,0" Foreground="{DynamicResource Theme.TextSecondary}" TextWrapping="Wrap" />
                                                     <TextBlock x:Name="BattleBot3Unknown1Entry" Visibility="Collapsed" /><TextBlock x:Name="BattleBot3Unknown3Entry" Visibility="Collapsed" /><TextBlock x:Name="BattleBot3Unknown5Entry" Visibility="Collapsed" />
                                                     <TextBlock x:Name="BattleBot3Cycle4ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot3Cycle5ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot3Cycle6ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot3Cycle7ValueLabel" Visibility="Collapsed" /><TextBlock x:Name="BattleBot3Cycle8ValueLabel" Visibility="Collapsed" />
                                                     <TextBox x:Name="BattleBot3ReservedEntry" Visibility="Collapsed" />
@@ -615,7 +638,25 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="PartFilterEntry" TextChanged="OnPartFilterChanged" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="PartFilterEntry" TextChanged="OnPartFilterChanged" VerticalContentAlignment="Center" />
+                                <Button x:Name="AddBotCommandButton"
+                                        Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        Width="34"
+                                        Height="30"
+                                        Padding="0,-4,0,0"
+                                        Content="+"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Style="{StaticResource AddButtonStyle}"
+                                        ToolTip="New Medabots: create one or more bots and add them to a copy of the expanded ROM"
+                                        Click="OnAddBotClicked" />
+                            </Grid>
                             <ListBox x:Name="PartCollectionView"
                                      Grid.Row="1"
                                      Margin="0,10,0,0"
@@ -632,10 +673,10 @@
                                         <TextBlock Text="Part Details" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" />
                                         <Button HorizontalAlignment="Right" Click="OnResetPartClicked">Reset</Button>
                                     </Grid>
-                                    <Border Margin="0,12,0,0" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="10" Background="#FFF9FAFB">
+                                    <Border Margin="0,12,0,0" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="10" Background="{DynamicResource Theme.PanelAltBackground}">
                                         <StackPanel>
                                             <TextBlock x:Name="PartOverviewLabel" FontWeight="SemiBold" TextWrapping="Wrap" />
-                                            <TextBlock x:Name="PartOverviewHintLabel" Margin="0,6,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartOverviewHintLabel" Margin="0,6,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
                                     </Border>
 
@@ -653,7 +694,7 @@
                                                       Margin="0,4,0,0"
                                                       DisplayMemberPath="Title"
                                                       SelectedValuePath="Id" />
-                                            <TextBlock x:Name="PartMedalCompatibilityHintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartMedalCompatibilityHintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="2">
@@ -662,7 +703,7 @@
                                                       Margin="0,4,0,0"
                                                       DisplayMemberPath="Title"
                                                       SelectedValuePath="Id" />
-                                            <TextBlock x:Name="PartSpecialityHintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartSpecialityHintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
                                     </Grid>
 
@@ -679,13 +720,13 @@
                                                       Margin="0,4,0,0"
                                                       DisplayMemberPath="Title"
                                                       SelectedValuePath="Id" />
-                                            <TextBlock x:Name="PartGenderHintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartGenderHintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="2">
                                             <TextBlock Text="Armor" FontWeight="SemiBold" />
                                             <TextBox x:Name="PartArmorEntry" Margin="0,4,0,0" />
-                                            <TextBlock x:Name="PartArmorHintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartArmorHintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
                                     </Grid>
 
@@ -710,13 +751,13 @@
                                                       DisplayMemberPath="Title"
                                                       SelectedValuePath="Id"
                                                       Visibility="Collapsed" />
-                                            <TextBlock x:Name="PartValue1HintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartValue1HintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="2">
                                             <TextBlock x:Name="PartValue2Label" FontWeight="SemiBold" />
                                             <TextBox x:Name="PartValue2Entry" Margin="0,4,0,0" />
-                                            <TextBlock x:Name="PartValue2HintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartValue2HintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
                                     </Grid>
 
@@ -730,7 +771,7 @@
                                         <StackPanel Grid.Column="0">
                                             <TextBlock x:Name="PartValue3Label" FontWeight="SemiBold" />
                                             <TextBox x:Name="PartValue3Entry" Margin="0,4,0,0" />
-                                            <TextBlock x:Name="PartValue3HintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartValue3HintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="2">
@@ -740,14 +781,14 @@
                                                       Margin="0,8,0,0"
                                                       Content="Enabled"
                                                       Visibility="Collapsed" />
-                                            <TextBlock x:Name="PartValue4HintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock x:Name="PartValue4HintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         </StackPanel>
                                     </Grid>
 
                                     <StackPanel Margin="0,8,0,0">
                                         <TextBlock x:Name="PartValue5Label" FontWeight="SemiBold" />
                                         <TextBox x:Name="PartValue5Entry" Margin="0,4,0,0" />
-                                        <TextBlock x:Name="PartValue5HintLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                        <TextBlock x:Name="PartValue5HintLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                     </StackPanel>
 
                                     <TextBlock Margin="0,14,0,0" Text="Derived / Scaling Fields" FontWeight="SemiBold" />
@@ -776,23 +817,23 @@
 
                                     <TextBlock x:Name="PartUnknown2HintLabel"
                                                Margin="0,6,0,0"
-                                               Foreground="#FF6B7280"
+                                               Foreground="{DynamicResource Theme.TextMuted}"
                                                TextWrapping="Wrap" />
                                     <TextBlock x:Name="PartUnknown45HintLabel"
                                                Margin="0,6,0,0"
-                                               Foreground="#FF6B7280"
+                                               Foreground="{DynamicResource Theme.TextMuted}"
                                                TextWrapping="Wrap" />
 
                                     <Expander Margin="0,14,0,0" Header="Advanced / Unresolved Fields">
                                         <StackPanel Margin="0,8,0,0">
-                                            <TextBlock Text="These bytes are preserved on save, but their full gameplay meaning is still being reverse engineered." Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                            <TextBlock Text="These bytes are preserved on save, but their full gameplay meaning is still being reverse engineered." Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                             <UniformGrid Margin="0,10,0,0" Columns="2">
                                                 <TextBlock x:Name="PartUnknown3Label" VerticalAlignment="Center">Bot Shared Value</TextBlock>
                                                 <TextBox x:Name="PartUnknown3Entry" />
                                             </UniformGrid>
                                             <TextBlock x:Name="PartUnknown3HintLabel"
                                                        Margin="0,6,0,0"
-                                                       Foreground="#FF6B7280"
+                                                       Foreground="{DynamicResource Theme.TextMuted}"
                                                        TextWrapping="Wrap" />
                                             <UniformGrid Margin="0,8,0,0" Columns="4">
                                                 <TextBlock VerticalAlignment="Center">Reserved Tail A</TextBlock>
@@ -812,7 +853,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem x:Name="MapsSection" Header="Maps">
+            <TabItem x:Name="MapsSection" Header="Maps" PreviewKeyDown="OnMapsPreviewKeyDown">
                 <Grid Margin="0,8,0,0" PreviewMouseDown="OnMapEditorRootPreviewMouseDown">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="340" />
@@ -828,11 +869,31 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="MapFilterEntry" TextChanged="OnMapFilterChanged" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="MapFilterEntry" TextChanged="OnMapFilterChanged" VerticalContentAlignment="Center" />
+                                <Button x:Name="AddMapCommandButton"
+                                        Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        Width="34"
+                                        Height="30"
+                                        Padding="0,-4,0,0"
+                                        Content="+"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Style="{StaticResource AddButtonStyle}"
+                                        ToolTip="New map: a copy of an existing map (layers, tileset, collision, music) in the next free map ID"
+                                        Click="OnAddMapClicked" />
+                            </Grid>
                             <ListBox x:Name="MapCollectionView"
                                      Grid.Row="1"
                                      Margin="0,10,0,0"
                                      SelectionChanged="OnMapSelectionChanged"
+                                     MouseDoubleClick="OnMapListDoubleClicked"
+                                     ToolTip="Double-click a map to rename it (an editor label saved in the project; the game has no map names)"
                                      DisplayMemberPath="Title"
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
@@ -849,43 +910,59 @@
                             </Grid.RowDefinitions>
                             <TextBlock Text="Map Editor" FontWeight="SemiBold" FontSize="14" />
                             <TextBlock x:Name="MapSummaryLabel" Grid.Row="1" Margin="0,10,0,0" TextWrapping="Wrap" Visibility="Collapsed" />
-                            <ToolBarTray Grid.Row="2" Margin="0,14,0,0" Background="Transparent">
-                                <ToolBar Band="0" BandIndex="0">
-                                    <TextBlock VerticalAlignment="Center">Edit</TextBlock>
-                                    <ComboBox x:Name="MapEditLayerComboBox"
-                                              Width="130"
-                                              Margin="8,0,0,0"
-                                              SelectionChanged="OnMapEditLayerSelectionChanged" />
-                                    <Separator />
-                                    <CheckBox x:Name="MapLayer1VisibilityCheckBox" Content="L1" IsChecked="True" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
-                                    <CheckBox x:Name="MapLayer2VisibilityCheckBox" Margin="8,0,0,0" Content="L2" IsChecked="True" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
-                                    <CheckBox x:Name="MapLayer3VisibilityCheckBox" Margin="8,0,0,0" Content="L3" IsChecked="True" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
-                                    <CheckBox x:Name="MapCollisionVisibilityCheckBox" Margin="8,0,0,0" Content="Collision" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
-                                    <CheckBox x:Name="MapEventsVisibilityCheckBox" Margin="8,0,0,0" Content="Events" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
-                                    <CheckBox x:Name="MapWarpsVisibilityCheckBox" Margin="8,0,0,0" Content="Warps" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
-                                    <Separator />
-                                    <TextBlock VerticalAlignment="Center">Chapter</TextBlock>
-                                    <ComboBox x:Name="MapEventChapterFilterComboBox"
-                                              Width="150"
-                                              Margin="8,0,0,0"
-                                              SelectionChanged="OnMapEventChapterFilterChanged" />
-                                    <Separator />
-                                    <TextBlock x:Name="MapZoomValueLabel" VerticalAlignment="Center" Text="Zoom 2x" />
-                                </ToolBar>
-                            </ToolBarTray>
+                            <!-- Map editor options: three groups that wrap instead of overflowing (Fluent check boxes have MinWidth 120 by default). -->
+                            <WrapPanel Grid.Row="2" Margin="0,14,0,0" Orientation="Horizontal">
+                                <Border Margin="0,0,10,8" Padding="10,6" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource Theme.SubtleBorder}" Background="{DynamicResource Theme.PanelAltBackground}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Tool" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextMuted}" Margin="0,0,10,0" />
+                                        <RadioButton x:Name="MapToolPencilButton" GroupName="MapTool" Tag="Pencil" Content="Pencil" ToolTip="Pencil (P): click or drag; stamps the tiles selected in the palette" MinWidth="0" Padding="8,3" Margin="0,0,4,0" IsChecked="True" Style="{StaticResource {x:Type ToggleButton}}" Checked="OnMapToolChecked" />
+                                        <RadioButton x:Name="MapToolLineButton" GroupName="MapTool" Tag="Line" Content="Line" ToolTip="Line (L): drag from start to end" MinWidth="0" Padding="8,3" Margin="0,0,4,0" Style="{StaticResource {x:Type ToggleButton}}" Checked="OnMapToolChecked" />
+                                        <RadioButton x:Name="MapToolRectangleButton" GroupName="MapTool" Tag="Rectangle" Content="Rect" ToolTip="Rectangle outline (R): drag a corner to the opposite one" MinWidth="0" Padding="8,3" Margin="0,0,4,0" Style="{StaticResource {x:Type ToggleButton}}" Checked="OnMapToolChecked" />
+                                        <RadioButton x:Name="MapToolFilledRectangleButton" GroupName="MapTool" Tag="FilledRectangle" Content="Fill rect" ToolTip="Filled rectangle (F): drag a corner to the opposite one" MinWidth="0" Padding="8,3" Margin="0,0,4,0" Style="{StaticResource {x:Type ToggleButton}}" Checked="OnMapToolChecked" />
+                                        <RadioButton x:Name="MapToolBucketButton" GroupName="MapTool" Tag="Bucket" Content="Bucket" ToolTip="Bucket fill (G): fills the connected area of identical tiles (or collision values)" MinWidth="0" Padding="8,3" Margin="0,0,4,0" Style="{StaticResource {x:Type ToggleButton}}" Checked="OnMapToolChecked" />
+                                        <RadioButton x:Name="MapToolPickerButton" GroupName="MapTool" Tag="Picker" Content="Picker" ToolTip="Picker (I): takes the tile (or collision value) under the cursor, then back to the pencil" MinWidth="0" Padding="8,3" Margin="0,0,4,0" Style="{StaticResource {x:Type ToggleButton}}" Checked="OnMapToolChecked" />
+                                        <Button Content="Undo" Margin="10,0,4,0" Padding="8,3" ToolTip="Undo (Ctrl+Z)" Click="OnMapUndoClicked" />
+                                        <Button Content="Redo" Padding="8,3" ToolTip="Redo (Ctrl+Y)" Click="OnMapRedoClicked" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Margin="0,0,10,8" Padding="10,6" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource Theme.SubtleBorder}" Background="{DynamicResource Theme.PanelAltBackground}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Edit" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextMuted}" Margin="0,0,10,0" />
+                                        <ComboBox x:Name="MapEditLayerComboBox" Width="130" SelectionChanged="OnMapEditLayerSelectionChanged" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Margin="0,0,10,8" Padding="10,6" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource Theme.SubtleBorder}" Background="{DynamicResource Theme.PanelAltBackground}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Show" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextMuted}" Margin="0,0,10,0" />
+                                        <CheckBox x:Name="MapLayer1VisibilityCheckBox" Content="L1" IsChecked="True" MinWidth="0" Margin="0,0,0,0" VerticalAlignment="Center" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
+                                        <CheckBox x:Name="MapLayer2VisibilityCheckBox" Content="L2" IsChecked="True" MinWidth="0" Margin="14,0,0,0" VerticalAlignment="Center" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
+                                        <CheckBox x:Name="MapLayer3VisibilityCheckBox" Content="L3" IsChecked="True" MinWidth="0" Margin="14,0,0,0" VerticalAlignment="Center" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
+                                        <CheckBox x:Name="MapCollisionVisibilityCheckBox" Content="Collision" MinWidth="0" Margin="14,0,0,0" VerticalAlignment="Center" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
+                                        <CheckBox x:Name="MapEventsVisibilityCheckBox" Content="Events" MinWidth="0" Margin="14,0,0,0" VerticalAlignment="Center" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
+                                        <CheckBox x:Name="MapWarpsVisibilityCheckBox" Content="Warps" MinWidth="0" Margin="14,0,0,0" VerticalAlignment="Center" Checked="OnMapLayerVisibilityChanged" Unchecked="OnMapLayerVisibilityChanged" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Margin="0,0,10,8" Padding="10,6" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource Theme.SubtleBorder}" Background="{DynamicResource Theme.PanelAltBackground}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Chapter" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextMuted}" Margin="0,0,10,0" />
+                                        <ComboBox x:Name="MapEventChapterFilterComboBox" Width="150" SelectionChanged="OnMapEventChapterFilterChanged" />
+                                        <TextBlock x:Name="MapZoomValueLabel" Margin="14,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource Theme.TextMuted}" Text="Zoom 2x" />
+                                    </StackPanel>
+                                </Border>
+                            </WrapPanel>
                             <Grid Grid.Row="3" Margin="0,12,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock x:Name="MapTilesetSummaryLabel" Grid.Row="0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                <TextBlock x:Name="MapTilesetSummaryLabel" Grid.Row="0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                 <Border Grid.Row="1"
                                         Margin="0,10,0,0"
-                                        MinHeight="640"
-                                        BorderBrush="#FFD1D5DB"
+                                        MinHeight="240"
+                                        BorderBrush="{DynamicResource Theme.Border}"
                                         BorderThickness="1"
-                                        Background="#FFF9FAFB"
+                                        Background="{DynamicResource Theme.PanelAltBackground}"
                                         Padding="8">
                                     <ScrollViewer x:Name="MapPreviewScrollViewer"
                                                   HorizontalScrollBarVisibility="Hidden"
@@ -901,6 +978,7 @@
                                                   VerticalAlignment="Top">
                                                 <Image x:Name="MapCompositePreviewImage"
                                                        MouseLeftButtonDown="OnMapCompositePreviewMouseLeftButtonDown"
+                                                       MouseLeftButtonUp="OnMapCompositePreviewMouseLeftButtonUp"
                                                        MouseRightButtonDown="OnMapCompositePreviewMouseRightButtonDown"
                                                        MouseMove="OnMapCompositePreviewMouseMove"
                                                        MouseLeave="OnMapCompositePreviewMouseLeave"
@@ -928,7 +1006,7 @@
                                         </Border>
                                     </ScrollViewer>
                                 </Border>
-                                <TextBlock x:Name="MapOverlayStatusLabel" Grid.Row="2" Margin="0,10,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                <TextBlock x:Name="MapOverlayStatusLabel" Grid.Row="2" Margin="0,10,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                             </Grid>
                         </Grid>
                     </Border>
@@ -938,10 +1016,10 @@
                             <StackPanel>
                                 <StackPanel x:Name="MapMetadataEditorPanel" Margin="0,0,0,12" Visibility="Collapsed">
                                     <TextBlock Text="Map Metadata" FontWeight="SemiBold" FontSize="14" />
-                                    <Border Margin="0,12,0,0" BorderBrush="#FFE5E7EB" BorderThickness="1" CornerRadius="4" Padding="10" Background="#FFF9FAFB">
+                                    <Border Margin="0,12,0,0" BorderBrush="{DynamicResource Theme.SubtleBorder}" BorderThickness="1" CornerRadius="4" Padding="10" Background="{DynamicResource Theme.PanelAltBackground}">
                                         <TextBlock x:Name="MapMetadataOverviewLabel" TextWrapping="Wrap" />
                                     </Border>
-                                    <TextBlock Margin="0,12,0,0" Text="Map Size" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Margin="0,12,0,0" Text="Map Size" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <Grid Margin="0,6,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -959,10 +1037,10 @@
                                     </Grid>
                                     <TextBlock x:Name="MapResizeHintLabel"
                                                Margin="0,6,0,0"
-                                               Foreground="#FF6B7280"
+                                               Foreground="{DynamicResource Theme.TextMuted}"
                                                TextWrapping="Wrap"
                                                Text="Resize is staged immediately. Existing tiles are copied from the top-left; new space is filled with empty tiles." />
-                                    <TextBlock Margin="0,12,0,0" Text="Music" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Margin="0,12,0,0" Text="Music" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <ComboBox x:Name="MapMusicComboBox"
                                               Margin="0,6,0,0"
                                               HorizontalAlignment="Stretch"
@@ -976,7 +1054,7 @@
                                               Unchecked="OnMapMetadataChanged" />
                                     <StackPanel x:Name="MapEncounterFieldsPanel"
                                                 Visibility="{Binding IsChecked, ElementName=MapHasEncountersCheckBox, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <TextBlock Margin="0,12,0,0" Text="Encounters" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Margin="0,12,0,0" Text="Encounters" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <UniformGrid Margin="0,6,0,0" Columns="2">
                                         <TextBlock VerticalAlignment="Center">Battle 1</TextBlock>
                                         <ComboBox x:Name="MapEncounterBattle1ComboBox"
@@ -1006,11 +1084,11 @@
                                                   SelectionChanged="OnMapMetadataChanged" />
                                     </UniformGrid>
                                     </StackPanel>
-                                    <TextBlock Margin="0,12,0,0" Text="Sprite Slots" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Margin="0,12,0,0" Text="Sprite Slots" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <Border Margin="0,8,0,0"
-                                            BorderBrush="#FFD1D5DB"
+                                            BorderBrush="{DynamicResource Theme.Border}"
                                             BorderThickness="1"
-                                            Background="#FFF9FAFB"
+                                            Background="{DynamicResource Theme.PanelAltBackground}"
                                             Padding="8">
                                         <StackPanel>
                                             <ListBox x:Name="MapSpriteSlotListBox"
@@ -1025,7 +1103,7 @@
                                                 </ListBox.ItemsPanel>
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Border Width="24" Height="32" Margin="0.5" Padding="0" BorderBrush="#FFD1D5DB" BorderThickness="1" Background="#FFFFFFFF">
+                                                        <Border Width="24" Height="32" Margin="0.5" Padding="0" BorderBrush="{DynamicResource Theme.Border}" BorderThickness="1" Background="{DynamicResource Theme.PanelBackground}">
                                                             <StackPanel>
                                                                 <Image HorizontalAlignment="Center"
                                                                        Width="16"
@@ -1046,8 +1124,8 @@
                                                    Closed="OnMapSpriteSlotPickerPopupClosed">
                                                 <Border Margin="0,6,0,0"
                                                         Padding="8"
-                                                        Background="White"
-                                                        BorderBrush="#FFD1D5DB"
+                                                        Background="{DynamicResource Theme.PanelBackground}"
+                                                        BorderBrush="{DynamicResource Theme.Border}"
                                                         BorderThickness="1">
                                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                                                   VerticalScrollBarVisibility="Auto"
@@ -1077,14 +1155,14 @@
                                     <TextBlock x:Name="MapMetadataStatusLabel"
                                                Margin="0,8,0,0"
                                                TextWrapping="Wrap"
-                                               Foreground="#FF6B7280" />
+                                               Foreground="{DynamicResource Theme.TextMuted}" />
                                 </StackPanel>
 
                                 <TextBlock x:Name="MapEditorTitleLabel" Text="Layer Editor" FontWeight="SemiBold" FontSize="14" />
 
                                 <StackPanel x:Name="MapTileEditorPanel" Margin="0,12,0,0">
-                                    <TextBlock Text="Tilemap Layer" FontWeight="SemiBold" Foreground="#FF111827" />
-                                    <TextBlock Margin="0,12,0,0" Text="Tileset Source" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Text="Tilemap Layer" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
+                                    <TextBlock Margin="0,12,0,0" Text="Tileset Source" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <Grid Margin="0,6,0,0">
                                         <ComboBox x:Name="MapTilesetComboBox"
                                                   HorizontalAlignment="Stretch"
@@ -1092,11 +1170,18 @@
                                                   SelectedValuePath="RepresentativeMapId"
                                                   SelectionChanged="OnMapTilesetSelectionChanged" />
                                     </Grid>
-                                    <TextBlock Margin="0,12,0,0" Text="Tile Palette" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Margin="0,12,0,0" Text="This map's tileset as PNG" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
+                                    <UniformGrid Columns="2" Margin="0,6,0,0">
+                                        <Button Content="Export tileset..." HorizontalAlignment="Stretch" Margin="0,0,3,3" Click="OnExportMapTilesetClicked" ToolTip="16 tiles per row, colour 0 transparent, each tile in the palette row it is shown with" />
+                                        <Button Content="Import tileset..." HorizontalAlignment="Stretch" Margin="3,0,0,3" Click="OnImportMapTilesetClicked" ToolTip="Same size as the export; colours snap to the tile's palette row" />
+                                        <Button Content="Export palettes..." HorizontalAlignment="Stretch" Margin="0,3,3,0" Click="OnExportMapPaletteClicked" ToolTip="16 x 16 grid: one row per palette bank" />
+                                        <Button Content="Import palettes..." HorizontalAlignment="Stretch" Margin="3,3,0,0" Click="OnImportMapPaletteClicked" ToolTip="A 16 x 16 colour grid (e.g. the exported 256x256 picture)" />
+                                    </UniformGrid>
+                                    <TextBlock Margin="0,12,0,0" Text="Tile Palette" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <Border Margin="0,8,0,0"
-                                            BorderBrush="#FFD1D5DB"
+                                            BorderBrush="{DynamicResource Theme.Border}"
                                             BorderThickness="1"
-                                            Background="#FFF9FAFB"
+                                            Background="{DynamicResource Theme.PanelAltBackground}"
                                             Padding="8">
                                         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                                       VerticalScrollBarVisibility="Auto"
@@ -1112,34 +1197,34 @@
                                                    MouseLeftButtonUp="OnMapTilesetPaletteMouseLeftButtonUp" />
                                         </ScrollViewer>
                                     </Border>
-                                    <TextBlock x:Name="MapTilesetPaletteStatusLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="#FF6B7280" />
-                                    <TextBlock x:Name="MapTileEditorStatusLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="#FF6B7280" />
+                                    <TextBlock x:Name="MapTilesetPaletteStatusLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
+                                    <TextBlock x:Name="MapTileEditorStatusLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
                                 </StackPanel>
 
                                 <StackPanel x:Name="MapCollisionEditorPanel" Margin="0,12,0,0" Visibility="Collapsed">
-                                    <TextBlock Text="Collision Layer" FontWeight="SemiBold" Foreground="#FF111827" />
-                                    <TextBlock Margin="0,8,0,0" Text="Collision Value" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Text="Collision Layer" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
+                                    <TextBlock Margin="0,8,0,0" Text="Collision Value" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <ComboBox x:Name="MapCollisionValueComboBox"
                                               Margin="0,6,0,0"
                                               DisplayMemberPath="DisplayName"
                                               SelectedValuePath="Value"
                                               SelectionChanged="OnMapCollisionValueSelectionChanged" />
-                                    <TextBlock x:Name="MapCollisionEditorStatusLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="#FF6B7280" />
+                                    <TextBlock x:Name="MapCollisionEditorStatusLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
                                 </StackPanel>
 
                                 <StackPanel x:Name="MapOverlayEditorPanel" Margin="0,12,0,0" Visibility="Collapsed">
-                                    <TextBlock Text="Selected Overlay" FontWeight="SemiBold" Foreground="#FF111827" />
+                                    <TextBlock Text="Selected Overlay" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                     <Border x:Name="MapOverlayPreviewBorder"
                                             Margin="0,10,0,0"
                                             Padding="8"
-                                            BorderBrush="#FFD1D5DB"
+                                            BorderBrush="{DynamicResource Theme.Border}"
                                             BorderThickness="1"
-                                            Background="#FFF9FAFB"
+                                            Background="{DynamicResource Theme.PanelAltBackground}"
                                             Visibility="Collapsed">
                                         <StackPanel>
                                             <TextBlock x:Name="MapOverlayPreviewLabel"
                                                        Margin="0,0,0,8"
-                                                       Foreground="#FF6B7280"
+                                                       Foreground="{DynamicResource Theme.TextMuted}"
                                                        TextWrapping="Wrap" />
                                             <Image x:Name="MapOverlayPreviewImage"
                                                    HorizontalAlignment="Left"
@@ -1150,7 +1235,7 @@
                                         </StackPanel>
                                     </Border>
                                     <StackPanel x:Name="MapWarpFieldsPanel" Margin="0,12,0,0" Visibility="Collapsed">
-                                        <TextBlock Text="Warp Fields" FontWeight="SemiBold" Foreground="#FF111827" />
+                                        <TextBlock Text="Warp Fields" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                         <UniformGrid Margin="0,8,0,0" Columns="2">
                                             <TextBlock VerticalAlignment="Center">Tile X</TextBlock>
                                             <TextBox x:Name="MapWarpTileXEntry" />
@@ -1189,7 +1274,7 @@
                                         </UniformGrid>
                                     </StackPanel>
                                     <StackPanel x:Name="MapEventSpawnFieldsPanel" Margin="0,12,0,0" Visibility="Collapsed">
-                                        <TextBlock Text="Event / Spawn Fields" FontWeight="SemiBold" Foreground="#FF111827" />
+                                        <TextBlock Text="Event / Spawn Fields" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                         <UniformGrid Margin="0,8,0,0" Columns="2">
                                             <TextBlock VerticalAlignment="Center">Tile X</TextBlock>
                                             <TextBox x:Name="MapSpawnTileXEntry" />
@@ -1206,7 +1291,7 @@
                                             <TextBlock VerticalAlignment="Center">Event / Object Id</TextBlock>
                                             <TextBox x:Name="MapSpawnEventOrObjectIdEntry" />
                                         </UniformGrid>
-                                        <TextBlock Margin="0,6,0,0" Text="Character" FontWeight="SemiBold" Foreground="#FF111827" />
+                                        <TextBlock Margin="0,6,0,0" Text="Character" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                         <ComboBox x:Name="MapSpawnSpriteComboBox"
                                                   Margin="0,6,0,0"
                                                   ItemTemplate="{StaticResource MapSpawnSpriteOptionTemplate}"
@@ -1220,7 +1305,7 @@
                                                 </ItemsPanelTemplate>
                                             </ComboBox.ItemsPanel>
                                         </ComboBox>
-                                        <TextBlock Margin="0,10,0,0" Text="Facing" FontWeight="SemiBold" Foreground="#FF111827" />
+                                        <TextBlock Margin="0,10,0,0" Text="Facing" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextPrimary}" />
                                         <ComboBox x:Name="MapSpawnFacingComboBox"
                                                   Margin="0,6,0,0"
                                                   ItemTemplate="{StaticResource MapSpawnFacingOptionTemplate}"
@@ -1245,7 +1330,7 @@
                                                    Margin="0,12,0,0"
                                                    Text="Linked Event Script"
                                                    FontWeight="SemiBold"
-                                                   Foreground="#FF111827"
+                                                   Foreground="{DynamicResource Theme.TextPrimary}"
                                                    Visibility="Collapsed" />
                                         <TextBox x:Name="MapOverlayScriptSummaryTextBox"
                                                  Margin="0,8,0,0"
@@ -1266,7 +1351,7 @@
                                             HorizontalAlignment="Left"
                                             Click="OnApplyMapOverlayChangesClicked"
                                             Visibility="Collapsed">Apply Overlay Changes</Button>
-                                    <TextBlock x:Name="MapOverlayEditorStatusLabel" Margin="0,10,0,0" TextWrapping="Wrap" Foreground="#FF6B7280" />
+                                    <TextBlock x:Name="MapOverlayEditorStatusLabel" Margin="0,10,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
@@ -1274,7 +1359,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem x:Name="SpritesSection" Header="Sprites">
+            <TabItem x:Name="SpritesSection" Header="Sprites" PreviewKeyDown="OnSpritesPreviewKeyDown">
                 <Grid Margin="0,8,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="340" />
@@ -1287,10 +1372,28 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="SpriteFilterEntry" TextChanged="OnSpriteFilterChanged" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="SpriteFilterEntry" TextChanged="OnSpriteFilterChanged" VerticalContentAlignment="Center" />
+                                <Button x:Name="AddSpriteAssetCommandButton"
+                                        Grid.Column="1"
+                                        Margin="8,0,0,0"
+                                        Width="34"
+                                        Height="30"
+                                        Padding="0,-4,0,0"
+                                        Content="+"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Style="{StaticResource AddButtonStyle}"
+                                        ToolTip="New portrait character (a copy or blank), or rename one"
+                                        Click="OnAddSpriteAssetClicked" />
+                            </Grid>
                             <TreeView x:Name="SpriteTreeView" Grid.Row="1" Margin="0,10,0,0" SelectedItemChanged="OnSpriteSelectionChanged">
                                 <TreeView.ItemContainerStyle>
-                                    <Style TargetType="TreeViewItem">
+                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
                                         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                                     </Style>
                                 </TreeView.ItemContainerStyle>
@@ -1321,21 +1424,31 @@
                                 <ColumnDefinition Width="12" />
                                 <ColumnDefinition Width="320" />
                             </Grid.ColumnDefinitions>
-                            <ToolBarTray Grid.Row="0" Background="Transparent">
-                                <ToolBar Band="0" BandIndex="0">
-                                    <ToggleButton x:Name="SpriteToolPencilButton" IsChecked="True" Click="OnSpriteToolPencilClicked">Pencil</ToggleButton>
-                                    <ToggleButton x:Name="SpriteToolEraserButton" Margin="6,0,0,0" Click="OnSpriteToolEraserClicked">Eraser</ToggleButton>
-                                    <ToggleButton x:Name="SpriteToolPickerButton" Margin="6,0,0,0" Click="OnSpriteToolPickerClicked">Picker</ToggleButton>
-                                    <Separator />
-                                    <Button Click="OnUndoSpriteEditClicked">Undo</Button>
-                                    <Button Margin="6,0,0,0" Click="OnRevertSelectedSpriteChangesClicked">Reset Asset</Button>
-                                    <Button Margin="6,0,0,0" Click="OnRevertAllSpriteChangesClicked">Reset All To ROM</Button>
-                                    <Separator />
-                                    <Button Margin="6,0,0,0" Click="OnApplySpriteChangesClicked">Stage Changes</Button>
-                                    <Separator />
-                                    <TextBlock x:Name="SpriteZoomValueLabel" Margin="8,0,0,0" VerticalAlignment="Center" Text="Zoom 4x" />
-                                </ToolBar>
-                            </ToolBarTray>
+                            <WrapPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                                <Border Margin="0,0,10,8" Padding="10,6" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource Theme.SubtleBorder}" Background="{DynamicResource Theme.PanelAltBackground}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Tool" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextMuted}" Margin="0,0,10,0" />
+                                        <ToggleButton x:Name="SpriteToolPencilButton" Content="Pencil" ToolTip="Pencil (P): click or drag" Padding="8,3" Margin="0,0,4,0" IsChecked="True" Click="OnSpriteToolPencilClicked" />
+                                        <ToggleButton x:Name="SpriteToolEraserButton" Content="Eraser" ToolTip="Eraser (E): paints colour 0 (transparent)" Padding="8,3" Margin="0,0,4,0" Click="OnSpriteToolEraserClicked" />
+                                        <ToggleButton x:Name="SpriteToolLineButton" Content="Line" ToolTip="Line (L): drag from start to end" Padding="8,3" Margin="0,0,4,0" Click="OnSpriteToolLineClicked" />
+                                        <ToggleButton x:Name="SpriteToolRectangleButton" Content="Rect" ToolTip="Rectangle outline (R): drag a corner to the opposite one" Padding="8,3" Margin="0,0,4,0" Click="OnSpriteToolRectangleClicked" />
+                                        <ToggleButton x:Name="SpriteToolFilledRectangleButton" Content="Fill rect" ToolTip="Filled rectangle (F): drag a corner to the opposite one" Padding="8,3" Margin="0,0,4,0" Click="OnSpriteToolFilledRectangleClicked" />
+                                        <ToggleButton x:Name="SpriteToolBucketButton" Content="Bucket" ToolTip="Bucket fill (G): fills the connected area of the same colour" Padding="8,3" Margin="0,0,4,0" Click="OnSpriteToolBucketClicked" />
+                                        <ToggleButton x:Name="SpriteToolPickerButton" Content="Picker" ToolTip="Picker (I): takes the colour under the cursor" Padding="8,3" Margin="0,0,4,0" Click="OnSpriteToolPickerClicked" />
+                                        <Button Content="Undo" Margin="10,0,4,0" Padding="8,3" ToolTip="Undo (Ctrl+Z)" Click="OnUndoSpriteEditClicked" />
+                                        <Button Content="Redo" Padding="8,3" ToolTip="Redo (Ctrl+Y)" Click="OnRedoSpriteEditClicked" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Margin="0,0,10,8" Padding="10,6" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource Theme.SubtleBorder}" Background="{DynamicResource Theme.PanelAltBackground}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Asset" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource Theme.TextMuted}" Margin="0,0,10,0" />
+                                        <Button Content="Stage Changes" Padding="8,3" Margin="0,0,4,0" Click="OnApplySpriteChangesClicked" />
+                                        <Button Content="Reset Asset" Padding="8,3" Margin="0,0,4,0" Click="OnRevertSelectedSpriteChangesClicked" />
+                                        <Button Content="Reset All To ROM" Padding="8,3" Click="OnRevertAllSpriteChangesClicked" />
+                                        <TextBlock x:Name="SpriteZoomValueLabel" Margin="14,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource Theme.TextMuted}" Text="Zoom 4x" />
+                                    </StackPanel>
+                                </Border>
+                            </WrapPanel>
                             <Grid Grid.Row="2" Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -1345,10 +1458,10 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="Sprite Preview" FontWeight="SemiBold" FontSize="14" />
                                 <Border Grid.Row="2"
-                                        MinHeight="520"
-                                        BorderBrush="#FFD1D5DB"
+                                        MinHeight="240"
+                                        BorderBrush="{DynamicResource Theme.Border}"
                                         BorderThickness="1"
-                                        Background="#FFF9FAFB"
+                                        Background="{DynamicResource Theme.PanelAltBackground}"
                                         Padding="8">
                                     <Border.ContextMenu>
                                         <ContextMenu>
@@ -1387,7 +1500,7 @@
                                         </Border>
                                     </ScrollViewer>
                                 </Border>
-                                <TextBlock Grid.Row="3" x:Name="SpritePatchStatusLabel" Margin="0,8,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                <TextBlock Grid.Row="3" x:Name="SpritePatchStatusLabel" Margin="0,8,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                             </Grid>
                             <ScrollViewer Grid.Row="2" Grid.Column="2" VerticalScrollBarVisibility="Auto">
                                 <StackPanel>
@@ -1397,9 +1510,9 @@
                                         <TextBlock Text="Complete Medabot Preview" FontWeight="SemiBold" />
                                         <Border Margin="0,6,0,0"
                                                 Padding="6"
-                                                BorderBrush="#FFD1D5DB"
+                                                BorderBrush="{DynamicResource Theme.Border}"
                                                 BorderThickness="1"
-                                                Background="#FFF9FAFB">
+                                                Background="{DynamicResource Theme.PanelAltBackground}">
                                             <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                                           VerticalScrollBarVisibility="Disabled">
                                                 <Image x:Name="LargeBotLivePreviewImage"
@@ -1414,7 +1527,7 @@
                                         </Border>
                                         <TextBlock x:Name="LargeBotLivePreviewLabel"
                                                    Margin="0,6,0,0"
-                                                   Foreground="#FF6B7280"
+                                                   Foreground="{DynamicResource Theme.TextMuted}"
                                                    TextWrapping="Wrap" />
                                     </StackPanel>
                                     <StackPanel x:Name="BotBattleFacingEditorPanel" Margin="0,12,0,0" Visibility="Collapsed">
@@ -1427,13 +1540,13 @@
                                                   SelectionChanged="OnBotBattleFacingSelectionChanged" />
                                         <TextBlock x:Name="BotBattleFacingHintLabel"
                                                    Margin="0,6,0,0"
-                                                   Foreground="#FF6B7280"
+                                                   Foreground="{DynamicResource Theme.TextMuted}"
                                                    TextWrapping="Wrap"
                                                    Text="Battle preview currently exposes the left/right mirrored presentation used by the assembled battle sprite path." />
                                     </StackPanel>
                                     <StackPanel x:Name="ParsedDescriptorEditorPanel" Margin="0,12,0,0" Visibility="Collapsed">
                                         <TextBlock Text="Descriptor Fields" FontWeight="SemiBold" />
-                                        <TextBlock x:Name="ParsedDescriptorHeaderLabel" Margin="0,8,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                        <TextBlock x:Name="ParsedDescriptorHeaderLabel" Margin="0,8,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         <UniformGrid Margin="0,8,0,0" Columns="4">
                                             <TextBlock VerticalAlignment="Center">X</TextBlock>
                                             <TextBox x:Name="ParsedDescriptorXEntry" Margin="0,0,8,0" />
@@ -1474,7 +1587,7 @@
                                             <TextBlock VerticalAlignment="Center">Byte 17</TextBlock>
                                             <TextBox x:Name="ParsedDescriptorRaw17Entry" />
                                         </UniformGrid>
-                                        <TextBlock x:Name="ParsedDescriptorVariantInfoLabel" Margin="0,8,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                        <TextBlock x:Name="ParsedDescriptorVariantInfoLabel" Margin="0,8,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                         <Button Margin="0,10,0,0" HorizontalAlignment="Left" Click="OnApplyParsedDescriptorChangesClicked">Apply Descriptor Changes</Button>
                                     </StackPanel>
                                     <TextBlock Margin="0,16,0,0" Text="Palette" FontWeight="SemiBold" />
@@ -1502,12 +1615,12 @@
                                                             </ContextMenu>
                                                         </Button.ContextMenu>
                                                         <Button.Style>
-                                                            <Style TargetType="Button">
-                                                                <Setter Property="BorderBrush" Value="#FF9CA3AF" />
+                                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource Theme.TextFaint}" />
                                                                 <Setter Property="BorderThickness" Value="1" />
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                                                        <Setter Property="BorderBrush" Value="#FF2563EB" />
+                                                                        <Setter Property="BorderBrush" Value="{DynamicResource Theme.Accent}" />
                                                                         <Setter Property="BorderThickness" Value="2" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -1520,7 +1633,7 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <TextBlock x:Name="SpritePaletteSummaryLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="#FF6B7280" />
+                                    <TextBlock x:Name="SpritePaletteSummaryLabel" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
                                     <StackPanel x:Name="SpritePaletteFamilyEditorPanel" Margin="0,12,0,0" Visibility="Collapsed">
                                         <TextBlock Text="Palette Family" FontWeight="SemiBold" />
                                         <ComboBox x:Name="SpritePaletteFamilyComboBox"
@@ -1542,7 +1655,7 @@
                                                                     <Border Width="12"
                                                                             Height="12"
                                                                             Margin="0,0,3,0"
-                                                                            BorderBrush="#FF9CA3AF"
+                                                                            BorderBrush="{DynamicResource Theme.TextFaint}"
                                                                             BorderThickness="1"
                                                                             Background="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" />
                                                                 </DataTemplate>
@@ -1555,7 +1668,7 @@
                                         <TextBlock x:Name="SpritePaletteFamilyHintLabel"
                                                    Margin="0,6,0,0"
                                                    TextWrapping="Wrap"
-                                                   Foreground="#FF6B7280" />
+                                                   Foreground="{DynamicResource Theme.TextMuted}" />
                                     </StackPanel>
                                 </StackPanel>
                             </ScrollViewer>
@@ -1609,7 +1722,7 @@
                     <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}">
                         <StackPanel>
                             <TextBox x:Name="ShopFilterEntry" TextChanged="OnShopFilterChanged" />
-                            <TextBlock Margin="0,10,0,0" Foreground="#FF6B7280" TextWrapping="Wrap">The ROM contains 15 shops. Each shop has up to four visible part sets.</TextBlock>
+                            <TextBlock Margin="0,10,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap">The ROM contains 15 shops. Each shop has up to four visible part sets.</TextBlock>
                             <ListBox x:Name="ShopCollectionView" Margin="0,10,0,0" SelectionChanged="OnShopSelectionChanged" ItemTemplate="{StaticResource BrowserItemChangeTemplate}" />
                         </StackPanel>
                     </Border>
@@ -1635,25 +1748,25 @@
                                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold">Slot 1</TextBlock>
                                 <StackPanel Grid.Row="0" Grid.Column="1">
                                     <ComboBox x:Name="ShopSlot1Entry" />
-                                    <TextBlock x:Name="ShopSlot1DetailLabel" Margin="0,4,0,8" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                    <TextBlock x:Name="ShopSlot1DetailLabel" Margin="0,4,0,8" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                 </StackPanel>
 
                                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold">Slot 2</TextBlock>
                                 <StackPanel Grid.Row="1" Grid.Column="1">
                                     <ComboBox x:Name="ShopSlot2Entry" />
-                                    <TextBlock x:Name="ShopSlot2DetailLabel" Margin="0,4,0,8" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                    <TextBlock x:Name="ShopSlot2DetailLabel" Margin="0,4,0,8" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                 </StackPanel>
 
                                 <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold">Slot 3</TextBlock>
                                 <StackPanel Grid.Row="2" Grid.Column="1">
                                     <ComboBox x:Name="ShopSlot3Entry" />
-                                    <TextBlock x:Name="ShopSlot3DetailLabel" Margin="0,4,0,8" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                    <TextBlock x:Name="ShopSlot3DetailLabel" Margin="0,4,0,8" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                 </StackPanel>
 
                                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold">Slot 4</TextBlock>
                                 <StackPanel Grid.Row="3" Grid.Column="1">
                                     <ComboBox x:Name="ShopSlot4Entry" />
-                                    <TextBlock x:Name="ShopSlot4DetailLabel" Margin="0,4,0,0" Foreground="#FF6B7280" TextWrapping="Wrap" />
+                                    <TextBlock x:Name="ShopSlot4DetailLabel" Margin="0,4,0,0" Foreground="{DynamicResource Theme.TextMuted}" TextWrapping="Wrap" />
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
@@ -1699,7 +1812,7 @@
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Style="{StaticResource PanelBorderStyle}">
                         <TextBlock x:Name="ChangesSummaryLabel"
-                                   Foreground="#FF111827"
+                                   Foreground="{DynamicResource Theme.TextPrimary}"
                                    TextWrapping="Wrap" />
                     </Border>
                     <Border Grid.Row="2" Style="{StaticResource PanelBorderStyle}">

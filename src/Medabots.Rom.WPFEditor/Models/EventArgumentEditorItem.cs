@@ -168,6 +168,12 @@ public sealed class EventArgumentEditorItem : INotifyPropertyChanged
         }
     }
 
+    /// <summary>Map names of the open ROM (new maps included), for "map_id" arguments; set by the main window.</summary>
+    public static Func<IReadOnlyList<string>>? MapNames { get; set; }
+
+    /// <summary>Medabot names of the open ROM (expanded rosters included); set by the main window.</summary>
+    public static Func<IReadOnlyList<string>>? BotNames { get; set; }
+
     public static EventArgumentEditorItem Create(EventArgumentValue argument, IReadOnlyDictionary<int, string>? labelMap = null, int sourceOffset = 0)
     {
         var item = new EventArgumentEditorItem
@@ -178,6 +184,23 @@ public sealed class EventArgumentEditorItem : INotifyPropertyChanged
             ValueText = argument.RawValue.ToString(),
             HelpText = argument.DisplayValue
         };
+
+        // Map IDs are plain bytes in the opcode table; a dropdown of the ROM's maps when names are known.
+        if (argument.Type == EventArgumentType.Byte && argument.Name is "map_id" or "map" && MapNames?.Invoke() is { Count: > 0 } maps)
+        {
+            item.IsEnumEditor = true;
+            PopulateEnumOptions(item.EnumOptions, maps);
+            if (argument.RawValue >= maps.Count)
+            {
+                for (var id = maps.Count; id <= argument.RawValue; id++)
+                {
+                    item.EnumOptions.Add($"{id:D3}  (no such map)");
+                }
+            }
+
+            item.SelectedEnumIndex = Math.Max(0, argument.RawValue);
+            return item;
+        }
 
         switch (argument.Type)
         {
@@ -217,7 +240,7 @@ public sealed class EventArgumentEditorItem : INotifyPropertyChanged
 
             case EventArgumentType.Bot:
                 item.IsEnumEditor = true;
-                PopulateEnumOptions(item.EnumOptions, MedabotsMetadata.Default.Catalog.Bots);
+                PopulateEnumOptions(item.EnumOptions, BotNames?.Invoke() is { Count: > 0 } bots ? bots : MedabotsMetadata.Default.Catalog.Bots);
                 item.SelectedEnumIndex = Math.Clamp(argument.RawValue, 0, item.EnumOptions.Count - 1);
                 break;
 

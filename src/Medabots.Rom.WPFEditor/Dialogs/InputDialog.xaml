@@ -7,7 +7,8 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        Background="#FFF7F7F7">
+        Background="{DynamicResource Theme.WindowBackground}"
+        Foreground="{DynamicResource Theme.TextPrimary}">
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,7 +19,7 @@
 
         <TextBlock x:Name="PromptTextBlock"
                    FontSize="13"
-                   Foreground="#FF1F1F1F"
+                   Foreground="{DynamicResource Theme.TextPrimary}"
                    TextWrapping="Wrap" />
 
         <TextBox x:Name="ResponseTextBox"
@@ -31,7 +32,7 @@
                    Grid.Row="2"
                    Margin="0,8,0,0"
                    FontSize="11"
-                   Foreground="#FF6B7280"
+                   Foreground="{DynamicResource Theme.TextMuted}"
                    TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="3"

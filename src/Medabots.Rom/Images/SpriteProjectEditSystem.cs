@@ -21,6 +21,20 @@ internal sealed class SpriteProjectEditSystem : IProjectEditSystem
             .Concat(project.BattleCompositeSpriteEdits.Select(edit => $"Battle {edit.MedabotId:D3}/{edit.ComponentIndex}"))
             .Concat(project.LargePartDisplayEdits.Select(edit => $"Large {edit.PartId:D3}/{edit.VariantSelector}"));
 
+    // A staged portrait carries the table addresses it was read from; new portrait characters move the tables,
+    // so the pointers and current data are looked up again by character and expression.
+    private PortraitAsset RebasePortrait(RomFile rom, PortraitAsset asset)
+    {
+        var current = _imageAssetRepository.ReadPortrait(rom, asset.CharacterId, asset.PortraitIndex);
+        return asset with
+        {
+            ImagePointerOffset = current.ImagePointerOffset,
+            PalettePointerOffset = current.PalettePointerOffset,
+            ImageOffset = current.ImageOffset,
+            PaletteOffset = current.PaletteOffset,
+        };
+    }
+
     public IEnumerable<ProjectChange> BuildChanges(RomHackProject project, ProjectBuildContext context)
     {
         var changes = new List<ProjectChange>();
@@ -32,7 +46,7 @@ internal sealed class SpriteProjectEditSystem : IProjectEditSystem
         changes.AddRange(project.PortraitEdits
             .OrderBy(asset => asset.CharacterId)
             .ThenBy(asset => asset.PortraitIndex)
-            .Select(asset => new ProjectChange(DisplayName, $"Portrait {asset.CharacterId}:{asset.PortraitIndex}", _imageAssetPatcher.BuildPortraitSmartActions(context.SourceRom, asset, context.Allocator))));
+            .Select(asset => new ProjectChange(DisplayName, $"Portrait {asset.CharacterId}:{asset.PortraitIndex}", _imageAssetPatcher.BuildPortraitSmartActions(context.SourceRom, RebasePortrait(context.SourceRom, asset), context.Allocator))));
 
         changes.AddRange(project.BattleCompositeSpriteEdits
             .OrderBy(asset => asset.MedabotId)

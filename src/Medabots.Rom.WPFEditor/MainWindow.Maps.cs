@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -165,14 +165,19 @@ public partial class MainWindow
         {
             if (!_mapTilesetCache.TryGetValue(item.Id, out var asset))
             {
-                asset = _mapTilesetRepository.ReadMap(_session.RomFile, item.Id, _metadata.GetMapName(item.Id));
+                asset = _mapTilesetRepository.ReadMap(MapSourceRom(), item.Id, MapDisplayName(item.Id));
                 _mapTilesetCache[item.Id] = asset;
             }
 
             if (!_mapOverlayCache.TryGetValue(item.Id, out var overlays))
             {
-                overlays = _mapOverlayRepository.ReadMap(_session.RomFile, item.Id);
+                overlays = _mapOverlayRepository.ReadMap(MapSourceRom(), item.Id);
                 _mapOverlayCache[item.Id] = overlays;
+            }
+
+            if (_loadedMapTileset?.MapId != asset.MapId)
+            {
+                ClearMapHistory();
             }
 
             _loadedMapTileset = asset;
@@ -259,11 +264,12 @@ public partial class MainWindow
         }
 
         var seen = new HashSet<(int GraphicsOffset, int PaletteOffset, int ColorOffset)>();
-        for (var mapId = 0; mapId < MedabotsRomSchema.MapCount; mapId++)
+        var mapRom = MapSourceRom();
+        for (var mapId = 0; mapId < mapRom.Layout.MapCount; mapId++)
         {
-            var graphicsPointerOffset = MedabotsRomSchema.MapTilesetGraphicsPointerTableOffset + (mapId * sizeof(uint));
-            var palettePointerOffset = MedabotsRomSchema.MapTilesetPalettePointerTableOffset + (mapId * sizeof(uint));
-            var colorPointerOffset = MedabotsRomSchema.MapColorAttributePointerTableOffset + (mapId * sizeof(uint));
+            var graphicsPointerOffset = mapRom.Layout.MapTilesetGraphicsPointerTableOffset + (mapId * sizeof(uint));
+            var palettePointerOffset = mapRom.Layout.MapTilesetPalettePointerTableOffset + (mapId * sizeof(uint));
+            var colorPointerOffset = mapRom.Layout.MapColorAttributePointerTableOffset + (mapId * sizeof(uint));
             var graphicsOffset = TryReadMapPointerOffset(graphicsPointerOffset);
             var paletteOffset = TryReadMapPointerOffset(palettePointerOffset);
             var colorOffset = TryReadMapPointerOffset(colorPointerOffset);
@@ -277,7 +283,7 @@ public partial class MainWindow
                 graphicsOffset,
                 paletteOffset,
                 colorOffset,
-                $"{mapId:D3}  {_metadata.GetMapName(mapId)}"));
+                $"{mapId:D3}  {MapDisplayName(mapId)}"));
         }
     }
 
@@ -373,13 +379,15 @@ public partial class MainWindow
         }
 
         var editLayerKey = (MapEditLayerComboBox?.SelectedItem as MapLayerOption)?.Key ?? "layer1";
-        if (editLayerKey is "layer1" or "layer2" or "layer3" && _selectedMapTileX.HasValue && _selectedMapTileY.HasValue)
+        if (_selectedMapTileX.HasValue && _selectedMapTileY.HasValue && BeginMapTool(editLayerKey, _selectedMapTileX.Value, _selectedMapTileY.Value))
         {
-            TryPaintSelectedMapTile(editLayerKey, _selectedMapTileX.Value, _selectedMapTileY.Value);
-        }
-        else if (editLayerKey == "collision" && _selectedMapTileX.HasValue && _selectedMapTileY.HasValue)
-        {
-            TryPaintSelectedCollisionCell(_selectedMapTileX.Value, _selectedMapTileY.Value);
+            if (_mapToolDragging)
+            {
+                image.CaptureMouse();
+            }
+
+            e.Handled = true;
+            return;
         }
 
         UpdateMapOverlayStatus();
@@ -514,6 +522,7 @@ public partial class MainWindow
         }
 
         DrawMapTilePlacementPreview(pixels, width, height);
+        DrawMapToolPreview(pixels, width, height);
 
         var bitmap = BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgra32, null, pixels, width * 4);
         bitmap.Freeze();
@@ -1060,7 +1069,7 @@ public partial class MainWindow
         }
 
         var romFile = new RomFile(sourcePath, File.ReadAllBytes(sourcePath));
-        var asset = _mapTilesetRepository.ReadMap(romFile, mapId, _metadata.GetMapName(mapId));
+        var asset = _mapTilesetRepository.ReadMap(romFile, mapId, MapDisplayName(mapId));
         _sourceMapTilesetCache[mapId] = asset;
         return asset;
     }
@@ -1595,9 +1604,9 @@ public partial class MainWindow
             return;
         }
 
-        if (widthInTiles < 1 || heightInTiles < 1 || widthInTiles > byte.MaxValue || heightInTiles > byte.MaxValue)
+        if (widthInTiles < 1 || heightInTiles < 1 || widthInTiles > Medabots.Rom.Maps.MapExpander.MaxMapSize || heightInTiles > Medabots.Rom.Maps.MapExpander.MaxMapSize)
         {
-            MapResizeHintLabel.Text = $"Size must be between 1 and {byte.MaxValue} tiles.";
+            MapResizeHintLabel.Text = $"Size must be between 1 and {Medabots.Rom.Maps.MapExpander.MaxMapSize} tiles (the game shows up to 64 x 64).";
             return;
         }
 
@@ -1993,6 +2002,11 @@ public partial class MainWindow
         }
 
         var mapId = _loadedMapTileset.MapId;
+        if (await TryRemoveStagedNewMapAsync(mapId))
+        {
+            return;
+        }
+
         RemovePatchForMap(_project.MapEncounterPatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapEncounterStatePatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapMusicPatches, mapId, patch => patch.MapId);
@@ -2000,10 +2014,11 @@ public partial class MainWindow
         RemovePatchForMap(_project.MapDimensionPatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapLayerPatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapCollisionPatches, mapId, patch => patch.MapId);
+        RemoveTilesetPatchesForMap(mapId);
         ClearCurrentMapMetadataDraft();
         _mapSpriteSlotEditorMapId = null;
 
-        var freshAsset = _mapTilesetRepository.ReadMap(_session.RomFile, mapId, _metadata.GetMapName(mapId));
+        var freshAsset = _mapTilesetRepository.ReadMap(MapSourceRom(), mapId, MapDisplayName(mapId));
         _mapTilesetCache[mapId] = freshAsset;
         _loadedMapTileset = freshAsset;
         UpdateMapMetadataEditor();
@@ -2141,7 +2156,7 @@ public partial class MainWindow
             return false;
         }
 
-        var installedTable = EventScriptReader.ResolveInstalledEventTable(_session.RomFile.Data, profile);
+        var installedTable = EventScriptReader.ResolveInstalledEventTable(_session.RomFile, profile);
         var isInstalledEvent = spawn.EventOrObjectId >= 0 && spawn.EventOrObjectId < installedTable.EventCount;
         var isProjectStagedEvent = _eventProjectScriptPatches.ContainsKey((short)spawn.EventOrObjectId) ||
                                    _project.EventScriptPatches.Any(patch => patch.EventId == (short)spawn.EventOrObjectId);
@@ -2642,7 +2657,7 @@ public partial class MainWindow
 
         if (!_mapTilesetCache.TryGetValue(sourceMapId, out var asset))
         {
-            asset = _mapTilesetRepository.ReadMap(_session.RomFile, sourceMapId, _metadata.GetMapName(sourceMapId));
+            asset = _mapTilesetRepository.ReadMap(MapSourceRom(), sourceMapId, MapDisplayName(sourceMapId));
             _mapTilesetCache[sourceMapId] = asset;
         }
 
@@ -2930,7 +2945,7 @@ public partial class MainWindow
             return -1;
         }
 
-        return GbaPointer.TryReadFileOffset(_session.RomFile.Data, pointerOffset, out var dataOffset)
+        return GbaPointer.TryReadFileOffset(MapSourceRom().Data, pointerOffset, out var dataOffset)
             ? dataOffset
             : -1;
     }
@@ -3014,6 +3029,12 @@ public partial class MainWindow
 
         if (TrySelectMapHoverCell(image, e.GetPosition(image)))
         {
+            if (_mapToolDragging && e.LeftButton == System.Windows.Input.MouseButtonState.Pressed && _hoveredMapTileX is { } hx && _hoveredMapTileY is { } hy)
+            {
+                UpdateMapTool(hx, hy);
+                return;
+            }
+
             DrawMapOverlays();
         }
     }
@@ -3327,6 +3348,33 @@ public partial class MainWindow
             UpdateMapPreviewLayout(bitmap.PixelWidth, bitmap.PixelHeight);
             UpdateMapGridOverlay(bitmap.PixelWidth, bitmap.PixelHeight);
         }
+
+        // A newly opened map starts centred in the view (later redraws keep the user's scroll).
+        if (_loadedMapTileset is { } map && map.MapId != _centeredMapId)
+        {
+            _centeredMapId = map.MapId;
+            CenterMapPreview();
+        }
+    }
+
+    private int _centeredMapId = -1;
+
+    // The surface is larger than the view with the map in its middle: scroll to the middle of the surface.
+    private void CenterMapPreview()
+    {
+        // After layout settles (ContextIdle): the surface is symmetric around the map, so the middle of
+        // the scrollable range centres it.
+        Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.ContextIdle, () =>
+        {
+            if (MapPreviewScrollViewer is not { } viewer)
+            {
+                return;
+            }
+
+            viewer.UpdateLayout();
+            viewer.ScrollToHorizontalOffset(viewer.ScrollableWidth / 2);
+            viewer.ScrollToVerticalOffset(viewer.ScrollableHeight / 2);
+        });
     }
 
     private void OnMapPreviewViewportSizeChanged(object sender, SizeChangedEventArgs e)
@@ -3335,6 +3383,7 @@ public partial class MainWindow
         {
             UpdateMapPreviewLayout(bitmap.PixelWidth, bitmap.PixelHeight);
             UpdateMapGridOverlay(bitmap.PixelWidth, bitmap.PixelHeight);
+            CenterMapPreview();
         }
     }
 

@@ -267,6 +267,7 @@ public partial class MainWindow : Window
             loadedProject.ProjectFilePath = projectPath;
 
             _session = projectSession.Value.Session;
+            RegisterEventArgumentNames();
             _project = loadedProject;
             _project.SourceRomPath = projectSession.Value.RomPath;
             _project.TextProfileId = projectSession.Value.Profile.Id;
@@ -319,11 +320,17 @@ public partial class MainWindow : Window
             return;
         }
 
+        await OpenRomPathAsync(romPath);
+    }
+
+    private async Task OpenRomPathAsync(string romPath)
+    {
         try
         {
             SetLoadingState(true, "Opening ROM...", 0.02);
             var session = await RomHackSession.OpenAsync(romPath);
             _session = session;
+            RegisterEventArgumentNames();
             _project = CreateInMemoryProject(romPath);
             PrepareProjectForEditing();
             SetLoadingState(true, "Detecting profile...", 0.08);
@@ -383,6 +390,7 @@ public partial class MainWindow : Window
 
         _loadedBattles = OverlayProjectBattleEdits(_loadedBattles);
         _loadedParts = OverlayProjectPartEdits(_loadedParts);
+        ApplyRomRoster();
         RefreshPartLegTypeOptions(_loadedParts);
         RefreshBattleLoadoutOptions();
         _loadedEncounters = _encounterTableReader.ReadAll(_session.RomFile);
@@ -392,6 +400,8 @@ public partial class MainWindow : Window
         _battleCompositeComponentCache.Clear();
         _largePartDisplayAssetCache.Clear();
         _mapTilesetCache.Clear();
+        _tilesetPreviewRom = null;
+        _mapAdditionsRom = null;
         _editedOverworldSpriteAssets.Clear();
         _editedPortraitAssets.Clear();
         _editedBattleCompositeComponentAssets.Clear();
@@ -408,7 +418,7 @@ public partial class MainWindow : Window
         _allPartItems.AddRange(_loadedParts.Select(part => new BrowserItem(part.Id, $"{part.Id:D3}  {_metadata.GetPartName(part.Id)}  ({part.Kind})")));
         RefreshPartBrowserChangeState();
         _allMapItems.Clear();
-        _allMapItems.AddRange(Enumerable.Range(0, Math.Min(MedabotsRomSchema.MapCount, _metadata.Catalog.Maps.Count)).Select(mapId => new BrowserItem(mapId, $"{mapId:D3}  {_metadata.GetMapName(mapId)}")));
+        _allMapItems.AddRange(Enumerable.Range(0, _session is null ? Math.Min(MedabotsRomSchema.MapCount, _metadata.Catalog.Maps.Count) : MapSourceRom().Layout.MapCount).Select(mapId => new BrowserItem(mapId, $"{mapId:D3}  {MapDisplayName(mapId)}")));
         _allSpriteNodes.Clear();
         _allSpriteNodes.AddRange(BuildSpriteTreeNodes());
         _allEncounterItems.Clear();
@@ -792,6 +802,8 @@ public partial class MainWindow : Window
             _project.MapEventObjectResourcePatches.Count +
             _project.MapDimensionPatches.Count +
             _project.MapLayerPatches.Count +
+            _project.MapTilesetPatches.Count +
+            _project.MapAdditions.Count +
             _project.MapCollisionPatches.Count +
             _project.MapEntitySpawnPatches.Count +
             _project.MapWarpPatches.Count +
@@ -849,7 +861,12 @@ public partial class MainWindow : Window
             return;
         }
 
-        foreach (var change in _projectApplicator.BuildChanges(_project, _session.RomFile))
+        foreach (var addition in _project.MapAdditions)
+        {
+            _allChangeItems.Add(new BrowserItem(_allChangeItems.Count, $"New map: copy of map {addition.SourceMapId}{(addition.CopyWarpsAndPeople ? " (with warps and people)" : "")}"));
+        }
+
+        foreach (var change in _projectApplicator.BuildChanges(_project, MapAdditionsRom()))
         {
             _allChangeItems.Add(new BrowserItem(_allChangeItems.Count, $"{change.Owner}: {change.Description}"));
             foreach (var action in change.Actions)
@@ -922,6 +939,17 @@ public partial class MainWindow : Window
         {
             errorMessage = "Message text cannot be empty.";
             return false;
+        }
+
+        // Edited text gets the line/box breaks the game would make by itself, written out (originals stay as they are).
+        if (text != _selectedPatch.Text)
+        {
+            var wrapped = ApplyMessageLineBreaks(text, _session?.RomFile.Data);
+            if (wrapped != text)
+            {
+                text = wrapped;
+                MessageTextEditor.Text = text;
+            }
         }
 
         _selectedPatch.Bank = bank;
@@ -1353,8 +1381,8 @@ public partial class MainWindow : Window
     {
         var isActive = botIndex < activeBotCount;
         label.Text = string.Empty;
-        label.Foreground = isActive ? WpfBrushes.Black : WpfBrushes.DarkRed;
-        panel.Background = isActive ? WpfBrushes.White : new SolidColorBrush(WpfColor.FromRgb(0xFF, 0xF7, 0xED));
+        ThemeManager.SetBrush(label, WpfTextBlock.ForegroundProperty, isActive ? "Theme.TextPrimary" : "Theme.Warning");
+        ThemeManager.SetBrush(panel, Border.BackgroundProperty, isActive ? "Theme.PanelBackground" : "Theme.InactivePanelBackground");
         panel.Opacity = 1.0;
     }
 
@@ -1408,21 +1436,14 @@ public partial class MainWindow : Window
         SetBattleControlChanged(cycleReset, current.SpecialityCycleResetValue != source.SpecialityCycleResetValue);
 
         var changed = !current.Equals(source);
-        summaryLabel.Foreground = changed ? WpfBrushes.Red : WpfBrushes.Black;
-        if (changed)
-        {
-            panel.BorderBrush = WpfBrushes.Red;
-        }
-        else
-        {
-            panel.BorderBrush = new SolidColorBrush(WpfColor.FromRgb(0xE5, 0xE7, 0xEB));
-        }
+        ThemeManager.SetBrush(summaryLabel, WpfTextBlock.ForegroundProperty, changed ? "Theme.Changed" : "Theme.TextPrimary");
+        ThemeManager.SetBrush(panel, Border.BorderBrushProperty, changed ? "Theme.Changed" : "Theme.SubtleBorder");
     }
 
     private static void SetBattleControlChanged(System.Windows.Controls.Control control, bool changed)
     {
-        control.Foreground = changed ? WpfBrushes.Red : WpfBrushes.Black;
-        control.BorderBrush = changed ? WpfBrushes.Red : new SolidColorBrush(WpfColor.FromRgb(0xAB, 0xAD, 0xB3));
+        ThemeManager.SetBrush(control, System.Windows.Controls.Control.ForegroundProperty, changed ? "Theme.Changed" : "Theme.TextPrimary");
+        ThemeManager.SetBrush(control, System.Windows.Controls.Control.BorderBrushProperty, changed ? "Theme.Changed" : "Theme.InputBorder");
     }
 
     private void RefreshBattleBrowserItem(BattleDefinition battle)
@@ -1627,7 +1648,7 @@ public partial class MainWindow : Window
             PartValue4Label.Text = "Defense";
             PartValue5Label.Text = "Proximity";
             PartUnknown2Label.Text = "Remoteness";
-            PartUnknown4Label.Text = "Price (x100)";
+            PartUnknown4Label.Text = "Price";
             PartUnknown5Label.Text = "Attack Scalar";
             return;
         }
@@ -1643,7 +1664,7 @@ public partial class MainWindow : Window
         PartValue4Label.Text = "Chain Reaction";
         PartValue5Label.Text = kind == PartKind.Head ? "Uses" : "Charge";
         PartUnknown2Label.Text = "Radiation";
-        PartUnknown4Label.Text = "Price (x100)";
+        PartUnknown4Label.Text = "Price";
         PartUnknown5Label.Text = "Attack Scalar";
     }
 
@@ -1667,7 +1688,7 @@ public partial class MainWindow : Window
             PartValue4HintLabel.Text = "Defense affects how well the legs absorb or mitigate hits.";
             PartValue5HintLabel.Text = "Proximity is the legs-derived bonus used for close-range specialities.";
             PartUnknown2HintLabel.Text = "Remoteness is the legs-derived bonus used for ranged specialities.";
-            PartUnknown45HintLabel.Text = "Price is stored in units of 100 currency. The attack-scalar slot is still present in the raw record, but its battle meaning is not proven for legs yet.";
+            PartUnknown45HintLabel.Text = "Price is the shop price in whole units (11 is shown in-game as 11,00). The attack-scalar slot is still present in the raw record, but its battle meaning is not proven for legs yet.";
             PartUnknown3HintLabel.Text = "Bot Shared Value is duplicated across the full 4-part set for each Medabot, but its exact gameplay meaning is still unresolved.";
             return;
         }
@@ -1681,7 +1702,7 @@ public partial class MainWindow : Window
             ? "Uses is the head ammo / remaining-use count. Battle code clamps head consumption against this byte."
             : "Charge is the arm action charge value. This shares the same raw record byte that heads use for Uses.";
         PartUnknown2HintLabel.Text = "Radiation is a per-part scalar used by combat logic for radiation-type interactions.";
-        PartUnknown45HintLabel.Text = "Price is stored in units of 100 currency. Attack Scalar is the per-part coefficient used by battle damage/attack scaling code.";
+        PartUnknown45HintLabel.Text = "Price is the shop price in whole units (11 is shown in-game as 11,00). Attack Scalar is the per-part coefficient used by battle damage/attack scaling code.";
         PartUnknown3HintLabel.Text = "Bot Shared Value is duplicated across the full 4-part set for each Medabot, but its exact gameplay meaning is still unresolved.";
     }
 
@@ -2010,7 +2031,7 @@ public partial class MainWindow : Window
         SetBattleControlChanged(ShopSlot4Entry, currentContents[3] != sourceContents[3]);
         var changed = !currentContents.SequenceEqual(sourceContents);
         ShopSummaryLabel.Text = $"Shop {current.Id:D3} @ 0x{current.DataOffset:X}. The game reads four Medabot part-set slots and stops at the first empty slot (0xFF).";
-        ShopSummaryLabel.Foreground = changed ? WpfBrushes.Red : WpfBrushes.Black;
+        ThemeManager.SetBrush(ShopSummaryLabel, WpfTextBlock.ForegroundProperty, changed ? "Theme.Changed" : "Theme.TextPrimary");
     }
 
     private ShopDefinition BuildShopFromEditor(ShopDefinition source)
@@ -2059,7 +2080,7 @@ public partial class MainWindow : Window
         if (itemId == MedabotsRomSchema.EmptyShopSlot)
         {
             label.Text = isIgnored ? "Ignored after an earlier empty slot." : "Empty; later slots are not displayed in-game.";
-            label.Foreground = WpfBrushes.Gray;
+            ThemeManager.SetBrush(label, WpfTextBlock.ForegroundProperty, "Theme.TextMuted");
             return;
         }
 
@@ -2067,14 +2088,14 @@ public partial class MainWindow : Window
         var conditionalText = itemId == MedabotsRomSchema.ConditionalShopSlot
             ? " Hidden unless the game state byte checked by the shop routine equals 3."
             : string.Empty;
-        label.Text = $"{_metadata.GetBotName(itemId)} part set. Display price: {price:N0}.{conditionalText}{(isIgnored ? " Ignored because an earlier slot is empty." : string.Empty)}";
-        label.Foreground = isIgnored ? WpfBrushes.Gray : WpfBrushes.Black;
+        label.Text = $"{_metadata.GetBotName(itemId)} part set. Display price: {price},00.{conditionalText}{(isIgnored ? " Ignored because an earlier slot is empty." : string.Empty)}";
+        ThemeManager.SetBrush(label, WpfTextBlock.ForegroundProperty, isIgnored ? "Theme.TextMuted" : "Theme.TextPrimary");
     }
 
     private int GetShopItemPrice(byte itemId)
     {
         var head = _loadedParts.FirstOrDefault(part => part.MedabotId == itemId && part.Kind == PartKind.Head);
-        return (head?.Unknown4 ?? 0) * 100;
+        return head?.Unknown4 ?? 0;
     }
 
     private string BuildShopSlotOptionTitle(int id)
@@ -2335,7 +2356,7 @@ public partial class MainWindow : Window
     {
         var bitmap = CreateBattleLoadoutThumbnail(part, componentIndex);
         var title = _metadata.GetPartName(part.Id);
-        var subtitle = part.MedabotId < ImageAssetRepository.CompositeBattleSpritePartCount
+        var subtitle = part.MedabotId < RosterBotCount
             ? $"Bot {part.MedabotId:D3}  Part {part.Id:D3}"
             : $"Uninitialized family {part.MedabotId:D3}  Part {part.Id:D3}";
         return new BattleLoadoutOption(part.MedabotId, part.Id, title, subtitle, bitmap);
@@ -2343,7 +2364,7 @@ public partial class MainWindow : Window
 
     private BitmapSource CreateBattleLoadoutThumbnail(PartDefinition part, int componentIndex)
     {
-        if (part.MedabotId < 0 || part.MedabotId >= ImageAssetRepository.CompositeBattleSpritePartCount)
+        if (part.MedabotId < 0 || part.MedabotId >= RosterBotCount)
         {
             return CreateBattleLoadoutPlaceholderBitmap();
         }

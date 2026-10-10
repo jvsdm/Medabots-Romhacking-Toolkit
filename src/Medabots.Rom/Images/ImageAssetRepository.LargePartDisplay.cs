@@ -11,7 +11,7 @@ public sealed partial class ImageAssetRepository
         ArgumentNullException.ThrowIfNull(part);
 
         var partOrdinal = part.Id / 4;
-        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(part.Kind);
+        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(romFile, part.Kind);
         var appearanceEntrySize = part.Kind == PartKind.Legs ? 0x20 : 0x10;
         var appearanceEntryOffset = appearanceTableOffset + (partOrdinal * appearanceEntrySize);
         if (appearanceEntryOffset < 0 || appearanceEntryOffset + appearanceEntrySize > romFile.Length)
@@ -45,7 +45,7 @@ public sealed partial class ImageAssetRepository
         ArgumentNullException.ThrowIfNull(part);
 
         var partOrdinal = part.Id / 4;
-        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(part.Kind);
+        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(romFile, part.Kind);
         var appearanceEntrySize = part.Kind == PartKind.Legs ? 0x20 : 0x10;
         var appearanceEntryOffset = appearanceTableOffset + (partOrdinal * appearanceEntrySize);
         if (appearanceEntryOffset < 0 || appearanceEntryOffset + appearanceEntrySize > romFile.Length)
@@ -65,7 +65,7 @@ public sealed partial class ImageAssetRepository
             return [];
         }
 
-        var descriptorPointerOffset = CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
+        var descriptorPointerOffset = romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
         var descriptorOffset = ReadRequiredPointer(romFile, descriptorPointerOffset);
         var blobPointerTableOffset = ReadRequiredPointer(romFile, descriptorOffset);
         return BuildVariantResolutions(romFile, appearanceEntry, blobPointerTableOffset, GetVariantSelectorsForPartKind(part.Kind)).ToArray();
@@ -119,7 +119,7 @@ public sealed partial class ImageAssetRepository
         ArgumentNullException.ThrowIfNull(part);
 
         var partOrdinal = part.Id / 4;
-        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(part.Kind);
+        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(romFile, part.Kind);
         var appearanceEntrySize = part.Kind == PartKind.Legs ? 0x20 : 0x10;
         var appearanceEntryOffset = appearanceTableOffset + (partOrdinal * appearanceEntrySize);
         if (appearanceEntryOffset < 0 || appearanceEntryOffset + appearanceEntrySize > romFile.Length)
@@ -139,7 +139,7 @@ public sealed partial class ImageAssetRepository
         {
             throw new InvalidDataException($"Large part display root descriptor for part {part.Id} is empty.");
         }
-        var rootRecordOffset = ReadRequiredPointer(romFile, CompositePreviewDescriptorPointerTableOffset + (rootDescriptorId * sizeof(uint)));
+        var rootRecordOffset = ReadRequiredPointer(romFile, romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (rootDescriptorId * sizeof(uint)));
 
         var resolvedVariantSelector = GetLargeDisplayVariantSelector(part.Kind, variantSelector);
         var descriptorRecords = ReadLargePartDisplayDescriptorRecords(romFile, part, resolvedVariantSelector);
@@ -219,12 +219,12 @@ public sealed partial class ImageAssetRepository
         return combinedFrame;
     }
 
-    private static int GetCompositePreviewAppearanceTableOffset(PartKind kind) => kind switch
+    private static int GetCompositePreviewAppearanceTableOffset(RomFile romFile, PartKind kind) => kind switch
     {
-        PartKind.Head => CompositePreviewHeadAppearanceTableOffset,
-        PartKind.RightArm => CompositePreviewRightArmAppearanceTableOffset,
-        PartKind.LeftArm => CompositePreviewLeftArmAppearanceTableOffset,
-        PartKind.Legs => CompositePreviewLegsAppearanceTableOffset,
+        PartKind.Head => romFile.Layout.CompositePreviewHeadAppearanceTableOffset,
+        PartKind.RightArm => romFile.Layout.CompositePreviewRightArmAppearanceTableOffset,
+        PartKind.LeftArm => romFile.Layout.CompositePreviewLeftArmAppearanceTableOffset,
+        PartKind.Legs => romFile.Layout.CompositePreviewLegsAppearanceTableOffset,
         _ => throw new InvalidOperationException($"Unsupported part kind '{kind}'.")
     };
 
@@ -260,7 +260,7 @@ public sealed partial class ImageAssetRepository
 
     private (int RowOffset, uint[] Entries) ReadCompositePreviewAppearanceRow(RomFile romFile, PartKind kind, int partOrdinal)
     {
-        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(kind);
+        var appearanceTableOffset = GetCompositePreviewAppearanceTableOffset(romFile, kind);
         var appearanceEntrySize = kind == PartKind.Legs ? 0x20 : 0x10;
         var appearanceEntryOffset = appearanceTableOffset + (partOrdinal * appearanceEntrySize);
         if (appearanceEntryOffset < 0 || appearanceEntryOffset + appearanceEntrySize > romFile.Length)
@@ -492,7 +492,7 @@ public sealed partial class ImageAssetRepository
             return;
         }
 
-        var descriptorPointerOffset = CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
+        var descriptorPointerOffset = romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
         var descriptorOffset = ReadRequiredPointer(romFile, descriptorPointerOffset);
         if (descriptorOffset + 0x18 > romFile.Length)
         {
@@ -623,7 +623,7 @@ public sealed partial class ImageAssetRepository
             return;
         }
 
-        var descriptorPointerOffset = CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
+        var descriptorPointerOffset = romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
         var descriptorOffset = ReadRequiredPointer(romFile, descriptorPointerOffset);
         if (descriptorOffset + 0x18 > romFile.Length)
         {
@@ -686,7 +686,7 @@ public sealed partial class ImageAssetRepository
             tableIndex,
             imageOffset > 0,
             variantSelector,
-            BuildVariantResolutions(romFile, appearanceEntryRaw, blobPointerTableOffset, GetVariantSelectorsForPartKind(GetPartKindForAppearanceOffset(appearanceEntryBaseOffset))).ToArray()));
+            BuildVariantResolutions(romFile, appearanceEntryRaw, blobPointerTableOffset, GetVariantSelectorsForPartKind(GetPartKindForAppearanceOffset(romFile, appearanceEntryBaseOffset))).ToArray()));
 
         if (descriptorBytes[0x10] != 0)
         {
@@ -774,7 +774,7 @@ public sealed partial class ImageAssetRepository
             }
 
             var selector = ResolveCompositePreviewTableIndex(sourceEntry, variantSelector);
-            var sourceDescriptorOffset = ReadRequiredPointer(romFile, CompositePreviewDescriptorPointerTableOffset + (sourceDescriptorId * sizeof(uint)));
+            var sourceDescriptorOffset = ReadRequiredPointer(romFile, romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (sourceDescriptorId * sizeof(uint)));
             var blobPointerTableOffset = ReadRequiredPointer(romFile, sourceDescriptorOffset);
             var imageOffset = ReadRequiredPointer(romFile, blobPointerTableOffset + (selector * sizeof(uint)));
             var decoded = GbaLz77.Decompress(romFile.Data, imageOffset);
@@ -1016,7 +1016,7 @@ public sealed partial class ImageAssetRepository
         PartDefinition part)
     {
         var descriptorId = GetFirstAppearanceDescriptorId(romFile, part);
-        var descriptorPointerOffset = CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
+        var descriptorPointerOffset = romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
         var descriptorOffset = ReadRequiredPointer(romFile, descriptorPointerOffset);
         var descriptorBytes = romFile.ReadBytes(descriptorOffset, 0x18).ToArray();
         var widthDivisor = Math.Max(1, descriptorBytes[0x14] >> 4);
@@ -1139,7 +1139,7 @@ public sealed partial class ImageAssetRepository
             return true;
         }
 
-        var descriptorPointerOffset = CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
+        var descriptorPointerOffset = romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
         if (TryReadOptionalPointerSafe(romFile, descriptorPointerOffset, out descriptorOffset) &&
             descriptorOffset + 0x18 <= romFile.Length)
         {
@@ -1162,10 +1162,10 @@ public sealed partial class ImageAssetRepository
         int legsRootDescriptorId,
         bool mirrorSide)
     {
-        var head = romFile.ReadBytes(CompositePreviewHeadSyntheticDescriptorTemplateOffset, 0x18).ToArray();
-        var left = romFile.ReadBytes(CompositePreviewRightArmSyntheticDescriptorTemplateOffset, 0x18).ToArray();
-        var right = romFile.ReadBytes(CompositePreviewLeftArmSyntheticDescriptorTemplateOffset, 0x18).ToArray();
-        var legs = romFile.ReadBytes(CompositePreviewLegsSyntheticDescriptorTemplateOffset, 0x18).ToArray();
+        var head = romFile.ReadBytes(romFile.Layout.CompositePreviewHeadSyntheticDescriptorTemplateOffset, 0x18).ToArray();
+        var left = romFile.ReadBytes(romFile.Layout.CompositePreviewRightArmSyntheticDescriptorTemplateOffset, 0x18).ToArray();
+        var right = romFile.ReadBytes(romFile.Layout.CompositePreviewLeftArmSyntheticDescriptorTemplateOffset, 0x18).ToArray();
+        var legs = romFile.ReadBytes(romFile.Layout.CompositePreviewLegsSyntheticDescriptorTemplateOffset, 0x18).ToArray();
         head[0x10] = (byte)headRootDescriptorId;
         left[0x10] = (byte)leftArmRootDescriptorId;
         right[0x10] = (byte)rightArmRootDescriptorId;
@@ -1291,9 +1291,9 @@ public sealed partial class ImageAssetRepository
     private static IReadOnlyDictionary<int, byte[]> BuildInitialLargeDisplayPaletteBanks(RomFile romFile) =>
         new Dictionary<int, byte[]>
         {
-            [8] = romFile.ReadBytes(PartDetailObjPaletteBlockBOffset, PaletteSize).ToArray(),
-            [9] = romFile.ReadBytes(PartDetailObjPaletteBlockAOffset, PaletteSize).ToArray(),
-            [10] = romFile.ReadBytes(PartDetailObjPaletteBlockCOffset, PaletteSize).ToArray()
+            [8] = romFile.ReadBytes(romFile.Layout.PartDetailObjPaletteBlockBOffset, PaletteSize).ToArray(),
+            [9] = romFile.ReadBytes(romFile.Layout.PartDetailObjPaletteBlockAOffset, PaletteSize).ToArray(),
+            [10] = romFile.ReadBytes(romFile.Layout.PartDetailObjPaletteBlockCOffset, PaletteSize).ToArray()
         };
 
     private static int GetLargeDisplayVariantSelector(PartKind kind, int? requestedVariantSelector)
@@ -1318,13 +1318,26 @@ public sealed partial class ImageAssetRepository
         yield return 0;
     }
 
-    private static PartKind GetPartKindForAppearanceOffset(int appearanceEntryBaseOffset) => appearanceEntryBaseOffset switch
+    private static PartKind GetPartKindForAppearanceOffset(RomFile romFile, int appearanceEntryBaseOffset)
     {
-        >= CompositePreviewHeadAppearanceTableOffset and < CompositePreviewRightArmAppearanceTableOffset => PartKind.Head,
-        >= CompositePreviewRightArmAppearanceTableOffset and < CompositePreviewLeftArmAppearanceTableOffset => PartKind.RightArm,
-        >= CompositePreviewLeftArmAppearanceTableOffset and < CompositePreviewLegsAppearanceTableOffset => PartKind.LeftArm,
-        _ => PartKind.Legs
-    };
+        var layout = romFile.Layout;
+        if (appearanceEntryBaseOffset >= layout.CompositePreviewHeadAppearanceTableOffset && appearanceEntryBaseOffset < layout.CompositePreviewRightArmAppearanceTableOffset)
+        {
+            return PartKind.Head;
+        }
+
+        if (appearanceEntryBaseOffset >= layout.CompositePreviewRightArmAppearanceTableOffset && appearanceEntryBaseOffset < layout.CompositePreviewLeftArmAppearanceTableOffset)
+        {
+            return PartKind.RightArm;
+        }
+
+        if (appearanceEntryBaseOffset >= layout.CompositePreviewLeftArmAppearanceTableOffset && appearanceEntryBaseOffset < layout.CompositePreviewLegsAppearanceTableOffset)
+        {
+            return PartKind.LeftArm;
+        }
+
+        return PartKind.Legs;
+    }
 
     private static IEnumerable<LargePartDisplayDescriptorVariantResolution> BuildVariantResolutions(
         RomFile romFile,
@@ -1377,7 +1390,7 @@ public sealed partial class ImageAssetRepository
 
         yield return descriptorId;
 
-        var descriptorPointerOffset = CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
+        var descriptorPointerOffset = romFile.Layout.CompositePreviewDescriptorPointerTableOffset + (descriptorId * sizeof(uint));
         var descriptorOffset = ReadRequiredPointer(romFile, descriptorPointerOffset);
         if (descriptorOffset + 0x18 > romFile.Length)
         {

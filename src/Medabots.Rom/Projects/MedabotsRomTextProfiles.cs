@@ -7,9 +7,9 @@ public static class MedabotsRomTextProfiles
     private static readonly IReadOnlyList<MedabotsRomTextProfile> Profiles =
     [
         new("MEDABOTSRKSVA9BPE9", "Medabots Rokusho Version (E)", "MEDABOTSRKSVA9BPE9", new MedabotsRomAddresses(0x47DF44, 0x7F5500, 0x7852F4, 0x3C1BA0, 0xF6, 0x769EE4, 0x8F0)),
-        new("MEDABOTSRKSVA9BEE9", "Medabots Rokusho Version (U)", "MEDABOTSRKSVA9BEE9", new MedabotsRomAddresses(0x47E45C, 0x7F5500, 0x7840C0, 0x3C1A00, 0xF6, 0x769EE4, 0x8F0)),
+        new("MEDABOTSRKSVA9BEE9", "Medabots Rokusho Version (U)", "MEDABOTSRKSVA9BEE9", new MedabotsRomAddresses(0x47E45C, 0x7F5500, 0x7840C0, 0x3C1A00, 0xF6, 0x768CB0, 0x8F0)),
         new("MEDABOTSMTBVA8BEE9", "Medabots Metabee Version (U)", "MEDABOTSMTBVA8BEE9", new MedabotsRomAddresses(0x47E43C, 0x7F5500, 0x78409B, 0x3C19E0, 0xF6, 0x769EE4, 0x8F0)),
-        new("MEDABOTSMTBVA8BPE9", "Medabots Metabee Version (E)", "MEDABOTSMTBVA8BPE9", new MedabotsRomAddresses(0x47DF24, 0x7F5500, 0x7852CF, 0x3C1B80, 0xF6, 0x769EE4, 0x8F0))
+        new("MEDABOTSMTBVA8BPE9", "Medabots Metabee Version (E)", "MEDABOTSMTBVA8BPE9", new MedabotsRomAddresses(0x47DF24, 0x7F5500, 0x7852CF, 0x3C1B80, 0xF6, 0x769EC0, 0x8F0))
     ];
 
     public static IReadOnlyList<MedabotsRomTextProfile> All => Profiles;

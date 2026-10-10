@@ -5,6 +5,7 @@ namespace Medabots.Rom.Parts;
 public sealed class PartTableReader
 {
     public const int PartSize = MedabotsRomSchema.PartSize;
+    /// <summary>Part entries in an original (120-bot) ROM. Use <see cref="Layout.RomLayout.PartCount"/> per ROM.</summary>
     public const int PartCount = MedabotsRomSchema.PartCount;
 
     public IReadOnlyList<PartDefinition> ReadAll(RomFile romFile)
@@ -17,9 +18,10 @@ public sealed class PartTableReader
     public IReadOnlyList<PartDefinition> ReadAll(RomFile romFile, int tableOffset)
     {
         ArgumentNullException.ThrowIfNull(romFile);
-        var parts = new List<PartDefinition>(PartCount);
+        var partCount = romFile.Layout.PartCount;
+        var parts = new List<PartDefinition>(partCount);
 
-        for (var partId = 0; partId < PartCount; partId++)
+        for (var partId = 0; partId < partCount; partId++)
         {
             var dataOffset = tableOffset + (partId * PartSize);
             parts.Add(ReadSingle(romFile, partId, dataOffset));
@@ -59,7 +61,8 @@ public sealed class PartTableReader
     public int FindTableOffset(RomFile romFile)
     {
         ArgumentNullException.ThrowIfNull(romFile);
-        return MedabotsRomSchema.PartTable.Locate(romFile.Data);
+        // Follows GetPartStats' literal, so expanded ROMs with a relocated table are read correctly.
+        return romFile.Layout.PartTableOffset;
     }
 
     public static byte[] Serialize(PartDefinition part)

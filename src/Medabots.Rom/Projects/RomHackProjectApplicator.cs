@@ -53,12 +53,69 @@ public sealed partial class RomHackProjectApplicator
         ArgumentNullException.ThrowIfNull(project);
         ArgumentNullException.ThrowIfNull(session);
 
+        // New maps and portrait characters first: they move tables, and the other edits are built against the
+        // result. Written as the new base (not as patch records): those edits then update the moved tables.
+        if (project.MapAdditions.Count > 0)
+        {
+            WriteBase(session, Maps.MapExpander.ApplyAdditions(session.RomFile.Data.ToArray(), project.MapAdditions), $"Add {project.MapAdditions.Count} map(s)");
+        }
+
+        if (project.PortraitAdditions.Count > 0)
+        {
+            WriteBase(session, Images.PortraitExpander.ApplyAdditions(session.RomFile.Data.ToArray(), project.PortraitAdditions), $"Add {project.PortraitAdditions.Count} portrait character(s)");
+        }
+
         var changes = BuildChanges(project, session.RomFile);
         foreach (var change in changes)
         {
             using var scope = session.BeginPatchScope(change.Owner);
             change.Apply(session);
         }
+    }
+
+    private static void WriteBase(RomHackSession session, byte[] after, string description)
+    {
+        foreach (var action in DifferenceActions(session.RomFile.Data.ToArray(), after, description))
+        {
+            session.RomFile.WriteBytes(action.Offset, action.Data);
+        }
+
+        session.RomFile.RefreshLayout();
+    }
+
+    // The changed byte ranges between two ROM images as patch actions (ranges closer than 16 bytes merged).
+    internal static IReadOnlyList<RomPatchAction> DifferenceActions(byte[] before, byte[] after, string description)
+    {
+        var actions = new List<RomPatchAction>();
+        var at = 0;
+        while (at < after.Length)
+        {
+            if (at < before.Length && before[at] == after[at])
+            {
+                at++;
+                continue;
+            }
+
+            var start = at;
+            var end = at + 1;
+            for (var gap = 0; at < after.Length && gap < 16; at++)
+            {
+                if (at >= before.Length || before[at] != after[at])
+                {
+                    end = at + 1;
+                    gap = 0;
+                }
+                else
+                {
+                    gap++;
+                }
+            }
+
+            actions.Add(RomPatchAction.Create(start, after.AsSpan(start, end - start).ToArray(), description));
+            at = end;
+        }
+
+        return actions;
     }
 
     private ResolvedRomLayout ResolveLayout(RomHackProject project)
@@ -85,6 +142,7 @@ public sealed partial class RomHackProjectApplicator
             new Maps.MapCollisionProjectEditSystem(_mapOverlayPatcher),
             new Maps.MapDimensionProjectEditSystem(),
             new Maps.MapLayerProjectEditSystem(_mapLayerPatcher),
+            new Maps.MapTilesetProjectEditSystem(),
             new Maps.MapEncounterStateProjectEditSystem(),
             new Maps.MapEncounterProjectEditSystem(_encounterTableReader),
             new Maps.MapMusicProjectEditSystem(),

@@ -11,39 +11,39 @@ public sealed class MapTilesetRepository
     {
         ArgumentNullException.ThrowIfNull(romFile);
         ArgumentOutOfRangeException.ThrowIfNegative(mapId);
-        if (mapId >= MedabotsRomSchema.MapCount)
+        if (mapId >= romFile.Layout.MapCount)
         {
             throw new ArgumentOutOfRangeException(nameof(mapId));
         }
 
-        var widthInTiles = romFile.Data[MedabotsRomSchema.MapDimensionsInMetaTilesTableOffset + (mapId * 2)];
-        var heightInTiles = romFile.Data[MedabotsRomSchema.MapDimensionsInMetaTilesTableOffset + (mapId * 2) + 1];
-        var encounterSettingsDataOffset = MedabotsRomSchema.MapEncounterSettingsTableOffset + (mapId * 8);
+        var widthInTiles = romFile.Data[romFile.Layout.MapDimensionsInMetaTilesTableOffset + (mapId * 2)];
+        var heightInTiles = romFile.Data[romFile.Layout.MapDimensionsInMetaTilesTableOffset + (mapId * 2) + 1];
+        var encounterSettingsDataOffset = romFile.Layout.MapEncounterSettingsTableOffset + (mapId * 8);
         var encounterEnabledByte = romFile.Data[encounterSettingsDataOffset];
 
-        var graphicsPointerOffset = MedabotsRomSchema.MapTilesetGraphicsPointerTableOffset + (mapId * sizeof(uint));
+        var graphicsPointerOffset = romFile.Layout.MapTilesetGraphicsPointerTableOffset + (mapId * sizeof(uint));
         var graphicsDataOffset = ReadPointerOffset(romFile, graphicsPointerOffset);
         var tilesetPixelIndices = ReadTilesetPixelIndices(romFile, graphicsDataOffset);
         var tileCount = tilesetPixelIndices.Length / 64;
 
-        var palettePointerOffset = MedabotsRomSchema.MapTilesetPalettePointerTableOffset + (mapId * sizeof(uint));
+        var palettePointerOffset = romFile.Layout.MapTilesetPalettePointerTableOffset + (mapId * sizeof(uint));
         var paletteDataOffset = ReadPointerOffset(romFile, palettePointerOffset);
         var paletteBytes = paletteDataOffset >= 0
             ? romFile.ReadBytes(paletteDataOffset, MedabotsRomSchema.MapPaletteSize).ToArray()
             : new byte[MedabotsRomSchema.MapPaletteSize];
 
-        var musicDataOffset = MedabotsRomSchema.MapMusicTableOffset + mapId;
+        var musicDataOffset = romFile.Layout.MapMusicTableOffset + mapId;
         var musicId = romFile.Data[musicDataOffset];
 
-        var collisionPointerOffset = MedabotsRomSchema.MapCollisionPointerTableOffset + (mapId * sizeof(uint));
+        var collisionPointerOffset = romFile.Layout.MapCollisionPointerTableOffset + (mapId * sizeof(uint));
         var collisionDataOffset = ReadPointerOffset(romFile, collisionPointerOffset);
         var collisionBytes = ReadCollisionBytes(romFile, collisionDataOffset, widthInTiles, heightInTiles);
 
-        var colorAttributePointerOffset = MedabotsRomSchema.MapColorAttributePointerTableOffset + (mapId * sizeof(uint));
+        var colorAttributePointerOffset = romFile.Layout.MapColorAttributePointerTableOffset + (mapId * sizeof(uint));
         var colorAttributeDataOffset = ReadPointerOffset(romFile, colorAttributePointerOffset);
         var colorAttributeBytes = ReadCompressedBytes(romFile, colorAttributeDataOffset);
 
-        var eventObjectResourcePointerOffset = MedabotsRomSchema.MapEventObjectResourcePointerTableOffset + (mapId * sizeof(uint));
+        var eventObjectResourcePointerOffset = romFile.Layout.MapEventObjectResourcePointerTableOffset + (mapId * sizeof(uint));
         var eventObjectResourceDataOffset = ReadPointerOffset(romFile, eventObjectResourcePointerOffset);
         var eventObjectResourceIds = ReadEventObjectResourceIds(romFile, eventObjectResourceDataOffset);
 
@@ -51,7 +51,7 @@ public sealed class MapTilesetRepository
         var tilePaletteBanks = Enumerable.Repeat(-1, tileCount).ToArray();
         for (var layerIndex = 0; layerIndex < MedabotsRomSchema.MapLayerCount; layerIndex++)
         {
-            var layerPointerOffset = MedabotsRomSchema.MapLayerTilemapPointerTableOffset + ((mapId * MedabotsRomSchema.MapLayerCount + layerIndex) * sizeof(uint));
+            var layerPointerOffset = romFile.Layout.MapLayerTilemapPointerTableOffset + ((mapId * MedabotsRomSchema.MapLayerCount + layerIndex) * sizeof(uint));
             var layerDataOffset = ReadPointerOffset(romFile, layerPointerOffset);
             layers.Add(ReadLayer(romFile, layerIndex, layerPointerOffset, layerDataOffset, widthInTiles, heightInTiles, tilesetPixelIndices, paletteBytes, tilePaletteBanks));
         }

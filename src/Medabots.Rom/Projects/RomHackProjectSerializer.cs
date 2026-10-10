@@ -97,6 +97,16 @@ public static class RomHackProjectSerializer
 
         public List<MapLayerPatchDocument> MapLayerPatches { get; set; } = [];
 
+        public List<MapTilesetPatchDocument> MapTilesetPatches { get; set; } = [];
+
+        public List<MapAdditionDocument> MapAdditions { get; set; } = [];
+
+        public Dictionary<int, string> MapNames { get; set; } = [];
+
+        public List<PortraitAdditionDocument> PortraitAdditions { get; set; } = [];
+
+        public Dictionary<int, string> PortraitNames { get; set; } = [];
+
         public List<int> SplitLargeDisplayPartIds { get; set; } = [];
 
         public RomHackProject ToProject(string? projectFilePath)
@@ -367,6 +377,31 @@ public static class RomHackProjectSerializer
                     patch.HeaderOriginX2,
                     patch.HeaderOriginY2,
                     patch.TileEntries));
+            }
+
+            foreach (var (mapId, name) in MapNames)
+            {
+                project.MapNames[mapId] = name;
+            }
+
+            foreach (var (characterId, name) in PortraitNames)
+            {
+                project.PortraitNames[characterId] = name;
+            }
+
+            foreach (var addition in PortraitAdditions)
+            {
+                project.PortraitAdditions.Add(new Images.PortraitAddition(addition.SourceCharacterId, addition.Blank));
+            }
+
+            foreach (var addition in MapAdditions)
+            {
+                project.MapAdditions.Add(new Maps.MapAddition(addition.SourceMapId, addition.CopyWarpsAndPeople, addition.Blank, addition.Width, addition.Height, addition.BlankTileset));
+            }
+
+            foreach (var patch in MapTilesetPatches)
+            {
+                project.MapTilesetPatches.Add(new Maps.MapTilesetPatch(patch.MapIds, patch.TilePixels, patch.PaletteBytes));
             }
 
             foreach (var partId in SplitLargeDisplayPartIds.Distinct())
@@ -669,6 +704,30 @@ public static class RomHackProjectSerializer
                         HeaderOriginX2 = patch.HeaderOriginX2,
                         HeaderOriginY2 = patch.HeaderOriginY2,
                         TileEntries = patch.TileEntries.ToArray()
+                    })
+                    .ToList(),
+                MapNames = new Dictionary<int, string>(project.MapNames),
+                PortraitNames = new Dictionary<int, string>(project.PortraitNames),
+                PortraitAdditions = project.PortraitAdditions
+                    .Select(addition => new PortraitAdditionDocument { SourceCharacterId = addition.SourceCharacterId, Blank = addition.Blank })
+                    .ToList(),
+                MapAdditions = project.MapAdditions
+                    .Select(addition => new MapAdditionDocument
+                    {
+                        SourceMapId = addition.SourceMapId,
+                        CopyWarpsAndPeople = addition.CopyWarpsAndPeople,
+                        Blank = addition.Blank,
+                        Width = addition.Width,
+                        Height = addition.Height,
+                        BlankTileset = addition.BlankTileset
+                    })
+                    .ToList(),
+                MapTilesetPatches = project.MapTilesetPatches
+                    .Select(patch => new MapTilesetPatchDocument
+                    {
+                        MapIds = patch.MapIds.ToList(),
+                        TilePixels = patch.TilePixels,
+                        PaletteBytes = patch.PaletteBytes
                     })
                     .ToList(),
                 SplitLargeDisplayPartIds = project.SplitLargeDisplayPartIds
@@ -982,6 +1041,29 @@ public static class RomHackProjectSerializer
         public ushort HeaderOriginX2 { get; set; }
         public ushort HeaderOriginY2 { get; set; }
         public ushort[] TileEntries { get; set; } = [];
+    }
+
+    private sealed class MapAdditionDocument
+    {
+        public int SourceMapId { get; set; }
+        public bool CopyWarpsAndPeople { get; set; }
+        public bool Blank { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public bool BlankTileset { get; set; }
+    }
+
+    private sealed class PortraitAdditionDocument
+    {
+        public int SourceCharacterId { get; set; }
+        public bool Blank { get; set; }
+    }
+
+    private sealed class MapTilesetPatchDocument
+    {
+        public List<int> MapIds { get; set; } = [];
+        public byte[]? TilePixels { get; set; }
+        public byte[]? PaletteBytes { get; set; }
     }
 
     private sealed class MapDimensionPatchDocument

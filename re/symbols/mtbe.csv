@@ -4,6 +4,7 @@ address,name,kind,count,comment
 0x020260D0,gBattlePartState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
 0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
+0x03000440,gTextState,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra"
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
 0x03001780,gFrameCount,label,,contador de frames (AgbMain)
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0
@@ -82,7 +83,11 @@ address,name,kind,count,comment
 0x08000258,MainStateNop,func_thumb,,estados 4 e 5 de gMainStateTable
 0x0800025C,AgbMain,func_thumb,,loop principal
 0x08002534,MainState0,func_thumb,,estado 0 (soft reset volta para ca)
+0x0803F41C,LoadPortrait_Unk,func_thumb,,provavel: carrega retrato (gPortraitImages[personagem*9 + expressao]) e paleta para buffer
+0x0803F480,LoadPortraitToVram_Unk,func_thumb,,"provavel: retrato em VRAM 0x06000F80, paleta em 0x050001A0"
+0x0803F51C,ShowPortrait_Unk,func_thumb,,provavel: carrega retrato se gTextState+0xE == 0
 0x08040144,TextItalicFont_Use,label,,codigo de texto que le a fonte italica (0x40144-0x40504)
+0x080402B4,TextMeasureWord,func_thumb,,mede a proxima palavra ate o espaco inclusive; se x + largura > 208 (0xD0) marca quebra (linha 2 ou caixa nova)
 0x08042238,site_TinpetCreate,label,,criacao do Medabot pelado; imediato do TinpetId
 0x08042B58,GetPartStats,func_thumb,,"GetPartStats(bot, kind, dest): copia 16 B de gPartStats + bot*64 + kind*16"
 0x080436AC,site_PartCycle,label,,ciclo de pecas (cmp #0x78 = Tinpet macho)
@@ -111,7 +116,11 @@ address,name,kind,count,comment
 0x0807FDB0,gPreviewLeftArm,data,1952,preview braco esquerdo: 122 x 16 B
 0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
+0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite
+0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato
 0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros
+0x083B4E08,gFontWidths,data,512,larguras da fonte do dialogo: 2 B por glifo (o 1o e o avanco)
+0x083B5008,gItalicFontWidths,data,512,larguras da fonte italica
 0x083B62D8,gMedals,data,480,medalhas: 16 B cada (27 ou 30 entradas - confirmar)
 0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B
 0x083BA658,gBotNames,ptr,120,nomes dos bots
@@ -123,6 +132,9 @@ address,name,kind,count,comment
 0x083C1B80,gBattlePointerTable,ptr,246,batalhas
 0x083CAD78,gMoveStyle,data,122,estilo de deslocamento em batalha (0-6) por bot das pernas
 0x083D1D78,gMoldTable,ptr,50,moldes de preview: registros de 0x18 B
+0x083D1E40,gBattleAnimTable_Unk,label,,provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
+0x083D222C,gEventOpcodeTableA,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler)
+0x083D2630,gEventOpcodeTableB,label,,a outra tabela dos 137 opcodes de evento
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B
 0x083F8A80,gMapTilesetGfx,ptr,192,graficos do tileset (LZ77)
@@ -139,6 +151,7 @@ address,name,kind,count,comment
 0x08483234,gMapPeople,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF)
 0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B)
 0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio)
+0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias)"
 0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
 0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
 0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')

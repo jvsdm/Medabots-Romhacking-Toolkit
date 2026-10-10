@@ -8,8 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Medabots.Rom.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="medabots.catalog.json" />
     <EmbeddedResource Include="battleactions.json" />
+    <EmbeddedResource Include="Expansion/expansion.manifest.json" LogicalName="Medabots.Rom.Expansion.expansion.manifest.json" />
   </ItemGroup>
 
 </Project>

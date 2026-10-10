@@ -12,7 +12,11 @@ public sealed class ShopTableReader
     public int FindTableOffset(RomFile romFile)
     {
         ArgumentNullException.ThrowIfNull(romFile);
-        return MedabotsRomSchema.ShopTable.Locate(romFile.Data);
+        // The game code's pointer works on ROMs whose shops were already edited; the content
+        // signature is only a fallback for images without recognizable code.
+        return romFile.Layout.TryGet("ShopTable", out var offset)
+            ? offset
+            : MedabotsRomSchema.ShopTable.Locate(romFile.Data);
     }
 
     public IReadOnlyList<ShopDefinition> ReadAll(RomFile romFile)

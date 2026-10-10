@@ -266,20 +266,5 @@ public sealed class BattleAndPartTests
         return (RomHackSession)constructor.Invoke([romFile]);
     }
 
-    private static string FindWorkspaceRom()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null)
-        {
-            var candidate = Path.Combine(directory.FullName, "Medabots Rokusho Version (E).gba");
-            if (File.Exists(candidate))
-            {
-                return candidate;
-            }
-
-            directory = directory.Parent;
-        }
-
-        throw new FileNotFoundException("Could not find the local Rokusho ROM used for integration testing.");
-    }
+    private static string FindWorkspaceRom() => TestRomLocator.FindWorkspaceRom();
 }

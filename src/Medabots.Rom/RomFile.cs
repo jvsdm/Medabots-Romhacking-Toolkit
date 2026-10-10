@@ -14,6 +14,14 @@ public sealed class RomFile
 
     public byte[] Data => _data;
 
+    private Layout.RomLayout? _layout;
+
+    /// <summary>Table addresses resolved from this ROM's code (cached; see <see cref="RefreshLayout"/>).</summary>
+    public Layout.RomLayout Layout => _layout ??= Medabots.Rom.Layout.RomLayout.Resolve(_data);
+
+    /// <summary>Re-resolves table addresses after code literals were repointed.</summary>
+    public void RefreshLayout() => _layout = null;
+
     public int Length => _data.Length;
 
     public static async Task<RomFile> LoadAsync(string filePath, CancellationToken cancellationToken = default)
@@ -34,6 +42,7 @@ public sealed class RomFile
     {
         EnsureCapacity(offset + bytes.Length);
         bytes.CopyTo(_data.AsSpan(offset, bytes.Length));
+        _layout = null; // code literals may have been repointed
     }
 
     public void EnsureCapacity(int minimumLength)

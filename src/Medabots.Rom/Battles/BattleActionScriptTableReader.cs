@@ -11,7 +11,7 @@ public sealed class BattleActionScriptTableReader
         var pointerEntries = new List<(byte scriptId, int pointerOffset, uint romAddress, int scriptOffset)>(MedabotsRomSchema.BattleActionScriptCount);
         for (var scriptId = 0; scriptId < MedabotsRomSchema.BattleActionScriptCount; scriptId++)
         {
-            var pointerOffset = MedabotsRomSchema.BattleActionScriptTableOffset + (scriptId * sizeof(uint));
+            var pointerOffset = romFile.Layout.BattleActionScriptTableOffset + (scriptId * sizeof(uint));
             if (!GbaPointer.TryReadFileOffset(romFile.Data, pointerOffset, out var scriptOffset))
             {
                 throw new InvalidDataException($"Battle action script pointer 0x{scriptId:X2} at 0x{pointerOffset:X} is invalid.");

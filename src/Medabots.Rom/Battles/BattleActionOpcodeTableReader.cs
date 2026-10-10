@@ -12,7 +12,7 @@ public sealed class BattleActionOpcodeTableReader
 
         for (var opcode = 0; opcode < MedabotsRomSchema.BattleActionOpcodeCount; opcode++)
         {
-            var pointerOffset = MedabotsRomSchema.BattleActionOpcodeHandlerTableOffset + (opcode * sizeof(uint));
+            var pointerOffset = romFile.Layout.BattleActionOpcodeHandlerTableOffset + (opcode * sizeof(uint));
             if (!GbaPointer.TryReadFileOffset(romFile.Data, pointerOffset, out var handlerOffset))
             {
                 throw new InvalidDataException($"Battle action opcode pointer 0x{opcode:X2} at 0x{pointerOffset:X} is invalid.");

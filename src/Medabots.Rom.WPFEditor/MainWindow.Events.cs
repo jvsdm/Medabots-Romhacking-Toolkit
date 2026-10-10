@@ -833,7 +833,7 @@ public partial class MainWindow : Window
             return _eventScriptReader.ReadById(_session.RomFile, profile, eventId);
         }
 
-        var installedTable = EventScriptReader.ResolveInstalledEventTable(_session.RomFile.Data, profile);
+        var installedTable = EventScriptReader.ResolveInstalledEventTable(_session.RomFile, profile);
         if (eventId < 0 || eventId >= installedTable.EventCount)
         {
             return _eventScriptReader.ReadFromBytes(eventId, patchBytes);
