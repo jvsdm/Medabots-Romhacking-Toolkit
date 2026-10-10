@@ -30,7 +30,18 @@ python inject/tools/build.py IN.gba OUT.gba --gcc <pasta bin do toolchain>
 - Código injetado não pode ter globais graváveis (`.data`/`.bss`); estado vai em `INJECT_RAM` (0x0202F700).
   `0x0202E780-0x0202F7FF` ficou zerado em todas as capturas; `0x0202E000-0x0202E77F` é o inventário expandido.
 
-## Piloto (2026-10-10)
+## Menu de debug (2026-10-10) - ativo em `patches.json`
+
+`src/debug_menu.c` troca dois ponteiros de `gMainStateTable` (nenhum codigo do jogo e alterado):
+- `[1]` (mapa): com **L + R + SELECT** abre o menu de debug que ja existe na ROM (cena 63 de `menu_list`);
+  sem a combinacao roda o estado original.
+- `[0]` (cenas): quando o menu de debug e fechado (B), reinicia o jogo (SoftReset da BIOS), porque a volta
+  original (cena 0 com o video do mapa) deixa a tela embaralhada.
+
+No menu: ESQUERDA/DIREITA escolhem, A entra, B sai. Opcoes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic,
+Rnd-tk, Battle, Sound, Motion (Motion = visualizador das animacoes de batalha).
+
+## Piloto (2026-10-10) - opcional (`--with pilot_part_stats`)
 
 `src/pilot_part_stats.c` reescreve `GetPartStats` (0x08042B58, 28 chamadas) com o mesmo comportamento e conta as
 chamadas em `INJECT_RAM`. A tabela é lida pelo literal original (0x08042B7C), então funciona também na ROM

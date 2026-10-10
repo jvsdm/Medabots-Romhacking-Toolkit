@@ -6,6 +6,8 @@ Free space starts after the last non-0xFF byte (at least 8 MB, + 0x10 gap, 4-ali
 FreeSpaceAllocator; an 8 MB ROM grows to the next MB. Each hook overwrites the start of a game function with
     [Thumb] bx pc ; (nop if needed)   [ARM] ldr ip, [pc] ; bx ip ; .word target|1
 (14-16 bytes; ip is a scratch register at a function entry), so the game's callers reach the C function.
+"pointers" replace a word in a ROM table (e.g. a state or handler table) with a C function's address | 1.
+Optional sets in patches.json ("optional") are added with --with NAME.
 """
 import argparse
 import json
@@ -22,7 +24,8 @@ sys.path.insert(0, str(HERE))
 import gen_symbols  # noqa: E402
 
 GBA = 0x08000000
-CFLAGS = ["-std=gnu11", "-mthumb", "-mthumb-interwork", "-mcpu=arm7tdmi", "-O2", "-ffreestanding", "-fno-builtin",
+# -mlong-calls: the injected code sits more than 4 MB away from the game's code, out of BL range.
+CFLAGS = ["-std=gnu11", "-mthumb", "-mthumb-interwork", "-mlong-calls", "-mcpu=arm7tdmi", "-O2", "-ffreestanding", "-fno-builtin",
           "-nostdlib", "-fno-pic", "-ffunction-sections", "-Wall", "-Wextra", "-Werror"]
 
 
@@ -55,9 +58,15 @@ def main():
     parser.add_argument("rom_in")
     parser.add_argument("rom_out")
     parser.add_argument("--gcc", default=os.environ.get("ARM_GCC_BIN", ""), help="folder with arm-none-eabi-*")
+    parser.add_argument("--with", dest="extra", action="append", default=[], help="optional set from patches.json")
     args = parser.parse_args()
     tool = lambda name: str(Path(args.gcc) / name) if args.gcc else name
     config = json.loads((INJECT / "patches.json").read_text(encoding="utf-8"))
+    config.setdefault("pointers", [])
+    for name in args.extra:
+        extra = config.get("optional", {}).get(name) or sys.exit(f"no optional set {name}")
+        for key in ("sources", "hooks", "pointers"):
+            config.setdefault(key, []).extend(extra.get(key, []))
     rom = bytearray(Path(args.rom_in).read_bytes())
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -83,7 +92,7 @@ ASSERT(SIZEOF(.data) == 0 && SIZEOF(.bss) == 0, "injected code cannot have writa
 """, encoding="utf-8")
         elf = tmp / "inject.elf"
         run([tool("arm-none-eabi-gcc"), *CFLAGS, "-T", str(tmp / "link.ld"), "-Wl,--gc-sections", "-Wl,-e,0",
-             "-Wl,--undefined=" + ",--undefined=".join(h["to"] for h in config["hooks"]), *objects, "-o", str(elf)])
+             *[f"-Wl,--undefined={entry['to']}" for entry in config["hooks"] + config["pointers"]], *objects, "-o", str(elf)])
         binary = tmp / "inject.bin"
         run([tool("arm-none-eabi-objcopy"), "-O", "binary", "-j", ".text", str(elf), str(binary)])
         symbols = {}
@@ -112,6 +121,15 @@ ASSERT(SIZEOF(.data) == 0 && SIZEOF(.bss) == 0, "injected code cannot have writa
             sys.exit(f"hook at 0x{at:08X} needs {len(patch)} bytes, only {hook['max_bytes']} allowed")
         rom[at - GBA:at - GBA + len(patch)] = patch
         print(f"hook: 0x{at:08X} -> {hook['to']} at 0x{target:08X} ({len(patch)} bytes)")
+
+    for pointer in config["pointers"]:
+        at = int(pointer["at"], 16)
+        target = symbols.get(pointer["to"])
+        if target is None:
+            sys.exit(f"pointer target {pointer['to']} not found in the compiled code")
+        old = struct.unpack_from("<I", rom, at - GBA)[0]
+        struct.pack_into("<I", rom, at - GBA, target | 1)
+        print(f"pointer: 0x{at:08X} 0x{old:08X} -> {pointer['to']} 0x{target | 1:08X}")
 
     Path(args.rom_out).write_bytes(rom)
     print(f"-> {args.rom_out}")

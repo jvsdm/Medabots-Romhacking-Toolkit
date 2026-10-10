@@ -145,3 +145,12 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
   local. Proximo alvo sugerido: acao de batalha nova via `gTechniqueActionValidationHandlerTable`/`Setup...` -
   precisa entender a assinatura dos handlers (decompilar 2-3 handlers e documentar aqui).
 
+### 2026-10-10 - sessao local (4): menu de debug liberado
+- Cena 63 de `menu_list` = menu de debug (11 opcoes; nomes em `debug_menu_text`). `inject/src/debug_menu.c` abre
+  com L+R+SELECT no mapa trocando `gMainStateTable[1]` e reinicia ao sair trocando `gMainStateTable[0]`. Testado no
+  mGBA (abre, troca opcoes, Motion mostra dois Medabots, B reinicia, jogo normal sem a combinacao).
+- Simbolos novos no CSV: DebugMenu_Dispatch/Init/Exit/RunOption, gDebugReturnScene/Step, gDebugMenuOption.
+- Proximo: usar a opcao Motion para decodificar os roteiros de movimento (`gMoveScriptTable` 0x0807E8EC, tocados por
+  0x08047428) e a arvore de moldes (registro de 0x18 B: +0x0F/+0x10 filhos, +0x12/+0x13 tamanho, +0x15 forma do
+  sprite; cada pedaco = 1 sprite de hardware, max 64x64).
+

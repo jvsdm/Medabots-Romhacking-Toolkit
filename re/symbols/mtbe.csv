@@ -9,6 +9,9 @@ address,name,kind,count,comment
 0x03000448,current_dialog_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x0300044C,current_character_in_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x0300045A,text_speed,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03000470,gDebugReturnScene,label,,u8: cena para onde o menu de debug volta ao sair (passo 2)
+0x03000471,gDebugReturnStep,label,,u8: passo da cena de retorno do menu de debug
+0x03000472,gDebugMenuOption,label,,u8: opcao do menu de debug (0-10)
 0x0300047D,currently_selected_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03000491,selected_tinpet_in_menu,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03000493,selected_tinpet_has_all_parts,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -67,7 +70,7 @@ address,name,kind,count,comment
 0x03000BE6,first_medal_aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BE7,first_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BEA,first_medal_name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x0300137C,gamestate_subroutine,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x0300137C,gamestate_subroutine,label,,"passo interno da cena atual (debug: 0 init, 1 menu, 2 sai, 3 opcao); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03001780,gFrameCount,label,,contador de frames (AgbMain)
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state
 0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
@@ -101,7 +104,7 @@ address,name,kind,count,comment
 0x03002420,current_shop,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03002B64,held_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03002B88,gPlayTimeFrames,label,,tempo de jogo em frames; trava em 21599999 (99:59:59)
-0x03002B8C,gamestate_menu,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03002B8C,gamestate_menu,label,,"u32: indice em menu_list executado pelo MainState0 (63 = menu de debug); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03004C40,gInventory,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory
@@ -285,7 +288,11 @@ address,name,kind,count,comment
 0x08006764,RenderAlternateCompositePreviewLargeFrame,func_thumb,,Simon/Rokusho
 0x08006F44,PartSet_UpdateFromCurrentLoadoutMaybe,func_thumb,,Simon/Rokusho
 0x08006FA0,PartSet_EquipCurrentLoadoutMaybe,func_thumb,,Simon/Rokusho
+0x0800B890,DebugMenu_Dispatch,func_thumb,,menu_list[63]: chama debug_menu_subroutines[gamestate_subroutine]
+0x0800B8B0,DebugMenu_Init,func_thumb,,"passo 0: limpa OAM, carrega fonte de sprites em 0x06017400, liga sprites"
 0x0800B938,controls_in_debug_menu,func_thumb,,Simon/Rokusho
+0x0800BA74,DebugMenu_Exit,func_thumb,,passo 2: volta para gDebugReturnScene/gDebugReturnStep
+0x0800BAB8,DebugMenu_RunOption,func_thumb,,passo 3: chama a tabela 0x083ACA80 [gDebugMenuOption]
 0x0800BAF8,debug_process,func_thumb,,Simon/Rokusho
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
 0x0800EE34,PartSetPreview_DrawAttributeMatchMarkers,func_thumb,,Simon/Rokusho: Draw per-slot attribute match markers for the four parts in the selected part set. The marker is controlled by RomPartRecord.attribute_id.
@@ -961,10 +968,11 @@ address,name,kind,count,comment
 0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable
 0x08081490,sCompositePreviewMirroredDescriptorMap,label,,Simon/Rokusho em 0x080814B0
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
-0x083AC2C8,menu_list,label,,Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
+0x083AC2C8,menu_list,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
 0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]
-0x083ACBA0,debug_menu_text,label,,Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]
+0x083ACA80,debug_menu_option_table,ptr,11,rotinas das 11 opcoes (debug_menu_subroutines a partir do indice 9)
+0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]"
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]

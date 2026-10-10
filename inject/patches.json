@@ -1,11 +1,22 @@
 {
-  "sources": ["src/pilot_part_stats.c"],
-  "hooks": [
+  "sources": ["src/debug_menu.c"],
+  "pointers": [
     {
-      "at": "0x08042B58",
-      "to": "Inject_GetPartStats",
-      "replaces": "GetPartStats (36 bytes up to its literal at 0x08042B7C, which stays)",
-      "max_bytes": 36
+      "at": "0x083ABF98",
+      "to": "Inject_MainState0",
+      "replaces": "gMainStateTable[0] = MainState0 (menu_list scenes)"
+    },
+    {
+      "at": "0x083ABF9C",
+      "to": "Inject_MainState1",
+      "replaces": "gMainStateTable[1] = MainState1 (field)"
     }
-  ]
+  ],
+  "hooks": [],
+  "optional": {
+    "pilot_part_stats": {
+      "sources": ["src/pilot_part_stats.c"],
+      "hooks": [{"at": "0x08042B58", "to": "Inject_GetPartStats", "max_bytes": 36}]
+    }
+  }
 }
