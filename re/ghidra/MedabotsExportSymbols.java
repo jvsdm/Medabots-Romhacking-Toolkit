@@ -52,14 +52,14 @@ public class MedabotsExportSymbols extends GhidraScript {
 
         for (Symbol sym : currentProgram.getSymbolTable().getAllSymbols(true)) {
             SourceType src = sym.getSource();
-            if (src != SourceType.USER_DEFINED && src != SourceType.IMPORTED) {
+            if (src != SourceType.USER_DEFINED) {
                 continue;
             }
             if (!sym.isPrimary() || !sym.isGlobal()) {
                 continue;
             }
             Address a = sym.getAddress();
-            if (!a.isMemoryAddress()) {
+            if (!a.isMemoryAddress() || !currentProgram.getMemory().contains(a)) {
                 continue;
             }
             String name = sym.getName();

@@ -29,6 +29,7 @@ import ghidra.program.model.mem.MemoryBlock;
 import ghidra.program.model.symbol.Reference;
 import ghidra.program.model.symbol.SourceType;
 import ghidra.program.model.symbol.Symbol;
+import ghidra.program.model.symbol.SymbolType;
 
 public class MedabotsSetup extends GhidraScript {
 
@@ -198,7 +199,30 @@ public class MedabotsSetup extends GhidraScript {
             if (!"ROM".equals(rom.getName())) {
                 rom.setName("ROM");
             }
+            // Area de dados sem execute: os analisadores param de criar codigo nela
+            Address dataStart = addr(DATA_START);
+            if (rom.contains(dataStart) && !rom.getStart().equals(dataStart)) {
+                memory.split(rom, dataStart);
+                ok("ROM dividida em ROM + ROM_DATA");
+            }
         }
+        MemoryBlock romData = memory.getBlock(addr(DATA_START));
+        if (romData != null && !romData.getStart().equals(addr(ROM_START))) {
+            if (!"ROM_DATA".equals(romData.getName())) {
+                romData.setName("ROM_DATA");
+            }
+            romData.setRead(true);
+            romData.setWrite(false);
+            romData.setExecute(false);
+        }
+    }
+
+    private Address romEnd() {
+        MemoryBlock last = currentProgram.getMemory().getBlock(addr(DATA_START));
+        if (last == null) {
+            last = currentProgram.getMemory().getBlock(addr(ROM_START));
+        }
+        return last == null ? null : last.getEnd();
     }
 
     // Limpeza
@@ -251,11 +275,11 @@ public class MedabotsSetup extends GhidraScript {
             ok("Funcoes falsas removidas: " + bogus.size());
         }
 
-        MemoryBlock rom = currentProgram.getMemory().getBlock(addr(ROM_START));
-        if (rom != null) {
+        Address end = romEnd();
+        if (end != null) {
             List<Instruction> orphans = new ArrayList<>();
             for (Instruction ins : currentProgram.getListing().getInstructions(limit, true)) {
-                if (ins.getAddress().compareTo(rom.getEnd()) > 0) {
+                if (ins.getAddress().compareTo(end) > 0) {
                     break;
                 }
                 if (getFunctionContaining(ins.getAddress()) == null) {
@@ -276,7 +300,7 @@ public class MedabotsSetup extends GhidraScript {
         Iterator<Bookmark> it = bm.getBookmarksIterator("Error");
         while (it.hasNext()) {
             Bookmark b = it.next();
-            if ("Bad Instruction".equals(b.getCategory()) && b.getAddress().compareTo(limit) >= 0) {
+            if (b.getAddress().compareTo(limit) >= 0) {
                 doomed.add(b);
             }
         }
@@ -349,8 +373,15 @@ public class MedabotsSetup extends GhidraScript {
     }
 
     private void setName(Address a, String name) throws Exception {
+        // CSV e a fonte da verdade: nome do usuario em outro endereco e movido
         for (Symbol s : getSymbols(name, null)) {
-            if (!s.getAddress().equals(a)) {
+            if (s.getAddress().equals(a)) {
+                continue;
+            }
+            if (s.getSource() == SourceType.USER_DEFINED && s.getSymbolType() == SymbolType.LABEL) {
+                s.delete();
+            }
+            else {
                 warn("Nome " + name + " ja usado em " + s.getAddress() + "; mantido la");
                 return;
             }

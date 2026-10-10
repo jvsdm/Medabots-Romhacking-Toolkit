@@ -49,4 +49,4 @@ O Setup e idempotente: pode rodar quantas vezes quiser.
 
 ## Limpeza de codigo falso
 
-Funcoes acima de `0x08080000` (graficos, texto, tabelas) sem chamada vinda de codigo abaixo desse endereco sao removidas, depois de confirmacao. Funcoes listadas no CSV nunca sao removidas. O limite fica em `DATA_START` no topo de `MedabotsSetup.java`.
+A partir de `0x08080000` a ROM vira o bloco `ROM_DATA`, sem execute, para os analisadores nao criarem codigo ali. Funcoes acima desse endereco sem chamada vinda de codigo abaixo desse endereco sao removidas, depois de confirmacao. Funcoes listadas no CSV nunca sao removidas. O limite fica em `DATA_START` no topo de `MedabotsSetup.java`.
