@@ -617,6 +617,11 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
 - **Cintura:** o molde 2 do Navi (raiz do tronco, pai das juntas da cabeça e dos braços) tem deslocamento (−4,0);
   o do Core é zero, e a junta das pernas fica no molde 1. Sem isso cabeça e pernas ficavam 4 px mais próximas.
   O importador soma esse deslocamento às raízes da cabeça e dos braços.
+- **Linha do chão:** na pose parada (tela de montagem, sem movimento) os bots do Navi ficavam com os pés 2-17 px
+  acima da linha do Core (Flying Of 13 px abaixo). O importador mede o pixel mais baixo de cada bot (registros +
+  arte, todas as juntas num ponto) e compara com a mediana dos bots do Core; a diferença vai nos bits 24-31 da
+  1ª entrada da perna, e o hook do PlacePiece desloca o bot inteiro na raiz (molde 1). Com perna trocada (Tinpet)
+  o ajuste some junto. Conferido: pés dos 21 em y=94 na tela de montagem (Core 93-95).
 - Moldes novos que começam um membro usam registro/movimento da raiz do Core (cabeça 7, direito 17, esquerdo 14,
   pernas 20).
 - **Peças misturadas** (Tinpet quando a peça quebra, ou peças trocadas entre bots): com o mapa antigo o braço de

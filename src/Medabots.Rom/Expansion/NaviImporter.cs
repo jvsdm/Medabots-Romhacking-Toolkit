@@ -253,8 +253,130 @@ public static class NaviImporter
             }
         }
 
+        // ---- 4. feet on Core's ground line: Navi bots are taller or shorter than Core's. The rest-pose bottom of each
+        //         bot (all rows, joints at one point) is compared with the median of Core's bots; the difference (px,
+        //         up) goes into bits 24-31 of the first legs entry, and the injected code lifts the whole bot by it.
+        var geometry = new RestPose(rom, layout.CompositePreviewDescriptorPointerTableOffset, markerAt + 8,
+            [previews["head"], previews["right_arm"], previews["left_arm"], previews["legs"]]);
+        var ground = Median(Enumerable.Range(0, Math.Min(CoreBots, added.BotId)).Select(geometry.Bottom).OfType<int>());
+        for (var b = 0; b < plans.Count; b++)
+        {
+            var id = added.BotId + b;
+            var bottom = geometry.Bottom(id);
+            var legsRow = previews["legs"] + id * 32;
+            if (bottom is null || U32(rom, legsRow) == 0)
+            {
+                continue;
+            }
+
+            var lift = Math.Clamp(bottom.Value - ground, sbyte.MinValue, sbyte.MaxValue);
+            WriteU32(rom, legsRow, (U32(rom, legsRow) & 0x00FFFFFFu) | ((uint)(byte)(sbyte)lift << 24));
+            log.Add($"{plans[b].Request.Name}: feet at {bottom}, Core ground {ground}, lift {lift}");
+        }
+
         log.Add($"free space used up to 0x{allocator.Next:X6}");
         return new BotAddResult(rom, added.BotId, log);
+    }
+
+    private const int CoreBots = 120;
+
+    private static int Median(IEnumerable<int> values)
+    {
+        var sorted = values.OrderBy(v => v).ToList();
+        Require(sorted.Count > 0, "No Core bot to measure the ground line.");
+        return sorted[sorted.Count / 2];
+    }
+
+    // Rest pose of a bot as the game draws it with no motion: every limb hangs from the same point (Core's joints and
+    // body root have no offset), each piece at parent + (+0x0C) with its pivot (+0x04) and height (+0x12).
+    private sealed class RestPose(byte[] rom, int coreTable, int naviTable, int[] rows)
+    {
+        private static readonly int[] RowSizes = [16, 16, 16, 32];
+
+        public int? Bottom(int bot)
+        {
+            int? best = null;
+            for (var part = 0; part < rows.Length; part++)
+            {
+                var entries = new Dictionary<int, uint>();
+                uint first = 0;
+                for (var k = 0; k < RowSizes[part] / 4; k++)
+                {
+                    var entry = U32(rom, rows[part] + bot * RowSizes[part] + 4 * k);
+                    if ((entry & 0x3F) == 0)
+                    {
+                        break;
+                    }
+
+                    first = first == 0 ? entry : first;
+                    entries.TryAdd((int)(entry & 0x3F), entry);
+                }
+
+                if (first != 0)
+                {
+                    Walk((int)(first & 0x3F), 0, entries, ref best, 0);
+                }
+            }
+
+            return best;
+        }
+
+        private void Walk(int mold, int parent, Dictionary<int, uint> entries, ref int? best, int depth)
+        {
+            if (depth > 16)
+            {
+                return;
+            }
+
+            var has = entries.TryGetValue(mold, out var entry);
+            var table = has && (entry & NaviEntryBit) != 0 ? naviTable : coreTable;
+            var record = (int)U32(rom, table + 4 * mold) - GbaBase;
+            var at = parent + (sbyte)rom[record + 0x0C];
+            if (has)
+            {
+                var image = (int)U32(rom, (int)U32(rom, record) - GbaBase + 8 * (int)((entry >> 6) & 0xFF)) - GbaBase;
+                var lowest = LowestRow(GbaLz77.Decompress(rom, image), rom[record + 0x13], rom[record + 0x12]);
+                if (lowest >= 0)
+                {
+                    var bottom = at - BinaryPrimitives.ReadInt32LittleEndian(rom.AsSpan(record + 4)) + lowest + 1;
+                    best = best is null ? bottom : Math.Max(best.Value, bottom);
+                }
+            }
+
+            if (rom[record + 0x10] != 0)
+            {
+                Walk(rom[record + 0x10], at, entries, ref best, depth + 1);
+            }
+
+            if (rom[record + 0x0F] != 0)
+            {
+                Walk(rom[record + 0x0F], parent, entries, ref best, depth + 1);
+            }
+        }
+
+        // Lowest row with an opaque pixel of a 4bpp picture (1D tiles, row-major), or -1.
+        private static int LowestRow(byte[]? pixels, int width, int height)
+        {
+            if (pixels is null || width < 8)
+            {
+                return -1;
+            }
+
+            var across = width / 8;
+            for (var row = height - 1; row >= 0; row--)
+            {
+                for (var tile = 0; tile < across; tile++)
+                {
+                    var at = 32 * ((row / 8) * across + tile) + 4 * (row % 8);
+                    if (at + 4 <= pixels.Length && (pixels[at] | pixels[at + 1] | pixels[at + 2] | pixels[at + 3]) != 0)
+                    {
+                        return row;
+                    }
+                }
+            }
+
+            return -1;
+        }
     }
 
     // Mold table -> 64 entries, mirror map -> 64 entries (new arms swap), motion scripts -> 63 mold rows.

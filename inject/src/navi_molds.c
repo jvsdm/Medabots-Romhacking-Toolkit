@@ -70,9 +70,22 @@ u32 Inject_PartPreviewPiece(const u32 *table, const u32 *entries, u32 mold, u32 
 
 /* On side 1 a piece takes the geometry of its mirror mold (the arms swap pictures, CopyArmGraphics), so the table
    follows the piece whose picture and record are drawn there. */
+/* Bits 24-31 of a Navi legs entry: how many pixels the whole bot goes up so its feet stand on Core's ground line
+   (NaviImporter measures the rest pose). Applied at the root of the assembly (mold 1); x is the vertical, 8.8. */
+static s32 NaviLift(const u32 *entries)
+{
+    if (entries != 0)
+        for (; (*entries & 0x3F) != 0; entries++)
+            if ((*entries & NAVI_ENTRY_BIT) && (*entries >> 24) != 0)
+                return (s8)(*entries >> 24);
+    return 0;
+}
+
 u32 Inject_PlacePiece(u32 *ctx, const u32 *entries, u32 mold, s32 x, s32 y, s32 z, s32 angle, u32 mirrored)
 {
     u32 saved = ctx[1];
+    if ((mold & 0xFF) == 1)
+        x -= NaviLift(entries) << 8;
     u32 drawn = mold;
     if ((mirrored & 0xFF) && NaviPiece(entries, (*MIRROR_MAP_LITERAL)[mold & 0xFF]) >= 0)
         drawn = (*MIRROR_MAP_LITERAL)[mold & 0xFF];

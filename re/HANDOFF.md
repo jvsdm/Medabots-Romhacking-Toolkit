@@ -193,3 +193,6 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
 - Para a nuvem (sem ROM, barato): nada.
 - (8b) Cintura: o molde 2 do Navi (pai das juntas da cabeca e bracos) tem offset (-4,0), o do Core e zero; o
   importador soma isso as raizes da cabeca e dos bracos (pernas penduram no molde 1).
+- (8c) Linha do chao: ajuste por bot (px) nos bits 24-31 da 1a entrada da perna, medido na pose parada contra a
+  mediana do Core; `navi_molds.c` desloca o bot na raiz (molde 1). Tela de montagem: B, A, A, A; pecas equipadas
+  em 0x030017A3-A6 (IDs de bot); Baixo + Start troca o conjunto.

@@ -616,6 +616,11 @@ menu's Motion viewer the bot is identical to the original on both sides.
 - **Waist:** Navi's mold 2 (body root, parent of the head and arm joints) is offset (−4,0); Core's is zero, and
   the legs joint hangs from mold 1. Without it head and legs sat 4 px too close. The importer adds that offset to
   the head and arm roots.
+- **Ground line:** in the rest pose (build screen, no motion) Navi bots stood 2-17 px above Core's feet line
+  (Flying Of 13 px below). The importer measures each bot's lowest pixel (records + art, all joints at one point)
+  against the median of Core's bots; the difference goes into bits 24-31 of the first legs entry, and the
+  PlacePiece hook moves the whole bot at the root (mold 1). With swapped legs (Tinpet) the lift goes with them.
+  Checked: all 21 bots' feet at y=94 on the build screen (Core 93-95).
 - New molds that start a limb take record/motion from Core's limb root (head 7, right 17, left 14, legs 20).
 - **Mixed parts** (Tinpet when a part breaks, or parts swapped between bots): with the old map the Tinpet arm (mold
   14) collided with Navi's right arm in the same mold and took Navi's record (loose arm). Fixed by the per-side map.
