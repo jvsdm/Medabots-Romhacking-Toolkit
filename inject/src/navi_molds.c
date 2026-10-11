@@ -7,6 +7,7 @@
 
 #define NAVI_ENTRY_BIT 0x10000u
 #define CORE_MOLD_TABLE_LITERAL ((const u32 *const *)0x08005364)
+#define MIRROR_MAP_LITERAL ((const u8 *const *)0x08046654)
 
 extern const u32 gNaviMoldTable[];
 
@@ -42,19 +43,20 @@ asm(".text\n"
     "  bx r5\n"
     "  .ltorg\n");
 
-static int IsNaviPiece(const u32 *entries, u32 mold)
+/* 1 = Navi piece, 0 = Core piece, -1 = the mold has no entry. */
+static int NaviPiece(const u32 *entries, u32 mold)
 {
     if (entries == 0)
-        return 0;
+        return -1;
     for (; (*entries & 0x3F) != 0; entries++)
         if ((*entries & 0x3F) == (mold & 0xFF))
             return (*entries & NAVI_ENTRY_BIT) != 0;
-    return 0;
+    return -1;
 }
 
 static const u32 *PickTable(const u32 *current, const u32 *entries, u32 mold)
 {
-    if (IsNaviPiece(entries, mold))
+    if (NaviPiece(entries, mold) == 1)
         return gNaviMoldTable;
     if (current == gNaviMoldTable)
         return *CORE_MOLD_TABLE_LITERAL;
@@ -66,16 +68,38 @@ u32 Inject_PartPreviewPiece(const u32 *table, const u32 *entries, u32 mold, u32 
     return Orig_PartPreviewPiece(PickTable(table, entries, mold), entries, mold, palette, state, tile, variant);
 }
 
+/* On side 1 a piece takes the geometry of its mirror mold (the arms swap pictures, CopyArmGraphics), so the table
+   follows the piece whose picture and record are drawn there. */
 u32 Inject_PlacePiece(u32 *ctx, const u32 *entries, u32 mold, s32 x, s32 y, s32 z, s32 angle, u32 mirrored)
 {
     u32 saved = ctx[1];
-    ctx[1] = (u32)PickTable((const u32 *)saved, entries, mold);
+    u32 drawn = mold;
+    if ((mirrored & 0xFF) && NaviPiece(entries, (*MIRROR_MAP_LITERAL)[mold & 0xFF]) >= 0)
+        drawn = (*MIRROR_MAP_LITERAL)[mold & 0xFF];
+    ctx[1] = (u32)PickTable((const u32 *)saved, entries, drawn);
     u32 result = Orig_PlacePiece(ctx, entries, mold, x, y, z, angle, mirrored);
     ctx[1] = saved;
     return result;
 }
 
+static u32 EntryOf(const u32 *entries, u32 mold)
+{
+    if (entries != 0)
+        for (; (*entries & 0x3F) != 0; entries++)
+            if ((*entries & 0x3F) == (mold & 0xFF))
+                return *entries;
+    return 0;
+}
+
+/* Side 1 swaps the arms' pictures piece by piece. With a Core arm against a Navi one the pieces may differ in size
+   (a 64x64 one-piece Navi arm), and a Navi piece with its own side-1 picture (bit 15) is not swapped: then each
+   arm keeps its own picture, flipped at the mirror geometry. */
 u32 Inject_CopyArmGraphics(const u32 *table, void *state, const u32 *entries, u32 src, u32 dst)
 {
+    const u32 *core = *CORE_MOLD_TABLE_LITERAL;
+    const u8 *from = (const u8 *)core[src & 0xFF], *to = (const u8 *)core[dst & 0xFF];
+    u32 entry = EntryOf(entries, src);
+    if ((entry & NAVI_ENTRY_BIT && entry & 0x8000) || from[0x12] != to[0x12] || from[0x13] != to[0x13])
+        return 0;
     return Orig_CopyArmGraphics(PickTable(table, entries, src), state, entries, src, dst);
 }

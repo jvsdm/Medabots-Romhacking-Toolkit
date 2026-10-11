@@ -40,7 +40,7 @@ public static class NaviImporter
     private static readonly Dictionary<int, int> SameShape = new()
     {
         [7] = 7, [8] = 8, [9] = 9, [10] = 10,
-        [13] = 14, [14] = 15, [16] = 17, [17] = 18,
+        [13] = 17, [14] = 18, [16] = 14, [17] = 15,        // right arm row: Core 17-19, left arm row: Core 14-16
         [19] = 31, [20] = 32, [21] = 33, [22] = 34, [23] = 35,
         [25] = 25, [26] = 26, [27] = 27, [28] = 28, [29] = 29,
     };
@@ -49,7 +49,7 @@ public static class NaviImporter
     private static readonly Dictionary<int, int> NewMoldAnalog = new()
     {
         [30] = 13, [11] = 11, [12] = 12,
-        [15] = 16, [33] = 16, [18] = 19, [34] = 19,
+        [15] = 19, [33] = 19, [18] = 16, [34] = 16,
         [24] = 30, [31] = 30, [32] = 30, [35] = 30, [36] = 30, [37] = 30,
     };
 
@@ -65,7 +65,7 @@ public static class NaviImporter
     private static readonly int[] NaviJointTemplates = [0x4BFBE4, 0x4BFBFC, 0x4BFC14, 0x4BFC2C];
 
     // Core's first piece of each limb (children of the joints 3-6): head, right arm, left arm, legs.
-    private static readonly int[] CoreLimbRoots = [7, 14, 17, 20];
+    private static readonly int[] CoreLimbRoots = [7, 17, 14, 20];
 
     private static readonly Dictionary<string, int> LegTypeCode = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -104,8 +104,8 @@ public static class NaviImporter
             map[naviMold] = coreMold;
         }
 
-        // The first piece of each limb hangs from a skeleton joint: Navi keeps the limb's side in the joint (with the
-        // opposite sign to Core, which keeps it in the piece), so the joint's offsets move into that piece.
+        // The first piece of each limb hangs from a skeleton joint: Navi keeps the limb's offset in the joint, Core
+        // in the piece (joints are zero), so the joint's offsets move into that piece.
         // The joint's child is set at run time to the first entry of the row, so that piece is the limb's root.
         var limbRoot = new Dictionary<int, int>();
         foreach (var (_, rows) in plans)

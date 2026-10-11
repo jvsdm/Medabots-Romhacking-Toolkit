@@ -598,9 +598,11 @@ menu's Motion viewer the bot is identical to the original on both sides.
 - Navi's Medachange forms have not been found yet (they are not in the bot rows).
 
 ### 15.5 Faithful Navi assembly: a Navi mold table + hooks (2026-10-10)
-- Problem: with Core's records, arms and legs came out on the wrong side and fitted badly. Navi keeps a limb's side
-  in the **joint** (templates 0x4BFBE4/FC, 0x4BFC14/2C: right arm (-4,-7), left (-4,+7)); Core keeps it in the
-  **first piece** (14: +8, 17: -8). Pivots of same-shape molds also differ.
+- Problem: with Core's records, arms and legs came out on the wrong side and fitted badly. Main cause: in Core the
+  **right arm row uses molds 17-19 and the left one 14-16**; the old map sent Navi's right arm (13/14) to 14/15
+  (Core's left side). Now: right 13/14→17/18, left 16/17→14/15, 64×64 15/33→new molds based on 19, 18/34→based on
+  16. Also Navi keeps a limb's offset in the **joint** (templates 0x4BFBE4/FC, 0x4BFC14/2C: right (-4,-7), left
+  (-4,+7)) and Core in the **first piece** (17: -8, 14: +8, zero joints), and same-shape molds have other pivots.
 - Fix: `NaviImporter` writes a **second mold table** (64 pointers, after the marker `MBXNAVIT`) holding Navi's
   records at Core's IDs (Core motion still fits), with the joint offset added to the first piece of each row (the
   RAM joint points at the row's first entry, not at the template's fixed child). Navi entries carry **bit 16**
@@ -611,9 +613,16 @@ menu's Motion viewer the bot is identical to the original on both sides.
 - Side 1 (mirrored): Core h-flips every non-rotating piece; Navi does not when the entry has **bit 15** (second
   picture already drawn for side 1, test at 0x0801A7F4). The importer stores that picture flipped, so Core's flip
   undoes it. This fixed Lady Outer, Giraffe Chief and Fearer.
-- New molds that start a limb take record/motion from Core's limb root (7/14/17/20).
-- Result: all 21 bots checked on both sides against Medapedia; Core bots identical with and without the hooks.
-  Open: Hophop smaller than the reference (legs without their own palette).
+- New molds that start a limb take record/motion from Core's limb root (head 7, right 17, left 14, legs 20).
+- **Mixed parts** (Tinpet when a part breaks, or parts swapped between bots): with the old map the Tinpet arm (mold
+  14) collided with Navi's right arm in the same mold and took Navi's record (loose arm). Fixed by the per-side map.
+  On side 1 the PlacePiece hook picks the table by the piece of the mirror mold (that geometry is used there), and
+  the CopyArmGraphics hook skips the arm picture swap when sizes differ or the Navi piece has its own side-1
+  picture (bit 15).
+- Result: all 21 bots checked on both sides against Medapedia; Core bots identical with and without the hooks;
+  Granbeetle and Lady Outer with a Core arm fit on both sides.
+  Open: Hophop smaller than the reference (legs without their own palette); a one-piece 64×64 Navi arm without a
+  side-1 picture (Umbrebat's wing) on a Core bot is off on side 1.
 
 ## Credits and references
 

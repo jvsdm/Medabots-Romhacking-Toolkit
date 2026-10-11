@@ -182,3 +182,12 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
 - 21 bots conferidos nos dois lados; bots do Core identicos com e sem hooks. Detalhes: `re/reference/` 15.5.
 - Pendente local: Hophop (perna sem paleta propria); Medachange do Navi.
 - Para a nuvem (sem ROM, barato): nada.
+
+### 2026-10-10 - sessao local (8): peca quebrada (Tinpet) em bot do Navi
+- Causa real dos lados trocados: no Core a linha do braco direito usa moldes 17-19 e a do esquerdo 14-16; o mapa
+  mandava o direito do Navi para 14/15. Com isso o braco de Tinpet (14) colidia com o braco do Navi no mesmo molde
+  e pegava o registro do Navi. Mapa corrigido por lado (NaviImporter).
+- `navi_molds.c`: no lado 1 a tabela segue o molde espelhado; troca de arte entre bracos pulada se os tamanhos
+  diferem ou a peca do Navi tem bit 15. Bots do Core identicos; misturas Core/Navi encaixam.
+- Pendente local: asa 64x64 do Navi sem arte de lado 1 num bot do Core (lado 1); Hophop; Medachange.
+- Para a nuvem (sem ROM, barato): nada.

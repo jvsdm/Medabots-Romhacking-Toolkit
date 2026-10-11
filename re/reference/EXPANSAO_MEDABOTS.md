@@ -598,9 +598,12 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
 - As formas de Medachange do Navi ainda não foram encontradas (não estão nas linhas dos bots).
 
 ### 15.5 Montagem fiel do Navi: tabela de moldes do Navi + hooks (2026-10-10)
-- Problema: com os registros do Core, braços e pernas saíam do lado trocado e mal encaixados. O Navi guarda o lado
-  do membro na **junta** (templates 0x4BFBE4/FC, 0x4BFC14/2C: braço direito (-4,-7), esquerdo (-4,+7)); o Core
-  guarda no **primeiro pedaço** (14: +8, 17: -8). E os pivôs dos moldes de mesmo formato são diferentes.
+- Problema: com os registros do Core, braços e pernas saíam do lado trocado e mal encaixados. Causa principal: no
+  Core a linha do **braço direito usa os moldes 17-19 e a do esquerdo 14-16**; o mapa antigo mandava o braço
+  direito do Navi (13/14) para 14/15 (lado esquerdo do Core). Agora: direito 13/14→17/18, esquerdo 16/17→14/15,
+  64×64 15/33→novos com base 19, 18/34→base 16. Além disso o Navi guarda o deslocamento do membro na **junta**
+  (templates 0x4BFBE4/FC, 0x4BFC14/2C: direito (-4,-7), esquerdo (-4,+7)) e o Core no **primeiro pedaço**
+  (17: -8, 14: +8, juntas zeradas), e os pivôs dos moldes de mesmo formato diferem.
 - Solução: `NaviImporter` grava uma **segunda tabela de moldes** (64 ponteiros, depois do marcador `MBXNAVIT`) com
   os registros do Navi nos IDs do Core (o movimento do Core continua servindo) e o offset da junta somado ao
   primeiro pedaço de cada linha (a junta da RAM aponta para a 1ª entrada da linha; não é o filho fixo do template).
@@ -611,9 +614,17 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
 - Lado 1 (espelhado): no Core toda peça sem rotação leva hflip; no Navi não leva se tiver **bit 15** (segunda arte
   já desenhada para o lado 1, teste em 0x0801A7F4). O importador grava essa segunda arte já invertida, e o hflip
   do Core a desvira. Isso consertou Lady Outer, Giraffe Chief e Fearer.
-- Moldes novos que começam um membro usam registro/movimento da raiz do Core (7/14/17/20).
-- Resultado: 21 bots conferidos nos dois lados contra o Medapedia; bots do Core idênticos com e sem os hooks.
-  Pendente: Hophop menor que a referência (perna sem paleta própria).
+- Moldes novos que começam um membro usam registro/movimento da raiz do Core (cabeça 7, direito 17, esquerdo 14,
+  pernas 20).
+- **Peças misturadas** (Tinpet quando a peça quebra, ou peças trocadas entre bots): com o mapa antigo o braço de
+  Tinpet (molde 14) colidia com o braço direito do Navi no mesmo molde e pegava o registro do Navi (braço solto).
+  Corrigido pelo mapa por lado. No lado 1 o hook do PlacePiece escolhe a tabela pela peça do molde espelhado (é a
+  geometria usada ali), e o do CopyArmGraphics pula a troca de arte entre braços quando os tamanhos diferem ou a
+  peça do Navi tem arte própria do lado 1 (bit 15).
+- Resultado: 21 bots conferidos nos dois lados contra o Medapedia; bots do Core idênticos com e sem os hooks;
+  Granbeetle com braço do Core e Lady Outer com braço do Core encaixam nos dois lados.
+  Pendentes: Hophop menor que a referência (perna sem paleta própria); braço do Navi de uma peça 64×64 sem arte do
+  lado 1 (asa do Umbrebat) num bot do Core sai deslocado no lado 1.
 
 ## Créditos e referências
 
