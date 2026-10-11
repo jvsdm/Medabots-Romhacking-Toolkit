@@ -316,3 +316,13 @@ Checklist:
   falhas antigas (LargePartDisplay).
 - Emulador, Metabee (E) simples com o projeto aplicado: "<I>NoItem" e "<I>ãõÃÕéá" escuros e legiveis; texto
   normal igual ao anterior. WPF: preview italico escuro, igual ao jogo.
+
+### 2026-10-11 - sessao local (13): pendencias registradas (fonte e custom)
+- Fonte: o Toolkit acha a normal/italica 8 bytes adiante do jogo. Codigo (0x08040132: glifo<<6 + ponteiro):
+  normal 0x084BFC64, italica 0x084C59A4 (literais 0x40164, 0x40144...); Toolkit usa 0x4BFC6C / 0x4C59AC.
+  Corrigir lendo os literais e realinhar os 4 glifos novos. A italica e mal desenhada na propria ROM (confirmado
+  pelo usuario no Tile Molester): refazer a mao (folha PNG / base inclinada / Import Italic Font). Paleta do
+  dialogo 0x4C7F34. Usuario pediu para deixar para depois.
+- Bot customizado (custom_lab, KWG-03BH): pausado; desmonta fora da animacao de espera.
+- Docs: `re/reference/` secao 16 (fonte) e 15.7 (custom pausado).
+- Para a nuvem (sem ROM, barato): nada.

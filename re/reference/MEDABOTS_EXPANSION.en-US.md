@@ -648,7 +648,27 @@ menu's Motion viewer the bot is identical to the original on both sides.
   and offset so the rest pose reproduces the assembled view, feet on Core's ground line. New molds 50+ with
   Metabee's tree and motion; written to bot 43 of an EU ROM.
 - Test: KWG-03BH (`Medarot_Navi_Custom_Sprites_2.png`) in `build/Metabee+debug+custom.gba`; preview in
-  `.preview.png`. Checked in the Motion viewer. The sheets are fan art: do not version the art.
+  `.preview.png`. The sheets are fan art: do not version the art.
+- **Paused (2026-10-11):** the bot is right at rest and in the idle animation but falls apart in the other
+  animations (Metabee's rotations and offsets do not fit another geometry). Motion viewer: ←/→ change the
+  animation number and A plays it; START/SELECT change the bot (0x03000479).
+
+## 16. Extended font (PT-BR) — Toolkit, Font tab (2026-10-11)
+
+- New glyphs in the normal font: 0x4F õ, 0x7D Ã, 0x7E ã, 0x7F Õ. Widths 0x4F-0x7F computed from the pixels (zero
+  in the original ROM): normal = last inked column + 2, italic = + 1. (E) ROMs only; in the (U) the font stops at
+  0x4E and the rest is other data (the tab is locked). Off, the ROM is identical to the original.
+- With the font on, the (E) italic font is repaired (`ItalicFontRepair`: shades B-F stored as 0 become dark
+  again). The (E) italic already ships õ Ã ã Õ (width 0); they are kept and get widths.
+- Dialogue palette: 0x4C7F34 (16 colors, BGR555). Widths: normal 0x3B4E08, italic 0x3B5008.
+- **Open:**
+  - The Toolkit finds the fonts 8 bytes after what the game uses. The code (routine 0x08040132: `glyph << 6` +
+    pointer) points the normal font to **0x084BFC64** and the italic to **0x084C59A4** (literals at 0x40164,
+    0x40144 and others); the Toolkit uses 0x4BFC6C / 0x4C59AC. Fix: read the pointer from the literals and realign
+    the 4 new glyphs (today they land 2 rows lower). Rokusho (E): probably 0x4BFC88 / 0x4C59C8.
+  - The italic font is badly drawn in the ROM itself (stray pixels, misplaced accents, also at the right pointer):
+    redraw by hand. Options: PNG sheet to edit, a slanted base from the normal font, and "Import Italic Font" in
+    the Font tab.
 
 ## Credits and references
 

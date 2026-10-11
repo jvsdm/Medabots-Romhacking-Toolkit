@@ -651,7 +651,27 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
   espelhados do mesmo tamanho), pivô e offset para a pose parada reproduzir a vista montada, pés na linha do chão
   do Core. Moldes novos 50+ com a árvore e o movimento do Metabee; grava no bot 43 de uma ROM EU.
 - Teste: KWG-03BH (`Medarot_Navi_Custom_Sprites_2.png`) em `build/Metabee+debug+custom.gba`; prévia em
-  `.preview.png`. Conferido no visualizador Motion. As folhas são de fã: não versionar a arte.
+  `.preview.png`. As folhas são de fã: não versionar a arte.
+- **Pausado (2026-10-11):** o bot fica certo parado e na animação de espera, mas desmonta nas outras animações
+  (rotações e deslocamentos do Metabee não servem para outra geometria). Visualizador Motion: ←/→ mudam o número
+  da animação e A toca; START/SELECT trocam o bot (0x03000479).
+
+## 16. Fonte estendida (PT-BR) — Toolkit, aba Font (2026-10-11)
+
+- Glifos novos na fonte normal: 0x4F õ, 0x7D Ã, 0x7E ã, 0x7F Õ. Larguras 0x4F-0x7F calculadas pelos pixels (na ROM
+  original são 0): normal = última coluna com tinta + 2, itálico = + 1. Só ROM (E); na (U) a fonte só vai até
+  0x4E e o resto é outro dado (a aba fica bloqueada). Desligado, a ROM sai idêntica à original.
+- Com a fonte ligada, o itálico da (E) é reparado (`ItalicFontRepair`: tons B-F gravados como 0 voltam a ser
+  escuros). A itálica da (E) já traz õ Ã ã Õ (largura 0); eles são mantidos e ganham largura.
+- Paleta do diálogo: 0x4C7F34 (16 cores, BGR555). Larguras: normal 0x3B4E08, itálica 0x3B5008.
+- **Pendente:**
+  - O Toolkit acha as fontes 8 bytes adiante do que o jogo usa. O código (rotina 0x08040132: `glifo << 6` +
+    ponteiro) aponta a normal para **0x084BFC64** e a itálica para **0x084C59A4** (literais em 0x40164,
+    0x40144 e outros); o Toolkit usa 0x4BFC6C / 0x4C59AC. Corrigir: ler o ponteiro dos literais e realinhar os 4
+    glifos novos (hoje entram 2 linhas abaixo). Rokusho (E): provavelmente 0x4BFC88 / 0x4C59C8.
+  - A fonte itálica é mal desenhada na própria ROM (pixels soltos, acentos fora do lugar, também no ponteiro
+    certo): refazer à mão. Opções: folha PNG para editar, base inclinada a partir da fonte normal, e "Import
+    Italic Font" na aba Font.
 
 ## Créditos e referências
 
