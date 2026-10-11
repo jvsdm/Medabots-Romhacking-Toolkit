@@ -974,7 +974,9 @@ address,name,kind,count,comment
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
 0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]
 0x083ACA80,debug_menu_option_table,ptr,11,rotinas das 11 opcoes (debug_menu_subroutines a partir do indice 9)
+0x083ACB48,gTextProcessStrings,ptr,11,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]"
+0x083ACBCC,gTextProcessStrings3,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
@@ -984,18 +986,39 @@ address,name,kind,count,comment
 0x083B29EC,gRandomLUT,label,,Simon/Rokusho em 0x083B2A0C
 0x083B4E08,gFontWidths,data,512,larguras da fonte do dialogo: 2 B por glifo (o 1o e o avanco)
 0x083B5008,gItalicFontWidths,data,512,larguras da fonte italica
+0x083B5578,gTextDialogue_083B5578,ptr,23,tabela de texto: Diálogo inicial; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B62D8,gMedals,data,480,medalhas: 16 B cada (27 ou 30 entradas - confirmar); Simon: rom_medal_information
+0x083B6590,gTextMedalNames,ptr,34,tabela de texto: Nomes das Medalhas; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B66EC,gPartAttributeNamePointerTable,label,,Simon/Rokusho em 0x083B670C; tipo undefined *32[4]
+0x083B6B48,gTextMedalAbilityDesc1,ptr,27,tabela de texto: Compatibilidade peça→medalha; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B6FA4,gTextMedalAbilityDesc2,ptr,26,tabela de texto: Compatibilidade medalha→peça; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B7048,gTextAttackTypeNames,ptr,8,tabela de texto: Tipos de ataque; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B722C,gTextAttackTypeDesc,ptr,8,tabela de texto: Descrições dos ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B74B8,gTextMedaforceNames,ptr,50,tabela de texto: Nomes das Medaforças; 50 entradas (o script de traducao usava 52 e invadia MedaforceDesc); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B7580,gTextMedaforceDesc,ptr,53,tabela de texto: Descrições das Medaforças; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B7F8C,medal_medaforce_list,label,,Simon/Rokusho em 0x083B7FAC
+0x083B80C0,gTextMedaforceDesc1,ptr,5,tabela de texto: Descrições das Medaforças1; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B82F0,gTextSpecialAttackDesc,ptr,8,tabela de texto: Descrições de ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B; Simon: gRomPartRecordTable
 0x083BA658,gBotNames,ptr,120,nomes dos bots; Simon: gPartNamePointerTable
 0x083BBB4C,gPartNames,ptr,480,nomes das pecas (bot*4 + kind)
+0x083BCFEC,gTextPartCodeNames,ptr,480,tabela de texto: Códigos das peças; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083BDA04,gTextStatDescriptions,ptr,11,tabela de texto: Descrições de estatísticas; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083BE868,gTechniqueNames,ptr,60,nomes das tecnicas
+0x083BEAFC,gTextLegTypes,ptr,7,tabela de texto: Tipos de perna; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083BEB68,gTextBattlefieldNames,ptr,11,tabela de texto: Campos de batalha; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083BEB94,gPaletteFamily,data,122,familia de paleta = banco OBJ do mini sprite; Simon: sCompositeBattleSpritePaletteFamilyTable
 0x083BEC10,gMapEncounters,data,1536,encontros por mapa: 192 x 8 B; Simon: map_has_enemies_list
 0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B; Simon: gMapEncounterBattleTable; Simon: map_encounters
 0x083C1B80,gBattlePointerTable,ptr,246,batalhas; Simon: list_of_all_fights
+0x083C2D3C,gTextPreBattleMessage,ptr,96,tabela de texto: Diálogos antes das batalhas; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083C3B04,gTextPostBattleMessage,ptr,96,tabela de texto: Diálogos após as batalhas; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083C40B8,gTextCharacterNames,ptr,97,tabela de texto: Nomes dos personagens; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083C47EC,gTextMenuLabels,ptr,6,tabela de texto: Rótulos do menu; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083C4B90,gTextStatusStrings,ptr,128,tabela de texto: Textos de status; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083C6744,gTextGameMessages,ptr,176,tabela de texto: Mensagens do jogo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083CAD78,gMoveStyle,data,122,estilo de deslocamento em batalha (0-6) por bot das pernas
+0x083CF530,gTextSystemMessages,ptr,32,tabela de texto: Mensagens do sistema; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083D1D78,gMoldTable,ptr,50,"registros 0x18 B: +0 artes, +0x0F/+0x10 filhos, +0x11 paleta, +0x12/+0x13 tamanho, +0x15 forma OBJ; 1-2 raizes, 3-6 juntas RAM (cabeca/bracos/pernas); 64 posicoes funcionam com espelho+movimento estendidos; moldes de preview: registros de 0x18 B; Simon: sCompositePreviewDescriptorPointerTable; Simon: sLargePartDisplayDescriptorPointerTable"
 0x083D1E40,gMotionAngleTable,ptr,59,roteiro -> s16 angulo [molde 1..49][N quadros-chave] (1/65536 volta); o tocador le 63 moldes; provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
 0x083D1F2C,gMotionOffsetTable,ptr,59,"roteiro -> (s8 x, s8 y) [molde 1..49][N]"
@@ -1013,14 +1036,36 @@ address,name,kind,count,comment
 0x08404334,gMapCollision,ptr,192,colisao (1 B por metatile 16x16); Simon: collision_table
 0x08409480,gMapBlockA,ptr,192,bloco por mapa A; Simon: sMapBackgroundAnimationPointerTable
 0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B)
+0x08411AE0,gTextDialogue_08411AE0,ptr,202,tabela de texto: Diálogo de NPCs (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08412E60,gMapWarps,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable
 0x08413160,gMapSprites,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable
+0x084144B4,gTextDialogue_084144B4,ptr,248,tabela de texto: Diálogo de NPCs (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x084798F4,gTextDialogue_084798F4,ptr,389,tabela de texto: Diálogo de história (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x08479F0C,gTextDialogue_08479F0C,ptr,237,tabela de texto: Diálogo de história (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847A2C4,gTextDialogue_0847A2C4,ptr,303,tabela de texto: Diálogo de história (3); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847A784,gTextDialogue_0847A784,ptr,323,tabela de texto: Diálogo de história (4); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847AC94,gTextDialogue_0847AC94,ptr,286,tabela de texto: Diálogo de história (5); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847B110,gTextDialogue_0847B110,ptr,295,tabela de texto: Diálogo de história (6); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847B5B0,gTextDialogue_0847B5B0,ptr,259,tabela de texto: Diálogo de história (7); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847B9C0,gTextDialogue_0847B9C0,ptr,263,tabela de texto: Diálogo de história (8); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847BDE0,gTextDialogue_0847BDE0,ptr,281,tabela de texto: Diálogo de história (9); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847C248,gTextDialogue_0847C248,ptr,256,tabela de texto: Diálogo de história (10); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847C64C,gTextDialogue_0847C64C,ptr,277,tabela de texto: Diálogo de história (11); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847CAA8,gTextDialogue_0847CAA8,ptr,180,tabela de texto: Diálogo de história (12); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847CD7C,gTextDialogue_0847CD7C,ptr,233,tabela de texto: Diálogo de história (13); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847D124,gTextDialogue_0847D124,ptr,293,tabela de texto: Diálogo de história (14); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847D5C0,gTextDialogue_0847D5C0,ptr,323,tabela de texto: Diálogo de história (15); fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0847DAD0,gTextDialogue_0847DAD0,ptr,276,tabela de texto: Diálogo de história (16); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto
 0x0847E388,get_item_text,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4]
 0x0847E644,gMapMusic,data,192,musica por mapa
 0x08483234,gMapPeople,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable
 0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B)
 0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents
+0x08483ED8,gTextKeyItems,ptr,64,tabela de texto: Key Items; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0848521C,gTextShopDialogue,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias)"
 0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
 0x084C4BDC,sPartDetailTileSheetA,label,,Simon/Rokusho em 0x084C4C00
