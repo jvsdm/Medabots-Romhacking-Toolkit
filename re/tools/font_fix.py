@@ -12,8 +12,10 @@ Correcoes (linhas 0-15 de cada glifo; maiusculas ocupam 2-8):
 - D: borrao escuro na linha 9 -> removido.
 - L: pe duplo (8 e 9) e topo apagado (linha 2) -> linha 9 removida, linha 2 = linha 3.
 - l: topo apagado (linha 2) e borrao na 9 -> linha 2 = linha 3, linha 9 removida.
-- pontuacao na base (linha 8): '.' e o ponto de '!' e '?' sobem 1 linha; ',' sobe 1 (cauda na 9); o fim da
-  haste do '?' (linha 7) sai para nao encostar no ponto.
+- pontuacao na base (linha 8), so se ainda estiver baixa (tinta na linha 9): '.' e o ponto de '!' e '?'
+  sobem 1 linha; ',' sobe 1 (cauda na 9); o fim da haste do '?' (linha 7) sai para nao encostar no ponto.
+- 9: a cauda descia ate a linha 9; a linha 5 (repete a 4 no meio do bojo) sai e o resto sobe 1, como os
+  outros algarismos (2-8). So se a tinta chegar na linha 9.
 - sombra: tons claros (indices 2..N, padrao 5) viram fundo; 0 desliga. Indices maiores = cores mais escuras.
 """
 import sys
@@ -91,11 +93,14 @@ def fix(glyphs, shadow=5):
             g[2] = g[3][:]
         elif ch and ch not in NO_ROW9_RULE and ch.strip() and max(g[9]) < DARK_MIN:
             clear(g, 9)
-        if ch in PUNCTUATION_UP:
+        low = any(v != BACKGROUND for v in g[9]) or (ch == "," and any(v != BACKGROUND for v in g[10]))
+        if low and ch in PUNCTUATION_UP:
             move_up(g, PUNCTUATION_UP[ch])
-        elif ch == "?":
+        elif low and ch == "?":
             clear(g, 7)
             move_up(g, [9])
+        elif low and ch == "9":
+            move_up(g, [6, 7, 8, 9])
         if shadow:
             for r in range(16):
                 g[r] = [BACKGROUND if 1 < v <= shadow else v for v in g[r]]
