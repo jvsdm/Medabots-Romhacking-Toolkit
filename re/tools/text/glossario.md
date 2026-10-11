@@ -45,3 +45,10 @@ reporter animada, Koji arrogante, Karin educada, Rubberobo Gang caricatos e atra
 | A Button / B Button / START / SELECT / L / R | Botão A / Botão B / START / SELECT / L / R |
 | Save / Load | Salvar / Carregar |
 | Yes / No | Sim / Não |
+
+## Decisoes aplicadas na 1a versao (2026-10-11)
+- Dr. Meta-Evil mantido em ingles (pendente de confirmacao).
+- £ mantido nos valores (e o simbolo das lojas). ♥ e reticencias "···" do original preservados.
+- Nomes de bots, pecas e codigos ficam em ingles. Medalhas: animais traduzidos (JABUTI, AGUA-VIVA...), KUWAGATA,
+  KABUTO e KAPPA mantidos.
+- Duvidas abertas: arquivo duvidas_traducao.md entregue junto com o JSON.
