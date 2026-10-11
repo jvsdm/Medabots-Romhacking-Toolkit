@@ -585,15 +585,19 @@ The old blocker was not the state array (65 slots per side) but **data**:
 `tools/mold_lab.py` extends all three (64 / 64 / 63 rows) and makes bot 0's head use clones 50/51: in the debug
 menu's Motion viewer the bot is identical to the original on both sides.
 
-### 15.4 Navi bots with Navi geometry (prototype, 2026-10-10)
-- Navi uses the same mold system; the shapes Core lacks are one-piece 64×64 arms (15/18, 33/34), a 64×64 head (30)
-  and one-piece 64×64 legs (24). They used to be squeezed into Core molds.
-- `tools/navi_lab.py`: for each piece of the Navi bot it creates a new mold (50+): the record of the closest Core mold
-  (palette), Navi size and attachment points, remapped children, art and palette copied from the Navi ROM, movement
-  copied from the closest Core mold (head 13, arms 16/19, legs 30), new arms swapped in the mirror map. Entries whose
-  art is not LZ77 (selector 0) are skipped, as in the extraction.
-- Tested: RDF (Navi 000) and BAT (Navi 001) in place of bot 0, in the Motion viewer. Navi's second legs entry (same
-  mold, other art) is not drawn by the main assembly, as in the original game.
+### 15.4 Navi bots with Navi geometry (2026-10-10)
+- Navi uses the same mold system; shapes Core lacks are one-piece 64×64 arms (15/18, 33/34), 64×64 head (30),
+  64×32+32×16 head (11/12) and one-piece (24) or long (31/32, 35-37) legs.
+- **Navi rows: head and arms 16 B, legs 32 B** (as in Core). Reading 64 B pulled in the next bot's legs: the
+  "extra pieces" were that, not Medachange. `art/navi/` was extracted again.
+- `NaviImporter` (Toolkit, `src/Medabots.Rom/Expansion/NaviImporter.cs`) adds Navi bots to the expanded ROM. Pieces
+  with a same-shape Core mold use it (heads 7-10, two-piece arms 13/14→14/15 and 16/17→17/18, biped legs 19-23→31-35,
+  chain 25-29); the rest get new molds (50+) with the closest Core mold's record and Navi size/attachment. Stats, mini
+  sprite and movement style come from a Core bot with the same leg geometry; the in-game leg type is Navi's.
+- Test batch (21 bots, IDs 182-202) in `build/Medabots_expanded+navi+debug.gba` + `.sav` with every part. Checked in
+  the Motion viewer against Medapedia: 19 match. Open: Hophop (legs without their own palette) and 64×64 arms with
+  multi-piece legs on the right side (Lady Outer, Giraffe Chief: loose arm).
+- Navi's Medachange forms have not been found yet (they are not in the bot rows).
 
 ## Credits and references
 

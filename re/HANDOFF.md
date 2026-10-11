@@ -165,3 +165,10 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
 - Para a nuvem (sem ROM, barato): nada urgente. Se acionada: revisar `re/tools/mold_lab.py` e propor o desenho
   da classe C# `MoldExpander` no estilo de `src/Medabots.Rom/Maps/MapExpander.cs`.
 
+### 2026-10-10 - sessao local (6): bots do Navi
+- Linhas do Navi: pernas tem 32 B (nao 64). `NaviImporter` (C#) adiciona bots do Navi com a geometria do Navi;
+  lote de 21 bots testado no visualizador Motion, 19 iguais ao Medapedia (ver `re/reference/` 15.4).
+- Pendentes locais: perna sem paleta propria (Hophop) e bracos 64x64 + pernas em pedacos no lado direito.
+- Para a nuvem (sem ROM, barato): nada. As formas de Medachange do Navi ainda nao foram achadas; e busca na ROM do
+  Navi (local).
+

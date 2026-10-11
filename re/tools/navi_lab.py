@@ -16,7 +16,7 @@ import mold_lab as ml
 GBA = 0x08000000
 NAVI_ROM = "D:/claude-brain/Medabots/0100 - Medarot Navi - Kuwagata Version (J)(Eurasia).gba"
 NAVI_MOLDS = 0x658858
-NAVI_ROWS = {"head": (0x4BFC40, 16), "right_arm": (0x4C05C0, 16), "left_arm": (0x4C0F40, 16), "legs": (0x4C18C0, 64)}
+NAVI_ROWS = {"head": (0x4BFC40, 16), "right_arm": (0x4C05C0, 16), "left_arm": (0x4C0F40, 16), "legs": (0x4C18C0, 32)}
 CORE_ROWS = {"head": (0x7EE70, 16), "right_arm": (0x7F610, 16), "left_arm": (0x7FDB0, 16), "legs": (0x80550, 32)}
 # Molde do Core usado como base (paleta e movimento) para cada molde do Navi.
 CORE_ANALOG = {"head": 13, "right_arm": 16, "left_arm": 19, "legs": 30}

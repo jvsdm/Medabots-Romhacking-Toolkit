@@ -583,15 +583,21 @@ O bloqueio antigo não era o vetor de estado (ele tem 65 posições por lado), e
 `tools/mold_lab.py` estende os três (64 / 64 / 63 linhas) e faz a cabeça do bot 0 usar clones 50/51: no
 visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois lados.
 
-### 15.4 Bots do Navi com a geometria do Navi (protótipo, 2026-10-10)
+### 15.4 Bots do Navi com a geometria do Navi (2026-10-10)
 - O Navi usa o mesmo sistema de moldes; os formatos que o Core não tem são braço 64×64 num pedaço (15/18, 33/34),
-  cabeça 64×64 (30) e pernas 64×64 num pedaço (24). Antes eram espremidos nos moldes do Core.
-- `tools/navi_lab.py`: para cada pedaço do bot do Navi cria um molde novo (50+): registro do molde parecido do Core
-  (paleta), tamanho e pontos de encaixe do Navi, filhos remapeados, arte e paleta copiadas da ROM do Navi, movimento
-  copiado do molde parecido do Core (cabeça 13, braços 16/19, pernas 30), braços novos trocados no espelho.
-  Entradas cuja arte não é LZ77 (seletor 0) são ignoradas, como na extração.
-- Testado: RDF (Navi 000) e BAT (Navi 001) no lugar do bot 0, no visualizador Motion. A 2ª entrada de pernas do
-  Navi (mesmo molde, outra arte) não é desenhada na montagem principal, nem no jogo original.
+  cabeça 64×64 (30), cabeça 64×32+32×16 (11/12) e pernas num pedaço (24) ou longas (31/32, 35-37).
+- **Linhas do Navi: cabeça e braços 16 B, pernas 32 B** (como no Core). A leitura antiga com 64 B juntava a perna do
+  bot seguinte: as "peças extras" eram isso, não Medachange. `art/navi/` foi extraído de novo.
+- `NaviImporter` (Toolkit, `src/Medabots.Rom/Expansion/NaviImporter.cs`): adiciona bots do Navi à ROM expandida.
+  Peças com molde de mesmo formato no Core vão para ele (cabeças 7-10, braços de dois pedaços 13/14→14/15 e
+  16/17→17/18, pernas bípedes 19-23→31-35, corrente 25-29); as outras ganham moldes novos (50+) com o registro do
+  molde parecido do Core e tamanho/encaixe do Navi. Stats, mini sprite e estilo de movimento vêm de um bot do Core
+  com a mesma geometria de pernas (Rokusho 31-35, Spidar/Totalizer 25-29, Noctobat/Churlybear/Armorparadeen um
+  pedaço); o tipo de perna do jogo é o do Navi.
+- Lote de teste (21 bots, IDs 182-202) em `build/Medabots_expanded+navi+debug.gba` + `.sav` com todas as peças.
+  Conferido no visualizador Motion contra o Medapedia: 19 iguais. Pendentes: Hophop (perna sem paleta própria) e
+  braços 64×64 com pernas em pedaços no lado direito (Lady Outer, Giraffe Chief: braço solto).
+- As formas de Medachange do Navi ainda não foram encontradas (não estão nas linhas dos bots).
 
 ## Créditos e referências
 

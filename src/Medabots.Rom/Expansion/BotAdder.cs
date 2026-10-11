@@ -351,7 +351,7 @@ public static class BotAdder
     }
 
     // Selectors already taken in each mold: every preview row of the ROM plus the synthetic templates.
-    private static Dictionary<int, HashSet<int>> UsedSelectors(byte[] rom, RomLayout layout, Dictionary<string, int> previews)
+    internal static Dictionary<int, HashSet<int>> UsedSelectors(byte[] rom, RomLayout layout, Dictionary<string, int> previews)
     {
         var used = new Dictionary<int, HashSet<int>>();
         var rows = ExpansionPatchSites.TinpetId + 2;
@@ -385,7 +385,7 @@ public static class BotAdder
         return used;
     }
 
-    private static int WidenBlobList(byte[] rom, int record, int blobs, RomAllocator allocator)
+    internal static int WidenBlobList(byte[] rom, int record, int blobs, RomAllocator allocator)
     {
         var at = allocator.Take(SelectorSlots * 8);
         rom.AsSpan(blobs, OriginalSlots * 8).CopyTo(rom.AsSpan(at));
@@ -399,7 +399,7 @@ public static class BotAdder
     }
 
     // Free space after the last used byte (the expansion leaves 0xFF up to 16 MB); grows the ROM if full.
-    private static RomAllocator FreeSpace(ref byte[] rom)
+    internal static RomAllocator FreeSpace(ref byte[] rom)
     {
         var last = rom.Length - 1;
         while (last > 0x800000 && rom[last] == 0xFF)
