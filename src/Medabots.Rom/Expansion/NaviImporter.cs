@@ -55,6 +55,18 @@ public static class NaviImporter
 
     private static readonly (int Right, int Left)[] MirrorPairs = [(15, 18), (33, 34)];
 
+    /// <summary>Entries of Navi pieces carry this bit (unused by the game); the injected code then reads the Navi mold table.</summary>
+    public const uint NaviEntryBit = 1u << 16;
+
+    /// <summary>Written before the Navi mold table (64 pointers); inject/tools/build.py finds it.</summary>
+    public static ReadOnlySpan<byte> NaviTableMarker => "MBXNAVIT"u8;
+
+    // Navi's skeleton joint templates (head, right arm, left arm, legs): +0x0C..+0x0E offset of the limb.
+    private static readonly int[] NaviJointTemplates = [0x4BFBE4, 0x4BFBFC, 0x4BFC14, 0x4BFC2C];
+
+    // Core's first piece of each limb (children of the joints 3-6): head, right arm, left arm, legs.
+    private static readonly int[] CoreLimbRoots = [7, 14, 17, 20];
+
     private static readonly Dictionary<string, int> LegTypeCode = new(StringComparer.OrdinalIgnoreCase)
     {
         ["Flying"] = 100, ["Hover"] = 101, ["Multi-leg"] = 102, ["Bipedal"] = 103, ["Wheeled"] = 104, ["Tank"] = 105, ["Aquatic"] = 106,
@@ -76,30 +88,64 @@ public static class NaviImporter
         var rom = added.Rom;
         log.AddRange(added.Log);
 
-        // ---- 2. new molds for the shapes Core lacks, then 64 molds everywhere ----
+        // ---- 2. a Navi mold table: Navi's records (Navi geometry) at the Core IDs of the same shape, so Core motion
+        //         rows still fit, and new IDs 50+ (shared with the Core table) for the shapes Core lacks ----
         var allocator = BotAdder.FreeSpace(ref rom);
         layout = RomLayout.Resolve(rom);
-        var needed = plans.SelectMany(p => p.Rows.SelectMany(r => r.Entries)).Select(e => (int)(e & 0x3F))
-            .Where(m => !SameShape.ContainsKey(m)).Distinct().OrderBy(m => m).ToList();
-        var unknown = needed.Where(m => !NewMoldAnalog.ContainsKey(m)).ToList();
+        var used = plans.SelectMany(p => p.Rows.SelectMany(r => r.Entries)).Select(e => (int)(e & 0x3F)).Distinct().OrderBy(m => m).ToList();
+        var unknown = used.Where(m => !SameShape.ContainsKey(m) && !NewMoldAnalog.ContainsKey(m)).ToList();
         Require(unknown.Count == 0, $"Navi molds without a Core counterpart: {string.Join(", ", unknown)}.");
-        var moldTable = layout.CompositePreviewDescriptorPointerTableOffset;
-        Require(OriginalMolds + needed.Count <= MoldCapacity, $"{needed.Count} new molds do not fit in {MoldCapacity - OriginalMolds} free slots.");
-        var newMolds = needed.Select((m, i) => (Navi: m, Core: OriginalMolds + i)).ToDictionary(x => x.Navi, x => x.Core);
+        var newIds = used.Where(m => !SameShape.ContainsKey(m)).ToList();
+        Require(OriginalMolds + newIds.Count <= MoldCapacity, $"{newIds.Count} new molds do not fit in {MoldCapacity - OriginalMolds} free slots.");
+        var newMolds = newIds.Select((m, i) => (Navi: m, Core: OriginalMolds + i)).ToDictionary(x => x.Navi, x => x.Core);
         var map = new Dictionary<int, int>(SameShape);
         foreach (var (naviMold, coreMold) in newMolds)
         {
             map[naviMold] = coreMold;
         }
 
-        var table = new byte[4 * MoldCapacity];
-        rom.AsSpan(moldTable, 4 * OriginalMolds).CopyTo(table);
-        var artLists = new Dictionary<int, int>();
-        foreach (var (naviMold, coreMold) in newMolds)
+        // The first piece of each limb hangs from a skeleton joint: Navi keeps the limb's side in the joint (with the
+        // opposite sign to Core, which keeps it in the piece), so the joint's offsets move into that piece.
+        // The joint's child is set at run time to the first entry of the row, so that piece is the limb's root.
+        var limbRoot = new Dictionary<int, int>();
+        foreach (var (_, rows) in plans)
         {
-            var record = rom.AsSpan((int)U32(rom, moldTable + 4 * NewMoldAnalog[naviMold]) - GbaBase, 0x18).ToArray();
+            for (var part = 0; part < rows.Count; part++)
+            {
+                if (rows[part].Entries.Count > 0)
+                {
+                    limbRoot[(int)(rows[part].Entries[0] & 0x3F)] = part;
+                }
+            }
+        }
+
+        var innerToo = plans.SelectMany(p => p.Rows.SelectMany(r => r.Entries.Skip(1))).Select(e => (int)(e & 0x3F)).Where(limbRoot.ContainsKey).Distinct().ToList();
+        Require(innerToo.Count == 0, $"Navi molds that are a limb root in one bot and an inner piece in another: {string.Join(", ", innerToo)}.");
+
+        // A new mold borrows record (palette slot) and motion rows from a Core mold of the same role: the limb's Core
+        // root when it starts a limb, else the analog piece.
+        var analog = newIds.ToDictionary(m => m, m => limbRoot.TryGetValue(m, out var part) ? CoreLimbRoots[part] : NewMoldAnalog[m]);
+        var moldTable = layout.CompositePreviewDescriptorPointerTableOffset;
+        var coreTable = new byte[4 * MoldCapacity];
+        rom.AsSpan(moldTable, 4 * OriginalMolds).CopyTo(coreTable);
+        var naviTable = new byte[4 * MoldCapacity];
+        var artLists = new Dictionary<int, int>();
+        foreach (var naviMold in used)
+        {
+            var target = map[naviMold];
+            var baseId = target < OriginalMolds ? target : analog[naviMold];
+            var record = rom.AsSpan((int)U32(rom, moldTable + 4 * baseId) - GbaBase, 0x18).ToArray();
             var naviRecord = navi.Record(naviMold);
-            naviRecord.AsSpan(0x04, 0x0B).CopyTo(record.AsSpan(0x04));        // Navi's attachment points
+            naviRecord.AsSpan(0x04, 0x0B).CopyTo(record.AsSpan(0x04));        // pivot, offset and depth of the Navi
+            if (limbRoot.TryGetValue(naviMold, out var part))
+            {
+                var joint = navi.JointOffsets(part);
+                for (var k = 0; k < 3; k++)
+                {
+                    record[0x0C + k] = (byte)(sbyte)((sbyte)record[0x0C + k] + joint[k]);
+                }
+            }
+
             record[0x0F] = naviRecord[0x0F] == 0 ? (byte)0 : (byte)map[naviRecord[0x0F]];
             record[0x10] = naviRecord[0x10] == 0 ? (byte)0 : (byte)map[naviRecord[0x10]];
             record[0x12] = naviRecord[0x12];
@@ -107,16 +153,33 @@ public static class NaviImporter
             var list = allocator.Take(256 * 8);
             rom.AsSpan(list, 256 * 8).Clear();
             WriteU32(record, 0, (uint)(GbaBase + list));
-            artLists[coreMold] = list;
+            artLists[target] = list;
             var at = allocator.Take(0x18);
             record.CopyTo(rom, at);
-            WriteU32(table, 4 * coreMold, (uint)(GbaBase + at));
-            log.Add($"mold {coreMold}: Navi mold {naviMold} ({record[0x12]}x{record[0x13]}), based on Core mold {NewMoldAnalog[naviMold]}");
+            WriteU32(naviTable, 4 * target, (uint)(GbaBase + at));
+            if (target >= OriginalMolds)
+            {
+                WriteU32(coreTable, 4 * target, (uint)(GbaBase + at));
+            }
+
+            log.Add($"mold {target}: Navi mold {naviMold} ({record[0x12]}x{record[0x13]}){(limbRoot.ContainsKey(naviMold) ? ", limb root" : "")}");
         }
 
-        ExpandMolds(rom, layout, table, newMolds, allocator, log);
+        for (var m = 0; m < MoldCapacity; m++)
+        {
+            if (U32(naviTable, 4 * m) == 0)
+            {
+                WriteU32(naviTable, 4 * m, U32(coreTable, 4 * m));        // skeleton (1-6) and anything else: Core's
+            }
+        }
 
-        // ---- 3. Navi's art into each bot's rows ----
+        ExpandMolds(rom, layout, coreTable, newMolds, analog, allocator, log);
+        var markerAt = allocator.Take(8 + naviTable.Length);
+        NaviTableMarker.CopyTo(rom.AsSpan(markerAt));
+        naviTable.CopyTo(rom, markerAt + 8);
+        log.Add($"Navi mold table at 0x{markerAt + 8:X6} (marker MBXNAVIT); injected code picks it for entries with bit 16");
+
+        // ---- 3. Navi's art into each bot's rows (own lists per Navi record; entries marked with bit 16) ----
         layout = RomLayout.Resolve(rom);
         var previews = new Dictionary<string, int>
         {
@@ -126,8 +189,7 @@ public static class NaviImporter
             ["legs"] = layout.CompositePreviewLegsAppearanceTableOffset,
         };
         var rowSizes = new Dictionary<string, int> { ["head"] = 16, ["right_arm"] = 16, ["left_arm"] = 16, ["legs"] = 32 };
-        var taken = BotAdder.UsedSelectors(rom, layout, previews);
-        moldTable = layout.CompositePreviewDescriptorPointerTableOffset;
+        var nextSelector = new Dictionary<int, int>();
         for (var b = 0; b < plans.Count; b++)
         {
             var id = added.BotId + b;
@@ -138,22 +200,23 @@ public static class NaviImporter
                 var slot = 0;
                 foreach (var entry in row.Entries)
                 {
-                    var naviMold = (int)(entry & 0x3F);
-                    var coreMold = map[naviMold];
+                    var target = map[(int)(entry & 0x3F)];
                     var pairs = navi.Art(entry);
-                    var used = taken.TryGetValue(coreMold, out var set) ? set : taken[coreMold] = [];
-                    var selector = Enumerable.Range(1, 256 - pairs.Count).FirstOrDefault(s => Enumerable.Range(s, pairs.Count).All(x => !used.Contains(x)));
-                    Require(selector > 0, $"Mold {coreMold} has no free image slot left.");
-                    var record = (int)U32(rom, moldTable + 4 * coreMold) - GbaBase;
-                    var blobs = (int)U32(rom, record) - GbaBase;
-                    if (selector + pairs.Count > 128 && blobs < 0x800000)
-                    {
-                        blobs = BotAdder.WidenBlobList(rom, record, blobs, allocator);
-                    }
-
+                    var selector = nextSelector.GetValueOrDefault(target, 1);
+                    Require(selector + pairs.Count <= 256, $"Mold {target} has no free image slot left.");
+                    nextSelector[target] = selector + pairs.Count;
+                    var list = artLists[target];
                     for (var pose = 0; pose < pairs.Count; pose++)
                     {
                         var (image, palette) = pairs[pose];
+                        if (pose == 1 && (entry & 0x4000) == 0)
+                        {
+                            // Second picture = side 1. Navi draws it as is when bit 15 is set; Core always flips a
+                            // non-rotating piece on side 1, so the picture is stored flipped to come out right.
+                            var naviRecord = navi.Record((int)(entry & 0x3F));
+                            image = FlipLz77Picture(image, naviRecord[0x13], naviRecord[0x12], log);
+                        }
+
                         var imageAt = allocator.Take(image.Length);
                         image.CopyTo(rom, imageAt);
                         var paletteAt = imageAt;
@@ -163,27 +226,26 @@ public static class NaviImporter
                             palette.CopyTo(rom, paletteAt);
                         }
 
-                        WriteU32(rom, blobs + 8 * (selector + pose), (uint)(GbaBase + imageAt));
-                        WriteU32(rom, blobs + 8 * (selector + pose) + 4, (uint)(GbaBase + paletteAt));
-                        used.Add(selector + pose);
+                        WriteU32(rom, list + 8 * (selector + pose), (uint)(GbaBase + imageAt));
+                        WriteU32(rom, list + 8 * (selector + pose) + 4, (uint)(GbaBase + paletteAt));
                     }
 
-                    WriteU32(rom, rowAt + 4 * slot++, (entry & ~0x3Fu & ~(0xFFu << 6)) | (uint)coreMold | (uint)(selector << 6));
+                    WriteU32(rom, rowAt + 4 * slot++, (entry & ~0x3Fu & ~(0xFFu << 6)) | (uint)target | (uint)(selector << 6) | NaviEntryBit);
                 }
             }
 
             log.Add($"{plans[b].Request.Name}: bot {id}, Navi {plans[b].Request.NaviId} ({plans[b].Request.Model})");
         }
 
-        // Unused slots of the new molds' lists repeat their first picture (never drawn, but valid data).
-        foreach (var (coreMold, list) in artLists)
+        // Unused slots of every Navi list repeat its first picture (never drawn, but valid data).
+        foreach (var (_, list) in artLists)
         {
-            var first = Enumerable.Range(0, 256).FirstOrDefault(s => U32(rom, list + 8 * s) != 0);
-            for (var s = 0; s < 256; s++)
+            var first = Enumerable.Range(0, 256).FirstOrDefault(slot => U32(rom, list + 8 * slot) != 0);
+            for (var slot = 0; slot < 256; slot++)
             {
-                if (U32(rom, list + 8 * s) == 0)
+                if (U32(rom, list + 8 * slot) == 0)
                 {
-                    rom.AsSpan(list + 8 * first, 8).CopyTo(rom.AsSpan(list + 8 * s));
+                    rom.AsSpan(list + 8 * first, 8).CopyTo(rom.AsSpan(list + 8 * slot));
                 }
             }
         }
@@ -193,8 +255,40 @@ public static class NaviImporter
     }
 
     // Mold table -> 64 entries, mirror map -> 64 entries (new arms swap), motion scripts -> 63 mold rows.
+    // A 4bpp picture of width x height pixels (1D tiles, row-major), mirrored left-right; unchanged if the size differs.
+    private static byte[] FlipLz77Picture(byte[] compressed, int width, int height, ICollection<string> log)
+    {
+        var pixels = GbaLz77.Decompress(compressed, 0);
+        if (pixels is null || pixels.Length < width * height / 2 || width % 8 != 0 || height % 8 != 0)
+        {
+            log.Add($"side-1 picture not flipped ({width}x{height}, {pixels?.Length ?? 0} bytes)");
+            return compressed;
+        }
+
+        var flipped = (byte[])pixels.Clone();
+        int across = width / 8, down = height / 8;
+        for (var ty = 0; ty < down; ty++)
+        {
+            for (var tx = 0; tx < across; tx++)
+            {
+                var from = 32 * (ty * across + tx);
+                var to = 32 * (ty * across + across - 1 - tx);
+                for (var row = 0; row < 8; row++)
+                {
+                    for (var b = 0; b < 4; b++)
+                    {
+                        var value = pixels[from + 4 * row + b];
+                        flipped[to + 4 * row + 3 - b] = (byte)((value >> 4) | (value << 4));
+                    }
+                }
+            }
+        }
+
+        return GbaLz77.Compress(flipped);
+    }
+
     private static void ExpandMolds(byte[] rom, RomLayout layout, byte[] table, Dictionary<int, int> newMolds,
-        RomAllocator allocator, ICollection<string> log)
+        Dictionary<int, int> analog, RomAllocator allocator, ICollection<string> log)
     {
         var oldTable = layout.CompositePreviewDescriptorPointerTableOffset;
         var tableAt = allocator.Take(table.Length);
@@ -223,7 +317,7 @@ public static class NaviImporter
         WriteU32(rom, MirrorMapLiteral, (uint)(GbaBase + mirrorAt));
 
         // Each motion script: 49 rows (molds 1-49) of angle (s16) and offset (2 x s8) per keyframe; the player reads 63.
-        var rowSource = newMolds.ToDictionary(x => x.Value, x => NewMoldAnalog[x.Key]);
+        var rowSource = newMolds.ToDictionary(x => x.Value, x => analog[x.Key]);
         int angles = (int)U32(rom, MotionAngleLiteral) - GbaBase, offsets = (int)U32(rom, MotionOffsetLiteral) - GbaBase;
         var durations = (int)U32(rom, MotionDurationLiteral) - GbaBase;
         var moved = new Dictionary<int, int>();
@@ -293,6 +387,9 @@ public static class NaviImporter
     private sealed class NaviRom(byte[] data)
     {
         public byte[] Record(int mold) => data.AsSpan((int)U32(data, NaviMolds + 4 * mold) - GbaBase, 0x18).ToArray();
+
+        public sbyte[] JointOffsets(int part) =>
+            [(sbyte)data[NaviJointTemplates[part] + 0x0C], (sbyte)data[NaviJointTemplates[part] + 0x0D], (sbyte)data[NaviJointTemplates[part] + 0x0E]];
 
         // The bot's drawn entries: rows of 16 B (head, arms) and 32 B (legs, as in Core), only entries whose picture
         // is LZ77 (selector 0 entries carry no picture).

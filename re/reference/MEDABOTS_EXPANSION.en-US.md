@@ -594,10 +594,26 @@ menu's Motion viewer the bot is identical to the original on both sides.
   with a same-shape Core mold use it (heads 7-10, two-piece arms 13/14→14/15 and 16/17→17/18, biped legs 19-23→31-35,
   chain 25-29); the rest get new molds (50+) with the closest Core mold's record and Navi size/attachment. Stats, mini
   sprite and movement style come from a Core bot with the same leg geometry; the in-game leg type is Navi's.
-- Test batch (21 bots, IDs 182-202) in `build/Medabots_expanded+navi+debug.gba` + `.sav` with every part. Checked in
-  the Motion viewer against Medapedia: 19 match. Open: Hophop (legs without their own palette) and 64×64 arms with
-  multi-piece legs on the right side (Lady Outer, Giraffe Chief: loose arm).
+- Test batch (21 bots, IDs 182-202) in `build/Medabots_expanded+navi+debug.gba` + `.sav` with every part.
 - Navi's Medachange forms have not been found yet (they are not in the bot rows).
+
+### 15.5 Faithful Navi assembly: a Navi mold table + hooks (2026-10-10)
+- Problem: with Core's records, arms and legs came out on the wrong side and fitted badly. Navi keeps a limb's side
+  in the **joint** (templates 0x4BFBE4/FC, 0x4BFC14/2C: right arm (-4,-7), left (-4,+7)); Core keeps it in the
+  **first piece** (14: +8, 17: -8). Pivots of same-shape molds also differ.
+- Fix: `NaviImporter` writes a **second mold table** (64 pointers, after the marker `MBXNAVIT`) holding Navi's
+  records at Core's IDs (Core motion still fits), with the joint offset added to the first piece of each row (the
+  RAM joint points at the row's first entry, not at the template's fixed child). Navi entries carry **bit 16**
+  (unused by the game).
+- `inject/src/navi_molds.c`: hooks on PartPreviewPiece 0x08045E6C, PlacePiece 0x080465B8 and CopyArmGraphics
+  0x08046034. Each picks the Navi table when the piece has bit 16 and runs the original (16-byte prologue copied
+  into a trampoline). `build.py` finds the marker and adds the hooks by itself (`gNaviMoldTable` via `--defsym`).
+- Side 1 (mirrored): Core h-flips every non-rotating piece; Navi does not when the entry has **bit 15** (second
+  picture already drawn for side 1, test at 0x0801A7F4). The importer stores that picture flipped, so Core's flip
+  undoes it. This fixed Lady Outer, Giraffe Chief and Fearer.
+- New molds that start a limb take record/motion from Core's limb root (7/14/17/20).
+- Result: all 21 bots checked on both sides against Medapedia; Core bots identical with and without the hooks.
+  Open: Hophop smaller than the reference (legs without their own palette).
 
 ## Credits and references
 

@@ -172,3 +172,13 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
 - Para a nuvem (sem ROM, barato): nada. As formas de Medachange do Navi ainda nao foram achadas; e busca na ROM do
   Navi (local).
 
+
+### 2026-10-10 - sessao local (7): montagem fiel dos bots do Navi
+- Bracos/pernas saiam trocados de lado: o Navi guarda o lado do membro na junta, o Core no 1o pedaco. Agora o
+  `NaviImporter` grava uma 2a tabela de moldes (marcador `MBXNAVIT`) com os registros do Navi e o offset da junta
+  somado ao 1o pedaco de cada linha; entradas do Navi levam bit 16. `inject/src/navi_molds.c` (hooks em
+  0x08045E6C, 0x080465B8, 0x08046034) escolhe a tabela por peca; `build.py` liga sozinho ao achar o marcador.
+- Lado 1: o Navi nao faz hflip em peca com bit 15 (0x0801A7F4); o importador grava a 2a arte ja invertida.
+- 21 bots conferidos nos dois lados; bots do Core identicos com e sem hooks. Detalhes: `re/reference/` 15.5.
+- Pendente local: Hophop (perna sem paleta propria); Medachange do Navi.
+- Para a nuvem (sem ROM, barato): nada.

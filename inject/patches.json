@@ -14,6 +14,15 @@
   ],
   "hooks": [],
   "optional": {
+    "navi_molds": {
+      "auto_marker": "MBXNAVIT",
+      "sources": ["src/navi_molds.c"],
+      "hooks": [
+        {"at": "0x08045E6C", "to": "Inject_PartPreviewPiece"},
+        {"at": "0x080465B8", "to": "Inject_PlacePiece"},
+        {"at": "0x08046034", "to": "Inject_CopyArmGraphics"}
+      ]
+    },
     "pilot_part_stats": {
       "sources": ["src/pilot_part_stats.c"],
       "hooks": [{"at": "0x08042B58", "to": "Inject_GetPartStats", "max_bytes": 36}]

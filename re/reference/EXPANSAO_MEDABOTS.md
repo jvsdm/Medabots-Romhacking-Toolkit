@@ -595,9 +595,25 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
   com a mesma geometria de pernas (Rokusho 31-35, Spidar/Totalizer 25-29, Noctobat/Churlybear/Armorparadeen um
   pedaço); o tipo de perna do jogo é o do Navi.
 - Lote de teste (21 bots, IDs 182-202) em `build/Medabots_expanded+navi+debug.gba` + `.sav` com todas as peças.
-  Conferido no visualizador Motion contra o Medapedia: 19 iguais. Pendentes: Hophop (perna sem paleta própria) e
-  braços 64×64 com pernas em pedaços no lado direito (Lady Outer, Giraffe Chief: braço solto).
 - As formas de Medachange do Navi ainda não foram encontradas (não estão nas linhas dos bots).
+
+### 15.5 Montagem fiel do Navi: tabela de moldes do Navi + hooks (2026-10-10)
+- Problema: com os registros do Core, braços e pernas saíam do lado trocado e mal encaixados. O Navi guarda o lado
+  do membro na **junta** (templates 0x4BFBE4/FC, 0x4BFC14/2C: braço direito (-4,-7), esquerdo (-4,+7)); o Core
+  guarda no **primeiro pedaço** (14: +8, 17: -8). E os pivôs dos moldes de mesmo formato são diferentes.
+- Solução: `NaviImporter` grava uma **segunda tabela de moldes** (64 ponteiros, depois do marcador `MBXNAVIT`) com
+  os registros do Navi nos IDs do Core (o movimento do Core continua servindo) e o offset da junta somado ao
+  primeiro pedaço de cada linha (a junta da RAM aponta para a 1ª entrada da linha; não é o filho fixo do template).
+  Entradas do Navi levam o **bit 16** (o jogo não usa).
+- `inject/src/navi_molds.c`: hooks em PartPreviewPiece 0x08045E6C, PlacePiece 0x080465B8 e CopyArmGraphics
+  0x08046034. Cada um escolhe a tabela do Navi se a peça tem bit 16 e roda o original (prólogo de 16 B copiado num
+  trampolim). `build.py` acha o marcador e liga os hooks sozinho (`gNaviMoldTable` via `--defsym`).
+- Lado 1 (espelhado): no Core toda peça sem rotação leva hflip; no Navi não leva se tiver **bit 15** (segunda arte
+  já desenhada para o lado 1, teste em 0x0801A7F4). O importador grava essa segunda arte já invertida, e o hflip
+  do Core a desvira. Isso consertou Lady Outer, Giraffe Chief e Fearer.
+- Moldes novos que começam um membro usam registro/movimento da raiz do Core (7/14/17/20).
+- Resultado: 21 bots conferidos nos dois lados contra o Medapedia; bots do Core idênticos com e sem os hooks.
+  Pendente: Hophop menor que a referência (perna sem paleta própria).
 
 ## Créditos e referências
 

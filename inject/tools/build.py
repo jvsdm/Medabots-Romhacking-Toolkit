@@ -7,7 +7,8 @@ FreeSpaceAllocator; an 8 MB ROM grows to the next MB. Each hook overwrites the s
     [Thumb] bx pc ; (nop if needed)   [ARM] ldr ip, [pc] ; bx ip ; .word target|1
 (14-16 bytes; ip is a scratch register at a function entry), so the game's callers reach the C function.
 "pointers" replace a word in a ROM table (e.g. a state or handler table) with a C function's address | 1.
-Optional sets in patches.json ("optional") are added with --with NAME.
+Optional sets in patches.json ("optional") are added with --with NAME, or by themselves when the ROM holds their
+"auto_marker": the table after it is then passed to the linker as gNaviMoldTable (Navi bots from the Toolkit).
 """
 import argparse
 import json
@@ -63,11 +64,19 @@ def main():
     tool = lambda name: str(Path(args.gcc) / name) if args.gcc else name
     config = json.loads((INJECT / "patches.json").read_text(encoding="utf-8"))
     config.setdefault("pointers", [])
+    rom = bytearray(Path(args.rom_in).read_bytes())
+    defsyms = []
+    for name, extra in config.get("optional", {}).items():
+        marker = extra.get("auto_marker")
+        at = rom.find(marker.encode()) if marker else -1
+        if at >= 0 and name not in args.extra:
+            args.extra.append(name)
+            defsyms.append(f"-Wl,--defsym=gNaviMoldTable=0x{GBA + at + len(marker):08X}")
+            print(f"{marker} found at 0x{GBA + at:08X}: adding {name}")
     for name in args.extra:
         extra = config.get("optional", {}).get(name) or sys.exit(f"no optional set {name}")
         for key in ("sources", "hooks", "pointers"):
             config.setdefault(key, []).extend(extra.get(key, []))
-    rom = bytearray(Path(args.rom_in).read_bytes())
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
@@ -91,7 +100,7 @@ SECTIONS {{
 ASSERT(SIZEOF(.data) == 0 && SIZEOF(.bss) == 0, "injected code cannot have writable globals: use INJECT_RAM")
 """, encoding="utf-8")
         elf = tmp / "inject.elf"
-        run([tool("arm-none-eabi-gcc"), *CFLAGS, "-T", str(tmp / "link.ld"), "-Wl,--gc-sections", "-Wl,-e,0",
+        run([tool("arm-none-eabi-gcc"), *CFLAGS, "-T", str(tmp / "link.ld"), "-Wl,--gc-sections", "-Wl,-e,0", *defsyms,
              *[f"-Wl,--undefined={entry['to']}" for entry in config["hooks"] + config["pointers"]], *objects, "-o", str(elf)])
         binary = tmp / "inject.bin"
         run([tool("arm-none-eabi-objcopy"), "-O", "binary", "-j", ".text", str(elf), str(binary)])
