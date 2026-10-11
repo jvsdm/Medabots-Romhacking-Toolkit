@@ -7,7 +7,7 @@ internal sealed class FontProjectEditSystem : IProjectEditSystem
     public string DisplayName => "Font";
 
     public IEnumerable<string> DescribeChanges(RomHackProject project) =>
-        project.UseExtendedFont ? new[] { "Extended font (õ Ã ã Õ, normal and italic; widths 0x4F-0x7F)" } : Array.Empty<string>();
+        project.UseExtendedFont ? new[] { "Extended font (õ Ã ã Õ, normal and italic; widths 0x4F-0x7F; italic font repair)" } : Array.Empty<string>();
 
     public IEnumerable<ProjectChange> BuildChanges(RomHackProject project, ProjectBuildContext context)
     {
@@ -16,6 +16,19 @@ internal sealed class FontProjectEditSystem : IProjectEditSystem
             return Array.Empty<ProjectChange>();
         }
 
-        return new[] { new ProjectChange(DisplayName, "Extended font", ExtendedFont.BuildPatches(context.SourceRom.Data, layout)) };
+        // The European italic font lost its dark shades: repaired first, so the italic text is readable and the
+        // extension is measured on the repaired glyphs.
+        var rom = context.SourceRom.Data.ToArray();
+        var changes = new List<ProjectChange>();
+        var repaired = ItalicFontRepair.Repair(rom, layout.ItalicFont, out var fixedPixels);
+        if (repaired is not null)
+        {
+            repaired.CopyTo(rom, layout.ItalicFont);
+            changes.Add(new ProjectChange(DisplayName, "Italic font repair",
+                [new RomPatchAction(layout.ItalicFont, repaired, $"Italic font: {fixedPixels} lost dark pixels rebuilt")]));
+        }
+
+        changes.Add(new ProjectChange(DisplayName, "Extended font", ExtendedFont.BuildPatches(rom, layout)));
+        return changes;
     }
 }

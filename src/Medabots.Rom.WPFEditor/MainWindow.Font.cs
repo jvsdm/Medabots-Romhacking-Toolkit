@@ -141,11 +141,7 @@ public partial class MainWindow
         {
             var left = glyph % 16 * 8 * FontSheetScale;
             var top = glyph / 16 * 16 * FontSheetScale;
-            int advance = rom[widths + glyph * 2];
-            if (s_useExtendedFont && s_extendedWidths is { } ext && glyph >= ExtendedFont.FirstWidthGlyph)
-            {
-                advance = (italic ? ext.Italic : ext.Main)[(glyph - ExtendedFont.FirstWidthGlyph) * 2];
-            }
+            int advance = (s_useExtendedFont && s_extendedRom is { } ext ? ext : rom)[widths + glyph * 2];
 
             for (var y = 0; y < 16 * FontSheetScale; y++)
             {

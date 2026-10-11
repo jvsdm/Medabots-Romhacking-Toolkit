@@ -137,4 +137,50 @@ public sealed class ExtendedFontTests
     {
         Assert.True(new RomHackProject().UseExtendedFont);
     }
+
+    [Fact]
+    public void ItalicFontRepair_RebuildsLostDarkPixels()
+    {
+        var rom = new byte[0x10000];
+        const int font = 0x1000;
+        rom.AsSpan(font, ItalicFontRepair.FontSize).Fill(0x11);
+        rom[font + 4] = 0x10;                                   // glyph 0, row 1, x = 0: lost dark pixel (0)
+        rom[font + 0] = 0x51;                                   // row 0, x = 1: ink 5 above nothing
+        var repaired = ItalicFontRepair.Repair(rom, font, out var fixedPixels);
+        Assert.NotNull(repaired);
+        Assert.Equal(1, fixedPixels);
+        Assert.Equal(0xD, repaired![4] & 15);
+        Assert.DoesNotContain(repaired.SelectMany(b => new[] { b & 15, b >> 4 }), v => v == 0);
+
+        rom[font + 8] = 0xB1;                                   // a dark shade present: font not damaged
+        Assert.Null(ItalicFontRepair.Repair(rom, font, out _));
+    }
+
+    [Fact]
+    public void Project_RepairsEuropeanItalicFont()
+    {
+        string path;
+        try
+        {
+            path = TestRomLocator.FindRomByHeader(TestRomLocator.MetabeeEuropeHeader);
+        }
+        catch (FileNotFoundException)
+        {
+            return;
+        }
+
+        var original = File.ReadAllBytes(path);
+        var layout = ExtendedFont.Locate(original)!;
+        Assert.NotNull(ItalicFontRepair.Repair(original, layout.ItalicFont, out _));
+
+        var session = RomHackSession.FromRomFile(new RomFile("font.gba", (byte[])original.Clone()));
+        new Projects.RomHackProjectApplicator().Apply(new RomHackProject { Name = "font" }, session);
+        var rom = session.RomFile.Data.ToArray();
+        Assert.Null(ItalicFontRepair.Repair(rom, layout.ItalicFont, out _));
+        Assert.Equal(ExtendedFont.Preview(original, layout), rom);
+
+        var off = RomHackSession.FromRomFile(new RomFile("font.gba", (byte[])original.Clone()));
+        new Projects.RomHackProjectApplicator().Apply(new RomHackProject { Name = "font", UseExtendedFont = false }, off);
+        Assert.Equal(original, off.RomFile.Data.ToArray());
+    }
 }

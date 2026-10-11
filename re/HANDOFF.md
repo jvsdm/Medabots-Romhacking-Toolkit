@@ -303,3 +303,16 @@ Checklist:
     reparado) "<I>NoItem" sai certo, e "<I>ãõÃÕéá" aparece com os glifos originais da ROM (larguras novas).
 - Sugestao: aplicar o reparo do italico (`RepairItalicFont`) tambem pela aba Font em ROM EU simples; sem ele o
   italico continua quebrado. Nao feito.
+
+### 2026-10-11 - sessao local (12): reparo do italico pela aba Font
+- `Text/ItalicFontRepair.cs`: o reparo do italico (antes so em `RomExpander.RepairItalicFont`) virou rotina
+  compartilhada; o RomExpander usa ela (teste da ROM expandida byte a byte continua passando).
+- `FontProjectEditSystem`: com "Use extended font" ligado numa ROM (E), aplica antes o reparo do italico (na
+  posicao localizada, nao fixa) e depois a extensao. Desligado: ROM identica.
+- `ExtendedFont.Preview(rom, layout)`: copia da ROM como exportada. O preview de mensagem e as folhas do WPF leem
+  glifos e larguras dela. Antes o preview desenhava os glifos italicos do print, que a exportacao nao grava na
+  (E) (slots italicos ja ocupados), e media larguras sobre eles.
+- Testes: `ItalicFontRepair_RebuildsLostDarkPixels`, `Project_RepairsEuropeanItalicFont`. Suite: 252 ok + 3
+  falhas antigas (LargePartDisplay).
+- Emulador, Metabee (E) simples com o projeto aplicado: "<I>NoItem" e "<I>ãõÃÕéá" escuros e legiveis; texto
+  normal igual ao anterior. WPF: preview italico escuro, igual ao jogo.

@@ -53,6 +53,10 @@ public static class ExtendedFont
         "  Italic font: advance = last inked column + 1 (the slant already separates letters).\n" +
         "  Byte 2, vertical class (normal font): 0 = ink above row 2 (b, d, f, h, accented capitals), " +
         "1 = rows 2-9, 2 = reaches row 10 (comma, cedilla), 3 = reaches row 11 (g, p, q, y). Rows 12-15 are ignored. Italic: always 0.\n\n" +
+        "Italic font repair: the European ROMs lost the dark shades of the italic font (palette B-F stored as 0, " +
+        "so italic text fades into the box). Each lost pixel gets back a dark shade (F/E/D by inked neighbours). " +
+        "Applied before the extension; skipped when the italic font is not damaged. Where the italic slots already " +
+        "hold glyphs (Metabee/Rokusho E ship õ Ã ã Õ in italic), those glyphs are kept and only get widths.\n\n" +
         "In the sheet, the grid marks the 8x16 cells and the red line marks the advance of each glyph.\n\n" +
         "Font and tables are found by signature (Metabee (E) font 0x4BFC6C / widths 0x3B4E08, Rokusho (E) " +
         "0x4BFC90 / 0x3B4E28). Skipped when the slots already hold other glyphs.";
@@ -147,6 +151,20 @@ public static class ExtendedFont
     }
 
     /// <summary>Width entries (advance, class) for glyphs 0x4F-0x7F of both fonts, extension glyphs included.</summary>
+    /// <summary>Copy of the ROM as exported with the extended font: italic font repaired, then the extension.</summary>
+    public static byte[] Preview(ReadOnlySpan<byte> rom, FontLayout layout)
+    {
+        ArgumentNullException.ThrowIfNull(layout);
+        var copy = rom.ToArray();
+        ItalicFontRepair.Repair(copy, layout.ItalicFont, out _)?.CopyTo(copy, layout.ItalicFont);
+        foreach (var action in BuildPatches(copy, layout))
+        {
+            action.Data.CopyTo(copy, action.Offset);
+        }
+
+        return copy;
+    }
+
     public static (byte[] Main, byte[] Italic) BuildWidths(ReadOnlySpan<byte> rom, FontLayout layout, bool italicExtended = true)
     {
         var main = new byte[(GlyphCount - FirstWidthGlyph) * 2];
