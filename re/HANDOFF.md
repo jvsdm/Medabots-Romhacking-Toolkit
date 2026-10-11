@@ -213,4 +213,4 @@ Escrito na nuvem sem .NET (proxy bloqueia o SDK). Compilar, rodar os testes e co
 - `MedabotsTextCodec`: tabela de caracteres completa 0x00-0x7F (acentos e glifos novos codificam/decodificam).
 - WPF: aba `Font` (checkbox "Use extended font", botao `?` com `ExtendedFont.Summary`, folha 16x8 da fonte); preview de mensagem usa glifos/larguras estendidos quando ligado.
 - Testes: `ExtendedFontTests`, `EncodeAndDecode_RoundTripsExtendedGlyphs`.
-- Observacao: o o-til do usuario fica 1 px abaixo do o-trema (corpo nas linhas 6-9). Mantido como desenhado.
+- o-til subido 1 px (corpo nas linhas 5-8, igual ao o-trema e ao a-til).
