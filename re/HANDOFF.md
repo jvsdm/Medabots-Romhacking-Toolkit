@@ -279,3 +279,27 @@ Checklist:
 5. Exportar ROM com toggle ligado/desligado; no emulador conferir texto normal e `<I>` italico com "ao oes A-til O-til" e acentos. Desligado: fonte, italico e larguras iguais a ROM original.
 6. A-til italico tem um pixel do acento agudo na linha 1 (desenho do usuario); mostrar ao usuario.
 7. Commit e push na `claude/medabots-project-ajyaeb`; registrar resultado aqui.
+
+### 2026-10-11 - sessao local (11): validacao da nuvem (2)
+- `dotnet build` ok (0 erros). `dotnet test`: 250 ok, so as 3 falhas antigas de LargePartDisplay.
+- WPF, aba Font (aberta por automacao, prints conferidos):
+  - (E): status com offsets (fonte 0x4BFC6C, italico 0x4C59AC, larguras 0x3B4E08/0x3B5008); folhas normal e
+    italica com grade e linha vermelha coerente; botoes de export ok.
+  - (U) (Rokusho USA): painel bloqueado com "Font changes are for European (E) ROMs only".
+  - Botao `?` aparecia vazio (Width=22 nao cabia o texto com o padding do tema): trocado por MinWidth 28 +
+    Padding; conferido.
+  - Preview com `<I>`: o trecho italico sai claro/apagado. E o defeito da fonte italica da ROM EU original (tons
+    B-F viraram 0), o mesmo que `RomExpander.RepairItalicFont` corrige. O jogo mostra igual (conferido).
+- Export das fontes originais (Metabee E): PNG 128x128 indexado, paleta amarela do dialogo, indices preservados.
+  A normal sai sem a extensao. A italica ORIGINAL ja tem desenhos em 0x4F/0x7D/0x7E/0x7F (o-til, A-til, a-til,
+  O-til) com largura 0. Por isso o Toolkit nao grava o italico do print (slots nao vazios); com as larguras
+  calculadas, os glifos originais ficam visiveis. O pixel "do agudo" no A-til italico e os pontinhos no til do
+  a-til sao do desenho original da ROM.
+- ROM exportada: desligado = identica a original (fonte, italico e as duas tabelas), na EU e na expandida.
+  Ligado: 199 bytes (4 glifos normais + larguras normal/italico).
+- Emulador (descricao "No Item" do menu de itens):
+  - Normal ligado: "ãoõÃÕéá" certo e espacado.
+  - Italico: na EU original sai apagado ate com letras comuns (fonte italica estragada). Na expandida (italico
+    reparado) "<I>NoItem" sai certo, e "<I>ãõÃÕéá" aparece com os glifos originais da ROM (larguras novas).
+- Sugestao: aplicar o reparo do italico (`RepairItalicFont`) tambem pela aba Font em ROM EU simples; sem ele o
+  italico continua quebrado. Nao feito.

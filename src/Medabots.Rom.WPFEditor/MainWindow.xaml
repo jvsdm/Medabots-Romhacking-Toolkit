@@ -1820,7 +1820,8 @@
                                               Checked="OnUseExtendedFontChanged"
                                               Unchecked="OnUseExtendedFontChanged" />
                                     <Button Content="?"
-                                            Width="22"
+                                            MinWidth="28"
+                                            Padding="8,2"
                                             Margin="8,0,0,0"
                                             ToolTip="What the extended font applies and how spacing works"
                                             Click="OnExtendedFontHelpClicked" />
