@@ -1,0 +1,297 @@
+area	address	code_refs	ptr_run	nearest_label	sample_functions
+ROM	83b6120	123	ptrs=118	gRandomLUT+0x3714	?,ActionFamily_AntiAir_Handler,ActionFamily_HoldHandler,ActionFamily_Repair_Handler,FUN_08003300
+ROM	83b4c80	19	ptrs=106	gRandomLUT+0x2274	?,FUN_08003394,FUN_08003784,FUN_080075ac,FUN_08009484
+ROM	8485698	14	ptrs=59	shop_contents+0x1d94	?,FUN_0805db20,FUN_08063254,FUN_08063354,FUN_08063f08
+ROM	84c88dc	13	ptrs=0	sShopPartScreenUiTileSheet+0x884	?,FUN_080075ac,FUN_08007a04,FUN_08007e38,FUN_08008234
+ROM	83bbb6c	13	ptrs=480	gPartNamePointerTable+0x14f4	?,FUN_08005c9c,FUN_08005e00,FUN_08005f68,FUN_080060d0
+ROM	84e467c	11	ptrs=0	sPartScreenObjPaletteBlockC+0x260	?,FUN_080279e4,FUN_08028504,FUN_080294dc,FUN_08029868
+ROM	83b61a8	10	ptrs=84	gRandomLUT+0x379c	FUN_0801cdd4,FUN_0801ce94,FUN_0801ff9c,FUN_08020628,FUN_080206e8
+ROM	848523c	10	ptrs=19	shop_contents+0x1938	?,FUN_0805d580,FUN_0805db84,FUN_0805dc4c,FUN_0805dd50
+ROM	850f2dc	10	ptrs=0		?,FUN_080075ac,FUN_08007a04,FUN_08007e38,FUN_08008234
+ROM	83b65b0	10	ptrs=34	rom_medal_information+0x2b8	?,DrawBattlePreviewNameLabel,FUN_08005c10,FUN_08009540,FUN_08009ef4
+ROM	84c29fc	9	ptrs=0		?,DrawBattlePreviewPortraitTileBlock,FUN_08005b44,FUN_08009484,FUN_08009e4c
+ROM	83d6a4c	9	ptrs=0		ComputeBattleSpriteStatOffsets,EventOpcode0E_PlayerHopInPlace,EventOpcode0F_PlayerHopInDirection,EventOpcode43_ShakeCamera,FUN_08042bc0
+ROM	84c3a48	8	ptrs=0		?,FUN_080075ac,FUN_08007a04,FUN_08007e38,FUN_08008234
+ROM	83ad544	8	ptrs=0	debug_menu_text_*+0x984	FUN_08017a14,FUN_08017b24,FUN_0801830c,FUN_080185a8,FUN_080185e8
+ROM	8485784	8	ptrs=0	shop_contents+0x1e80	FUN_08069b38,FUN_08069bfc,FUN_0806a748,FUN_0806a860,FUN_0806aa10
+ROM	850f8fc	7	ptrs=0	sPartSelectionComponentPaletteSet+0x440	FUN_0801cdd4,FUN_0801e864,FUN_0801e8dc,FUN_08020628,FUN_08024890
+ROM	83b4e28	7	ptrs=0	gRandomLUT+0x241c	?,BuildObjectTextFromGlyphStream,FUN_08040038,FUN_080402b4,FUN_08040ee4
+ROM	83b7e74	7	ptrs=0	gPartAttributeNamePointerTable+0x1768	?,FUN_0800a2e8,FUN_0800a594,FUN_080173b4,FUN_08017734
+ROM	84c50f4	7	ptrs=0	sPartDetailTileSheetA+0x4f4	FUN_080075ac,FUN_08008234,FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	84c5274	7	ptrs=0	sPartDetailTileSheetA+0x674	FUN_080075ac,FUN_08008234,FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	83f83e0	7	ptrs=61	Overworld_Sprites+0x540	EventOpcode11_ChangePlayerCostume,FUN_080486b0,FUN_0804877c,FUN_08051e38,FUN_08069a08
+ROM	83ad545	7	ptrs=0	debug_menu_text_*+0x985	FUN_08017a14,FUN_08017b24,FUN_0801830c,FUN_080185a8,FUN_080185e8
+ROM	8485944	6	ptrs=0	shop_contents+0x2040	FUN_0806b134,FUN_0806c3a0,FUN_0806cd68,FUN_0806cf7c,FUN_0806cfec
+ROM	8485c20	6	ptrs=0	shop_contents+0x231c	FUN_0806938c,FUN_08069a08,FUN_0806a024,FUN_0806a114,FUN_0806a3c4
+ROM	83cee14	6	ptrs=37		?,FUN_0803c738,FUN_0803c7dc,FUN_0803c8ac,FUN_0803c9e0
+ROM	84c3e88	6	ptrs=0		?,ActionFamily_Counterattack_Handler,FUN_08007e38,FUN_080087cc,FUN_0801a788
+ROM	84cdf6c	6	ptrs=1		FUN_0801cdd4,FUN_0801e864,FUN_08020628,FUN_08024890,FUN_080277dc
+ROM	83b7068	6	ptrs=8	gPartAttributeNamePointerTable+0x95c	ActionFamily_DrainCharge_Handler,FUN_0800a05c,FUN_0800a594,FUN_080173b4,Fight_DrawSelectedActionDescription
+ROM	850f2bc	6	ptrs=0		?,FUN_0801058c,FUN_08011764,FUN_0803d74c,FUN_0805d980_battle_medal_state_save_ref
+ROM	84e43fc	6	ptrs=0		?,FUN_08003ee0,FUN_0800b8b0,FUN_0805c9c4,FUN_0805d980_battle_medal_state_save_ref
+ROM	83b585a	5	ptrs=0	gRandomLUT+0x2e4e	ActionFamily_AntiAir_Handler,ActionFamily_Repair_Handler,FUN_08022480,FUN_08022708,FUN_0802aaf8
+ROM	83b58f8	5	ptrs=0	gRandomLUT+0x2eec	?,FUN_08020fb8,FUN_08021000,FUN_08021bd8,FUN_08021c94
+ROM	80ae914	5	ptrs=0		?,FUN_080668d4,FUN_08066b4c,FUN_08066d8c,Map_RecomputeRenderAffineEntry
+ROM	850f91c	5	ptrs=0	sPartSelectionComponentPaletteSet+0x460	?,FUN_0801ead4,FUN_08020fb8,FUN_08021bd8,FUN_08026af4
+ROM	83b5aab	5	ptrs=0	gRandomLUT+0x309f	?,FUN_08022870,FUN_08022938,FUN_08022990,FUN_080229c0
+ROM	83c4bb0	5	ptrs=128	list_of_all_fights+0x3010	FUN_08016a3c,FUN_08017268,FUN_080173b4,Fight_DrawSelectedActionDescription,Fight_DrawSelectedActionStatusText
+ROM	83d2b86	5	ptrs=0	sEventContinuationOpcodeHandlerTable+0x536	FUN_0804fe9c,Map_RemoveTrackedObjectByPackedId,Map_SpawnTrackedObjectAtTile,Overworld_AdvancePlayerStep,Overworld_UpdateMapSceneStateMachine
+ROM	83c6cc8	5	ptrs=132		Fight_AdvanceActionScriptCursor,Fight_ReadActionScriptByte,Fight_ReadActionScriptInlineArgs,Fight_WaitForActionScriptByteMatch,Fight_WaitForActionScriptChoiceByteMatch
+ROM	83c40d8	5	ptrs=97	list_of_all_fights+0x2538	?,FUN_08011f50,FUN_08031218,FUN_0806a114,FUN_0806a3c4
+ROM	83b61ac	5	ptrs=83	gRandomLUT+0x37a0	?,FUN_08020fb8,FUN_08021000,FUN_08021bd8,FUN_08021c94
+ROM	83b6190	5	ptrs=90	gRandomLUT+0x3784	ActionFamily_AntiAir_Handler,ActionFamily_Repair_Handler,FUN_08022480,FUN_08022708,FUN_0802aaf8
+ROM	83ce184	5	ptrs=132		?,FUN_08039448,FightPreview_AdvanceSequenceCursor,FightPreview_GetCurrentSequenceValue,FightPreview_UnpackSequenceEntry
+ROM	83b6228	5	ptrs=52	gRandomLUT+0x381c	?,FUN_080237c8,FUN_08023e94,FUN_0802c864,FUN_0802c960
+ROM	83b6218	5	ptrs=56	gRandomLUT+0x380c	?,FUN_08022870,FUN_08022938,FUN_08022990,FUN_080229c0
+ROM	850f2fc	5	ptrs=0		FUN_08007a04,FUN_08007e38,FUN_08008234,FUN_080087cc,InitializeBattleStatusScreen
+ROM	84ce40c	5	ptrs=0		?,FUN_0801ead4,FUN_08020fb8,FUN_08021bd8,FUN_08026af4
+ROM	84e44fc	5	ptrs=0	sPartScreenObjPaletteBlockC+0xe0	?,FUN_08013288,FUN_08013568,FUN_0801a788,FUN_08030cac
+ROM	83b2648	5	ptrs=241	sCompositeBattleSpriteGraphicsPointerTable+0xc20	?,FUN_0801387c,FUN_0801fbc4,FUN_08043c08,FUN_08069530
+ROM	84ca84c	4	ptrs=0	sShopPartScreenUiTileSheet+0x27f4	?,FUN_0801ce94,FUN_08021038,Fight_LoadActionSequenceBackdropVariant
+ROM	83b58e7	4	ptrs=0	gRandomLUT+0x2edb	FUN_0801cdd4,FUN_0801ce94,FUN_0801ff9c,Fight_ShowActionSourceMarker
+ROM	850f93c	4	ptrs=0	sPartSelectionComponentPaletteSet+0x480	?,FUN_0801cd50,FUN_0802480c,Fight_ShowInlineEffectTextForCurrentPart
+ROM	83b5a5a	4	ptrs=0	gRandomLUT+0x304e	FUN_08021038,FUN_08021638,FUN_08025fc8,FUN_08026080
+ROM	83d2aa8	4	ptrs=0	sEventContinuationOpcodeHandlerTable+0x458	FUN_0804f6e0,FUN_0805330c,Overworld_AdvancePlayerStep,Overworld_UpdateMapSceneStateMachine
+ROM	83b5a92	4	ptrs=0	gRandomLUT+0x3086	?,FUN_080220a0,FUN_08029680,FUN_0802976c
+ROM	83b5a8a	4	ptrs=0	gRandomLUT+0x307e	FUN_080219c0,FUN_08021a14,FUN_08021a6c,FUN_08021afc
+ROM	84cabe8	4	ptrs=0	sShopPartScreenUiTileSheet+0x2b90	?,FUN_0801ce94,FUN_08021038,Fight_LoadActionSequenceBackdropVariant
+ROM	8485c22	4	ptrs=0	shop_contents+0x231e	FUN_08069a08,FUN_0806a114,FUN_0806a3c4,FightPreview_LoadCachedAndEncounterLoadouts
+ROM	8485c26	4	ptrs=0	shop_contents+0x2322	FUN_08069a08,FUN_0806a114,FUN_0806a3c4,FightPreview_LoadCachedAndEncounterLoadouts
+ROM	84bfc88	4	ptrs=0		?,FUN_08040038,FUN_080402b4,FUN_080405d0
+ROM	83d2d2d	4	ptrs=0	sEventContinuationOpcodeHandlerTable+0x6dd	FUN_080503fc,FUN_08059960,Map_LoadEntitySpawnsForCurrentMap,Map_UpdateVisibleEventObjectSprites
+ROM	8785ee4	4	ptrs=0		?,FUN_08060dd4,FUN_08062fb4,FUN_080639c4
+ROM	83c6f88	4	ptrs=4		?,FUN_08011764,FUN_08020768,FUN_08024da8
+ROM	83b5ff4	4	ptrs=0	gRandomLUT+0x35e8	FUN_0802ba2c,FUN_0802baac,FUN_0802f4d0,FUN_0802f594
+ROM	83b805c	4	ptrs=6	medal_medaforce_list+0xb0	FUN_0800aa1c,FUN_0800aac0,FUN_0800ff50,FUN_0800fff4
+ROM	84ca088	4	ptrs=0	sShopPartScreenUiTileSheet+0x2030	FUN_0801a788,FUN_0801c188,FUN_0802e948,FUN_08030890
+ROM	84cf19c	4	ptrs=0		?,FUN_0801cd50,FUN_0802480c,Fight_ShowInlineEffectTextForCurrentPart
+ROM	83b622c	4	ptrs=51	gRandomLUT+0x3820	FUN_08023988,FUN_08023f80,FUN_0802c960,FUN_0802ca5c
+ROM	83b6210	4	ptrs=58	gRandomLUT+0x3804	?,FUN_080220a0,FUN_08029680,FUN_0802976c
+ROM	83b620c	4	ptrs=59	gRandomLUT+0x3800	FUN_080219c0,FUN_08021a14,FUN_08021a6c,FUN_08021afc
+ROM	83b6200	4	ptrs=62	gRandomLUT+0x37f4	FUN_08021038,FUN_08021638,FUN_08025fc8,FUN_08026080
+ROM	83b62c0	4	ptrs=14	gRandomLUT+0x38b4	FUN_0802ba2c,FUN_0802baac,FUN_0802f4d0,FUN_0802f594
+ROM	85fb360	4	ptrs=0		EventOpcode11_ChangePlayerCostume,FUN_080486b0,FUN_0804877c,Map_LoadCurrentEventObjectPalettes
+ROM	83f83e4	4	ptrs=60	Overworld_Sprites+0x544	EventOpcode11_ChangePlayerCostume,FUN_080486b0,FUN_0804877c,Map_LoadCurrentEventObjectPalettes
+ROM	84e445c	4	ptrs=0	sPartScreenObjPaletteBlockC+0x40	?,FUN_080075ac,FUN_0800ce90,FUN_080639c4
+ROM	83b74d8	4	ptrs=52	gPartAttributeNamePointerTable+0xdcc	?,FUN_0800a2e8,FUN_08017268,FUN_080318cc
+ROM	83ad516	4	ptrs=0	debug_menu_text_*+0x956	FUN_08015f90,FUN_08016080,FUN_08016154,FUN_08016288
+ROM	83cf550	4	ptrs=32		?,FUN_08014a60,FUN_08031994,FUN_0803e634
+ROM	84ca640	4	ptrs=0	sShopPartScreenUiTileSheet+0x25e8	?,FUN_0801ce94,FUN_08021038,Fight_LoadActionSequenceBackdropVariant
+ROM	83ac634	4	ptrs=262	menu_list+0x34c	?,FUN_08009750,FUN_0800ce90,FUN_08062c28
+ROM	83af620	4	ptrs=0	gActionScriptOpcodeHandlerTable+0x480	FUN_08036784,FUN_080368c4,FUN_080369c8,FUN_08036c20
+ROM	83c6764	4	ptrs=176		?,FUN_08011adc,FUN_0801ac24,FUN_08031218
+ROM	83c482c	3	ptrs=0	list_of_all_fights+0x2c8c	FUN_080173b4,Fight_DrawSelectedActionDescription,Fight_DrawSelectedActionStatusText
+ROM	84c38fc	3	ptrs=0		DrawBattlePreviewPortraitTileBlock,FUN_08005b44,FUN_08009484
+ROM	83b5ab3	3	ptrs=0	gRandomLUT+0x30a7	FUN_08022a04,FUN_08022b40,FUN_08022e14
+ROM	84c9aa8	3	ptrs=0	sShopPartScreenUiTileSheet+0x1a50	?,FUN_08030f10,FUN_08031174
+ROM	83b5ad7	3	ptrs=0	gRandomLUT+0x30cb	?,FUN_080237c8,FUN_08023e94
+ROM	83d2b46	3	ptrs=0	sEventContinuationOpcodeHandlerTable+0x4f6	FUN_08051e38,Map_ResolveEventObjectGraphicSetId,Overworld_RunPostTransitionMapSpriteReload
+ROM	83c4bb4	3	ptrs=127	list_of_all_fights+0x3014	FUN_080173b4,Fight_DrawSelectedActionDescription,Fight_DrawSelectedActionStatusText
+ROM	83beb88	3	ptrs=11		FUN_08011fa0,FUN_0803e7f0,FUN_0806a08c
+ROM	84c3c1c	3	ptrs=0		FUN_08007a04,FUN_08013b8c,InitializeBattleSceneScreen
+ROM	83afc4c	3	ptrs=0	gActionScriptOpcodeHandlerTable+0xaac	?,FUN_0803be44,FUN_0803c33c
+ROM	83b5cbd	3	ptrs=0	gRandomLUT+0x32b1	FUN_080264e4,FUN_08026628,Fight_ApplyRandomPartReplacementEffect
+ROM	83c3ca4	3	ptrs=0	list_of_all_fights+0x2104	FUN_080121a8,FUN_0803e870,FUN_08069490
+ROM	83b5cc5	3	ptrs=0	gRandomLUT+0x32b9	FUN_080264e4,FUN_08026628,Fight_ApplyRandomPartReplacementEffect
+ROM	84cad50	3	ptrs=0	sShopPartScreenUiTileSheet+0x2cf8	?,FUN_0801ce94,Fight_LoadActionSequenceBackdropVariant
+ROM	80acd14	3	ptrs=0		?,FUN_08059734,FUN_080598c0
+ROM	80abd8c	3	ptrs=0		FUN_08047c84,FUN_08047ce4,FUN_08047d24
+ROM	80abd98	3	ptrs=0		FUN_08047c84,FUN_08047ce4,FUN_08047d24
+ROM	80abd90	3	ptrs=0		FUN_08047c84,FUN_08047ce4,FUN_08047d24
+ROM	80abd94	3	ptrs=0		FUN_08047c84,FUN_08047ce4,FUN_08047d24
+ROM	84d2de8	3	ptrs=0		?,FUN_0801e918,FUN_08026924
+ROM	850fd9c	3	ptrs=0	sPartSelectionComponentPaletteSet+0x8e0	FUN_080237c8,FUN_08023e94,FUN_0802c864
+ROM	8486d9c	3	ptrs=55	shop_contents+0x3498	FUN_08071180,FUN_08071320,FUN_0807164c
+ROM	83b5e4a	3	ptrs=0	gRandomLUT+0x343e	FUN_08028cc8,FUN_08029868,FUN_08029e34
+ROM	8486e80	3	ptrs=0	shop_contents+0x357c	FUN_08073ca0,FUN_08073d8c,FUN_08074134
+ROM	8486e90	3	ptrs=0	shop_contents+0x358c	?,FUN_0803f3a8,FUN_0803fc20
+ROM	84c7f58	3	ptrs=0	sPartDetailTileSheetA+0x3358	?,FUN_0803faa0,FUN_0805718c
+ROM	84f0ff8	3	ptrs=1		FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	84c7f98	3	ptrs=0	sPartDetailTileSheetA+0x3398	FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	8485fa8	3	ptrs=31	shop_contents+0x26a4	FUN_0806a08c,FUN_0806a114,FUN_0806a3c4
+ROM	84f3fa4	3	ptrs=0		FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	84c7fb8	3	ptrs=0	sPartDetailTileSheetA+0x33b8	FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	83b602c	3	ptrs=0	gRandomLUT+0x3620	?,FUN_0802dcdc,FUN_0802dd98
+ROM	83b612c	3	ptrs=115	gRandomLUT+0x3720	?,FUN_0800aa1c,FUN_0800ff50
+ROM	84d81c0	3	ptrs=0		FUN_08025674,FUN_0802a5c0,FUN_08031538
+ROM	83b6224	3	ptrs=53	gRandomLUT+0x3818	?,FUN_080235ac,FUN_080235e8
+ROM	83b621c	3	ptrs=55	gRandomLUT+0x3810	FUN_08022a04,FUN_08022b40,FUN_08022e14
+ROM	8488264	3	ptrs=0		FUN_08015a90,FUN_08015afc,FUN_08018ab4
+ROM	84e8260	3	ptrs=0	sPartScreenObjPaletteBlockC+0x3e44	FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	83b6250	3	ptrs=42	gRandomLUT+0x3844	FUN_080264e4,FUN_08026628,Fight_ApplyRandomPartReplacementEffect
+ROM	83b624c	3	ptrs=43	gRandomLUT+0x3840	FUN_080264e4,FUN_08026628,Fight_ApplyRandomPartReplacementEffect
+ROM	83b6290	3	ptrs=26	gRandomLUT+0x3884	FUN_08028cc8,FUN_08029868,FUN_08029e34
+ROM	83b62c4	3	ptrs=13	gRandomLUT+0x38b8	?,FUN_0802dcdc,FUN_0802dd98
+ROM	850f37c	3	ptrs=0	sPartScreenObjPaletteBlockA+0x40	FUN_08007e38,FUN_0801a788,FUN_08061ce0
+ROM	84873ac	3	ptrs=0	shop_contents+0x3aa8	?,FUN_0804169c,FUN_0805718c
+ROM	850f41c	3	ptrs=0	sPartScreenObjPaletteBlockB+0x80	FUN_0801058c,FUN_08011764,FUN_0803d74c
+ROM	848742c	3	ptrs=0	shop_contents+0x3b28	?,FUN_0804169c,FUN_0805718c
+ROM	85104dc	3	ptrs=0	sPartSelectionComponentPaletteSet+0x1020	?,FUN_0802f9b8,FUN_0802fe78
+ROM	84e44dc	3	ptrs=0	sPartScreenObjPaletteBlockC+0xc0	FUN_0801a788,FUN_0801c40c,FUN_08030cac
+ROM	84144d4	3	ptrs=256	sMapEntitySpawnPointerTable+0x1354	?,EventOpcode01_ShowMessageA,FUN_08057cb0
+ROM	84e44bc	3	ptrs=0	sPartScreenObjPaletteBlockC+0xa0	FUN_0801a788,FUN_0801c32c,FUN_08030cac
+ROM	84e455c	3	ptrs=0	sPartScreenObjPaletteBlockC+0x140	?,FUN_0801058c,FUN_08011764
+ROM	83ad522	3	ptrs=0	debug_menu_text_*+0x962	FUN_08016370,FUN_08016438,FUN_080164f4
+ROM	83ad510	3	ptrs=0	debug_menu_text_*+0x950	FUN_08015f90,FUN_08016080,FUN_08016154
+ROM	83cf554	3	ptrs=31		?,FUN_08014a60,FUN_08031994
+ROM	84c55f0	3	ptrs=0	sPartDetailTileSheetA+0x9f0	FUN_08013b8c,FUN_08060dd4,InitializeBattleSceneScreen
+ROM	83b55f4	3	ptrs=0	gRandomLUT+0x2be8	?,FUN_08003300,FUN_0800393c
+ROM	84e459c	3	ptrs=0	sPartScreenObjPaletteBlockC+0x180	?,FUN_08030f10,FUN_08031174
+ROM	83ac5d2	3	ptrs=0	menu_list+0x2ea	BuildBattlePreviewSpriteObjectsForAllSlots,FUN_08004ef8,UpdateBattlePreviewComparisonSpriteSlot
+ROM	850f65c	3	ptrs=0	sPartSelectionComponentPaletteSet+0x1a0	?,FUN_0801ce94,FUN_08021038
+ROM	84d765c	3	ptrs=1		FUN_080237c8,FUN_08023e94,FUN_0802c864
+ROM	83ce620	3	ptrs=132		FUN_0801bc5c,FUN_0801bca0,FUN_0801bce4
+ROM	83b561e	3	ptrs=0	gRandomLUT+0x2c12	?,FUN_0800aa1c,FUN_0800ff50
+ROM	850f61c	3	ptrs=0	sPartSelectionComponentPaletteSet+0x160	?,FUN_0801ce94,FUN_08021038
+ROM	850f63c	3	ptrs=0	sPartSelectionComponentPaletteSet+0x180	?,FUN_0801ce94,FUN_08021038
+ROM	84c5740	3	ptrs=0	sPartDetailTileSheetA+0xb40	?,ActionFamily_Counterattack_Handler,FUN_0801a788
+ROM	83b2724	3	ptrs=186	sCompositeBattleSpriteGraphicsPointerTable+0xcfc	FUN_0801bc5c,FUN_0801bca0,FUN_0801bce4
+RAM	3002c30	586		gamestate_menu+0xa4	?,ActionFamily_AntiAir_Handler,ActionFamily_AttackChange_Handler,ActionFamily_AutoRecover_Handler,ActionFamily_Change_Handler
+RAM	3000440	452			?,ActionFamily_AttackChange_Handler_V2,ActionFamily_AutoRecover_Handler,ActionFamily_Change_Handler,ActionFamily_DefenseChange_Handler
+RAM	30004c4	123		selected_tinpet_selected_part+0x2a	?,ActionFamily_AutoRecover_Handler,ActionFamily_Repair_Handler,ActionFamily_Sacrifice_Handler,ActionFamily_Strengthen_Handler
+RAM	3006f74	99		gScreenTransitionState+0x34	?,FUN_08059f58,FUN_0805a0cc,FUN_0805a3a4,FUN_0805a444
+RAM	3002c34	96		gamestate_menu+0xa8	?,ActionFamily_Recovery_Handler,AnimateCompositeBattleSpriteObjects,BuildCompositeBattleSpriteObjects,BuildObjectTextFromGlyphStream
+RAM	3002c32	88		gamestate_menu+0xa6	?,ActionFamily_Recovery_Handler,AnimateCompositeBattleSpriteObjects,BuildCompositeBattleSpriteObjects,BuildObjectTextFromGlyphStream
+RAM	3003470	78		gamestate_menu+0x8e4	?,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801b0e8,FUN_0801c774
+RAM	3003474	75		gamestate_menu+0x8e8	?,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801b0e8,FUN_0801c774
+RAM	3003472	74		gamestate_menu+0x8e6	?,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801b0e8,FUN_0801c774
+RAM	30004c6	74		selected_tinpet_selected_part+0x2c	?,ActionFamily_AttackChange_Handler_V2,ActionFamily_Change_Handler,ActionFamily_DefenseChange_Handler,ActionFamily_HealChange_Handler
+RAM	3004374	65		dpad_input_2+0xb63	?,ActionFamily_AutoRecover_Handler,ActionFamily_HoldHandler,FUN_08019d9c,FUN_0801b004
+RAM	3003478	63		gamestate_menu+0x8ec	?,ActionFamily_Reactivate_Handler,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801b0e8
+RAM	3004372	61		dpad_input_2+0xb61	?,ActionFamily_HoldHandler,FUN_08019348,FUN_08019d9c,FUN_08019fbc
+RAM	3001780	60		gamestate_subroutine_*+0x404	?,FUN_08001278,FUN_080039bc,FUN_08004e74,FUN_08006514
+RAM	300347a	59		gamestate_menu+0x8ee	?,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801c774,FUN_0801cdd4
+RAM	3003479	56		gamestate_menu+0x8ed	?,ActionFamily_Reactivate_Handler,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801b0e8
+RAM	300347b	56		gamestate_menu+0x8ef	?,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801b0e8,FUN_0801c774
+RAM	3006475	55		gEventScriptArguments+0x1	EventInitOpcode12_ClearEventFlagByPackedId,EventInitOpcode13_SetEventFlagByPackedId,EventInitOpcode16_ClearActiveObjectByPackedId,EventInitOpcode17_SetEventFlagFieldByPackedId,EventInitOpcode18_IncrementEventFlagFieldByPackedId
+RAM	300348c	53		gamestate_menu+0x900	?,ActionFamily_Repair_Handler,FUN_0801b004,FUN_0801c774,FUN_0801cdd4
+RAM	3002c36	50		gamestate_menu+0xaa	?,AnimateCompositeBattleSpriteObjects,BuildCompositeBattleSpriteObjects,BuildObjectTextFromGlyphStream,BuildShadowOamFromObjectState
+RAM	30017a0	48		pressed_buttons+0x8	BuildBattlePreviewSpriteObjectsForAllSlots,DrawBattlePreviewMedalLabel,DrawBattlePreviewNameLabel,DrawBattlePreviewPartIcons,DrawBattlePreviewPortraitTileBlock
+RAM	3002c3b	47		gamestate_menu+0xaf	?,BuildCompositeBattleSpriteObjects,BuildObjectTextFromGlyphStream,BuildShadowOamFromObjectState,CreateCompositeBattleSpriteObjects
+RAM	3002c3a	42		gamestate_menu+0xae	?,BuildCompositeBattleSpriteObjects,BuildObjectTextFromGlyphStream,BuildShadowOamFromObjectState,CreateCompositeBattleSpriteObjects
+RAM	3007014	39		gScreenTransitionState+0xd4	?,FUN_080723c8,FUN_08072750,FUN_080728bc,FUN_0807292c
+RAM	3001c04	39		won_bodypart_id+0x29b	?,FUN_0800065c,FUN_080039bc,FUN_08004e74,FUN_080093f8
+RAM	3002c4c	39		gamestate_menu+0xc0	?,BuildCompositeBattleSpriteObjects,BuildObjectTextFromGlyphStream,BuildShadowOamFromObjectState,CreateCompositeBattleSpriteObjects
+RAM	3002c50	37		gamestate_menu+0xc4	?,FUN_08015f90,FUN_08016080,FUN_08016154,FUN_0801a144
+RAM	3001c06	34		won_bodypart_id+0x29d	?,FUN_0800065c,FUN_080039bc,FUN_08004e74,FUN_080093f8
+RAM	3002414	34		won_bodypart_id+0xaab	?,BuildCompositePreviewSpriteLayer,BuildCompositePreviewSpriteLayerWithOffset,FUN_0800065c,FUN_080039e0
+RAM	3002c39	32		gamestate_menu+0xad	?,BuildShadowOamFromObjectState,CreateCompositeBattleSpriteObjects,FUN_08004ef8,FUN_08015f90
+RAM	3003492	32		gamestate_menu+0x906	?,ActionFamily_AntiAir_Handler,FUN_0801c9c8,FUN_0801ce94,FUN_0801ff9c
+RAM	300047c	31		text_speed+0x22	?,FUN_080036f4,FUN_080075ac,FUN_08007d28,FUN_0800a1e4
+RAM	30034b0	31		gamestate_menu+0x924	?,FUN_0801b0e8,FUN_0802167c,FUN_08021a6c,FUN_08022480
+RAM	3006d2a	30		gEventScriptArguments+0xa	EventInitOpcode1A_ApplyCurrentEventFacingVariant,EventInitOpcode1D_StartTransitionForCurrentEventObject,EventInitOpcode1E_SetTransitionArgsForCurrentEventObject,EventOpcode1E_FlickerEventNpc,EventOpcode1F_InitiateMovingActorA_Setup
+RAM	3002c38	30		gamestate_menu+0xac	?,BuildShadowOamFromObjectState,CreateCompositeBattleSpriteObjects,FUN_08004ef8,FUN_08015f90
+RAM	3003476	30		gamestate_menu+0x8ea	?,FUN_0801b004,FUN_0801c774,FUN_08020df8,FUN_08021038
+RAM	300047f	29		currently_selected_medal+0x2	?,FUN_080075ac,FUN_080087cc,FUN_0800941c,FUN_08009484
+RAM	300056f	28		gBattleScratchBuffer+0x41	?,FUN_08037b9c,FUN_08037e2c,FUN_08038178,FUN_08038258
+RAM	300057c	28		gBattleScratchBuffer+0x4e	?,FUN_0800065c,FUN_08035c3c,FUN_0803be44,FUN_0803c33c
+RAM	3002c4a	28		gamestate_menu+0xbe	?,FUN_08060248,FUN_080605a0,FUN_08069e78,FUN_0806a654
+RAM	3002c53	28		gamestate_menu+0xc7	?,FUN_08004e98,FUN_08004ef8,FUN_08019720,FUN_08019d9c
+RAM	3003488	27		gamestate_menu+0x8fc	?,FUN_08020df8,FUN_08021f90,FUN_080231d4,FUN_080237c8
+RAM	3000430	25			?,BuildShadowOamFromObjectState,FUN_0800065c,FUN_080039e0,FUN_08003ee0
+RAM	3004c30	25		dpad_input_2+0x141f	?,EventOpcode43_ShakeCamera,FUN_0800065c,FUN_0803a6fc,FUN_0803c33c
+RAM	3002c70	25		gamestate_menu+0xe4	?,BuildShadowOamFromObjectState,FUN_08004e98,FUN_08006494,FUN_08006514
+RAM	3002c5c	24		gamestate_menu+0xd0	?,FUN_08036784,FUN_0803684c,FUN_080370ac,FUN_08037e2c
+RAM	30017a6	23		pressed_buttons+0xe	BuildBattlePreviewSpriteObjectsForAllSlots,DrawBattlePreviewPartIcons,Equip_rokusho_parts,FUN_080048e0_partset_init_candidate,FUN_0800598c
+RAM	300057e	23		gBattleScratchBuffer+0x50	?,FUN_0800065c,FUN_080415bc,FUN_08043ca8,FUN_08043cd4
+RAM	3005010	22		parts_in_inventory+0x3d0	?,Battle_CheckExitShortcut,FUN_080008c0,FUN_08004a40,FUN_08004af8
+RAM	30017a4	22		pressed_buttons+0xc	BuildBattlePreviewSpriteObjectsForAllSlots,Equip_rokusho_parts,FUN_080048e0_partset_init_candidate,FUN_0800598c,FUN_080059d0
+RAM	3002c51	22		gamestate_menu+0xc5	?,AnimateCompositeBattleSpriteObjects,FUN_08015f90,FUN_08016080,FUN_08016154
+RAM	3002c5d	22		gamestate_menu+0xd1	?,FUN_080378f0,FUN_08037a94,FUN_08037e2c,FUN_08038178
+RAM	3002c60	22		gamestate_menu+0xd4	?,FUN_0803526c,FUN_080352ec,FUN_080355f0,FUN_08035658
+RAM	300047e	22		currently_selected_medal+0x1	?,FUN_08009af8,FUN_08009bc8,FUN_0800da34,FUN_0800e4f8
+RAM	202f800	21			?,EventOpcode11_ChangePlayerCostume,FUN_08001380,FUN_080013a8,FUN_0800da34
+RAM	30017a3	21		pressed_buttons+0xb	BuildBattlePreviewSpriteObjectsForAllSlots,Equip_rokusho_parts,FUN_080048e0_partset_init_candidate,FUN_0800598c,FUN_080059d0
+RAM	300052f	21		gBattleScratchBuffer+0x1	?,BattleMedalState_AllocateForMedal,DrawBattlePreviewPartIcons,FUN_080048e0_partset_init_candidate,FUN_080063b4
+RAM	3004c32	21		dpad_input_2+0x1421	?,EventOpcode43_ShakeCamera,FUN_0800065c,FUN_080415bc,FUN_08043ca8
+RAM	3002c52	21		gamestate_menu+0xc6	?,FUN_08015f90,FUN_08016080,FUN_08016154,FUN_0801630c
+RAM	3002c5b	21		gamestate_menu+0xcf	?,FUN_08037e2c,FUN_0803b0c0,FUN_0803b1ec,FUN_0803be44
+RAM	3002c74	21		gamestate_menu+0xe8	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	3006476	21		gEventScriptArguments+0x2	EventInitOpcode17_SetEventFlagFieldByPackedId,EventOpcode01_ShowMessageA,EventOpcode21_InitiateActor_Setup,EventOpcode27_ActorDoAnimation_Setup,EventOpcode2B_InitiateActor
+RAM	3002cb0	21		gamestate_menu+0x124	?,FUN_08004e98,FUN_08006494,FUN_08006514,FUN_08009174
+RAM	3002cb4	21		gamestate_menu+0x128	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	202fa00	20			?,FUN_08001380,FUN_08003394,FUN_0800da34,FUN_0801058c
+RAM	2026000	20		gBattlePreviewCachedOamList+0x147c	BuildCompositePreviewSpriteLayer,BuildCompositePreviewSpriteLayerWithOffset,FUN_0800f218,FUN_0800f300,FUN_0800f440
+RAM	2020800	20			?,FUN_080036f4,FUN_08003784,FUN_0800b8b0,FUN_08011644
+RAM	30017a5	20		pressed_buttons+0xd	BuildBattlePreviewSpriteObjectsForAllSlots,Equip_rokusho_parts,FUN_080048e0_partset_init_candidate,FUN_0800598c,FUN_080059d0
+RAM	30017f0	20		pressed_buttons+0x58	?,ActionFamily_TeamAttack_Handler,FUN_0800065c,FUN_08010ac8,FUN_08011344
+RAM	3000480	20		currently_selected_medal+0x3	?,FUN_0800941c,FUN_080096bc,FUN_08009750,FUN_080097e0
+RAM	3005016	19		parts_in_inventory+0x3d6	?,FUN_080008c0,FUN_08004a40,FUN_08004af8,FUN_08004db4
+RAM	300643c	19		gCurrentMapSceneVariant+0x1	?,EventInitOpcode10_ResetMovementQueueFromArgs,EventOpcode11_ChangePlayerCostume,FUN_08044b34,FUN_08048960
+RAM	3002c72	19		gamestate_menu+0xe6	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	3003494	19		gamestate_menu+0x908	?,FUN_0801c774,FUN_080215c8,FUN_0802167c,FUN_08021a6c
+RAM	30034b4	19		gamestate_menu+0x928	?,FUN_08022480,FUN_08025fc8,FUN_080264e4,FUN_080270bc
+RAM	3002cf4	19		gamestate_menu+0x168	?,FUN_08009900,FUN_080099a4,FUN_0800a854,FUN_0800a8a0
+RAM	300054e	18		gBattleScratchBuffer+0x20	?,FUN_08005e84,FUN_08005fec,FUN_08009da0,FUN_0800a2e8
+RAM	30034a0	18		gamestate_menu+0x914	?,FUN_0801c774,FUN_080215c8,FUN_0802167c,FUN_08021a6c
+RAM	3000b90	17		gEnemyBattleSideState+0x300	?,FUN_08004af8,FUN_08014b34,FUN_08014cf0,FUN_0801528c
+RAM	3002c59	17		gamestate_menu+0xcd	?,FUN_080378f0,FUN_08037a94,FUN_08037e2c,FUN_08038178
+RAM	300045b	17		text_speed+0x1	?,FUN_08011adc,FUN_0801ac24,FUN_0803fb0c,FUN_080408f4
+RAM	2026008	16		gBattlePreviewCachedOamList+0x1484	BuildCompositePreviewSpriteLayer,BuildCompositePreviewSpriteLayerWithOffset,FUN_0800f218,FUN_0800f300,FUN_0800f440
+RAM	3006428	16		gRandomIndex+0x11	?,EventOpcode63_ShowEffect,FUN_0804b008,FUN_0804f188,FUN_080503fc
+RAM	30034b2	16		gamestate_menu+0x926	?,FUN_08022480,FUN_080264e4,FUN_080270bc,FUN_0802a110
+RAM	3002cb2	16		gamestate_menu+0x126	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	30004f2	16		text_ram_access+0x14	?,ActionFamily_DrainCharge_Handler,FUN_08011764,FUN_08026924,FUN_08026a24
+RAM	3006d38	15		gOverworldAuxBufferPtr+0x8	?,EventInitOpcode06_ResetOverworldStateAndMarkInitialized,EventOpcode78_RunSceneCommand10IfAtLeastThreeCompletePartSets,EventOpcode79_RunSceneCommand12_Setup,EventScript_ClearGlobals
+RAM	3002c76	15		gamestate_menu+0xea	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	30034bb	15		gamestate_menu+0x92f	?,FUN_08022480,FUN_08025fc8,FUN_080264e4,FUN_080270bc
+RAM	2030000	14			?,ExpandCompositePreviewTemplateEntryToOam,FUN_08000e04,FUN_08001278,FUN_0804545c
+RAM	300501a	14		parts_in_inventory+0x3da	?,FUN_08004af8,FUN_08014b34,FUN_08014cf0,FUN_0803e79c
+RAM	30017a8	14		pressed_buttons+0x10	BuildBattlePreviewSpriteObjectsForAllSlots,DrawBattlePreviewPartIcons,FUN_08042218,FUN_08042238,FUN_0804384c
+RAM	3000530	14		gBattleScratchBuffer+0x2	?,BattleMedalState_AllocateForMedal,FUN_0800a2e8,FUN_0800a594,FUN_0800a960
+RAM	3000486	14		currently_selected_medal+0x9	?,AdvanceSelectedMedabotPreviewAnimationSlot,FUN_08007e38,FUN_08008234,FUN_0800a594
+RAM	3003497	14		gamestate_menu+0x90b	?,FUN_0801b004,FUN_08020df8,FUN_0802121c,FUN_080217d8
+RAM	300349d	14		gamestate_menu+0x911	?,FUN_080222a8,FUN_08022480,FUN_08022648,FUN_08022a04
+RAM	30034a2	14		gamestate_menu+0x916	?,FUN_0802167c,FUN_08021a6c,FUN_08022870,FUN_080237c8
+RAM	3002cb6	14		gamestate_menu+0x12a	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	30034ba	14		gamestate_menu+0x92e	?,FUN_08022480,FUN_08025fc8,FUN_080264e4,FUN_080270bc
+RAM	30034cc	14		gamestate_menu+0x940	?,FUN_08022480,FUN_08025fc8,FUN_080264e4,FUN_080270bc
+RAM	3005000	13		parts_in_inventory+0x3c0	?,FUN_0800065c,FUN_0803a6fc,FUN_0803c33c,FUN_080415bc
+RAM	202f9a0	13			?,FUN_0800da34,FUN_0801058c,FUN_08011764,FUN_0801a788
+RAM	3002eb4	13		gamestate_menu+0x328	?,ActionFamily_AttackChange_Handler,FUN_0801a228,FUN_0801ed50,FUN_0801eee4
+RAM	3002c48	13		gamestate_menu+0xbc	?,AnimateCompositeBattleSpriteObjects,BuildShadowOamFromObjectState,CreateCompositeBattleSpriteObjects,FUN_08004ef8
+RAM	3006456	13		str_ikki_y+0x6	?,EventOpcode10_MovePlayer,EventOpcode43_ShakeCamera,FUN_0804d7f8,FUN_08051ed8
+RAM	3002c58	13		gamestate_menu+0xcc	?,EventInitOpcode1D_StartTransitionForCurrentEventObject,EventOpcode28_HopActor_Setup,FUN_08038ac0,FUN_0803c8ac
+RAM	3000490	13		currently_selected_medal+0x13	?,FUN_080036f4,FUN_0800712c,FUN_0800725c,FUN_080072ec
+RAM	3003493	13		gamestate_menu+0x907	?,FUN_08020df8,FUN_08024210,FUN_08025dd4,FUN_08028a38
+RAM	300349b	13		gamestate_menu+0x90f	?,FUN_080222a8,FUN_08022480,FUN_08022648,FUN_08022a04
+RAM	300349c	13		gamestate_menu+0x910	?,FUN_080222a8,FUN_08022480,FUN_08022648,FUN_08022a04
+RAM	30004d6	13		menu_selected_item+0x8	?,FUN_08003ee0,FUN_080048e0_partset_init_candidate,FUN_0801387c,FUN_08013fa8
+RAM	300501e	12		parts_in_inventory+0x3de	?,FUN_0803e79c,FUN_08063254,FUN_08063f08,FUN_08063fb0
+RAM	3002eb2	12		gamestate_menu+0x326	?,ActionFamily_AttackChange_Handler,FUN_080185e8,FUN_0801ed50,FUN_0801eee4
+RAM	3002d34	12		gamestate_menu+0x1a8	?,FUN_0800712c,FUN_08010040,FUN_080100bc,FUN_080140b0
+RAM	3002c54	12		gamestate_menu+0xc8	?,AnimateCompositeBattleSpriteObjects,FUN_0803526c,FUN_080352ec,FUN_0803b0c0
+RAM	3002c57	12		gamestate_menu+0xcb	?,FUN_0802f214,FUN_0802f2f4,FUN_0803c8ac,FUN_0803cc8c
+RAM	3002cf2	12		gamestate_menu+0x166	?,FUN_08009900,FUN_0800a854,FUN_0800aca8,FUN_0800efb0
+RAM	3002b70	11		held_buttons+0xc	?,FUN_08047d4c,FUN_08047d58,FUN_08047d74,FUN_0805dec8
+RAM	2021000	11			FUN_08011644,FUN_08011764,FUN_08013798,FUN_0801387c,FUN_0801672c
+RAM	3005002	11		parts_in_inventory+0x3c2	?,FUN_0800065c,FUN_080415bc,FUN_08043ca8,FUN_08047c00
+RAM	30017a2	11		pressed_buttons+0xa	DrawBattlePreviewMedalLabel,DrawBattlePreviewNameLabel,DrawBattlePreviewPortraitTileBlock,Equip_rokusho_parts,FUN_0800598c
+RAM	3000506	11		text_ram_access+0x28	?,FUN_08026924,FUN_08026a24,FUN_08027544,FUN_0802a5c0
+RAM	3002d30	11		gamestate_menu+0x1a4	?,FUN_0800712c,FUN_08007480,FUN_08010040,FUN_08010170
+RAM	300054f	11		gBattleScratchBuffer+0x21	?,FUN_08005e84,FUN_08005fec,FUN_08009da0,FUN_0800a594
+RAM	3002c40	11		gamestate_menu+0xb4	BuildShadowOamFromObjectState,EventInitOpcode1D_StartTransitionForCurrentEventObject,EventOpcode28_HopActor_Setup,FUN_080503fc,FUN_0806b2f4
+RAM	3006447	11		gOverworldEventModeFlagsBackup+0x9	?,EventInit_Read5ConfigBytesAndMarkInitialized,FUN_0804a900,FUN_0804f6e0,FUN_080567f0
+RAM	3002c5a	11		gamestate_menu+0xce	?,FUN_080393bc,FUN_0803a0b8,FUN_0803b6d8,FUN_08050124
+RAM	300049e	11		selected_tinpet_selected_part+0x4	?,BuildBattlePreviewSpriteObjectsForAllSlots,FUN_08006444,FUN_08006e44,InitializeAlternateCompositePreviewFrame
+RAM	3002cbb	11		gamestate_menu+0x12f	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	3002ccc	11		gamestate_menu+0x140	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	3002cf0	11		gamestate_menu+0x164	?,FUN_08004e98,FUN_08009900,FUN_0800a854,FUN_0800aca8
+RAM	3005308	10		parts_in_inventory+0x6c8	BuildFourPartLargePreviewComposite,FUN_0800f218,FUN_0800f60c,FUN_080445f4,FUN_08047204
+RAM	3005170	10		parts_in_inventory+0x530	?,FUN_08002190,FUN_080021a4,FUN_08002328,FUN_080023d8
+RAM	30017a1	10		pressed_buttons+0x9	FUN_08006a00,FUN_08006a98,FUN_08006b30,FUN_08006bc8,FUN_08006c64
+RAM	3002eb0	10		gamestate_menu+0x324	?,ActionFamily_AttackChange_Handler,ActionFamily_Change_Handler,FUN_0801ed50,FUN_0801eee4
+RAM	3002d0c	10		gamestate_menu+0x180	?,FUN_08009900,FUN_0800a854,FUN_0800aca8,FUN_0800efb0
+RAM	3003530	10		gamestate_menu+0x9a4	?,FUN_08024210,FUN_0802bf9c,FUN_0802ce4c,FUN_0802d270
+RAM	3000531	10		gBattleScratchBuffer+0x3	?,BattleMedalState_AllocateForMedal,FUN_080127dc,FUN_0801520c,FUN_08019d9c
+RAM	3002c5e	10		gamestate_menu+0xd2	?,FUN_08037e2c,FUN_0803c738,FUN_0803c8ac,FUN_0803c9e0
+RAM	3000474	10		text_speed+0x1a	?,FUN_0800be8c,FUN_0800c2bc,FUN_0800c6f8,FUN_0800c804
+RAM	3000475	10		text_speed+0x1b	?,FUN_0800be8c,FUN_0800c2bc,FUN_0800c6f8,FUN_0800c804
+RAM	3002c7a	10		gamestate_menu+0xee	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	3002c7b	10		gamestate_menu+0xef	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	3002c8c	10		gamestate_menu+0x100	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	30034b8	10		gamestate_menu+0x92c	?,FUN_080217d8,FUN_0802186c,FUN_08022480,FUN_080270bc
+RAM	3002cba	10		gamestate_menu+0x12e	?,FUN_08006494,FUN_0800988c,FUN_0800a0fc,FUN_0800ac2c
+RAM	30034f0	10		gamestate_menu+0x964	?,FUN_0802167c,FUN_08021a6c,FUN_08024210,FUN_0802a360
+RAM	3002cf6	10		gamestate_menu+0x16a	?,FUN_08009900,FUN_0800a854,FUN_0800aca8,FUN_0800efb0
+RAM	3002cfb	10		gamestate_menu+0x16f	?,FUN_08009900,FUN_0800a854,FUN_0800aca8,FUN_0800efb0
