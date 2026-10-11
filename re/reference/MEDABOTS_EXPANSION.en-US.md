@@ -613,6 +613,9 @@ menu's Motion viewer the bot is identical to the original on both sides.
 - Side 1 (mirrored): Core h-flips every non-rotating piece; Navi does not when the entry has **bit 15** (second
   picture already drawn for side 1, test at 0x0801A7F4). The importer stores that picture flipped, so Core's flip
   undoes it. This fixed Lady Outer, Giraffe Chief and Fearer.
+- **Waist:** Navi's mold 2 (body root, parent of the head and arm joints) is offset (−4,0); Core's is zero, and
+  the legs joint hangs from mold 1. Without it head and legs sat 4 px too close. The importer adds that offset to
+  the head and arm roots.
 - New molds that start a limb take record/motion from Core's limb root (head 7, right 17, left 14, legs 20).
 - **Mixed parts** (Tinpet when a part breaks, or parts swapped between bots): with the old map the Tinpet arm (mold
   14) collided with Navi's right arm in the same mold and took Navi's record (loose arm). Fixed by the per-side map.

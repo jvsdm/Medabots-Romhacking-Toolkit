@@ -139,10 +139,13 @@ public static class NaviImporter
             naviRecord.AsSpan(0x04, 0x0B).CopyTo(record.AsSpan(0x04));        // pivot, offset and depth of the Navi
             if (limbRoot.TryGetValue(naviMold, out var part))
             {
+                // Head and arm joints hang from the body root (mold 2), the legs joint from mold 1; Navi's mold 2 is
+                // offset (Core's is zero: Navi bots lost their waist), so head and arms carry it too.
                 var joint = navi.JointOffsets(part);
+                var body = part < 3 ? navi.Record(2) : new byte[0x18];
                 for (var k = 0; k < 3; k++)
                 {
-                    record[0x0C + k] = (byte)(sbyte)((sbyte)record[0x0C + k] + joint[k]);
+                    record[0x0C + k] = (byte)(sbyte)((sbyte)record[0x0C + k] + joint[k] + (sbyte)body[0x0C + k]);
                 }
             }
 

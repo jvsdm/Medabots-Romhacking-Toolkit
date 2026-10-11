@@ -191,3 +191,5 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
   diferem ou a peca do Navi tem bit 15. Bots do Core identicos; misturas Core/Navi encaixam.
 - Pendente local: asa 64x64 do Navi sem arte de lado 1 num bot do Core (lado 1); Hophop; Medachange.
 - Para a nuvem (sem ROM, barato): nada.
+- (8b) Cintura: o molde 2 do Navi (pai das juntas da cabeca e bracos) tem offset (-4,0), o do Core e zero; o
+  importador soma isso as raizes da cabeca e dos bracos (pernas penduram no molde 1).

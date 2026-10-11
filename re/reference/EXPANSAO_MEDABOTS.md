@@ -614,6 +614,9 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
 - Lado 1 (espelhado): no Core toda peça sem rotação leva hflip; no Navi não leva se tiver **bit 15** (segunda arte
   já desenhada para o lado 1, teste em 0x0801A7F4). O importador grava essa segunda arte já invertida, e o hflip
   do Core a desvira. Isso consertou Lady Outer, Giraffe Chief e Fearer.
+- **Cintura:** o molde 2 do Navi (raiz do tronco, pai das juntas da cabeça e dos braços) tem deslocamento (−4,0);
+  o do Core é zero, e a junta das pernas fica no molde 1. Sem isso cabeça e pernas ficavam 4 px mais próximas.
+  O importador soma esse deslocamento às raízes da cabeça e dos braços.
 - Moldes novos que começam um membro usam registro/movimento da raiz do Core (cabeça 7, direito 17, esquerdo 14,
   pernas 20).
 - **Peças misturadas** (Tinpet quando a peça quebra, ou peças trocadas entre bots): com o mapa antigo o braço de
