@@ -249,3 +249,33 @@ Checklist:
   `MiniSpritePalette.EuPalettes` 0x50F498; `BotAdder.MoveStyleLiteral` 0x044AF8; `NaviImporter` MirrorMapLiteral
   0x046654 e literais de movimento 0x044AFC/0x044B0C/0x044B10. (As constantes de `MedabotsRomSchema` sao o
   fallback de schema e sao resolvidas por assinatura.)
+
+### 2026-10-11 - nuvem (2): italico, larguras calculadas, export, bloqueio (U) (nao compilado)
+
+Escrito na nuvem sem .NET (proxy bloqueia o SDK). Tarefa da sessao local: compilar, testar e validar.
+
+O que existe:
+- Base: sessao local (10). Larguras calculadas dao o-til 6, A-til 7, O-til 7 (iguais a correcao manual da sessao local) e corrigem tambem O-trema/o-trema/AE/ae.
+- `src/Medabots.Rom/Text/ExtendedFont.cs`:
+  - glifos 0x4F o-til, 0x7D A-til, 0x7E a-til, 0x7F O-til na fonte normal e na italica (italico extraido do print do usuario com a paleta do dialogo).
+  - larguras 0x4F-0x7F das duas tabelas calculadas pelos pixels (`MeasureGlyph`), nao mais a tabela do Hyd (estava errada em varios glifos, ex.: O-trema 4 com 6 px de tinta). Regra conferida contra a ROM: normal avanco = ultima coluna com tinta + 2 (74/78 glifos originais), classe vertical 0/1/2/3 por topo/base (78/78); italico avanco = ultima coluna + 1, classe 0. Linhas 12-15 ignoradas (pixels soltos em a-agudo, e-agudo, e-trema, o-trema, u-trema).
+  - fonte localizada por assinatura (larguras 0x00-0x4E + glifos A-C). Metabee (E) 0x4BFC6C / 0x3B4E08, Rokusho (E) 0x4BFC90 / 0x3B4E28. Italico = fonte + 0x5D40, larguras italicas = larguras + 0x200.
+  - so ROM europeia: `IsEuropean` = byte 0xAF do cabecalho == 'P'. ROM (U) nao aplica.
+  - italico so e escrito se os slots italicos estiverem em branco; a normal e obrigatoria.
+- `FontProjectEditSystem` no applicator; `RomHackProject.UseExtendedFont` (padrao true, salvo no projeto).
+- `MedabotsTextCodec`: tabela 0x00-0x7F completa.
+- WPF aba `Font`:
+  - status com offsets; ROM (U) -> painel bloqueado com aviso "Font changes are for European (E) ROMs only".
+  - checkbox "Use extended font", botao `?` (`ExtendedFont.Summary`, explica avanco e classe vertical).
+  - "Export Original Normal Font..." / "Export Original Italic Font...": PNG indexado 128x128 (16 por linha), indices da paleta preservados, fonte da ROM sem a extensao.
+  - folhas normal e italica a 4x com grade nas celulas 8x16 e linha vermelha no avanco de cada glifo.
+  - preview de mensagem usa o layout da ROM e, ligado, glifos e larguras estendidos (normal e italico).
+
+Checklist:
+1. `dotnet build`; corrigir erros de compilacao.
+2. `dotnet test` da suite inteira. Novos: `ExtendedFontTests`, `MedabotsTextCodecTests.EncodeAndDecode_RoundTripsExtendedGlyphs`. `UseExtendedFont` padrao true acrescenta um change em todo projeto: ver se algum teste compara a ROM inteira.
+3. WPF (nao conferido na sessao 10): (E) mostra offsets e folhas com linhas vermelhas coerentes; (U) mostra a aba bloqueada; preview com `<I>`.
+4. Exportar as duas fontes originais e abrir o PNG: 128x128, indexado, paleta amarela do dialogo.
+5. Exportar ROM com toggle ligado/desligado; no emulador conferir texto normal e `<I>` italico com "ao oes A-til O-til" e acentos. Desligado: fonte, italico e larguras iguais a ROM original.
+6. A-til italico tem um pixel do acento agudo na linha 1 (desenho do usuario); mostrar ao usuario.
+7. Commit e push na `claude/medabots-project-ajyaeb`; registrar resultado aqui.

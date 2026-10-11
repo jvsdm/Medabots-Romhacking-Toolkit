@@ -7,7 +7,7 @@ internal sealed class FontProjectEditSystem : IProjectEditSystem
     public string DisplayName => "Font";
 
     public IEnumerable<string> DescribeChanges(RomHackProject project) =>
-        project.UseExtendedFont ? new[] { "Extended font (õ Ã ã Õ, widths 0x4F-0x7F)" } : Array.Empty<string>();
+        project.UseExtendedFont ? new[] { "Extended font (õ Ã ã Õ, normal and italic; widths 0x4F-0x7F)" } : Array.Empty<string>();
 
     public IEnumerable<ProjectChange> BuildChanges(RomHackProject project, ProjectBuildContext context)
     {
@@ -16,6 +16,6 @@ internal sealed class FontProjectEditSystem : IProjectEditSystem
             return Array.Empty<ProjectChange>();
         }
 
-        return new[] { new ProjectChange(DisplayName, "Extended font", ExtendedFont.BuildPatches(layout)) };
+        return new[] { new ProjectChange(DisplayName, "Extended font", ExtendedFont.BuildPatches(context.SourceRom.Data, layout)) };
     }
 }

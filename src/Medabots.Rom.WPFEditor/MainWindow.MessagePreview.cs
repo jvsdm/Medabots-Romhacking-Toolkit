@@ -27,6 +27,9 @@ public partial class MainWindow
     private static readonly Medabots.Rom.Text.FontLayout DefaultFontLayout = new(0x4BFC6C, 0x3B4E08);
     private static Medabots.Rom.Text.FontLayout s_fontLayout = DefaultFontLayout;
     private static byte[]? s_fontLayoutRom;
+
+    // Widths 0x4F-0x7F with the extension; null when the ROM cannot take it
+    private static (byte[] Main, byte[] Italic)? s_extendedWidths;
     private const int BoxTop = 104;
     private const int TextLeft = 16;
     private const int TextRight = 228;
@@ -340,9 +343,10 @@ public partial class MainWindow
     private static int GlyphAdvance(byte[]? rom, char ch, bool italic)
     {
         var glyph = GlyphIndex(ch);
-        if (!italic && s_useExtendedFont && Medabots.Rom.Text.ExtendedFont.GetAdvance(glyph) is { } extended)
+        if (s_useExtendedFont && s_extendedWidths is { } ext && glyph >= Medabots.Rom.Text.ExtendedFont.FirstWidthGlyph)
         {
-            return extended;
+            var extendedAdvance = (italic ? ext.Italic : ext.Main)[(glyph - Medabots.Rom.Text.ExtendedFont.FirstWidthGlyph) * 2];
+            return extendedAdvance is > 0 and <= 16 ? extendedAdvance : 6;
         }
 
         var widths = (italic ? s_fontLayout.ItalicWidths : s_fontLayout.Widths) + glyph * 2;
@@ -513,14 +517,17 @@ public partial class MainWindow
         }
 
         s_fontLayout = Medabots.Rom.Text.ExtendedFont.Locate(rom) ?? DefaultFontLayout;
+        s_extendedWidths = Medabots.Rom.Text.ExtendedFont.CanApply(rom, out var layout)
+            ? Medabots.Rom.Text.ExtendedFont.BuildWidths(rom, layout)
+            : null;
         s_fontLayoutRom = rom;
     }
 
-    // Palette index (0-F) of a glyph pixel; the main font takes the extended glyphs when enabled.
+    // Palette index (0-F) of a glyph pixel; extended glyphs replace the blank slots when enabled.
     private static int GlyphPixel(byte[] rom, int glyph, bool italic, int x, int y)
     {
         var offset = (y / 8) * 32 + (y % 8) * 4 + x / 2;
-        var extended = !italic && s_useExtendedFont ? Medabots.Rom.Text.ExtendedFont.GetGlyph(glyph) : default;
+        var extended = s_useExtendedFont && s_extendedWidths is not null ? Medabots.Rom.Text.ExtendedFont.GetGlyph(glyph, italic) : default;
         var b = extended.IsEmpty ? rom[(italic ? s_fontLayout.ItalicFont : s_fontLayout.Font) + glyph * 64 + offset] : extended[offset];
         return (x & 1) == 1 ? b >> 4 : b & 15;
     }
