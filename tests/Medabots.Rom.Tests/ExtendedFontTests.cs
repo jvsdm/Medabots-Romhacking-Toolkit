@@ -42,8 +42,9 @@ public sealed class ExtendedFontTests
                 .SequenceEqual(ExtendedFont.GetGlyph(glyph)));
         }
 
-        Assert.Equal(5, rom[widths + 0x4F * 2]);
-        Assert.Equal(6, rom[widths + 0x7F * 2]);
+        Assert.Equal(6, rom[widths + 0x4F * 2]);
+        Assert.Equal(7, rom[widths + 0x7D * 2]);
+        Assert.Equal(7, rom[widths + 0x7F * 2]);
         Assert.Equal(8, rom[widths + 0x4E * 2]);
         Assert.Equal(0, rom[widths + 0x80 * 2]);
         Assert.True(ExtendedFont.CanApply(rom));
@@ -62,10 +63,13 @@ public sealed class ExtendedFontTests
         Assert.Null(ExtendedFont.Locate(noWidths));
     }
 
+    // Rokusho (U): font 0x4C01D0 / widths 0x3B4C88, but it only holds 0x00-0x4E (no accents); 0x50 onward is other
+    // data, so the new glyphs cannot go into 0x7D-0x7F there.
     [Theory]
-    [InlineData(TestRomLocator.MetabeeEuropeHeader, ExtendedFont.FontOffset, ExtendedFont.WidthTableOffset)]
-    [InlineData(TestRomLocator.RokushoEuropeHeader, RokushoFont, RokushoWidths)]
-    public void Locate_FindsFontInLocalRoms(string header, int font, int widths)
+    [InlineData(TestRomLocator.MetabeeEuropeHeader, ExtendedFont.FontOffset, ExtendedFont.WidthTableOffset, true)]
+    [InlineData(TestRomLocator.RokushoEuropeHeader, RokushoFont, RokushoWidths, true)]
+    [InlineData(TestRomLocator.RokushoUsaHeader, 0x4C01D0, 0x3B4C88, false)]
+    public void Locate_FindsFontInLocalRoms(string header, int font, int widths, bool canApply)
     {
         string path;
         try
@@ -79,7 +83,7 @@ public sealed class ExtendedFontTests
 
         var rom = File.ReadAllBytes(path);
         Assert.Equal(new FontLayout(font, widths), ExtendedFont.Locate(rom));
-        Assert.True(ExtendedFont.CanApply(rom));
+        Assert.Equal(canApply, ExtendedFont.CanApply(rom));
     }
 
     [Fact]

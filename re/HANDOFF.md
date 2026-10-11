@@ -227,3 +227,25 @@ Checklist:
 5. Exportar ROM com o toggle ligado e desligado; no emulador conferir um texto com "ão ões Ã Õ" e acentos (largura certa, sem sobreposicao). Com o toggle desligado a fonte/larguras devem ficar iguais a ROM original.
 6. Outros enderecos fixos da Metabee E no Toolkit (ex.: `ExpansionPatchSites.ItalicFont` usado em `RepairItalicFont`): listar e avisar o usuario; nao faz parte desta tarefa.
 7. Commit e push na `claude/medabots-project-ajyaeb`; registrar resultado neste diario.
+
+### 2026-10-11 - sessao local (10): fonte estendida compilada e testada
+- `dotnet build` ok (0 erros). `dotnet test`: 248 ok, 3 falhas antigas (LargePartDisplay, ja falhavam antes). Os
+  testes novos passam; nenhum teste de ROM inteira quebrou com `UseExtendedFont` ligado por padrao.
+- Locate/CanApply nas ROMs locais (nao temos a Metabee (U)):
+  - Metabee (E): fonte 0x4BFC6C, larguras 0x3B4E08, CanApply true.
+  - Rokusho (E): 0x4BFC90 / 0x3B4E28, true.
+  - Rokusho (U): 0x4C01D0 / 0x3B4C88, **false**. A fonte da (U) so tem 0x00-0x4E (sem acentos); de 0x50 em diante
+    e outro dado, entao 0x7D-0x7F estao ocupados. O italico da (U) tambem nao fica a +0x5D40. Nao mexido: decidir
+    com o usuario. Teste `Locate_FindsFontInLocalRoms` ganhou o caso (U) com CanApply false.
+- Exportacao (API do applicator): desligado = ROM identica byte a byte (Metabee E e Rokusho E); ligado = so a
+  tabela de larguras 0x4F-0x7F e os 4 glifos mudam. Na (U) nada e aplicado.
+- Emulador (Metabee E, descricao "No Item" do menu de itens trocada por "ãoõÃÕéá"): os glifos aparecem. õ, Ã e
+  Õ encostavam no proximo caractere; larguras corrigidas para 6/7/7 (largura desenhada + 1, como A e O).
+  0x64, 0x65, 0x7B e 0x7C (tabela do Hyd) tem o desenho mais largo que o avanco: nao mexido, so anotado.
+- WPF (aba Font, folha, preview <I>): nao conferido nesta sessao (precisa de interacao na interface).
+- Enderecos fixos da Metabee (E) fora da deteccao por assinatura: `ExpansionPatchSites.ItalicFont` 0x4C59AC
+  (+ demais sitios de ExpansionPatchSites, usados em RomExpander.RepairItalicFont); `RomExpander` PartStats
+  0x3B83FC, BotNames 0x3BA658, PartNames 0x3BBB4C; `ShingataGraphicsPorter.DescriptorTable` 0x3D1D78;
+  `MiniSpritePalette.EuPalettes` 0x50F498; `BotAdder.MoveStyleLiteral` 0x044AF8; `NaviImporter` MirrorMapLiteral
+  0x046654 e literais de movimento 0x044AFC/0x044B0C/0x044B10. (As constantes de `MedabotsRomSchema` sao o
+  fallback de schema e sao resolvidas por assinatura.)

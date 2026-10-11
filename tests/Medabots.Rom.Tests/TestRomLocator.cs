@@ -4,6 +4,7 @@ internal static class TestRomLocator
 {
     public const string RokushoEuropeHeader = "MEDABOTSRKSVA9BPE9";
     public const string MetabeeEuropeHeader = "MEDABOTSMTBVA8BPE9";
+    public const string RokushoUsaHeader = "MEDABOTSRKSVA9BEE9";
 
     public static string FindWorkspaceRom() => FindRomByHeader(RokushoEuropeHeader);
 
