@@ -641,6 +641,15 @@ menu's Motion viewer the bot is identical to the original on both sides.
 - Navi character portraits: table 0x62CBCC (166 entries: 32 B palette + Malias 0x600, 48×64). Medarot mini
   sprites not found yet.
 
+### 15.7 Bot from a custom sprite sheet (2026-10-11)
+- `tools/custom_lab.py` + `data/custom/<bot>.json`: cuts the pieces from the exploded view, finds each in the
+  assembled view (pixel matching; children searched near the parent), orders depth by what shows in overlaps, one
+  palette per part (≤15 colors, merges the closest), smallest sprite frame (mirrored pairs share a size), pivot
+  and offset so the rest pose reproduces the assembled view, feet on Core's ground line. New molds 50+ with
+  Metabee's tree and motion; written to bot 43 of an EU ROM.
+- Test: KWG-03BH (`Medarot_Navi_Custom_Sprites_2.png`) in `build/Metabee+debug+custom.gba`; preview in
+  `.preview.png`. Checked in the Motion viewer. The sheets are fan art: do not version the art.
+
 ## Credits and references
 
 - [Medabots-Romhacking-Toolkit](https://github.com/STulling/Medabots-Romhacking-Toolkit), [Medabots-Randomizer](https://github.com/STulling/Medabots-Randomizer), [MedabotsLib](https://github.com/STulling/MedabotsLib) — STulling

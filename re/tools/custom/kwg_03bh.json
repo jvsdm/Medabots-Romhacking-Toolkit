@@ -1,0 +1,22 @@
+{
+  "name": "KWG-03BH",
+  "sheet": "Medarot_Navi_Custom_Sprites_2.png",
+  "block": [1003, 0, 1412, 140],
+  "assembled": [0, 30, 62, 118],
+  "exploded": [140, 5, 245, 130],
+  "core_bot": 43,
+  "pieces": [
+    {"name": "head",        "part": "head",      "at": [197, 28],  "analog": 9,  "parent": null},
+    {"name": "neck",        "part": "head",      "at": [196, 56],  "analog": 10, "parent": "head"},
+    {"name": "r_shoulder",  "part": "right_arm", "at": [159, 53],  "analog": 17, "parent": null},
+    {"name": "r_claw",      "part": "right_arm", "at": [161, 81],  "analog": 18, "parent": "r_shoulder"},
+    {"name": "l_shoulder",  "part": "left_arm",  "at": [229, 54],  "analog": 14, "parent": null},
+    {"name": "l_fist",      "part": "left_arm",  "at": [226, 79],  "analog": 15, "parent": "l_shoulder"},
+    {"name": "hip",         "part": "legs",      "at": [197, 76],  "analog": 20, "parent": null},
+    {"name": "thigh_a",     "part": "legs",      "at": [210, 91],  "analog": 21, "parent": "hip"},
+    {"name": "shin_a",      "part": "legs",      "at": [212, 113], "analog": 22, "parent": "thigh_a"},
+    {"name": "thigh_b",     "part": "legs",      "at": [186, 91],  "analog": 23, "parent": "hip", "sibling_of": "thigh_a"},
+    {"name": "shin_b",      "part": "legs",      "at": [185, 114], "analog": 24, "parent": "thigh_b"}
+  ],
+  "mirror_pairs": [["r_shoulder", "l_shoulder"], ["r_claw", "l_fist"]]
+}
