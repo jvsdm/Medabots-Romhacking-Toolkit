@@ -632,6 +632,15 @@ menu's Motion viewer the bot is identical to the original on both sides.
   Open: Hophop smaller than the reference (legs without their own palette); a one-piece 64×64 Navi arm without a
   side-1 picture (Umbrebat's wing) on a Core bot is off on side 1.
 
+### 15.6 Navi's Medachange (2026-10-11)
+- Form table: **0x4C2BC0**, 32 B per bot, right after the legs rows. Bots without a form hold one filler entry
+  (0x1818). Forms use molds **31-37** and hang from the legs joint (Navi's legs joint template has fixed child 31).
+- `NaviBotRequest(..., Medachange: true)` imports the form as a bot of its own (form in place of the legs). The
+  game reads the first entry of every part even when empty, so head and arms get a **blank mold** (8×8, empty,
+  no palette). 16 forms checked in the Motion viewer against Medapedia.
+- Navi character portraits: table 0x62CBCC (166 entries: 32 B palette + Malias 0x600, 48×64). Medarot mini
+  sprites not found yet.
+
 ## Credits and references
 
 - [Medabots-Romhacking-Toolkit](https://github.com/STulling/Medabots-Romhacking-Toolkit), [Medabots-Randomizer](https://github.com/STulling/Medabots-Randomizer), [MedabotsLib](https://github.com/STulling/MedabotsLib) — STulling

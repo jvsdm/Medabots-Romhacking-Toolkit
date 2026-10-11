@@ -634,6 +634,16 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
   Pendentes: Hophop menor que a referência (perna sem paleta própria); braço do Navi de uma peça 64×64 sem arte do
   lado 1 (asa do Umbrebat) num bot do Core sai deslocado no lado 1.
 
+### 15.6 Medachange do Navi (2026-10-11)
+- Tabela das formas: **0x4C2BC0**, 32 B por bot, logo após as linhas de pernas. Bots sem forma têm só uma entrada
+  de enchimento (0x1818). As formas usam os moldes **31-37** e pendem da junta das pernas (o template da junta
+  das pernas do Navi tem filho fixo 31).
+- `NaviBotRequest(..., Medachange: true)` importa a forma como um bot à parte (forma no lugar das pernas). O jogo
+  lê a 1ª entrada de toda parte mesmo vazia, então cabeça e braços recebem um **molde vazio** (8×8 transparente,
+  sem paleta). 16 formas conferidas no visualizador Motion contra o Medapedia.
+- Retratos de personagens do Navi: tabela 0x62CBCC (166 entradas: paleta 32 B + Malias 0x600, 48×64). Os mini
+  sprites dos Medarots ainda não foram encontrados.
+
 ## Créditos e referências
 
 - [Medabots-Romhacking-Toolkit](https://github.com/STulling/Medabots-Romhacking-Toolkit), [Medabots-Randomizer](https://github.com/STulling/Medabots-Randomizer), [MedabotsLib](https://github.com/STulling/MedabotsLib) — STulling

@@ -6,7 +6,9 @@ using Medabots.Rom.Maps;
 namespace Medabots.Rom.Expansion;
 
 /// <summary>A Medarot Navi (Kuwagata, J) bot to add: its index in Navi's tables, a name and its leg type.</summary>
-public sealed record NaviBotRequest(int NaviId, string Name, string Model, string LegType);
+/// <remarks>With <paramref name="Medachange"/> the bot is the Medachange form alone: Navi's form row (molds 31-37, hung
+/// from the legs joint) as its legs, no head or arms.</remarks>
+public sealed record NaviBotRequest(int NaviId, string Name, string Model, string LegType, bool Medachange = false);
 
 /// <summary>
 /// Adds Medarot Navi bots to an expanded Metabee (E) ROM with Navi's own geometry. Both games use the same mold
@@ -24,6 +26,9 @@ public static class NaviImporter
     private const int NaviMolds = 0x658858;
     private static readonly (string Part, int Table, int RowSize)[] NaviRows =
         [("head", 0x4BFC40, 16), ("right_arm", 0x4C05C0, 16), ("left_arm", 0x4C0F40, 16), ("legs", 0x4C18C0, 32)];
+
+    // Medachange forms: 32 B per bot right after the legs rows; bots without a form hold one filler entry (0x1818).
+    private const int NaviMedachangeRows = 0x4C2BC0;
 
     // Metabee (E) code that loads the mirror map and the three motion script tables.
     private const int MirrorMapLiteral = 0x046654;
@@ -82,7 +87,7 @@ public static class NaviImporter
 
         // ---- 1. the bots themselves (names, stats from a Core bot with the same leg geometry) ----
         var layout = RomLayout.Resolve(expandedRom);
-        var plans = bots.Select(b => (Request: b, Rows: navi.Rows(b.NaviId))).ToList();
+        var plans = bots.Select(b => (Request: b, Rows: navi.Rows(b.NaviId, b.Medachange))).ToList();
         var definitions = plans.Select(p => Definition(expandedRom, layout, p.Request, p.Rows)).ToList();
         var added = BotAdder.AddAll(expandedRom, definitions);
         var rom = added.Rom;
@@ -176,6 +181,34 @@ public static class NaviImporter
             }
         }
 
+        // A part with no piece (Medachange-only bots: no head or arms) still gets one entry, because the game reads the
+        // first entry of every part: a blank 8x8 mold with an empty picture and no palette.
+        var blank = 0;
+        if (plans.Any(p => p.Rows.Any(r => r.Entries.Count == 0)))
+        {
+            blank = OriginalMolds + newIds.Count;
+            Require(blank < MoldCapacity, "No free mold left for the blank piece.");
+            var record = new byte[0x18];
+            record[0x14] = 0x11;
+            record[0x12] = record[0x13] = 8;
+            var picture = GbaLz77.Compress(new byte[32]);
+            var pictureAt = allocator.Take(picture.Length);
+            picture.CopyTo(rom, pictureAt);
+            var list = allocator.Take(256 * 8);
+            for (var slot = 0; slot < 256; slot++)
+            {
+                WriteU32(rom, list + 8 * slot, (uint)(GbaBase + pictureAt));
+                WriteU32(rom, list + 8 * slot + 4, 0);
+            }
+
+            WriteU32(record, 0, (uint)(GbaBase + list));
+            var at = allocator.Take(0x18);
+            record.CopyTo(rom, at);
+            WriteU32(coreTable, 4 * blank, (uint)(GbaBase + at));
+            WriteU32(naviTable, 4 * blank, (uint)(GbaBase + at));
+            log.Add($"mold {blank}: blank piece for empty parts");
+        }
+
         ExpandMolds(rom, layout, coreTable, newMolds, analog, allocator, log);
         var markerAt = allocator.Take(8 + naviTable.Length);
         NaviTableMarker.CopyTo(rom.AsSpan(markerAt));
@@ -201,6 +234,11 @@ public static class NaviImporter
                 var rowAt = previews[row.Part] + id * rowSizes[row.Part];
                 rom.AsSpan(rowAt, rowSizes[row.Part]).Clear();
                 var slot = 0;
+                if (row.Entries.Count == 0)
+                {
+                    WriteU32(rom, rowAt, (uint)blank | (1u << 6));
+                }
+
                 foreach (var entry in row.Entries)
                 {
                     var target = map[(int)(entry & 0x3F)];
@@ -518,13 +556,14 @@ public static class NaviImporter
 
         // The bot's drawn entries: rows of 16 B (head, arms) and 32 B (legs, as in Core), only entries whose picture
         // is LZ77 (selector 0 entries carry no picture).
-        public IReadOnlyList<NaviRow> Rows(int bot)
+        public IReadOnlyList<NaviRow> Rows(int bot, bool medachange = false)
         {
             var rows = new List<NaviRow>();
-            foreach (var (part, table, size) in NaviRows)
+            foreach (var (part, partTable, size) in NaviRows)
             {
                 var entries = new List<uint>();
-                for (var k = 0; k < size / 4; k++)
+                var table = medachange ? (part == "legs" ? NaviMedachangeRows : -1) : partTable;
+                for (var k = 0; table >= 0 && k < size / 4; k++)
                 {
                     var entry = U32(data, table + bot * size + 4 * k);
                     if (entry != 0 && entry < 0x10000 && HasPicture(entry))

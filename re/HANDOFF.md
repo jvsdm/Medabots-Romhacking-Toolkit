@@ -196,3 +196,10 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
 - (8c) Linha do chao: ajuste por bot (px) nos bits 24-31 da 1a entrada da perna, medido na pose parada contra a
   mediana do Core; `navi_molds.c` desloca o bot na raiz (molde 1). Tela de montagem: B, A, A, A; pecas equipadas
   em 0x030017A3-A6 (IDs de bot); Baixo + Start troca o conjunto.
+
+### 2026-10-11 - sessao local (9): Medachange do Navi
+- Formas em 0x4C2BC0 (32 B/bot, apos as pernas; 0x1818 = sem forma), moldes 31-37 na junta das pernas.
+  `NaviImporter` importa a forma como bot (Medachange: true); partes vazias recebem um molde vazio (o jogo le a 1a
+  entrada de toda parte). 16 formas ok no visualizador Motion.
+- Retratos do Navi: 0x62CBCC. Mini sprites dos Medarots do Navi: nao encontrados.
+- Para a nuvem (sem ROM, barato): nada.
