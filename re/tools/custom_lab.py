@@ -186,8 +186,11 @@ def main():
             parent = pieces[p["parent"]]
             if "pivot_abs" not in parent:
                 place(p["parent"])
-            ty, tx = parent["pivot_abs"]
-            k = int(np.argmin((ys + p["y"] - ty) ** 2 + (xs + p["x"] - tx) ** 2))
+            # Ponto de contato: pixel do filho mais perto de algum pixel do pai (a articulacao).
+            pys, pxs = np.where(parent["mask"])
+            pys, pxs = pys + parent["y"], pxs + parent["x"]
+            d = (ys[:, None] + p["y"] - pys[None, :]) ** 2 + (xs[:, None] + p["x"] - pxs[None, :]) ** 2
+            k = int(np.argmin(d.min(axis=1)))
             py, px = int(ys[k]), int(xs[k])
         p["pivot"] = (py, px)
         p["pivot_abs"] = (p["y"] + py, p["x"] + px)
@@ -218,7 +221,7 @@ def main():
             canvas[yy, xx] = index[tuple(p["img"][yy, xx])]
         picture = GBA + space.store(lz77_store(tiles(canvas)))
         pal = GBA + space.store(pal_bytes)
-        art = GBA + space.store(struct.pack("<II", picture, pal) * 4)        # seletores 0-3 -> mesma arte
+        art = GBA + space.store(struct.pack("<II", picture, pal) * 256)      # qualquer seletor -> mesma arte
         struct.pack_into("<I", rec, 0, art)
         struct.pack_into("<ii", rec, 4, p["pivot"][0], p["pivot"][1])
         if p["parent"]:
@@ -250,6 +253,20 @@ def main():
     for at in ml.loaded_literals(rom, GBA + ml.MIRROR_MAP):
         ml.put32(rom, at, new_mirror)
     print("movimento: blocos", ml.expand_motion(rom, space, {mold[k]: p["analog"] for k, p in pieces.items()}))
+    # Os deslocamentos (tabela B) do Metabee valem para a geometria dele: as pecas novas ficam so com os angulos.
+    zeroed = set()
+    for script in range(ml.SCRIPTS):
+        c = ml.u32(rom, ml.MOTION_C + 4 * script) - GBA
+        keys = 0
+        while rom[c + keys]:
+            keys += 1
+        b_rows = ml.u32(rom, ml.MOTION_B + 4 * script) - GBA
+        if keys == 0 or b_rows in zeroed:
+            continue
+        zeroed.add(b_rows)
+        for k in pieces:
+            at = b_rows + (mold[k] - 1) * keys * 2
+            rom[at:at + keys * 2] = bytes(keys * 2)
 
     bot = spec["core_bot"]
     for part, (rows, size) in CORE_ROWS.items():
