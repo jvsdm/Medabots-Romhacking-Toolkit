@@ -583,6 +583,16 @@ O bloqueio antigo não era o vetor de estado (ele tem 65 posições por lado), e
 `tools/mold_lab.py` estende os três (64 / 64 / 63 linhas) e faz a cabeça do bot 0 usar clones 50/51: no
 visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois lados.
 
+### 15.4 Bots do Navi com a geometria do Navi (protótipo, 2026-10-10)
+- O Navi usa o mesmo sistema de moldes; os formatos que o Core não tem são braço 64×64 num pedaço (15/18, 33/34),
+  cabeça 64×64 (30) e pernas 64×64 num pedaço (24). Antes eram espremidos nos moldes do Core.
+- `tools/navi_lab.py`: para cada pedaço do bot do Navi cria um molde novo (50+): registro do molde parecido do Core
+  (paleta), tamanho e pontos de encaixe do Navi, filhos remapeados, arte e paleta copiadas da ROM do Navi, movimento
+  copiado do molde parecido do Core (cabeça 13, braços 16/19, pernas 30), braços novos trocados no espelho.
+  Entradas cuja arte não é LZ77 (seletor 0) são ignoradas, como na extração.
+- Testado: RDF (Navi 000) e BAT (Navi 001) no lugar do bot 0, no visualizador Motion. A 2ª entrada de pernas do
+  Navi (mesmo molde, outra arte) não é desenhada na montagem principal, nem no jogo original.
+
 ## Créditos e referências
 
 - [Medabots-Romhacking-Toolkit](https://github.com/STulling/Medabots-Romhacking-Toolkit), [Medabots-Randomizer](https://github.com/STulling/Medabots-Randomizer), [MedabotsLib](https://github.com/STulling/MedabotsLib) — STulling

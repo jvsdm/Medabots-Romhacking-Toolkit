@@ -585,6 +585,16 @@ The old blocker was not the state array (65 slots per side) but **data**:
 `tools/mold_lab.py` extends all three (64 / 64 / 63 rows) and makes bot 0's head use clones 50/51: in the debug
 menu's Motion viewer the bot is identical to the original on both sides.
 
+### 15.4 Navi bots with Navi geometry (prototype, 2026-10-10)
+- Navi uses the same mold system; the shapes Core lacks are one-piece 64×64 arms (15/18, 33/34), a 64×64 head (30)
+  and one-piece 64×64 legs (24). They used to be squeezed into Core molds.
+- `tools/navi_lab.py`: for each piece of the Navi bot it creates a new mold (50+): the record of the closest Core mold
+  (palette), Navi size and attachment points, remapped children, art and palette copied from the Navi ROM, movement
+  copied from the closest Core mold (head 13, arms 16/19, legs 30), new arms swapped in the mirror map. Entries whose
+  art is not LZ77 (selector 0) are skipped, as in the extraction.
+- Tested: RDF (Navi 000) and BAT (Navi 001) in place of bot 0, in the Motion viewer. Navi's second legs entry (same
+  mold, other art) is not drawn by the main assembly, as in the original game.
+
 ## Credits and references
 
 - [Medabots-Romhacking-Toolkit](https://github.com/STulling/Medabots-Romhacking-Toolkit), [Medabots-Randomizer](https://github.com/STulling/Medabots-Randomizer), [MedabotsLib](https://github.com/STulling/MedabotsLib) — STulling
