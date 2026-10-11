@@ -11,11 +11,11 @@ internal sealed class FontProjectEditSystem : IProjectEditSystem
 
     public IEnumerable<ProjectChange> BuildChanges(RomHackProject project, ProjectBuildContext context)
     {
-        if (!project.UseExtendedFont || !ExtendedFont.CanApply(context.SourceRom.Data))
+        if (!project.UseExtendedFont || !ExtendedFont.CanApply(context.SourceRom.Data, out var layout))
         {
             return Array.Empty<ProjectChange>();
         }
 
-        return new[] { new ProjectChange(DisplayName, "Extended font", ExtendedFont.BuildPatches()) };
+        return new[] { new ProjectChange(DisplayName, "Extended font", ExtendedFont.BuildPatches(layout)) };
     }
 }

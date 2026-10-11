@@ -22,11 +22,13 @@ public partial class MainWindow
         _syncingFontSection = false;
 
         var rom = _session?.RomFile.Data;
+        FontLayout? layout = null;
         ExtendedFontStatusLabel.Text = rom is null
             ? "No ROM loaded."
-            : ExtendedFont.CanApply(rom)
-                ? _project.UseExtendedFont ? "Applied on export." : "Off: the original font is kept."
-                : "Not applicable to this ROM (not Metabee (E), or the slots hold other glyphs).";
+            : ExtendedFont.CanApply(rom, out layout)
+                ? (_project.UseExtendedFont ? "Applied on export." : "Off: the original font is kept.") +
+                  $"  Font 0x{layout.Font:X6}, widths 0x{layout.Widths:X6}."
+                : "Not applicable to this ROM (dialogue font not found, or the slots hold other glyphs).";
         FontSheetImage.Source = rom is null ? null : RenderFontSheet(rom);
     }
 
@@ -50,6 +52,7 @@ public partial class MainWindow
     private BitmapSource RenderFontSheet(byte[] rom)
     {
         s_useExtendedFont = _project.UseExtendedFont;
+        UpdateFontLayout(rom);
         const int size = 128;
         var pixels = new uint[size * size];
         for (var glyph = 0; glyph < 128; glyph++)
@@ -60,7 +63,7 @@ public partial class MainWindow
             {
                 for (var x = 0; x < 8; x++)
                 {
-                    var value = rom.Length >= MainFontOffset + 128 * 64 ? GlyphPixel(rom, glyph, false, x, y) : 0;
+                    var value = rom.Length >= s_fontLayout.Font + 128 * 64 ? GlyphPixel(rom, glyph, false, x, y) : 0;
                     pixels[(top + y) * size + left + x] = value > 1 ? Blend(0xFFFFFFFF, 0xFF000000, (value - 1) / 14.0) : 0xFFFFFFFF;
                 }
             }

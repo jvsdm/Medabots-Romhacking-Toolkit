@@ -11,9 +11,9 @@ namespace Medabots.Rom.WPFEditor;
 /// Preview of a message as the game shows it: one 240x160 screen per box (&lt;NB&gt; starts a new box), with
 /// the dialogue font and its width table, two lines per box (&lt;NL&gt;), and the portrait of
 /// &lt;PORTRAIT:side, character, expression&gt; (side 1 = left, 0 = right; it stays until changed).
-/// Medabots: Metabee (E) addresses (text code at 0x40144-0x40504): font 0x4BFC6C and italic font 0x4C59AC
-/// (128 glyphs of 8x16, 4bpp, colour 1 = background), widths 0x3B4E08 / 0x3B5008 (2 bytes per glyph;
-/// the first is the advance). Glyph order: tools' ENCODING / EuropeanNameEncoding.
+/// Font located per ROM by Text.ExtendedFont.Locate (Metabee (E): font 0x4BFC6C, italic 0x4C59AC, widths
+/// 0x3B4E08 / 0x3B5008; text code at 0x40144-0x40504) (128 glyphs of 8x16, 4bpp, colour 1 = background;
+/// 2 bytes per glyph in the width tables, the first is the advance). Glyph order: tools' ENCODING / EuropeanNameEncoding.
 /// Automatic wrapping (routine 0x080402B4, state at 0x3000440): before each word, the game measures it up to and
 /// including the space after it (stopping at a control code) and, if pen x + that width &gt; 208, moves to line 2, or
 /// from line 2 to a new box after the button. Pen x and the measured width are bytes: a line past 256 px is drawn
@@ -23,10 +23,10 @@ public partial class MainWindow
 {
     private const int GbaScreenWidth = 240;
     private const int GbaScreenHeight = 160;
-    private const int MainFontOffset = 0x4BFC6C;
-    private const int ItalicFontOffset = 0x4C59AC;
-    private const int MainWidthTable = 0x3B4E08;
-    private const int ItalicWidthTable = 0x3B5008;
+    // Metabee (E) layout, used until a ROM is located
+    private static readonly Medabots.Rom.Text.FontLayout DefaultFontLayout = new(0x4BFC6C, 0x3B4E08);
+    private static Medabots.Rom.Text.FontLayout s_fontLayout = DefaultFontLayout;
+    private static byte[]? s_fontLayoutRom;
     private const int BoxTop = 104;
     private const int TextLeft = 16;
     private const int TextRight = 228;
@@ -79,6 +79,7 @@ public partial class MainWindow
         }
 
         s_useExtendedFont = _project.UseExtendedFont;
+        UpdateFontLayout(_session?.RomFile.Data);
         _messageBoxes = WrapMessageBoxes(ParseMessageBoxes(MessageTextEditor?.Text ?? ""), _session?.RomFile.Data);
         ShowMessageBox(keepBox ? _messageBoxIndex : 0);
     }
@@ -344,7 +345,7 @@ public partial class MainWindow
             return extended;
         }
 
-        var widths = (italic ? ItalicWidthTable : MainWidthTable) + glyph * 2;
+        var widths = (italic ? s_fontLayout.ItalicWidths : s_fontLayout.Widths) + glyph * 2;
         var advance = rom is not null && widths < rom.Length ? rom[widths] : 6;  // the second byte is not spacing
         return advance is > 0 and <= 16 ? advance : 6;
     }
@@ -441,7 +442,7 @@ public partial class MainWindow
     // Draws an 8x16 glyph (two 4bpp tiles, colour 0/1 = background), clipped to the visible part of the line.
     private static void DrawGlyph(uint[] pixels, byte[]? rom, int glyph, bool italic, int left, int top)
     {
-        var font = italic ? ItalicFontOffset : MainFontOffset;
+        var font = italic ? s_fontLayout.ItalicFont : s_fontLayout.Font;
         if (rom is null || font + 128 * 64 > rom.Length)
         {
             return;
@@ -503,12 +504,24 @@ public partial class MainWindow
         }
     }
 
+    // Locates the font once per ROM image; keeps the Metabee (E) layout when not found.
+    private static void UpdateFontLayout(byte[]? rom)
+    {
+        if (rom is null || ReferenceEquals(rom, s_fontLayoutRom))
+        {
+            return;
+        }
+
+        s_fontLayout = Medabots.Rom.Text.ExtendedFont.Locate(rom) ?? DefaultFontLayout;
+        s_fontLayoutRom = rom;
+    }
+
     // Palette index (0-F) of a glyph pixel; the main font takes the extended glyphs when enabled.
     private static int GlyphPixel(byte[] rom, int glyph, bool italic, int x, int y)
     {
         var offset = (y / 8) * 32 + (y % 8) * 4 + x / 2;
         var extended = !italic && s_useExtendedFont ? Medabots.Rom.Text.ExtendedFont.GetGlyph(glyph) : default;
-        var b = extended.IsEmpty ? rom[(italic ? ItalicFontOffset : MainFontOffset) + glyph * 64 + offset] : extended[offset];
+        var b = extended.IsEmpty ? rom[(italic ? s_fontLayout.ItalicFont : s_fontLayout.Font) + glyph * 64 + offset] : extended[offset];
         return (x & 1) == 1 ? b >> 4 : b & 15;
     }
 

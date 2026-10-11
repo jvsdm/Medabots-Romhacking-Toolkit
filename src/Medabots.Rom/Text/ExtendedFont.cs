@@ -1,9 +1,19 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Medabots.Rom.Text;
 
+/// <summary>Dialogue font of a ROM (file offsets). Italic font and widths sit at fixed distances in every release.</summary>
+public sealed record FontLayout(int Font, int Widths)
+{
+    public int ItalicFont => Font + 0x5D40;
+
+    public int ItalicWidths => Widths + 0x200;
+}
+
 /// <summary>
-/// PT-BR extension of the dialogue font (Medabots: Metabee (E)): new glyphs in the original blank slots
-/// (0x4F õ, 0x7D Ã, 0x7E ã, 0x7F Õ) and advance widths for 0x4F-0x7F, zero in the original ROM
-/// (table by Hyd, from insert_text_v2.py).
+/// PT-BR extension of the dialogue font: new glyphs in the original blank slots (0x4F õ, 0x7D Ã, 0x7E ã, 0x7F Õ)
+/// and advance widths for 0x4F-0x7F, zero in the original ROM (table by Hyd, from insert_text_v2.py).
+/// The font is located by signature: Metabee (E) font 0x4BFC6C / widths 0x3B4E08, Rokusho (E) 0x4BFC90 / 0x3B4E28.
 /// </summary>
 public static class ExtendedFont
 {
@@ -14,13 +24,22 @@ public static class ExtendedFont
 
     public const string Summary =
         "Use extended font (PT-BR)\n\n" +
-        "Writes into the dialogue font (0x4BFC6C, 8x16 4bpp) the glyphs drawn over the original blank slots:\n" +
+        "Writes into the dialogue font (8x16 4bpp) the glyphs drawn over the original blank slots:\n" +
         "  0x4F  õ\n  0x7D  Ã\n  0x7E  ã\n  0x7F  Õ\n\n" +
-        "Writes the advance widths for glyphs 0x4F-0x7F into the width table (0x3B4E08, 2 bytes per glyph: " +
+        "Writes the advance widths for glyphs 0x4F-0x7F into the width table (2 bytes per glyph: " +
         "advance in pixels and vertical class). In the original ROM these entries are zero, so the accented " +
         "letters (Ä..à, Æ æ) and the new glyphs are drawn with no spacing.\n\n" +
-        "Only the italic font is left unchanged. Skipped when the ROM is not Metabee (E) or the slots already " +
-        "hold other glyphs.";
+        "The font and the table are found by signature (Metabee (E) font 0x4BFC6C / widths 0x3B4E08, " +
+        "Rokusho (E) 0x4BFC90 / 0x3B4E28). The italic font is left unchanged. Skipped when the font is not " +
+        "found or the slots already hold other glyphs.";
+
+    // Widths of glyphs 0x00-0x4E as shipped
+    internal static readonly byte[] WidthSignature = Convert.FromHexString(
+        "0401060105010601060105010501060106010401060105010501070106010701050107010601060106010601060108010601060106010601050005010500060104000503050002010401050102010601050106010403050304010401040104010501060106010503050106010501060106010601050105010601050106010401040103020200060105010401060104010400060106010801080108010801");
+
+    // Glyphs 0x01-0x03 (A, B, C)
+    internal static readonly byte[] FontSignature = Convert.FromHexString(
+        "111111111111111111C1111111FC1411518F1A11C1151F11E9FF1F11BD111F116C111A11111111111111111111111111111111111111111111111111111111111111111111111111FD1A11119E9D11111EB91111CF4E1111BFBD11111FE41111FD9E111188151111111111111111111111111111111111111111111111111111111111111111111111D61E11617F1B11C5181111F7111111CA111111E8831B11A1DF111111111111111111111111111111111111111111111111111111111111");
 
     private static readonly Dictionary<int, byte[]> GlyphData = new()
     {
@@ -42,9 +61,6 @@ public static class ExtendedFont
         0x06, 0x01,
     ];
 
-    // '£', '&', '%' entries (0x4C-0x4E): 8,1 in Metabee (E)
-    private static readonly byte[] WidthFingerprint = [0x08, 0x01, 0x08, 0x01, 0x08, 0x01];
-
     private const byte BlankPair = 0x11;
 
     public static IReadOnlyCollection<int> Glyphs => GlyphData.Keys;
@@ -58,24 +74,36 @@ public static class ExtendedFont
         return index >= 0 && index < WidthData.Length ? WidthData[index] : null;
     }
 
-    /// <summary>True when the ROM has the Metabee (E) layout and the target slots are blank or already extended.</summary>
-    public static bool CanApply(ReadOnlySpan<byte> rom)
+    /// <summary>Dialogue font of the ROM, found by the shipped widths and glyphs A-C; null when absent.</summary>
+    public static FontLayout? Locate(ReadOnlySpan<byte> rom)
     {
-        if (rom.Length < FontOffset + 128 * GlyphSize)
+        var widths = rom.IndexOf(WidthSignature);
+        var font = rom.IndexOf(FontSignature) - GlyphSize;
+        if (widths < 0 || font < 0 || font + 128 * GlyphSize > rom.Length || widths + 256 * 2 > rom.Length)
         {
-            return false;
+            return null;
         }
 
-        if (!rom.Slice(WidthTableOffset + 0x4C * 2, WidthFingerprint.Length).SequenceEqual(WidthFingerprint))
+        return new FontLayout(font, widths);
+    }
+
+    public static bool CanApply(ReadOnlySpan<byte> rom) => CanApply(rom, out _);
+
+    /// <summary>True when the font is found and the target slots are blank or already extended.</summary>
+    public static bool CanApply(ReadOnlySpan<byte> rom, [NotNullWhen(true)] out FontLayout? layout)
+    {
+        layout = Locate(rom);
+        if (layout is null)
         {
             return false;
         }
 
         foreach (var (glyph, data) in GlyphData)
         {
-            var slot = rom.Slice(FontOffset + glyph * GlyphSize, GlyphSize);
+            var slot = rom.Slice(layout.Font + glyph * GlyphSize, GlyphSize);
             if (!slot.SequenceEqual(data) && slot.IndexOfAnyExcept(BlankPair) >= 0)
             {
+                layout = null;
                 return false;
             }
         }
@@ -83,15 +111,16 @@ public static class ExtendedFont
         return true;
     }
 
-    public static IReadOnlyList<RomPatchAction> BuildPatches()
+    public static IReadOnlyList<RomPatchAction> BuildPatches(FontLayout layout)
     {
+        ArgumentNullException.ThrowIfNull(layout);
         var actions = new List<RomPatchAction>
         {
-            new(WidthTableOffset + FirstWidthGlyph * 2, WidthData, "Extended font widths 0x4F-0x7F")
+            new(layout.Widths + FirstWidthGlyph * 2, WidthData, "Extended font widths 0x4F-0x7F")
         };
         foreach (var (glyph, data) in GlyphData.OrderBy(pair => pair.Key))
         {
-            actions.Add(new RomPatchAction(FontOffset + glyph * GlyphSize, data, $"Extended font glyph 0x{glyph:X2}"));
+            actions.Add(new RomPatchAction(layout.Font + glyph * GlyphSize, data, $"Extended font glyph 0x{glyph:X2}"));
         }
 
         return actions;

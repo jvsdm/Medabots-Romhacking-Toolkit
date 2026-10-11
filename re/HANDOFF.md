@@ -206,11 +206,24 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
 
 ### 2026-10-11 - nuvem: fonte estendida no Toolkit (nao compilado)
 
-Escrito na nuvem sem .NET (proxy bloqueia o SDK). Compilar, rodar os testes e conferir a aba:
+Escrito na nuvem sem .NET (proxy bloqueia o SDK). Tarefa da sessao local: compilar, testar e validar nas 4 ROMs.
 
-- `src/Medabots.Rom/Text/ExtendedFont.cs`: glifos 0x4F o-til, 0x7D-0x7F A-til a-til O-til (4bpp, da folha do usuario) e larguras 0x4F-0x7F (tabela do Hyd do `insert_text_v2.py`, sem as 2 entradas extras 0x80-0x81). `CanApply` exige larguras 0x4C-0x4E = 8,1 e slots em branco (0x11) ou ja estendidos.
+O que existe:
+- `src/Medabots.Rom/Text/ExtendedFont.cs`: glifos 0x4F o-til, 0x7D-0x7F A-til a-til O-til (4bpp, folha do usuario; o-til alinhado ao o-trema) e larguras 0x4F-0x7F (tabela do Hyd do `insert_text_v2.py`, sem as entradas 0x80-0x81).
+- Fonte localizada por assinatura, nao por endereco fixo: larguras 0x00-0x4E (158 B) + glifos A-C (192 B). `FontLayout(Font, Widths)`; italico = Font + 0x5D40, larguras italicas = Widths + 0x200.
+  - Metabee (E): fonte 0x4BFC6C, larguras 0x3B4E08 (confirmado).
+  - Rokusho (E): fonte 0x4BFC90, larguras 0x3B4E28 (confirmado no banco do Simon; fonte e larguras identicas byte a byte).
+  - Metabee (U) / Rokusho (U): nao verificado.
+- `CanApply`: fonte achada e slots em branco (0x11) ou ja estendidos. Senao nao aplica.
 - `FontProjectEditSystem` no applicator; `RomHackProject.UseExtendedFont` (padrao true, salvo no projeto; projetos antigos carregam true).
-- `MedabotsTextCodec`: tabela de caracteres completa 0x00-0x7F (acentos e glifos novos codificam/decodificam).
-- WPF: aba `Font` (checkbox "Use extended font", botao `?` com `ExtendedFont.Summary`, folha 16x8 da fonte); preview de mensagem usa glifos/larguras estendidos quando ligado.
-- Testes: `ExtendedFontTests`, `EncodeAndDecode_RoundTripsExtendedGlyphs`.
-- o-til subido 1 px (corpo nas linhas 5-8, igual ao o-trema e ao a-til).
+- `MedabotsTextCodec`: tabela 0x00-0x7F completa (acentos e glifos novos).
+- WPF: aba `Font` (checkbox "Use extended font", botao `?` com `ExtendedFont.Summary`, status com offsets achados, folha 16x8). Preview de mensagem usa o layout localizado por ROM (antes era fixo na Metabee E) e os glifos/larguras estendidos quando ligado.
+
+Checklist:
+1. `dotnet build` da solucao; corrigir erros de compilacao.
+2. `dotnet test`; os testes novos sao `ExtendedFontTests` e `MedabotsTextCodecTests.EncodeAndDecode_RoundTripsExtendedGlyphs`. Rodar a suite inteira: `UseExtendedFont` padrao true acrescenta um change de fonte em todo projeto; ver se algum teste compara a ROM inteira e quebra.
+3. Abrir cada ROM no WPF (Metabee E/U, Rokusho E/U): aba Font mostra os offsets; folha da fonte correta; preview de mensagem com texto normal e `<I>` italico.
+4. Nas (U): se `Locate` nao achar, comparar a fonte/larguras da (U) com a (E) e ajustar a assinatura; se os slots 0x4F/0x7D-0x7F nao estiverem em branco, decidir com o usuario. Acrescentar os offsets em `Locate_FindsFontInLocalRoms` e no comentario de `ExtendedFont`.
+5. Exportar ROM com o toggle ligado e desligado; no emulador conferir um texto com "ão ões Ã Õ" e acentos (largura certa, sem sobreposicao). Com o toggle desligado a fonte/larguras devem ficar iguais a ROM original.
+6. Outros enderecos fixos da Metabee E no Toolkit (ex.: `ExpansionPatchSites.ItalicFont` usado em `RepairItalicFont`): listar e avisar o usuario; nao faz parte desta tarefa.
+7. Commit e push na `claude/medabots-project-ajyaeb`; registrar resultado neste diario.
