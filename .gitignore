@@ -8,3 +8,4 @@ python/
 *.gba
 *.sav
 .tmp*TestResults/
+__pycache__/
