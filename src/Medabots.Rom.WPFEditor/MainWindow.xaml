@@ -1803,6 +1803,39 @@
                 </Grid>
             </TabItem>
 
+            <TabItem x:Name="FontSection" Header="Font">
+                <Grid Margin="0,8,0,0">
+                    <Border Style="{StaticResource PanelBorderStyle}" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="UseExtendedFontCheckBox"
+                                          Content="Use extended font"
+                                          VerticalAlignment="Center"
+                                          Foreground="{DynamicResource Theme.TextPrimary}"
+                                          Checked="OnUseExtendedFontChanged"
+                                          Unchecked="OnUseExtendedFontChanged" />
+                                <Button Content="?"
+                                        Width="22"
+                                        Margin="8,0,0,0"
+                                        ToolTip="What the extended font applies"
+                                        Click="OnExtendedFontHelpClicked" />
+                            </StackPanel>
+                            <TextBlock x:Name="ExtendedFontStatusLabel"
+                                       Margin="0,8,0,0"
+                                       Foreground="{DynamicResource Theme.TextMuted}"
+                                       TextWrapping="Wrap" />
+                            <Image x:Name="FontSheetImage"
+                                   Margin="0,12,0,0"
+                                   Width="512"
+                                   Height="512"
+                                   HorizontalAlignment="Left"
+                                   Stretch="Fill"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
             <TabItem x:Name="ChangesSection" Header="Changes">
                 <Grid Margin="0,8,0,0">
                     <Grid.RowDefinitions>

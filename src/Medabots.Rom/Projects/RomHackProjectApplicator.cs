@@ -136,6 +136,7 @@ public sealed partial class RomHackProjectApplicator
         [
             new PendingActionsProjectEditSystem(),
             new Text.MessageProjectEditSystem(_textPatcher),
+            new Text.FontProjectEditSystem(),
             new Events.EventScriptProjectEditSystem(_eventInstructionPatcher),
             new Maps.MapSpawnProjectEditSystem(_mapOverlayPatcher),
             new Maps.MapWarpProjectEditSystem(_mapOverlayPatcher),

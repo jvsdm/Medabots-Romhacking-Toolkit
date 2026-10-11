@@ -109,6 +109,8 @@ public static class RomHackProjectSerializer
 
         public List<int> SplitLargeDisplayPartIds { get; set; } = [];
 
+        public bool UseExtendedFont { get; set; } = true;
+
         public RomHackProject ToProject(string? projectFilePath)
         {
             if (SchemaVersion is not 1 and not 2 and not 3 and not 4 and not 5 and not 6 and not 7 and not 8 and not 9 and not 10 and not 11 and not 12 and not 13)
@@ -121,7 +123,8 @@ public static class RomHackProjectSerializer
                 Name = Name,
                 SourceRomPath = SourceRomPath,
                 ProjectFilePath = projectFilePath,
-                TextProfileId = TextProfileId
+                TextProfileId = TextProfileId,
+                UseExtendedFont = UseExtendedFont
             };
 
             foreach (var action in PendingActions)
@@ -732,7 +735,8 @@ public static class RomHackProjectSerializer
                     .ToList(),
                 SplitLargeDisplayPartIds = project.SplitLargeDisplayPartIds
                     .Distinct()
-                    .ToList()
+                    .ToList(),
+                UseExtendedFont = project.UseExtendedFont
             };
         }
     }

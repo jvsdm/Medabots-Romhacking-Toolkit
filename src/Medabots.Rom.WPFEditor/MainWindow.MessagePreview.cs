@@ -36,6 +36,9 @@ public partial class MainWindow
     private const string PlayerNamePlaceholder = "WWWWWWWW";
     private const int PortraitSize = 64;
 
+    // Preview draws the extended glyphs and widths (Text.ExtendedFont) when the project enables them.
+    private static bool s_useExtendedFont = true;
+
     private const string MessageGlyphs =
         " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789·" +
         ".,'-/:?!\"()♥£&%õ" +
@@ -75,6 +78,7 @@ public partial class MainWindow
             return;
         }
 
+        s_useExtendedFont = _project.UseExtendedFont;
         _messageBoxes = WrapMessageBoxes(ParseMessageBoxes(MessageTextEditor?.Text ?? ""), _session?.RomFile.Data);
         ShowMessageBox(keepBox ? _messageBoxIndex : 0);
     }
@@ -334,7 +338,13 @@ public partial class MainWindow
 
     private static int GlyphAdvance(byte[]? rom, char ch, bool italic)
     {
-        var widths = (italic ? ItalicWidthTable : MainWidthTable) + GlyphIndex(ch) * 2;
+        var glyph = GlyphIndex(ch);
+        if (!italic && s_useExtendedFont && Medabots.Rom.Text.ExtendedFont.GetAdvance(glyph) is { } extended)
+        {
+            return extended;
+        }
+
+        var widths = (italic ? ItalicWidthTable : MainWidthTable) + glyph * 2;
         var advance = rom is not null && widths < rom.Length ? rom[widths] : 6;  // the second byte is not spacing
         return advance is > 0 and <= 16 ? advance : 6;
     }
@@ -443,8 +453,7 @@ public partial class MainWindow
             {
                 for (var x = 0; x < 8; x++)
                 {
-                    var b = rom[font + glyph * 64 + tile * 32 + y * 4 + x / 2];
-                    var value = (x & 1) == 1 ? b >> 4 : b & 15;
+                    var value = GlyphPixel(rom, glyph, italic, x, tile * 8 + y);
                     var px = left + x;
                     var py = top + tile * 8 + y;
                     if (value > 1 && px >= TextLeft && px < TextRight + 2 && py < GbaScreenHeight)
@@ -492,6 +501,15 @@ public partial class MainWindow
                 pixels[py * GbaScreenWidth + px] = colour;
             }
         }
+    }
+
+    // Palette index (0-F) of a glyph pixel; the main font takes the extended glyphs when enabled.
+    private static int GlyphPixel(byte[] rom, int glyph, bool italic, int x, int y)
+    {
+        var offset = (y / 8) * 32 + (y % 8) * 4 + x / 2;
+        var extended = !italic && s_useExtendedFont ? Medabots.Rom.Text.ExtendedFont.GetGlyph(glyph) : default;
+        var b = extended.IsEmpty ? rom[(italic ? ItalicFontOffset : MainFontOffset) + glyph * 64 + offset] : extended[offset];
+        return (x & 1) == 1 ? b >> 4 : b & 15;
     }
 
     private static uint Blend(uint a, uint b, double t)

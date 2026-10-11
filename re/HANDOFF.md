@@ -203,3 +203,14 @@ Form-change (Medachange) no modelo "forma = outro bot": trocar os 4 IDs de peca 
   entrada de toda parte). 16 formas ok no visualizador Motion.
 - Retratos do Navi: 0x62CBCC. Mini sprites dos Medarots do Navi: nao encontrados.
 - Para a nuvem (sem ROM, barato): nada.
+
+### 2026-10-11 - nuvem: fonte estendida no Toolkit (nao compilado)
+
+Escrito na nuvem sem .NET (proxy bloqueia o SDK). Compilar, rodar os testes e conferir a aba:
+
+- `src/Medabots.Rom/Text/ExtendedFont.cs`: glifos 0x4F o-til, 0x7D-0x7F A-til a-til O-til (4bpp, da folha do usuario) e larguras 0x4F-0x7F (tabela do Hyd do `insert_text_v2.py`, sem as 2 entradas extras 0x80-0x81). `CanApply` exige larguras 0x4C-0x4E = 8,1 e slots em branco (0x11) ou ja estendidos.
+- `FontProjectEditSystem` no applicator; `RomHackProject.UseExtendedFont` (padrao true, salvo no projeto; projetos antigos carregam true).
+- `MedabotsTextCodec`: tabela de caracteres completa 0x00-0x7F (acentos e glifos novos codificam/decodificam).
+- WPF: aba `Font` (checkbox "Use extended font", botao `?` com `ExtendedFont.Summary`, folha 16x8 da fonte); preview de mensagem usa glifos/larguras estendidos quando ligado.
+- Testes: `ExtendedFontTests`, `EncodeAndDecode_RoundTripsExtendedGlyphs`.
+- Observacao: o o-til do usuario fica 1 px abaixo do o-trema (corpo nas linhas 6-9). Mantido como desenhado.

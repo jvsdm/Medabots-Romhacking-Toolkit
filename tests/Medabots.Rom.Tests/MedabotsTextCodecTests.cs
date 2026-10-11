@@ -22,6 +22,17 @@ public sealed class MedabotsTextCodecTests
     }
 
     [Fact]
+    public void EncodeAndDecode_RoundTripsExtendedGlyphs()
+    {
+        const string text = "Ãõã Õ àÆ";
+
+        var encoded = _codec.Encode(text);
+
+        Assert.Equal([0x7D, 0x4F, 0x7E, 0x00, 0x7F, 0x00, 0x7A, 0x7B], encoded);
+        Assert.Equal(text, _codec.Decode(encoded));
+    }
+
+    [Fact]
     public void ReadEncodedMessage_StopsAtEndCommand()
     {
         byte[] romData = [0x01, 0x02, 0xFF, 0x00, 0x55, 0x66];

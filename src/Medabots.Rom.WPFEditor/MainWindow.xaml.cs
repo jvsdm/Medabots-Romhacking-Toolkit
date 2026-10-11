@@ -1038,6 +1038,7 @@ public partial class MainWindow : Window
         PatchCollectionView.SelectedItem = null;
         ClearPatchEditor();
         ClearPartEditor();
+        RefreshFontSection();
     }
 
     private async Task<string?> ResolveProjectRomPathAsync(string? configuredRomPath)

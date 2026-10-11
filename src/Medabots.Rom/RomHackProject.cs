@@ -71,4 +71,7 @@ public sealed class RomHackProject
     public IDictionary<int, string> PortraitNames { get; } = new Dictionary<int, string>();
 
     public IList<int> SplitLargeDisplayPartIds { get; } = new List<int>();
+
+    /// <summary>Writes the PT-BR font extension (Text.ExtendedFont) on build. On by default.</summary>
+    public bool UseExtendedFont { get; set; } = true;
 }
