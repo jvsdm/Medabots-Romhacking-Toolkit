@@ -1071,6 +1071,7 @@ address,name,kind,count,comment
 0x084C4BDC,sPartDetailTileSheetA,label,,Simon/Rokusho em 0x084C4C00
 0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
 0x084C8034,sShopPartScreenUiTileSheet,label,,Simon/Rokusho em 0x084C8058
+0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR)
 0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
 0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
 0x0850F2F8,sCompositeBattleSpritePaletteSet,label,,Simon/Rokusho em 0x0850F31C
