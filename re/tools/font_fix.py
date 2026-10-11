@@ -1,6 +1,6 @@
 """Corrige o alinhamento da fonte do dialogo (Metabee E) sem mudar o desenho dos glifos.
 
-    python font_fix.py font.png font_corrigida.png
+    python font_fix.py font.png font_corrigida.png [--sombra N]
 
 Entrada e saida no formato do insert_font.py: 128x128, 16 glifos 8x16 por linha, cores da paleta da fonte
 (0x084E43D8). Glifos novos (0x4F, 0x7D-0x7F etc.) passam intactos, exceto pela regra geral da linha 9.
@@ -12,6 +12,9 @@ Correcoes (linhas 0-15 de cada glifo; maiusculas ocupam 2-8):
 - D: borrao escuro na linha 9 -> removido.
 - L: pe duplo (8 e 9) e topo apagado (linha 2) -> linha 9 removida, linha 2 = linha 3.
 - l: topo apagado (linha 2) e borrao na 9 -> linha 2 = linha 3, linha 9 removida.
+- pontuacao na base (linha 8): '.' e o ponto de '!' e '?' sobem 1 linha; ',' sobe 1 (cauda na 9); o fim da
+  haste do '?' (linha 7) sai para nao encostar no ponto.
+- sombra: tons claros (indices 2..N, padrao 5) viram fundo; 0 desliga. Indices maiores = cores mais escuras.
 """
 import sys
 
@@ -67,7 +70,16 @@ def clear(g, row):
     g[row] = [BACKGROUND] * 8
 
 
-def fix(glyphs):
+def move_up(g, rows):
+    for r in rows:
+        g[r - 1] = g[r][:]
+        clear(g, r)
+
+
+PUNCTUATION_UP = {".": [9], ",": [8, 9, 10], "!": [9]}
+
+
+def fix(glyphs, shadow=5):
     changed = []
     for i, g in enumerate(glyphs):
         ch = ENCODING[i] if i < len(ENCODING) else ""
@@ -79,17 +91,31 @@ def fix(glyphs):
             g[2] = g[3][:]
         elif ch and ch not in NO_ROW9_RULE and ch.strip() and max(g[9]) < DARK_MIN:
             clear(g, 9)
+        if ch in PUNCTUATION_UP:
+            move_up(g, PUNCTUATION_UP[ch])
+        elif ch == "?":
+            clear(g, 7)
+            move_up(g, [9])
+        if shadow:
+            for r in range(16):
+                g[r] = [BACKGROUND if 1 < v <= shadow else v for v in g[r]]
         if g != before:
             changed.append(ch or f"0x{i:02X}")
     return changed
 
 
 def main():
-    if len(sys.argv) != 3:
+    args = sys.argv[1:]
+    shadow = 5
+    if "--sombra" in args:
+        k = args.index("--sombra")
+        shadow = int(args[k + 1])
+        del args[k:k + 2]
+    if len(args) != 2:
         sys.exit(__doc__)
-    glyphs = load(sys.argv[1])
-    changed = fix(glyphs)
-    save(glyphs, sys.argv[2])
+    glyphs = load(args[0])
+    changed = fix(glyphs, shadow)
+    save(glyphs, args[1])
     print(f"{len(changed)} glifos ajustados: {''.join(changed)}")
 
 
