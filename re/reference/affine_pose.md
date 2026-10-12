@@ -124,3 +124,33 @@ so o Ghidra responde, para a sessao local nao refazer leitura.
   pose com o tocador `pc/game/src/motion.lua` (B15/B16 seguem valendo). rig.lua/battle.lua NAO alterados.
 - Ferramenta de apoio: `replay_record.py --watch` filtrado por PC (`--watch-skip-pc`) e `--break` com lr funcionam
   para achar escritores; `--break` grava muitos .bin (apagar depois).
+
+## 8. G9 (rec_2 ck_1400, f1460-1530): interpolador conferido valor a valor (PARCIAL: pivo/OAM ainda nao)
+
+- **Enderecos (medidos e lidos no literal pool de site_MoveStyleRead 0x08044A3C)**: contador do lado s = byte 0x020260CC+s;
+  passo (keyframe) do lado s = byte 0x020260CE+s; estado do lado s = 0x020260D0 + s*0x410; molde m (1-based) em
+  0x020260D0 + 0x10*(m-1): x +0x18 (8.8), y +0x1A (8.8), angulo +0x1C (1/65536). Tabelas ROM: angulo 0x083D1E40,
+  deslocamento 0x083D1F2C, duracao 0x083D2018 (ponteiro por roteiro), roteiro->id 0x0807E8EC/0x083CAD78.
+- **Mapeamento de moldes**: indice de estado g (0-based) = molde g+1 (linha g+1 da tabela). Ex.: pernas do bot 43 =
+  moldes 7..12 = estado 6..11 (7/9/11 iguais, 8/10/12 iguais).
+- **Roteiro do tipo 13, bot 43**: roteiro 44 (indice 0-based), 13 keyframes, duracoes 8,8,8,6,6,6,4,1,1,1,2,16,6 (73 quadros).
+  O contador zera em f1460 (novo roteiro, passo 0); ha 2 chamadas paradas (f1461, f1462 com contador 0); o passo 0
+  comeca a contar em f1463. **Quadro 0 do tocador = f1462** (estado antes do 1o passo); quadro n = f1462+n.
+  Passo 1 em f1470, passo 2 em f1478, passo 12 em f1530 (conferido).
+- **Estado de partida NAO e zero**: em f1462 os moldes ja carregam o estado do roteiro anterior (ex.: molde 7 = 1820,
+  molde 6 = (768,-256) px*256). O interpolador parte desse estado; o jogo nao zera os moldes ao trocar de tipo.
+- **Interpolador (decompilado, confere)**: a cada quadro contador++; se passo < N: para cada molde (63 moldes, 0..62 no
+  laco, estado g), alvo = tabela[molde g+1][passo] (zero se o molde nao tem linha); se contador < dur: restante = dur -
+  contador, angulo += Div(menor_caminho(alvo-angulo), restante) (menor caminho so entre d e d-65536), x/y += Div(alvo*256 -
+  x/y, restante); senao snap ao alvo. Se algum molde fez snap, passo++ e contador = 0. Divisao truncada (C).
+- **Medicao**: `motion.lua` (corrigido, ver abaixo) com o estado de f1462 como partida, comparado com os dumps de
+  f1463..f1530 (todos os moldes 1..49): erro 0 no angulo e 0 px na posicao. Os moldes 50..62 nao tem linha na tabela e o
+  jogo le dados fora dela (erro grande la; sem uso no bot 43 aparente).
+- **Correcoes em motion.lua (G9)**: (a) `start(tipo, bot, prev)` aceita o estado anterior e herda os moldes (sem `prev`,
+  zero como antes); (b) o laco passa a cobrir os 63 moldes, molde sem linha tem alvo 0 (antes ficava parado, o que
+  deixava 2-3 px de erro com estado herdado). rig.lua e battle.lua NAO alterados (battle.lua ainda nao passa `prev`).
+- **Unidade do angulo**: o tocador usa 1/65536 de volta, igual ao estado. O BIOS ObjAffineSet usa so alpha>>8 (256
+  passos por volta, 1,41 graus); o pivo e o sinal da matriz ainda NAO conferidos com a OAM afim (proximo passo: dump de
+  0x03001380 por quadro e comparar pa/pb/pc/pd com cos/sin de (ang>>8)*1,41 graus e sx/sy dos bytes do molde).
+- Teste: `replay_record.py rec_2 --frames 1530 --dump 0x020260C0:0x440@F...` (F = 1462..1530, usa ck_1400) e comparar com
+  `motion.lua` (start com o estado do dump de f1462). Script de conferencia nao foi guardado (apagado com o scratchpad).
