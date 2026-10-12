@@ -387,3 +387,5 @@ Checklist:
   (+0,3 px antes de arredondar; espaco 3) em vez da tinta rasterizada (o acento do 'í' e o antialias do 's' abriam
   buracos); '·' (reticencias) desenhado como '.' na linha de base. ROMs locais `Medabots_PT-BR_roboto400.gba` e
   `..._roboto500.gba`.
+- Comparacao com o Google Fonts (Roboto 20 px, 7 frases): com +0,3 px as linhas ficavam ~10% mais largas (+15 a
+  +23 px). Arredondamento simples com espaco 3 da a menor diferenca (media +1,2 px por linha); adotado.

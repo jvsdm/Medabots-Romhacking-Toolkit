@@ -2,7 +2,7 @@
 Rasteriza uma fonte TrueType nas celulas 8x16 4bpp da fonte do dialogo (Metabee E, endereco do jogo) com a
 linha de base na linha 10, converte a cobertura do antialias nos tons 1 (fundo) a F e grava as larguras.
 Avanco maximo 8: com 9 o jogo apaga a letra seguinte em algumas posicoes (testado: "Tem um" saia "Tem  m").
-Avancos = largura da propria fonte (+0,3 px antes de arredondar, espaco >= 3), como o navegador; '·' (reticencias
+Avancos = largura da propria fonte (arredondadas; espaco >= 3: linhas com ~1 px de diferenca do navegador), como o navegador; '·' (reticencias
 "···" no texto) e desenhado como '.' na linha de base. Teste: Roboto 10 px, peso 400 ou 500 (normal e italica)."""
 import argparse, sys
 from PIL import Image, ImageDraw, ImageFont
@@ -11,8 +11,8 @@ import medtext as m
 
 FONTS = {False: (0x4BFC64, 0x3B4E08), True: (0x4C59A4, 0x3B5008)}
 BASELINE = 10
-# acrescimo antes de arredondar: em 10 px as larguras sao fracionadas e o arredondamento aperta o texto
-TRACKING = 0.3
+# acrescimo antes de arredondar (0: menor erro de comprimento de linha contra o navegador, com espaco 3)
+TRACKING = 0.0
 # glifos 0x50/0x51/0x64/0x65 mostram Ã ã Õ õ na fonte PT-BR
 CHARS = list(m.CHARS)
 for g, c in ((0x50, 'Ã'), (0x51, 'ã'), (0x64, 'Õ'), (0x65, 'õ')):
