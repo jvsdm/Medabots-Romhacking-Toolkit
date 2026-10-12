@@ -551,3 +551,14 @@ Checklist:
 - Devolver aqui: enderecos + formato (tiles/tilemap/paleta, tamanho) de cada item; entao entram no CSV e viram a secao do .md.
 - Tarefa 8 (mini sprite) continua aberta para a nuvem; tambem precisa de ROM para ser util, so o que ja esta em
   `OverworldSpriteFrameExtractor`/`MiniSpritePalette` pode ser lido estaticamente.
+
+### 2026-10-12 - sessao local: tarefa H1 (caixa de dialogo amarela, moldura real)
+- Achado (ROM original, rec_2 f0; VRAM/paleta/tilemap do quadro; CONFERIDO: o PC renderiza a moldura igual ao print):
+  - moldura = Malias2 `0x08486E6C` (544 B = 17 tiles 4bpp) -> VRAM `0x06000020` (tiles 1..0x11); tile de preenchimento = 8.
+  - paleta 14 (BG) = ROM `0x084E43D8` (tambem gFontPalette): idx 1 = amarelo 0x27DF, idx 13 = texto 0x04AB (marrom 0x582808).
+  - paleta 15 (BG, ornamento azul/verde/vermelho) = ROM `0x08488520`.
+  - tilemap da caixa = BG0 SBB5 (VRAM `0x06002800`), linhas 13..18, 30 colunas; NAO esta na ROM (o codigo grava). Layout em `extract_ui.py`.
+  - Carga: `0x080009BC` (decompress_and_store) com r0=0x08486E6C, r1=0x06000020 em rec_2 f146 (n=76 do log); 0x08486FC0 (r1=0x06000020, f40) traz os mesmos bytes. Quem chama: NAO achado (passo 3 da tarefa 9 segue aberto para a caixa do MAPA).
+- Caixa do mapa (New Game, ev 185): nao medida nesta sessao; o print M3 parece a mesma. Pendente: confirmar tilemap/tom no mapa.
+- Entregue: `pc/extract/extract_ui.py` (ligado em extract_all.py), `pc/cache/ui/dialog_box.png` + `ui.lua`, `pc/game/src/dialog.lua` (moldura real, texto 0x582808 em x=16 y=117).
+- Para o CSV/nuvem: `0x08486E6C` (Malias2, moldura), `0x084E43D8` (pal 14 BG = texto), `0x08488520` (pal 15 BG = ornamento), `0x06002800` (BG0 SBB5 = caixa).
