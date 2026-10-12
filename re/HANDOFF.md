@@ -497,6 +497,7 @@ Checklist:
 - `re/reference/portraits.md`: tag `<PORTRAIT:a,b,c>` (0xFB + lado, personagem, expressao), tabelas `gPortraitImages` (176x9
   Malias2, 64x64 = 64 tiles 4bpp) e `gPortraitPalettes` (32 B por personagem), regra de desenho (`BoxTop-64`, x=8 ou 168,
   hflip no lado 1) vinda da previa do WPF e do `PortraitExpander`. CSV: comentarios de `Parse_text` e `gPortraitPalettes`.
+- CONFERIDO LOCAL (parcial, tarefa P2): imagem/paleta/VRAM/tilemap e posicao do lado 0 (Erika) em (152,40), sem flip; correcao: x=152 e nao 168. Detalhes em `portraits.md` secao 6. Ainda aberto: lado 1 (posicao e flip) e `gTextState+0xE`.
 - Tudo "provavel". Local precisa conferir (lista em `portraits.md` secao 5): decompilar 0x0803F41C/0x0803F480/0x0803F51C e o
   caso 0xFB em 0x0803FD28 (ordem dos bytes, lado = hflip do tilemap?), posicao em pixels no emulador, VRAM 0x06000F80 /
   paleta 0x050001A0, significado de `gTextState+0xE`, e valores reais de lado/expressao no dump do texto.

@@ -57,3 +57,20 @@ Fonte: leitura do Toolkit (`PortraitAsset`, `ImageAssetRepository.BasicAssets`, 
 3. Confirmar VRAM 0x06000F80 / paleta 0x050001A0 e o tamanho 64x64 (64 tiles) e o endereco do tilemap do retrato.
 4. Se `gTextState+0xE` e "retrato ja carregado" (evita recarregar a mesma imagem) ou outra coisa.
 5. Contar `a`/`c` usados no dump do texto (`dump_text_v3.py`): valores de lado diferentes de 0/1? expressoes > 8?
+
+## 6. Conferido local (tarefa P2, sessao com ROM e emulador)
+
+Conferido (print rec_2 quadro 0 e 180, dump de VRAM/paleta/tilemap do replay, mesmo pixel a pixel):
+- Imagem e paleta: pelo ponteiro 0x083AFE88 (indice `personagem*9+expressao`) e 0x083B1748 (`personagem`); Erika = personagem 2,
+  quadro 0 = expressao 0, quadro 180 = expressao 1. Malias2 -> 2048 B -> 64 tiles 4bpp; ordem de tiles como na secao 2.
+  (Os enderecos do Toolkit +0x20 caem em outros ponteiros; o da documentacao, 0x083AFE88, esta certo.)
+- VRAM 0x06000F80 (tile 124) recebe os 2048 B da imagem; paleta bancada 13 (0x050001A0).
+- Desenho: BG0 (BGCNT 0x0500, bloco de tilemap 5), 8x8 celulas em colunas 19-26 e linhas 5-12, entradas 0xD07C..0xD0BB
+  (banco 13, sem flip). Na tela: **x=152, y=40** (nao 168 como dizia a secao 4), e a caixa do print comeca em y=104.
+- Espelhamento: nenhum bit de flip no tilemap do lado 0 (Erika a direita, desenhada como esta).
+
+Nao conferido:
+- Lado 1 (esquerda): posicao e se ha flip. Nao ha print com retrato a esquerda.
+- Ghidra `FUN_0803F51C` recebe o lado (`param_1`) como ultimo argumento de `FUN_0803F15c`; o ramo `param_6 != 0` usa a
+  expressao em ordem inversa (`expr - 8`). Ainda sem explicacao.
+- `gTextState+0xE`: nao identificado.
