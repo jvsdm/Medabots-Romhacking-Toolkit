@@ -76,3 +76,20 @@ so o Ghidra responde, para a sessao local nao refazer leitura.
    primeiro valor com `angulo[roteiro][molde][0]`.
 2. Achar o quadro de inicio do roteiro no jogo (primeiro quadro em que a perna 21 sai de 0) e ver se os tipos
    seguintes (14/15/12) mudam o angulo do OAM. B16 ja diz que o slot 1 fica em 13 de f1445 a f1565.
+
+## 6. G7 (rec_2 ck_1400, f1440-1560): lista de registros e +0x18 (PARCIAL)
+
+- **Lista que 0x08001520 le**: base `0x03002C30` (= `gObjectSlots`, mtbe.csv), 128 registros x 0x40 B. Laco em
+  0x08001520+0x44 (pc 0x08001564): so entra registro com bit 0x8000 em +0x00; ordena por byte +0x0B; r6 = base + k*0x40.
+  Campos vistos nos registros ativos (halfwords): +0x00 flags (0xC404), +0x02 y, +0x04 x (strh pelo proprio 0x08001520),
+  +0x06 attr2-like, +0x0A (0x800C), +0x20, +0x28, +0x2C (tipo). Escala/flip em +0x08/+0x09 (bytes).
+- **+0x18 (angulo)**: chamada de 0x08001CAC so se `ldrh [r6,#0x18] != 0` (0x0800179E-0x080017A2) e indice <= 0x1F.
+- **Medido**: watch de escrita sobre `0x03002C30:0x2000` em f1440-1560 (rec_2, ck_1400): ZERO escritas em +0x18 de
+  qualquer registro (as escritas caem em +0x00..0x06, +0x0A, +0x20..+0x32). Dumps em f1470/1500/1530: registros ativos
+  (1530: slots 10, 11, 14-19) com +0x18 = 0. Logo, em rec_2 nesta janela os sprites afins das pernas NAO saem deste
+  laco com angulo; a pose do OAM (pa/pb/pc/pd em 0x03001380) vem de outro caminho ou de registro fora de 0x03002C30.
+  Nao rastreado: quem escreve 0x03001380 (watch) e a origem do angulo.
+- Ferramenta: `tools/replay_record.py` agora loga todas as escritas (`DIFF`) do --watch (antes cortava em 48 por quadro;
+  agora 4096). Nao faz diferenca nos prints.
+- Nao feito (G7 passos 2-3): tabela quadro->molde->{x,y,ang} e G7_compare.png nao gerados; pose do tocador segue sem
+  fechar com o jogo.
