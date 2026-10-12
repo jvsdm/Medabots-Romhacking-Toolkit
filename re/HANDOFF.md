@@ -101,6 +101,34 @@ Demais enderecos: ver `re/symbols/mtbe.csv`.
 - Procurar constantes `#0x1D`/`#0x1E` ligadas a contagem de medalhas.
 - Aceite: layout do registro documentado; count corrigido no CSV.
 
+### 6. Montagem do bot grande para qualquer bot (PRIORIDADE - PC)
+- Ler `src/Medabots.Rom/Images/ImageAssetRepository.LargePartDisplay.cs`, `LargePartDisplayAsset.cs`,
+  `ImageAssetPatcher.LargePartDisplay.cs` e a previa do WPF (`Medabots.Rom.WPFEditor`, grep "LargePart").
+- Entregar `re/reference/large_part_layout.md`: tabelas (enderecos EU; lembrar do desvio +0x20 do Toolkit em
+  varias tabelas), layout dos registros, quantos moldes por peca, como sai a POSICAO de cada molde por bot (o
+  local ja tem o Metabee montado pela OAM: cabeca m09 (-12,-49) / m10 (-15,-75), braco esq m14 (-3,-63) /
+  m15 (0,-42), pernas m20-m24, braco dir m17 (-36,-62) / m18 (-36,-39), origem = centro dos pes) e
+  pseudocodigo Python para montar qualquer bot. Aceite: as offsets do Metabee saem da sua regra.
+
+### 7. Animacao de batalha por molde (0x083D1E40)
+- Formato da tabela: quadros, poses de ataque (bracos pose1/pose2), efeitos (tiro, explosao), duracao.
+- Cruzar com `battleactions.json` e `BattleActionScript*` do Toolkit. Entregar `re/reference/battle_anim.md`.
+
+### 8. Mini sprite: os 8 quadros e as paletas
+- `BattleCompositeSpriteComponentAsset`, `SpriteProjectEditSystem`, `OverworldSpriteFrameExtractor`, familia de
+  paleta 0x3BEB94. Quais quadros o jogo usa para andar/atacar/peca quebrada; como escolhe a paleta OBJ.
+- Local mediu: pernas 1,2,1,3 (~5 quadros cada) andando ate o centro; bracos so sobem/descem.
+
+### 9. Arte do HUD da batalha
+- Onde estao (ROM, formato) os icones das faixas, a barra central, digitos do TIME, barras de HP, letreiros
+  "CRITICAL HIT", "LEG DEFENSE", "HEAD DEFENSE", "STOP MOBILITY", e a moldura do menu de comandos.
+- Local ja achou os FUNDOS (Malias): campo tiles 0x545CD4, mapas 0x554D1C/0x553374, paleta 0x556A00; corte
+  tiles 0x52A2E8, mapas 0x53C3A4/0x5388A4, paleta 0x53E5B0. Os assets do HUD devem estar perto.
+
+### 10. Retratos dos dialogos
+- `PortraitAsset`, `PortraitExpander`, tag `<PORTRAIT:a,b,c>` do texto: tabela, formato, expressoes, o que
+  significa cada um dos 3 bytes. Entregar a regra para desenhar o retrato na caixa de dialogo.
+
 ## Pendencias conhecidas
 
 - `MedabotsLabel.java` antigo do usuario usa enderecos com base 0 (sem 0x08). Converter os nomes uteis para o CSV somando 0x08000000: `fn_MedapartMenu_ButtonHandler` 0x6980, `fn_MedapartMenu_Render` 0x59C0, `fn_MedapartMenu_PartTypeLogic` 0x6F5C, `fn_PageWrap` 0x4361C e os sitios `PATCH_*`/`SKIP_*`.
@@ -400,3 +428,14 @@ Checklist:
   Docs: secao 16.2 (import de fonte). Para a nuvem: nada.
 - Local: apagados o fork antigo `toolkit/`, `dist/` e `data/captures/`; este clone e o unico Toolkit local
   (os geradores `tools/export_manifest.py`, `export_patch_sites.py` e `gen_signatures.py` escrevem aqui).
+
+### 2026-10-12 - sessao local (batalha no PC)
+- Projeto PC (LOVE) no repo principal `pc/`: mapa, dialogo PT-BR, batalha 1x1. Achados confirmados com replay
+  deterministico das gravacoes do usuario (`tools/battle_record.lua` + `tools/replay_record.py --break/--watch`):
+  - Bloco do bot em batalha: IWRAM 0x030005D0 (jogador) / 0x030008D0 (inimigo), 0x100 B; pecas a partir de +0x0C,
+    0x18 B cada: +0 armadura max, +0xD atual. Medaforce candidato 0x03000951 (0-80).
+  - Dano 0x08033D30 devolve ctx+0xEC; queda de HP = min(dano, HP da peca), sem transbordar.
+  - ROS real 70-160 (nivel de skill ~10), esquiva 18-42, defesa 19-26 (so desvia > 31), critico zera esquiva.
+  - Tabela de batalhas EU 0x3C1B80 (bot da batalha 1 da Erika em 0x3BF53C); injetar Rokusho funcionou.
+  - Fundos da batalha: ver tarefa 9. Decoder Malias 0x080009BC (r0 = src ROM, r1 = dst).
+- Para a nuvem: tarefas 6-10 (imagens, leitura do Toolkit C#); prioridade 6 e 7.
