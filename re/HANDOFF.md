@@ -483,3 +483,12 @@ Checklist:
   repontar `gSpriteSetTable0[0]`; (3) a fonte passa de 0x3ED: tiles 0x3EE-0x3FF (18) so se nenhuma das ~20 telas
   usar; conferir no emulador (VRAM OBJ) cada tela que carrega 0x06017400. 18 tiles: á â ã é ê í ó ô õ ú ç (11)
   + Á É Ó Ú Ç Ã Õ (7); à fica sem acento.
+
+### 2026-10-12 - sessao local: conferencia das tarefas 6 e 7
+- Tarefa 6 CONFERIDA: `re/tools/large_part_layout.py` bate 0 px com a OAM do Metabee (offset constante (4,36) ate
+  a origem nos pes); com 0x12 = altura / 0x13 = largura, os 120 bots saem inteiros (folha de 16 bots conferida;
+  Noctobat contra o Motion do debug). Pode tirar o "provavel" das entradas da tarefa 6 no CSV.
+- Corrigido `Expansion/BotArt.cs`: lia 0x12 como largura (embaralhava moldes nao quadrados na arte de bot custom).
+- Tarefa 7: o visualizador Motion (ROM de debug, savestate no mapa + poke da cena 63) mostra os 47 tipos; a
+  rotulagem esta sendo feita pelo jogo (breakpoint em FightPreview_ApplyObjectMotionKind durante o replay).
+- Para a nuvem: tarefas 8 (mini sprite), 9 (HUD) e 10 (retratos) continuam abertas.

@@ -138,7 +138,41 @@ está nas pernas que mexem (variante 1: moldes 20-29; variante 2: 30 e 41-49). O
 | 51 | 2 / 48 | sem a raiz, variante 2 | — |
 | 57, 58 | 33 e 23 / 189 | poucos moldes | cenas fora da batalha (tipos 44, 45) |
 
-## 6. Para conferir no emulador
+## 6. Rotulos dos tipos (A1, Motion no emulador)
+
+Capturas feitas para os 47 tipos (0-46), 5 quadros por tipo; detalhes e metodo em `pc/research/A1_motion_kinds.md`.
+Confianca: alta = confirmada na tela; media = pela duracao/roteiro; baixa = palpite visual. "?" = sem rotulo.
+
+| tipo | roteiro (estilo 0) | rotulo provavel | confianca |
+|---|---|---|---|
+| 0-2 | 38-42 | andar / avancar (secao 4) | baixa |
+| 3-5, 6-8 | 7-18 | reacao curta ao golpe (corpo + pernas) | baixa |
+| 9-11 | 22-26 | andar / avancar (roteiros 22-27) | baixa |
+| 12 | 20 | ataque longo | baixa |
+| 13-18 | 31-33, 44-46 | golpe / tremor | baixa |
+| 19 | 1 | ataque especial | baixa |
+| 20-21 | 2-3 | ataque longo | baixa |
+| 22-24 | 28-30 | golpe | baixa |
+| 25-27 | 4-6 | ataque | baixa |
+| 28-30 | 36 | ? (movimento amplo) | baixa |
+| 31 | 19 | ? (movimento amplo) | baixa |
+| 32-35 | 47-52 | ? (Medaforce / especiais) | sem rotulo |
+| 35 | 48 | ? | sem rotulo |
+| 36 | 54 | ? | sem rotulo |
+| 37 | 49 | ? | sem rotulo |
+| 38-39 | 55, 50 | pose instantanea (2 quadros-chave) | media |
+| 40 | 51 | ? | sem rotulo |
+| 41 | 35 | entrada (FightPreview, roteiro 35, 28 quadros) | media |
+| 42 | 34 | ? | sem rotulo |
+| 43 | 56 | ? | sem rotulo |
+| 44 | 57 | cena fora da batalha (189 quadros; demo/titulo) | baixa |
+| 45 | 58 | cena fora da batalha (189 quadros) | baixa |
+| 46 | 37 | ? | sem rotulo |
+
+Nota: o rotulo "retirada", "parte quebrada", "funcao cessada", "vitoria" e "hit/flinch" nao puderam ser
+atribuidos com os dados atuais. Ver A1_motion_kinds.md para o que falta.
+
+### Passos de conferencia (feitos parcialmente)
 
 O visualizador **Motion** do menu de debug (`DebugMotion_Main` 0x0800D710) monta dois bots e toca o tipo
 `[0x03000475 + byte 0x03000474]` (`DebugMotion_PlayKind` 0x0800D90C chama `MotionPlayStep` dos dois lados com

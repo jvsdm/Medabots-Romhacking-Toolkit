@@ -53,7 +53,7 @@ public static class BotArt
                 }
 
                 var record = (int)U32(rom, layout.CompositePreviewDescriptorPointerTableOffset + 4 * mold) - GbaBase;
-                int width = rom[record + 0x12], height = rom[record + 0x13];
+                int height = rom[record + 0x12], width = rom[record + 0x13];   // 0x12 = altura, 0x13 = largura (como em LargePartDisplay)
                 var blobs = (int)U32(rom, record) - GbaBase;
                 var selector = (int)((value >> 6) & SelectorMask);
                 var poses = (int)((value >> 15) & 1) + 1;
