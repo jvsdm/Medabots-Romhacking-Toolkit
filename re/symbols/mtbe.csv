@@ -569,7 +569,7 @@ address,name,kind,count,comment
 0x0803F41C,get_portrait,func_thumb,,provavel: carrega retrato (gPortraitImages[personagem*9 + expressao]) e paleta para buffer; antes LoadPortrait_Unk; Simon/Rokusho
 0x0803F480,LoadPortraitToVram_Unk,func_thumb,,"provavel: retrato em VRAM 0x06000F80, paleta em 0x050001A0"
 0x0803F51C,Move_Character_Portraits,func_thumb,,provavel: carrega retrato se gTextState+0xE == 0; antes ShowPortrait_Unk; Simon/Rokusho
-0x0803FD28,Parse_text,func_thumb,,Simon/Rokusho
+0x0803FD28,Parse_text,func_thumb,,Simon/Rokusho; provavel: trata o opcode 0xFB (<PORTRAIT:lado,personagem,expressao>, 3 bytes); ver re/reference/portraits.md
 0x08040144,TextItalicFont_Use,label,,codigo de texto que le a fonte italica (0x40144-0x40504)
 0x080402B4,TextMeasureWord,func_thumb,,mede a proxima palavra ate o espaco inclusive; se x + largura > 208 (0xD0) marca quebra (linha 2 ou caixa nova)
 0x08040CD0,ClearObjectAttributeEntries,func_thumb,,Simon/Rokusho
@@ -993,7 +993,7 @@ address,name,kind,count,comment
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
 0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images
-0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato; Simon: Portrait_Pallettes
+0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes
 0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable
 0x083B29EC,gRandomLUT,label,,Simon/Rokusho em 0x083B2A0C
 0x083B4E08,gFontWidths,data,512,larguras da fonte do dialogo: 2 B por glifo (o 1o e o avanco)

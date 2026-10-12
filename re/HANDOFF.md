@@ -492,3 +492,12 @@ Checklist:
 - Tarefa 7: o visualizador Motion (ROM de debug, savestate no mapa + poke da cena 63) mostra os 47 tipos; a
   rotulagem esta sendo feita pelo jogo (breakpoint em FightPreview_ApplyObjectMotionKind durante o replay).
 - Para a nuvem: tarefas 8 (mini sprite), 9 (HUD) e 10 (retratos) continuam abertas.
+
+### 2026-10-12 - sessao nuvem: tarefa 10 (retratos dos dialogos), estatica, nao testada
+- `re/reference/portraits.md`: tag `<PORTRAIT:a,b,c>` (0xFB + lado, personagem, expressao), tabelas `gPortraitImages` (176x9
+  Malias2, 64x64 = 64 tiles 4bpp) e `gPortraitPalettes` (32 B por personagem), regra de desenho (`BoxTop-64`, x=8 ou 168,
+  hflip no lado 1) vinda da previa do WPF e do `PortraitExpander`. CSV: comentarios de `Parse_text` e `gPortraitPalettes`.
+- Tudo "provavel". Local precisa conferir (lista em `portraits.md` secao 5): decompilar 0x0803F41C/0x0803F480/0x0803F51C e o
+  caso 0xFB em 0x0803FD28 (ordem dos bytes, lado = hflip do tilemap?), posicao em pixels no emulador, VRAM 0x06000F80 /
+  paleta 0x050001A0, significado de `gTextState+0xE`, e valores reais de lado/expressao no dump do texto.
+- Proxima da nuvem: tarefa 8 (mini sprite) ou 9 (HUD; precisa de ROM, so o local).
