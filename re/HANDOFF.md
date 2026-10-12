@@ -389,3 +389,9 @@ Checklist:
   `..._roboto500.gba`.
 - Comparacao com o Google Fonts (Roboto 20 px, 7 frases): com +0,3 px as linhas ficavam ~10% mais largas (+15 a
   +23 px). Arredondamento simples com espaco 3 da a menor diferenca (media +1,2 px por linha); adotado.
+- Toolkit: "Import Font (TTF/OTF)..." na aba Font (`Text/ImportedFont` + `WPFEditor/TrueTypeRasterizer`). Tamanho
+  pela altura do H (7 px, linhas 4-10), contornos do `GlyphTypeface` desenhados 8x e somados em cobertura, tons
+  da paleta do dialogo, avancos da propria fonte arredondados pelo menor erro em frases PT-BR (max 8 px),
+  '·' como '.', caractere que falta na fonte (Roboto nao tem ♥) fica com o glifo e a largura do jogo. Salvo no
+  projeto (`ImportedFont`, `UseImportedFont`; vence PT-BR e estendida). Testado: import pela interface,
+  emulador com Roboto 400 (variavel lida na instancia padrao). Testes: 260 ok + 3 antigas.

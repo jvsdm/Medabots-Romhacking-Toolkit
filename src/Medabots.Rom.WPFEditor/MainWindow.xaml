@@ -1838,8 +1838,30 @@
                                             Margin="8,0,0,0"
                                             ToolTip="What the PT-BR font writes"
                                             Click="OnPtBrFontHelpClicked" />
+                                    <CheckBox x:Name="UseImportedFontCheckBox"
+                                              Content="Use imported font"
+                                              Margin="24,0,0,0"
+                                              VerticalAlignment="Center"
+                                              Foreground="{DynamicResource Theme.TextPrimary}"
+                                              Checked="OnUseImportedFontChanged"
+                                              Unchecked="OnUseImportedFontChanged" />
+                                    <Button Content="Import Font (TTF/OTF)..."
+                                            Margin="8,0,0,0"
+                                            Padding="8,2"
+                                            Click="OnImportFontClicked" />
+                                    <Button Content="?"
+                                            MinWidth="28"
+                                            Padding="8,2"
+                                            Margin="8,0,0,0"
+                                            ToolTip="How a TrueType font is fitted to the game"
+                                            Click="OnImportedFontHelpClicked" />
+                                </StackPanel>
+                                <TextBlock x:Name="ImportedFontLabel"
+                                           Margin="0,6,0,0"
+                                           Foreground="{DynamicResource Theme.TextMuted}" />
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                                     <Button Content="Export Original Normal Font..."
-                                            Margin="24,0,0,0"
+                                            Margin="0,0,0,0"
                                             Padding="8,2"
                                             Click="OnExportNormalFontClicked" />
                                     <Button Content="Export Original Italic Font..."

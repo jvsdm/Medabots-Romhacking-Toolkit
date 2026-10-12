@@ -23,7 +23,13 @@ public partial class MainWindow
         _syncingFontSection = true;
         UseExtendedFontCheckBox.IsChecked = _project.UseExtendedFont;
         UsePtBrFontCheckBox.IsChecked = _project.UsePtBrFont;
-        UseExtendedFontCheckBox.IsEnabled = !_project.UsePtBrFont;
+        UseImportedFontCheckBox.IsChecked = _project.UseImportedFont;
+        UseImportedFontCheckBox.IsEnabled = _project.ImportedFont is not null;
+        UsePtBrFontCheckBox.IsEnabled = !_project.UseImportedFont;
+        UseExtendedFontCheckBox.IsEnabled = !_project.UsePtBrFont && !_project.UseImportedFont;
+        ImportedFontLabel.Text = _project.ImportedFont is { } imported
+            ? $"Imported: {imported.Name}, {imported.PixelSize:0.#} px{(imported.Italic is null ? " (no italic: the game's italic is kept)" : ", with italic")}"
+            : "No font imported.";
         _syncingFontSection = false;
 
         var rom = _session?.RomFile.Data;
@@ -44,7 +50,8 @@ public partial class MainWindow
         }
         else
         {
-            var state = _project.UsePtBrFont ? "PT-BR font (100%) applied on export."
+            var state = _project.UseImportedFont && _project.ImportedFont is { } font ? $"Imported font {font.Name} applied on export."
+                : _project.UsePtBrFont ? "PT-BR font (100%) applied on export."
                 : !ExtendedFont.CanApply(rom) ? "Extended font not applicable: the slots 0x4F/0x7D-0x7F already hold other glyphs."
                 : _project.UseExtendedFont ? "Extended font applied on export." : "Extended font off: the original font is kept.";
             ExtendedFontStatusLabel.Text = $"{state}  Font 0x{layout.GameFont:X6}, italic 0x{layout.GameItalicFont:X6} (as drawn by the game), widths 0x{layout.Widths:X6} / 0x{layout.ItalicWidths:X6}.";
@@ -79,6 +86,65 @@ public partial class MainWindow
         RebuildMessagePreview(keepBox: true);
         UpdateStatus();
     }
+
+    private void OnUseImportedFontChanged(object sender, RoutedEventArgs e)
+    {
+        if (_syncingFontSection)
+        {
+            return;
+        }
+
+        _project.UseImportedFont = UseImportedFontCheckBox.IsChecked == true && _project.ImportedFont is not null;
+        RefreshFontSection();
+        RebuildMessagePreview(keepBox: true);
+        UpdateStatus();
+    }
+
+    // TrueType/OpenType file (and optionally its italic) rasterized into the dialogue cells
+    private async void OnImportFontClicked(object sender, RoutedEventArgs e)
+    {
+        var normalPath = PickOpenFilePath("Import font (TrueType / OpenType)", FontFileFilter);
+        if (string.IsNullOrWhiteSpace(normalPath))
+        {
+            return;
+        }
+
+        var italicPath = PickOpenFilePath("Italic font (optional; cancel to keep the game's italic)", FontFileFilter);
+        try
+        {
+            _project.ImportedFont = TrueTypeRasterizer.Import(normalPath, string.IsNullOrWhiteSpace(italicPath) ? null : italicPath);
+            _project.UseImportedFont = true;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlertAsync("Import failed", ex.Message, "OK");
+            return;
+        }
+
+        RefreshFontSection();
+        RebuildMessagePreview(keepBox: true);
+        UpdateStatus();
+        var warnings = _project.ImportedFont.Warnings;
+        await DisplayAlertAsync("Font imported",
+            $"{_project.ImportedFont.Name} at {_project.ImportedFont.PixelSize:0.#} px (capital H = {ImportedFont.CapHeight} px)."
+            + (warnings.Count > 0 ? Environment.NewLine + Environment.NewLine + string.Join(Environment.NewLine, warnings) : ""), "OK");
+    }
+
+    private async void OnImportedFontHelpClicked(object sender, RoutedEventArgs e) =>
+        await DisplayAlertAsync("Imported font", ImportedFontSummary, "OK");
+
+    private const string FontFileFilter = "Fonts (*.ttf;*.otf)|*.ttf;*.otf|All files (*.*)|*.*";
+
+    private const string ImportedFontSummary =
+        "Import a TrueType / OpenType font for the dialogue boxes (European ROMs).\n\n" +
+        "Size: chosen so a capital H is 7 px tall (rows 4-10 of the 8x16 cell, as the game's font).\n" +
+        "Shading: the font's anti-aliasing becomes the 15 dialogue shades (same palette).\n" +
+        "Widths: the font's own advances, rounded with the offset and space width that keep sample PT-BR lines " +
+        "closest to their exact length; at most 8 px (above 8 the game wipes the next letter at some positions).\n" +
+        "The game's ellipsis character (···) is drawn as a period on the baseline.\n\n" +
+        "Works best with sans-serif or pixel fonts; wide letters (M, W) are limited to 8 px and the import lists " +
+        "letters cut at the cell or missing from the font. Variable fonts are read at their default instance.\n\n" +
+        "The font is kept in the project file. When on, it replaces the PT-BR and extended fonts.";
 
     private async void OnExtendedFontHelpClicked(object sender, RoutedEventArgs e) =>
         await DisplayAlertAsync("Extended font", ExtendedFont.Summary, "OK");
@@ -147,8 +213,7 @@ public partial class MainWindow
     // 16x8 glyphs at 4x: grid on the 8x16 cells, red line at the advance of each glyph (what the game uses).
     private BitmapSource RenderFontSheet(byte[] rom, bool italic)
     {
-        s_useExtendedFont = _project.UseExtendedFont;
-        s_usePtBrFont = _project.UsePtBrFont;
+        SyncFontOptions();
         UpdateFontLayout(rom);
         const int cells = 128;
         const int size = cells * FontSheetScale;

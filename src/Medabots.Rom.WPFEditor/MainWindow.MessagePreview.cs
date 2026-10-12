@@ -48,9 +48,23 @@ public partial class MainWindow
     // PT-BR font (Text.PtBrFont): replaces the extended font when on
     private static bool s_usePtBrFont;
 
-    // Font image the preview draws: PT-BR font, extended font or the ROM as is
+    // Imported TrueType font (Text.ImportedFont): replaces the PT-BR and extended fonts when on
+    private static Medabots.Rom.Text.ImportedFont? s_importedFont;
+    private static Medabots.Rom.Text.ImportedFont? s_importedFontDrawn;
+    private static byte[]? s_importedRom;
+
+    // Font image the preview draws: imported font, PT-BR font, extended font or the ROM as is
     private static byte[]? ActiveFontRom(byte[]? rom) =>
-        s_usePtBrFont && s_ptBrRom is { } ptBr ? ptBr : s_useExtendedFont && s_extendedRom is { } ext ? ext : rom;
+        s_importedFont is not null && s_importedRom is { } imported ? imported
+        : s_usePtBrFont && s_ptBrRom is { } ptBr ? ptBr : s_useExtendedFont && s_extendedRom is { } ext ? ext : rom;
+
+    // Font switches of the project, read before drawing
+    private void SyncFontOptions()
+    {
+        s_useExtendedFont = _project.UseExtendedFont;
+        s_usePtBrFont = _project.UsePtBrFont;
+        s_importedFont = _project.UseImportedFont ? _project.ImportedFont : null;
+    }
 
     private const string MessageGlyphs =
         " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789·" +
@@ -91,8 +105,7 @@ public partial class MainWindow
             return;
         }
 
-        s_useExtendedFont = _project.UseExtendedFont;
-        s_usePtBrFont = _project.UsePtBrFont;
+        SyncFontOptions();
         UpdateFontLayout(_session?.RomFile.Data);
         _messageBoxes = WrapMessageBoxes(ParseMessageBoxes(MessageTextEditor?.Text ?? ""), _session?.RomFile.Data);
         ShowMessageBox(keepBox ? _messageBoxIndex : 0);
@@ -517,8 +530,14 @@ public partial class MainWindow
     // Locates the font once per ROM image; keeps the Metabee (E) layout when not found.
     private static void UpdateFontLayout(byte[]? rom)
     {
-        if (rom is null || ReferenceEquals(rom, s_fontLayoutRom))
+        if (rom is null)
         {
+            return;
+        }
+
+        if (ReferenceEquals(rom, s_fontLayoutRom))
+        {
+            UpdateImportedFont(rom);
             return;
         }
 
@@ -530,6 +549,22 @@ public partial class MainWindow
             ? Medabots.Rom.Text.PtBrFont.Preview(rom, ptBrLayout)
             : null;
         s_fontLayoutRom = rom;
+        s_importedFontDrawn = null;
+        UpdateImportedFont(rom);
+    }
+
+    // The imported font is drawn again when the project gets another one
+    private static void UpdateImportedFont(byte[] rom)
+    {
+        if (ReferenceEquals(s_importedFont, s_importedFontDrawn) && (s_importedFont is null || s_importedRom is not null))
+        {
+            return;
+        }
+
+        s_importedRom = s_importedFont is not null && Medabots.Rom.Text.ImportedFont.CanApply(rom, out var layout)
+            ? s_importedFont.Preview(rom, layout)
+            : null;
+        s_importedFontDrawn = s_importedFont;
     }
 
     // Palette index (0-F) of a glyph pixel as the game draws it, from the font the export writes.

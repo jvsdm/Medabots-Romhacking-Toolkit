@@ -113,6 +113,10 @@ public static class RomHackProjectSerializer
 
         public bool UsePtBrFont { get; set; }
 
+        public ImportedFontDocument? ImportedFont { get; set; }
+
+        public bool UseImportedFont { get; set; }
+
         public RomHackProject ToProject(string? projectFilePath)
         {
             if (SchemaVersion is not 1 and not 2 and not 3 and not 4 and not 5 and not 6 and not 7 and not 8 and not 9 and not 10 and not 11 and not 12 and not 13)
@@ -127,7 +131,9 @@ public static class RomHackProjectSerializer
                 ProjectFilePath = projectFilePath,
                 TextProfileId = TextProfileId,
                 UseExtendedFont = UseExtendedFont,
-                UsePtBrFont = UsePtBrFont
+                UsePtBrFont = UsePtBrFont,
+                ImportedFont = ImportedFont?.ToFont(),
+                UseImportedFont = UseImportedFont
             };
 
             foreach (var action in PendingActions)
@@ -740,9 +746,46 @@ public static class RomHackProjectSerializer
                     .Distinct()
                     .ToList(),
                 UseExtendedFont = project.UseExtendedFont,
-                UsePtBrFont = project.UsePtBrFont
+                UsePtBrFont = project.UsePtBrFont,
+                ImportedFont = ImportedFontDocument.FromFont(project.ImportedFont),
+                UseImportedFont = project.UseImportedFont
             };
         }
+    }
+
+    private sealed class ImportedFontDocument
+    {
+        public string Name { get; set; } = "";
+
+        public double PixelSize { get; set; }
+
+        public string Normal { get; set; } = "";
+
+        public string NormalAdvances { get; set; } = "";
+
+        public string? Italic { get; set; }
+
+        public string? ItalicAdvances { get; set; }
+
+        public static ImportedFontDocument? FromFont(Text.ImportedFont? font) => font is null ? null : new ImportedFontDocument
+        {
+            Name = font.Name,
+            PixelSize = font.PixelSize,
+            Normal = Convert.ToBase64String(font.Normal),
+            NormalAdvances = Convert.ToBase64String(font.NormalAdvances),
+            Italic = font.Italic is null ? null : Convert.ToBase64String(font.Italic),
+            ItalicAdvances = font.ItalicAdvances is null ? null : Convert.ToBase64String(font.ItalicAdvances)
+        };
+
+        public Text.ImportedFont ToFont() => new()
+        {
+            Name = Name,
+            PixelSize = PixelSize,
+            Normal = Convert.FromBase64String(Normal),
+            NormalAdvances = Convert.FromBase64String(NormalAdvances),
+            Italic = Italic is null ? null : Convert.FromBase64String(Italic),
+            ItalicAdvances = ItalicAdvances is null ? null : Convert.FromBase64String(ItalicAdvances)
+        };
     }
 
     private sealed class MessagePatchDocument

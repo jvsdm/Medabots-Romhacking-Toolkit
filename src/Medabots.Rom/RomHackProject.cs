@@ -77,4 +77,10 @@ public sealed class RomHackProject
 
     /// <summary>Writes the PT-BR fonts (Text.PtBrFont) on build, in place of the extended font. Off by default.</summary>
     public bool UsePtBrFont { get; set; }
+
+    /// <summary>Font imported from a TrueType/OpenType file (Text.ImportedFont), kept with the project.</summary>
+    public Text.ImportedFont? ImportedFont { get; set; }
+
+    /// <summary>Writes <see cref="ImportedFont"/> on build, in place of the PT-BR and extended fonts.</summary>
+    public bool UseImportedFont { get; set; }
 }
