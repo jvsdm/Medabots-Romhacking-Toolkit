@@ -1104,3 +1104,5 @@ address,name,kind,count,comment
 0x08034048,FightPreview_SetupSceneFromPartTechnique,func_thumb,,"A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]."
 0x083CE164,FightPreview_SceneRowPointerTable,data,,"A5: 132 ponteiros para linhas de halfwords (indexadas por sequence_cursor). Linha = sel de +0xF9. Dump: pc/research/A5_preview_rows.tsv"
 0x083CE374,FightPreview_EntryCountBlocks,data,,"A5: blocos (byte count + ...) apontados por Row[cursor] (signed halfword). Count = numero de halfwords copiadas por 0x0803D450."
+0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,"A6 (rec_2): cursor(+0x100 = 0x03001900) += 1 + byte(0x083CE374 + s16(Row[cursor])); escrita pc 0x0803D4DC; chamada pelos handlers 8-12 do roteiro de objeto"
+0x080340A4,FightPreview_CursorReset,code_pc,,"A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864"

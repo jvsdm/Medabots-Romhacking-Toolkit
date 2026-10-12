@@ -194,3 +194,9 @@ da ROM `0x083CE164[sel]` (FightPreview_UnpackSequenceEntry 0x0803D450), com sel 
 sel=6 = peca 0). Logo, o tipo de movimento de um slot = tabela ROM indexada por tecnica da peca + cursor + k. Cadeia fechada
 ate a tabela; falta o avanco do cursor (+0x100), o ramo +0xDD>3 e o nome de cada linha. Rotulos da tabela desta secao: ainda
 sem confirmacao no jogo.
+
+Nota A6 (rec_2, ver pc/research/A2_motion_events.md, secao A6): o cursor +0x100 (0x03001900) e o indice de bloco da linha
+ROM de `FightPreview_SceneRowPointerTable`. Escrito por `FightPreview_AdvanceSequenceCursor` 0x0803D4AC (pc 0x0803D4DC):
+cursor += 1 + cnt, cnt = byte(0x083CE374 + Row[cursor]). Zerado em `FightPreview_SetupSceneFromPartTechnique` (pc 0x080340A4).
+Anda por passo do roteiro de objeto (handlers 8-12), varios passos por quadro; nao e tempo. Rotulos da tabela 6 continuam
+SEM confirmacao no jogo; nada novo foi rotulado nesta passada (rec_6/rec_7 nao repetidos). Nomes dos 60 tipos: 0x083BE868.
