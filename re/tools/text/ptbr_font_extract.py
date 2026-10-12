@@ -12,7 +12,10 @@ Ajustes da fonte normal (linha de base = linha 10, como A, a, n):
 - '.' e ',' descem 1 linha (o ponto fica na linha 10);
 - 'l' recebe a haste do 'b' (linhas 3-10);
 - o corpo do 'í' (linhas 5 em diante) vai 1 coluna para a esquerda: haste na coluna 0, como o 'i' (antes sobrava
-  um espaco antes dele); o acento fica onde estava, inclinado sobre a haste.
+  um espaco antes dele); o acento fica onde estava, inclinado sobre a haste;
+- letras: no corpo (linhas 4+ nas maiusculas, 6+ nas minusculas; os acentos ficam), a sombra clara (tom < 8) a
+  direita da ultima coluna forte sai, e o pe de 1 pixel do 'a' tambem; a letra termina onde a largura do Toolkit
+  termina (PtBrFont: ultima coluna forte + 1 livre) e nao encosta na seguinte.
 """
 import sys
 
@@ -38,6 +41,16 @@ def put(glyph, x, y, value):
     glyph[i] = (glyph[i] & 0x0F) | value << 4 if x & 1 else (glyph[i] & 0xF0) | value
 
 
+def last_strong_column(glyph, lowercase, top, strong=8):
+    # mesma regra de PtBrFont.LastInkColumn: tom >= 8; em minuscula, ultima coluna com 1 pixel so (pe do 'a') nao conta
+    cols = [sum(get(glyph, x, y) >= strong for y in range(top, 14)) for x in range(8)]
+    inked = [x for x in range(8) if cols[x]]
+    if not inked:
+        return 7
+    last = inked[-1]
+    return last - 1 if lowercase and cols[last] == 1 and last > 0 else last
+
+
 def adjust_normal(font):
     glyphs = [bytearray(font[g * GLYPH:(g + 1) * GLYPH]) for g in range(128)]
     for c in BASELINE_MERGE:
@@ -58,6 +71,14 @@ def adjust_normal(font):
             for x in range(8):
                 if y >= ACCENT_ROWS:
                     put(g, x, y, rows[y][x + 1] if x < 7 else BACKGROUND)
+    for i, c in enumerate(CHARS):
+        if c.isalpha():
+            g = glyphs[i]
+            top = 6 if c.islower() else 4
+            last = last_strong_column(g, c.islower(), top)
+            for y in range(top, 16):
+                for x in range(last + 1, 8):
+                    put(g, x, y, BACKGROUND)
     stem = glyphs[CHARS.index('b')]
     el = glyphs[CHARS.index('l')]
     for y in range(16):

@@ -203,7 +203,7 @@ public sealed class ExtendedFontTests
     [Fact]
     public void PtBrFont_HoldsTheDrawnGlyphs()
     {
-        Assert.Equal(72, PtBrFont.NormalGlyphs.Count);
+        Assert.Equal(76, PtBrFont.NormalGlyphs.Count);
         Assert.Equal(127, PtBrFont.ItalicGlyphs.Count);
         foreach (var glyph in new[] { 0x50, 0x51, 0x64, 0x65 })
         {

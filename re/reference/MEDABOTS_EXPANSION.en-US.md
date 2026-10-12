@@ -687,7 +687,9 @@ menu's Motion viewer the bot is identical to the original on both sides.
 - Review with the user (same day), in the extractor and in `PtBrFont`:
   - baseline = row 10: capitals, digits, k, v, ß, Æ, È-Ë had a shade on row 11 (they looked 1 px lower), merged
     into row 10; '.' and ',' move 1 row down; 'l' gets the stem of 'b'; the body of 'í' moves to column 0 (the
-    accent stays);
+    accent stays); in the letter body, light shades (< 8) right of the last strong column and the one-pixel foot of
+    'a' are removed — the letter ends where its width ends and does not touch the next one (before, "oa" touched
+    and the text looked dirty). The palette is unchanged;
   - letter widths (normal font): up to the last column with shade 8 or darker + 1 blank column (light edge shades
     and the one-pixel foot of 'a' do not open a gap): a, e, o 6 → 5; accented letters measured below the accent and
     never narrower than the base letter (í = i = 2). Punctuation and digits keep their widths;

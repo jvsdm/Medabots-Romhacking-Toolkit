@@ -372,3 +372,7 @@ Checklist:
   10, '.'/',' descem, 'l' com haste do 'b', corpo do 'í' na coluna 0), larguras das letras pela tinta >= 8
   (a/e/o = 5, acentuados pelo corpo, í = i) e `medtext.reflow` refazendo toda caixa. Conferido no emulador.
   `build/Medabots_PT-BR_fonte100.gba` regenerada (5595 strings, 0 aviso).
+- Revisao 2 do usuario: "oa" grudado e texto "sujo" (sombras claras da borda direita encostando na letra seguinte
+  depois das larguras menores; a paleta nao mudou). O extrator limpa no corpo das letras a sombra < 8 a direita da
+  ultima coluna forte e o pe do 'a'. 'r' seguido de 'd' continua com vao maior (o 'r' so tem largura no braco;
+  avanco 3 encostaria o braco nas letras com haste a esquerda). Conferido no emulador.

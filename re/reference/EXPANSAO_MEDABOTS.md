@@ -690,7 +690,9 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
 - Revisão com o usuário (mesmo dia), no extrator e no `PtBrFont`:
   - linha de base = linha 10: maiúsculas, números, k, v, ß, Æ, È-Ë tinham sombra na linha 11 (pareciam 1 px abaixo)
     e ela entra na linha 10; '.' e ',' descem 1 linha; 'l' recebe a haste do 'b'; o corpo do 'í' vai para a
-    coluna 0 (o acento fica);
+    coluna 0 (o acento fica); no corpo das letras, a sombra clara (tom < 8) à direita da última coluna forte e o pé
+    de 1 pixel do 'a' saem — a letra termina onde a largura termina e não encosta na seguinte (antes "oa" grudava
+    e o texto parecia sujo). A paleta não muda;
   - larguras das letras (fonte normal): até a última coluna com tom 8 ou mais escuro + 1 coluna livre (tons claros
     da borda e o pé de 1 pixel do 'a' não abrem espaço): a, e, o 6 → 5; acentuados medidos abaixo do acento e nunca
     menores que a letra base (í = i = 2). Pontuação e números mantêm a largura;
