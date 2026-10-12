@@ -169,6 +169,10 @@ Confianca: alta = confirmada na tela; media = pela duracao/roteiro; baixa = palp
 | 45 | 58 | cena fora da batalha (189 quadros) | baixa |
 | 46 | 37 | ? | sem rotulo |
 
+Nota A2 (parcial, ver pc/research/A2_motion_events.md): nenhum rotulo confirmado pelo jogo; `FightPreview_ApplyObjectMotionKind` nao roda na batalha rec_2, entao a ligacao acao -> tipo ainda nao foi achada. Os rotulos desta secao seguem como palpite.
+
+Nota A3 (rec_2, ver pc/research/A2_motion_events.md, secao A3): o roteiro de objeto e `ObjectScript_OpcodeDispatch` 0x080393EC (le byte de `ObjectScript_ReadWord` 0x0803D424, grava em gObjectSlots+0x29, chama `0x083AF8C0[opcode]`). Valores medidos: +0x2C parado em slot 1 = 13 (f1460-1840) e slot 2 = 32 (f1560 em diante); +0x2C que cai por quadro = contador. Quem grava o tipo em +0x2C ainda nao foi achado. Rotulos desta secao seguem como palpite.
+
 Nota: o rotulo "retirada", "parte quebrada", "funcao cessada", "vitoria" e "hit/flinch" nao puderam ser
 atribuidos com os dados atuais. Ver A1_motion_kinds.md para o que falta.
 

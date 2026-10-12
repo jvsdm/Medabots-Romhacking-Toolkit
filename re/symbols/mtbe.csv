@@ -560,9 +560,11 @@ address,name,kind,count,comment
 0x08039250,Fight_SetAttackerAffinityResultFromMirroredAction,func_thumb,,Simon/Rokusho
 0x080392D8,Fight_SetDefenderAffinityResultFromSelectedAction,func_thumb,,"Simon/Rokusho: Classify the selected defender target into a defensive affinity result family. Writes action_result_flow_flags.DEFENDER_AFFINITY_RESULT and the defender_affinity_result_kind classifier when optic, bomb, or grav defender affinity applies."
 0x0803934C,Fight_SetDefenderAffinityResultFromMirroredAction,func_thumb,,Simon/Rokusho
+0x080393EC,ObjectScript_OpcodeDispatch,func_thumb,,"A3: despachante do roteiro de objeto. Le 1 byte de FUN_0803D424 e grava em gObjectSlots+0x29 (slot 0 fixo no codigo); chama o handler 0x083AF8C0[opcode]. Break no replay rec_2: hit de f1446 em diante."
 0x08039E00,FightPreview_BeginSideEntranceSequence,func_thumb,,"Simon/Rokusho: Begin one side of the battle preview entrance sequence. Initialize anchor/screen positions for the chosen side, load displayed part ids, spawn the side sprite layers, seed the per-side preview step flag byte with 0x29, and start the first preview movement step."
 0x0803BBE0,FightPreview_ApplyObjectMotionKind,func_thumb,,copia gObjectSlots[atual]+0x2C para o tipo de movimento do lado (fight_information+0x112) depois da espera +0x30
 0x0803CB54,ObjectSlot_TickRepeat,func_thumb,,conta +0x30 e +0x2C do slot atual; com +0x2E recarrega +0x2C de +0x2D
+0x0803D424,ObjectScript_ReadWord,func_thumb,,"A3: le halfword do roteiro de objeto (ponteiro em DAT_0803d44c+0x100, indice vindo de DAT_0803d44c+0xF9)."
 0x0803D450,FightPreview_UnpackSequenceEntry,func_thumb,,Simon/Rokusho: Unpack the current preview sequence entry selected by fight_information.preview_sequence_state.sequence_cursor and the scene table keyed by fight_information.turn_side_flags low byte. Writes the variable-length entry data into sequence_arg_0..sequence_arg_6 for later preview step handlers.
 0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,"Simon/Rokusho: Advance the preview sequence cursor to the next table entry, skipping the current entry header plus its variable-length payload. Used by the side-preview scene step handlers after consuming sequence_arg_0..sequence_arg_6."
 0x0803EED8,Battle_CheckExitShortcut,func_thumb,,"Simon/Rokusho: Battle-level early-exit shortcut check. If the current battle state allows it and the relevant input bit is pressed, return to the main menu/battle exit state."
@@ -992,6 +994,7 @@ address,name,kind,count,comment
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
+0x083AF8C0,ObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2."
 0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images
 0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes
 0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable
