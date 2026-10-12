@@ -481,5 +481,5 @@ Checklist:
 - Para ter acento nos rotulos (depois): (1) desenhar os glifos 8x8 acentuados e recomprimir a fonte com mais tiles;
   (2) tabela de quadros nova com 128 entradas (registros de 12 B como os de 0x08075C50, tile = 0x3A0+char-1) e
   repontar `gSpriteSetTable0[0]`; (3) a fonte passa de 0x3ED: tiles 0x3EE-0x3FF (18) so se nenhuma das ~20 telas
-  usar; conferir no emulador (VRAM OBJ) cada tela que carrega 0x06017400. 18 tiles cobrem a e i o u com acentos
-  usados em PT-BR + c cedilha minusculos e 7 maiusculos.
+  usar; conferir no emulador (VRAM OBJ) cada tela que carrega 0x06017400. 18 tiles: á â ã é ê í ó ô õ ú ç (11)
+  + Á É Ó Ú Ç Ã Õ (7); à fica sem acento.
