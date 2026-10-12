@@ -376,3 +376,10 @@ Checklist:
   depois das larguras menores; a paleta nao mudou). O extrator limpa no corpo das letras a sombra < 8 a direita da
   ultima coluna forte e o pe do 'a'. 'r' seguido de 'd' continua com vao maior (o 'r' so tem largura no braco;
   avanco 3 encostaria o braco nas letras com haste a esquerda). Conferido no emulador.
+
+### 2026-10-12 - sessao local (16): teste de fonte TrueType (Roboto)
+- `re/tools/text/port_ttf.py`: rasteriza uma TTF nas celulas 8x16 4bpp (linha de base 10, antialias -> tons 1-F) e
+  grava as larguras. Roboto 10 px peso 500 (normal + italica) ficou a mais proxima da fonte do jogo; no emulador,
+  texto normal e italico com acentos ok. ROM de teste local `build/Medabots_PT-BR_roboto_teste.gba`.
+- **Limite do jogo: avanco maximo 8 px.** Com M/m/W em 9, a letra seguinte some em certas posicoes ("Tem um" saiu
+  "Tem  m"; com o espaco em 4, sumiu o 'e' de "Tem"). Com tudo <= 8, certo. A fonte original nao passa de 8.

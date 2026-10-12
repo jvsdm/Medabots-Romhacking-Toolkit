@@ -5,6 +5,7 @@
 | `dump_text_v3.py` | `python dump_text_v3.py ROM.gba game_text.json`: extrai as 50 tabelas de texto (mantem traducoes ja feitas) |
 | `insert_text_v3.py` | `python insert_text_v3.py ROM_toolkit.gba game_text.json ROM_saida.gba --reflow`: grava as traducoes |
 | `medtext.py` | tabela de caracteres, larguras da fonte (com a extensao do Toolkit), medida e quebra de caixas |
+| `port_ttf.py` | `python port_ttf.py ROM_IN ROM_OUT fonte.ttf 10 --weight 500 --italic italica.ttf`: teste de fonte TrueType (ex.: Roboto) rasterizada nas celulas 8x16 do dialogo |
 | `ptbr_font_extract.py` | `python ptbr_font_extract.py ORIGINAL_E.gba EDITADA.gba ../../../src/Medabots.Rom/Text/ptbr_font.bin`: glifos da fonte PT-BR desenhada a mao para o Toolkit |
 | `glossario.md` | termos e nomes usados na traducao |
 
