@@ -512,3 +512,14 @@ Checklist:
 - Pedido (tarefa 11): no codigo decompilado do tocador/renderizador do bot grande, como sai o angulo e a escala de
   cada molde (matriz affine em OAM), o deslocamento global do corpo durante o ataque, e se o tipo 13 e tocado do
   inicio ou de um quadro-chave intermediario. Entregar a formula para o PC.
+
+### 2026-10-12 - sessao nuvem: tarefa 11 (pose afim do bot grande), SEM resposta
+- Pedido nao resolvivel so com o repo: nao ha ROM nem decompilacao do renderizador/da matriz afim aqui. Nao inventei formula.
+- Entregue `re/reference/affine_pose.md`: o que ja se sabe (interpolador inteiro com truncamento, funcoes afins gerais
+  0x08001CAC/0x08001EA8/0x08001FF8, ramo afim do preview 0x080465B8/0x08045C30/0x08045680), 4 hipoteses ("provavel":
+  sinal/pivo/centro do sprite, deslocamento do corpo = linha do molde 1 do roteiro 44, inicio do tipo 13 em k=0) e a
+  lista ordenada do que o local precisa responder.
+- Local confere (prioridade): (1) dump dos roteiros 44 (angulos e deslocamentos, molde 1 e bracos 14-19); (2) decompilar
+  0x08001CAC (angulo -> pa/pb/pc/pd, tabela de seno, escala 0x100?); (3) onde 0x080465B8 le o angulo e se usa double-size;
+  (4) OAM afim real de um quadro-chave vs o angulo do estado; (5) watchpoint em estado+molde*0x10+0x1C no corte.
+  Devolver a formula aqui para o PC. CSV nao alterado (nada novo confirmado).
