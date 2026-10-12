@@ -383,3 +383,7 @@ Checklist:
   texto normal e italico com acentos ok. ROM de teste local `build/Medabots_PT-BR_roboto_teste.gba`.
 - **Limite do jogo: avanco maximo 8 px.** Com M/m/W em 9, a letra seguinte some em certas posicoes ("Tem um" saiu
   "Tem  m"; com o espaco em 4, sumiu o 'e' de "Tem"). Com tudo <= 8, certo. A fonte original nao passa de 8.
+- Revisao com o usuario (comparando com fonts.google.com/specimen/Roboto): avancos agora vem das larguras da fonte
+  (+0,3 px antes de arredondar; espaco 3) em vez da tinta rasterizada (o acento do 'í' e o antialias do 's' abriam
+  buracos); '·' (reticencias) desenhado como '.' na linha de base. ROMs locais `Medabots_PT-BR_roboto400.gba` e
+  `..._roboto500.gba`.

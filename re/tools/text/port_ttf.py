@@ -2,7 +2,8 @@
 Rasteriza uma fonte TrueType nas celulas 8x16 4bpp da fonte do dialogo (Metabee E, endereco do jogo) com a
 linha de base na linha 10, converte a cobertura do antialias nos tons 1 (fundo) a F e grava as larguras.
 Avanco maximo 8: com 9 o jogo apaga a letra seguinte em algumas posicoes (testado: "Tem um" saia "Tem  m").
-Teste: Roboto 10 px peso 500 (normal e italica) e a mais proxima da fonte do jogo."""
+Avancos = largura da propria fonte (+0,3 px antes de arredondar, espaco >= 3), como o navegador; '·' (reticencias
+"···" no texto) e desenhado como '.' na linha de base. Teste: Roboto 10 px, peso 400 ou 500 (normal e italica)."""
 import argparse, sys
 from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, r"D:\claude-brain\Medabots\git\Medabots-Romhacking-Toolkit\re\tools\text")
@@ -10,6 +11,8 @@ import medtext as m
 
 FONTS = {False: (0x4BFC64, 0x3B4E08), True: (0x4C59A4, 0x3B5008)}
 BASELINE = 10
+# acrescimo antes de arredondar: em 10 px as larguras sao fracionadas e o arredondamento aperta o texto
+TRACKING = 0.3
 # glifos 0x50/0x51/0x64/0x65 mostram Ã ã Õ õ na fonte PT-BR
 CHARS = list(m.CHARS)
 for g, c in ((0x50, 'Ã'), (0x51, 'ã'), (0x64, 'Õ'), (0x65, 'õ')):
@@ -27,25 +30,16 @@ def load(path, size, weight):
 
 
 def raster(font, ch, gamma):
-    # desenha grande o bastante e recorta a celula: x a partir da tinta, linha de base na linha 10
+    # caneta na coluna 0 da celula e linha de base na linha 10, como o navegador desenha; avanco = largura da
+    # propria fonte (arredondada). '·' e reticencias no jogo ("···"): desenhado como '.' na linha de base.
+    if ch == '·':
+        ch = '.'
     im = Image.new("L", (32, 32), 0)
     d = ImageDraw.Draw(im)
     asc = font.getmetrics()[0]
     d.text((8, BASELINE + 8 - asc), ch, font=font, fill=255)
-    box = im.getbbox()
-    cell = [[0] * 8 for _ in range(16)]
-    if not box:
-        return cell, 0
-    left = box[0]
-    right = -1
-    for y in range(16):
-        for x in range(8):
-            v = im.getpixel((left + x, y + 8)) if left + x < 32 else 0
-            cell[y][x] = round(15 * (v / 255) ** gamma)
-    for x in range(8):
-        if any(cell[y][x] >= 4 for y in range(16)):
-            right = x
-    return cell, right
+    cell = [[round(15 * (im.getpixel((8 + x, 8 + y)) / 255) ** gamma) for x in range(8)] for y in range(16)]
+    return cell, round(font.getlength(ch) + TRACKING)
 
 
 def encode(cell):
@@ -70,10 +64,10 @@ def main():
         font = load(path, a.size, a.weight)
         base, widths = FONTS[italic]
         for g in range(1, 128):
-            cell, right = raster(font, CHARS[g], a.gamma)
+            cell, advance = raster(font, CHARS[g], a.gamma)
             rom[base + g * 64:base + g * 64 + 64] = encode(cell)
-            rom[widths + g * 2] = min(8, right + 2) if right >= 0 else 3
-        rom[widths] = 3  # espaco
+            rom[widths + g * 2] = max(1, min(8, advance))
+        rom[widths] = max(3, min(8, round(font.getlength(' ') + TRACKING)))  # espaco
     open(a.rom_out, "wb").write(rom)
 
 
