@@ -439,3 +439,21 @@ Checklist:
   - Tabela de batalhas EU 0x3C1B80 (bot da batalha 1 da Erika em 0x3BF53C); injetar Rokusho funcionou.
   - Fundos da batalha: ver tarefa 9. Decoder Malias 0x080009BC (r0 = src ROM, r1 = dst).
 - Para a nuvem: tarefas 6-10 (imagens, leitura do Toolkit C#); prioridade 6 e 7.
+
+### 2026-10-12 - sessao nuvem: tarefa 6 (montagem do bot grande), estatica, nao testada
+- Li `ImageAssetRepository.LargePartDisplay.cs` (caminho `Composite*`/`ReadMedabotLargeDisplayFrame`), `LargePartDisplayAsset`,
+  `ImageAssetPatcher.LargePartDisplay`, `RomLayout.Tables` e `NaviImporter.RestPose`. Entregues:
+  `re/reference/large_part_layout.md` (tabelas, formato da entrada e do registro de molde, algoritmo, pseudocodigo) e
+  `re/tools/large_part_layout.py` (implementa o algoritmo sobre a ROM; so compilado, nunca executado).
+- Achados (todos "provavel" ate conferir): posicao = ancora acumulada (+0x0C em y, +0x0D em x, negado no lado 1) - pivo
+  (+4 = rawY, +8 = rawX); filho herda a ancora ja deslocada, irmao a do pai; ancora inicial (0x3C,0x32), chave 0x1C2;
+  lado 1 usa registro de geometria do molde espelhado (14-16 <-> 17-19) e `x = ancora - (largura - rawX)`; juntas 3-6 sao
+  4 registros de 0x18 B em `0x0807EE10` (antes de `gPreviewHead`; novo no CSV `gPreviewJointTemplates`), com `byte 0x10` = molde
+  raiz da peca e `0x0D` -> `-2-0x0D` no lado 1. O Toolkit le **0x12 = altura, 0x13 = largura**; EXPANSAO 15.1 diz o contrario.
+  O `descriptor_table 0x083D1D98` do Simon e a nossa `0x083D1D78` (Rokusho = Metabee + 0x20).
+- Local precisa conferir (detalhe em `large_part_layout.md` secao 7): (1) rodar o script com a ROM no Metabee, lados 0 e 1, e
+  comparar com as offsets do HANDOFF (cabeca m09 (-12,-49)/m10 (-15,-75), braco esq m14 (-3,-63)/m15 (0,-42), braco dir m17
+  (-36,-62)/m18 (-36,-39)); (2) `--dump-molds` dos moldes 1-6 (quem liga as juntas 3-6) e `--histogram` (moldes por peca);
+  (3) no Ghidra, `RenderCompositePreviewDescriptorRecursive` 0x080465B8: ordem altura/largura e sinais; (4) confirmar `0x0807EE10`.
+  Se bater, tirar o "provavel" do CSV e marcar a tarefa 6 como feita; se nao, os suspeitos estao em 5 do .md.
+- Proxima da nuvem: tarefa 7 (formato da tabela de animacao 0x083D1E40), mas ja ha `re/reference` 15.2; falta so a ROM.

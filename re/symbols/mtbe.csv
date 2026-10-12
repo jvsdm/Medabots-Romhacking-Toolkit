@@ -964,6 +964,7 @@ address,name,kind,count,comment
 0x0807CCE8,VBlankWait,func_thumb,,provavel: espera VBlank no inicio de cada frame; Simon: VBlankIntrWait
 0x0807CCF0,CallViaR0,func_thumb,,chama o ponteiro em r0; Simon: CallFunctionPointer
 0x0807E8EC,gMoveScriptTable,label,,roteiros de deslocamento em batalha: [kind*7 + estilo]
+0x0807EE10,gPreviewJointTemplates,data,96,"provavel: 4 registros de 0x18 B (juntas sinteticas 3-6 do preview grande: cabeca, esq, dir, pernas); byte 0x10 = molde raiz da peca, 0x0D invertido (-2-x) no lado 1; ver re/reference/large_part_layout.md"
 0x0807EE70,gPreviewHead,data,1952,preview cabeca: 122 x 16 B
 0x0807F610,gPreviewRightArm,data,1952,preview braco direito: 122 x 16 B
 0x0807FDB0,gPreviewLeftArm,data,1952,preview braco esquerdo: 122 x 16 B
