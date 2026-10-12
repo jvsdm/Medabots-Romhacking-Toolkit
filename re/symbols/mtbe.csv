@@ -1101,3 +1101,6 @@ address,name,kind,count,comment
 0x087852CF,gStarterData,label,,dados do bot inicial
 0x08785FB4,sSharedPartScreenTileSheet,label,,Simon/Rokusho em 0x08785FD8
 0x087F5500,gTextDump,label,,inicio do texto
+0x08034048,FightPreview_SetupSceneFromPartTechnique,func_thumb,,"A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]."
+0x083CE164,FightPreview_SceneRowPointerTable,data,,"A5: 132 ponteiros para linhas de halfwords (indexadas por sequence_cursor). Linha = sel de +0xF9. Dump: pc/research/A5_preview_rows.tsv"
+0x083CE374,FightPreview_EntryCountBlocks,data,,"A5: blocos (byte count + ...) apontados por Row[cursor] (signed halfword). Count = numero de halfwords copiadas por 0x0803D450."

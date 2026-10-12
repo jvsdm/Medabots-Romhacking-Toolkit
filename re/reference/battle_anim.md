@@ -188,3 +188,9 @@ ele). Direita/esquerda mudam o tipo; START/SELECT, o bot (0-121); A avança.
 
 Nota A4 (rec_2, ver pc/research/A2_motion_events.md, secao A4): o +0x2C do slot 1 = 13 (f1446) e escrito pelo handler de opcode 8 do roteiro
 de objeto, `0x080395E8` (tabela 0x083AF8C0[8]): valor = halfword de `fight_information+0x104+2*k`. Ainda sem a origem de k/da tabela e sem rotulo do tipo 13.
+
+Nota A5 (rec_2, ver pc/research/A2_motion_events.md, secao A5 e pc/research/A5_preview_rows.tsv): a tabela +0x104 vem da linha
+da ROM `0x083CE164[sel]` (FightPreview_UnpackSequenceEntry 0x0803D450), com sel = action_or_leg_type da peca k (ate f1445
+sel=6 = peca 0). Logo, o tipo de movimento de um slot = tabela ROM indexada por tecnica da peca + cursor + k. Cadeia fechada
+ate a tabela; falta o avanco do cursor (+0x100), o ramo +0xDD>3 e o nome de cada linha. Rotulos da tabela desta secao: ainda
+sem confirmacao no jogo.
