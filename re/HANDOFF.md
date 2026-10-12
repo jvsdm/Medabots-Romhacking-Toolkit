@@ -398,3 +398,5 @@ Checklist:
 - Local (2026-10-12): pasta do projeto organizada. ROMs geradas em `build/{expansao,traducao,debug}`, texto da
   traducao em `traducao/` (fora do git), arte de fa em `art/custom/`; nota central do Obsidian `_Medabots.md`.
   Docs: secao 16.2 (import de fonte). Para a nuvem: nada.
+- Local: apagados o fork antigo `toolkit/`, `dist/` e `data/captures/`; este clone e o unico Toolkit local
+  (os geradores `tools/export_manifest.py`, `export_patch_sites.py` e `gen_signatures.py` escrevem aqui).
