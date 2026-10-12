@@ -154,3 +154,25 @@ so o Ghidra responde, para a sessao local nao refazer leitura.
   0x03001380 por quadro e comparar pa/pb/pc/pd com cos/sin de (ang>>8)*1,41 graus e sx/sy dos bytes do molde).
 - Teste: `replay_record.py rec_2 --frames 1530 --dump 0x020260C0:0x440@F...` (F = 1462..1530, usa ck_1400) e comparar com
   `motion.lua` (start com o estado do dump de f1462). Script de conferencia nao foi guardado (apagado com o scratchpad).
+
+## 9. G10 (rec_2 ck_1400, f1462-1530, pernas = moldes 20-24, CONFERIDO na OAM real)
+
+- **OAM real**: 0x07000000 (o shadow 0x03001380 diverge em alguns bytes; usar a OAM). Pernas do bot 43: OBJ 92-96 =
+  entradas k92..k96 com `attr0` bit 8 (afim), `attr1` bits 9-13 = grupo; dbl0 em todas. Grupo g = `pa` em 0x07000000+0x20g+6.
+- **Matriz**: `pa = T[i+64]`, `pb = -T[i]`, `pc = T[i]`, `pd = T[i+64]` com `i = ((-acc) & 0xFFFF) >> 8` e
+  `T[k] = trunc(256 sen(2 pi k / 256))` (sx = sy = 256 aqui). Bate em 315/315 amostras (perna x quadro).
+  `acc` = soma inteira (s16) do registro +0x0C dos moldes da cadeia.
+- **Cadeia das pernas** (arvore do battle.lua do bot 043, indices da lista): molde 6 (raiz das pernas) -> 20 -> 21 -> 22
+  e 20 -> 23 -> 24. Cada no soma o angulo do seu registro (id = molde). Sinal: o desenho gira por `atan2(pb,pa)` = +acc
+  quantizado (`rig.draw_angle`); a posicao da junta usa +acc exato.
+- **Registro com x/y trocados no composto**: o deslocamento usado pelo composto e (dx,dy) = (+0x08, +0x0A) do registro,
+  ou seja, o que `motion.lua` chama `y` e `x` (ajuste por regressao das pernas e da raiz, molde 1: 0 px de vies no
+  quadro bom). Vale tambem para a raiz (molde 1).
+- **Centro do sprite (pivo)**: sem double-size, o sprite gira em torno de (x+w/2, y+h/2). Centro = junta + R(th)*((w/2,h/2)-raw);
+  a imagem e desenhada com origem no centro. Com angulo 0 e igual ao desenho antigo (rig.lua: rest pose 32 itens, 0 diferencas).
+- **Atraso**: o OAM de f reflete o registro de f-2 (cadeia de 2 quadros; os angulos batem exatos so com -2).
+- **Medido** (`rig.lua` novo, f1474-1520, n=235 por no): posicao max 1,6 px (media 0,6); angulo desenhado vs OAM max
+  0,2 grau (media 0,07); angulo exato vs OAM max 1,4 grau (so a quantizacao).
+- **Aberto**: f1521-1530, a raiz do bot anda para a esquerda (erro ate 25 px em f1526, ~ -3 px por quadro) e nao e explicada
+  por um registro (moldes 1-63, x/y/ang, lags -2..0) nem por um halfword da tabela 0x03002C30 (128 x 0x40). `prev` do
+  f1462 (molde 8/10/12 = 0x71C) nao existe em battle.lua (o corte comeca com zeros). battle.lua nao aplica o atraso de 2 quadros.
