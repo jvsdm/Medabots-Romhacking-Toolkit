@@ -326,3 +326,30 @@ Checklist:
 - Bot customizado (custom_lab, KWG-03BH): pausado; desmonta fora da animacao de espera.
 - Docs: `re/reference/` secao 16 (fonte) e 15.7 (custom pausado).
 - Para a nuvem (sem ROM, barato): nada.
+
+### 2026-10-11 - sessao local (14): ROM PT-BR de teste (fonte estendida + traducao v1)
+- `dotnet build` ok. Fonte: `ExtendedFont.Preview` (mesma saida do Export com "Use extended font") sobre a
+  Metabee (E) -> `Medabots_font.gba`: larguras 0x4F/0x7D-0x7F = 06 01 / 07 00 / 06 01 / 07 00, 4 glifos gravados,
+  italico reparado (1465 bytes).
+- `insert_text_v3.py ... --reflow`: "5595 strings (5072 unicas), 0 aviso(s), texto ate 0x86A346"; sem aviso de
+  largura zerada.
+- Emulador (mGBA; prints locais em `build/ptbr_smoke/`, fora do git):
+  - Inicio (laboratorio, Ikki/assistente do Dr. Aki): a/e/a/u acentuados e cedilha ok, caixas de 2 linhas, sem corte.
+  - "Beleza, vamos de Robattle!" ok na tela de inicio do Robattle.
+  - Medawatch > Medals > detalhes: "Tiro"/"Golpe" ok.
+  - **Bug: rotulos com acento na tela de detalhes da peca.** WeaponTypeNames[34] "Antiaereo" (com e agudo) sai
+    "Antia" e o nome da peca ao lado (PSYCHO MISSILE, bytes do nome iguais aos da ROM original) vira "YC". Na ROM
+    so com a fonte e na (E) original o mesmo quadro sai certo ("Anti-Air" / "PSYCHO MISSILE"); sem acento
+    ("Regenerar", "Impedir") sai certo. Hipotese: esses rotulos usam a fonte de sprites (OBJ), que nao tem os
+    acentos; o codigo do acento le tiles fora dela e suja o nome vizinho. Outras strings com acento em tabelas de
+    rotulo, a conferir: WeaponTypeNames 6/9/14/15/23/24/34/39 (+3), AttackTypeNames 1, LegTypes 3/6,
+    BattlefieldNames 4/9, MedalAbilityNames 2/5/15, MedaforceNames (14), MenuLabels 0/4, MedalNames 3/9/10/18/23.
+    Proximo: achar a fonte OBJ desses rotulos e decidir entre glifos acentuados nela ou rotulos sem acento.
+  - Fora do dump (continua em ingles): dicas do Medawatch ("Change page with Control Pad...", "Change Medals
+    with...", "SELECT WITH CURSOR"), descricoes de peca "(Anti-Air) Damages Air Medabots greatly." e nomes de
+    peca/bot (PartNames/BotNames sem traducao no JSON, por decisao do glossario?).
+  - Nao testado: loja (preco com libra), Robattle completo (mensagens "<?>"/0x50, nomes de Medaforca, italico
+    <I>), descricoes de medalha/ataque longas. A opcao Battle do menu de debug fica em tela preta depois de
+    "Okay let's Robattle!" tambem na (E) original (limitacao do atalho, nao da traducao); o unico save com
+    progresso e o de `Medabots_expanded` (escola). Precisa de save/estado perto da loja e de um Robattle.
+- Para a nuvem: achar a fonte dos rotulos OBJ (tela de detalhes da peca) e o caminho de desenho deles (estatico).
