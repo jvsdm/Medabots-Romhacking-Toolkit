@@ -594,7 +594,7 @@ menu's Motion viewer the bot is identical to the original on both sides.
   with a same-shape Core mold use it (heads 7-10, two-piece arms 13/14→14/15 and 16/17→17/18, biped legs 19-23→31-35,
   chain 25-29); the rest get new molds (50+) with the closest Core mold's record and Navi size/attachment. Stats, mini
   sprite and movement style come from a Core bot with the same leg geometry; the in-game leg type is Navi's.
-- Test batch (21 bots, IDs 182-202) in `build/Medabots_expanded+navi+debug.gba` + `.sav` with every part.
+- Test batch (21 bots, IDs 182-202) in `build/expansao/Medabots_expanded+navi+debug.gba` + `.sav` with every part.
 - Navi's Medachange forms have not been found yet (they are not in the bot rows).
 
 ### 15.5 Faithful Navi assembly: a Navi mold table + hooks (2026-10-10)
@@ -647,7 +647,7 @@ menu's Motion viewer the bot is identical to the original on both sides.
   palette per part (≤15 colors, merges the closest), smallest sprite frame (mirrored pairs share a size), pivot
   and offset so the rest pose reproduces the assembled view, feet on Core's ground line. New molds 50+ with
   Metabee's tree and motion; written to bot 43 of an EU ROM.
-- Test: KWG-03BH (`Medarot_Navi_Custom_Sprites_2.png`) in `build/Metabee+debug+custom.gba`; preview in
+- Test: KWG-03BH (`art/custom/Medarot_Navi_Custom_Sprites_2.png`) in `build/debug/Metabee+debug+custom.gba`; preview in
   `.preview.png`. The sheets are fan art: do not version the art.
 - **Paused (2026-10-11):** the bot is right at rest and in the idle animation but falls apart in the other
   animations (Metabee's rotations and offsets do not fit another geometry). Motion viewer: ←/→ change the
@@ -695,6 +695,22 @@ menu's Motion viewer the bot is identical to the original on both sides.
     never narrower than the base letter (í = i = 2). Punctuation and digits keep their widths;
   - `--reflow` rewraps every box from scratch (before, only boxes that overflowed) and counts the space after the
     word, as the game does.
+
+### 16.2 Import a TrueType/OpenType font — Font tab (2026-10-12)
+
+- "Import Font (TTF/OTF)..." + "Use imported font" (`Text/ImportedFont`, `WPFEditor/TrueTypeRasterizer`). Asks for
+  the normal font and, optionally, the italic (cancel keeps the game's italic). Kept in the project; when on, it
+  replaces the PT-BR and extended fonts.
+- Automatic fit: pixel size from the H height (7 px, rows 4-10 as the game's font); outlines drawn 8x and summed
+  into coverage, mapped to the 15 dialogue shades; advances = the font's own widths, rounded with the offset and
+  space width that keep PT-BR sample lines closest to their exact length; '·' (ellipsis "···") drawn as '.';
+  characters missing from the font (Roboto: ♥) keep the game's glyph. Warnings: letters cut at the cell, missing,
+  or limited to 8 px.
+- **Game limit: advance at most 8 px.** With 9 the next letter disappears at some positions ("Tem um" became
+  "Tem  m").
+- Roboto test (compared with fonts.google.com, 7 sentences): plain rounding + 3 px space → lines within ~1 px of
+  the browser. Weight 400 (the user's choice) in `build/traducao/Medabots_PT-BR_roboto400.gba`. Equivalent test
+  script: `re/tools/text/port_ttf.py` (Python, takes a variable-font weight).
 
 ## Credits and references
 

@@ -594,7 +594,7 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
   molde parecido do Core e tamanho/encaixe do Navi. Stats, mini sprite e estilo de movimento vêm de um bot do Core
   com a mesma geometria de pernas (Rokusho 31-35, Spidar/Totalizer 25-29, Noctobat/Churlybear/Armorparadeen um
   pedaço); o tipo de perna do jogo é o do Navi.
-- Lote de teste (21 bots, IDs 182-202) em `build/Medabots_expanded+navi+debug.gba` + `.sav` com todas as peças.
+- Lote de teste (21 bots, IDs 182-202) em `build/expansao/Medabots_expanded+navi+debug.gba` + `.sav` com todas as peças.
 - As formas de Medachange do Navi ainda não foram encontradas (não estão nas linhas dos bots).
 
 ### 15.5 Montagem fiel do Navi: tabela de moldes do Navi + hooks (2026-10-10)
@@ -650,7 +650,7 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
   sobreposição, uma paleta por parte (≤15 cores, junta as mais próximas), quadro de sprite mínimo (pares
   espelhados do mesmo tamanho), pivô e offset para a pose parada reproduzir a vista montada, pés na linha do chão
   do Core. Moldes novos 50+ com a árvore e o movimento do Metabee; grava no bot 43 de uma ROM EU.
-- Teste: KWG-03BH (`Medarot_Navi_Custom_Sprites_2.png`) em `build/Metabee+debug+custom.gba`; prévia em
+- Teste: KWG-03BH (`art/custom/Medarot_Navi_Custom_Sprites_2.png`) em `build/debug/Metabee+debug+custom.gba`; prévia em
   `.preview.png`. As folhas são de fã: não versionar a arte.
 - **Pausado (2026-10-11):** o bot fica certo parado e na animação de espera, mas desmonta nas outras animações
   (rotações e deslocamentos do Metabee não servem para outra geometria). Visualizador Motion: ←/→ mudam o número
@@ -698,6 +698,22 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
     menores que a letra base (í = i = 2). Pontuação e números mantêm a largura;
   - `--reflow` refaz as quebras de toda caixa do zero (antes só as que estouravam) e conta o espaço depois da
     palavra, como o jogo.
+
+### 16.2 Importar fonte TrueType/OpenType — aba Font (2026-10-12)
+
+- "Import Font (TTF/OTF)..." + "Use imported font" (`Text/ImportedFont`, `WPFEditor/TrueTypeRasterizer`). Pede
+  a fonte normal e, opcional, a itálica (cancelar mantém a itálica do jogo). Salva no projeto; ligada, vence a
+  fonte PT-BR e a estendida.
+- Ajuste automático: tamanho pela altura do H (7 px, linhas 4-10 como a fonte do jogo); contornos desenhados 8x e
+  somados em cobertura, convertida nos 15 tons da paleta do diálogo; avanços = larguras da própria fonte,
+  arredondados com o deslocamento e o espaço que deixam frases PT-BR mais perto do comprimento exato; '·'
+  (reticências "···") desenhado como '.'; caractere que a fonte não tem (Roboto: ♥) fica com o glifo do jogo.
+  Avisos: letras cortadas na célula, ausentes, ou limitadas a 8 px.
+- **Limite do jogo: avanço máximo 8 px.** Com 9 a letra seguinte some em algumas posições ("Tem um" saiu
+  "Tem  m").
+- Teste com a Roboto (comparada com fonts.google.com, 7 frases): arredondamento simples + espaço 3 → linhas a
+  ~1 px do navegador. Peso 400 (preferido pelo usuário) em `build/traducao/Medabots_PT-BR_roboto400.gba`.
+  Script de teste equivalente: `re/tools/text/port_ttf.py` (Python, aceita peso de fonte variável).
 
 ## Créditos e referências
 

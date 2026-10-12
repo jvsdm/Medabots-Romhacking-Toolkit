@@ -395,3 +395,6 @@ Checklist:
   '·' como '.', caractere que falta na fonte (Roboto nao tem ♥) fica com o glifo e a largura do jogo. Salvo no
   projeto (`ImportedFont`, `UseImportedFont`; vence PT-BR e estendida). Testado: import pela interface,
   emulador com Roboto 400 (variavel lida na instancia padrao). Testes: 260 ok + 3 antigas.
+- Local (2026-10-12): pasta do projeto organizada. ROMs geradas em `build/{expansao,traducao,debug}`, texto da
+  traducao em `traducao/` (fora do git), arte de fa em `art/custom/`; nota central do Obsidian `_Medabots.md`.
+  Docs: secao 16.2 (import de fonte). Para a nuvem: nada.
