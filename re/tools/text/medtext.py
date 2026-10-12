@@ -66,7 +66,8 @@ def text_width(s, italic=False):
 
 
 def reflow(s, width=WRAP, lines_per_box=2):
-    # Reorganiza <NL>/<NB> de cada caixa como o jogo quebra palavras (2 linhas por caixa)
+    # Refaz as quebras de linha de cada caixa do zero (enche a linha ate 208 px, como o jogo quebra palavras);
+    # as caixas (<NB>) do texto ficam, e a que nao couber em 2 linhas vira mais caixas
     end = ''
     m = re.search(r'(<END:\d+>|<ENDLST>)$', s)
     if m:
@@ -76,11 +77,6 @@ def reflow(s, width=WRAP, lines_per_box=2):
     out = []
     italic = False
     for box in boxes:
-        parts = box.split('<NL>')
-        if len(parts) <= lines_per_box and all(text_width(p, italic) <= width for p in parts):
-            out.append(box)
-            italic ^= box.count('<I>') % 2 == 1
-            continue
         box = re.sub(r'\s*<NL>\s*', ' ', box)
         box = re.sub(r' {2,}', ' ', box)
         lead = ''.join(re.findall(r'^(?:<PORTRAIT:[^>]*>)*', box)[:1])
@@ -90,7 +86,8 @@ def reflow(s, width=WRAP, lines_per_box=2):
         for w in words:
             ww = text_width(w, italic)
             sw = (W_ITAL if italic else W_MAIN)[0]
-            if cur and x + sw + ww > width:
+            # o jogo mede a palavra com o espaco seguinte
+            if cur and x + sw + ww + sw > width:
                 lines.append(' '.join(cur))
                 cur, x = [w], ww
             else:

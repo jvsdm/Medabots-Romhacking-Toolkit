@@ -684,6 +684,15 @@ menu's Motion viewer the bot is identical to the original on both sides.
   accents, cedilla), no overlap. The byte 0x4C599D changed in the edited ROM (outside the fonts) is not carried.
 - `insert_text_v3.py` now reads the widths of the input ROM for `--reflow` (with the extended font the output is
   identical to before).
+- Review with the user (same day), in the extractor and in `PtBrFont`:
+  - baseline = row 10: capitals, digits, k, v, ß, Æ, È-Ë had a shade on row 11 (they looked 1 px lower), merged
+    into row 10; '.' and ',' move 1 row down; 'l' gets the stem of 'b'; the body of 'í' moves to column 0 (the
+    accent stays);
+  - letter widths (normal font): up to the last column with shade 8 or darker + 1 blank column (light edge shades
+    and the one-pixel foot of 'a' do not open a gap): a, e, o 6 → 5; accented letters measured below the accent and
+    never narrower than the base letter (í = i = 2). Punctuation and digits keep their widths;
+  - `--reflow` rewraps every box from scratch (before, only boxes that overflowed) and counts the space after the
+    word, as the game does.
 
 ## Credits and references
 

@@ -203,7 +203,7 @@ public sealed class ExtendedFontTests
     [Fact]
     public void PtBrFont_HoldsTheDrawnGlyphs()
     {
-        Assert.Equal(43, PtBrFont.NormalGlyphs.Count);
+        Assert.Equal(72, PtBrFont.NormalGlyphs.Count);
         Assert.Equal(127, PtBrFont.ItalicGlyphs.Count);
         foreach (var glyph in new[] { 0x50, 0x51, 0x64, 0x65 })
         {
@@ -246,6 +246,15 @@ public sealed class ExtendedFontTests
         // Accented letters advance at least as far as the base letter (ã as a, Ã as A)
         Assert.True(rom[layout.ItalicWidths + 0x7E * 2] >= rom[layout.ItalicWidths + 0x1B * 2]);
         Assert.True(rom[layout.ItalicWidths + 0x7D * 2] >= rom[layout.ItalicWidths + 0x01 * 2]);
+
+        // Normal font: í as wide as i, light edge shades do not widen e/o, capitals sit on row 10 like A
+        Assert.Equal(rom[layout.Widths + 0x23 * 2], rom[layout.Widths + 0x63 * 2]);
+        Assert.Equal(5, rom[layout.Widths + 0x1F * 2]);
+        Assert.Equal(5, rom[layout.Widths + 0x29 * 2]);
+        for (var x = 0; x < 8; x++)
+        {
+            Assert.Equal(1, ExtendedFont.Pixel(Glyph(layout.GameFont, 0x02), x, 11));
+        }
         Assert.Equal(rom, PtBrFont.Preview(rom, layout));
     }
 }

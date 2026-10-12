@@ -8,9 +8,10 @@ namespace Medabots.Rom.Text;
 /// (re/tools/text/ptbr_font_extract.py: only the glyphs that differ from Metabee (E)) and are written where the game
 /// draws them (<see cref="FontLayout.GameFont"/>). Ã ã Õ õ are copied into the extension slots too (0x4F õ, 0x7D Ã,
 /// 0x7E ã, 0x7F Õ), so text encoded for <see cref="ExtendedFont"/> shows the same letters.
-/// Widths: 0x4F-0x7F measured from the pixels (<see cref="ExtendedFont.MeasureGlyph"/>), at least the width of the base
-/// letter (the shipped italic widths are often 1 px wider than the rule); a redrawn glyph below 0x4F keeps its shipped
-/// width plus the change in its measured advance.
+/// Widths, normal font: letters advance to their last column with shade 8 or darker + 1 blank column (light edge
+/// shades and the single-pixel foot of 'a' do not widen the gap); punctuation and digits keep the shipped widths.
+/// Accented letters are measured on their body (below the accent) and never narrower than the base letter, in both
+/// fonts. Other glyphs 0x4F-0x7F: <see cref="ExtendedFont.MeasureGlyph"/>.
 /// </summary>
 public static class PtBrFont
 {
@@ -20,9 +21,13 @@ public static class PtBrFont
     // Extension slot <- PT-BR letter drawn in the Ä/Ö slots
     private static readonly (int Slot, int Source)[] Aliases = [(0x4F, 0x65), (0x7D, 0x50), (0x7E, 0x51), (0x7F, 0x64)];
 
-    // Letters of glyphs 0x4F-0x7F (the game's order); an accented letter advances at least as far as its base letter
-    private const string UpperGlyphs = "õÄäÁáÂâÈèÉéÊêËëÎîÏïÍíÖöÔôÓóÜüÛûÙùÚúßÇçÑñ¡¿ÀàÆæÃãÕ";
+    // Characters of glyphs 0x00-0x7F (the game's order; 0x50/0x51/0x64/0x65 hold Ã ã Õ õ in this font)
     private const string Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private const string GlyphChars = " " + Letters + "0123456789·.,'-/:?!\"()♥£&%õÄäÁáÂâÈèÉéÊêËëÎîÏïÍíÖöÔôÓóÜüÛûÙùÚúßÇçÑñ¡¿ÀàÆæÃãÕ";
+
+    // First row of the letter body (below the accents): capitals, lowercase x-height
+    private const int CapitalTop = 4;
+    private const int LowercaseTop = 6;
 
     private static readonly Lazy<(Dictionary<int, byte[]> Normal, Dictionary<int, byte[]> Italic)> Glyphs = new(Load);
 
@@ -34,8 +39,10 @@ public static class PtBrFont
         "  Italic font: redrawn (replaces the italic font repair).\n" +
         "Ã ã Õ õ are also copied to 0x4F õ, 0x7D Ã, 0x7E ã, 0x7F Õ, the slots the text encoder uses, so the text " +
         "encoding is the same as with the extended font.\n\n" +
-        "Widths: 0x4F-0x7F measured from the pixels with the extended font rule, never narrower than the base " +
-        "letter (Ã as A, ã as a); a redrawn glyph below 0x4F keeps its width plus the change in its measured advance.\n\n" +
+        "Widths (normal font): each letter advances to its last column with shade 8 or darker, plus one blank " +
+        "column; light edge shades and the one-pixel foot of 'a' do not widen the gap. Punctuation and digits keep " +
+        "their widths. Accented letters (both fonts) are measured below the accent and are never narrower than the " +
+        "base letter (í as i, Ã as A).\n\n" +
         "Replaces \"Use extended font\" when both are on.";
 
     public static IReadOnlyCollection<int> NormalGlyphs => Glyphs.Value.Normal.Keys;
@@ -102,41 +109,77 @@ public static class PtBrFont
             actions.Add(new RomPatchAction(font + slot * ExtendedFont.GlyphSize, data, $"{name} glyph 0x{slot:X2} (copy of 0x{source:X2})"));
         }
 
-        for (var glyph = 0; glyph < ExtendedFont.FirstWidthGlyph; glyph++)
+        // Width table (advance, class) of all 128 glyphs
+        var table = rom.Slice(widths, ExtendedFont.GlyphCount * 2).ToArray();
+        Span<byte> Glyph(byte[] source, int glyph) => source.AsSpan(font + glyph * ExtendedFont.GlyphSize, ExtendedFont.GlyphSize);
+        for (var glyph = 1; glyph < ExtendedFont.GlyphCount; glyph++)
         {
-            if (!glyphs.ContainsKey(glyph))
+            if (glyph >= ExtendedFont.FirstWidthGlyph)
             {
-                continue;
+                (table[glyph * 2], table[glyph * 2 + 1]) = MeasureGameGlyph(Glyph(copy, glyph), italic);
+            }
+            else if (glyphs.ContainsKey(glyph))
+            {
+                // Punctuation and digits keep the shipped advance, plus the change in the measured one when redrawn
+                var before = MeasureGameGlyph(rom.Slice(font + glyph * ExtendedFont.GlyphSize, ExtendedFont.GlyphSize), italic).Advance;
+                var after = MeasureGameGlyph(Glyph(copy, glyph), italic).Advance;
+                if (table[glyph * 2] + after - before is var advance and > 0 and <= 16)
+                {
+                    table[glyph * 2] = (byte)advance;
+                }
             }
 
-            var before = MeasureGameGlyph(rom.Slice(font + glyph * ExtendedFont.GlyphSize, ExtendedFont.GlyphSize), italic).Advance;
-            var after = MeasureGameGlyph(copy.AsSpan(font + glyph * ExtendedFont.GlyphSize, ExtendedFont.GlyphSize), italic).Advance;
-            var advance = rom[widths + glyph * 2] + after - before;
-            if (after != before && advance is > 0 and <= 16)
+            if (!italic && char.IsLetter(GlyphChars[glyph]) && table[glyph * 2] > 0)
             {
-                actions.Add(new RomPatchAction(widths + glyph * 2, [(byte)advance], $"{name} width 0x{glyph:X2}"));
+                table[glyph * 2] = (byte)(LastInkColumn(Glyph(copy, glyph), 0, char.IsLower(GlyphChars[glyph])) + 2);
             }
         }
 
-        var table = new byte[(ExtendedFont.GlyphCount - ExtendedFont.FirstWidthGlyph) * 2];
+        // Accented letters: the accent sits above the other letters, so the body decides (never narrower than the base)
         for (var glyph = ExtendedFont.FirstWidthGlyph; glyph < ExtendedFont.GlyphCount; glyph++)
         {
-            var k = (glyph - ExtendedFont.FirstWidthGlyph) * 2;
-            (table[k], table[k + 1]) = MeasureGameGlyph(copy.AsSpan(font + glyph * ExtendedFont.GlyphSize, ExtendedFont.GlyphSize), italic);
-            if (table[k] > 0 && BaseGlyph(glyph) is var baseGlyph and > 0)
+            if (BaseGlyph(glyph) is var baseGlyph and > 0 && table[glyph * 2] > 0)
             {
-                table[k] = Math.Max(table[k], rom[widths + baseGlyph * 2]);
+                var ch = GlyphChars[glyph];
+                var body = LastInkColumn(Glyph(copy, glyph), char.IsUpper(ch) ? CapitalTop : LowercaseTop, char.IsLower(ch), italic);
+                table[glyph * 2] = (byte)Math.Max(table[baseGlyph * 2], body + (italic ? 1 : 2));
             }
         }
 
-        actions.Add(new RomPatchAction(widths + ExtendedFont.FirstWidthGlyph * 2, table, $"{name} widths 0x4F-0x7F"));
+        actions.Add(new RomPatchAction(widths, table, $"{name} widths"));
     }
 
-    // Glyph of the unaccented letter (A = 0x01, a = 0x1B); 0 for ß, ¡, ¿, Æ, æ
+    // Last column with ink from firstRow down: shade 8 or darker in the normal font (lighter edge shades do not
+    // push the next letter away), any ink in the italic font. In lowercase a last column with a single such pixel
+    // (the foot of 'a') does not count.
+    private static int LastInkColumn(ReadOnlySpan<byte> glyph, int firstRow, bool lowercase, bool italic = false)
+    {
+        var threshold = italic ? 2 : 8;
+        var last = -1;
+        var count = 0;
+        for (var x = 0; x < 8; x++)
+        {
+            var inked = 0;
+            for (var y = firstRow; y < 14; y++)
+            {
+                inked += ExtendedFont.Pixel(glyph, x, y) >= threshold ? 1 : 0;
+            }
+
+            if (inked > 0)
+            {
+                (last, count) = (x, inked);
+            }
+        }
+
+        return !italic && lowercase && count == 1 && last > 0 ? last - 1 : last;
+    }
+
+    // Glyph of the unaccented letter (A = 0x01, a = 0x1B); 0 when not an accented letter (ß, ¡, ¿, Æ, æ)
     private static int BaseGlyph(int glyph)
     {
-        var letter = UpperGlyphs[glyph - ExtendedFont.FirstWidthGlyph].ToString().Normalize(System.Text.NormalizationForm.FormD)[0];
-        return Letters.IndexOf(letter) + 1;
+        var ch = GlyphChars[glyph];
+        var letter = ch.ToString().Normalize(System.Text.NormalizationForm.FormD)[0];
+        return letter == ch ? 0 : Letters.IndexOf(letter) + 1;
     }
 
     private static (Dictionary<int, byte[]> Normal, Dictionary<int, byte[]> Italic) Load()

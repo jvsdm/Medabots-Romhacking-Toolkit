@@ -367,3 +367,8 @@ Checklist:
 - `insert_text_v3.py --reflow` le as larguras da ROM de entrada.
 - ROM de teste: `build/Medabots_PT-BR_fonte100.gba` (fonte 100% + traducao v1; 5595 strings, 0 aviso).
 - Pendente: extensao antiga ainda grava em +8; bug dos rotulos com acento (sessao 14) continua (fonte OBJ).
+- Revisao do usuario no emulador (mesmo dia): maiusculas/numeros 1 px abaixo, ponto alto, 'l' alto, espacos largos
+  em e/o/a e no 'í', quebra de linha mantendo a do tradutor. Corrigido: ajustes de glifo no extrator (linha de base
+  10, '.'/',' descem, 'l' com haste do 'b', corpo do 'í' na coluna 0), larguras das letras pela tinta >= 8
+  (a/e/o = 5, acentuados pelo corpo, í = i) e `medtext.reflow` refazendo toda caixa. Conferido no emulador.
+  `build/Medabots_PT-BR_fonte100.gba` regenerada (5595 strings, 0 aviso).

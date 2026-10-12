@@ -687,6 +687,15 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
   cedilha) sem sobreposição. O byte 0x4C599D mudado na editada (fora das fontes) não entra.
 - `insert_text_v3.py` agora lê as larguras da ROM de entrada para o `--reflow` (com a fonte estendida a saída é
   idêntica à anterior).
+- Revisão com o usuário (mesmo dia), no extrator e no `PtBrFont`:
+  - linha de base = linha 10: maiúsculas, números, k, v, ß, Æ, È-Ë tinham sombra na linha 11 (pareciam 1 px abaixo)
+    e ela entra na linha 10; '.' e ',' descem 1 linha; 'l' recebe a haste do 'b'; o corpo do 'í' vai para a
+    coluna 0 (o acento fica);
+  - larguras das letras (fonte normal): até a última coluna com tom 8 ou mais escuro + 1 coluna livre (tons claros
+    da borda e o pé de 1 pixel do 'a' não abrem espaço): a, e, o 6 → 5; acentuados medidos abaixo do acento e nunca
+    menores que a letra base (í = i = 2). Pontuação e números mantêm a largura;
+  - `--reflow` refaz as quebras de toda caixa do zero (antes só as que estouravam) e conta o espaço depois da
+    palavra, como o jogo.
 
 ## Créditos e referências
 
