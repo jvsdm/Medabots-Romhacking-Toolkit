@@ -93,3 +93,34 @@ so o Ghidra responde, para a sessao local nao refazer leitura.
   agora 4096). Nao faz diferenca nos prints.
 - Nao feito (G7 passos 2-3): tabela quadro->molde->{x,y,ang} e G7_compare.png nao gerados; pose do tocador segue sem
   fechar com o jogo.
+
+## 7. G8 (rec_2 ck_1400, f1446-1530): de onde vem a pose das pernas (PARCIAL, 2026-10-12)
+
+- **Correcao de G6/G7**: o buffer 0x03001380:0x400 e a OAM sombra inteira (128 x 8 B). Os campos afins sao os
+  halfwords com endereco = 6 mod 8 (pa +6, pb +E, pc +16, pd +1E de cada grupo de 0x20). Escritas em outros
+  enderecos (attr0-2) vem de 0x08001C78/0x08001B82-0x08001BF6 (laco de 0x08001520, normal) e 0x080006EC (copia).
+  O 0x08001CAC NAO escreve nas pernas nesta janela: todas as escritas de pa/pb/pc/pd com watch filtrado por
+  endereco (6 mod 8) vem de outro caminho (abaixo).
+- **Caminho real (dinamico, medido)**:
+  1. VBlank `FUN_0800065c` (ramo `*0x08000780 == 2`) chama `FUN_08045a14`: copia 32 grupos de 4 halfwords
+     (src -> EWRAM stage, stride 0x20 no destino) = a matriz afim por molde, pronta para a OAM.
+  2. A fonte (EWRAM 0x02024FA4, 0x100 B) e escrita por `FUN_080465B8` (RenderCompositePreviewDescriptorRecursive,
+     recursiva) em 0x0804685C-0x08046910, chamada de 0x08046794/0x08046A1F/0x08046A51 etc.
+  3. Dentro dela, o angulo acumulado (local_58 = pai + halfword do registro +0x0C) vai para `FUN_0807cce0`, que e
+     so um wrapper de `SWI 0x0F` (BIOS ObjAffineSet): o seno/cosseno vem da BIOS (alpha >> 8 = 256 passos por
+     volta; sx/sy dos bytes do molde). Matriz (hipotese, padrao da SWI, NAO conferida): pa = cos*sx, pb = -sin*sx, pc = sin*sy, pd = cos*sy.
+  4. Registro do composto: ctx 0x02026000 (word0 0x02024000, word1 = 0x083D1D78 ROM, word2 = 0x020260D0 = registros
+     de 0x10 B por molde). Halfword +0x0C de cada registro = angulo do molde (1/65536 de volta). Pernas do Metabee:
+     k=7,9,11 e k=8,10,12 (mesmo valor nos pares, em 1480: 0x06E8/0x06B0; em 1520: 0x1A2B/0x0E9A); raiz k=14/15.
+  5. Quem grava o +0x0C: `0x080474F4`/`0x0804752E` (lr 0x08044AD3), copia de `state+0x1C`; o `state` (gMotionState,
+     molde*0x10) e atualizado por `FUN_08047428` = interpolador: a cada quadro anda `FUN_0807ccc8(alvo-atual, restante)`
+     em `+0x1C` (angulo, 1/65536) e em `+0x18/+0x1A` (x,y <<8), com alvo = `gMotionAngleTable` (param_2) e
+     posicao = `gMotionOffsetTable` (param_3), passo de tabela = param_9, contagem = param_8 (moldes).
+  6. Entrada: `FUN_08046D1C` (BuildFourPartLargePreviewComposite) chamada por `FUN_080447ec` (lr 0x080448DD), com
+     r2 = 0x2B (sel 43 = bot 43), a cada quadro do corte.
+- **Aberto (nao fechado)**: (a) a formula exata de sx/sy e do pivo do molde (bytes +0x12/+0x13 e o `restante`);
+  (b) mapear grupo OAM (pa em 0x03001380+0x20k+6) para o registro k; (c) confirmar em 2 quadros que
+  alpha = (angulo>>8) bate com o pa/pb medido (o grau de quantizacao da BIOS e 1,41 grau); (d) a comparacao de
+  pose com o tocador `pc/game/src/motion.lua` (B15/B16 seguem valendo). rig.lua/battle.lua NAO alterados.
+- Ferramenta de apoio: `replay_record.py --watch` filtrado por PC (`--watch-skip-pc`) e `--break` com lr funcionam
+  para achar escritores; `--break` grava muitos .bin (apagar depois).
