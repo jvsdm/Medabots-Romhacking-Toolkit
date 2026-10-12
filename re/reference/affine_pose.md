@@ -49,3 +49,30 @@ so o Ghidra responde, para a sessao local nao refazer leitura.
    unidade, sinal e escala sem ler codigo.
 6. Se 1-5 nao fecharem a diferenca de ~20 graus: comparar o PC contra o jogo no mesmo quadro-chave (k = 0, `restante`
    = 0) para separar erro de interpolacao (inteiro vs ponto flutuante) de erro de formula.
+
+## 4. Conferido local (G6, 2026-10-12, Ghidra offline: desmonte com tools/rom_asm.py)
+
+- **0x08001CAC** (chamado so de `BuildShadowOamFromObjectState` 0x08001520, em 0x080017B0): `idx = angulo & 0x3FF`
+  (1024 passos por volta, nao 65536). Tabela de seno Q14 em ROM 0x08075250 (1024 halfwords; sin[0]=0, sin[256]=16384);
+  `cos = tab[idx+256]`, `sin = tab[idx]`. Escalas sx/sy vem dos bytes +8/+9 do registro do objeto (0 vira 1). Bits
+  0x1000 e 0x2000 do halfword de flags negam X/Y. Escreve no buffer afim 0x03001380: grupo de 0x20 B por indice,
+  pa +0x06, pb +0x0E, pc +0x16, pd +0x1E.
+- **Angulo de entrada**: halfword em `registro_objeto+0x18` (o chamador faz `ldrh [r6,#0x18]` e passa direto). Nao e o
+  campo +0x1C 1/65536 do molde da secao 1; a unidade certa (1/1024 ou >>6) ainda nao foi confirmada.
+- **OAM real (rec_2, f1470, f1446-1546 a cada 4)**: sprites afins com attr0 bit 9 (double-size) = 0 em todos, entao o
+  pivo e o centro do sprite. Matriz medida: pa = 256 em angulo 0 e ~255 com angulo; pb = +sin*sy, pc = -sin*sx.
+  Angulos das pernas quantizados em passos de 8 indices (2,81 graus).
+- **Tocador x jogo NAO fecha**: pernas 20-24 (OBJ 94/96/95/93/92, tiles 544/548/552/568/572) comparadas com
+  `pc/game/src/motion.lua` (tipo 13, bot 43, roteiro 44, 73 quadros) em angulo local e em angulo acumulado pela cadeia
+  de pais (`cache/battle/043/battle.lua`), com sinal +/-1, escala de tempo 0,5-1,5 e deslocamento -60..+80 quadros.
+  Melhor erro medio quadratico ~19 graus nas pernas que se mexem (perna 20 e 22 so batem porque ficam quase paradas).
+  Logo falta algo alem de unidade/sinal: ou o tipo que o jogo toca nao e 13 durante todo o corte, ou o quadro de
+  inicio nao e o mesmo.
+- Arquivos de apoio (apagados): dumps OAM em scratchpad G6.
+
+## 5. Proximo passo sugerido
+
+1. Confirmar o angulo de entrada: watch de escrita em `registro_objeto+0x18` durante f1446-1546 (rec_2) e comparar o
+   primeiro valor com `angulo[roteiro][molde][0]`.
+2. Achar o quadro de inicio do roteiro no jogo (primeiro quadro em que a perna 21 sai de 0) e ver se os tipos
+   seguintes (14/15/12) mudam o angulo do OAM. B16 ja diz que o slot 1 fica em 13 de f1445 a f1565.
