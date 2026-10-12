@@ -502,3 +502,13 @@ Checklist:
   caso 0xFB em 0x0803FD28 (ordem dos bytes, lado = hflip do tilemap?), posicao em pixels no emulador, VRAM 0x06000F80 /
   paleta 0x050001A0, significado de `gTextState+0xE`, e valores reais de lado/expressao no dump do texto.
 - Proxima da nuvem: tarefa 8 (mini sprite) ou 9 (HUD; precisa de ROM, so o local).
+
+### 2026-10-12 - sessao local: animacao do corte de ataque (pedido para a nuvem)
+- No PC o corte do Missile do Metabee ja bate com o jogo em fundo, arte (sel crua da linha), paleta (bancos OBJ 4-7),
+  efeitos (missil/faiscas 0x4D353C, explosao BG 0x560114) e tempo (~114 quadros; o slot do atacante fica no tipo 13).
+- NAO bate a POSE: os 11 sprites do bot grande sao AFFINE; os angulos do jogo diferem ~20 graus do que o nosso
+  tocador (re/reference/battle_anim.md) calcula para o tipo 13 do bot 43, e o corpo anda +30 px e depois volta
+  para a esquerda ate sair (rec_2 f1446-1550). Medicoes: Medabots/pc/research/README.md linhas B16-B18.
+- Pedido (tarefa 11): no codigo decompilado do tocador/renderizador do bot grande, como sai o angulo e a escala de
+  cada molde (matriz affine em OAM), o deslocamento global do corpo durante o ataque, e se o tipo 13 e tocado do
+  inicio ou de um quadro-chave intermediario. Entregar a formula para o PC.
