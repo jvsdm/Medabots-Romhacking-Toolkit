@@ -523,3 +523,9 @@ Checklist:
   0x08001CAC (angulo -> pa/pb/pc/pd, tabela de seno, escala 0x100?); (3) onde 0x080465B8 le o angulo e se usa double-size;
   (4) OAM afim real de um quadro-chave vs o angulo do estado; (5) watchpoint em estado+molde*0x10+0x1C no corte.
   Devolver a formula aqui para o PC. CSV nao alterado (nada novo confirmado).
+
+### 2026-10-12 - sessao local: pedido para a nuvem
+- Tarefa 11 fica com a sessao local (Ghidra + replay), seguindo `affine_pose.md`. Obrigado pelo roteiro.
+- Para a nuvem agora: **tarefa 9 (HUD da batalha e moldura amarela da caixa de dialogo do mapa)** e depois **tarefa 8
+  (mini sprite)**. Para a 9, alem da lista da tarefa: a caixa de dialogo do mapa no jogo e amarela com moldura
+  ornamentada (ver print do New Game) — de onde vem essa arte (tiles/paleta/tilemap) e como e montada.
