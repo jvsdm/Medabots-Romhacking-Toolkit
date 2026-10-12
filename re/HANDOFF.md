@@ -529,3 +529,25 @@ Checklist:
 - Para a nuvem agora: **tarefa 9 (HUD da batalha e moldura amarela da caixa de dialogo do mapa)** e depois **tarefa 8
   (mini sprite)**. Para a 9, alem da lista da tarefa: a caixa de dialogo do mapa no jogo e amarela com moldura
   ornamentada (ver print do New Game) — de onde vem essa arte (tiles/paleta/tilemap) e como e montada.
+
+### 2026-10-12 - sessao nuvem: tarefa 9 (HUD / caixa de dialogo amarela), SEM achados de endereco
+- Sem ROM nem decompilacao no repo, os enderecos da arte do HUD e da moldura da caixa nao saem por analise estatica. O que
+  o repo tem sobre a caixa: so `MainWindow.MessagePreview.cs` (BoxTop=104; 3 retangulos `Fill` de cor fixa, e uma
+  aproximacao do WPF, nao a arte real). Nada inventado; CSV nao alterado.
+- Entregue `re/tools/find_ui_gfx.py` (so a parte Malias2 foi testada: round-trip com o compressor do Toolkit e backref curto
+  ok; o resto e nao testado). Metodo: a rotina que monta a tela guarda os assets no literal pool; cada ponteiro 0x08xxxxxx para
+  bloco `Le` e um asset (tiles, tilemap ou paleta, classificados por heuristica, "provavel").
+- Local, nesta ordem (cada passo e curto):
+  1. `python find_ui_gfx.py ROM.gba --func 0x0800406C --len 0x900 --png out/` (InitializeBattleSceneScreen; ajustar `--len` ate o
+     fim da funcao no Ghidra). Lista os assets da cena de batalha: fundo (ja conhecido 0x545CD4/0x554D1C/0x553374/0x556A00) e os
+     novos = HUD (faixas, barra central, TIME, HP, letreiros). Repetir com `0x08003A38` (tela de status) e com os chamadores de
+     `LZ77UnCompVRAM`/`decompress_and_store` 0x080009BC perto de `Fight_*` (letreiros CRITICAL HIT etc. devem vir de OBJ).
+  2. `--range 0x52A000 0x560800` varre os blocos Malias2 vizinhos dos fundos; olhar as folhas PNG (cinza; paleta real no emulador).
+  3. Caixa de dialogo do mapa: marcar escrita em BG VRAM no emulador quando a caixa abre (EventOpcode01_ShowMessageA 0x0804DC38);
+     quem chama `decompress_and_store` na abertura da caixa tem a arte nos literais. Rodar `--func` nessa rotina. A paleta amarela
+     deve ser a do dialogo (`gFontPalette` 0x084E43D8 e vizinhas) ou uma paleta BG propria; a moldura e tilemap de BG (nao OBJ).
+  4. Letreiros "CRITICAL HIT"/"LEG DEFENSE": hipotese = sprites OBJ de quadros grandes (como o texto 8x8 de
+     `gObjTextGlyphFrames`) ou tilemap BG; ver quem chama `Fight_SpawnInlineEffectTextObjects` 0x08036FF8.
+- Devolver aqui: enderecos + formato (tiles/tilemap/paleta, tamanho) de cada item; entao entram no CSV e viram a secao do .md.
+- Tarefa 8 (mini sprite) continua aberta para a nuvem; tambem precisa de ROM para ser util, so o que ja esta em
+  `OverworldSpriteFrameExtractor`/`MiniSpritePalette` pode ser lido estaticamente.
