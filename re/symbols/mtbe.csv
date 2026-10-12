@@ -12,6 +12,8 @@ address,name,kind,count,comment
 0x03000470,gDebugReturnScene,label,,u8: cena para onde o menu de debug volta ao sair (passo 2)
 0x03000471,gDebugReturnStep,label,,u8: passo da cena de retorno do menu de debug
 0x03000472,gDebugMenuOption,label,,u8: opcao do menu de debug (0-10)
+0x03000474,gDebugMotionCursor,label,,u8: indice do tipo no visualizador Motion
+0x03000475,gDebugMotionKinds,label,,u8[]: tipo de movimento tocado pelo visualizador Motion (direita/esquerda)
 0x0300047D,currently_selected_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03000491,selected_tinpet_in_menu,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03000493,selected_tinpet_has_all_parts,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -27,6 +29,7 @@ address,name,kind,count,comment
 0x030004DB,selected_tinpet_legs,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
+0x0300056F,gCurrentObjectSlot,label,,u8: slot de gObjectSlots em uso
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
 0x0300058C,just_pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03000590,gPlayerBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
@@ -105,6 +108,7 @@ address,name,kind,count,comment
 0x03002B64,held_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03002B88,gPlayTimeFrames,label,,tempo de jogo em frames; trava em 21599999 (99:59:59)
 0x03002B8C,gamestate_menu,label,,"u32: indice em menu_list executado pelo MainState0 (63 = menu de debug); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03002C30,gObjectSlots,label,,slots de objeto (0x40 B): +0x2B anim, +0x2C tipo de movimento/contador, +0x2D recarga, +0x2E repeticoes, +0x30 espera (s16); indice atual em 0x0300056F
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03004C40,gInventory,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory
@@ -295,6 +299,7 @@ address,name,kind,count,comment
 0x0800BAB8,DebugMenu_RunOption,func_thumb,,passo 3: chama a tabela 0x083ACA80 [gDebugMenuOption]
 0x0800BAF8,debug_process,func_thumb,,Simon/Rokusho
 0x0800D710,DebugMotion_Main,func_thumb,,"opcao Motion do debug: monta 2 bots (BuildCompositePreviewSpriteLayerWithOffset), START/SELECT trocam o bot (0-121), A avanca"
+0x0800D90C,DebugMotion_PlayKind,func_thumb,,toca MotionPlayStep(lado, gDebugMotionKinds[gDebugMotionCursor]) nos dois bots
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
 0x0800EE34,PartSetPreview_DrawAttributeMatchMarkers,func_thumb,,Simon/Rokusho: Draw per-slot attribute match markers for the four parts in the selected part set. The marker is controlled by RomPartRecord.attribute_id.
 0x0800F6CC,PartDetail_GetCurrentSelectionLegIconIndex,func_thumb,,Simon/Rokusho
@@ -556,6 +561,8 @@ address,name,kind,count,comment
 0x080392D8,Fight_SetDefenderAffinityResultFromSelectedAction,func_thumb,,"Simon/Rokusho: Classify the selected defender target into a defensive affinity result family. Writes action_result_flow_flags.DEFENDER_AFFINITY_RESULT and the defender_affinity_result_kind classifier when optic, bomb, or grav defender affinity applies."
 0x0803934C,Fight_SetDefenderAffinityResultFromMirroredAction,func_thumb,,Simon/Rokusho
 0x08039E00,FightPreview_BeginSideEntranceSequence,func_thumb,,"Simon/Rokusho: Begin one side of the battle preview entrance sequence. Initialize anchor/screen positions for the chosen side, load displayed part ids, spawn the side sprite layers, seed the per-side preview step flag byte with 0x29, and start the first preview movement step."
+0x0803BBE0,FightPreview_ApplyObjectMotionKind,func_thumb,,copia gObjectSlots[atual]+0x2C para o tipo de movimento do lado (fight_information+0x112) depois da espera +0x30
+0x0803CB54,ObjectSlot_TickRepeat,func_thumb,,conta +0x30 e +0x2C do slot atual; com +0x2E recarrega +0x2C de +0x2D
 0x0803D450,FightPreview_UnpackSequenceEntry,func_thumb,,Simon/Rokusho: Unpack the current preview sequence entry selected by fight_information.preview_sequence_state.sequence_cursor and the scene table keyed by fight_information.turn_side_flags low byte. Writes the variable-length entry data into sequence_arg_0..sequence_arg_6 for later preview step handlers.
 0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,"Simon/Rokusho: Advance the preview sequence cursor to the next table entry, skipping the current entry header plus its variable-length payload. Used by the side-preview scene step handlers after consuming sequence_arg_0..sequence_arg_6."
 0x0803EED8,Battle_CheckExitShortcut,func_thumb,,"Simon/Rokusho: Battle-level early-exit shortcut check. If the current battle state allows it and the relevant input bit is pressed, return to the main menu/battle exit state."
@@ -970,6 +977,7 @@ address,name,kind,count,comment
 0x0807FDB0,gPreviewLeftArm,data,1952,preview braco esquerdo: 122 x 16 B
 0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable
 0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
+0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083AC2C8,menu_list,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]

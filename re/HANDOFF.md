@@ -457,3 +457,14 @@ Checklist:
   (3) no Ghidra, `RenderCompositePreviewDescriptorRecursive` 0x080465B8: ordem altura/largura e sinais; (4) confirmar `0x0807EE10`.
   Se bater, tirar o "provavel" do CSV e marcar a tarefa 6 como feita; se nao, os suspeitos estao em 5 do .md.
 - Proxima da nuvem: tarefa 7 (formato da tabela de animacao 0x083D1E40), mas ja ha `re/reference` 15.2; falta so a ROM.
+
+### 2026-10-12 - sessao nuvem: tarefa 7 (animacao de batalha por molde), estatica
+- `re/reference/battle_anim.md`: cadeia tipo (0-46) -> `gMoveScriptTable[tipo*7 + gMoveStyle]` -> roteiro (0-58)
+  -> duracoes/angulos/deslocamentos; tocador e interpolador decompilados (duracao = quadros ate o quadro-chave,
+  interpolacao linear, angulo pelo menor caminho, 63 moldes); tabela dos 47 tipos e perfil dos 59 roteiros
+  (quadros-chave, total de quadros, moldes que mexem). Tipo 41 = entrada (roteiro 35); tipo 44 = cenas fora da batalha.
+- CSV: `gObjectSlots` 0x03002C30 (+0x2C = tipo de movimento do slot), `FightPreview_ApplyObjectMotionKind`
+  0x0803BBE0, `ObjectSlot_TickRepeat` 0x0803CB54, `DebugMotion_PlayKind` 0x0800D90C, `gDebugMotionKinds` 0x03000475.
+- Local: no visualizador Motion do debug, direita/esquerda trocam o tipo (0x03000475); rotular os 47 tipos
+  (secao 6 do .md). Em batalha, watchpoint em `fight_information+0x112` e `gObjectSlots[i]+0x2C` para ligar
+  acao -> tipo de movimento. Proxima da nuvem: tarefa 8 (mini sprite) ou 9 (HUD).
