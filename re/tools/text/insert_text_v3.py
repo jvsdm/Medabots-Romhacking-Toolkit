@@ -86,6 +86,10 @@ def main():
     widths = WIDTH_TABLES.get(bytes(rom[0xAC:0xB0]))
     if widths is not None and rom[widths + 0x4F * 2] == 0:
         print("AVISO: larguras 0x4F-0x7F zeradas. Exporte a ROM pelo Toolkit com 'Use extended font' antes.")
+    elif widths is not None:
+        # reflow com as larguras da propria ROM (fonte estendida ou fonte PT-BR 100%)
+        medtext.W_MAIN[:] = rom[widths:widths + 256:2]
+        medtext.W_ITAL[:] = rom[widths + 0x200:widths + 0x300:2]
 
     with open(args.json, encoding='utf-8') as f:
         data = json.load(f)

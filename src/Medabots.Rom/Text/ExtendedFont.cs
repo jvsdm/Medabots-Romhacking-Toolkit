@@ -8,6 +8,12 @@ public sealed record FontLayout(int Font, int Widths)
     public int ItalicFont => Font + 0x5D40;
 
     public int ItalicWidths => Widths + 0x200;
+
+    /// <summary>Normal font as the game draws it: the code (glyph &lt;&lt; 6 + pointer, 0x08040132) points 8 bytes
+    /// before <see cref="Font"/>. Glyph pixels are drawn from here; widths are measured from <see cref="Font"/>.</summary>
+    public int GameFont => Font - 8;
+
+    public int GameItalicFont => ItalicFont - 8;
 }
 
 /// <summary>
@@ -150,7 +156,6 @@ public static class ExtendedFont
         return actions;
     }
 
-    /// <summary>Width entries (advance, class) for glyphs 0x4F-0x7F of both fonts, extension glyphs included.</summary>
     /// <summary>Copy of the ROM as exported with the extended font: italic font repaired, then the extension.</summary>
     public static byte[] Preview(ReadOnlySpan<byte> rom, FontLayout layout)
     {
@@ -165,6 +170,7 @@ public static class ExtendedFont
         return copy;
     }
 
+    /// <summary>Width entries (advance, class) for glyphs 0x4F-0x7F of both fonts, extension glyphs included.</summary>
     public static (byte[] Main, byte[] Italic) BuildWidths(ReadOnlySpan<byte> rom, FontLayout layout, bool italicExtended = true)
     {
         var main = new byte[(GlyphCount - FirstWidthGlyph) * 2];

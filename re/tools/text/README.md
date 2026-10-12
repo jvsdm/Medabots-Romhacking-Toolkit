@@ -5,11 +5,12 @@
 | `dump_text_v3.py` | `python dump_text_v3.py ROM.gba game_text.json`: extrai as 50 tabelas de texto (mantem traducoes ja feitas) |
 | `insert_text_v3.py` | `python insert_text_v3.py ROM_toolkit.gba game_text.json ROM_saida.gba --reflow`: grava as traducoes |
 | `medtext.py` | tabela de caracteres, larguras da fonte (com a extensao do Toolkit), medida e quebra de caixas |
+| `ptbr_font_extract.py` | `python ptbr_font_extract.py ORIGINAL_E.gba EDITADA.gba ../../../src/Medabots.Rom/Text/ptbr_font.bin`: glifos da fonte PT-BR desenhada a mao para o Toolkit |
 | `glossario.md` | termos e nomes usados na traducao |
 
 Fluxo:
-1. Toolkit: abrir a ROM (E), aba Font com "Use extended font" ligado, Export ROM.
-2. `insert_text_v3.py` sobre essa ROM com o JSON traduzido.
+1. Toolkit: abrir a ROM (E), aba Font com "PT-BR font (100%)" ligado (ou so "Use extended font"), Export ROM.
+2. `insert_text_v3.py` sobre essa ROM com o JSON traduzido (o `--reflow` usa as larguras dessa ROM).
 
 Regras de texto (as mesmas do preview de mensagens do Toolkit):
 - caixa de dialogo: 208 px de largura, 2 linhas; `<NL>` quebra a linha, `<NB>` abre outra caixa (o retrato continua);

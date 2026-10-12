@@ -111,6 +111,8 @@ public static class RomHackProjectSerializer
 
         public bool UseExtendedFont { get; set; } = true;
 
+        public bool UsePtBrFont { get; set; }
+
         public RomHackProject ToProject(string? projectFilePath)
         {
             if (SchemaVersion is not 1 and not 2 and not 3 and not 4 and not 5 and not 6 and not 7 and not 8 and not 9 and not 10 and not 11 and not 12 and not 13)
@@ -124,7 +126,8 @@ public static class RomHackProjectSerializer
                 SourceRomPath = SourceRomPath,
                 ProjectFilePath = projectFilePath,
                 TextProfileId = TextProfileId,
-                UseExtendedFont = UseExtendedFont
+                UseExtendedFont = UseExtendedFont,
+                UsePtBrFont = UsePtBrFont
             };
 
             foreach (var action in PendingActions)
@@ -736,7 +739,8 @@ public static class RomHackProjectSerializer
                 SplitLargeDisplayPartIds = project.SplitLargeDisplayPartIds
                     .Distinct()
                     .ToList(),
-                UseExtendedFont = project.UseExtendedFont
+                UseExtendedFont = project.UseExtendedFont,
+                UsePtBrFont = project.UsePtBrFont
             };
         }
     }

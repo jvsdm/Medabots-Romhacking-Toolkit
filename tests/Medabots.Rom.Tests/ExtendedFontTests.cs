@@ -136,6 +136,22 @@ public sealed class ExtendedFontTests
     public void Project_DefaultsToExtendedFont()
     {
         Assert.True(new RomHackProject().UseExtendedFont);
+        Assert.False(new RomHackProject().UsePtBrFont);
+    }
+
+    [Fact]
+    public async Task Project_SavesPtBrFontToggle()
+    {
+        var path = Path.Combine(Path.GetTempPath(), $"ptbr_font_{Guid.NewGuid():N}.json");
+        try
+        {
+            await Projects.RomHackProjectSerializer.SaveAsync(new RomHackProject { Name = "font", UsePtBrFont = true }, path);
+            Assert.True((await Projects.RomHackProjectSerializer.LoadAsync(path)).UsePtBrFont);
+        }
+        finally
+        {
+            File.Delete(path);
+        }
     }
 
     [Fact]
@@ -182,5 +198,54 @@ public sealed class ExtendedFontTests
         var off = RomHackSession.FromRomFile(new RomFile("font.gba", (byte[])original.Clone()));
         new Projects.RomHackProjectApplicator().Apply(new RomHackProject { Name = "font", UseExtendedFont = false }, off);
         Assert.Equal(original, off.RomFile.Data.ToArray());
+    }
+
+    [Fact]
+    public void PtBrFont_HoldsTheDrawnGlyphs()
+    {
+        Assert.Equal(43, PtBrFont.NormalGlyphs.Count);
+        Assert.Equal(127, PtBrFont.ItalicGlyphs.Count);
+        foreach (var glyph in new[] { 0x50, 0x51, 0x64, 0x65 })
+        {
+            Assert.Equal(ExtendedFont.GlyphSize, PtBrFont.GetGlyph(glyph).Length);
+        }
+    }
+
+    [Fact]
+    public void Project_WritesPtBrFontWhereTheGameDraws()
+    {
+        string path;
+        try
+        {
+            path = TestRomLocator.FindRomByHeader(TestRomLocator.MetabeeEuropeHeader);
+        }
+        catch (FileNotFoundException)
+        {
+            return;
+        }
+
+        var original = File.ReadAllBytes(path);
+        var layout = ExtendedFont.Locate(original)!;
+        Assert.Equal(0x4BFC64, layout.GameFont);
+        Assert.Equal(0x4C59A4, layout.GameItalicFont);
+
+        var session = RomHackSession.FromRomFile(new RomFile("font.gba", (byte[])original.Clone()));
+        new Projects.RomHackProjectApplicator().Apply(new RomHackProject { Name = "font", UsePtBrFont = true }, session);
+        var rom = session.RomFile.Data.ToArray();
+        Assert.Equal(PtBrFont.Preview(original, layout), rom);
+
+        Span<byte> Glyph(int font, int glyph) => rom.AsSpan(font + glyph * ExtendedFont.GlyphSize, ExtendedFont.GlyphSize);
+        Assert.True(Glyph(layout.GameFont, 0x51).SequenceEqual(PtBrFont.GetGlyph(0x51)));
+        Assert.True(Glyph(layout.GameItalicFont, 0x01).SequenceEqual(PtBrFont.GetGlyph(0x01, true)));
+        foreach (var (slot, source) in new[] { (0x4F, 0x65), (0x7D, 0x50), (0x7E, 0x51), (0x7F, 0x64) })
+        {
+            Assert.True(Glyph(layout.GameFont, slot).SequenceEqual(Glyph(layout.GameFont, source)));
+            Assert.True(Glyph(layout.GameItalicFont, slot).SequenceEqual(Glyph(layout.GameItalicFont, source)));
+        }
+
+        // Accented letters advance at least as far as the base letter (ã as a, Ã as A)
+        Assert.True(rom[layout.ItalicWidths + 0x7E * 2] >= rom[layout.ItalicWidths + 0x1B * 2]);
+        Assert.True(rom[layout.ItalicWidths + 0x7D * 2] >= rom[layout.ItalicWidths + 0x01 * 2]);
+        Assert.Equal(rom, PtBrFont.Preview(rom, layout));
     }
 }

@@ -14,6 +14,7 @@
   <ItemGroup>
     <EmbeddedResource Include="medabots.catalog.json" />
     <EmbeddedResource Include="battleactions.json" />
+    <EmbeddedResource Include="Text/ptbr_font.bin" LogicalName="Medabots.Rom.Text.ptbr_font.bin" />
     <EmbeddedResource Include="Expansion/expansion.manifest.json" LogicalName="Medabots.Rom.Expansion.expansion.manifest.json" />
   </ItemGroup>
 

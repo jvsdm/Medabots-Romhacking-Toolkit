@@ -74,4 +74,7 @@ public sealed class RomHackProject
 
     /// <summary>Writes the PT-BR font extension (Text.ExtendedFont) on build. On by default.</summary>
     public bool UseExtendedFont { get; set; } = true;
+
+    /// <summary>Writes the PT-BR fonts (Text.PtBrFont) on build, in place of the extended font. Off by default.</summary>
+    public bool UsePtBrFont { get; set; }
 }

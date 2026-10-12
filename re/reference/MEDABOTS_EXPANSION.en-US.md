@@ -661,14 +661,29 @@ menu's Motion viewer the bot is identical to the original on both sides.
 - With the font on, the (E) italic font is repaired (`ItalicFontRepair`: shades B-F stored as 0 become dark
   again). The (E) italic already ships õ Ã ã Õ (width 0); they are kept and get widths.
 - Dialogue palette: 0x4C7F34 (16 colors, BGR555). Widths: normal 0x3B4E08, italic 0x3B5008.
-- **Open:**
-  - The Toolkit finds the fonts 8 bytes after what the game uses. The code (routine 0x08040132: `glyph << 6` +
-    pointer) points the normal font to **0x084BFC64** and the italic to **0x084C59A4** (literals at 0x40164,
-    0x40144 and others); the Toolkit uses 0x4BFC6C / 0x4C59AC. Fix: read the pointer from the literals and realign
-    the 4 new glyphs (today they land 2 rows lower). Rokusho (E): probably 0x4BFC88 / 0x4C59C8.
-  - The italic font is badly drawn in the ROM itself (stray pixels, misplaced accents, also at the right pointer):
-    redraw by hand. Options: PNG sheet to edit, a slanted base from the normal font, and "Import Italic Font" in
-    the Font tab.
+- Font address: the code (routine 0x08040132: `glyph << 6` + pointer) draws the normal font from **0x084BFC64**
+  and the italic from **0x084C59A4** (literals at 0x40164, 0x40144...), 8 bytes before what the signature search
+  finds (0x4BFC6C / 0x4C59AC). `FontLayout.GameFont`/`GameItalicFont` = signature − 8. The Font tab sheets, the
+  message preview and "Export Original ... Font" read from there (they show what the game draws). The width rule is
+  still measured on the old window (rows 2-13 of the game glyph), the one that matches the shipped widths.
+- **Open:** "Use extended font" still writes its 4 glyphs at the old address (+8, 2 rows lower). The PT-BR font
+  (16.1) replaces the extension.
+
+### 16.1 PT-BR font (100%) — Font tab (2026-10-11)
+
+- Fonts redrawn by hand by the user (Tile Molester) over Metabee (E): normal font with 43 retouched glyphs and
+  Ã ã Õ õ in place of Ä ä Ö ö (0x50, 0x51, 0x64, 0x65); italic font fully redrawn (127 glyphs).
+- `re/tools/text/ptbr_font_extract.py ORIGINAL EDITED src/Medabots.Rom/Text/ptbr_font.bin` stores only the glyphs
+  that differ from the original. `Text/PtBrFont` (option "PT-BR font (100%)", `RomHackProject.UsePtBrFont`)
+  writes them at the game address, copies Ã ã Õ õ to 0x7D/0x7E/0x7F/0x4F as well (text stays encoded as with the
+  extension) and computes widths 0x4F-0x7F with the rule, never below the base letter (Ã ≥ A, ã ≥ a: the shipped
+  italic widths are often 1 px wider than the rule). A redrawn glyph below 0x4F (only "/"): shipped width + the
+  measured change (5 → 7). When on, it replaces the extension and the italic repair.
+- Checked: original + PT-BR font = edited ROM in all 256 glyphs (only the copies 0x4F/0x7D-0x7F differ, blank in
+  the edited ROM); WPF Export ROM identical to the API output; emulator with normal and italic text (ã õ Ã Õ,
+  accents, cedilla), no overlap. The byte 0x4C599D changed in the edited ROM (outside the fonts) is not carried.
+- `insert_text_v3.py` now reads the widths of the input ROM for `--reflow` (with the extended font the output is
+  identical to before).
 
 ## Credits and references
 

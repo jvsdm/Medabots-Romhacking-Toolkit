@@ -6,7 +6,7 @@ using Medabots.Rom.Text;
 
 namespace Medabots.Rom.WPFEditor;
 
-/// <summary>Font tab (European ROMs): extended font toggle, normal and italic sheets with advance lines, PNG export.</summary>
+/// <summary>Font tab (European ROMs): extended / PT-BR font toggles, normal and italic sheets with advance lines, PNG export.</summary>
 public partial class MainWindow
 {
     private const int FontSheetScale = 4;
@@ -22,6 +22,8 @@ public partial class MainWindow
 
         _syncingFontSection = true;
         UseExtendedFontCheckBox.IsChecked = _project.UseExtendedFont;
+        UsePtBrFontCheckBox.IsChecked = _project.UsePtBrFont;
+        UseExtendedFontCheckBox.IsEnabled = !_project.UsePtBrFont;
         _syncingFontSection = false;
 
         var rom = _session?.RomFile.Data;
@@ -42,10 +44,10 @@ public partial class MainWindow
         }
         else
         {
-            var state = !ExtendedFont.CanApply(rom)
-                ? "Extended font not applicable: the slots 0x4F/0x7D-0x7F already hold other glyphs."
+            var state = _project.UsePtBrFont ? "PT-BR font (100%) applied on export."
+                : !ExtendedFont.CanApply(rom) ? "Extended font not applicable: the slots 0x4F/0x7D-0x7F already hold other glyphs."
                 : _project.UseExtendedFont ? "Extended font applied on export." : "Extended font off: the original font is kept.";
-            ExtendedFontStatusLabel.Text = $"{state}  Font 0x{layout.Font:X6}, italic 0x{layout.ItalicFont:X6}, widths 0x{layout.Widths:X6} / 0x{layout.ItalicWidths:X6}.";
+            ExtendedFontStatusLabel.Text = $"{state}  Font 0x{layout.GameFont:X6}, italic 0x{layout.GameItalicFont:X6} (as drawn by the game), widths 0x{layout.Widths:X6} / 0x{layout.ItalicWidths:X6}.";
         }
 
         FontSheetImage.Source = european && layout is not null ? RenderFontSheet(rom!, false) : null;
@@ -65,8 +67,24 @@ public partial class MainWindow
         UpdateStatus();
     }
 
+    private void OnUsePtBrFontChanged(object sender, RoutedEventArgs e)
+    {
+        if (_syncingFontSection)
+        {
+            return;
+        }
+
+        _project.UsePtBrFont = UsePtBrFontCheckBox.IsChecked == true;
+        RefreshFontSection();
+        RebuildMessagePreview(keepBox: true);
+        UpdateStatus();
+    }
+
     private async void OnExtendedFontHelpClicked(object sender, RoutedEventArgs e) =>
         await DisplayAlertAsync("Extended font", ExtendedFont.Summary, "OK");
+
+    private async void OnPtBrFontHelpClicked(object sender, RoutedEventArgs e) =>
+        await DisplayAlertAsync("PT-BR font (100%)", PtBrFont.Summary, "OK");
 
     private async void OnExportNormalFontClicked(object sender, RoutedEventArgs e) => await ExportOriginalFontAsync(false);
 
@@ -91,7 +109,7 @@ public partial class MainWindow
         }
 
         const int size = 128;
-        var pixels = FontIndexSheet(rom, italic ? layout.ItalicFont : layout.Font);
+        var pixels = FontIndexSheet(rom, italic ? layout.GameItalicFont : layout.GameFont);
         var palette = new BitmapPalette(ExtendedFont.Palette.Select(Rgb555ToColor).ToList());
         var encoder = new PngBitmapEncoder();
         encoder.Frames.Add(BitmapFrame.Create(BitmapSource.Create(size, size, 96, 96, PixelFormats.Indexed8, palette, pixels, size)));
@@ -130,6 +148,7 @@ public partial class MainWindow
     private BitmapSource RenderFontSheet(byte[] rom, bool italic)
     {
         s_useExtendedFont = _project.UseExtendedFont;
+        s_usePtBrFont = _project.UsePtBrFont;
         UpdateFontLayout(rom);
         const int cells = 128;
         const int size = cells * FontSheetScale;
@@ -141,7 +160,7 @@ public partial class MainWindow
         {
             var left = glyph % 16 * 8 * FontSheetScale;
             var top = glyph / 16 * 16 * FontSheetScale;
-            int advance = (s_useExtendedFont && s_extendedRom is { } ext ? ext : rom)[widths + glyph * 2];
+            int advance = ActiveFontRom(rom)![widths + glyph * 2];
 
             for (var y = 0; y < 16 * FontSheetScale; y++)
             {

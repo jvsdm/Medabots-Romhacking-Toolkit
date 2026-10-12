@@ -664,14 +664,29 @@ visualizador Motion do menu de debug o bot fica idêntico ao original, dos dois 
 - Com a fonte ligada, o itálico da (E) é reparado (`ItalicFontRepair`: tons B-F gravados como 0 voltam a ser
   escuros). A itálica da (E) já traz õ Ã ã Õ (largura 0); eles são mantidos e ganham largura.
 - Paleta do diálogo: 0x4C7F34 (16 cores, BGR555). Larguras: normal 0x3B4E08, itálica 0x3B5008.
-- **Pendente:**
-  - O Toolkit acha as fontes 8 bytes adiante do que o jogo usa. O código (rotina 0x08040132: `glifo << 6` +
-    ponteiro) aponta a normal para **0x084BFC64** e a itálica para **0x084C59A4** (literais em 0x40164,
-    0x40144 e outros); o Toolkit usa 0x4BFC6C / 0x4C59AC. Corrigir: ler o ponteiro dos literais e realinhar os 4
-    glifos novos (hoje entram 2 linhas abaixo). Rokusho (E): provavelmente 0x4BFC88 / 0x4C59C8.
-  - A fonte itálica é mal desenhada na própria ROM (pixels soltos, acentos fora do lugar, também no ponteiro
-    certo): refazer à mão. Opções: folha PNG para editar, base inclinada a partir da fonte normal, e "Import
-    Italic Font" na aba Font.
+- Endereço das fontes: o código (rotina 0x08040132: `glifo << 6` + ponteiro) usa a normal em **0x084BFC64** e a
+  itálica em **0x084C59A4** (literais em 0x40164, 0x40144...), 8 bytes antes do que a busca por assinatura acha
+  (0x4BFC6C / 0x4C59AC). `FontLayout.GameFont`/`GameItalicFont` = assinatura − 8. As folhas da aba Font, o preview
+  de mensagens e "Export Original ... Font" leem desse endereço (mostram o que o jogo desenha). A regra de largura
+  continua medida na janela antiga (linhas 2-13 do glifo do jogo), que é a que bate com as larguras originais.
+- **Pendente:** a extensão "Use extended font" ainda grava os 4 glifos no endereço antigo (+8, 2 linhas abaixo).
+  A fonte PT-BR (16.1) substitui a extensão.
+
+### 16.1 Fonte PT-BR (100%) — aba Font (2026-10-11)
+
+- Fontes redesenhadas à mão pelo usuário (Tile Molester) sobre a Metabee (E): normal com 43 glifos retocados e
+  Ã ã Õ õ no lugar de Ä ä Ö ö (0x50, 0x51, 0x64, 0x65); itálica toda redesenhada (127 glifos).
+- `re/tools/text/ptbr_font_extract.py ORIGINAL EDITADA src/Medabots.Rom/Text/ptbr_font.bin` grava só os glifos
+  que diferem da original. `Text/PtBrFont` (opção "PT-BR font (100%)", `RomHackProject.UsePtBrFont`) grava esses
+  glifos no endereço do jogo, copia Ã ã Õ õ também para 0x7D/0x7E/0x7F/0x4F (o texto continua codificado como
+  na extensão) e calcula as larguras 0x4F-0x7F pela regra, nunca abaixo da letra base (Ã ≥ A, ã ≥ a: as larguras
+  originais da itálica costumam ser 1 px maiores que a regra). Glifo redesenhado abaixo de 0x4F (só "/"): largura
+  original + diferença medida (5 → 7). Ligada, substitui a extensão e o reparo do itálico.
+- Conferido: original + PT-BR font = ROM editada nos 256 glifos (diferem só as cópias 0x4F/0x7D-0x7F, vazias na
+  editada); Export ROM do WPF idêntico ao da API; emulador com texto normal e itálico (ã õ Ã Õ, acentos,
+  cedilha) sem sobreposição. O byte 0x4C599D mudado na editada (fora das fontes) não entra.
+- `insert_text_v3.py` agora lê as larguras da ROM de entrada para o `--reflow` (com a fonte estendida a saída é
+  idêntica à anterior).
 
 ## Créditos e referências
 

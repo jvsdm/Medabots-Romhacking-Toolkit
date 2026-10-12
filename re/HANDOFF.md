@@ -353,3 +353,17 @@ Checklist:
     "Okay let's Robattle!" tambem na (E) original (limitacao do atalho, nao da traducao); o unico save com
     progresso e o de `Medabots_expanded` (escola). Precisa de save/estado perto da loja e de um Robattle.
 - Para a nuvem: achar a fonte dos rotulos OBJ (tela de detalhes da peca) e o caminho de desenho deles (estatico).
+
+### 2026-10-11 - sessao local (15): fonte PT-BR (100%) no Toolkit
+- Base: ROM editada a mao pelo usuario (`Medabots - Metabee (Europe)editada.gba`, fora do git): fonte normal com 43
+  glifos retocados e Ã ã Õ õ nos slots de Ä ä Ö ö (0x50/0x51/0x64/0x65); italica toda redesenhada. Ela confirmou
+  o endereco do jogo (0x4BFC64 / 0x4C59A4).
+- `re/tools/text/ptbr_font_extract.py` -> `src/Medabots.Rom/Text/ptbr_font.bin` (so glifos diferentes da original).
+  `Text/PtBrFont` + opcao "PT-BR font (100%)" na aba Font (`RomHackProject.UsePtBrFont`, salvo no projeto):
+  grava no endereco do jogo, copia Ã ã Õ õ para 0x7D/0x7E/0x7F/0x4F, larguras 0x4F-0x7F pela regra com minimo da
+  letra base. `FontLayout.GameFont/GameItalicFont`; folhas, preview e export de PNG leem o endereco do jogo.
+- Conferido: original + PT-BR font = editada nos 256 glifos (fora as copias); WPF Export ROM = saida da API;
+  emulador (texto normal e italico com ã õ Ã Õ e acentos) sem sobreposicao. Testes: 255 ok + 3 antigas.
+- `insert_text_v3.py --reflow` le as larguras da ROM de entrada.
+- ROM de teste: `build/Medabots_PT-BR_fonte100.gba` (fonte 100% + traducao v1; 5595 strings, 0 aviso).
+- Pendente: extensao antiga ainda grava em +8; bug dos rotulos com acento (sessao 14) continua (fonte OBJ).

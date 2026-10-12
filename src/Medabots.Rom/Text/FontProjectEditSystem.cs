@@ -7,10 +7,19 @@ internal sealed class FontProjectEditSystem : IProjectEditSystem
     public string DisplayName => "Font";
 
     public IEnumerable<string> DescribeChanges(RomHackProject project) =>
-        project.UseExtendedFont ? new[] { "Extended font (õ Ã ã Õ, normal and italic; widths 0x4F-0x7F; italic font repair)" } : Array.Empty<string>();
+        project.UsePtBrFont ? new[] { "PT-BR font (100%: normal and italic glyphs, õ Ã ã Õ, widths)" }
+        : project.UseExtendedFont ? new[] { "Extended font (õ Ã ã Õ, normal and italic; widths 0x4F-0x7F; italic font repair)" }
+        : Array.Empty<string>();
 
     public IEnumerable<ProjectChange> BuildChanges(RomHackProject project, ProjectBuildContext context)
     {
+        if (project.UsePtBrFont)
+        {
+            return PtBrFont.CanApply(context.SourceRom.Data, out var ptBrLayout)
+                ? [new ProjectChange(DisplayName, "PT-BR font", PtBrFont.BuildPatches(context.SourceRom.Data, ptBrLayout))]
+                : Array.Empty<ProjectChange>();
+        }
+
         if (!project.UseExtendedFont || !ExtendedFont.CanApply(context.SourceRom.Data, out var layout))
         {
             return Array.Empty<ProjectChange>();

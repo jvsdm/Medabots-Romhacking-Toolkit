@@ -30,6 +30,9 @@ public partial class MainWindow
 
     // The ROM as exported with the extended font (italic repaired, glyphs and widths); null when it cannot take it
     private static byte[]? s_extendedRom;
+
+    // The ROM as exported with the PT-BR font (Text.PtBrFont); null when it cannot take it
+    private static byte[]? s_ptBrRom;
     private const int BoxTop = 104;
     private const int TextLeft = 16;
     private const int TextRight = 228;
@@ -41,6 +44,13 @@ public partial class MainWindow
 
     // Preview draws the extended glyphs and widths (Text.ExtendedFont) when the project enables them.
     private static bool s_useExtendedFont = true;
+
+    // PT-BR font (Text.PtBrFont): replaces the extended font when on
+    private static bool s_usePtBrFont;
+
+    // Font image the preview draws: PT-BR font, extended font or the ROM as is
+    private static byte[]? ActiveFontRom(byte[]? rom) =>
+        s_usePtBrFont && s_ptBrRom is { } ptBr ? ptBr : s_useExtendedFont && s_extendedRom is { } ext ? ext : rom;
 
     private const string MessageGlyphs =
         " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789·" +
@@ -82,6 +92,7 @@ public partial class MainWindow
         }
 
         s_useExtendedFont = _project.UseExtendedFont;
+        s_usePtBrFont = _project.UsePtBrFont;
         UpdateFontLayout(_session?.RomFile.Data);
         _messageBoxes = WrapMessageBoxes(ParseMessageBoxes(MessageTextEditor?.Text ?? ""), _session?.RomFile.Data);
         ShowMessageBox(keepBox ? _messageBoxIndex : 0);
@@ -343,14 +354,9 @@ public partial class MainWindow
     private static int GlyphAdvance(byte[]? rom, char ch, bool italic)
     {
         var glyph = GlyphIndex(ch);
-        if (s_useExtendedFont && s_extendedRom is { } ext && glyph >= Medabots.Rom.Text.ExtendedFont.FirstWidthGlyph)
-        {
-            var extendedAdvance = ext[(italic ? s_fontLayout.ItalicWidths : s_fontLayout.Widths) + glyph * 2];
-            return extendedAdvance is > 0 and <= 16 ? extendedAdvance : 6;
-        }
-
+        var source = ActiveFontRom(rom);
         var widths = (italic ? s_fontLayout.ItalicWidths : s_fontLayout.Widths) + glyph * 2;
-        var advance = rom is not null && widths < rom.Length ? rom[widths] : 6;  // the second byte is not spacing
+        var advance = source is not null && widths < source.Length ? source[widths] : 6;  // the second byte is not spacing
         return advance is > 0 and <= 16 ? advance : 6;
     }
 
@@ -446,7 +452,7 @@ public partial class MainWindow
     // Draws an 8x16 glyph (two 4bpp tiles, colour 0/1 = background), clipped to the visible part of the line.
     private static void DrawGlyph(uint[] pixels, byte[]? rom, int glyph, bool italic, int left, int top)
     {
-        var font = italic ? s_fontLayout.ItalicFont : s_fontLayout.Font;
+        var font = italic ? s_fontLayout.GameItalicFont : s_fontLayout.GameFont;
         if (rom is null || font + 128 * 64 > rom.Length)
         {
             return;
@@ -520,15 +526,18 @@ public partial class MainWindow
         s_extendedRom = Medabots.Rom.Text.ExtendedFont.CanApply(rom, out var layout)
             ? Medabots.Rom.Text.ExtendedFont.Preview(rom, layout)
             : null;
+        s_ptBrRom = Medabots.Rom.Text.PtBrFont.CanApply(rom, out var ptBrLayout)
+            ? Medabots.Rom.Text.PtBrFont.Preview(rom, ptBrLayout)
+            : null;
         s_fontLayoutRom = rom;
     }
 
-    // Palette index (0-F) of a glyph pixel; read from the exported font (repaired italic, new glyphs) when enabled.
+    // Palette index (0-F) of a glyph pixel as the game draws it, from the font the export writes.
     private static int GlyphPixel(byte[] rom, int glyph, bool italic, int x, int y)
     {
         var offset = (y / 8) * 32 + (y % 8) * 4 + x / 2;
-        var source = s_useExtendedFont && s_extendedRom is not null ? s_extendedRom : rom;
-        var b = source[(italic ? s_fontLayout.ItalicFont : s_fontLayout.Font) + glyph * 64 + offset];
+        var source = ActiveFontRom(rom)!;
+        var b = source[(italic ? s_fontLayout.GameItalicFont : s_fontLayout.GameFont) + glyph * 64 + offset];
         return (x & 1) == 1 ? b >> 4 : b & 15;
     }
 
