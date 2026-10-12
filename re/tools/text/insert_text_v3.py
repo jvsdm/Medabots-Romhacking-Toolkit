@@ -10,7 +10,8 @@ Correcoes sobre a v2:
 - texto gravado depois do ultimo byte usado acima de 8 MB, como o Toolkit (a v2 usava 0x850000 fixo);
 - strings iguais gravadas uma vez so;
 - <0xNN> grava o byte cru (argumento do <?>);
-- --reflow: reorganiza <NL>/<NB> das caixas de dialogo pela largura real (208 px, 2 linhas por caixa).
+- --reflow: reorganiza <NL>/<NB> das caixas de dialogo pela largura real (208 px, 2 linhas por caixa);
+- rotulos (medtext.LABEL_TABLES) gravados sem acento: a fonte 8x8 dos sprites nao tem acentos.
 """
 import argparse
 import json
@@ -102,6 +103,8 @@ def main():
             if not text:
                 continue
             where = f"{name}[{e['index']}]"
+            if name in medtext.LABEL_TABLES and '<' not in text:
+                text = medtext.fold_accents(text)
             if args.reflow and is_dialogue(text):
                 text = medtext.reflow(text)
             original = medtext.clean(e["original"]).replace('<?>ä', '<?><0x50>')

@@ -43,6 +43,21 @@ def clean(s):
     return s
 
 
+# Rotulos (nomes de medalha, arma, perna, item...) sao desenhados como sprites com a fonte 8x8 da ROM
+# (0x084C8034, so 0x01-0x4E): letra acentuada le quadros fora da tabela e desenha lixo.
+LABEL_TABLES = {'MedalNames', 'MedalAbilityNames', 'AttackTypeNames', 'WeaponTypeNames', 'LegTypes',
+                'BattlefieldNames', 'MenuLabels', 'KeyItems', 'CharacterNames', 'StatusStrings', 'MedaforceNames'}
+
+
+def fold_accents(s):
+    # Tira acentos (á -> a, Ç -> C); mantem ♥ · £
+    out = []
+    for c in s:
+        d = unicodedata.normalize('NFD', c)
+        out.append(d[0] if len(d) > 1 and d[0].isascii() else c)
+    return ''.join(out)
+
+
 def bad_chars(s):
     return sorted({c for c in TAG.sub('', s) if c not in CODE})
 

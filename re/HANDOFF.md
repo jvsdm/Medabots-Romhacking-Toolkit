@@ -468,3 +468,18 @@ Checklist:
 - Local: no visualizador Motion do debug, direita/esquerda trocam o tipo (0x03000475); rotular os 47 tipos
   (secao 6 do .md). Em batalha, watchpoint em `fight_information+0x112` e `gObjectSlots[i]+0x2C` para ligar
   acao -> tipo de movimento. Proxima da nuvem: tarefa 8 (mini sprite) ou 9 (HUD).
+
+### 2026-10-12 - sessao nuvem: acento nos rotulos (tela de detalhes da peca)
+- Causa: rotulos (nomes de medalha, arma, perna, item, Medaforca...) sao sprites montados por
+  `BuildObjectTextFromGlyphStream` 0x08040DB8: cada letra vira um slot com quadro `char-1` do set 0 de
+  `gSpriteSetTable0` 0x083ABFB0 -> `gObjTextGlyphFrames` 0x08075FF8, que so tem **78 quadros (0x01-0x4E)**. Os
+  quadros apontam tiles OBJ 0x3A0+char-1, carregados da fonte 8x8 `gObjTextFontGfx` 0x084C8034 (comprimida,
+  0x9C0 B = 78 tiles) em 0x06017400 por ~20 telas. Letra >= 0x4F le ponteiros depois da tabela (lixo; quadros com
+  contagem errada podem gastar os 128 OAM e sumir com o texto vizinho, o "YC").
+- Correcao aplicada: rotulos sem acento. `medtext.LABEL_TABLES` + `fold_accents`; `insert_text_v3.py` tira o acento
+  dessas tabelas sozinho (strings sem tags); `game_text_ptbr.json` regenerado (nao versionado).
+- Para ter acento nos rotulos (depois): (1) desenhar os glifos 8x8 acentuados e recomprimir a fonte com mais tiles;
+  (2) tabela de quadros nova com 128 entradas (registros de 12 B como os de 0x08075C50, tile = 0x3A0+char-1) e
+  repontar `gSpriteSetTable0[0]`; (3) a fonte passa de 0x3ED: tiles 0x3EE-0x3FF (18) so se nenhuma das ~20 telas
+  usar; conferir no emulador (VRAM OBJ) cada tela que carrega 0x06017400. 18 tiles cobrem a e i o u com acentos
+  usados em PT-BR + c cedilha minusculos e 7 maiusculos.

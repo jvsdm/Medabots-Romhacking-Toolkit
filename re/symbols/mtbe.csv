@@ -961,6 +961,8 @@ address,name,kind,count,comment
 0x080619B0,Shop_InitPartSelectionScreen,func_thumb,,"Simon/Rokusho: Initialize the shop part-selection screen. Builds either the sellable inventory list or the current shop stock list, and computes each listed part's displayed price as RomPartRecord.price_hundreds * 100."
 0x08068440,MainState3,func_thumb,,estado 3 (estado inicial no boot)
 0x08068F50,FightPreview_LoadCachedAndEncounterLoadouts,func_thumb,,Simon/Rokusho: Load battle preview/composite sprites using the cached player preview loadout from fight_information.preview_loadout_cache and the selected encounter fight templates from list_of_all_fights. Also seeds the preview scene state before handing control to the scene-specific main loop.
+0x08075C50,gObjTextGlyphFrameRecords,data,936,quadros dos glifos 8x8 (12 B: count 1, attr0, attr1, tile 0x3A0+char-1, 0, largura?) para chars 0x01-0x4E
+0x08075FF8,gObjTextGlyphFrames,ptr,78,set 0 de gSpriteSetTable0: quadro = char-1; so 78 (0x01-0x4E), acento le fora da tabela
 0x0807CCC0,CPUFastSet,func_thumb,,Simon/Rokusho em 0x0807CCE0
 0x0807CCC4,CPUSet,func_thumb,,Simon/Rokusho em 0x0807CCE4
 0x0807CCC8,Div,func_thumb,,Simon/Rokusho em 0x0807CCE8
@@ -979,6 +981,7 @@ address,name,kind,count,comment
 0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
 0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
+0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
 0x083AC2C8,menu_list,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
 0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]
@@ -1080,6 +1083,7 @@ address,name,kind,count,comment
 0x084C4BDC,sPartDetailTileSheetA,label,,Simon/Rokusho em 0x084C4C00
 0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
 0x084C8034,sShopPartScreenUiTileSheet,label,,Simon/Rokusho em 0x084C8058
+0x084C8034,gObjTextFontGfx,data,,fonte 8x8 dos rotulos em sprite (comprimida, 0x9C0 B = 78 tiles 4bpp), carregada em OBJ tile 0x3A0 (0x06017400)
 0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR)
 0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
 0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
