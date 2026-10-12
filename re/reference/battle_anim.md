@@ -185,3 +185,6 @@ ele). Direita/esquerda mudam o tipo; START/SELECT, o bot (0-121); A avança.
 2. Testar o mesmo tipo com bots de estilos diferentes (`gMoveStyle` 0 e 2) para confirmar as variantes.
 3. Em batalha, pôr um watchpoint de escrita em `fight_information+0x112` e em `0x03002C30 + slot*0x40 + 0x2C`
    para achar quem escolhe o tipo de cada ação (falta para ligar ação -> animação).
+
+Nota A4 (rec_2, ver pc/research/A2_motion_events.md, secao A4): o +0x2C do slot 1 = 13 (f1446) e escrito pelo handler de opcode 8 do roteiro
+de objeto, `0x080395E8` (tabela 0x083AF8C0[8]): valor = halfword de `fight_information+0x104+2*k`. Ainda sem a origem de k/da tabela e sem rotulo do tipo 13.
