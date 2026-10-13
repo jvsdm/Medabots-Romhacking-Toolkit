@@ -36,23 +36,28 @@ Updated 2026-10-13. **Current focus: discovery and documentation of ROM function
   - HN1..HN10: the 387 handlers that had no section. **Done**, decompiled and renamed in Ghidra.
   - HE1..HE4: event opcodes 0x00..0x88 (table 0x083D222C). **Done**, decompiled.
   - HO1/HO2: ObjectScript 0x01..0x3A (table 0x083AF8C0, argc at 0x083CE374). **Done**.
-  - HA1..HA8: battle handlers. **Partial**: done before the functions existed, with many sections marked
-    "sem função/chute/capstone" (count per file: HA2 48, HA8 26, HA4 24, HA7 22, HA3 12, HA1 11, HA5 4, HA6 4).
+  - HA1..HA8: battle handlers. **Redo done on 2026-10-13** with decompile (about 190 sections rewritten and
+    renamed). Remaining items are in each file's "Pendente redo" line: in HA2, 12 sections never reread (E02, E03,
+    E08, G00, G01, G03, G06, H00, H0D, F02, H15, H18).
+  - HA9..HA13: already covered by HN1..HN10 (checked).
+  - HC.md: the event continuation table 0x083D2630 (137 ops, 85 unique targets, 30 are already functions).
 - Confidence across the CSVs: about 723 entries "provável" and 178 "chute"; the rest "confirmado".
 
 ## Next discovery tasks (suggested priority)
-1. **Continuation table of event opcodes, `0x083D2630 + 4*op`.** Many opcodes only read arguments and set a
-   pending flag (0x03006469); the real effect runs in `table2[E+0xC92]` via `Event_DispatchContinuation`
-   (0x0804DC0C).
-   - Many targets are **not functions** in Ghidra (e.g. 0x0804DC34, 0x0804E480, 0x0804E48C, 0x0804F5DC,
-     0x0804F67C, 0x0804F6E0, 0x0804F83C, 0x0804F850, 0x0804FB8C).
-   - Step: write a list (`HC_lista.txt`) by reading the 0x89 pointers from the ROM, have the user run
-     CreateHandlerFunctions with that list (the script reads the first field of each line), then document it in
-     `HC1..HCn.md` (`Event_OpXX_Continue_<Name>`).
-2. **HA redo pass (HA1..HA8)**: same prompt as the HE/HO redos (decompile what was "sem função/chute", fix the
-   section in the same file, rename in Ghidra, update the CSV).
-3. **HA9..HA13_lista.txt (170 entries) have no .md.** First check whether HN1..HN10 already cover them (grep the
-   addresses in HN*_simbolos.csv). Document whatever is missing.
+1. **Continuation table of event opcodes, `0x083D2630`** (see HC.md). `HC_lista.txt` is ready with the 55 targets
+   that are not functions yet.
+   - **The user needs to run** `re/ghidra/CreateHandlerFunctions.java` with `HC_lista.txt` and save the project.
+   - Then document them in HC1..HCn.md (`Event_OpXX_Cont_<Name>`).
+   - 0x0804DC34 is the common stub (53 ops, NoOp).
+2. **Unnamed battle helpers that recur in many handlers** (high value):
+   - FUN_0803725C, FUN_08037280 (common start AccumRosPart -> ApplyStatusCostIfFlag -> 0x0803725C).
+   - FUN_080376F4, FUN_080370AC, FUN_08036AC4, FUN_08036E54, FUN_08036B84, FUN_08036D24.
+   - Fight_RollPartValue.
+   - Fight_RunSubstateDispatchC (second substate dispatcher, AJ 0C..13).
+   - Who reads the codes at +0xA6 (0x1A, 0x1C, 0x1D, 0x25, 0x2B, 0x2C, 0x2D, 0x39).
+3. **Indirect jumps Ghidra did not recover** (jump tables "UNRECOVERED"): HA2 E05/G02, HA3 H:0x3E (0x0801F28A),
+   J:0x02 (0x0801FBC4, 5 entries + fallback 0x0801FD70), L:0x0B (0x0802040C), HA1 E/05 (0x0801DADE). Read the table
+   from the ROM and fix it with set_disassembly_comment / document the targets.
 4. **Leftover Ghidra functions**: list with `mcp__ghidra__list_functions` and filter names `FUN_*` that aren't in
    mtbe.csv (functions that are neither BL targets nor in handler tables: callbacks, IRQ, and the ones created now).
    Also the 62 generic names, 55 with no name and 19 named "?" that the merge ignored (see MERGE_RELATORIO.md).
@@ -63,6 +68,8 @@ Updated 2026-10-13. **Current focus: discovery and documentation of ROM function
    - 0x08047BA8: the mtbe name Overworld_StartMapTransitionEffect is wrong (it only calls sfx); no new name yet.
    - 0x08045A40: may be a literal pool, not a function.
    - 0x0804305C vs 0x08042E58: possible duplicate composite-sprite routines.
+   - E/01, E/05 (HA1): mtbe ActionFamily_CancelGravHandler etc. vs the code (loads graphics by follow-up +0xDF).
+   - 0x08036FF8 Fight_SpawnInlineEffectTextObjects: its use in M 0x00 looks like sprite creation.
    - Duplicate names after the merge: Map_TickObjectAnimation (0x08049440 / 0x080508B4), snd_track_step
      (0x08072D68 / 0x08074118).
 6. **Data tables**: name the ROM tables cited in the literal pools (part, technique, medal, text, motion tables)
@@ -71,6 +78,11 @@ Updated 2026-10-13. **Current focus: discovery and documentation of ROM function
    RNG 0x080424B8, encounter, collision, Medaforce).
 
 ## Key facts (don't rediscover)
+- New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
+  0x03000440+0x86. Bot part flag at bot+0x59+0x18*i (i=0..3). gObjectSlots 0x03002C30. Effect mode fi+0x51 (0..3)
+  comes from part byte +0x49 (10/11/12/other).
+- **Merge pending:** the HA*_simbolos.csv files from this redo are NOT in mtbe.csv yet (merge script in
+  MERGE_RELATORIO.md / redo it like the previous one).
 - Battle bot block: `0x03000590 + bot*0x100` (research offsets = Ghidra offset − 0x40).
 - fight_information `0x03001800`:
   - `+0xAA` = action step (substate)

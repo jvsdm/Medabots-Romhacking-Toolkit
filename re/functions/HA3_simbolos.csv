@@ -1,43 +1,43 @@
 address,name,kind,comment
-0x0801ECC0,Fight_DispatchOnSubstateAA_H_Substate20,handler,despachante H[0x20] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801ED50,Fight_DispatchOnSubstateAA_H_Substate21,handler,"despachante H[0x21] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_H, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
-0x0801EED4,Fight_DispatchOnSubstateAA_H_Substate24,handler,despachante H[0x24] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801EEE4,Fight_DispatchOnSubstateAA_H_Substate28,handler,despachante H[0x28] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801EFC8,Fight_DispatchOnSubstateAA_H_Substate29,handler,despachante H[0x29] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F018,Fight_DispatchOnSubstateAA_H_Substate30,handler,despachante H[0x30] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AP
-0x0801F0F0,Fight_DispatchOnSubstateAA_H_Substate38,handler,despachante H[0x38] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F1C8,Fight_DispatchOnSubstateAA_H_Substate3B,handler,despachante H[0x3B] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F214,Fight_DispatchOnSubstateAA_H_Substate3E,handler,"despachante H[0x3E] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
-0x0801F290,Fight_DispatchOnSubstateAA_H_Substate3F,handler,"despachante H[0x3F] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
-0x0801F2DC,Fight_DispatchOnSubstateAA_H_Substate41,handler,"despachante H[0x41] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
-0x0801F374,Fight_DispatchOnSubstateAA_H_Substate44,handler,"despachante H[0x44] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
-0x0801F390,Fight_DispatchOnSubstateAA_H_Substate45,handler,"despachante H[0x45] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
-0x0801F3F0,Fight_DispatchOnSubstateAA_H_Substate47,handler,despachante H[0x47] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F474,Fight_DispatchOnSubstateAA_H_Substate4D,handler,despachante H[0x4D] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F4AC,Fight_DispatchOnSubstateAA_I_Substate00,handler,despachante I[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F5AC,Fight_DispatchOnSubstateAA_I_Substate01,handler,despachante I[0x01] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_I
-0x0801F5BC,Fight_DispatchOnSubstateAA_I_Substate02,handler,despachante I[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F780,Fight_DispatchOnSubstateAA_I_Substate03,handler,despachante I[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F800,Fight_DispatchOnSubstateAA_I_Substate04,handler,despachante I[0x04] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F9B0,Fight_DispatchOnSubstateAA_I_Substate05,handler,despachante I[0x05] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801F9EC,Fight_DispatchOnSubstateAA_I_Substate07,handler,despachante I[0x07] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FA68,Fight_DispatchOnSubstateAA_J_Substate00,handler,despachante J[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FADC,Fight_DispatchOnSubstateAA_J_Substate01,handler,despachante J[0x01] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FBC4,Fight_DispatchOnSubstateAA_J_Substate02,handler,despachante J[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FD88,Fight_DispatchOnSubstateAA_J_Substate03,handler,despachante J[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FE14,Fight_DispatchOnSubstateAA_K_Substate00,handler,despachante K[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FE64,Fight_DispatchOnSubstateAA_K_Substate02,handler,despachante K[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FEC8,Fight_DispatchOnSubstateAA_K_Substate03,handler,despachante K[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FEE8,Fight_DispatchOnSubstateAA_K_Substate04,handler,despachante K[0x04] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0801FF9C,Fight_DispatchOnSubstateAA_K_Substate05,handler,despachante K[0x05] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x08020004,Fight_DispatchOnSubstateAA_K_Substate06,handler,despachante K[0x06] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x08020040,Fight_DispatchOnSubstateAA_K_Substate08,handler,despachante K[0x08] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x08020078,Fight_DispatchOnSubstateAA_L_Substate00,handler,despachante L[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x080200A8,Fight_DispatchOnSubstateAA_L_Substate02,handler,despachante L[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x080201DC,Fight_DispatchOnSubstateAA_L_Substate03,handler,despachante L[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x08020248,Fight_DispatchOnSubstateAA_L_Substate04,handler,despachante L[0x04] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x08020288,Fight_DispatchOnSubstateAA_L_Substate06,handler,despachante L[0x06] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x080202E0,Fight_DispatchOnSubstateAA_L_Substate07,handler,despachante L[0x07] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x08020340,Fight_DispatchOnSubstateAA_L_Substate09,handler,despachante L[0x09] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x0802036C,Fight_DispatchOnSubstateAA_L_Substate0B,handler,despachante L[0x0B] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
-0x08020428,Fight_DispatchOnSubstateAA_L_Substate0C,handler,despachante L[0x0C] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801ECC0,Fight_DispatchOnSubstateAA_H_20_ApplyPartDamage,handler,"despachante H[0x20]; sorteia peca-alvo e aplica dano (FUN_08036B84 se estado da peca '0'); confirmado (corpo); passo provavel"
+0x0801ED50,Fight_DispatchOnSubstateAA_H_21_LoadBotSpriteAndPlace,handler,"despachante H[0x21]; carrega sprite do bot (ramo por estado da peca) e posiciona OBJ; confirmado (corpo); passo provavel; tambem: Fight_DispatchOnSubstateAA_H, _P, _R, _H_4A"
+0x0801EED4,Fight_DispatchOnSubstateAA_H_24_JumpToStep0A,handler,"despachante H[0x24]; so grava +0xAA=0x0A (salto); confirmado"
+0x0801EEE4,Fight_DispatchOnSubstateAA_H_28_LoadEffectSpriteAtBot,handler,"despachante H[0x28]; carrega efeito e define posicao inicial (+0x284) e alvo (+0x2B0) do OBJ; SFX 0x2F; confirmado (corpo); passo provavel"
+0x0801EFC8,Fight_DispatchOnSubstateAA_H_29_WaitSpriteMoveThenTimer60,handler,"despachante H[0x29]; espera contador de OBJ (+0x284) chegar em +0x2B0, depois timer 60; confirmado (corpo); passo provavel"
+0x0801F018,Fight_DispatchOnSubstateAA_H_30_LoadEffectSpriteAtBot,handler,"despachante H[0x30]; sprite de efeito no bot (atributo 0x2000), SFX 0x2A; confirmado (corpo); passo provavel; tambem: AP"
+0x0801F0F0,Fight_DispatchOnSubstateAA_H_38_LoadEffectSpriteAtBot,handler,"despachante H[0x38]; sprite de efeito (atributo 0x2E00), SFX 0x2A; confirmado (corpo); passo provavel"
+0x0801F1C8,Fight_DispatchOnSubstateAA_H_3B_PickRepairablePartOrSkip,handler,"despachante H[0x3B]; escolhe peca danificada reparavel; sem peca pula; com peca chama FUN_08036CCC e salta para 0x3E; confirmado (corpo); reparo provavel"
+0x0801F214,Fight_DispatchOnSubstateAA_H_3E_LoadGfxSpawnEffectAtBot,handler,"despachante H[0x3E]; gfx+paleta, FUN_08036C20 (efeito no bot), salto indireto nao recuperado; confirmado (corpo); passo provavel; tambem: AQ, P, R"
+0x0801F290,Fight_DispatchOnSubstateAA_H_3F_WaitSlotAnimEndThenClear,handler,"despachante H[0x3F]; espera animacao do slot 10 acabar (Anim_RunSlotScript), limpa slot e timer 60; confirmado (corpo); passo provavel; tambem: AQ, P, R"
+0x0801F2DC,Fight_DispatchOnSubstateAA_H_41_ShowNumberSpriteRowAtBot,handler,"despachante H[0x41]; mostra numero (halfword +0xC8) sobre o bot via Fight_WriteNumberTiles; SFX 0x5B; confirmado (corpo); passo provavel; tambem: AQ, P, R"
+0x0801F374,Fight_DispatchOnSubstateAA_H_44_PlaySfx2EAndAdvance,handler,"despachante H[0x44]; so SFX 0x2E e +0xAA+=1; confirmado; tambem: AQ, P, R"
+0x0801F390,Fight_DispatchOnSubstateAA_H_45_DrawPartIconsWaitTimer,handler,"despachante H[0x45]; desenha icones de peca (FUN_08036D24 como condicao); se ok timer 60 e +0xAA+=1; confirmado (corpo); passo provavel; tambem: AQ, P, R"
+0x0801F3F0,Fight_DispatchOnSubstateAA_H_47_RepairPartOrJump4A,handler,"despachante H[0x47]; se peca danificada reparavel e +0xCA!=0 chama FUN_08036CCC e salta para 0x4A; senao +0xAA+=1; confirmado (corpo); reparo provavel"
+0x0801F474,Fight_DispatchOnSubstateAA_H_4D_JumpTo3E,handler,"despachante H[0x4D]; so grava +0xAA=0x3E (salto para H:0x3E); confirmado"
+0x0801F4AC,Fight_DispatchOnSubstateAA_I_00_ClassifyPartStateJump2,handler,"despachante I[0x00]; classifica estado da peca (0x0D..0x14) em +0x51 (0..3) e salta para 2; senao +0xAA+=1; confirmado (corpo); categorias chute"
+0x0801F5AC,Fight_DispatchOnSubstateAA_I_01_EndHandlerNoEffect,handler,"despachante I[0x01]; so grava +0xB5=1 (termina sem efeito, igual a 0x0803080C); confirmado; tambem: I"
+0x0801F5BC,Fight_DispatchOnSubstateAA_I_02_LoadPartStateSpriteSetupSlot11,handler,"despachante I[0x02]; sprite da peca por categoria +0x51 (gfx/paleta), OBJ em gObjectSlots, Slot_SetupFromRecordList slot 11, SFX 0x2F; confirmado (corpo); passo provavel"
+0x0801F780,Fight_DispatchOnSubstateAA_I_03_AnimateSlot11ThenClear,handler,"despachante I[0x03]; desloca sprite (+0x2A0, passos de 4) e roda Anim_RunSlotScript slot 11; ao fim Tile_ClearSlots(10,2); confirmado (corpo); passo provavel"
+0x0801F800,Fight_DispatchOnSubstateAA_I_04_PlaceTwoPartStateSprites,handler,"despachante I[0x04]; dois OBJs (X-0x10 e X+0x10) com gfx por categoria +0x51; confirmado (corpo); passo provavel"
+0x0801F9B0,Fight_DispatchOnSubstateAA_I_05_WaitSlotsThenTimer90,handler,"despachante I[0x05]; FUN_08036DE8 nos slots 10/11; ao ok SFX 0x2A e timer 90; confirmado (corpo); passo provavel"
+0x0801F9EC,Fight_DispatchOnSubstateAA_I_07_ApplyPartStateEffectAtXY,handler,"despachante I[0x07]; FUN_08036E64 com estado da peca e posicao +0xE8/+0xEC; confirmado (corpo); passo provavel"
+0x0801FA68,Fight_DispatchOnSubstateAA_J_00_PreviewAdvanceSideSequences,handler,"despachante J[0x00]; avanca sequencias laterais da previa (FightPreview_Advance*) e limpa areas; confirmado (corpo); passo provavel"
+0x0801FADC,Fight_DispatchOnSubstateAA_J_01_PreviewSideStepSprites,handler,"despachante J[0x01]; passo 0..9 da previa com FUN_0803F15C espelhado; ao fim limpa 0x200 bytes e +0xAA+=1; confirmado (corpo); passo provavel"
+0x0801FBC4,Fight_DispatchOnSubstateAA_J_02_SubDispatchByStep,handler,"despachante secundario: tabela de 5 entradas por byte de estado; alvos nao recuperados no Ghidra; confirmado (despachante); alvos pendentes"
+0x0801FD88,Fight_DispatchOnSubstateAA_J_03_PreviewSideStepCounter,handler,"despachante J[0x03]; contador 0..9 da previa com FUN_0803EF8C espelhado; confirmado (corpo); passo provavel"
+0x0801FE14,Fight_DispatchOnSubstateAA_K_00_ConsumePendingBotRefresh,handler,"despachante K[0x00]; percorre 3 pendencias em +0xE0; consome a primeira, atualiza sprites dos bots ativos e vai para 2; confirmado (corpo); passo provavel"
+0x0801FE64,Fight_DispatchOnSubstateAA_K_02_LoadGfxPlaceSprite21,handler,"despachante K[0x02]; gfx+paleta e sprite 0x21 na posicao de tabela (0x1740 + cat*0x100) via FUN_08036FF8; confirmado (corpo); passo provavel"
+0x0801FEC8,Fight_DispatchOnSubstateAA_K_03_WaitSprite21Ready,handler,"despachante K[0x03]; espera FUN_080370AC(0x21) devolver nao zero; confirmado (corpo); passo provavel"
+0x0801FEE8,Fight_DispatchOnSubstateAA_K_04_LoadGfxSetupSlot21,handler,"despachante K[0x04]; gfx+paleta, posicao por tabela (cat*0x100+0x1742), Slot_SetupFromRecordList slot 0x21; confirmado (corpo); passo provavel"
+0x0801FF9C,Fight_DispatchOnSubstateAA_K_05_WaitSlot21ClearAttrMasks,handler,"despachante K[0x05]; espera anim do slot 0x21, Tile_ClearSlots e Slot_ClearAttrMask (0x5A+4*cat, 0x72+cat); confirmado (corpo); passo provavel"
+0x08020004,Fight_DispatchOnSubstateAA_K_06_QueueMessageCode14,handler,"despachante K[0x06]; FUN_0803F63C (entrada por lado) e grava +0xA6=0x14 (codigo de mensagem); confirmado (corpo); passo provavel"
+0x08020040,Fight_DispatchOnSubstateAA_K_08_ResetStepToZero,handler,"despachante K[0x08]; so grava +0xAA=0 (reinicia a fase K); confirmado"
+0x08020078,Fight_DispatchOnSubstateAA_L_00_CheckFlagF6JumpTo2,handler,"despachante L[0x00]; se bit0 de +0xF6 e 0: +0xAB=0, +0xAA+=1; senao +0xAA=2; confirmado (corpo)"
+0x080200A8,Fight_DispatchOnSubstateAA_L_02_LoadTwoGfxSetupSlot11,handler,"despachante L[0x02]; dois gfx+paletas, OBJs em gObjectSlots, Slot_SetupFromRecordList slot 11, SFX 0x53; confirmado (corpo); passo provavel"
+0x080201DC,Fight_DispatchOnSubstateAA_L_03_SlideSlot11ThenClear,handler,"despachante L[0x03]; desliza sprite do slot 11 ate marca 0x28 e limpa; confirmado (corpo); passo provavel"
+0x08020248,Fight_DispatchOnSubstateAA_L_04_CommitActionIfState3,handler,"despachante L[0x04]; se +0xB7==3 chama Fight_CommitActionState e limpa slot 10; senao +0xAA=6; confirmado (corpo); passo provavel"
+0x08020288,Fight_DispatchOnSubstateAA_L_06_LoadGfxResetCounterSfx,handler,"despachante L[0x06]; gfx+paleta, zera contador +0x2AC, SFX 0x2F; confirmado (corpo); passo provavel"
+0x080202E0,Fight_DispatchOnSubstateAA_L_07_SlideUntilMarker0x28ThenTimer60,handler,"despachante L[0x07]; desliza sprite ate marca 0x28, timer 60, +0xAB=0; confirmado (corpo); passo provavel"
+0x08020340,Fight_DispatchOnSubstateAA_L_09_BranchOnB8Value,handler,"despachante L[0x09]; desvio por +0xB8: 2 -> passo 0x0B, 4 -> passo 0x0F; senao +0xAA+=1; confirmado (corpo); significado chute"
+0x0802036C,Fight_DispatchOnSubstateAA_L_0B_LoadGfxSetupSlot10ThenJump,handler,"despachante L[0x0B]; gfx+paleta, OBJ, Slot_SetupFromRecordList slot 10, SFX 0x37, salto indireto nao recuperado (0x0802040C); confirmado (corpo); passo provavel"
+0x08020428,Fight_DispatchOnSubstateAA_L_0C_WaitSlot10AnimThenTimer60,handler,"despachante L[0x0C]; espera anim do slot 10, timer 60 e Tile_ClearSlots(10,1); confirmado (corpo); passo provavel"
