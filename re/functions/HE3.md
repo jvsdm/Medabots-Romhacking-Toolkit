@@ -15,7 +15,8 @@ Convenções (confirmadas nos decompiles desta faixa):
   (bate com `alvo = at + 1 + byte` do extract_events.py).
 - Tabela de continuação `gEventOpcodeTableB` 0x083D2630 + 4*op. Nesta faixa só 0x56, 0x59, 0x63, 0x66 e 0x67 gravam
   estado 1 e têm continuação real; as outras entradas são 0x0804DC35 ou stubs NoOp (0x0804F5C8..0x0804F6DC).
-  As continuações NÃO são funções no Ghidra; foram lidas por disassembly Thumb dos bytes da ROM.
+  As continuações NÃO são funções no Ghidra (conferido de novo depois do CreateHandlerFunctions: 0x0804F5DC, F67C,
+  F6E0, F83C e F850 seguem sem função); foram lidas por disassembly Thumb dos bytes da ROM.
 - Tamanho de argumento = bytes que o handler consome. Comparado com `EventOpcodeDefinitions.cs` (C#),
   `LegacyEventOpcodeTable.Lengths[op] - 1` (legado) e `ROM_SIZE_FIX` de `pc/extract/extract_events.py` (tamanho total).
 - mtbe.csv: os rótulos `EventOpcode50..58` em 0x0804CC5C..0x0804CD84 estão deslocados de 1 (ex.: 0x0804CC5C é o 0x51,
@@ -60,8 +61,9 @@ Legenda PC: implementado | parcial | falta (`pc/extract/extract_events.py` e `pc
 
 ## 0x4B (0x0804CA28) Jump_If_Item_Count_Below_Amount
 - Args: 3 bytes (item, amount, jump). Lidos com ReadBytes(3).
-- Faz: `c = FUN_08047D8C(item)`; salta se `c == 0` ou `c < amount`.
-- Memória: contagem de item no save (via FUN_08047D8C, não decodificada).
+- Faz: `c = FUN_08047D8C(item)` (wrapper de `Map64_GetValue`); salta se `c == 0` ou `c < amount`.
+- Memória: `Map64_GetValue` varre 64 pares de bytes em 0x03002BA0 (`[flag|id, count]`; bit 0x80 = entrada usada,
+  id comparado com `item & 0x3F`) e devolve `count` (0 se não achou). Ou seja, inventário de itens = 0x03002BA0, 64 x 2 bytes.
 - PC: implementado (`item_below` no Lua, linha ~109).
 - Confiança: confirmado (lido no Ghidra).
 
@@ -74,22 +76,25 @@ Legenda PC: implementado | parcial | falta (`pc/extract/extract_events.py` e `pc
 
 ## 0x4D (0x0804CAE8) Jump_If_Not_Has_Medal
 - Args: 2 bytes (medal, jump). ReadBytes(2).
-- Faz: `FUN_08047DB0(medal) == 0` → salta.
-- Memória: posse de medalha no save (não decodificada).
+- Faz: `FUN_08047DB0(medal) == 0` → salta. FUN_08047DB0 é wrapper de `Slot_FindByIdPlus1`: varre 30 registros de
+  0x40 bytes em 0x03000BE0 (bit 0x80 do byte 0 = slot usado, byte +1 = id da medalha) e devolve índice+1 ou 0.
+- Memória: lista de medalhas 0x03000BE0 (30 x 0x40).
 - PC: parcial (kind "jump", condição não avaliada).
 - Confiança: confirmado (Ghidra).
 
 ## 0x4E (0x0804CB34) Jump_If_Not_Has_Money
 - Args: 3 bytes (money Short big-endian, jump). ReadBytes(3).
 - Faz: `FUN_08047D4C() < money * 10` → salta. Atenção: o valor é multiplicado por 10.
-- Memória: dinheiro do save (via FUN_08047D4C).
-- PC: implementado (`money_below`, Lua linha ~111), mas o Lua compara `save.money < amount` sem o fator 10.
+- Memória: FUN_08047D4C devolve `*(u32*)0x03002B70` (dinheiro do save, literal em 0x08047D54).
+- PC: implementado (`money_below`, Lua linha ~111), mas nem o extract (amount = Short BE cru) nem o Lua
+  (`save.money < s.amount`) aplicam o fator 10. Só bate se `save.money` estiver em unidades de 10.
 - Confiança: confirmado (Ghidra).
 
 ## 0x4F (0x0804CB94) Jump_If_Previous_Scene_Command_Failed
 - Args: 1 byte (jump). ReadBytes(1).
-- Faz: salta se o byte de estado `*(DAT_cbd4 + 0x39) == 2` (comando de cena anterior falhou).
-- Memória: byte de estado (+0x39 do bloco apontado por DAT_0804CBD4), não nomeado.
+- Faz: salta se `*(u8*)0x03005349 == 2` (comando de cena anterior falhou/perdeu).
+- Memória: DAT_0804CBD4 = 0x03005310 (mtbe `gOverworldAffineState`, nome provavelmente estreito demais); byte +0x39
+  = 0x03005349 = resultado do último comando de cena (2 = falhou).
 - PC: implementado (`prev_failed`, Lua linha ~107; `won == false`, aproximação).
 - Confiança: confirmado (Ghidra).
 
@@ -174,15 +179,17 @@ Legenda PC: implementado | parcial | falta (`pc/extract/extract_events.py` e `pc
 
 ## 0x5B (0x0804CE04) Jump_If_Fewer_Than_Three_Complete_Part_Sets
 - Args: 1 byte (jump). ReadBytes(1).
-- Faz: `FUN_08047F9C() < 3` → salta.
-- Memória: contagem de conjuntos de peça completos (PartSet_CountCompleteEntries).
+- Faz: `FUN_08047F9C() < 3` → salta. FUN_08047F9C conta, nos 9 registros de 8 bytes em 0x030017A0, quantos têm
+  byte 0 == 3.
+- Memória: 0x030017A0 = 9 registros de Medabot montado (byte 0 = estado, 3 = completo; +3..+6 = 4 peças; ver 0x62).
 - PC: parcial (kind "jump" da extract, sem avaliar condição).
 - Confiança: confirmado (Ghidra).
 
 ## 0x5C (0x0804CE44) Jump_If_Missing_Complete_Monochrome_Part_Set
 - Args: 2 bytes (part_id, jump). ReadBytes(2).
-- Faz: `FUN_08047FBC(part_id) == 0` → salta.
-- Memória: conjuntos de peça monocromáticos (PartSet_HasCompleteMonochromeEntry).
+- Faz: `FUN_08047FBC(part_id) == 0` → salta. FUN_08047FBC procura nos 9 registros de 0x030017A0 um com byte 0 == 3
+  e as 4 peças (+3..+6) iguais a `part_id` (set completo de um só modelo).
+- Memória: 0x030017A0 (mesma tabela do 0x5B).
 - PC: parcial (condição não avaliada).
 - Confiança: confirmado (Ghidra).
 

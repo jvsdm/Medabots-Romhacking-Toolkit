@@ -1,59 +1,62 @@
 address,name,kind,comment
 0x08000840,ObjScript_Op00_Stub,stub,bx lr; opcode 0 e 0x3B..0x4F da tabela 0x083AF8C0
-0x08039430,ObjScript_Op01_SetFlag2A_B5,handler,provavel: ctx+0x2A=1 e 0x03001800+0xB5=1
-0x08039448,ObjScript_Op02_WaitHalfwordMatch,handler,confirmado: espera halfword casar com tabela ROM 0x083CE164
-0x080394C4,ObjScript_Op03_WaitHalfwordMatchFlag,handler,provavel: espera como 02 com flag +0xFD
-0x08039540,ObjScript_Op04_SetFlagFromB7,handler,provavel: +0xFD from +0xB7
-0x08039568,ObjScript_Op05_SetFlagFromF6Bit0,handler,provavel: +0xFD = bit0 de +0xF6
-0x08039598,ObjScript_Op06_SetFlagIfB8Is2,handler,provavel: +0xFD = (+0xB8==2)
-0x080395C0,ObjScript_Op07_SetFlagIfB8Is4,handler,provavel: +0xFD = (+0xB8==4)
-0x080395E8,ObjectOpcode08_SetMotionFromTable,handler,confirmado (A4): escreve +0x2C do slot via fight_information+0x104+2*k
-0x080396C4,ObjScript_Op09_SetFlag2A,handler,confirmado: ctx+0x2A=1
-0x080396D4,ObjScript_Op0A_SetMotionFromTableAlt,handler,provavel: parente do 08 com +0xAB
-0x080397B0,ObjScript_Op0B,handler,chute: copia 0x03001800+0x181 para 0x03002C30+0xEB
-0x0803981C,ObjScript_Op0C,handler,chute
-0x080398AC,ObjScript_Op0D,handler,chute: desenho (0x0801BCE4/0x0801BD1C)
-0x080399EC,ObjScript_Op0E,handler,chute: ctx+0x2A=1
-0x08039A2C,ObjScript_Op0F,handler,chute
-0x08039AC8,ObjScript_Op10,handler,chute
-0x08039BFC,ObjScript_Op11,handler,chute
-0x08039CB4,ObjScript_Op12,handler,chute
-0x08039CF8,ObjScript_Op13,handler,chute: desenho
-0x08039E00,ObjScript_Op14,handler,chute
-0x08039FE4,ObjScript_Op15,handler,chute: IDs 0x782/0x7A5/0x7A9/0x7AB
-0x0803A0B8,ObjScript_Op16,handler,chute
-0x0803A0E0,ObjScript_Op17,handler,provavel: carga de grafico (0x080009BC, 0x0807CCC0, VRAM 0x06010000)
-0x0803A130,ObjScript_Op18,handler,chute
-0x0803A264,ObjScript_Op19,handler,chute
-0x0803A2E8,ObjScript_Op1A,handler,chute
-0x0803A310,ObjScript_Op1B,handler,chute
-0x0803A370,ObjScript_Op1C,handler,provavel: parente do 15
-0x0803A444,ObjScript_Op1D,handler,provavel: escreve 0x04000008
-0x0803A474,ObjScript_Op1E,handler,chute: desenho
-0x0803A5CC,ObjScript_Op1F,handler,chute
-0x0803A6FC,ObjScript_Op20,handler,chute: escreve 0x04000008
-0x0803A760,ObjScript_Op21,handler,provavel: parente do 08
-0x0803A840,ObjScript_Op22,handler,provavel: parente do 08
-0x0803A920,ObjScript_Op23,handler,chute
-0x0803A93C,ObjScript_Op24,handler,chute
-0x0803AA00,ObjScript_Op25,handler,chute
-0x0803AA90,ObjScript_Op26,handler,chute
-0x0803AB00,ObjScript_Op27,handler,chute: 0x08001380
-0x0803AB9C,ObjScript_Op28,handler,provavel: paleta/sprite via 0x0807CCC0
-0x0803AC4C,ObjScript_Op2A,handler,chute
-0x0803ADE8,ObjScript_Op2B,handler,chute
-0x0803ADFC,ObjScript_Op2C,handler,chute: desenho
-0x0803AF2C,ObjScript_Op2D,handler,chute
-0x0803B0C0,ObjScript_Op2E,handler,chute
-0x0803B19C,ObjScript_Op2F,handler,chute
-0x0803B1EC,ObjScript_Op30,handler,chute
-0x0803B328,ObjScript_Op31,handler,chute: 0x0801BF78
-0x0803B374,ObjScript_Op32,handler,chute: 0x0801BC5C
-0x0803B3C8,ObjScript_Op33,handler,provavel: carga de grafico
-0x0803B428,ObjScript_Op34,handler,chute
-0x0803B4F8,ObjScript_Op35,handler,chute
-0x0803B5DC,ObjScript_Op36,handler,provavel: carga de sprites/fundo
-0x0803B6D8,ObjScript_Op37,handler,chute
-0x0803B700,ObjScript_Op38,handler,chute: BGCNT
-0x0803B754,ObjScript_Op39,handler,chute: desenho
-0x0803B884,ObjScript_Op3A,handler,chute: 0x08074DE0
+0x080393BC,ObjectScript_RunUntilYield,function,provavel (nome; nao renomeado no Ghidra): roda ObjectScript_OpcodeDispatch ate ctx 0x03002C30+0x2A != 0
+0x083CE374,ObjectScript_ArgCountTable,data,confirmado: u8 argc por opcode; cursor += 1+argc; 0x80+ = rotulos (argc 0)
+0x08039430,ObjScript_Op01_SetFlag2A_B5,handler,confirmado: fim do script; cede quadro e fight+0xB5=1; argc 0
+0x08039448,ObjScript_Op02_SkipToLabel,handler,confirmado: goto para frente ate o rotulo a0; argc 1
+0x080394C4,ObjScript_Op03_SkipToLabelByFlag,handler,confirmado: goto rotulo a[fight+0xFD]; argc 4
+0x08039540,ObjScript_Op04_SetFlagIfB7Is1,handler,confirmado: +0xFD = (+0xB7==1); argc 0
+0x08039568,ObjScript_Op05_SetFlagFromF6Bit0,handler,confirmado: +0xFD = +0xF6 & 1; argc 0
+0x08039598,ObjScript_Op06_SetFlagIfB8Is2,handler,confirmado: +0xFD = (+0xB8==2); argc 0
+0x080395C0,ObjScript_Op07_SetFlagIfB8Is4,handler,confirmado: +0xFD = (+0xB8==4); argc 0
+0x080395E8,ObjectOpcode08_SetMotionFromTable,handler,confirmado: motion do bot do lado atacante = a[1+peca]/a[4+peca]; argc 7
+0x080396C4,ObjScript_Op09_SetFlag2A,handler,confirmado: parada (cede sem avancar); argc 0
+0x080396D4,ObjScript_Op0A_SetMotionFromTableOtherSide,handler,confirmado: como 08 no bot do outro lado; argc 7
+0x080397B0,ObjScript_Op0B_SetupSlot3Anim,handler,confirmado: slot 3 estado 8 com X do lado; argc 1
+0x0803981C,ObjScript_Op0C_WaitSideFlag,handler,confirmado: espera fight+0x15F/0x160 do lado a0; argc 1
+0x080398AC,ObjScript_Op0D_SpawnEffectSlot4PartPal,handler,confirmado: efeito slot 4 estado 0x10 paleta da peca; argc 8
+0x080399EC,ObjScript_Op0E_WaitFrames,handler,confirmado: espera a0 quadros (ctx+0x30); argc 1
+0x08039A2C,ObjScript_Op0F_SetSlotMotion,handler,confirmado: slot a0+5 estado 0x18; argc 5
+0x08039AC8,ObjScript_Op10_SetSlotMotionByDamage,handler,confirmado: como 0F com anim de 0x083AFA08 por bot+0x91; argc 5
+0x08039BFC,ObjScript_Op11_SetupSlot3Effect,handler,confirmado: slot 3 estado 9; argc 3
+0x08039CB4,ObjScript_Op12_SetFlagFromBotBC20,handler,confirmado: +0xFD = bot alvo +0xBC & 0x20; argc 0
+0x08039CF8,ObjScript_Op13_SpawnEffectSlot4FixedPal,handler,confirmado: como 0D com paleta fixa 0x3C; argc 8
+0x08039E00,ObjScript_Op14_SpawnActorOffscreen,handler,confirmado: bot atacante fora da tela e motion 0x29; argc 0
+0x08039FE4,ObjScript_Op15_SpawnSlot1EState0A,handler,confirmado: slot 0x1E estado 0x0A; argc 5
+0x0803A0B8,ObjScript_Op16_WaitSlot1EIdle,handler,confirmado: espera ctx+0x7A9==0; argc 0
+0x0803A0E0,ObjScript_Op17_LoadObjGfxAndPal,handler,confirmado: 0x083AFA0C[a0] -> VRAM 0x06010000 e pal 0x050003C0; argc 1
+0x0803A130,ObjScript_Op18_SpawnFreeSlotState0B,handler,confirmado: slot livre 10..18 estado 0x0B; argc 8
+0x0803A264,ObjScript_Op19_WaitSlotReachX,handler,confirmado: espera X do slot a1 >= a0; argc 2
+0x0803A2E8,ObjScript_Op1A_ClearSlots,handler,confirmado: Tile_ClearSlots(a0;a1); argc 2
+0x0803A310,ObjScript_Op1B_SetSlotState20,handler,confirmado: slot a2 estado 0x20; argc 5
+0x0803A370,ObjScript_Op1C_SpawnSlot1EState0C,handler,confirmado: como 15 estado 0x0C; argc 5
+0x0803A444,ObjScript_Op1D_SetBg0CntClearMap,handler,confirmado: BG0CNT=0x4500 e limpa mapa; argc 0
+0x0803A474,ObjScript_Op1E_SpawnEffectSlot23PartPal,handler,confirmado: como 0D no slot 0x23 estado 0x11; argc 8
+0x0803A5CC,ObjScript_Op1F_SpawnEffectSlot4State12,handler,confirmado: como 0D estado 0x12 Y=4; argc 8
+0x0803A6FC,ObjScript_Op20_ClearTilesReset,handler,confirmado: limpa BG0 e slots 4/0x23; argc 0
+0x0803A760,ObjScript_Op21_SetMotionOwnSideHold,handler,confirmado: como 08 com +0x2D=1; argc 7
+0x0803A840,ObjScript_Op22_SetMotionOtherSideHold,handler,confirmado: como 0A com +0x2D=1; argc 7
+0x0803A920,ObjScript_Op23_SetFlagAdvance,handler,confirmado: ctx+0x8E7=1; argc 0
+0x0803A93C,ObjScript_Op24_SpawnSlot12or13State22,handler,confirmado: slot 12/13 estado 0x22; argc 7
+0x0803AA00,ObjScript_Op25_SetSlotAngle,handler,confirmado: slot a0 +0x25/+0x24; argc 3
+0x0803AA90,ObjScript_Op26_ToggleSlotFlip,handler,confirmado: inverte bits 0x1000/0x2000 do slot a0; argc 3
+0x0803AB00,ObjScript_Op27_StartSlot27PalEffect,handler,confirmado: slot 0x27 estado 0x28/0x29; argc 5
+0x0803AB9C,ObjScript_Op28_SaveObjPalsToBuffer,handler,confirmado: pal OBJ 8-11 ou 4-7 -> buffer 0x0202F800+; argc 0
+0x0803ACB4,ObjScript_Op29_SpawnFreeSlotState0D,handler,confirmado: como 18 estado 0x0D; argc 8
+0x0803AC4C,ObjScript_Op2A_SavePalRowToBuffer,handler,confirmado: linha a1 de pal BG/OBJ -> buffer; argc 2
+0x0803ADE8,ObjScript_Op2B_ClearSlots12And13,handler,confirmado: Tile_ClearSlots(0x0C;2); argc 0
+0x0803ADFC,ObjScript_Op2C_SpawnEffectSlot4State13,handler,confirmado: como 1F estado 0x13; argc 8
+0x0803AF2C,ObjScript_Op2D_SetupFourSlots,handler,confirmado: centro slot 10 + 4 sprites em volta; argc 8
+0x0803B0C0,ObjScript_Op2E_SetupFourSprites,handler,confirmado: slots 10..13 pos de 0x083AFACC; argc 4
+0x0803B19C,ObjScript_Op2F_LoadGfxToEwramAndPal,handler,confirmado: 0x083AFADC[a0] -> 0x02000000 e pal; argc 1
+0x0803B1EC,ObjScript_Op30_SetupFreeSlot,handler,confirmado: como 18 estado 0x0E; argc 8
+0x0803B328,ObjScript_Op31_SetSlotAnimScript,handler,confirmado: slot a1 anim script 0x083CEDF4[a0]; argc 2
+0x0803B374,ObjScript_Op32_LoadGfxList,handler,confirmado: gfx da peca do atacante -> OBJ VRAM; argc 0
+0x0803B3C8,ObjScript_Op33_LoadObjGfxAtTileAndPal,handler,confirmado: como 17 no tile a1; argc 2
+0x0803B428,ObjScript_Op34_SetupAffineSlotState34,handler,confirmado: slot a0 estado 0x34; argc 6
+0x0803B4F8,ObjScript_Op35_SetupEightSprites,handler,confirmado: 8 sprites em circulo no slot a0; argc 4
+0x0803B5DC,ObjScript_Op36_LoadBgFxStartSlot9,handler,confirmado: gfx/pal de BG e slot 9 estado 0x38; argc 2
+0x0803B6D8,ObjScript_Op37_WaitThenSetFlag,handler,confirmado: espera slot 9 (ctx+0x269==0); argc 0
+0x0803B700,ObjScript_Op38_ClearTilesFx,handler,confirmado: limpa BG0/BG1 e slots 4/0x23; argc 0
+0x0803B754,ObjScript_Op39_SpawnEffectSlot4NoPrioShift,handler,confirmado: como 0D sem +2 espelhado; argc 8
+0x0803B884,ObjScript_Op3A_StartTwinSlotsSfx,handler,confirmado: slots 10/11 estado 0x3A e sfx 0x10; argc 0
