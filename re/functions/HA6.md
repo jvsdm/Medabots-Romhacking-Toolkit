@@ -39,7 +39,7 @@ com um disassembler Thumb de rascunho; sem renomear. Ver "Não definidos" abaixo
 
 ## 0x080231D4 Fight_DispatchOnSubstateAA_Z_TileClearOrScroll (índice 0x08)
 - Passo: se o byte em (base+0x...) == '@' limpa slots 0x21 (2) e +0xAA; senão soma 0x10 a um halfword (scroll) e avança o byte.
-- Lê/escreve: 0x03001800+0xAA; halfword do bloco de base (0x031D?) via `DAT_0802321c`. Confiança: confirmado.
+- Lê/escreve: 0x03001800+0xAA; halfword de base+índice (base = 0x03001800 via literal; deslocamento no literal 0x0802321C). Confiança: confirmado.
 
 ## 0x08023224 Fight_DispatchOnSubstateAA_Z_TickCounterDown (índice 0x09)
 - Passo: contador 0x03000440+0x84 desce até 0 (efeito por contador com `FUN_0803f684`/`FUN_0803f998`), então +0xAA.
