@@ -1,43 +1,43 @@
 address,name,kind,comment
-0x080230C8,Fight_DispatchOnSubstateAA_Z_TickCounterUp,func_thumb,"HA6 Z/06: contador 0x03000440+0x84 sobe ate 0x10 (efeito FUN_0803f684/f998); depois +0xAA. Confirmado."
-0x08023118,?,func_thumb,"HA6 Z/07: init de gObjectSlots+0x840 (0xC604); sem funcao no Ghidra; lido a mao; parcial. Chute."
-0x080231D4,Fight_DispatchOnSubstateAA_Z_TileClearOrScroll,func_thumb,"HA6 Z/08: se '@' limpa slots 0x21 (2); senao scroll +0x10; +0xAA. Confirmado."
-0x08023224,Fight_DispatchOnSubstateAA_Z_TickCounterDown,func_thumb,"HA6 Z/09: contador 0x03000440+0x84 desce ate 0; +0xAA. Confirmado."
-0x08023274,?,func_thumb,"HA6 Z/0A: chama 0x08032FC4; laco de 3 bots em gObjectSlots+0x840; sem funcao no Ghidra; parcial. Chute."
-0x08023328,Fight_DispatchOnSubstateAA_Z_WaitAndDecaySlots,func_thumb,"HA6 Z/0B: timer 0x03000440+0x86 (0x14 -> 0x3C) e decaimento de slots; +0xAA. Confirmado."
-0x08023384,?,func_thumb,"HA6 Z/0D: laco de 3 slots; se byte 0x848==8 chama ClearObjectAttributeEntries 0x08040CD0; +0xAA. Sem funcao no Ghidra. Provavel."
-0x080233E0,Fight_DispatchOnSubstateAA_Z_AddGaugeMax160,func_thumb,"HA6 Z/0E: Fight_AddByteClampToMax teto 0xA0; +0xAA. Confirmado."
-0x08023414,?,func_thumb,"HA6 Z/0F: byte +0xA6 = 0x1C; +0xAA. Sem funcao no Ghidra; lido a mao. Confirmado."
-0x08023454,?,func_thumb,"HA6 AA/00: calculo de ROS (0x0803579C, 0x08035814, 0x0803725C). Sem funcao no Ghidra. Provavel."
-0x080234A8,?,func_thumb,"HA6 AA/04: gfx (0x080009BC, 0x0807CCC0) + init de slot (0xC404). Sem funcao no Ghidra. Provavel."
-0x08023564,Fight_DispatchOnSubstateAA_AA_WaitScriptEnd,func_thumb,"HA6 AA/05: Anim_RunSlotScript slot 0x21; fim -> timer 0x3C; +0xAA. Confirmado."
-0x080235AC,Fight_DispatchOnSubstateAA_AA_SetupSlotSfx4D,func_thumb,"HA6 AA/07: Slot_SetupFromRecordList; sfx 0x4D; +0xAA. Confirmado."
-0x080235E8,Fight_DispatchOnSubstateAA_AA_AnimCounterStep,func_thumb,"HA6 AA/08: contador 0x84 +1; FightPreview_SetGroupActive4; fim de script -> Tile_ClearSlots; +0xAA. Confirmado."
-0x08023658,Fight_DispatchOnSubstateAA_AA_WaitPreviewShowGroup,func_thumb,"HA6 AA/09: espera preview e FightPreview_ShowGroup4; +0xAA. Confirmado."
-0x080236E0,Fight_DispatchOnSubstateAA_AA_AddGaugeMax120,func_thumb,"HA6 AA/0A: Fight_AddByteClampToMax teto 0x78; +0xAA. Confirmado."
-0x08023718,?,func_thumb,"HA6 AA/0B: byte +0xA6 = 0x1D; +0xAA. Sem funcao no Ghidra; lido a mao. Confirmado."
-0x08023758,?,func_thumb,"HA6 AB/00: calculo de ROS + 0x080331F8. Sem funcao no Ghidra; parcial. Provavel."
-0x080237C8,Fight_DispatchOnSubstateAA_AB_LoadGfxSetupSlot,func_thumb,"HA6 AB/08: decompress + CPUFastSet; flags 0x220; slot 0x42; timer 0x3C; +0xAA. Confirmado."
-0x080238A0,Fight_DispatchOnSubstateAA_AB_WaitAnimOrTimer,func_thumb,"HA6 AB/09: Anim_RunSlotScript; espera timer ou flag; +0xAA. Confirmado."
-0x08023900,Fight_DispatchOnSubstateAA_AB_MoveSlotTowardTarget,func_thumb,"HA6 AB/0A: desloca slot +-0x40; Fight_StepSlotTowardTarget; +0xAA. Confirmado."
-0x08023988,Fight_DispatchOnSubstateAA_AB_SetupSlot43Sfx4E,func_thumb,"HA6 AB/0B: +0x84=0x43; slot registro +0x10C; sfx 0x4E; +0xAA. Confirmado."
-0x080239C0,Fight_DispatchOnSubstateAA_AB_WaitScriptFlag,func_thumb,"HA6 AB/0C: Anim_RunSlotScript; fim -> +0xAA. Confirmado."
-0x08023A04,Fight_DispatchOnSubstateAA_AB_StepFadeBytes8,func_thumb,"HA6 AB/0D: passos de fade de 8; fim -> Tile_ClearSlots; +0xAA. Confirmado."
-0x08023A48,Fight_DispatchOnSubstateAA_AB_CopyDisplayValues,func_thumb,"HA6 AB/0E: grava 0x26 e valores de Fight_ClampDisplayValue1To99 no bot; +0xAA. Confirmado."
-0x08023AB0,?,func_thumb,"HA6 AB/0F: byte +0xA6 = 0x2C; +0xAA. Sem funcao no Ghidra; lido a mao. Confirmado."
-0x08023AF0,?,func_thumb,"HA6 AC/00: calculo de ROS. Sem funcao no Ghidra. Provavel."
-0x08023B44,?,func_thumb,"HA6 AC/08: gfx + init de slot. Sem funcao no Ghidra. Provavel."
-0x08023C18,Fight_DispatchOnSubstateAA_AC_SetupSlot46Sfx4E,func_thumb,"HA6 AC/0B: +0x84=0x46; slot registro +0x118; sfx 0x4E; +0xAA. Confirmado."
-0x08023C50,?,func_thumb,"HA6 AC/0E: le byte do bot (0x03000590) e escreve +0xAA. Sem funcao no Ghidra; parcial. Chute."
-0x08023C78,?,func_thumb,"HA6 AC/0F: byte +0xA6 = 0x2B; +0xAA. Sem funcao no Ghidra; lido a mao. Confirmado."
-0x08023CB8,?,func_thumb,"HA6 AD/00: calculo de ROS. Sem funcao no Ghidra. Provavel."
-0x08023D44,?,func_thumb,"HA6 AD/08: gfx + init de slot. Sem funcao no Ghidra. Provavel."
-0x08023E18,Fight_DispatchOnSubstateAA_AD_SetupSlot44Sfx4E,func_thumb,"HA6 AD/0B: +0x84=0x44; slot registro +0x110; sfx 0x4E; +0xAA. Confirmado."
-0x08023E50,Fight_DispatchOnSubstateAA_AD_StepFadeBytes8Clear,func_thumb,"HA6 AD/0D: como AB/0D com Slot_ClearAttrMask; +0xAA. Confirmado."
-0x08023E94,Fight_DispatchOnSubstateAA_AD_LoadGfxSetupSlot,func_thumb,"HA6 AD/0E: gfx + flags 0x8000 + slot 0x42 + timer 0x3C; +0xAA. Confirmado."
-0x08023F48,?,func_thumb,"HA6 AD/0F: halfwords em gObjectSlots com 0x848/0x849; sem funcao no Ghidra; parcial. Chute."
-0x08023F80,Fight_DispatchOnSubstateAA_AD_SetupSlot43Sfx4E,func_thumb,"HA6 AD/12: +0x84=0x43; slot registro +0x10C; sfx 0x4E; +0xAA. Confirmado."
-0x08023FB8,Fight_DispatchOnSubstateAA_AD_WriteBotDisplayRows,func_thumb,"HA6 AD/15: escreve 0x29 e valores de display nas linhas de 2 bots; +0xAA. Confirmado."
-0x08024078,?,func_thumb,"HA6 AD/16: byte +0xA6 = 0x2D; +0xAA. Sem funcao no Ghidra; lido a mao. Confirmado."
-0x080240B8,?,func_thumb,"HA6 AE/00: calculo de ROS. Sem funcao no Ghidra. Provavel."
-0x0802410C,?,func_thumb,"HA6 AE/08: gfx + init de slot. Sem funcao no Ghidra. Provavel."
+0x080230C8,Fight_DispatchOnSubstateAA_Z_TickCounterUp,func_thumb,HA6 Z/06: contador 0x03000440+0x84 sobe ate 0x10 (efeito FUN_0803f684/f998); depois +0xAA. Confirmado.
+0x08023118,Fight_DispatchOnSubstateAA_Z_07_InitSlot21FromBotSfx4C,handler,"Z 0x07: monta slot 0x21 a partir do bot, sfx 0x4C (confirmado)"
+0x080231D4,Fight_DispatchOnSubstateAA_Z_TileClearOrScroll,func_thumb,HA6 Z/08: se '@' limpa slots 0x21 (2); senao scroll +0x10; +0xAA. Confirmado.
+0x08023224,Fight_DispatchOnSubstateAA_Z_TickCounterDown,func_thumb,HA6 Z/09: contador 0x03000440+0x84 desce ate 0; +0xAA. Confirmado.
+0x08023274,Fight_DispatchOnSubstateAA_Z_0A_SetupAllySlotsFromBots,handler,"Z 0x0A: slots 0x21..0x23 para bots ligados do lado, sfx 0x2E (confirmado)"
+0x08023328,Fight_DispatchOnSubstateAA_Z_WaitAndDecaySlots,func_thumb,HA6 Z/0B: timer 0x03000440+0x86 (0x14 -> 0x3C) e decaimento de slots; +0xAA. Confirmado.
+0x08023384,Fight_DispatchOnSubstateAA_Z_0D_SlotBitStepClearTiles,handler,Z 0x0D: passo de bytes +0x08/+0x09 com bit 0x8000; Tile_ClearSlots (confirmado)
+0x080233E0,Fight_DispatchOnSubstateAA_Z_AddGaugeMax160,func_thumb,HA6 Z/0E: Fight_AddByteClampToMax teto 0xA0; +0xAA. Confirmado.
+0x08023414,Fight_DispatchOnSubstateAA_Z_0F_SetStepCode1C,handler,Z 0x0F: grava 0x1C em +0xA6 (confirmado; sentido chute)
+0x08023454,Fight_DispatchOnSubstateAA_AA_00_RosCalcPart,handler,"AA 0x00: ROS da peca; ok -> 4, falha -> +0xA6=0x1A (confirmado)"
+0x080234A8,Fight_DispatchOnSubstateAA_AA_04_LoadGfxSetupSlot21Sfx4D,handler,"AA 0x04: gfx ROM->VRAM, slot 0x21, sfx 0x4D (confirmado)"
+0x08023564,Fight_DispatchOnSubstateAA_AA_WaitScriptEnd,func_thumb,HA6 AA/05: Anim_RunSlotScript slot 0x21; fim -> timer 0x3C; +0xAA. Confirmado.
+0x080235AC,Fight_DispatchOnSubstateAA_AA_SetupSlotSfx4D,func_thumb,HA6 AA/07: Slot_SetupFromRecordList; sfx 0x4D; +0xAA. Confirmado.
+0x080235E8,Fight_DispatchOnSubstateAA_AA_AnimCounterStep,func_thumb,HA6 AA/08: contador 0x84 +1; FightPreview_SetGroupActive4; fim de script -> Tile_ClearSlots; +0xAA. Confirmado.
+0x08023658,Fight_DispatchOnSubstateAA_AA_WaitPreviewShowGroup,func_thumb,HA6 AA/09: espera preview e FightPreview_ShowGroup4; +0xAA. Confirmado.
+0x080236E0,Fight_DispatchOnSubstateAA_AA_AddGaugeMax120,func_thumb,HA6 AA/0A: Fight_AddByteClampToMax teto 0x78; +0xAA. Confirmado.
+0x08023718,Fight_DispatchOnSubstateAA_AA_0B_SetStepCode1D,handler,AA 0x0B: grava 0x1D em +0xA6 (confirmado; sentido chute)
+0x08023758,Fight_DispatchOnSubstateAA_AB_00_RosCalcPartNoTech16,handler,AB 0x00: ROS; sem tecnica 16 -> +0xA6=0x39 (confirmado)
+0x080237C8,Fight_DispatchOnSubstateAA_AB_LoadGfxSetupSlot,func_thumb,HA6 AB/08: decompress + CPUFastSet; flags 0x220; slot 0x42; timer 0x3C; +0xAA. Confirmado.
+0x080238A0,Fight_DispatchOnSubstateAA_AB_WaitAnimOrTimer,func_thumb,HA6 AB/09: Anim_RunSlotScript; espera timer ou flag; +0xAA. Confirmado.
+0x08023900,Fight_DispatchOnSubstateAA_AB_MoveSlotTowardTarget,func_thumb,HA6 AB/0A: desloca slot +-0x40; Fight_StepSlotTowardTarget; +0xAA. Confirmado.
+0x08023988,Fight_DispatchOnSubstateAA_AB_SetupSlot43Sfx4E,func_thumb,HA6 AB/0B: +0x84=0x43; slot registro +0x10C; sfx 0x4E; +0xAA. Confirmado.
+0x080239C0,Fight_DispatchOnSubstateAA_AB_WaitScriptFlag,func_thumb,HA6 AB/0C: Anim_RunSlotScript; fim -> +0xAA. Confirmado.
+0x08023A04,Fight_DispatchOnSubstateAA_AB_StepFadeBytes8,func_thumb,HA6 AB/0D: passos de fade de 8; fim -> Tile_ClearSlots; +0xAA. Confirmado.
+0x08023A48,Fight_DispatchOnSubstateAA_AB_CopyDisplayValues,func_thumb,HA6 AB/0E: grava 0x26 e valores de Fight_ClampDisplayValue1To99 no bot; +0xAA. Confirmado.
+0x08023AB0,Fight_DispatchOnSubstateAA_AB_0F_SetStepCode2C,handler,AB 0x0F: grava 0x2C em +0xA6 (confirmado; sentido chute)
+0x08023AF0,Fight_DispatchOnSubstateAA_AC_00_RosCalcPart,handler,AC 0x00: ROS sem checagem de custo (confirmado)
+0x08023B44,Fight_DispatchOnSubstateAA_AC_08_LoadGfxSetupSlot21,handler,"AC 0x08: gfx, slot 0x21 (reg +0x114), contador 0x45 (confirmado)"
+0x08023C18,Fight_DispatchOnSubstateAA_AC_SetupSlot46Sfx4E,func_thumb,HA6 AC/0B: +0x84=0x46; slot registro +0x118; sfx 0x4E; +0xAA. Confirmado.
+0x08023C50,Fight_DispatchOnSubstateAA_AC_0E_SetBotFlagBF,handler,AC 0x0E: escreve 1 em flag do bot2 +0xBF (confirmado; sentido chute)
+0x08023C78,Fight_DispatchOnSubstateAA_AC_0F_SetStepCode2B,handler,AC 0x0F: grava 0x2B em +0xA6 (confirmado; sentido chute)
+0x08023CB8,Fight_DispatchOnSubstateAA_AD_00_RosCalcPartNoTech16,handler,AD 0x00: ROS; testa tecnica 16 nos dois bots (confirmado)
+0x08023D44,Fight_DispatchOnSubstateAA_AD_08_LoadGfxSetupSlot21,handler,"AD 0x08: gfx, slot 0x21 (reg +0x108), contador 0x42 (confirmado)"
+0x08023E18,Fight_DispatchOnSubstateAA_AD_SetupSlot44Sfx4E,func_thumb,HA6 AD/0B: +0x84=0x44; slot registro +0x110; sfx 0x4E; +0xAA. Confirmado.
+0x08023E50,Fight_DispatchOnSubstateAA_AD_StepFadeBytes8Clear,func_thumb,HA6 AD/0D: como AB/0D com Slot_ClearAttrMask; +0xAA. Confirmado.
+0x08023E94,Fight_DispatchOnSubstateAA_AD_LoadGfxSetupSlot,func_thumb,HA6 AD/0E: gfx + flags 0x8000 + slot 0x42 + timer 0x3C; +0xAA. Confirmado.
+0x08023F48,Fight_DispatchOnSubstateAA_AD_0F_FadeSlotBytesStep8,handler,"AD 0x0F: fade de bytes 0x848/0x849 de 8, teste 0x40 (confirmado)"
+0x08023F80,Fight_DispatchOnSubstateAA_AD_SetupSlot43Sfx4E,func_thumb,HA6 AD/12: +0x84=0x43; slot registro +0x10C; sfx 0x4E; +0xAA. Confirmado.
+0x08023FB8,Fight_DispatchOnSubstateAA_AD_WriteBotDisplayRows,func_thumb,HA6 AD/15: escreve 0x29 e valores de display nas linhas de 2 bots; +0xAA. Confirmado.
+0x08024078,Fight_DispatchOnSubstateAA_AD_16_SetStepCode2D,handler,AD 0x16: grava 0x2D em +0xA6 (confirmado; sentido chute)
+0x080240B8,Fight_DispatchOnSubstateAA_AE_00_RosCalcPart,handler,AE 0x00: igual AA 0x00 (confirmado)
+0x0802410C,Fight_DispatchOnSubstateAA_AE_08_LoadGfxSetupSlot21,handler,"AE 0x08: gfx, slot 0x21, flag 0x1000 se +0xF8 bit0 (confirmado)"
