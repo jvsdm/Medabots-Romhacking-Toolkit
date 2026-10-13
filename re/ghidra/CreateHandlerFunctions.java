@@ -19,7 +19,7 @@ public class CreateHandlerFunctions extends GhidraScript {
         for (String line : lines) {
             line = line.trim();
             if (line.isEmpty() || line.startsWith("#")) continue;
-            String hex = line.split("\s+")[0];
+            String hex = line.split("[ 	,]+")[0];
             long v = Long.decode(hex) & ~1L;  // ponteiro Thumb: tira o bit 0
             Address a = toAddr(v);
             if (getFunctionAt(a) != null) { existed++; continue; }
