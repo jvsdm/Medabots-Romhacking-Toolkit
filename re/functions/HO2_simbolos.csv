@@ -1,0 +1,11 @@
+address,name,kind,comment
+0x0803A6FC,ObjScript_Op20_ClearTilesReset,func_thumb,"HO2: opcode 0x20 do roteiro de objeto; limpa tiles, grava 0x0500 em *DAT_0803a754; sem args de registro; provavel"
+0x0803A920,ObjScript_Op23_SetFlagAdvance,func_thumb,"HO2: opcode 0x23; grava 1 em byte de flag calculado; avanca cursor; nome provavel"
+0x0803AB9C,ObjScript_Op28_CopyFourBlocks,func_thumb,"HO2: opcode 0x28; 4 cópias bios_cpufastset (lado conforme ctx+0xF8 bit1); destino nao resolvido"
+0x0803AF2C,ObjScript_Op2D_SetupFourSlots,func_thumb,"HO2: opcode 0x2D; desempacota entrada (+0x102..+0x110), monta 4 sprites com Slot_SetupFromRecordList; nome provavel"
+0x0803B0C0,ObjScript_Op2E_SetupFourSprites,func_thumb,"HO2: opcode 0x2E; 4 sprites a partir de +0x102..+0x108 e pares de coords; nome provavel"
+0x0803B1EC,ObjScript_Op30_SetupFreeSlot,func_thumb,"HO2: opcode 0x30; coloca 1 objeto no slot 0x0A ou no primeiro slot livre 0x0B..0x13; nome provavel"
+0x0803B374,ObjScript_Op32_LoadGfxList,func_thumb,"HO2: opcode 0x32; Fight_LoadGfxListToObjVram do bot atual (base +0x87*0x100); nome provavel"
+0x0803B4F8,ObjScript_Op35_SetupEightSprites,func_thumb,"HO2: opcode 0x35; 8 sprites (slots 0x0B+i) com coords de lista ushort em +0x108; nome provavel"
+0x0803B6D8,ObjScript_Op37_WaitThenSetFlag,func_thumb,"HO2: opcode 0x37; liga ctx+0x2A (flag do laco FUN_080393BC); avanca cursor se byte cond == 0; nome provavel"
+0x0803B700,ObjScript_Op38_ClearTilesFx,func_thumb,"HO2: opcode 0x38; 2x FUN_0803ef8c + Tile_ClearSlots(4,1)/(0x23,1); nome provavel"

@@ -1,0 +1,36 @@
+address,name,kind,comment
+0x0804B73C,Event_Op00_Nop,func_thumb,provavel; mtbe EventInitOpcode00_NoOp; NAO aplicado no Ghidra (sem funcao definida)
+0x0804B740,Event_Op01_ShowMessageA,func_thumb,provavel; mtbe EventInitOpcode01; 3 bytes args
+0x0804B74C,Event_Op02_ShowMessageB,func_thumb,provavel; mtbe EventInitOpcode02; 3 bytes args
+0x0804B778,Event_Op03_CloseMessageBox,func_thumb,provavel; mtbe EventInitOpcode03; 0 bytes
+0x0804B78C,Event_Op04_WaitXFrames,func_thumb,provavel; mtbe EventInitOpcode04; 1 byte
+0x0804B7B4,Event_Op05_WaitForButtonPress,func_thumb,provavel; mtbe EventInitOpcode05; 0 bytes
+0x0804B7C8,Event_Op06_End,func_thumb,provavel; sem definicao no C#; mtbe EventInitOpcode06
+0x0804B858,Event_Op07_FadeToBlack,func_thumb,provavel; 1 byte; mtbe EventInitOpcode07
+0x0804B8AC,Event_Op08_FadeFromBlack,func_thumb,provavel; 1 byte; mtbe EventInitOpcode08
+0x0804B900,Event_Op09_FadeToWhite,func_thumb,provavel; 1 byte; mtbe EventInitOpcode09
+0x0804B958,Event_Op0A_FadeFromWhite,func_thumb,provavel; 1 byte; mtbe EventInitOpcode0A
+0x0804B9B0,Event_Op0B_WarpA,func_thumb,provavel; 5 bytes; mtbe nome diverge (SetConfigFlag)
+0x0804B9CC,Event_Op0C_WarpB,func_thumb,provavel; 5 bytes; mtbe nome diverge (ClearConfigFlag)
+0x0804BA5C,Event_Op0D_PlayerFaceDirection,func_thumb,provavel; 1 byte
+0x0804BA9C,Event_Op0E_PlayerHopInPlace,func_thumb,chute; 0 bytes; mtbe nome diverge (StartMapTransition)
+0x0804BAEC,Event_Op0F_PlayerHopInDirection,func_thumb,provavel; 1 byte
+0x0804BB14,Event_Op10_MovePlayer,func_thumb,confirmado no extrator; 4 bytes
+0x0804BBA0,Event_Op11_ChangePlayerCostume,func_thumb,provavel; 1 byte
+0x0804BBC8,Event_Op12_AddEventPermanently,func_thumb,provavel; 2 bytes; mtbe nome diverge (ClearEventFlag)
+0x0804BBF4,Event_Op13_RemoveEventPermanently,func_thumb,provavel; 2 bytes; mtbe nome diverge (SetEventFlag)
+0x0804BC20,Event_Op14_RemoveCurrentEventNow,func_thumb,provavel; 0 bytes
+0x0804BC6C,Event_Op15_RemoveCurrentEventNowKeepCollision,func_thumb,provavel; 0 bytes
+0x0804BCD4,Event_Op16_RemoveEventNow,func_thumb,provavel; 2 bytes
+0x0804BD08,Event_Op17_SetEventVariable,func_thumb,provavel; 3 bytes
+0x0804BD44,Event_Op18_IncrementEventVariable,func_thumb,provavel; 2 bytes
+0x0804BD70,Event_Op19_Goto,func_thumb,provavel; sem definicao no C#; 2 bytes de salto
+0x0804BDD8,Event_Op1A_NpcDoAnimation,func_thumb,provavel; 2 bytes
+0x0804BE50,Event_Op1B_NpcResetAnimation,func_thumb,chute; 0 bytes
+0x0804BEC4,Event_Op1C_RotateEventNpc,func_thumb,provavel; 1 byte
+0x0804BF34,Event_Op1D_HopEventNpc,func_thumb,chute; 0 bytes
+0x0804BFB4,Event_Op1E_FlickerEventNpc,func_thumb,provavel; 1 byte
+0x0804C02C,Event_Op1F_InitiateMovingActorA,func_thumb,provavel; 5 bytes; mtbe EventOpcode1F_..._Setup
+0x0804C078,Event_Op20_InitiateMovingActorB,func_thumb,provavel; 5 bytes; mtbe EventOpcode20_..._Setup
+0x0804C0C4,Event_Op21_InitiateActor,func_thumb,provavel; 4 bytes; mtbe EventOpcode21_..._Setup
+0x0804C100,Event_Op22_RotateActor,func_thumb,provavel; 2 bytes; mtbe EventOpcode22_..._Setup
