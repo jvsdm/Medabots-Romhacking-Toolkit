@@ -1,0 +1,28 @@
+# address,name,kind,comment
+0x08000458,InitializeInterruptsAndDefaultHandlers,func,IRQ e registros padrao (provavel)
+0x080004E0,ResetHardwareAndMemory,func,limpa EWRAM/IWRAM/paleta via CpuFastSet
+0x08000540,ClearOamAndVramShadow,func,esconde 128 sprites (attr0=0xA0); zera VRAM
+0x0800065C,VBlankIrqHandler,func,handler de VBlank: scroll, OAM, callbacks (G8)
+0x08000844,get_player_inputs,func,leitura de teclas com borda e repeticao
+0x080008C0,SoftResetSequence,func,reinicio de hardware (provavel)
+0x08000964,is_input_soft_reset,func,combinacao de 4 botoes -> reinicia (provavel)
+0x080009BC,decompress_and_store,func,despachante Malias (cabecalho Le)
+0x08000A0C,Malias_DecodeLZ,func,LZ de bytes (provavel)
+0x08000B14,Malias_DecodeLZ_Halfword,func,LZ para halfword (provavel)
+0x08000E04,LoadTilesWithMalias,func,descomprime e escreve tilemap (provavel)
+0x08000E94,WriteTilemapToScreenBlock,func,copia retangulo de tilemap (provavel)
+0x08000F1C,CopyTileRowsToVram,func,copia linhas de tiles por CpuSet (provavel)
+0x08000F78,WriteTilemapWideMap,func,tilemap > 32 tiles (provavel)
+0x080012F0,rand_scaled,func,RNG do jogo (n*r>>16) (provavel)
+0x08001380,CopyPaletteBuffersToHardware,func,copia buffers de paleta para 0x05000000 (provavel)
+0x080013A8,PaletteBlendToColor,func,mistura paleta com cor no peso 0..32 (provavel)
+0x08001520,BuildShadowOamFromObjectState,func,monta sombra de OAM a partir de gObjectSlots (confirmado)
+0x08001EA8,SetObjectScaleVectorFromMode,func,escala de afim por modo (provavel)
+0x08001FF8,RotateObjectOffsetByAffineAngle,func,gira offset pelo angulo (confirmado)
+0x08001CAC,SetObjectAffineMatrixFromAngleAndScale,func,matriz afim (pesquisa G6/G10)
+0x08002060,SortActiveObjectIndicesByPriority,func,ordena por prioridade (confirmado)
+0x08002328,FUN_08002328,func,despacha 4 blocos de objeto (provavel)
+0x080023D8,SwapDisplayBuffersOnVBlank,func,troca buffers duplos (chute)
+0x08003300,FUN_08003300,func,carregador de sprite A: Malias + OBJ em (136,y) (provavel)
+0x08003904,FUN_08003904,func,escolhe imagem por byte 0x8F e descomprime (provavel)
+0x0800393C,FUN_0800393C,func,carregador de sprite B (provavel)

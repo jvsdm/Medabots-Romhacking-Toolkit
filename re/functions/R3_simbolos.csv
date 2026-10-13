@@ -1,0 +1,10 @@
+address,name,kind,comment
+0x08047e50,PartSet_GetLegIconIndexForMatchingSlotPartId,func_thumb,"tipo da perna 100..106 da tabela de 9 registros (ROM 0x08047E88); -1 se nao acha"
+0x08047f50,PartSet_FindCompleteEntryIndex,func_thumb,"indice (0..8) do registro com +3..+6 iguais a v; -1 se nenhum"
+0x08048b70,Fixed_Mul88,func_thumb,"(a*b)>>8 com arredondamento para zero (8.8)"
+0x08048ba0,Fixed_ReciprocalQ16,func_thumb,"0x10000 / a"
+0x080488ac,Map_CountDecimalDigits,func_thumb,"numero de digitos decimais de n"
+0x080488e8,Map_FormatDecimalDigits,func_thumb,"extrai digitos decimais de n com zeros a esquerda"
+0x08049110,BgMap_WriteTileEntry,func_thumb,"entrada de tilemap BG: tile + paleta<<12 + flips"
+0x08049440,Map_TickObjectAnimation,func_thumb,"interpretador de animacao de objeto de mapa (codigos 0..5)"
+0x08047ef0,PartSet_HasMatchingSlotPartId,func_thumb,"1 se algum dos 9 conjuntos (byte0=3) tem partId no campo do slot 0..3; senao 0"

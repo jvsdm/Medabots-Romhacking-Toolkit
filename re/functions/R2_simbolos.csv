@@ -1,0 +1,27 @@
+address,name,kind,comment
+0x080358B8,Fight_IsAntiSeaAgainstSeaTarget,func,afinidade contra o mar (kind 0x23 x alvo 'j')
+0x080358F0,Fight_AddStrengthenRosBonus,func,soma bonus de ROS das pecas kind '5'
+0x08035928,Fight_SetSelectedTargetBot,func,grava bot alvo +0xE0 e global +0x88
+0x08035944,Fight_SetSelectedTargetPart,func,grava peca alvo +0xE1 e global +0x8B
+0x0803598C,Fight_IsOpticClassAction,func,afinidade optica (kind 4/5 ou flag +0xD6)
+0x08035960,Fight_BotHasActivePartWithKind,func,proposto: laco 4 pecas com flag +0x10 e kind igual
+0x080359D8,Fight_IsBombClassAction,func,afinidade bomba (kind 6/7 ou +0xD6 bit1)
+0x08035A24,Fight_IsGravClassAction,func,afinidade gravidade (kind 8/9 ou +0xD6 bit2)
+0x08035A70,Fight_TargetHasAction34ReactionAffinity,func,alvo +0xC0 bit1 e kind 0x34
+0x08035AAC,Fight_TargetHasOpticAffinity,func,optica: kind 4/5 ou +0xD6 bit0 e alvo bit3
+0x08035AFC,Fight_TargetHasBombAffinity,func,reacao bomba (kind 6/7 ou +0xD6 bit1; alvo bit4)
+0x08035B4C,Fight_TargetHasGravAffinity,func,reacao gravidade (kind 8/9 ou +0xD6 bit2; alvo bit5)
+0x08035B9C,Fight_AddStrengthenDamageBonus,func,soma byte +5 das pecas kind '5' ao acumulador de dano
+0x08035BD4,Fight_AddRandomBonusUpTo3,func,proposto: se ctx+0xEC<3 soma rand&3
+0x08035BFC,Fight_ScaleDamageByPartScalar,func,ctx+0xEC = escala(ctx+0xEC, peca+0x54); min 1
+0x08035C3C,,func,chute: escreve 0x110 ou ctx+0xF8 em dois ponteiros
+0x08035C70,FightPreview_InitializeSideSprites,func,setup dos dois lados da previa (timers e sprites)
+0x08035DD4,,func,teste x+off > 0xA8 (sprite fora de faixa)
+0x08035DE8,FightPreview_UpdateSingleLayerSideSprites,func,atualiza sprites da previa (1 camada)
+0x08035F20,FightPreview_UpdateDualLayerSideSprites,func,atualiza sprites da previa (2 camadas)
+0x08036120,FightPreview_LoadDisplayedPartIdsForSide,func,escolhe id da peca exibida e chama 08015838
+0x080361A8,FightPreview_ResetSequenceStepFlags,func,cursor +0x112 = 0x29 nos dois lados
+0x080361C4,FightPreview_AdvanceLeftSideSequenceStep,func,avanca passo do lado esquerdo via site_MoveStyleRead
+0x08036218,FightPreview_AdvanceRightSideSequenceStep,func,versao direita do passo da previa
+0x08036270,Fight_IncrementActionUsageCounter_08036270,func,incrementa contador de uso da acao (8 bytes por acao)
+0x0803628C,Fight_AddMedaforceChargeFromAction,func,+20 (ou +40 com bit3 de +0xC0) em +0xC1, teto 80

@@ -1,0 +1,2 @@
+0x08049FD0
+# ultimo endereco da lista processado; 0x08047EF0 documentado (1 linha de lacuna)

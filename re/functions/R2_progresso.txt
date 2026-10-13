@@ -1,0 +1,2 @@
+0x0803628C
+ultimo documentado: 0x0803628C (26 funcoes; 0x080362C4 em diante ainda nao lido)
