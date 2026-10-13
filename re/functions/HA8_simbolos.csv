@@ -1,19 +1,43 @@
 address,name,kind,comment
 0x08025790,Fight_DispatchOnSubstateAA_AH_FormatCounterDigits,func_thumb,Handler AH idx 0x12: formata +0x51 em 6 glifos; avanca subestado
+0x080257E8,Fight_DispatchOnSubstateAA_AI_00_AccumPartCheckCost,func_thumb,Handler AI idx 0x00: acumula peca do bot ativo; custo de status; checa tecnica 16 do alvo; avanca
 0x08025858,Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics,func_thumb,Handler AI idx 0x08: escolhe gfx por tecnica ('.'); salto final por tabela nao recuperada
+0x08025974,Fight_DispatchOnSubstateAA_AI_0B_SetupTargetSpriteSfx,func_thumb,Handler AI idx 0x0B: monta sprite na posicao do alvo; SFX 0x6A; avanca
 0x08025A18,Fight_DispatchOnSubstateAA_AI_SetActionResultCodes,func_thumb,Handler AI idx 0x11: grava +0xC9..+0xCC do bot; avanca subestado
+0x08025AAC,Fight_DispatchOnSubstateAA_AI_12_SelectMessageByTechnique,func_thumb,Handler AI idx 0x12: grava codigo 0x31/0x32 conforme byte de tecnica '.'; avanca
+0x08025B20,Fight_DispatchOnSubstateAA_AJ_00_AccumPartCheckTargetCost,func_thumb,Handler AJ idx 0x00: como AI_00 mas checa +0xC1 do alvo; grava 0x74 ou vai para 4; avanca
+0x08025B9C,Fight_DispatchOnSubstateAA_AJ_08_SetupTargetGraphicsSprite,func_thumb,Handler AJ idx 0x08: carrega gfx; monta sprite do alvo e slot 0x21; timer 0x3C; avanca
 0x08025C84,Fight_DispatchOnSubstateAA_AJ_SwapActorAndTarget,func_thumb,Handler AJ idx 0x0B: troca bot ativo (+0x87) com alvo (+0x88); avanca
+0x08025D2C,Fight_DispatchOnSubstateAA_AJ_0C_RunDispatchCWaitDone,func_thumb,Handler AJ idx 0x0C: chama Fight_RunSubstateDispatchC(0); avanca quando retorna !=0
+0x08025D4C,Fight_DispatchOnSubstateAA_AJ_0D_RunDispatchCPlaySfx51,func_thumb,Handler AJ idx 0x0D: chama Fight_RunSubstateDispatchC(0); SFX 0x51; avanca
+0x08025D6C,Fight_DispatchOnSubstateAA_AJ_0E_StepBotVisualDownWaitSlot,func_thumb,Handler AJ idx 0x0E: passo visual do bot ativo; anima slot 0x21; avanca quando contador=2
 0x08025DD4,Fight_DispatchOnSubstateAA_AJ_RestoreActorAndSetupSprite,func_thumb,Handler AJ idx 0x0F: restaura +0x87 de +0x64 e monta sprite; avanca
+0x08025E88,Fight_DispatchOnSubstateAA_AJ_13_StepBotVisualUpWaitIO,func_thumb,Handler AJ idx 0x13: passo visual do bot ativo; IO 0x220; avanca quando contador=2
+0x08025F14,Fight_DispatchOnSubstateAA_AJ_14_SetMessage75Advance,func_thumb,Handler AJ idx 0x14: grava +0xA6=0x75; avanca
+0x08025F54,Fight_DispatchOnSubstateAA_AK_00_CheckPartFlagMsg22,func_thumb,Handler AK idx 0x00: checa flags da peça (+0x8A); msg 0x22 ou avanca
+0x08025FC8,Fight_DispatchOnSubstateAA_AL_00_SetupThreeSlotSprites,func_thumb,Handler AL idx 0x00: gfx LZ77; 3 slots de sprite; SFX 0x52; avanca
 0x08026080,Fight_DispatchOnSubstateAA_AL_WaitSlotAnimations,func_thumb,Handler AL idx 0x01: roda 3 slots de animacao; timer 0x3C quando +0x22==0xFF; avanca
+0x080260EC,Fight_DispatchOnSubstateAA_AL_03_ClearThreeSlots,func_thumb,Handler AL idx 0x03: Tile_ClearSlots(0x21,3); avanca
+0x08026130,Fight_DispatchOnSubstateAA_AM_00_AccumPartCheckCostNoTech,func_thumb,Handler AM idx 0x00: acumula peca; custo de status; uso ou 0x1A; avanca
+0x08026184,Fight_DispatchOnSubstateAA_AM_04_SetupBotSpriteSlot,func_thumb,Handler AM idx 0x04: gfx LZ77; sprite do bot ativo; slot 0x21; avanca
 0x08026284,Fight_DispatchOnSubstateAA_AM_WaitAnimThenPlaceSprite,func_thumb,Handler AM idx 0x05: espera slot 0x21 e posiciona sprite; avanca
 0x080262FC,Fight_DispatchOnSubstateAA_AM_StepDownCounterWithSfx,func_thumb,Handler AM idx 0x06: contador -8 por frame; SFX 0x53 ao chegar em '@'; avanca
+0x08026340,Fight_DispatchOnSubstateAA_AM_07_StepCounterUntilP,func_thumb,Handler AM idx 0x07: espera ate byte de controle == 'P'; avanca
+0x08026378,Fight_DispatchOnSubstateAA_AM_08_StepDownCounterUntilAt,func_thumb,Handler AM idx 0x08: contador -4 ate '@'; timer 0x3C; avanca
+0x080263BC,Fight_DispatchOnSubstateAA_AM_0A_ClearSlotSetPartDisplayValue,func_thumb,Handler AM idx 0x0A: limpa slot 0x21; copia tecnica da peca; soma valor ate 0xFF; avanca
+0x08026444,Fight_DispatchOnSubstateAA_AM_0B_SetMessage2AAdvance,func_thumb,Handler AM idx 0x0B: grava +0xA6=0x2A; avanca
+0x08026484,Fight_DispatchOnSubstateAA_AN_00_AccumPartCheckCostFlagAB,func_thumb,Handler AN idx 0x00: como AI_00; liga/zera +0xAB; avanca ou vai para 4
 0x080264E4,Fight_DispatchOnSubstateAA_AN_SetupEffectSpritesAndSfx,func_thumb,Handler AN idx 0x04: LZ77 + 2 slots de animacao + SFX 0x5E; avanca
 0x08026628,Fight_DispatchOnSubstateAA_AN_WaitFramesWithAnimations,func_thumb,Handler AN idx 0x05: espera timer +0x86 ate 0x5A rodando animacoes; avanca
 0x08026678,Fight_ApplyRandomPartReplacementEffect,func_thumb,Handler AN idx 0x06 (nome ja existia); troca peca sorteada; avanca
+0x08026810,Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs,func_thumb,Handler AN idx 0x07: limpa 2 slots; copia dois blocos de 15 bytes para tabela; msg 0x2F; avanca
+0x080268AC,Fight_DispatchOnSubstateAA_AO_01_RollPartValueForBot,func_thumb,Handler AO idx 0x01: Fight_RollPartValue e FUN_080376f4 no bot ativo; avanca
 0x080268D4,Fight_DispatchOnSubstateAA_AO_ClampPartCountsToLimit,func_thumb,Handler AO idx 0x02: clampa 4 contadores de peca pelo limite +0xEC; avanca
 0x08026924,Fight_DispatchOnSubstateAA_AO_ShowFourPartValues,func_thumb,Handler AO idx 0x03: escreve 4 numeros de peca; SFX 0x5B; avanca
 0x08026A24,Fight_DispatchOnSubstateAA_AO_WaitPartRowsDrawn,func_thumb,Handler AO idx 0x04: espera 4 linhas de peca; timer 0x3C; avanca
 0x08026A74,Fight_DispatchOnSubstateAA_AO_DrawPartIconsWaitReady,func_thumb,Handler AO idx 0x07: desenha icones de peca; timer 0x3C quando 4 prontas; avanca
 0x08026AF4,Fight_DispatchOnSubstateAA_AO_ShowPartFlagsOrBackup,func_thumb,Handler AO idx 0x09: efeitos por peca; avanca ou vai para 0x0D com backup
+0x08026BF8,Fight_DispatchOnSubstateAA_AO_0D_WaitPartEffectAnimsClear,func_thumb,Handler AO idx 0x0D: espera animacoes de efeito por peca (slots 10..13); limpa; avanca
 0x08026CBC,Fight_QueueHeadBreakIfDefenderHeadZero,func_thumb,Handler AO idx 0x10 (nome ja existia); fila de quebra de cabeca; avanca
+0x08026D1C,Fight_DispatchOnSubstateAA_AP_01_WaitUnlessFlagB8Bit1,func_thumb,Handler AP idx 0x01: avanca, ou vai para 0x20 se +0xB8 bit 1 aceso
 0x08026D44,Fight_DispatchOnSubstateAA_AP_ApplyDamageToRandomTargetPart,func_thumb,Handler AP idx 0x15: dano em peca sorteada do alvo; avanca +3; salto por tabela nao recuperada
