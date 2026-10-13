@@ -1,4 +1,1 @@
-0x0805BB0C
-# ultimo endereco da lista processado em ordem (GH-R3 continuacao 4: 0x08053C00..0x0805BB0C). Documentados nesta rodada: 31 funcoes (inclui site_SaveGame 0x0805E010, feito fora de ordem).
-# Sem funcao no Ghidra: 0x08053360..0x08053C00 (lista original) + 14 da faixa 0x08053C00..0x0805678C; 0x08059434.
-# Pendentes em ordem: 0x0805BB38..0x080672F4 (~57 enderecos, exceto 0x0805E010 ja feito).
+fim

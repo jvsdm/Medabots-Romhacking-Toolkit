@@ -1,2 +1,2 @@
-0x0801E2D8
-Proximo na lista: 0x801f484 (182 funcoes feitas da faixa + 9 handlers do despachante A7D8..A9C8)
+0x0802C2AC
+Proximo na lista: 0x802c644 (52 funcoes feitas da faixa: 42 despachantes Fight_DispatchOnSubstateAA_I..AX + AY..BH; todos seguem o mesmo padrao)

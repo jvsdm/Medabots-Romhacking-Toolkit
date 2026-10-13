@@ -33,3 +33,5 @@ Formato de cada seção:
 - Bloco do bot na batalha (R1, confirmado no literal pool 0x0801593C): base = 0x03000590 + bot*0x100. A pesquisa do PC
   usa 0x030005D0 = base + 0x40, então offset Ghidra = offset da pesquisa + 0x40 (peças: Ghidra +0x4C = pesquisa +0x0C).
 - `FUN_08041D04` = memcpy de bytes (não é som).
+- Jump tables: o literal do pool aponta PARA a tabela (ex.: literal 0x0801A7B0 -> tabela em 0x0801A7B4, 9 ponteiros
+  de handler). Ler as palavras na ROM é barato; vale recuperar quando a tabela tem poucas entradas (≤ 12).
