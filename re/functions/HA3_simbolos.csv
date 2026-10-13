@@ -1,0 +1,43 @@
+address,name,kind,comment
+0x0801ECC0,Fight_DispatchOnSubstateAA_H_Substate20,handler,despachante H[0x20] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801ED50,Fight_DispatchOnSubstateAA_H_Substate21,handler,"despachante H[0x21] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_H, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
+0x0801EED4,Fight_DispatchOnSubstateAA_H_Substate24,handler,despachante H[0x24] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801EEE4,Fight_DispatchOnSubstateAA_H_Substate28,handler,despachante H[0x28] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801EFC8,Fight_DispatchOnSubstateAA_H_Substate29,handler,despachante H[0x29] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F018,Fight_DispatchOnSubstateAA_H_Substate30,handler,despachante H[0x30] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AP
+0x0801F0F0,Fight_DispatchOnSubstateAA_H_Substate38,handler,despachante H[0x38] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F1C8,Fight_DispatchOnSubstateAA_H_Substate3B,handler,despachante H[0x3B] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F214,Fight_DispatchOnSubstateAA_H_Substate3E,handler,"despachante H[0x3E] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
+0x0801F290,Fight_DispatchOnSubstateAA_H_Substate3F,handler,"despachante H[0x3F] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
+0x0801F2DC,Fight_DispatchOnSubstateAA_H_Substate41,handler,"despachante H[0x41] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
+0x0801F374,Fight_DispatchOnSubstateAA_H_Substate44,handler,"despachante H[0x44] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
+0x0801F390,Fight_DispatchOnSubstateAA_H_Substate45,handler,"despachante H[0x45] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_AQ, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R"
+0x0801F3F0,Fight_DispatchOnSubstateAA_H_Substate47,handler,despachante H[0x47] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F474,Fight_DispatchOnSubstateAA_H_Substate4D,handler,despachante H[0x4D] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F4AC,Fight_DispatchOnSubstateAA_I_Substate00,handler,despachante I[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F5AC,Fight_DispatchOnSubstateAA_I_Substate01,handler,despachante I[0x01] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_I
+0x0801F5BC,Fight_DispatchOnSubstateAA_I_Substate02,handler,despachante I[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F780,Fight_DispatchOnSubstateAA_I_Substate03,handler,despachante I[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F800,Fight_DispatchOnSubstateAA_I_Substate04,handler,despachante I[0x04] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F9B0,Fight_DispatchOnSubstateAA_I_Substate05,handler,despachante I[0x05] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801F9EC,Fight_DispatchOnSubstateAA_I_Substate07,handler,despachante I[0x07] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FA68,Fight_DispatchOnSubstateAA_J_Substate00,handler,despachante J[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FADC,Fight_DispatchOnSubstateAA_J_Substate01,handler,despachante J[0x01] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FBC4,Fight_DispatchOnSubstateAA_J_Substate02,handler,despachante J[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FD88,Fight_DispatchOnSubstateAA_J_Substate03,handler,despachante J[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FE14,Fight_DispatchOnSubstateAA_K_Substate00,handler,despachante K[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FE64,Fight_DispatchOnSubstateAA_K_Substate02,handler,despachante K[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FEC8,Fight_DispatchOnSubstateAA_K_Substate03,handler,despachante K[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FEE8,Fight_DispatchOnSubstateAA_K_Substate04,handler,despachante K[0x04] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0801FF9C,Fight_DispatchOnSubstateAA_K_Substate05,handler,despachante K[0x05] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x08020004,Fight_DispatchOnSubstateAA_K_Substate06,handler,despachante K[0x06] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x08020040,Fight_DispatchOnSubstateAA_K_Substate08,handler,despachante K[0x08] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x08020078,Fight_DispatchOnSubstateAA_L_Substate00,handler,despachante L[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x080200A8,Fight_DispatchOnSubstateAA_L_Substate02,handler,despachante L[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x080201DC,Fight_DispatchOnSubstateAA_L_Substate03,handler,despachante L[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x08020248,Fight_DispatchOnSubstateAA_L_Substate04,handler,despachante L[0x04] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x08020288,Fight_DispatchOnSubstateAA_L_Substate06,handler,despachante L[0x06] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x080202E0,Fight_DispatchOnSubstateAA_L_Substate07,handler,despachante L[0x07] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x08020340,Fight_DispatchOnSubstateAA_L_Substate09,handler,despachante L[0x09] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x0802036C,Fight_DispatchOnSubstateAA_L_Substate0B,handler,despachante L[0x0B] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
+0x08020428,Fight_DispatchOnSubstateAA_L_Substate0C,handler,despachante L[0x0C] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado
