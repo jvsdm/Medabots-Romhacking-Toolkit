@@ -1,0 +1,34 @@
+address,name,kind,comment
+0x0802C644,Fight_DispatchOnSubstateAA_BI,func_thumb,Despachante por +AA (mesmo padrao); zera +0xB5 e chama handler da tabela 0x083AE994 por +0xAA
+0x0802CBE8,Fight_DispatchOnSubstateAA_BJ,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AE9D4
+0x0802D688,Fight_DispatchOnSubstateAA_BK,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEA30
+0x0802DCB4,Fight_DispatchOnSubstateAA_BL,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEA88
+0x0802E424,Fight_DispatchOnSubstateAA_BM,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEB1C
+0x0802EBC0,Fight_DispatchOnSubstateAA_BN,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEB88
+0x0802F030,Fight_DispatchOnSubstateAA_BO,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEBC4
+0x0802F628,Fight_DispatchOnSubstateAA_BP,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEC04
+0x0802F990,Fight_DispatchOnSubstateAA_BQ,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEC58
+0x0802FE50,Fight_DispatchOnSubstateAA_BR,func_thumb,Despachante por +AA (mesmo padrao); tabela 0x083AEC98
+0x08031A3C,Fight_BuildPartActionMetadataForAllParts,func_thumb,Simon/Rokusho: para o bot ativo percorre 3 partes chamando preparacao e execucao por tecnica
+0x08031A70,Fight_DispatchPartPreparation,func_thumb,Limpa metadata da acao e chama handler por tecnica da peça (provavel)
+0x08031ABC,Fight_DispatchPartExecution,func_thumb,Chama handler por tecnica da peça corrente (provavel)
+0x08032F64,Fight_ClearPartActionMetadata,func_thumb,Simon/Rokusho: zera escratch +0x5E/+0x5F e alvo +0x56/+0x57 da peça
+0x08032FB8,Fight_GetOpponentSideBaseIndex,func_thumb,Simon/Rokusho: base do lado adversario (3 se bot<3 senao 0)
+0x08032FC4,Fight_GetAllySideBaseIndex,func_thumb,Simon/Rokusho: base do proprio lado (0 se bot<3 senao 3)
+0x08032FD0,Fight_HasActivePartWithSpeciality,func_thumb,Simon/Rokusho: 1 se alguma peca integra tem campo +0x4A igual ao parametro
+0x08032FFC,Fight_HasAnyCandidateTarget,func_thumb,Simon/Rokusho: 1 se algum dos 3 alvos candidatos (fight_information+0x61..0x63) != 0
+0x0803301C,Fight_PickRandomCandidateTargetSlot,func_thumb,Sorteia slot candidato com passos vizinhos (provavel); usa randbyte
+0x08033074,Fight_RandomSlotFromTable16,func_thumb,Sorteia indice (randbyte &0xF) e retorna byte da tabela 0x0803308C (provavel)
+0x08033090,Fight_PickRandomActiveBotInSide,func_thumb,Simon/Rokusho: sorteia bot ativo dentro de um lado de 3 bots (flag +0x40)
+0x080330E8,FUN_080330E8,func_thumb,Wrapper: chama FUN_0803556C (sem nome ainda)
+0x080330F4,Fight_PickRandomIntactPart,func_thumb,Simon/Rokusho: sorteia peca integra (+0x59 != 0) entre head/right/left
+0x08033154,Fight_SetPartActionMetadata,func_thumb,Simon/Rokusho: copia escratch +0x5E/+0x5F para alvo +0x56/+0x57 da peça
+0x08033184,Fight_PickMostDamagedRepairablePart1Based,func_thumb,Simon/Rokusho: slot 1-based da peça mais danificada (dif +0x4C - +0x59)
+0x080331F8,Fight_HasNoTechnique16Part,func_thumb,Simon/Rokusho: 0 se alguma peca integra tem tecnica 0x16; senao 1
+0x08033224,Fight_IsBotMedaforceInactive,func_thumb,Simon/Rokusho: true se +0xC4 do bot == 0
+0x08033240,Fight_IsBotPendingActionClear,func_thumb,Simon/Rokusho: true se +0xC9 do bot == 0
+0x0803325C,Fight_PickRandomBrokenOrMissingPart1Based,func_thumb,Simon/Rokusho: sorteia peca com armadura zero; slot 1-based
+0x080332B4,Fight_IsHeadActionUsable,func_thumb,Simon/Rokusho: true se +0x58 do bot != 0
+0x080332D0,Fight_IsBotMedaforceTokenActive,func_thumb,Simon/Rokusho: true se +0xC1 do bot != 0
+0x08033318,Fight_BeginPartActionValidation,func_thumb,Simon/Rokusho: inicia validacao de acao de peca; grava bot/parte e chama handler
+0x08034E94,FUN_08034E94,func_thumb,Le byte de tabela 0x083C6CA8 indexada por +0xA8 e somado a u16 em +0xBC (nome nao definido)

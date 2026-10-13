@@ -65,6 +65,14 @@ Endereços sem função no Ghidra (miolo ou pool de literais) ficam com uma linh
 - Para o Lua: não precisa (espelho de prévia). A fórmula `-2 - x` é a regra a copiar se a prévia for portada.
 - Confiança: confirmado (código); o significado de "espelho" é provável.
 
+## 0x08046D1C BuildFourPartLargePreviewComposite
+- Assinatura: `u32 BuildFourPartLargePreviewComposite(u32 _, int ctx, u32 a, u32 b, u32 c, u32 d, s16 x, u8 pal, u32 flags, u32 slot)`
+- O que faz: dois modos pelo bit 2 de `flags`. Sem o bit: registra um objeto novo no registro de 0x30 B (`*DAT_08046D88 + slot*0x30`): flag de ativo (bit 0), argumentos a..d em +0x04..+0x10 e `slot` em +0x28. Com o bit: monta a composição de 4 peças (tamanhos 0x140, 0x1A0, 0x1E0, 0x220, na ordem), copiando para um buffer de 0x80 B as três listas de cada peça (`DAT_080471F4..080471FC`, `DAT_08047200`) e desenhando a peça grande com `RenderCompositePreviewDescriptorRecursive`. Na variante das 4 peças (`else`), chama `PartPreviewPiece` para cada uma das quatro peças e, se `slot` (argumento 0x3C) ≠ 0, copia os gráficos das sub-peças (`CopyCompositePreviewDescriptorGraphics`) e espelha os deslocamentos (`FlipSyntheticCompositePreviewDescriptorOffsets`) quando `flags & 2`. Por fim copia 0x60 B de estado para o contexto e marca o registro com `(bits & ~2) | 0xC`.
+- Chama: RenderCompositePreviewDescriptorRecursive (0x080465B8), PartPreviewPiece (0x08045E6C), CopyCompositePreviewDescriptorGraphics (0x08046034), FlipSyntheticCompositePreviewDescriptorOffsets (0x08046CC8), lib_memset. Chamada por: não lido nesta passada (provável: montagem da prévia de 4 partes, `FUN_080447EC` segundo a nota de R2).
+- Memória: registros de objeto (passo 0x30, `DAT_08046D88`); buffer local de 0x80 B; tabelas de peças (literais `DAT_08046E2C..08046E48`, `DAT_08047050..0804705C`); contexto de 0x60 B em `ctx + slot*0x60`.
+- Para o Lua: não precisa (prévia de 4 partes em OAM/tiles).
+- Confiança: confirmado (código); a ordem de tamanhos e o papel de `slot` são prováveis.
+
 ## 0x08047204 UpdateTwoCompositePreviewSlotFlags (nome novo)
 - Assinatura: `u32 UpdateTwoCompositePreviewSlotFlags(void)`
 - O que faz: percorre duas entradas (registros de 0x30 B a partir de `*DAT_08047228`) e ajusta o byte de flags em +0x2C: se o bit 0 estiver ligado, troca por bit 1 (desliga 0, liga 1); senão, se bits 1 estiver desligado e bits 3 e 2 estiverem ligados, desliga o bit 2.
@@ -80,14 +88,6 @@ Endereços sem função no Ghidra (miolo ou pool de literais) ficam com uma linh
 - Memória: escreve em `ctx` (12 B) e um byte no endereço `a + literal DAT_08047424`.
 - Para o Lua: não precisa.
 - Confiança: confirmado (código).
-
-## 0x08046D1C BuildFourPartLargePreviewComposite
-- Assinatura: `u32 BuildFourPartLargePreviewComposite(u32 _, int ctx, u32 a, u32 b, u32 c, u32 d, s16 x, u8 pal, u32 flags, u32 slot)`
-- O que faz: dois modos pelo bit 2 de `flags`. Sem o bit: registra um objeto novo no registro de 0x30 B (`*DAT_08046D88 + slot*0x30`): flag de ativo (bit 0), argumentos a..d em +0x04..+0x10 e `slot` em +0x28. Com o bit: monta a composição de 4 peças (tamanhos 0x140, 0x1A0, 0x1E0, 0x220, na ordem), copiando para um buffer de 0x80 B as três listas de cada peça (`DAT_080471F4..080471FC`, `DAT_08047200`) e desenhando a peça grande com `RenderCompositePreviewDescriptorRecursive`. Na variante das 4 peças (`else`), chama `PartPreviewPiece` para cada uma das quatro peças e, se `slot` (argumento 0x3C) ≠ 0, copia os gráficos das sub-peças (`CopyCompositePreviewDescriptorGraphics`) e espelha os deslocamentos (`FlipSyntheticCompositePreviewDescriptorOffsets`) quando `flags & 2`. Por fim copia 0x60 B de estado para o contexto e marca o registro com `(bits & ~2) | 0xC`.
-- Chama: RenderCompositePreviewDescriptorRecursive (0x080465B8), PartPreviewPiece (0x08045E6C), CopyCompositePreviewDescriptorGraphics (0x08046034), FlipSyntheticCompositePreviewDescriptorOffsets (0x08046CC8), lib_memset. Chamada por: não lido nesta passada (provável: montagem da prévia de 4 partes, `FUN_080447EC` segundo a nota de R2).
-- Memória: registros de objeto (passo 0x30, `DAT_08046D88`); buffer local de 0x80 B; tabelas de peças (literais `DAT_08046E2C..08046E48`, `DAT_08047050..0804705C`); contexto de 0x60 B em `ctx + slot*0x60`.
-- Para o Lua: não precisa (prévia de 4 partes em OAM/tiles).
-- Confiança: confirmado (código); a ordem de tamanhos e o papel de `slot` são prováveis.
 
 ## 0x08047574 EventScript_ClearGlobals
 - Assinatura: `u32 EventScript_ClearGlobals(void)`
@@ -105,20 +105,6 @@ Endereços sem função no Ghidra (miolo ou pool de literais) ficam com uma linh
 - Para o Lua: não precisa até o nome estar claro.
 - Confiança: confirmado (código); o significado dos modos é chute. Sem nome novo.
 
-## 0x08047850 (nome não encontrado)
-- Assinatura: `void FUN_08047850(int idx)`
-- O que faz: se `0 <= idx < 4`, grava 1 em duas flags e 5 em um byte de estado (literais `DAT_0804786C..08047874`). Fora da faixa, não faz nada.
-- Chama: não. Chamada por: não lido nesta passada.
-- Para o Lua: não precisa até o contexto estar claro.
-- Confiança: confirmado (código); o papel de `idx` é chute. Sem nome novo.
-
-## 0x08047BA8 (mtbe: Overworld_StartMapTransitionEffect)
-- Assinatura: `u32 FUN_08047BA8(void)`
-- O que faz: só chama `snd_sfx_request()`. O corpo não tem nenhuma transição de mapa.
-- Chama: snd_sfx_request. Chamada por: não lido nesta passada.
-- Para o Lua: não precisa (som).
-- Confiança: confirmado (código). O nome do mtbe (`Overworld_StartMapTransitionEffect`) NÃO bate com o corpo: conferir antes de usar; não renomeado.
-
 ## 0x080476E8 (nome não encontrado)
 - Assinatura: `u32 FUN_080476E8(u32 cmd)`
 - O que faz: `switch` por comando (0..12). Comandos 0,1,2,3 e 12 não fazem nada. Comandos 4, 5, 6 gravam flags e um valor de fase (16, 32, 8) no ponteiro escolhido. Comandos 7 e 8 gravam 7 e 8 num byte de estado. Comando 9 liga `gPlayTimeRunning` e cai no caso comum (grava 1 em `gMainState`, 1 em outra flag e 5 no ponteiro de fase). Comandos 10 e 11 chamam `EventScript_ClearGlobals` (e, no 10, `FUN_08049714` com 0xCC0 B) e gravam o estado inicial (valor de fase 0 e 10). Comandos fora de 0..12 não fazem nada.
@@ -127,21 +113,12 @@ Endereços sem função no Ghidra (miolo ou pool de literais) ficam com uma linh
 - Para o Lua: não precisa até o contexto estar claro.
 - Confiança: confirmado (código); o significado dos valores de fase é chute. Sem nome novo.
 
-## 0x08047BDC GetBotName
-- Assinatura: `char *GetBotName(int bot)`
-- O que faz: devolve `gBotNames[bot]` (ponteiro de 4 B por bot; tabela no literal `DAT_08047BE8`).
+## 0x08047850 (nome não encontrado)
+- Assinatura: `void FUN_08047850(int idx)`
+- O que faz: se `0 <= idx < 4`, grava 1 em duas flags e 5 em um byte de estado (literais `DAT_0804786C..08047874`). Fora da faixa, não faz nada.
 - Chama: não. Chamada por: não lido nesta passada.
-- Memória: lê a tabela de ponteiros de nomes na ROM.
-- Para o Lua: não precisa (o Lua já tem os nomes em `text.lua`).
-- Confiança: confirmado (código). Nome já era GetBotName no Ghidra.
-
-## 0x08047BEC GetPartName
-- Assinatura: `char *GetPartName(int kind, int bot)`
-- O que faz: devolve `gPartNames[bot*4 + kind]` (ponteiro de 4 B; tabela no literal `DAT_08047BFC`). `kind` = 0..3 (cabeça, braço, perna, corpo).
-- Chama: não. Chamada por: não lido nesta passada.
-- Memória: lê a tabela de ponteiros de nomes na ROM.
-- Para o Lua: não precisa (o Lua já tem os nomes em `text.lua`). A ordem `kind` = posição da peça é provável.
-- Confiança: confirmado (código); o significado de `kind` é provável. Nome já era GetPartName no Ghidra.
+- Para o Lua: não precisa até o contexto estar claro.
+- Confiança: confirmado (código); o papel de `idx` é chute. Sem nome novo.
 
 ## 0x08047878 GameState_StartFlowByCommand
 - Assinatura: `void GameState_StartFlowByCommand(u32 cmd, u8 arg)`
@@ -150,6 +127,13 @@ Endereços sem função no Ghidra (miolo ou pool de literais) ficam com uma linh
 - Memória: flags e fase em ponteiros de literal (`DAT_08047A88..08047BA4`, `DAT_080479BC..080479FC`), não identificados.
 - Para o Lua: não precisa até mapear os valores de fase (provável: tabela de fluxos da máquina de estados).
 - Confiança: confirmado (código); o nome do mtbe é provável.
+
+## 0x08047BA8 (mtbe: Overworld_StartMapTransitionEffect)
+- Assinatura: `u32 FUN_08047BA8(void)`
+- O que faz: só chama `snd_sfx_request()`. O corpo não tem nenhuma transição de mapa.
+- Chama: snd_sfx_request. Chamada por: não lido nesta passada.
+- Para o Lua: não precisa (som).
+- Confiança: confirmado (código). O nome do mtbe (`Overworld_StartMapTransitionEffect`) NÃO bate com o corpo: conferir antes de usar; não renomeado.
 
 ## 0x08047BB4 Sound_RequestSong
 - Assinatura: `u32 Sound_RequestSong(void)`
@@ -170,6 +154,22 @@ Endereços sem função no Ghidra (miolo ou pool de literais) ficam com uma linh
 - O que faz: devolve `DAT_08047BD8[idx]` (tabela de ponteiros de 4 B). Getter indexado.
 - Chama: não. Chamada por: não lido nesta passada.
 - Confiança: confirmado (código); o conteúdo da tabela não foi lido. Sem nome.
+
+## 0x08047BDC GetBotName
+- Assinatura: `char *GetBotName(int bot)`
+- O que faz: devolve `gBotNames[bot]` (ponteiro de 4 B por bot; tabela no literal `DAT_08047BE8`).
+- Chama: não. Chamada por: não lido nesta passada.
+- Memória: lê a tabela de ponteiros de nomes na ROM.
+- Para o Lua: não precisa (o Lua já tem os nomes em `text.lua`).
+- Confiança: confirmado (código). Nome já era GetBotName no Ghidra.
+
+## 0x08047BEC GetPartName
+- Assinatura: `char *GetPartName(int kind, int bot)`
+- O que faz: devolve `gPartNames[bot*4 + kind]` (ponteiro de 4 B; tabela no literal `DAT_08047BFC`). `kind` = 0..3 (cabeça, braço, perna, corpo).
+- Chama: não. Chamada por: não lido nesta passada.
+- Memória: lê a tabela de ponteiros de nomes na ROM.
+- Para o Lua: não precisa (o Lua já tem os nomes em `text.lua`). A ordem `kind` = posição da peça é provável.
+- Confiança: confirmado (código); o significado de `kind` é provável. Nome já era GetPartName no Ghidra.
 
 ## 0x08047C00 (nome não encontrado)
 - Assinatura: `u32 FUN_08047C00(void)`
@@ -219,3 +219,46 @@ Endereços sem função no Ghidra (miolo ou pool de literais) ficam com uma linh
 - Chama: não. Chamada por: não lido nesta passada.
 - Para o Lua: `math.min(cnt + delta, max)`.
 - Confiança: confirmado (código); o nome e o papel do contador são prováveis.
+
+## 0x08047D74 SubClampedCounter (nome novo, provável)
+- Assinatura: `void SubClampedCounter(int delta)`
+- O que faz: subtrai `delta` do contador apontado por `DAT_08047D84`; se ficar negativo, grava 0.
+- Chama: não. Chamada por: não lido nesta passada.
+- Para o Lua: `math.max(cnt - delta, 0)`.
+- Confiança: confirmado (código); o papel do contador é provável.
+
+## 0x08047D8C (wrapper de Map64_GetValue)
+- Assinatura: `void FUN_08047D8C(u8 a)`
+- O que faz: só chama `Map64_GetValue(a)`. Wrapper; o valor devolvido é descartado aqui.
+- Chama: Map64_GetValue. Chamada por: não lido nesta passada.
+- Confiança: confirmado (código). Sem nome novo (o alvo já tem nome).
+
+## 0x08047D9C (wrapper de Inv_ReadCounter16)
+- Assinatura: `void FUN_08047D9C(u8 a, u8 b)`
+- O que faz: só chama `Inv_ReadCounter16(a, b)`. Wrapper.
+- Chama: Inv_ReadCounter16. Chamada por: não lido nesta passada.
+- Confiança: confirmado (código). Sem nome novo.
+
+## 0x08047DB0 (wrapper de Slot_FindByIdPlus1)
+- Assinatura: `void FUN_08047DB0(u8 id)`
+- O que faz: só chama `Slot_FindByIdPlus1(id)`. Wrapper.
+- Chama: Slot_FindByIdPlus1. Chamada por: não lido nesta passada.
+- Confiança: confirmado (código). Sem nome novo.
+
+## 0x08047DC0 (wrapper de Map64_AddCountClamp99)
+- Assinatura: `u32 FUN_08047DC0(u8 a, s8 n)`
+- O que faz: se `n == 0`, usa 1; chama `Map64_AddCountClamp99(a, n)`. Wrapper com padrão 1.
+- Chama: Map64_AddCountClamp99. Chamada por: não lido nesta passada.
+- Confiança: confirmado (código). Sem nome novo.
+
+## 0x08047DD8 (wrapper de Map64_SubRemoveIfZero)
+- Assinatura: `u32 FUN_08047DD8(u8 a, s8 n)`
+- O que faz: se `n == 0`, usa 1; chama `Map64_SubRemoveIfZero(a, n)`. Wrapper com padrão 1.
+- Chama: Map64_SubRemoveIfZero. Chamada por: não lido nesta passada.
+- Confiança: confirmado (código). Sem nome novo.
+
+## 0x08047DF0 (wrapper de Inv_AddCountClamp99)
+- Assinatura: `u32 FUN_08047DF0(u8 a, u8 b, u8 c)`
+- O que faz: só chama `Inv_AddCountClamp99(a, b, c)`. Wrapper.
+- Chama: Inv_AddCountClamp99. Chamada por: não lido nesta passada.
+- Confiança: confirmado (código). Sem nome novo.
