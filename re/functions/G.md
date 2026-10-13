@@ -36,7 +36,7 @@ Confiança segue o formato de R0.md. Nomes do mtbe.csv reaproveitados quando bat
 ## 0x080432A0 Sprite_UpdateComposite4Motion
 - Assinatura: `void Sprite_UpdateComposite4Motion(int slot, short x)`
 - O que faz: atualiza 4 sprites de um grupo com um contador de fase (+0x26, +0x24) e um índice de 0..3 (+0x21); calcula a posição com CompositeSprite_ComputeOffsetWord (movimento em arco/órbita) e grava x/y de cada sprite.
-- Chama: CompositeSprite_ComputeOffsetWord. Chamada por: 0x0806AAA4, 0x0806ADB0 (e 0x0804361C não).
+- Chama: CompositeSprite_ComputeOffsetWord. Chamada por: 0x0806AAA4, 0x0806ADB0.
 - Para o Lua: sim (animação do grupo de 4 sprites).
 - Confiança: provável.
 
@@ -70,7 +70,7 @@ Confiança segue o formato de R0.md. Nomes do mtbe.csv reaproveitados quando bat
 
 ## 0x0805B0D8 Shop_BuildAvailablePartList
 - Assinatura: `void Shop_BuildAvailablePartList(void)`
-- O que faz: zera a lista gShopItems (0x78 entradas de 2 bytes do par) e a reconstrói: para cada peça de 0 a 0x77 da categoria atual (byte +0x19 do bloco de jogo) que tem quantidade disponível (byte [1] < byte [0]), grava o id, a quantidade restante, as estatísticas (GetPartStats) e um preço (x100). Guarda o total no byte +0x20.
+- O que faz: zera o byte +2 de 0x78 registros de 8 bytes e reconstrói gShopItems: para cada peça de 0 a 0x77 da categoria atual (byte +0x19 do bloco de jogo) com quantidade disponível (byte [1] < byte [0]), grava o id, a quantidade restante, as estatísticas (GetPartStats) e um valor (byte +0xB x 100, provavelmente preço). Guarda o total no byte +0x20 do bloco.
 - Chama: GetPartStats. Chamada por: não mapeado.
 - Memória: lê o bloco de jogo (0x0203....) e a tabela de peças; escreve gShopItems e o contador.
 - Para o Lua: sim (lista de peças da loja/troca).
@@ -139,3 +139,9 @@ Confiança segue o formato de R0.md. Nomes do mtbe.csv reaproveitados quando bat
 - Chama: snd_hw_channel_reset. Chamada por: não mapeado.
 - Para o Lua: não precisa (áudio do hardware; o port usa o próprio mixer).
 - Confiança: provável.
+
+## Sem função no Ghidra (uma linha cada)
+- 0x0805BB38: sem função (literal pool ou dado; não documentado).
+- 0x080736BC: sem função (literal pool ou dado; não documentado).
+- 0x080745DA: sem função (literal pool ou dado; não documentado).
+- 0x0807DD58: sem função (literal pool ou dado; não documentado).
