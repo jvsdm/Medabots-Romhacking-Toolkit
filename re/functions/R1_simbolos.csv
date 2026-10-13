@@ -1,27 +1,60 @@
 address,name,kind,comment
-0x08016288,Fight_HorizontalCursorInput,func_thumb,"Cursor esq/dir da escolha de tipo/acao (estado +0x83); provavel"
-0x080164F4,Fight_AnimateEntryFrames,func_thumb,"Anima 4 quadros de tile por contador (+0x1B); provavel"
-0x08016554,Fight_MarkEntrySelectedAlt,func_thumb,"Como 0x0801630C com altura 0x60 (bit 0x04); provavel"
-0x080165B0,Fight_CopyTableByteToVar,func_thumb,"Copia byte de tabela indexada pelo tipo; provavel"
-0x08016660,Fight_DrawTwoFieldsIfCounterLow5,func_thumb,"Como 0x08016614 com limite 5; provavel"
-0x080166F0,Fight_DrawFieldIfCounterLow4,func_thumb,"Campo com contador < 4; provavel"
-0x0801672C,Fight_DrawFieldRowByCounter,func_thumb,"Dois campos com contador < 12; provavel na forma"
+0x08016288,Fight_HorizontalCursorInput,func_thumb,Cursor esq/dir da escolha de tipo/acao (estado +0x83); provavel
+0x080164F4,Fight_AnimateEntryFrames,func_thumb,Anima 4 quadros de tile por contador (+0x1B); provavel
+0x08016554,Fight_MarkEntrySelectedAlt,func_thumb,Como 0x0801630C com altura 0x60 (bit 0x04); provavel
+0x080165B0,Fight_CopyTableByteToVar,func_thumb,Copia byte de tabela indexada pelo tipo; provavel
+0x08016660,Fight_DrawTwoFieldsIfCounterLow5,func_thumb,Como 0x08016614 com limite 5; provavel
+0x080166F0,Fight_DrawFieldIfCounterLow4,func_thumb,Campo com contador < 4; provavel
+0x0801672C,Fight_DrawFieldRowByCounter,func_thumb,Dois campos com contador < 12; provavel na forma
 0x0801677C,Fight_InitObjectDefault,func_thumb,"Inicializa objeto em (0x78,0x78) com tile da tabela; provavel"
 0x080167BC,Fight_InitObjectAtFrame,func_thumb,"Inicializa objeto em (0x78,0x6C) com frame idx*4; provavel"
 0x08016804,Fight_InitKindObjectB,func_thumb,"Objeto do tipo 2, posicao (0x78,0x6C); provavel"
 0x0801684C,Fight_InitKindObjectC,func_thumb,"Objeto do tipo 3, posicao (0x84,0x78); provavel"
 0x08016894,Fight_InitKindObjectD,func_thumb,"Objeto do tipo 4, posicao (0x78,0x84); provavel"
-0x080168F4,Fight_InitKindObjectsForState,func_thumb,"Despacha init dos objetos pelo tipo selecionado; provavel"
-0x080169AC,Fight_UpdatePartKindSelector,func_thumb,"Troca o tipo de peca selecionado por tecla (0x40/0x80/0x20/0x10); redesenha; provavel"
-0x08016A3C,Fight_DrawKindIconAndLabel,func_thumb,"Desenha icone do tipo e caixa; provavel"
-0x08016AD8,Fight_DrawSelectedActionDescription,func_thumb,"Icone e caixa da acao selecionada (nome do CSV); provavel"
-0x08016C0C,Fight_DrawSelectedActionStatusText,func_thumb,"Texto de status da acao selecionada (nome do CSV); provavel"
-0x08016D18,Fight_DrawSelectedActionIcon,func_thumb,"Icone da acao da peca (byte +0x49); provavel"
-0x08016DA4,Fight_LoadSelectedKindFromBot,func_thumb,"Le +0xDD do bot ativo para o tipo selecionado; provavel"
-0x08016DCC,Fight_DrawActionPanelForKind,func_thumb,"Painel de valores do tipo; chute"
+0x080168F4,Fight_InitKindObjectsForState,func_thumb,Despacha init dos objetos pelo tipo selecionado; provavel
+0x080169AC,Fight_UpdatePartKindSelector,func_thumb,Troca o tipo de peca selecionado por tecla (0x40/0x80/0x20/0x10); redesenha; provavel
+0x08016A3C,Fight_DrawKindIconAndLabel,func_thumb,Desenha icone do tipo e caixa; provavel
+0x08016AD8,Fight_DrawSelectedActionDescription,func_thumb,Icone e caixa da acao selecionada (nome do CSV); provavel
+0x08016C0C,Fight_DrawSelectedActionStatusText,func_thumb,Texto de status da acao selecionada (nome do CSV); provavel
+0x08016D18,Fight_DrawSelectedActionIcon,func_thumb,Icone da acao da peca (byte +0x49); provavel
+0x08016DA4,Fight_LoadSelectedKindFromBot,func_thumb,Le +0xDD do bot ativo para o tipo selecionado; provavel
 0x08016E5C,Fight_IsPartTechniqueSupportUtilityClass,func_thumb,"Le tipo de tecnica da peca k; retorna 1 para 0x28, 0x18..0x1A, 0x35; confirmado"
-0x08016E90,Fight_DrawCounterFieldPair12,func_thumb,"Familia contador: 2 campos se contador < 12; provavel na forma"
-0x08016EDC,Fight_DrawCounterFieldPair4,func_thumb,"Familia contador: 2 campos se contador < 4; provavel na forma"
-0x08016F28,Fight_DrawCounterField5,func_thumb,"Familia contador: 1 campo se contador < 5; provavel na forma"
-0x08016F64,Fight_DrawCounterFieldRow10,func_thumb,"Familia contador: 2 campos se contador < 10; provavel na forma"
-0x08016FB4,Fight_SlideSixObjectsToTarget,func_thumb,"Desliza 6 objetos 8 px/quadro ate o alvo; provavel"
+0x08016E90,Fight_DrawCounterFieldPair12,func_thumb,Familia contador: 2 campos se contador < 12; provavel na forma
+0x08016EDC,Fight_DrawCounterFieldPair4,func_thumb,Familia contador: 2 campos se contador < 4; provavel na forma
+0x08016F28,Fight_DrawCounterField5,func_thumb,Familia contador: 1 campo se contador < 5; provavel na forma
+0x08016F64,Fight_DrawCounterFieldRow10,func_thumb,Familia contador: 2 campos se contador < 10; provavel na forma
+0x08016FB4,Fight_SlideSixObjectsToTarget,func_thumb,Desliza 6 objetos 8 px/quadro ate o alvo; provavel
+0x08016438,Fight_UpdateSpriteGroupMoveAnim,func_thumb,Anima e move grupo de objetos em passos de 4 px; retorna 1 ao fim; provavel
+0x08017004,Fight_LoadTwoGraphicBlocksB,func_thumb,Carrega 2 blocos graficos com LoadTilesWithMalias; provavel
+0x08017048,Fight_DrawCounterFieldAlt4,func_thumb,Familia contador: campo se contador < 4; provavel na forma
+0x08017084,Fight_DrawCounterFieldPairAlt12,func_thumb,Familia contador: 2 campos se contador < 12; provavel na forma
+0x080170D4,Fight_SetKindFromBotAlt,func_thumb,"Tipo selecionado de +0xDD do bot (<4 -> 0, senao -5); provavel"
+0x08017104,Fight_InitObjectFixedTile,func_thumb,"Inicializa objeto em (0x78,0x78) com tile fixo; provavel"
+0x08017130,Fight_InitObjectAt84Frame,func_thumb,"Inicializa objeto em (0x78,0x84) com frame; provavel"
+0x08017178,Fight_InitKindObjectE,func_thumb,"Objeto de tipo em (0x78,0x6C) (par de B); provavel"
+0x080171C0,Fight_InitKindObjectF,func_thumb,"Objeto de tipo em (0x6C,0x78) (par de C); provavel"
+0x08017208,Fight_InitKindObjectG,func_thumb,"Objeto de tipo em (0x84,0x78) (par de D); provavel"
+0x080175FC,Fight_UpdatePartKindSelectorB,func_thumb,"Mesma maquina de tipo que 0x080169AC, para o outro lado; provavel"
+0x0801767C,Fight_InitKindObjectsForStateB,func_thumb,Despacha init dos objetos E/F/G/84 pelo tipo; provavel
+0x08017948,Fight_DrawCounterFieldPair12B,func_thumb,Familia contador: 2 campos se contador < 12; provavel na forma
+0x08017994,Fight_DrawBotSlotSprite,func_thumb,Sprite de slot do bot (ativo ou nao) pelo indice fight_information+0x3D/+0x46; provavel
+0x08017A14,Fight_DrawSideBotSlots,func_thumb,"Laco dos 3 bots de um lado (presentes, +0x40); provavel"
+0x08017BD0,Fight_DrawActiveBotNameBox,func_thumb,Caixa de nome do bot ativo por lado; provavel
+0x08017E00,Fight_DrawFourPartIcons,func_thumb,Icones das 4 pecas do bot ativo; provavel na forma
+0x08017EA8,Fight_DrawFourPartRowsWithStats,func_thumb,4 linhas de peca com GetPartStats do bot ativo; provavel
+0x08017F9C,Fight_DrawFourPartStatColumns,func_thumb,Colunas de valores das 4 pecas do bot ativo; provavel na forma
+0x08018074,SetSelectedMedabotPreviewPartIds,func_thumb,Grava 4 ids de peca da previa em +0x98..0x9B; confirmado
+0x08018098,InitializeSelectedMedabotPreviewRenderer,func_thumb,Init da previa 40x40 do bot selecionado; confirmado
+0x08018180,RenderSelectedMedabotPreviewFrame,func_thumb,Re-render da previa do bot selecionado; confirmado
+0x08018218,RenderSelectedMedabotLargePreviewFrame,func_thumb,Previa grande 0x44x0x2A do bot selecionado; confirmado
+0x0801827C,GetPreviewSlotXPosition,func_thumb,Posicao do slot da grade 3x3 com deslocamento por lado; provavel na forma
+0x080182AC,Preview_NudgeOffsetIfFlag,func_thumb,Incrementa dois shorts de animacao se bit0 da flag; confirmado
+0x080182D0,AdvanceSelectedMedabotPreviewAnimationSlot,func_thumb,Avanca ciclo de animacao do slot da previa (+0x46); confirmado
+0x0801830C,Fight_DrawRowBotSlotsExceptSelected,func_thumb,Redesenha slots da linha de bots exceto o selecionado; provavel
+0x080183A4,HandleSelectedMedabotPreviewCursorInput,func_thumb,Cursor 3x3 da luta; redesenha paineis e previa; provavel (nome herdado descreve so a previa)
+0x080185A8,Fight_SlotConfirmStartSlide,func_thumb,Confirma slot e inicia transicao de lado; chute
+0x080185E8,Fight_SlideSideTransitionStep,func_thumb,Passo de animacao de troca de lado da grade de bots (14 passos); provavel
+0x080187A8,Fight_ToggleActiveSideAndRedraw,func_thumb,Inverte lado ativo e redesenha slots; provavel
+0x080187D4,Fight_SlideSideBackStep,func_thumb,Passo reverso da troca de lado; redesenha paineis no fim; provavel
+0x08018900,Fight_IncrementActionUsageCounter,func_thumb,Incrementa contador de uso de tecnica ou medaforce do bot; confirmado
+0x080189EC,Fight_IncrementUsageForActiveBots,func_thumb,Loop de 3 bots chamando o contador de uso; confirmado

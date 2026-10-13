@@ -25,3 +25,56 @@ address,name,kind,comment
 0x08036218,FightPreview_AdvanceRightSideSequenceStep,func,versao direita do passo da previa
 0x08036270,Fight_IncrementActionUsageCounter_08036270,func,incrementa contador de uso da acao (8 bytes por acao)
 0x0803628C,Fight_AddMedaforceChargeFromAction,func,+20 (ou +40 com bit3 de +0xC0) em +0xC1, teto 80
+0x080362C4,FightPreview_LoadSideTileSlots,func,carrega 4 blocos de tiles do lado (prévia)
+0x08036340,FightPreview_LoadSideTiles,func,LoadTilesWithMalias do lado (prévia)
+0x08036370,FightPreview_LoadPartIconRows,func,4 linhas de icones de peca do bot
+0x080363E8,FightPreview_DrawPartIconRow8,func,desenha ate 8 celulas de icone
+0x080364A8,FightPreview_DrawPartIconPairs,func,escolhe icone por byte 0 vs nao-0 e desenha
+0x080366DC,FightPreview_AdvanceSlotOffset,func,passo de animacao com tabela de deslocamento
+0x08036784,FightPreview_SetupFourSprites,func,4 sprites com posicao tabela+dx/dy
+0x0803684C,FightPreview_TickSpriteTimers,func,decrementa timers de sprite; retorna 1 se todos ociosos
+0x080368C4,FightPreview_BuildSpriteListRow,func,monta ate 5 sprites de lista (terminador 0xfe)
+0x080369C8,FightPreview_BuildSpriteListRowAlt,func,variante de BuildSpriteListRow com outras tabelas
+0x08036AC4,FightPreview_AdvanceSlotX,func,passo de X por tabela com contador por slot
+0x08036B1C,FightPreview_AdvanceRowSlotsMarked,func,avanca ate 5 slots marcando +9
+0x08036B50,FightPreview_AdvanceRowSlots,func,avanca ate 5 slots sem marcar +9
+0x08036B84,FightPreview_SetPartSpriteId,func,copia id da peca do bot para o sprite
+0x08036BB8,FightPreview_ConsumePartCount,func,consome 1 unidade de peca do bot (retorna 0) ou retorna 1 se zero
+0x08036C20,FightPreview_SetupOneSprite,func,configura 1 sprite com posicao tabela+x/y
+0x08036CCC,FightPreview_SplitCountByCapacity,func,divide valor entre dois lados pela capacidade livre do bot
+0x08036D24,FightPreview_FillPartSlot,func,incrementa contagem atual do bot ate o maximo
+0x08036D64,FightPreview_IsPartTypeFlagSet,func,testa bit de flag do lado conforme tipo de peca
+0x08036DE8,FightPreview_AdvanceSlotXDir,func,passo de X +/- tabela com contador por slot
+0x08036E54,FightPreview_ClampCount1To99,func,clamp 1..99
+0x08036E64,FightPreview_SetPartStatsByType,func,grava stats da peca no bot por tipo (clamp 1..99)
+0x08036FA0,Fight_ResetBotPartState,func,zera estado de peca do bot e inicializa blocos
+0x08036FF8,FightPreview_SetupSpriteRow,func,configura N sprites em linha
+0x080370AC,FightPreview_TickSpriteTimersCount,func,versao de TickSpriteTimers com N slots
+0x0803713C,Fight_CommitActionState,func,fecha passo de acao dos dois lados (contadores e flags)
+0x08037230,FightPreview_IsPartSlotEdge,func,retorna 1 se contagem atual 0 ou igual ao maximo
+0x0803725C,FUN_0803725C,func,chama 0x08035754 e testa short; chute
+0x08037280,Fight_ComputePartValue,func,valor = ctx>>2 + byte+0x4e passado a 0x0807cd2c
+0x080372D4,FightPreview_SplitCountByMax,func,divide valor pelo maximo do slot em dois campos
+0x08037330,FightPreview_SetGroupActive4,func,liga/desliga bit15 de 4 sprites do lado por mascara
+0x080373D4,FightPreview_ShowGroup4,func,liga bit15 de 4 sprites do lado
+0x08037424,FightPreview_AdvanceSlotYWrap,func,passo Y por tabela, contador modulo 32
+0x08037458,FightPreview_SplitCountByCap58,func,divide valor pelo limite +0x58 do bot
+0x08037498,FightPreview_SplitCountByFree,func,divide valor pela capacidade livre +0x50-+0x58
+0x080374E0,FightPreview_SplitValueAgainstLimit,func,divide valor contra limite e seta flag +0xd1
+0x0803752C,FightPreview_SplitValueAgainstRange,func,divide valor contra faixa b-a e seta flag +0xd1
+0x08037578,FUN_08037578,func,lookup de tabela por lado/sel; chute
+0x0803769C,Fight_RollPartValue,func,soma de campos do bot com sorteio 0-7 (rolagem)
+0x080376F4,FUN_080376F4,func,valor = ctx>>3 + campo +0xac; 0 vira 1
+0x08037728,FightPreview_ClampPartCountToLimit,func,clamp de contagem com flag +0xd2
+0x08037798,Fight_FindTargetBotWithPart,func,busca bot vivo com peca (3 candidatos, direcao por rng)
+0x08037830,FUN_08037830,func,busca bot vivo com campo +0x91 igual ao do outro; chute
+0x080378A8,FUN_080378a8,func,ajusta +-4 em campo de sprite conforme bit1 de ctx+0xf8; chute
+0x080378F0,FightPreview_SpawnEffectSprite,func,aloca sprite de efeito e despacha por tipo +0x51
+0x08037A94,FightPreview_SpawnEffectSpriteAlt,func,variante de SpawnEffectSprite com tiles 0x30/0x34
+0x08037B9C,FightPreview_DispatchEffectSlots,func,despacha 27 slots de efeito por tabela (+0x29)
+0x0803836C,FightPreview_ClearPartCounters3,func,zera 3 contadores de peca
+0x08038394,FightPreview_ClearPartFields,func,zera campos +0xc4..+0xcc do bot por flags
+0x080383E8,FightPreview_DispatchEffectSlotsTail,func,despacha 17 slots de efeito (cauda)
+0x080385D0,FightPreview_ClearPairsForBot,func,zera pares de bytes do bot em 6 posicoes
+0x080385F8,FightPreview_DispatchEffectSlotsB,func,copia do despacho de 27 slots (outra tabela)
+0x0803884C,FightPreview_DispatchEffectSlotsC,func,copia do despacho de 27 slots (terceira tabela)
