@@ -58,3 +58,30 @@ address,name,kind,comment
 0x080187D4,Fight_SlideSideBackStep,func_thumb,Passo reverso da troca de lado; redesenha paineis no fim; provavel
 0x08018900,Fight_IncrementActionUsageCounter,func_thumb,Incrementa contador de uso de tecnica ou medaforce do bot; confirmado
 0x080189EC,Fight_IncrementUsageForActiveBots,func_thumb,Loop de 3 bots chamando o contador de uso; confirmado
+0x08018A54,Fight_PlayResultCueByState,func_thumb,Escolhe cue de som por estado e chama FUN_08074b88; provavel
+0x08018AB4,Fight_InitOrRefreshCounterSprites,func_thumb,Monta/refaz sprites do contador de dois digitos; provavel
+0x08018A18,Fight_ApplyPostBattleMode20PlayerSideState,func_thumb,Modo 0x20 de pos-batalha: seta 0x50 nos 3 bots do lado do jogador; confirmado
+0x08018BD4,Fight_SetCounterTimerByState,func_thumb,Define valor inicial do contador +0x57 conforme estado; provavel
+0x08018C38,Fight_TickSecondaryEffectTimers,func_thumb,Divisor de 32 frames que decrementa contador +0x57 e chama atualizacao; provavel
+0x08018C78,Fight_UpdateCounterDigitPositions,func_thumb,Separa contador em dezena e unidade e grava posicoes; provavel
+0x08018CBC,Fight_TickActiveBotStatusEffects,func_thumb,Laço de 6 bots chamando desenhadores 0x08018D0C e 0x08018DF4; confirmado
+0x08018D0C,Fight_TickSecondaryRepairEffectAndEmitResult,func_thumb,Avanca efeito de reparo (+0xC4, tipo 0x1F) e emite total; confirmado
+0x08018DF4,Fight_TickPendingEffectDurationAndEmitResult,func_thumb,Avanca efeito pendente (+0xC9) e emite total; confirmado
+0x08018EE0,Fight_FindDamagedPartIndex1Based,func_thumb,Primeira peca com atual!=0 e atual!=max (1-based; 0 = nenhuma); confirmado
+0x08018F0C,Fight_AddPartArmorClampOverflow,func_thumb,Soma reparo a armadura atual da peca com teto no maximo; excedente no retorno; confirmado
+0x08018F6C,Fight_FindNextPartWithArmorForPendingEffect,func_thumb,Procura peca com atual>1 a partir do estagio pendente (+0xCA); confirmado
+0x08018FF0,Fight_ApplyPendingEffectDamageToPart,func_thumb,Aplica dano na peca sem zerar (minimo 1); excedente no byte alto; confirmado
+0x0801902C,Fight_TickActiveBotsExceptStatusTypes0F10,func_thumb,Laco 6 bots; ativos com tipo pendente fora de 0F/10 chamam subsistemas; confirmado
+0x08019078,Fight_TickActiveBotsExceptStatusTypes0F10_Step544,func_thumb,Mesmo filtro, so chama 0x08019544; confirmado
+0x080190B8,Fight_TickBotSubsystems,func_thumb,Zera +0xBB e chama 9 subrotinas por bot; confirmado
+0x08019108,Fight_TickSelectedPartCue,func_thumb,Soma medidor (+0xBB) pela peca selecionada (+0xDD); confirmado
+0x08019184,Fight_AddBotMeterCapped255,func_thumb,Soma delta ao medidor +0xBB com teto 255; confirmado
+0x080191A4,Fight_SubBotMeterClampZero,func_thumb,Subtrai delta do medidor +0xBB com piso 0; confirmado
+0x080191C0,Fight_CueIfBotFlagA1Clear,func_thumb,Se +0xA1==0 soma 6 ao medidor; confirmado
+0x080191E4,FUN_080191e4,func_thumb,Indice de tabela + FUN_08041d04 + soma valor ao medidor; parcial
+0x0801922C,Fight_TickPendingEffectMeterGain,func_thumb,Soma +0xCC ao medidor se tipo pendente 11/12/29; confirmado
+0x08019264,Fight_SubBotMeterByByte5Div10,func_thumb,Subtrai byte+5/10 do medidor +0xBB; confirmado
+0x0801928C,Fight_SubBotMeterByByteA2Div20,func_thumb,Subtrai byte+0xA2/20 do medidor +0xBB; confirmado
+0x080192B8,Fight_SubBotMeterForSecondaryEffect,func_thumb,Se efeito secundario 0x26/0x29 subtrai +0xC7 do medidor; confirmado
+0x080192E8,Fight_SubBotMeterForPartFlag28,func_thumb,Para 3 pecas com +0x49==0x28 e atual!=0 subtrai +0x4E do medidor; confirmado
+0x0801932C,Fight_ClampBotMeterMax31,func_thumb,Teto 0x1F no medidor +0xBB; confirmado

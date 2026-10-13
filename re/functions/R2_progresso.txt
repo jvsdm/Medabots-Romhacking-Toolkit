@@ -1,2 +1,2 @@
-0x0803884C
-ultimo documentado: 0x0803884C (80 funcoes no R2.md; proximo = linha 81 de R2_lista.txt, ainda nao lida)
+0x0803E9BC
+ultimo documentado: 0x0803E9BC (113 funcoes no R2.md + 1 nota de endereco sem funcao; proximo = 0x0803EA18)

@@ -26,3 +26,7 @@ Formato de cada seção:
 - Endereço sem função no Ghidra: `disassemble_function` só se precisar; quase sempre é literal pool ou dado.
 - `FUN_0807CCC0` = wrapper do SWI 0x0C (CpuFastSet). Wrappers de BIOS em 0x0807CC..: uma linha cada.
 - Não leia `pc/research/README.md` nem `mtbe.csv` inteiros: use grep pelo endereço.
+- Auxiliares de aritmética (confirmados na R4): `0x0807CD2C` = divisão com sinal (NÃO é multiplicação nem seno —
+  notas antigas em R0/R2/R4 que dizem isso estão erradas), `0x0807CDF8` = resto com sinal, `0x0807CEC8` = divisão
+  sem sinal, `0x0807CF40` = resto sem sinal (provável), `0x0807CCF4` = trampolim `bx r1` (o efeito é do alvo em r1).
+- Nomes: inglês, estilo `Subsistema_VerboObjeto` (como o mtbe.csv).

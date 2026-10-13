@@ -1,2 +1,2 @@
-0x08017F9C
-Proximo na lista: 0x08018074 (61 funcoes feitas)
+0x0801932C
+Proximo na lista: ver R1_lista.txt (ultimo doc: 0x0801932C)

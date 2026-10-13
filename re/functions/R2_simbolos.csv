@@ -78,3 +78,35 @@ address,name,kind,comment
 0x080385D0,FightPreview_ClearPairsForBot,func,zera pares de bytes do bot em 6 posicoes
 0x080385F8,FightPreview_DispatchEffectSlotsB,func,copia do despacho de 27 slots (outra tabela)
 0x0803884C,FightPreview_DispatchEffectSlotsC,func,copia do despacho de 27 slots (terceira tabela)
+0x08038BC0,Fight_ComputeTotalRos,func,soma ROS total e bonus de suporte/strengthen
+0x08038D30,Fight_HandleDefenderFollowupFlags,func,flags de seguimento do defensor (randbyte)
+0x08038E54,Fight_ResolveDefenderRosReductions,func,despacha reducoes de ROS do defensor
+0x08038E9C,Fight_TryApplyCriticalRosOverrideByActionKind,func,escala ROS por tipo de acao e aplica override
+0x08038F34,Fight_TryApplyCriticalRosOverride,func,override de ROS critico (compara e marca 0x4c)
+0x08038F84,Fight_ApplyEvasionReductionToRos,func,reducao de ROS por esquiva do defensor
+0x08039068,Fight_ApplyDefenseReductionToRos,func,reducao de ROS por defesa e escolha de parte
+0x08039134,get_amount_of_bodyparts_that_have_hp,func,conta partes com flag +0x59 ligada
+0x08039158,Fight_PickHighestArmorNonHeadPart1Based,func,parte de maior armadura (exceto cabeca) base 1
+0x08039188,Fight_UpdateActionArgSelectorFromDefenderState,func,seta seletor de acao pelo bit 0x10 do defensor
+0x080391C4,Fight_SetAttackerAffinityResultFromSelectedAction,func,resultado de afinidade do atacante (classe 2/3/4/6)
+0x08039250,Fight_SetAttackerAffinityResultFromMirroredAction,func,igual ao anterior sem alvo (espelhado)
+0x080392D8,Fight_SetDefenderAffinityResultFromSelectedAction,func,afinidade do defensor (optica/bomba/grav) em +0xbf
+0x0803934C,Fight_SetDefenderAffinityResultFromMirroredAction,func,igual ao anterior sem alvo (espelhado)
+0x080393EC,ObjectScript_OpcodeDispatch,func,le opcode do fluxo e chama handler por tabela
+0x0803B8C8,Dispatch39Slots,func,despacha 39 handlers por indice (sugestao)
+0x0803D424,ObjectScript_ReadWord,func,le palavra do fluxo de script
+0x0803D450,FightPreview_UnpackSequenceEntry,func,copia sequencia de shorts para buffer
+0x0803D4AC,FightPreview_AdvanceSequenceCursor,func,avanca cursor do fluxo pelo tamanho do registro
+0x0803D4EC,Fight_ScrollEntryCoords,func,soma/subtrai delta em 20 entradas com mascara (chute)
+0x0803E780,Overlay_ClearTimerIfFlag,func,zera timer se flag +0x89 == 1 (chute)
+0x0803E79C,Overlay_SetTargetAndCheckReached,func,grava alvo e testa se chegou (chute)
+0x0803E7C0,Overlay_DrawFixedBlock,func,chama desenho de bloco com parametros fixos (chute)
+0x0803E7F0,Overlay_DrawIconAndText,func,desenha icone e texto (chute)
+0x0803E83C,Overlay_DrawThreeTileBlocks,func,tres chamadas de DrawPartIconTileBlock (chute)
+0x0803E870,Overlay_CopyEightBytesForIndex,func,copia 8 bytes por indice (chute)
+0x0803E894,Counter_IncIfFlagBit0,func,incrementa dois shorts se bit0 de flag (chute)
+0x0803E8B8,Overlay_CopySixBytesFromRandomTable,func,sorteia byte e copia 6 bytes de tabela (chute)
+0x0803E8EC,Overlay_DrawSixDigitRow,func,6 chamadas de FillBgTilemapRectSequential (chute)
+0x0803E934,Overlay_InitOamSlot2,func,inicializa OAM slot 2 (chute)
+0x0803E978,Overlay_InitOamSlot3,func,inicializa OAM slot 3 (chute)
+0x0803E9BC,Overlay_InitOamSlot4,func,inicializa OAM slot 4 (chute)

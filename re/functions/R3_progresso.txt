@@ -1,2 +1,2 @@
-0x08050710
-# ultimo endereco da lista processado (43 entradas nesta sessao incl. gap 0x08047EF0)
+0x08051988
+# ultimo endereco da lista processado (sessao GH-R3 continuacao: 0x080517f0 e 0x08051940..0x08051988 incluidos)
