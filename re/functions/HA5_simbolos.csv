@@ -1,0 +1,8 @@
+address,name,kind,comment
+0x080219C0,Fight_DispatchOnSubstateAA_T_PlayThenSetup,handler,"T 0x09: toca slot 0x21; ao fim prepara slot, timer 0x3C, +0xAA++ (provável)"
+0x08021A14,Fight_DispatchOnSubstateAA_T_WaitTimer,handler,"T 0x0A: espera timer +0x86 (confirmado)"
+0x08021A6C,Fight_DispatchOnSubstateAA_T_SetupPositions,handler,"T 0x0B: copia blocos, grava posições +0x30/+0x32/+0x72/+0xB2 (confirmado)"
+0x08021AFC,Fight_DispatchOnSubstateAA_T_WaitSlotsReady,handler,"T 0x0C: espera 3 slots chegarem ao alvo (confirmado)"
+0x08021B78,Fight_DispatchOnSubstateAA_T_WaitScriptEndClearMask,handler,"T 0x0D: fim do roteiro, Slot_ClearAttrMask (confirmado)"
+0x08021BD8,Fight_DispatchOnSubstateAA_T_InitGraphicsAndSlots,handler,"T 0x0F: descomprime, cpufastset, slots, bit15 (confirmado)"
+0x08021C94,Fight_DispatchOnSubstateAA_T_RunSlotsThenClear,handler,"T 0x10: roteiro dos slots e limpeza de tiles (confirmado)"

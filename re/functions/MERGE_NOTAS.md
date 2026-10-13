@@ -21,3 +21,6 @@ Regra: quando o mtbe.csv já tem um nome que descreve melhor, ele vence e o Ghid
 | 0x08045A40 | sem função no Ghidra | IsCompositePreviewPointOnScreen | conferir endereço |
 | 0x080156F8 | Fight_IsPartActionBlocked (só no CSV) | Fight_IsPartActionAvailable | retorno 1 = BLOQUEADA; renomear |
 | 0x0804305C vs 0x08042E58 | Sprite_WriteComposite4Objects | CreateCompositeBattleSpriteObjects | conferir se é o mesmo corpo |
+| tabela de opcodes de evento | — | base 0x083D224C | errado: 0x083D222C (literal 0x0804B734); 0x06 = end, 0x19 = goto (fora do C#) |
+| op 0x2F | — | C# 2 bytes | ROM lê 1 byte |
+| ops 0x42-0x45 | — | C# Play_Sound/Play_Music/Shake | ROM: 0x42 = bx lr; 0x44/0x45 chamam transição de mapa / política de cena |
