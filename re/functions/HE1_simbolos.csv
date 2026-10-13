@@ -1,36 +1,38 @@
 address,name,kind,comment
-0x0804B73C,Event_Op00_Nop,func_thumb,provavel; mtbe EventInitOpcode00_NoOp; NAO aplicado no Ghidra (sem funcao definida)
-0x0804B740,Event_Op01_ShowMessageA,func_thumb,provavel; mtbe EventInitOpcode01; 3 bytes args
-0x0804B74C,Event_Op02_ShowMessageB,func_thumb,provavel; mtbe EventInitOpcode02; 3 bytes args
-0x0804B778,Event_Op03_CloseMessageBox,func_thumb,provavel; mtbe EventInitOpcode03; 0 bytes
-0x0804B78C,Event_Op04_WaitXFrames,func_thumb,provavel; mtbe EventInitOpcode04; 1 byte
-0x0804B7B4,Event_Op05_WaitForButtonPress,func_thumb,provavel; mtbe EventInitOpcode05; 0 bytes
-0x0804B7C8,Event_Op06_End,func_thumb,provavel; sem definicao no C#; mtbe EventInitOpcode06
-0x0804B858,Event_Op07_FadeToBlack,func_thumb,provavel; 1 byte; mtbe EventInitOpcode07
-0x0804B8AC,Event_Op08_FadeFromBlack,func_thumb,provavel; 1 byte; mtbe EventInitOpcode08
-0x0804B900,Event_Op09_FadeToWhite,func_thumb,provavel; 1 byte; mtbe EventInitOpcode09
-0x0804B958,Event_Op0A_FadeFromWhite,func_thumb,provavel; 1 byte; mtbe EventInitOpcode0A
-0x0804B9B0,Event_Op0B_WarpA,func_thumb,provavel; 5 bytes; mtbe nome diverge (SetConfigFlag)
-0x0804B9CC,Event_Op0C_WarpB,func_thumb,provavel; 5 bytes; mtbe nome diverge (ClearConfigFlag)
-0x0804BA5C,Event_Op0D_PlayerFaceDirection,func_thumb,provavel; 1 byte
-0x0804BA9C,Event_Op0E_PlayerHopInPlace,func_thumb,chute; 0 bytes; mtbe nome diverge (StartMapTransition)
-0x0804BAEC,Event_Op0F_PlayerHopInDirection,func_thumb,provavel; 1 byte
-0x0804BB14,Event_Op10_MovePlayer,func_thumb,confirmado no extrator; 4 bytes
-0x0804BBA0,Event_Op11_ChangePlayerCostume,func_thumb,provavel; 1 byte
-0x0804BBC8,Event_Op12_AddEventPermanently,func_thumb,provavel; 2 bytes; mtbe nome diverge (ClearEventFlag)
-0x0804BBF4,Event_Op13_RemoveEventPermanently,func_thumb,provavel; 2 bytes; mtbe nome diverge (SetEventFlag)
-0x0804BC20,Event_Op14_RemoveCurrentEventNow,func_thumb,provavel; 0 bytes
-0x0804BC6C,Event_Op15_RemoveCurrentEventNowKeepCollision,func_thumb,provavel; 0 bytes
-0x0804BCD4,Event_Op16_RemoveEventNow,func_thumb,provavel; 2 bytes
-0x0804BD08,Event_Op17_SetEventVariable,func_thumb,provavel; 3 bytes
-0x0804BD44,Event_Op18_IncrementEventVariable,func_thumb,provavel; 2 bytes
-0x0804BD70,Event_Op19_Goto,func_thumb,provavel; sem definicao no C#; 2 bytes de salto
-0x0804BDD8,Event_Op1A_NpcDoAnimation,func_thumb,provavel; 2 bytes
-0x0804BE50,Event_Op1B_NpcResetAnimation,func_thumb,chute; 0 bytes
-0x0804BEC4,Event_Op1C_RotateEventNpc,func_thumb,provavel; 1 byte
-0x0804BF34,Event_Op1D_HopEventNpc,func_thumb,chute; 0 bytes
-0x0804BFB4,Event_Op1E_FlickerEventNpc,func_thumb,provavel; 1 byte
-0x0804C02C,Event_Op1F_InitiateMovingActorA,func_thumb,provavel; 5 bytes; mtbe EventOpcode1F_..._Setup
-0x0804C078,Event_Op20_InitiateMovingActorB,func_thumb,provavel; 5 bytes; mtbe EventOpcode20_..._Setup
-0x0804C0C4,Event_Op21_InitiateActor,func_thumb,provavel; 4 bytes; mtbe EventOpcode21_..._Setup
-0x0804C100,Event_Op22_RotateActor,func_thumb,provavel; 2 bytes; mtbe EventOpcode22_..._Setup
+0x0804B73C,Event_Op00_Nop,func_thumb,confirmado; 0 bytes; imediato
+0x0804B740,Event_Op01_ShowMessageA,func_thumb,confirmado; 3 bytes (bank + id BE); diferido (cont. 0x0804DC38)
+0x0804B74C,Event_Op02_ShowMessageB,func_thumb,confirmado; 3 bytes; diferido (cont. 0x0804DCF8)
+0x0804B758,Event_ReadMessageArgsAndDefer,func_thumb,confirmado; Script_ReadBytes(3) + gCurrentEventStateByte=1; usado por 01/02
+0x0804B778,Event_Op03_CloseMessageBox,func_thumb,confirmado; 0 bytes; diferido (cont. 0x0804DD04)
+0x0804B78C,Event_Op04_WaitXFrames,func_thumb,confirmado; 1 byte; diferido (cont. 0x0804DD18)
+0x0804B7B4,Event_Op05_WaitForButtonPress,func_thumb,confirmado; 0 bytes; diferido (cont. 0x0804DD3C)
+0x0804B7C8,Event_Op06_End,func_thumb,confirmado; 0 bytes; zera o estado do evento; sem definicao no C#
+0x0804B858,Event_Op07_FadeToBlack,func_thumb,confirmado; 1 byte (frames presos 1..16); cor 0; 0->32
+0x0804B8AC,Event_Op08_FadeFromBlack,func_thumb,confirmado; 1 byte; cor 0; 32->0
+0x0804B900,Event_Op09_FadeToWhite,func_thumb,confirmado; 1 byte; cor 0x7FFF; 0->32
+0x0804B958,Event_Op0A_FadeFromWhite,func_thumb,confirmado; 1 byte; cor 0x7FFF; 32->0
+0x0804B9B0,Event_Op0B_WarpA,func_thumb,confirmado; 5 bytes (map unk1 unk2 x y); scene variant 0x0300643B=1
+0x0804B9CC,Event_Op0C_WarpB,func_thumb,confirmado; 5 bytes; scene variant 0x0300643B=0
+0x0804BA5C,Event_Op0D_PlayerFaceDirection,func_thumb,confirmado; 1 byte; imediato
+0x0804BA9C,Event_Op0E_PlayerHopInPlace,func_thumb,confirmado; 0 bytes; som 0x70 + arco de 16 quadros (cont. 0x0804DE74)
+0x0804BAEC,Event_Op0F_PlayerHopInDirection,func_thumb,confirmado (primaria); 1 byte; cont. 0x0804DF40
+0x0804BB14,Event_Op10_MovePlayer,func_thumb,confirmado; 4 bytes Move; cont. 0x0804E134
+0x0804BBA0,Event_Op11_ChangePlayerCostume,func_thumb,confirmado (primaria); 1 byte; cont. 0x0804E370
+0x0804BBC8,Event_Op12_AddEventPermanently,func_thumb,confirmado; 2 bytes; EventFlag_ClearIndexedFlagByPackedId
+0x0804BBF4,Event_Op13_RemoveEventPermanently,func_thumb,confirmado; 2 bytes; EventFlag_SetIndexedFlagByPackedId
+0x0804BC20,Event_Op14_RemoveCurrentEventNow,func_thumb,confirmado; 0 bytes; Map_ClearActiveObjectEntry se o id bate
+0x0804BC6C,Event_Op15_RemoveCurrentEventNowKeepCollision,func_thumb,confirmado; 0 bytes; limpa bit 0x80 sem zerar a entrada
+0x0804BCD4,Event_Op16_RemoveEventNow,func_thumb,confirmado; 2 bytes; Map_ClearActiveObjectEntry por id
+0x0804BD08,Event_Op17_SetEventVariable,func_thumb,confirmado; 3 bytes; valor & 7 (campo de 3 bits)
+0x0804BD44,Event_Op18_IncrementEventVariable,func_thumb,confirmado; 2 bytes; campo de 3 bits
+0x0804BD70,Event_Op19_GotoEvent,func_thumb,confirmado; 2 bytes (event id BE); troca gCurrentEventId e zera o cursor; sem definicao no C#
+0x0804BDD8,Event_Op1A_NpcDoAnimation,func_thumb,confirmado; 2 bytes (anim & 0xF + frames); cont. 0x0804E43C
+0x0804BE50,Event_Op1B_EventNpcFacePlayer,func_thumb,confirmado; 0 bytes; direcao oposta a do jogador (tabela 0x083D262C); C# diz NPC_Reset_Animation
+0x0804BEC4,Event_Op1C_RotateEventNpc,func_thumb,confirmado; 1 byte; imediato
+0x0804BF34,Event_Op1D_HopEventNpc,func_thumb,confirmado; 0 bytes; som 0x70; cont. 0x0804E450
+0x0804BFB4,Event_Op1E_FlickerEventNpc,func_thumb,confirmado; 1 byte; cont. 0x0804E464
+0x0804C02C,Event_Op1F_InitiateMovingActorA,func_thumb,confirmado (primaria); 5 bytes; cont. 0x0804E480
+0x0804C078,Event_Op20_InitiateMovingActorB,func_thumb,confirmado (primaria); 5 bytes; primaria igual a 1F; cont. 0x0804E48C
+0x0804C0C4,Event_Op21_InitiateActor,func_thumb,confirmado; 4 bytes; Map_SpawnTrackedObjectAtTile
+0x0804C100,Event_Op22_RotateActor,func_thumb,confirmado; 2 bytes (slot & 0xF + dir); Map_SetObjectParamAndFrame
+0x083D2630,EventOpcodeContinuationTable,data,confirmado; literal 0x0804DC28; indexada por gCurrentEventOpcodeByte (0x03006472)

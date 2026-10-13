@@ -1,258 +1,290 @@
 # HE3: handlers de opcode de evento (0x46-0x68), Metabee EU
 
 Fonte: `EventOpcodeTable` 0x083D222C + 4*op (lista `HE3_lista.txt`, conferida contra a ROM: 35/35 batem).
-Tamanho de argumento = `LegacyEventOpcodeTable.Lengths[op] - 1` (usado pelo leitor do Toolkit como fallback).
-Ghidra: só 13 entradas têm função definida; as demais são "No function found" (código não analisado nesta
-entrada). Nesses casos a leitura veio dos bytes Thumb da ROM + `mtbe.csv` + `EventOpcodeDefinitions.cs`.
-Os rótulos `EventOpcodeNN` do `mtbe.csv` nesta faixa estão deslocados (ex.: 0x0804C9A0 rotulado 0x43 e
-0x0804C9C4 rotulado 0x44; a tabela diz 0x48 e 0x49). Vale a numeração da tabela.
-Leitura de argumento: `EventScript_ReadBytes` 0x0804D8CC (N bytes) e `EventScript_ReadNextByte` 0x0804D83C.
-Legenda PC: implementado | parcial | falta (ver `pc/extract/extract_events.py` e `pc/game/src/script.lua`).
+Revisão GH-HE3-redo: os 35 handlers agora são funções no Ghidra; todos foram decompilados e renomeados
+`Event_Op<XX>_<Nome>`. Os literais de pool (DAT_...) foram lidos direto da ROM.
 
-## 0x46 (0x0804C984) Stop_Music (provável)
-- Args: 0 bytes. Ghidra: sem função nesta entrada.
-- Faz: chama `Overworld_ApplyMapSceneModePolicy(2, 0)` (0x0804842C), que para a música.
-- Memória: não lida além da chamada (efeito dentro da política não decodificado).
-- PC: falta (extract não decodifica 0x46; script.lua não tem).
-- Confiança: provável (bytes + nome do Toolkit).
+Convenções (confirmadas nos decompiles desta faixa):
+- Base RAM do evento = `0x030057E0` (event_flag_list). Offsets usados: +0xC89 = `gCurrentEventStateByte`
+  (0x03006469; gravar 1 = opcode diferido, o handler de continuação roda nos quadros seguintes), +0xC8A =
+  `gCurrentEventScriptCursor` (0x0300646A), +0xC8C = cópia do cursor antes de ler os args (0x0300646C),
+  +0xC93 = `gCurrentEventOpcodeSubstate` (0x03006473), +0xC94.. = `gEventScriptArguments[]` (0x03006474..).
+- `Script_ReadBytes(N)` (0x0804D8CC) copia N bytes para gEventScriptArguments e avança o cursor;
+  `site_GetEventScript` (= EventScript_ReadNextByte, 0x0804D83C) lê 1 byte.
+- Salto relativo dos Jump_If_*: `cursor = cursor_salvo + último_byte`, com cursor_salvo = posição logo após o opcode
+  (bate com `alvo = at + 1 + byte` do extract_events.py).
+- Tabela de continuação `gEventOpcodeTableB` 0x083D2630 + 4*op. Nesta faixa só 0x56, 0x59, 0x63, 0x66 e 0x67 gravam
+  estado 1 e têm continuação real; as outras entradas são 0x0804DC35 ou stubs NoOp (0x0804F5C8..0x0804F6DC).
+  As continuações NÃO são funções no Ghidra; foram lidas por disassembly Thumb dos bytes da ROM.
+- Tamanho de argumento = bytes que o handler consome. Comparado com `EventOpcodeDefinitions.cs` (C#),
+  `LegacyEventOpcodeTable.Lengths[op] - 1` (legado) e `ROM_SIZE_FIX` de `pc/extract/extract_events.py` (tamanho total).
+- mtbe.csv: os rótulos `EventOpcode50..58` em 0x0804CC5C..0x0804CD84 estão deslocados de 1 (ex.: 0x0804CC5C é o 0x51,
+  0x0804CD84 é o 0x59). Vale a numeração da tabela.
+Legenda PC: implementado | parcial | falta (`pc/extract/extract_events.py` e `pc/game/src/script.lua`).
 
-## 0x47 (0x0804C994) Fade_Out_Music (provável)
-- Args: 0 bytes. Ghidra: sem função nesta entrada.
-- Faz: chama `FUN_08047BC0(0x78)` (0x78 = duração fixa, provável em frames). Nome do Toolkit bate.
-- Memória: não decodificada dentro de 0x08047BC0.
+## 0x46 (0x0804C984) Stop_Music
+- Assinatura: `void Event_Op46_Stop_Music(void)`. Args: 0 bytes (C# 0, legado 0).
+- Faz: `Overworld_ApplyMapSceneModePolicy(2, 0)` (0x0804842C). O caso 2 zera a música atual
+  (0x03006410 = 0x030057E0+0xC30) e chama `Sound_RequestSong(0)`.
+- PC: falta (pulado pelo tamanho; Lua sem música de evento).
+- Confiança: confirmado (Ghidra).
+
+## 0x47 (0x0804C994) Fade_Out_Music
+- Assinatura: `void Event_Op47_Fade_Out_Music(void)`. Args: 0 (C# 0, legado 0).
+- Faz: `Sound_RequestFade(0x78)`: fade da música em 0x78 (120) unidades, provável quadros. Não espera o fade.
 - PC: falta.
-- Confiança: provável.
+- Confiança: confirmado (Ghidra).
 
-## 0x48 (0x0804C9A0) Play_Persistent_Music (provável)
-- Args: 1 byte (music id, tipo Music do Toolkit). Lê com `EventScript_ReadNextByte`.
-- Faz: `Overworld_ApplyMapSceneModePolicy(3, byte)`: toca a música persistente id.
-- Memória: via política de modo de mapa (não decodificada).
+## 0x48 (0x0804C9A0) Play_Persistent_Music
+- Assinatura: `void Event_Op48_Play_Persistent_Music(void)`. Args: 1 byte (music id; C# 1, legado 1).
+- Faz: lê o byte para gEventScriptArguments[0] e chama `Overworld_ApplyMapSceneModePolicy(3, id)`. Caso 3: se o bit
+  0x80 está limpo, grava `id & 0x7F` em 0x03006411 (+0xC31, música persistente), toca `Sound_RequestSong(id)` e marca
+  0x03006410 = 0xFF; com bit 0x80 só grava o id em 0x03006411 e marca 0xFF (sem tocar). Se 0x03006410 já é 0xFF e o
+  bit 0x80 está limpo, não faz nada.
 - PC: falta.
-- Confiança: provável. (mtbe chama isso de 0x43; o nome dele está errado.)
+- Confiança: confirmado (Ghidra; bit 0x80 = "só registrar" é leitura do código, semântica de jogo provável).
 
-## 0x49 (0x0804C9C4) Play_Map_Music (provável)
-- Args: 0. Faz: `Overworld_ApplyMapSceneModePolicy(4, 0)`: toca a música do mapa.
-- Memória: via política de modo de mapa. Confirma H.md (0x49 = C9C4).
+## 0x49 (0x0804C9C4) Play_Map_Music
+- Assinatura: `void Event_Op49_Play_Map_Music(void)`. Args: 0 (C# 0, legado 0).
+- Faz: `Overworld_ApplyMapSceneModePolicy(4, 0)`: pega a música do mapa (`FUN_080483F8`), grava em 0x03006410 e
+  chama `Sound_RequestSong` só se for diferente da atual.
 - PC: falta.
-- Confiança: provável.
+- Confiança: confirmado (Ghidra).
 
 ## 0x4A (0x0804C9D4) Jump_If_Not_Player_Direction
-- Args: 2 bytes (dir Direction 1 byte, jump 1 byte). Ghidra: sem função; usa ReadBytes.
-- Faz: salto relativo se a direção do jogador não for `dir` (condição não decodificada).
-- Memória: não decodificada (provável leitura da direção do objeto do jogador).
-- PC: parcial. BRANCH_OPS marca "jump", mas o Lua não avalia a condição e segue o próximo passo.
-- Confiança: chute no corpo; tamanho confirmado pelo legado.
+- Assinatura: `void Event_Op4A_Jump_If_Not_Player_Direction(void)`. Args: 2 bytes (dir, jump; C# 2, legado 2).
+- Faz: `Script_ReadBytes(2)`; se `args[0] != *(u8*)0x03003811` salta por `args[1]`.
+- Memória: 0x03003811 (= 0x03002C30+0xBE1; mtbe rotula `dpad_input_2`, o C# chama de direção do jogador).
+- PC: parcial (extract: kind "jump"; o Lua não avalia a condição e segue o `next`).
+- Confiança: confirmado no corpo; o significado do byte 0x03003811 é provável.
 
 ## 0x4B (0x0804CA28) Jump_If_Item_Count_Below_Amount
 - Args: 3 bytes (item, amount, jump). Lidos com ReadBytes(3).
 - Faz: `c = FUN_08047D8C(item)`; salta se `c == 0` ou `c < amount`.
 - Memória: contagem de item no save (via FUN_08047D8C, não decodificada).
 - PC: implementado (`item_below` no Lua, linha ~109).
-- Confiança: confirmado (lido no Ghidra FUN_0804ca28).
+- Confiança: confirmado (lido no Ghidra).
 
 ## 0x4C (0x0804CA84) Jump_If_Missing_Part
 - Args: 3 bytes (bot, part, jump). ReadBytes(3).
-- Faz: `PartSet_GetLegIconIndexForMatchingSlotPartId(bot, part) == -1` → salta.
-- Memória: leitura de slots de peça via PartSet (não decodificada). Caches `*(iVar1+0xC60)` quando achou.
+- Faz: `r = PartSet_GetLegIconIndexForMatchingSlotPartId(bot, part)`; se `r == -1` salta; senão guarda `r` em
+  0x03006440 (0x030057E0+0xC60), que o 0x51 usa depois.
 - PC: parcial. "jump" sem avaliar condição (Lua cai no próximo).
-- Confiança: confirmado (Ghidra FUN_0804ca84).
+- Confiança: confirmado (Ghidra).
 
 ## 0x4D (0x0804CAE8) Jump_If_Not_Has_Medal
 - Args: 2 bytes (medal, jump). ReadBytes(2).
 - Faz: `FUN_08047DB0(medal) == 0` → salta.
 - Memória: posse de medalha no save (não decodificada).
 - PC: parcial (kind "jump", condição não avaliada).
-- Confiança: confirmado (Ghidra FUN_0804cae8).
+- Confiança: confirmado (Ghidra).
 
 ## 0x4E (0x0804CB34) Jump_If_Not_Has_Money
 - Args: 3 bytes (money Short big-endian, jump). ReadBytes(3).
 - Faz: `FUN_08047D4C() < money * 10` → salta. Atenção: o valor é multiplicado por 10.
 - Memória: dinheiro do save (via FUN_08047D4C).
-- PC: implementado (`money_below` no Lua, linha ~111). Checar o fator 10 no Lua.
-- Confiança: confirmado (Ghidra FUN_0804cb34).
+- PC: implementado (`money_below`, Lua linha ~111), mas o Lua compara `save.money < amount` sem o fator 10.
+- Confiança: confirmado (Ghidra).
 
 ## 0x4F (0x0804CB94) Jump_If_Previous_Scene_Command_Failed
 - Args: 1 byte (jump). ReadBytes(1).
 - Faz: salta se o byte de estado `*(DAT_cbd4 + 0x39) == 2` (comando de cena anterior falhou).
 - Memória: byte de estado (+0x39 do bloco apontado por DAT_0804CBD4), não nomeado.
 - PC: implementado (`prev_failed`, Lua linha ~107; `won == false`, aproximação).
-- Confiança: confirmado (Ghidra FUN_0804cb94).
+- Confiança: confirmado (Ghidra).
 
-## 0x50 (0x0804CBDC) indefinido no Toolkit (C# diz "Jump_If_Current_Active_Object_Index_Not_Equal", 2 args)
-- Args: 3 bytes pela ROM (legado = 4). ReadBytes(3). O C# só tem 2 args.
-- Faz: compara um índice de objeto ativo (byte de estado) com argumento e aplica salto relativo.
-  Semântica exata não fechada (o byte a mais não foi identificado).
-- Memória: estado do objeto ativo (offset do byte de estado não nomeado).
-- PC: parcial, com problema de tamanho. Extract assume 3 bytes; a ROM consome 4. Risco de dessincronia.
-- Confiança: chute no corpo; tamanho confirmado pelo legado.
+## 0x50 (0x0804CBDC) Jump_If_Event_Counter_Below (C#: "Jump_If_Current_Active_Object_Index_Not_Equal")
+- Assinatura: `void Event_Op50_Jump_If_Event_Counter_Below(void)`. Args: 3 bytes (sel, value, jump).
+  C# tem só 2 args (diverge); legado 3 e ROM_SIZE_FIX 4 total batem com a ROM.
+- Faz: `Script_ReadBytes(3)`; `c = (s8)(sel == 0 ? *(u8*)0x0300649C : *(u8*)0x0300649D)`; se `c < value` salta por
+  `jump`. Comparação com sinal no contador, sem sinal no valor.
+- Memória: 0x0300649C / 0x0300649D (+0xCBC/+0xCBD), sem rótulo no mtbe; parecem contadores do evento.
+- PC: parcial (kind "jump", tamanho certo pelo ROM_SIZE_FIX, condição não avaliada).
+- Confiança: confirmado no corpo; nome provável (o nome do C# não bate com o código).
 
-## 0x51 (0x0804CC5C) compara índice ativo + salto (ver discrepância)
-- Args: 2 bytes (ReadBytes(2)). Ghidra FUN_0804cc5c.
-- Faz: compara `byte(estado) - 0x46` com outro byte; se diferente, aplica salto (`cursor = base + byte`).
-  Bate com o nome C# 0x50 ("active object index" com bias 0x46 mencionado no mtbe).
-- Memória: byte de estado do objeto ativo (não nomeado).
-- PC: parcial/erro. Lua trata 0x51 como "random" (BRANCH_OPS), que é o corpo de 0x52 na ROM.
-- Confiança: provável (corpo lido no Ghidra); nome: provável "Jump_If_Current_Active_Object_Index_Not_Equal".
+## 0x51 (0x0804CC5C) Jump_If_Found_Part_Index_Not_Equal (C#: "Random_Jump")
+- Assinatura: `void Event_Op51_Jump_If_Found_Part_Index_Not_Equal(void)`. Args: 2 bytes (value, jump; C# 2, legado 2).
+- Faz: `Script_ReadBytes(2)`; se `args[0] - 0x46 != *(u8*)0x03006440` salta por `args[1]`. 0x03006440 é o índice
+  gravado pelo 0x4C quando a peça foi achada, então o par 0x4C/0x51 testa "qual" slot/ícone tem a peça.
+- PC: parcial (extract: 0x51 = "jump", sem avaliar). O nome do C# (Random_Jump) está errado: o aleatório é o 0x52.
+- Confiança: confirmado no corpo; ligação com o 0x4C provável (mesmo endereço).
 
-## 0x52 (0x0804CCAC) Random_Jump (provável, C# chama 0x51)
-- Args: 2 bytes (reserved, jump). ReadBytes(2). Ghidra FUN_0804ccac.
-- Faz: `Random_NextScaled(0xFF)` (0x08049780); se `(r & 0xF) != 0` salta. O primeiro byte não entra no fluxo visível.
-- Memória: RNG (`Random_NextScaled`).
-- PC: falta no código do 0x52 (Lua tem "random" ligado ao 0x51 errado).
-- Confiança: confirmado no corpo; numeração 0x52 pela tabela.
+## 0x52 (0x0804CCAC) Random_Jump (sem definição no C#; C# põe Random_Jump no 0x51)
+- Args: 2 bytes (reserved, jump). ReadBytes(2).
+- Faz: `Random_NextScaled(0xFF)` (0x08049780); se `(r & 0xF) != 0` salta (15/16 das vezes). O primeiro byte não é usado.
+- PC: parcial (extract: kind "random", ROM_SIZE_FIX 3; o Lua não trata "random" e sempre segue o `next`).
+- Confiança: confirmado (Ghidra).
 
-## 0x53 (0x0804CCF4) Set_Object_Render_Mode (chute)
-- Args: 2 bytes (legado = 3). C# diz target_flags + render_mode.
-- Faz: mtbe diz "marca estado de continuação" e chama `0x08...` com r0=2; corpo não fechado.
-- Memória: ver mtbe (sprite/palette do objeto, não confirmado nesta entrada).
+## 0x53 (0x0804CCF4) Set_Map_Sprite_Slot (C#: "Set_Object_Render_Mode")
+- Assinatura: `void Event_Op53_Set_Map_Sprite_Slot(void)`. Args: 2 bytes (slot, sprite; C# 2, legado 2).
+- Faz: `Script_ReadBytes(2)`; `slot = args[0]` (se != 0, slot - 1, ou seja 1-based); grava `args[1]` em
+  `0x03006418 + slot` (+0xC38: lista de sprites do mapa atual); recarrega gráficos
+  (`Map_LoadOverworldSpriteGraphicsForCurrentMap`, 0x08048288) e paletas: `FUN_080486B0` se
+  `gScreenTransitionState[1]` (0x03006F41) ∈ {1, 3, 5, 6}, senão `Map_LoadCurrentEventObjectPalettes` (0x08048708).
+- PC: falta (pulado pelo tamanho).
+- Confiança: confirmado no corpo; nome provável (args do C# "target_flags/render_mode" não batem).
+
+## 0x54 (0x0804CD60) NoOp (sem definição no C#)
+- Args: 0 (legado 0). Corpo: só `bx lr`. Continuação = stub NoOp.
+- PC: falta: o extract não conhece 0x54 (fora do C#) e emite `unknown`, parando a leitura do script.
+- Confiança: confirmado (Ghidra).
+
+## 0x55 (0x0804CD64) NoOp (C# "Reserved_NoOp")
+- Args: 0 (C# 0, legado 0). Corpo vazio; continuação NoOp. Não entra em estado diferido.
+- PC: implementado (no-op; pulado pelo tamanho 1).
+- Confiança: confirmado (Ghidra).
+
+## 0x56 (0x0804CD68) Load_Entities
+- Assinatura: `void Event_Op56_Load_Entities(void)`. Args: 0 (C# 0, legado 0).
+- Faz: só grava `gCurrentEventStateByte = 1`. O trabalho é da continuação 0x0804F5DC (mtbe EventOpcode56_LoadEntities):
+  `Overworld_BuildEncounterNpcSnapshot`; zera 0x03003870 e 0x03004370 (0x900 cada) e 0x03005664/0x0300570C (0x90);
+  `Overworld_RebuildActiveObjectRenderSlots`; zera `gMapCollisionOccupancyBuffer` 0x03005FF0 (0x400) e copia nele a
+  colisão do mapa atual (`gMapCollision[gCurrentMapId]` 0x08404334, `(w/2)*(h/2)` bytes, w/h em 0x03005FE0/0x03005FE2);
+  marca 0x0300649A = 1; `Map_LoadEntitySpawnsForCurrentMap`, `Map_UpdateVisibleEventObjectSprites` e
+  `Event_EndOpcode` (termina no mesmo quadro da continuação).
 - PC: falta.
-- Confiança: chute (contraditório entre o corpo e o C#).
+- Confiança: confirmado (setup no Ghidra; continuação por disassembly da ROM).
 
-## 0x54 (0x0804CD60) sem argumento (chute)
-- Args: 0 (legado = 1). Ghidra: sem função. Corpo curto, sem chamadas (só retorno).
-- Faz: nada visível (provável NoOp ou ponto de espera). O mtbe diz "lê 1 byte", o legado diz 0 — conflito.
-- Memória: nenhuma nos bytes lidos.
-- PC: falta.
-- Confiança: chute.
+## 0x57 (0x0804CD7C) NoOp (C# "Reserved_NoOp")
+- Args: 0 (C# 0, legado 0). Corpo vazio; continuação NoOp.
+- PC: implementado (no-op; pulado pelo tamanho 1).
+- Confiança: confirmado (Ghidra).
 
-## 0x55 (0x0804CD64) lê 0 bytes, entra em estado diferido (chute)
-- Args: 0 (legado 1). Bytes com ReadBytes de N=0 ou sem leitura; nome Toolkit: não existe (0x55 não tem definição).
-- Faz: provável "espera" (estado diferido, continuação externa).
-- Memória: byte de estado `gCurrentEventStateByte`.
-- PC: falta.
-- Confiança: chute.
-
-## 0x56 (0x0804CD68) Load_Entities (chute)
-- Args: 0 (legado 1). Toolkit: "Load_Entities" sem args. mtbe: "lê 8 bytes" (conflito).
-- Faz: provável recarga de entidades de mapa a partir do script (continuação recarrega spawns).
-- Memória: lista de entidades do mapa (ponteiro não confirmado).
-- PC: falta.
-- Confiança: chute.
-
-## 0x57 (0x0804CD7C) sem argumento, estado diferido (chute)
-- Args: 0. Toolkit: "Reserved_NoOp" (C#). mtbe: entra em estado diferido.
-- Faz: provável espera externa; nome do Toolkit diz NoOp.
-- Memória: estado de evento.
-- PC: falta.
-- Confiança: chute.
-
-## 0x58 (0x0804CD80) sem argumento (chute)
-- Args: 0 (legado 1). Toolkit: sem definição. mtbe: sem descrição.
-- Faz: não fechado (tem chamada de leitura de 1 byte em uma das ramificações, não confirmado).
-- PC: falta.
-- Confiança: chute.
+## 0x58 (0x0804CD80) NoOp (sem definição no C#)
+- Args: 0 (legado 0). Corpo vazio; continuação NoOp.
+- PC: falta: fora do C#, o extract emite `unknown` e para a leitura.
+- Confiança: confirmado (Ghidra).
 
 ## 0x59 (0x0804CD84) Open_Shop
-- Args: 1 byte (shop id 0..14). Toolkit: `Open_Shop`, shop_id Byte (C# confere).
-- Faz: abre a loja `shop_id`; o handler de continuação espera a loja fechar (mtbe liga a shops).
-- Memória: estado da loja (tabela de lojas 0x4838E4, por `shops.lua`).
+- Assinatura: `void Event_Op59_Open_Shop(void)`. Args: 1 byte (shop id; C# 1, legado 1).
+- Faz: `Script_ReadBytes(1)` e estado = 1. Continuação 0x0804F67C: subpasso 0 chama `Event_ResetSceneCommandStep`
+  (0x08050CC0) e avança; subpasso 1 roda `Event_RunSceneCommandSequence(3, shop_id)` (0x08050CCC) até retornar != 0
+  e então `Event_EndOpcode`.
+- Memória: gEventScriptArguments[0], gCurrentEventOpcodeSubstate (0x03006473).
 - PC: implementado (extract `{op="shop"}`; Lua `host.shop`).
-- Confiança: confirmado pelo Toolkit + PC (parte da tabela de lojas via SH1 em pc/research).
+- Confiança: confirmado (setup no Ghidra; continuação por disassembly).
 
-## 0x5A (0x0804CDA4) Set_Secondary_Marker_Facing_Variant (chute)
-- Args: 1 byte (legado 2). Toolkit: `variant` Byte (C# confere o tamanho).
-- Faz: provável "muda variante de direção do marcador" (mtbe descreve o 0x59 e não confirma).
-- Memória: objeto 0x30 (facing/animação, mtbe; não confirmado).
+## 0x5A (0x0804CDA4) Set_Secondary_Marker_Facing
+- Assinatura: `void Event_Op5A_Set_Secondary_Marker_Facing(void)`. Args: 1 byte (facing; C# 1, legado 1).
+- Faz: lê o byte em args[0] e grava em 0x03003851 e 0x03003850; `anim = Overworld_GetObjectAnimationIndexForFacing(
+  0x30, facing + 4 * *(u8*)0x0300385B)`; `Map_SetObjectAnimationVariant(0x30, anim)`;
+  `Map_SetSecondaryMarkerFacing(facing)`. Slot 0x30 = marcador secundário (objeto de render 0x30).
 - PC: falta.
-- Confiança: chute.
+- Confiança: confirmado (Ghidra).
 
 ## 0x5B (0x0804CE04) Jump_If_Fewer_Than_Three_Complete_Part_Sets
-- Args: 1 byte (jump). ReadBytes(1). Ghidra FUN_0804ce04.
+- Args: 1 byte (jump). ReadBytes(1).
 - Faz: `FUN_08047F9C() < 3` → salta.
 - Memória: contagem de conjuntos de peça completos (PartSet_CountCompleteEntries).
 - PC: parcial (kind "jump" da extract, sem avaliar condição).
 - Confiança: confirmado (Ghidra).
 
 ## 0x5C (0x0804CE44) Jump_If_Missing_Complete_Monochrome_Part_Set
-- Args: 2 bytes (part_id, jump). ReadBytes(2). Ghidra FUN_0804ce44.
+- Args: 2 bytes (part_id, jump). ReadBytes(2).
 - Faz: `FUN_08047FBC(part_id) == 0` → salta.
 - Memória: conjuntos de peça monocromáticos (PartSet_HasCompleteMonochromeEntry).
 - PC: parcial (condição não avaliada).
 - Confiança: confirmado (Ghidra).
 
-## 0x5D (0x0804CE90) Update_Overworld_Event_Mode_Flags (provável)
-- Args: 1 byte (mode_control). ReadBytes(1).
-- Faz: se o bit alto estiver ativo, alterna bit 0x20 de `gOverworldEventModeFlags`; senão atualiza o nibble do modo.
-- Memória: `gOverworldEventModeFlags` e um byte companheiro (endereços não nomeados aqui).
+## 0x5D (0x0804CE90) Update_Overworld_Event_Mode_Flags
+- Assinatura: `void Event_Op5D_Update_Overworld_Event_Mode_Flags(void)`. Args: 1 byte (C# 1, legado 1).
+- Faz: `b = args[0]`. Bit 0x80 limpo: `*(u8*)0x03006413 = b & 0xF`. Bit 0x80 ligado: se `(b & 0xF) == 1` liga o bit
+  0x20 de `gOverworldEventModeFlags` (0x0300643D), senão desliga o bit 0x20.
+- Memória: 0x03006413 (+0xC33, sem rótulo), 0x0300643D.
 - PC: falta.
-- Confiança: provável (mtbe + C#), corpo não fechado.
+- Confiança: confirmado (Ghidra).
 
 ## 0x5E (0x0804CEF8) Set_Overworld_Event_Mode_Bit0
-- Args: 1 byte (enabled). ReadNextByte; grava em gEventScriptArguments[0].
-- Faz: liga/desliga o bit 0 de `gOverworldEventModeFlags`.
-- Memória: `gOverworldEventModeFlags` (RAM, endereço do Toolkit).
+- Args: 1 byte (enabled; C# 1, legado 1). ReadNextByte; grava em args[0].
+- Faz: `enabled == 1` liga o bit 0 de `gOverworldEventModeFlags` (0x0300643D); qualquer outro valor desliga.
 - PC: falta.
-- Confiança: provável (mtbe, corpo lido parcialmente).
+- Confiança: confirmado (Ghidra).
 
 ## 0x5F (0x0804CF40) Set_Random_Encounter_Mode_Flags
-- Args: 1 byte (flags). ReadNextByte; copia em `gRandomEncounterModeFlags`.
-- Faz: controla encontros aleatórios (Overworld_ShouldTriggerRandomEncounter).
-- Memória: `gRandomEncounterModeFlags` (RAM).
+- Args: 1 byte (flags; C# 1, legado 1). ReadNextByte.
+- Faz: grava o byte direto em `gRandomEncounterModeFlags` (0x0300640C; não passa por args).
 - PC: falta.
-- Confiança: provável (mtbe + Toolkit).
+- Confiança: confirmado (Ghidra).
 
 ## 0x60 (0x0804CF5C) Focus_Event_Object
-- Args: 3 bytes (target_mode 1 byte + packed object id Short). ReadBytes(3).
-- Faz: foca a câmera/render no objeto rastreado ou no objeto ativo, conforme target_mode.
-- Memória: câmera/staging de render do evento.
+- Assinatura: `void Event_Op60_Focus_Event_Object(void)`. Args: 3 bytes (mode, hi, lo; C# Byte+Short = 3, legado 3).
+- Faz: `Script_ReadBytes(3)`.
+  - mode 0: `s = Map_GetTrackedObjectSlotByIndex(lo)` (0x0804DBF0; usa só o 3º byte); se `s != -1`,
+    `Map_FocusEventObjectRenderSlot(s + 0x4F)` (0x0804D9F8).
+  - mode 1: `id = hi<<8 | lo` (BE). `id == 0`: foca o objeto do evento atual,
+    `(byte +4 do registro 0x03005DBC + 8*gCurrentEventActiveMapObjectIndex) & 0x1F) + 0x31`. Senão `e = Table64_FindOffsetByKey(id)`;
+    se achou, foca `(e[4] & 0x1F) + 0x31`.
+  - outro mode: nada.
+- Memória: 0x03006494 (gCurrentEventActiveMapObjectIndex), registros de objeto de mapa em 0x03005DBC (8 bytes).
 - PC: falta.
-- Confiança: provável (mtbe menciona só 1 byte; C# diz Byte + Short; o legado diz 3 bytes → use 3).
+- Confiança: confirmado (Ghidra).
 
 ## 0x61 (0x0804D00C) Restore_Focused_Event_Mode_Flags
-- Args: 0 (legado 1). Ghidra: chama `Map_RestoreFocusedEventModeFlags` (0x0804DB80).
-- Faz: restaura flags de modo de evento salvas pelo 0x60.
+- Args: 0 (C# 0, legado 0). Chama `Map_RestoreFocusedEventModeFlags` (0x0804DB80), que copia
+  `gOverworldEventModeFlagsBackup` (0x0300643E) de volta para 0x0300643D (desfaz o 0x60).
 - PC: falta.
-- Confiança: provável.
+- Confiança: confirmado (Ghidra; efeito do callee pelo mtbe).
 
 ## 0x62 (0x0804D018) Equip_Starter_Parts
-- Args: 0. Chama `site_StarterBot` (0x08044B58); nome do Toolkit diz equipar peças iniciais.
-- Faz: equipa as peças iniciais do bot do jogador.
-- Memória: inventário/slots de peça (não decodificado).
+- Args: 0 (C# 0, legado 0). Chama `site_StarterBot` (0x08044B58).
+- Faz (callee decompilado): `*(u8*)0x03000BE0 |= 0xC0`; bloco 0x030017A0 = `{3, ?, 1, 0x2B, 0x2B, 0x2B, 0x2B}`
+  (4 peças 0x2B equipadas); inventário 0x03004C40: grava 1 em +0x57, +0x147, +0x237, +0x327 (peça 0x2B nas 4
+  listas de peças, passo 0xF0, entrada de 2 bytes).
 - PC: falta.
-- Confiança: provável.
+- Confiança: confirmado (Ghidra); significado dos campos do bloco 0x030017A0 provável.
 
 ## 0x63 (0x0804D024) Show_Effect
-- Args: 3 bytes (effect_id, x, y). ReadBytes(3).
-- Faz: mostra o efeito `effect_id` na posição (x, y).
-- Memória: não decodificada (provável OAM/tarefa de efeito).
+- Assinatura: `void Event_Op63_Show_Effect(void)`. Args: 3 bytes (id, tx, ty; C# 3, legado 3).
+- Faz: `Script_ReadBytes(3)`; `Overworld_BeginUiSceneState(id, (tx & 0x7F)*16 + *(u16*)0x03006428,
+  (ty & 0x7F)*16 + *(u16*)0x0300642A, 0)` (0x080533E4); estado = 1. Posição = tile relativo à origem em 0x03006428/2A.
+- Continuação 0x0804F6E0 (disassembly): subpasso 0 roda 0x08050BC8 até != 0; se `gOverworldUiState` (0x03005350+0x1D4)
+  & 0x3F for 0xD ou 0x16 segue para os subpassos 1-2, senão termina (`Event_EndOpcode`). Subpasso 1 cria o objeto
+  0x2F com `(id<<4)|tx`; subpasso 2 espera `FUN_0804F188`, refaz âncoras de câmera/colisão do mapa,
+  `Overworld_ResetUiRenderState` e termina.
 - PC: falta.
-- Confiança: provável (C# confere).
+- Confiança: confirmado no setup; continuação provável (lida em disassembly, ramos 1-2 não nomeados).
 
 ## 0x64 (0x0804D084) Reset_Overworld_UI_Render_State
-- Args: 0. Chama `Overworld_ResetUiRenderState` (0x08050C94) e sai.
-- Faz: reseta o estado affine da UI do overworld.
-- Memória: registradores de affine/OAM da UI (via a função).
-- PC: falta (não precisa no port; é reset de hardware de render).
-- Confiança: confirmado pelo mtbe e pela chamada.
+- Args: 0 (C# 0, legado 0). Chama `Overworld_ResetUiRenderState` (0x08050C94) e sai.
+- PC: falta (não precisa no port; é reset de render).
+- Confiança: confirmado (Ghidra).
 
-## 0x65 (0x0804D090) NoOp
-- Args: 0. Corpo inerte (mtbe: "no-op stub"). C# "Reserved_NoOp".
-- PC: falta (trivial: basta não fazer nada e avançar 1 byte).
-- Confiança: confirmado (corpo vazio, mtbe).
+## 0x65 (0x0804D090) NoOp (C# "Reserved_NoOp")
+- Args: 0 (C# 0, legado 0). Corpo vazio.
+- PC: implementado (no-op; pulado pelo tamanho 1).
+- Confiança: confirmado (Ghidra).
 
 ## 0x66 (0x0804D094) Animate_Tracked_Object_Transition
-- Args: 2 bytes pela ROM (legado = 3). C# só diz 1 (tracked_object_index). O mtbe diz 1 byte.
-  Pelo tamanho do legado, o segundo byte é transition_mode (C# lista esse, sem tamanho certo).
-- Faz: resolve o slot de render do objeto rastreado em gEventScriptArguments[10], zera o byte de transição e entra em modo diferido.
-- Memória: byte de transição do slot (RAM, não nomeado); gEventScriptArguments[10].
+- Assinatura: `void Event_Op66_Animate_Tracked_Object_Transition(void)`. Args: 2 bytes (tracked index, mode;
+  C# 2, legado 2, ROM_SIZE_FIX 3 total).
+- Faz: `Script_ReadBytes(2)`; `slot = Map_GetTrackedObjectSlotByIndex(args[0]) + 0x4F`, grava em 0x03006D2A; zera o
+  byte +0x26 do registro de render `0x03002C30 + slot*0x40`; estado = 1. O 2º byte não é lido no setup (provável uso
+  dentro de `Map_TickTrackedObjectTransition`).
+- Continuação 0x0804F83C: chama `Map_TickTrackedObjectTransition` (0x080509EC) a cada quadro e `Event_EndOpcode` quando
+  ele retorna != 0.
 - PC: falta.
-- Confiança: provável no corpo; tamanho contraditório (1 vs 2): a ROM vence.
+- Confiança: confirmado (setup Ghidra; continuação por disassembly).
 
-## 0x67 (0x0804D0E0) sem definição no Toolkit
-- Args: 2 bytes (legado = 3). Sem definição no C#.
-- Faz: não fechado (corpo com ReadBytes; sem leitura de corpo nesta sessão).
-- PC: falta.
-- Confiança: chute.
+## 0x67 (0x0804D0E0) Skip_Two_Bytes_Wait (sem definição no C#)
+- Args: 2 bytes (legado 2). `Script_ReadBytes(2)`; estado = 1.
+- Continuação 0x0804F850: só `Event_EndOpcode`. Efeito: consome 2 bytes sem usá-los e espera 1 quadro.
+- PC: falta: fora do C#, o extract emite `unknown` e para a leitura.
+- Confiança: confirmado (Ghidra + disassembly).
 
 ## 0x68 (0x0804D100) Clear_Collision_For_Packed_Object
-- Args: 2 bytes (packed_object_id Short BE). Toolkit confere.
-- Faz: acha o registro do objeto de mapa ativo com esse id e limpa a colisão na sua célula (`set_collision(x, y, 0)`).
-- Memória: tabela de colisão do mapa (RAM); registros de objeto de mapa.
+- Assinatura: `void Event_Op68_Clear_Collision_For_Packed_Object(void)`. Args: 2 bytes (id Short BE; C# 2, legado 2).
+- Faz: `Script_ReadBytes(2)`; pega o registro de objeto do evento ATUAL `r = 0x03005DBC + 8*gCurrentEventActiveMapObjectIndex`;
+  se `(r.u16[1] & 0xFFF) == id` chama `set_collision(r[0], r[1], 0)` (0x08052E58). Não procura o id na lista: só
+  limpa se o objeto atual tem esse id.
 - PC: falta.
-- Confiança: provável (mtbe + Toolkit).
+- Confiança: confirmado (Ghidra).
 
 ## Discrepâncias para o port
-- Tabela de dispatch (ROM) vs Toolkit C#: o C# dá 0x50 = active-object (2 args) e 0x51 = Random_Jump. A ROM mostra 0x50 com 3 bytes, 0x51 com a comparação de índice ativo e 0x52 com o Random_Jump. Confirmar com o emulador (fora desta tarefa). Se estiver certo, o PC decodifica 0x51 errado e 0x50 com tamanho errado.
-- mtbe.csv: rótulos `EventOpcode43..55` nesta faixa estão deslocados em relação à tabela.
-- 0x66: tamanho 2 pela ROM; C# e mtbe dizem 1.
-- 0x4E: valor multiplicado por 10 antes da comparação (checar o Lua).
+- Tamanhos: a ROM bate com o legado em todos os 35. Diverge do C#: 0x50 (ROM 3, C# 2; ROM_SIZE_FIX corrige).
+  Sem definição no C#: 0x52 (2, coberto pelo ROM_SIZE_FIX), 0x54 (0), 0x58 (0), 0x67 (2): para 0x54/0x58/0x67 o
+  extract emite `unknown` e para.
+- ROM_SIZE_FIX 0x66 = 3 agora é redundante (o C# já tem 2 args).
+- Nomes do C# errados pelo código: 0x50 (é contador < valor), 0x51 (não é Random_Jump), 0x53 (troca sprite de slot do mapa).
+- 0x4E: o Lua compara sem o fator 10.
+- 0x52: o Lua não avalia "random" (ROM salta 15/16 das vezes).
+- mtbe.csv: rótulos EventOpcode50..58 deslocados de 1 em relação à tabela.

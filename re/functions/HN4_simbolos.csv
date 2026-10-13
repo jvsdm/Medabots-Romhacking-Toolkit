@@ -1,0 +1,41 @@
+address,name,kind,comment
+0x0802A5C0,Fight_DispatchOnSubstateAA_BA_ShowValueNumbers,function,BA 0x09 (tambem BF 0x09); numeros +0xD6..+0xDA sobre bots afetados; confirmado
+0x0802A694,Fight_DispatchOnSubstateAA_BA_SetMessage54,function,BA 0x0B; +0xA6=0x54; confirmado
+0x0802A6D4,Fight_DispatchOnSubstateAA_BB_LoadEffectGfx,function,BB 0x00; grafico no bot ativo sfx 0x6A; provavel
+0x0802A7E0,Fight_DispatchOnSubstateAA_BB_ScaleEffectUp,function,BB 0x01; escala slot ate 0x40 e timer 0x3C; confirmado
+0x0802A824,Fight_DispatchOnSubstateAA_BB_MarkOpponentsSetGauge,function,BB 0x03; oponentes +0xBD|=4 medidor +0xBB=0x14; provavel
+0x0802A9B8,Fight_DispatchOnSubstateAA_BB_AnimOpponentGauges,function,BB 0x04; anima medidor/posicao dos oponentes; provavel
+0x0802AAB8,Fight_DispatchOnSubstateAA_BB_SetMessage65,function,BB 0x05; +0xA6=0x65; confirmado
+0x0802AAF8,Fight_DispatchOnSubstateAA_BC_LoadTwinEffectGfx,function,BC 0x00; dois objetos x+-0x20 do bot ativo; provavel
+0x0802AC7C,Fight_DispatchOnSubstateAA_BC_AddValueToBotD1,function,BC 0x03; bot ativo +0xD1 += +0xEC (max 0xFF); confirmado
+0x0802ACB4,Fight_DispatchOnSubstateAA_BC_SetMessage45,function,BC 0x04; +0xA6=0x45; confirmado
+0x0802ACF4,Fight_DispatchOnSubstateAA_BD_LoadTwinEffectGfx,function,BD 0x00; dois objetos x+-0x20 do bot ativo; provavel
+0x0802AE88,Fight_DispatchOnSubstateAA_BD_RunEffectAnim,function,BD 0x02; anima rec+0x190 ate fim; confirmado
+0x0802AECC,Fight_DispatchOnSubstateAA_BD_LoadSecondEffect,function,BD 0x03; rec+0x194 sfx 0x71; confirmado
+0x0802AF6C,Fight_DispatchOnSubstateAA_BD_RunSecondEffectAnim,function,BD 0x04; anima rec+0x194 ate fim; confirmado
+0x0802AFB0,Fight_DispatchOnSubstateAA_BD_AddValueToBotD0,function,BD 0x05; bot ativo +0xD0 += +0xEC (max 0xFF); confirmado
+0x0802AFE8,Fight_DispatchOnSubstateAA_BD_SetMessage44,function,BD 0x06; +0xA6=0x44; confirmado
+0x0802B028,Fight_DispatchOnSubstateAA_BE_LoadEffectGfx,function,BE 0x02; variante por tecnica +0xA8==0x1E; provavel
+0x0802B184,Fight_DispatchOnSubstateAA_BE_SelectTargets,function,BE 0x05; marca oponentes por +0x91 (0x64/0x6A); nenhum -> fim; confirmado
+0x0802B258,Fight_DispatchOnSubstateAA_BE_SetupTargetBeams,function,BE 0x07; objetos do ativo ate cada alvo; provavel
+0x0802B388,Fight_DispatchOnSubstateAA_BE_StepBeamsToTargets,function,BE 0x08; Fight_StepSlotTowardTarget ate todos chegarem; confirmado
+0x0802B3CC,Fight_DispatchOnSubstateAA_BE_LoadHitAnim,function,BE 0x09; anim nos alvos; confirmado
+0x0802B460,Fight_DispatchOnSubstateAA_BE_RunHitAnim,function,BE 0x0A; roda anim ate fim; confirmado
+0x0802B4D8,Fight_DispatchOnSubstateAA_BE_RollRandomStatus,function,BE 0x0B; sorteia 0..7 por alvo em +0xD6; provavel
+0x0802B5AC,Fight_DispatchOnSubstateAA_BE_ApplyRandomStatus,function,BE 0x0E; aplica status sorteado (bot +0xC9..+0xCC); provavel
+0x0802B7AC,Fight_DispatchOnSubstateAA_BE_SetResultMessage,function,BE 0x0F; +0xA6=0x4D/0x4E; confirmado
+0x0802B810,Fight_DispatchOnSubstateAA_BF_SelectAlliesAndStat,function,BF 0x00; marca aliados e +0x51 pela tecnica 0x1F/21/23/25; confirmado
+0x0802B8BC,Fight_DispatchOnSubstateAA_BF_LoadEffectAboveAllies,function,BF 0x01; objetos acima dos aliados sfx 0x2C; confirmado
+0x0802B980,Fight_DispatchOnSubstateAA_BF_DropEffectOntoAllies,function,BF 0x02; desce objetos ate o bot; confirmado
+0x0802BA2C,Fight_DispatchOnSubstateAA_BF_LoadSecondAnim,function,BF 0x03; sfx 0x30; confirmado
+0x0802BAAC,Fight_DispatchOnSubstateAA_BF_RunSecondAnim,function,BF 0x04; roda anim ate fim; confirmado
+0x0802BB24,Fight_DispatchOnSubstateAA_BF_ShowStatIcon,function,BF 0x05; icone do stat (+0x51) sfx 0x2E; provavel
+0x0802BBA8,Fight_DispatchOnSubstateAA_BF_FloatIconUp,function,BF 0x06; icone sobe 0x20 frames; confirmado
+0x0802BC1C,Fight_DispatchOnSubstateAA_BF_CopyValueToNumbers,function,BF 0x08; +0xEC -> +0xD6+2i; confirmado
+0x0802BC60,Fight_DispatchOnSubstateAA_BF_ApplyStatBoost,function,BF 0x0B; bot +0x95/96/98/99 += +0xEC; confirmado
+0x0802BD1C,Fight_DispatchOnSubstateAA_BF_SetStatMessage,function,BF 0x0C; +0xA6=0x3D/3E/40/41; confirmado
+0x0802BD94,Fight_DispatchOnSubstateAA_BG_SetupCenterEffect,function,BG 0x03; objeto no centro da tela; provavel
+0x0802BE44,Fight_DispatchOnSubstateAA_BG_FlashCenterEffect,function,BG 0x04; 3 pulsos sfx 0x4C; provavel
+0x0802BEEC,Fight_DispatchOnSubstateAA_BG_MarkBothSides,function,BG 0x06 (tambem BH 0x00); marca aliados e oponentes vivos; confirmado
+0x0802BF9C,Fight_DispatchOnSubstateAA_BG_SetupBothSideSprites,function,BG 0x07; sprites nos dois times sfx 0x2E; confirmado
+0x0802C0DC,Fight_DispatchOnSubstateAA_BG_MoveBothSideSprites,function,BG 0x08; aliados sobem oponentes descem 0x20 frames; confirmado
