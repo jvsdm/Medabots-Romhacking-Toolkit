@@ -30,3 +30,6 @@ Formato de cada seção:
   notas antigas em R0/R2/R4 que dizem isso estão erradas), `0x0807CDF8` = resto com sinal, `0x0807CEC8` = divisão
   sem sinal, `0x0807CF40` = resto sem sinal (provável), `0x0807CCF4` = trampolim `bx r1` (o efeito é do alvo em r1).
 - Nomes: inglês, estilo `Subsistema_VerboObjeto` (como o mtbe.csv).
+- Bloco do bot na batalha (R1, confirmado no literal pool 0x0801593C): base = 0x03000590 + bot*0x100. A pesquisa do PC
+  usa 0x030005D0 = base + 0x40, então offset Ghidra = offset da pesquisa + 0x40 (peças: Ghidra +0x4C = pesquisa +0x0C).
+- `FUN_08041D04` = memcpy de bytes (não é som).

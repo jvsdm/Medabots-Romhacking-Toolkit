@@ -1,3 +1,4 @@
-0x080531e0
-# ultimo endereco da lista processado (sessao GH-R3 continuacao 2: 0x08051C64..0x080531E0 documentados, 37 funcoes).
-# Pendentes da faixa nao lidos nesta rodada (ja citados nas secoes): 0x08052A30, 0x08052A50, 0x08052A64, 0x08052E34, 0x08052E58, 0x08053108. Proximos da lista: 0x0805321C, 0x08053238, 0x08053280.
+0x0805BB0C
+# ultimo endereco da lista processado em ordem (GH-R3 continuacao 4: 0x08053C00..0x0805BB0C). Documentados nesta rodada: 31 funcoes (inclui site_SaveGame 0x0805E010, feito fora de ordem).
+# Sem funcao no Ghidra: 0x08053360..0x08053C00 (lista original) + 14 da faixa 0x08053C00..0x0805678C; 0x08059434.
+# Pendentes em ordem: 0x0805BB38..0x080672F4 (~57 enderecos, exceto 0x0805E010 ja feito).

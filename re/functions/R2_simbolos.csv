@@ -13,7 +13,7 @@ address,name,kind,comment
 0x08035B4C,Fight_TargetHasGravAffinity,func,reacao gravidade (kind 8/9 ou +0xD6 bit2; alvo bit5)
 0x08035B9C,Fight_AddStrengthenDamageBonus,func,soma byte +5 das pecas kind '5' ao acumulador de dano
 0x08035BD4,Fight_AddRandomBonusUpTo3,func,proposto: se ctx+0xEC<3 soma rand&3
-0x08035BFC,Fight_ScaleDamageByPartScalar,func,ctx+0xEC = escala(ctx+0xEC, peca+0x54); min 1
+0x08035BFC,Fight_ScaleDamageByPartScalar,func,ctx+0xEC = escala(ctx+0xEC; peca+0x54); min 1
 0x08035C3C,,func,chute: escreve 0x110 ou ctx+0xF8 em dois ponteiros
 0x08035C70,FightPreview_InitializeSideSprites,func,setup dos dois lados da previa (timers e sprites)
 0x08035DD4,,func,teste x+off > 0xA8 (sprite fora de faixa)
@@ -24,7 +24,7 @@ address,name,kind,comment
 0x080361C4,FightPreview_AdvanceLeftSideSequenceStep,func,avanca passo do lado esquerdo via site_MoveStyleRead
 0x08036218,FightPreview_AdvanceRightSideSequenceStep,func,versao direita do passo da previa
 0x08036270,Fight_IncrementActionUsageCounter_08036270,func,incrementa contador de uso da acao (8 bytes por acao)
-0x0803628C,Fight_AddMedaforceChargeFromAction,func,+20 (ou +40 com bit3 de +0xC0) em +0xC1, teto 80
+0x0803628C,Fight_AddMedaforceChargeFromAction,func,+20 (ou +40 com bit3 de +0xC0) em +0xC1; teto 80
 0x080362C4,FightPreview_LoadSideTileSlots,func,carrega 4 blocos de tiles do lado (prévia)
 0x08036340,FightPreview_LoadSideTiles,func,LoadTilesWithMalias do lado (prévia)
 0x08036370,FightPreview_LoadPartIconRows,func,4 linhas de icones de peca do bot
@@ -57,7 +57,7 @@ address,name,kind,comment
 0x080372D4,FightPreview_SplitCountByMax,func,divide valor pelo maximo do slot em dois campos
 0x08037330,FightPreview_SetGroupActive4,func,liga/desliga bit15 de 4 sprites do lado por mascara
 0x080373D4,FightPreview_ShowGroup4,func,liga bit15 de 4 sprites do lado
-0x08037424,FightPreview_AdvanceSlotYWrap,func,passo Y por tabela, contador modulo 32
+0x08037424,FightPreview_AdvanceSlotYWrap,func,passo Y por tabela; contador modulo 32
 0x08037458,FightPreview_SplitCountByCap58,func,divide valor pelo limite +0x58 do bot
 0x08037498,FightPreview_SplitCountByFree,func,divide valor pela capacidade livre +0x50-+0x58
 0x080374E0,FightPreview_SplitValueAgainstLimit,func,divide valor contra limite e seta flag +0xd1
@@ -66,7 +66,7 @@ address,name,kind,comment
 0x0803769C,Fight_RollPartValue,func,soma de campos do bot com sorteio 0-7 (rolagem)
 0x080376F4,FUN_080376F4,func,valor = ctx>>3 + campo +0xac; 0 vira 1
 0x08037728,FightPreview_ClampPartCountToLimit,func,clamp de contagem com flag +0xd2
-0x08037798,Fight_FindTargetBotWithPart,func,busca bot vivo com peca (3 candidatos, direcao por rng)
+0x08037798,Fight_FindTargetBotWithPart,func,busca bot vivo com peca (3 candidatos; direcao por rng)
 0x08037830,FUN_08037830,func,busca bot vivo com campo +0x91 igual ao do outro; chute
 0x080378A8,FUN_080378a8,func,ajusta +-4 em campo de sprite conforme bit1 de ctx+0xf8; chute
 0x080378F0,FightPreview_SpawnEffectSprite,func,aloca sprite de efeito e despacha por tipo +0x51
@@ -150,11 +150,38 @@ address,name,kind,comment
 0x08040038,Text_RenderGlyphStep,func,passo de texto por coluna com quebra em 0xD1 px (provavel)
 0x080402B4,Text_RenderGlyphStepVariant,func,variante de texto com subcomandos 0..4 por jump table (provavel)
 0x0804056C,Text_FlushAndNextLine,func,fecha coluna pendente; linha 1 -> 2; linha 2 -> fim (provavel)
-0x080405D0,Text_WaitKeyOrClearBox,func,fim de pagina: indicador e espera de A/B, limpa caixa (provavel)
+0x080405D0,Text_WaitKeyOrClearBox,func,fim de pagina: indicador e espera de A/B; limpa caixa (provavel)
 0x0804070C,Script_OpWaitFramesOrKey,func,opcode de espera N quadros ou tecla (0xFF) (provavel)
 0x080407A4,Script_OpWaitFrames,func,opcode de espera de N quadros sem tecla; 0xFF nao espera (confirmado)
-0x08040820,Script_OpSubcommandOrNextState,func,opcode 0xFF: subcomando 0..4 por tabela, senao avanca estado (provavel)
+0x08040820,Script_OpSubcommandOrNextState,func,opcode 0xFF: subcomando 0..4 por tabela; senao avanca estado (provavel)
 0x08040B90,Slot_SetupFromRecordList,func,le lista de registros de 3 bytes ate terminador >0xFA e grava halfword no slot (provavel)
-0x08040BD8,Anim_RunSlotScript,func,interpretador de animacao por slot: duracao, quadro, salto, fim (confirmado lógica)
+0x08040BD8,Anim_RunSlotScript,func,interpretador de animacao por slot: duracao; quadro; salto; fim (confirmado lógica)
 0x08040CD0,Tile_ClearSlots,func,zera count slots a partir de first via CpuSet (provavel)
 0x08040D0C,Slot_ClearAttrMask,func,AND de atributo halfword +0 em count slots (confirmado)
+0x08040D44,Slot_SetFlagBit15,func,liga bit 0x8000 do atributo em count slots (confirmado)
+0x08040D78,Slot_FindFree,func,busca slot livre (atributo 0) a partir de first; limite 0x80 (confirmado)
+0x08040DB8,Text_LayoutGlyphSprites,func,desenha string como sprites com alinhamento 0/1/2 (provavel)
+0x08040EE4,Text_LayoutGlyphSpritesOffset,func,variante de Text_LayoutGlyphSprites com offset de X e Y (provavel)
+0x08041020,Text_LayoutGlyphSpritesTileBase,func,variante de Text_LayoutGlyphSprites com base de tile (provavel)
+0x08041164,Num_FormatDecimalToGlyphs,func,formata u32 em glifos decimais com 0xFE final (provavel)
+0x0804126C,Num_FormatDecimalToGlyphsNoPrefix,func,variante de Num_FormatDecimalToGlyphs sem prefixo 0x4C (provavel)
+0x08041370,Num_FormatDecimal6Glyphs,func,formata ate 6 digitos; estouro grava placeholder fixo (confirmado)
+0x08041490,Num_FormatDecimal6GlyphsBase,func,igual a Num_FormatDecimal6Glyphs com base de glifo parametrizada (confirmado)
+0x080415BC,Clear4PairsHalfwords,func,zera 4 pares de halfwords por ponteiros globais (confirmado)
+0x080415E8,Fx_InitRecord8,func,zera bloco de 8 bytes e grava a;0x7F;b;c (confirmado; papel chute)
+0x08041674,StateTable_DispatchByIndex,func,despacha handler por indice +0x29 e retorna estado +0x28 (confirmado)
+0x08041C14,Slot_SetPosStepByMode,func,grava pos +2 do slot com passo +1/-1 conforme modo (confirmado)
+0x08041C5C,Slot_SetPosYStepByMode,func,igual a Slot_SetPosStepByMode no offset +4 (provavel eixo Y)
+0x08041CA4,StateMachine_DispatchSub,func,despacha handler por indice +0x1B; retorna estado>7 (confirmado)
+0x08041CD4,StateMachine_DispatchSubB,func,copia de StateMachine_DispatchSub para outro bloco/tabela (confirmado)
+0x08041D04,Mem_CopyBytes_Dup,func,copia n bytes byte a byte src->dst (mesma de 0x0803F63C; ordem src;dst) (confirmado)
+0x08041D28,Slot_InitIdsSequential,func,grava indice 0..29 no byte 0 de 30 slots (confirmado)
+0x08041D3C,Slot_FindByIdPlus1,func,busca slot ativo (bit 0x80) por id em byte +1; retorna indice+1 ou 0 (confirmado)
+0x08041D70,Medabot_SpawnFromRecord,func,cria bot em slot livre: registro 0x10 da ROM; nivel e 8 atributos base+base*(nivel/10) cap 100 (confirmado logica)
+0x0804206C,Level_ComputeReferenceFromSlots,func,nivel de referencia = media entre primeiro valor ordenado e constante (provavel)
+0x080420C4,Stage_FromLevelThresholds,func,estagio 0..4 pelo nivel e 4 limiares (0 = nao usado) (confirmado; uso provavel como evolucao)
+0x0803579C,Fight_AccumRosPart,func,soma parcela da parte ao acumulador de ROS (dano) com aleatorio 0..7 (provavel)
+0x08035754,Fight_SubClampZero,func,subtrai amount de s16 sem ir abaixo de 0 (confirmado)
+0x08035814,Fight_ApplyStatusCostIfFlag,func,se estado 0xD/0xE desconta custo do acumulador (confirmado)
+0x08035844,Fight_AccumRosBase,func,soma base e aleatorio 0..7 ao acumulador de ROS (provavel)
+0x08035880,Fight_CheckPairCondition,func,condicao 1/0 entre dois registros de bot (confirmado; significado chute)

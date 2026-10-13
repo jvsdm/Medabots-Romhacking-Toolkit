@@ -116,3 +116,61 @@ address,name,kind,comment
 0x0801AC24,Fight_TryUiActionByIndex,func_thumb,Mesma guarda; chama FUN_0803fb3c com item de tabela por indice; confirmado guarda
 0x0801AC6C,Fight_TryUiActionDefault,func_thumb,Mesma guarda; retorna FUN_08041ca4(); confirmado guarda
 0x0801AC98,Fight_LoadBotSideTiles,func_thumb,Carrega tiles dos bancos 0D/11 (lado 0-2) ou 12/14 (lado 3-5) via LoadTilesWithMalias; confirmado
+0x08015924,Fight_ShouldMirrorReactionIndicatorX,func_thumb,Bit 04 de +0xBD invertido por lado (bots 0-2 vs 3-5); confirmado (nome ja em mtbe.csv)
+0x08041D04,memcpy,func_thumb,Copia n bytes (u8) byte a byte; confirmado (nome ja em mtbe.csv)
+0x0801AD10,Fight_UpdateBotVisual,func_thumb,Despacha atualizacao visual do bot (ramo por +0xC1=='P'); provavel
+0x0801AD48,Fight_BuildSideEffectSprites8,func_thumb,Monta 8 objetos OAM por lado (X 5C/94, flip no lado 0-2); provavel
+0x0801ADE8,Fight_StepSideEffectSprites8,func_thumb,Avanca 8 objetos de lado (passo +-4 e quadro a cada 4); retorna 1 se ocioso; provavel
+0x0801AE70,Fight_AnimateSideEffectSprites8,func_thumb,Ciclo de 4 quadros nos 8 objetos de lado; confirmado
+0x0801AEB4,Fight_ResetBotVisualCounters,func_thumb,Zera 5 contadores de animacao do bot (+9C..A0); confirmado
+0x0801AEF4,Fight_InitBattleSprites,func_thumb,Inicializa sprites de batalha (FUN_0803ef8c x4 e FUN_08040cd0 x3); provavel
+0x0801AF6C,Fight_StepBotVisualUp,func_thumb,Rampa +0xC1 do bot ate 'P' com contador; retorna 1 ao concluir; confirmado
+0x0801AFB8,Fight_StepBotVisualDown,func_thumb,Rampa -0xC1 do bot ate 0 com contador; retorna 1 ao concluir; confirmado
+0x0801B004,Fight_BuildBotPartObjects8,func_thumb,Monta 8 objetos OAM de peca do bot (paleta +3C; posicao do bot); provavel
+0x0801B0E8,Fight_StepBotPartObjects8,func_thumb,Avanca 8 objetos de peca (X-8, tile, Y ao bot); retorna 1 se todos inativos; provavel
+0x0801B274,Fight_SelectBotActivePart,func_thumb,Seleciona peca ativa 1-3 e tipo em +0xDF; limpa bits 18 de +0xBD; provavel
+0x0801A7D8,Fight_RunStateDispatch_State0,state_handler,Carrega 4 graficos ROM->VRAM e marca estado; provavel
+0x0801A818,Fight_RunStateDispatch_State1,state_handler,Carrega 4 graficos ROM->VRAM; provavel
+0x0801A85C,Fight_RunStateDispatch_State2,state_handler,Carrega 5 graficos ROM->VRAM; provavel
+0x0801A8BC,Fight_RunStateDispatch_State3,state_handler,Carrega 5 graficos ROM->VRAM; provavel
+0x0801A910,Fight_RunStateDispatch_State4,state_handler,Carrega 3 graficos ROM->VRAM; provavel
+0x0801A950,Fight_RunStateDispatch_State5,state_handler,Sem graficos; so repassa 0x9D; confirmado
+0x0801A958,Fight_RunStateDispatch_State6,state_handler,Carrega 3 graficos ROM->VRAM; provavel
+0x0801A998,Fight_RunStateDispatch_State7,state_handler,Chama 0803EF8C (preenchimento); chute
+0x0801A9C8,Fight_RunStateDispatch_State8,state_handler,Salta para 0801AADE; confirmado
+0x0801B3AC,Fight_CommitActiveBotPartFields,func_thumb,Copia campos da peca ativa para o bot e chama PlaceActiveBotObjects; provavel
+0x0801B4C8,Fight_CountBotsWithStatus2,func_thumb,Conta 3 bots com status +BA == 2; confirmado
+0x0801B4F8,Fight_CountEmptyPartSlots,func_thumb,Conta pecas vazias (+59) de 3 bots vivos; confirmado
+0x0801B53C,Fight_EvaluateTeamWinState,func_thumb,Compara lados e grava estado 1/2 em +9C; provavel
+0x0801B5FC,Fight_ResetBotPartFlags,func_thumb,Zera flags de peca do bot e copia tabelas; provavel
+0x0801B67C,Fight_SetTeamSideState3,func_thumb,Grava 0 ou 3 em +F8 do bloco de lado; confirmado
+0x0801B69C,Fight_AssignBotTargetSlot,func_thumb,Escolhe alvo do bot se peca ativa valida; provavel
+0x0801B700,Fight_FindTargetSlot,func_thumb,Procura slot de alvo vivo ate 6 tentativas; provavel
+0x0801B76C,Fight_ChooseBotActionCode,func_thumb,Decide codigo de acao do bot (IA simples); provavel
+0x0801B894,Fight_StartPartEffectSlot9,func_thumb,Inicia efeito de peca no slot 9; provavel
+0x0801B9C4,Fight_StepPartEffectSlot9,func_thumb,Avanca efeito de peca (slot 9) e OAM; provavel
+0x0801BACC,Fight_FinishPartEffectSlot9,func_thumb,Fim do efeito de peca (OAM e limpeza do slot 9); provavel
+0x0801BB7C,Fight_CopySixSpritePositions,func_thumb,Copia 6 posicoes de sprite para buffer +13C; provavel
+0x0801BBC4,Fight_UpdateSixBotSprites,func_thumb,Atualiza 6 sprites de bot (visivel ou limpa); provavel
+0x0801BC04,Fight_SetupBotSpriteEntry,func_thumb,Monta entrada OAM de sprite de bot (X/Y do bot); provavel
+0x0801BC5C,Fight_LoadGfxListToObjVram,func_thumb,Carrega lista de graficos no OBJ VRAM; provavel
+0x0801BCA0,Fight_LoadFixedGfxListToObjVram,func_thumb,Carrega lista fixa de graficos no OBJ VRAM; provavel
+0x0801BCE4,Fight_CopyPaletteRowFromTable,func_thumb,Copia 8 words de paleta para 05000000+slot*10; provavel
+0x0801BD1C,Fight_InitAnimScriptSlot,func_thumb,Inicializa slot do interpretador de animacao (8 bytes); provavel
+0x0801BD58,Fight_StepAnimScriptSlot,func_thumb,Interpretador de script de animacao (-1 fim -2 volta -3 som, frames VRAM); provavel
+0x0801BE48,Fight_StepBotPartTimer,func_thumb,Temporiza fases de peca do bot (8 passos por fase); provavel
+0x0801BF14,Fight_SyncBotPartTimerToSlot,func_thumb,Copia temporizacao do bot para o slot de sprite; provavel
+0x0801BF64,Fight_IncrementToTarget16,func_thumb,Soma 1 se valor diferente do alvo; confirmado
+0x0801BF78,Fight_InitAnimScriptSlotB,func_thumb,Igual a InitAnimScriptSlot com outra tabela; provavel
+0x0801BFB4,Fight_StepAnimScriptSlotB,func_thumb,Interpretador de animacao (variante OBJ); provavel
+0x0801C0BC,Fight_RunSubstateDispatch,func_thumb,Despacha sub-estado via tabela; retorna 1 ao sinal 3; provavel
+0x0801C154,Fight_RunSubstateDispatchB,func_thumb,Despacha sub-estado +9C; retorna 1 ao sinal 4; provavel
+0x0801C2F0,Fight_RunSubstateDispatchC,func_thumb,Despacha sub-estado +9C com flag +9E de saida; provavel
+0x0801C4FC,Fight_DispatchOnSubstateAA,func_thumb,Despachante indexado por +AA; provavel
+0x0801D2F0,Fight_DispatchOnSubstateAA_B,func_thumb,Despachante indexado por +AA (outro bloco); provavel
+0x0801D380,Fight_DispatchOnSubstateAA_C,func_thumb,Despachante indexado por +AA (outro bloco); provavel
+0x0801D40C,Fight_DispatchOnSubstateAA_D,func_thumb,Despachante por +AA (mesmo padrao); provavel
+0x0801D580,Fight_DispatchOnSubstateAA_E,func_thumb,Despachante por +AA (mesmo padrao); provavel
+0x0801DE1C,Fight_DispatchOnSubstateAA_F,func_thumb,Despachante por +AA (mesmo padrao); provavel
+0x0801DEE4,Fight_DispatchOnSubstateAA_G,func_thumb,Despachante por +AA (mesmo padrao); provavel
+0x0801E2D8,Fight_DispatchOnSubstateAA_H,func_thumb,Despachante por +AA (mesmo padrao); provavel

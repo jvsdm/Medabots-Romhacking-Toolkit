@@ -1,1 +1,1 @@
-ultimo documentado: 0x08040820 (faixa 0x0803836C-0x08040820; 13 funcoes novas nesta rodada GH-R2 continuacao; proximo = 0x08040B90, linha 1 da lista apos 0x08040820)
+ultimo documentado: 0x08041D70 (e demais ate 0x080420C4; faixa GH-R2 continuacao, 0x0803FAA0..0x080420C4 + dependencias 0x0803579C, 0x08035754, 0x08035814, 0x08035844, 0x08035880). 44 funcoes novas nesta rodada, 42 renomeadas no Ghidra. Proximo = 0x08041FE4 (proxima entrada de R2_lista.txt apos 0x08041D70, ainda nao documentada).
