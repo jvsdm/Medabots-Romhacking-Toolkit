@@ -197,7 +197,7 @@ Convenção usada: "+1" = avança para o próximo subestado; "=0x0D" e "+3" = sa
 
 ## 0x08026924 Fight_DispatchOnSubstateAA_AO_ShowFourPartValues (AO, idx 0x03)
 - Assinatura: `undefined4 f(void)`
-- O que faz: LZ77 + cpufastset 8; escolhe linha de stat por bit 2 de +0xF8; escreve 4 números de peça
+- O que faz: LZ77 + cpufastset 8; escolhe linha de stat pelo valor 2 em +0xF8 (bit 1); escreve 4 números de peça
   (`Fight_WriteNumberTiles`, campos +0xD6/+0xD8/+0xDA/+0xDC) e monta as linhas de sprite; toca `snd_sfx_request(0x5B)`; avança +1.
 - Memória: lê +0xD6..+0xDC, +0xF8; escreve tiles/sprites; +0xAA.
 - Para o Lua: porta (depende de LZ77 e tiles).
