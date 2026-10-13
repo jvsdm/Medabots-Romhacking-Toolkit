@@ -1,0 +1,13 @@
+address,name,kind,comment
+0x0804C984,Event_Op46_Stop_Music,func_thumb,"provavel: Overworld_ApplyMapSceneModePolicy(2,0); 0 args"
+0x0804C994,Event_Op47_Fade_Out_Music,func_thumb,"provavel: FUN_08047BC0(0x78); 0 args"
+0x0804C9A0,Event_Op48_Play_Persistent_Music,func_thumb,"provavel: 1 byte -> Overworld_ApplyMapSceneModePolicy(3,byte)"
+0x0804C9C4,Event_Op49_Play_Map_Music,func_thumb,"provavel: Overworld_ApplyMapSceneModePolicy(4,0); 0 args"
+0x0804CA28,Event_Op4B_Jump_If_Item_Count_Below_Amount,func_thumb,"confirmado Ghidra FUN_0804ca28; 3 args (item,amount,jump)"
+0x0804CA84,Event_Op4C_Jump_If_Missing_Part,func_thumb,"confirmado Ghidra FUN_0804ca84; 3 args (bot,part,jump)"
+0x0804CAE8,Event_Op4D_Jump_If_Not_Has_Medal,func_thumb,"confirmado Ghidra FUN_0804cae8; 2 args (medal,jump)"
+0x0804CB34,Event_Op4E_Jump_If_Not_Has_Money,func_thumb,"confirmado Ghidra FUN_0804cb34; 3 args (Short money*10, jump)"
+0x0804CB94,Event_Op4F_Jump_If_Previous_Scene_Command_Failed,func_thumb,"confirmado Ghidra FUN_0804cb94; 1 arg (jump)"
+0x0804CCAC,Event_Op52_Random_Jump,func_thumb,"provavel: Ghidra FUN_0804ccac; 2 args; Toolkit chama de 0x51"
+0x0804CE04,Event_Op5B_Jump_If_Fewer_Than_Three_Complete_Part_Sets,func_thumb,"confirmado Ghidra FUN_0804ce04; 1 arg (jump)"
+0x0804CE44,Event_Op5C_Jump_If_Missing_Complete_Monochrome_Part_Set,func_thumb,"confirmado Ghidra FUN_0804ce44; 2 args (part,jump)"

@@ -1,0 +1,20 @@
+address,name,kind,comment
+0x08024210,Fight_DispatchOnSubstateAA_AE_ResetBotGfx,function,AE substado 0x0B; limpa gfx do bot; provavel
+0x080242F8,Fight_DispatchOnSubstateAA_AE_StepSlotAnim,function,AE substado 0x0C; anima 4 slots; provavel
+0x08024488,Fight_DispatchOnSubstateAA_AE_SetupFourSlots,function,AE substado 0x0D; preenche 4 entradas em 0x980; provavel
+0x080246C0,Fight_DispatchOnSubstateAA_AE_WaitRowAnim,function,AE substado 0x10; contador de animacao de linha; provavel
+0x0802473C,Fight_DispatchOnSubstateAA_AE_ApplyPartDamage,function,AE substado 0x11; dano na parte; ramo quebrada -> 0x1A; confirmado
+0x0802480C,Fight_DispatchOnSubstateAA_AE_LoadBrokenGfx,function,AE substado 0x1A; carrega gfx de parte quebrada; provavel
+0x08024890,Fight_DispatchOnSubstateAA_AE_LoadSlotGfx,function,AE substado 0x1C; carrega gfx e slot; provavel
+0x0802494C,Fight_DispatchOnSubstateAA_AE_RunSlotScript,function,AE substado 0x1D; roda script de slot; provavel
+0x08024A30,Fight_DispatchOnSubstateAA_AF_SetupOverlay,function,AF substado 0x08; setup de overlay; provavel
+0x08024C44,Fight_DispatchOnSubstateAA_AF_CountDownToMark,function,AF substado 0x0F; contagem ate marca; provavel
+0x08024C94,Fight_DispatchOnSubstateAA_AF_OscillateSlot,function,AF substado 0x10; oscila x do slot; provavel
+0x08024D18,Fight_DispatchOnSubstateAA_AF_SetSlotParams,function,AF substado 0x11; parametros do slot; provavel
+0x08024DA8,Fight_DispatchOnSubstateAA_AF_CopyTileData,function,AF substado 0x12; copia 0xE bytes; provavel
+0x08024E9C,Fight_DispatchOnSubstateAA_AG_SetupSlots,function,AG substado 0x08; setup de slots; provavel
+0x08024FC4,Fight_DispatchOnSubstateAA_AG_SlideSlotsIn,function,AG substado 0x0C; desliza slot; provavel
+0x0802503C,Fight_DispatchOnSubstateAA_AG_SpawnEffectSlot,function,AG substado 0x0D; slot de efeito; sfx 0x4F; provavel
+0x080255F8,Fight_DispatchOnSubstateAA_AH_SplitCountDamage,function,AH substado 0x0F; divide contagem e aplica; provavel
+0x08025674,Fight_DispatchOnSubstateAA_AH_DrawNumbers,function,AH substado 0x10; desenha numeros; provavel
+0x080256EC,Fight_DispatchOnSubstateAA_AH_WaitRowAnim,function,AH substado 0x11; espera animacao de linha; provavel
