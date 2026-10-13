@@ -562,3 +562,9 @@ Checklist:
 - Caixa do mapa (New Game, ev 185): nao medida nesta sessao; o print M3 parece a mesma. Pendente: confirmar tilemap/tom no mapa.
 - Entregue: `pc/extract/extract_ui.py` (ligado em extract_all.py), `pc/cache/ui/dialog_box.png` + `ui.lua`, `pc/game/src/dialog.lua` (moldura real, texto 0x582808 em x=16 y=117).
 - Para o CSV/nuvem: `0x08486E6C` (Malias2, moldura), `0x084E43D8` (pal 14 BG = texto), `0x08488520` (pal 15 BG = ornamento), `0x06002800` (BG0 SBB5 = caixa).
+
+### 2026-10-13 - sessao local: documentacao funcao por funcao (troca de conta)
+- Feito: R0..R4 (1507 BL), H (827 handlers; usuario rodou CreateHandlerFunctions, 457 criadas), HN1..10, HE1..4
+  (opcodes de evento), HO1/2 (ObjectScript) decompilados; 1458 simbolos fundidos no mtbe.csv (f73a901).
+- Foco agora e DISCOVERY (nao portar pro Lua). Retomar por `re/functions/HANDOFF_DISCOVERY.md` (estado, proximas
+  tarefas, fatos-chave, modelo de prompt). Proxima: tabela de continuacao de eventos 0x083D2630 (alvos nao sao funcoes).
