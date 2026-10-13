@@ -1,7 +1,7 @@
 // Cria funções no Ghidra para os handlers chamados por ponteiro (re/functions/H_lista.txt).
 // Muitos handlers de tabela (opcodes de evento, ObjectScript, estados da batalha) não são funções no
 // Ghidra, então o decompile não funciona neles. Rodar uma vez: Script Manager > CreateHandlerFunctions.
-// Escolha o arquivo H_lista.txt quando pedir. Depois salve o projeto (Ctrl+S).
+// Escolha a lista (H_lista.txt, HC_lista.txt...) quando pedir. Depois salve o projeto (Ctrl+S).
 //@category Medabots
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.address.Address;
@@ -13,7 +13,7 @@ import java.util.List;
 public class CreateHandlerFunctions extends GhidraScript {
     @Override
     public void run() throws Exception {
-        File f = askFile("H_lista.txt", "Abrir");
+        File f = askFile("Escolha a lista (HC_lista.txt, H_lista.txt...)", "Abrir");
         List<String> lines = Files.readAllLines(f.toPath());
         int created = 0, existed = 0, failed = 0;
         for (String line : lines) {
