@@ -1,2 +1,1 @@
-0x0801932C
-Proximo na lista: ver R1_lista.txt (ultimo doc: 0x0801932C)
+0x0801AC98

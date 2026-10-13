@@ -85,3 +85,34 @@ address,name,kind,comment
 0x080192B8,Fight_SubBotMeterForSecondaryEffect,func_thumb,Se efeito secundario 0x26/0x29 subtrai +0xC7 do medidor; confirmado
 0x080192E8,Fight_SubBotMeterForPartFlag28,func_thumb,Para 3 pecas com +0x49==0x28 e atual!=0 subtrai +0x4E do medidor; confirmado
 0x0801932C,Fight_ClampBotMeterMax31,func_thumb,Teto 0x1F no medidor +0xBB; confirmado
+0x08019348,Fight_UpdateBotScreenXFromMeter,func_thumb,Move X do bot (faixas 0x28-0x68 / 0x88-0xC8) por nibble de +0xD7/DA; provavel
+0x08019440,Fight_UpdateBotScreenXFromMeterInverted,func_thumb,Variante com teste do bit 4 invertido; devolve 1 se bateu limite; provavel
+0x08019544,Fight_UpdateBotMeterDisplayObject,func_thumb,Converte medidor em valor (0x20-m)>>1 +1 para objeto de tela; provavel
+0x080195C0,Fight_DrawActiveBotsOverlay,func_thumb,Laco 6 bots ativos desenha icones de status; provavel
+0x08019600,Fight_DrawSecondaryEffectIcon,func_thumb,Desenha icone do efeito secundario (+0xC4 1F/26/29); confirmado
+0x08019720,Fight_DrawPendingEffectIcon,func_thumb,Despachante de icone por tipo pendente (+0xC9); confirmado
+0x08019B40,Fight_DrawPartStatusIcon,func_thumb,Icone de status de peca (bits 08/10 de +0xBD); confirmado
+0x08019D9C,Fight_PlaceBotStatusIconObject,func_thumb,Preenche objeto de tela do icone de status (x/y/tile/paleta); provavel
+0x08019EF0,Fight_UpdateBotPositionEvents,func_thumb,Varre bots ativos e soma eventos de posicao (Y de descanso/fora da tela); provavel
+0x08019FBC,Fight_CheckBotYAtRestPos,func_thumb,Checa bot sem bit 04 com Y 68/88; enfileira evento se bate; confirmado
+0x0801A030,Fight_CheckBotYAtOffscreenPos,func_thumb,Par de CheckBotYAtRestPos com bit 04 e Y 28/200; confirmado
+0x0801A0A4,Fight_QueueBotEvent,func_thumb,Empilha (bot+1,arg) em fila de 6 pares; confirmado
+0x0801A0D0,Fight_PlaceActiveBotObjects,func_thumb,Posiciona objetos de tela dos bots ativos via FUN_08015a00; provavel
+0x0801A144,Fight_BuildBotOamEntries,func_thumb,Monta ate 3 entradas OAM de partes do bot (lista terminada em FE); provavel
+0x0801A228,Fight_StepBotPartAnimation,func_thumb,Avanca animacao de ate 3 objetos de peca do bot (contador FF = fim); provavel
+0x0801A28C,Fight_WriteNumberTiles,func_thumb,Escreve numero de 3 digitos como lista de tiles com prefixo 0A/0B; confirmado
+0x0801A33C,Fight_BuildBotOamEntriesAt,func_thumb,Variante de BuildBotOamEntries com slot offset (ate 5 itens); provavel
+0x0801A418,Fight_BuildBotOamEntriesAltTiles,func_thumb,Variante de BuildBotOamEntriesAt com tiles na pagina 0x5100; provavel
+0x0801A4F4,Fight_BuildRowOamEntries,func_thumb,Grava ate 5 OAM em linha (X+8 por item, tile +0x5100); provavel
+0x0801A574,Fight_StepRowAnimation,func_thumb,Animacao de ate 5 objetos em linha (tabela de passos de X); provavel
+0x0801A5D8,Fight_SortBotEventQueue,func_thumb,Ordena fila de 5 pares (id,chave) em ordem crescente; provavel
+0x0801A640,Fight_UpdatePhaseFromCounter,func_thumb,Deriva fase (quociente de (contador-1)/3) do contador +0x45; confirmado
+0x0801A678,Fight_PopBotEventQueue,func_thumb,Remove a frente da fila de eventos de bot (6 pares); confirmado
+0x0801A6B0,Fight_AnyBotFlagSet,func_thumb,Retorna 1 se algum bot ativo tem +0xBF; confirmado
+0x0801A6EC,Fight_IsSlotFlag44Set,func_thumb,Testa bit do slot 0/1/2 em +0x44 (01/02/04); confirmado
+0x0801A744,Fight_ClearSlotFlag44,func_thumb,Limpa bit do slot 0/1/2 em +0x44; confirmado
+0x0801A788,Fight_RunStateDispatch,func_thumb,Despachante de 9 estados via byte +0x13A e tabela de salto (nao recuperada); confirmado
+0x0801ABF8,Fight_MaybeStartUiAction,func_thumb,Guarda (flag ou fase +0x89) e chama FUN_0803faa0(1,2,0); chute no efeito; confirmado guarda
+0x0801AC24,Fight_TryUiActionByIndex,func_thumb,Mesma guarda; chama FUN_0803fb3c com item de tabela por indice; confirmado guarda
+0x0801AC6C,Fight_TryUiActionDefault,func_thumb,Mesma guarda; retorna FUN_08041ca4(); confirmado guarda
+0x0801AC98,Fight_LoadBotSideTiles,func_thumb,Carrega tiles dos bancos 0D/11 (lado 0-2) ou 12/14 (lado 3-5) via LoadTilesWithMalias; confirmado

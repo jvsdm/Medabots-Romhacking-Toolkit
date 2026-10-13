@@ -1,2 +1,1 @@
-0x0803E9BC
-ultimo documentado: 0x0803E9BC (113 funcoes no R2.md + 1 nota de endereco sem funcao; proximo = 0x0803EA18)
+ultimo documentado: 0x08040820 (faixa 0x0803836C-0x08040820; 13 funcoes novas nesta rodada GH-R2 continuacao; proximo = 0x08040B90, linha 1 da lista apos 0x08040820)

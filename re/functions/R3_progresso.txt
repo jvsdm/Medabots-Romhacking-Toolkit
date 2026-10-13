@@ -1,2 +1,3 @@
-0x08051988
-# ultimo endereco da lista processado (sessao GH-R3 continuacao: 0x080517f0 e 0x08051940..0x08051988 incluidos)
+0x080531e0
+# ultimo endereco da lista processado (sessao GH-R3 continuacao 2: 0x08051C64..0x080531E0 documentados, 37 funcoes).
+# Pendentes da faixa nao lidos nesta rodada (ja citados nas secoes): 0x08052A30, 0x08052A50, 0x08052A64, 0x08052E34, 0x08052E58, 0x08053108. Proximos da lista: 0x0805321C, 0x08053238, 0x08053280.

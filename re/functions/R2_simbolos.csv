@@ -110,3 +110,51 @@ address,name,kind,comment
 0x0803E934,Overlay_InitOamSlot2,func,inicializa OAM slot 2 (chute)
 0x0803E978,Overlay_InitOamSlot3,func,inicializa OAM slot 3 (chute)
 0x0803E9BC,Overlay_InitOamSlot4,func,inicializa OAM slot 4 (chute)
+0x0803EA18,Gauge_AdvanceAnimStep,func,avanca passo de animacao da barra (0..0x60) (chute)
+0x0803EA38,Gauge_DrawBar12Tiles,func,desenha barra de 12 tiles com valor (chute)
+0x0803EAD8,Gauge_DrawEmpty12Tiles,func,desenha barra vazia de 12 tiles (chute)
+0x0803EB0C,Gauge_DrawByFlag4,func,escolhe barra cheia ou vazia pelo bit 4 de +0x86 (chute)
+0x0803EB30,Gauge_SetCounterFrom0x68,func,contador 0x68-valor com piso 0xc (chute)
+0x0803EB5C,Gauge_DispatchByStepIndex,func,despacha por (valor>>4) em tabela de 7 handlers (chute)
+0x0803EC04,Tween_SetSpeedAndPlayEntry,func,define velocidade e chama entrada de animacao (chute)
+0x0803EC50,Tween_StepPosition,func,passo de deslocamento de posicao com resto (chute)
+0x0803EC98,Tween_StepUntilTarget,func,anda ate alvo e acelera (chute)
+0x0803ECF0,Gauge_FullTriggersSound7,func,barra cheia dispara FUN_08074de0(7) (chute)
+0x0803ED10,Tween_ResetDirectionForward,func,zera velocidade e direcao (chute)
+0x0803ED28,Tween_StepClampOrAccelerate,func,passo com fixacao no alvo ou aceleracao (chute)
+0x0803ED6C,Gauge_DrawTwoTileSegment,func,desenha segmento de 2 tiles (chute)
+0x0803EE10,Overlay_PickRandomSlotAndDrawCursor,func,sorteia slot ativo e grava cursor (chute)
+0x0803EED8,Battle_CheckExitShortcut,func,checa atalho de saida (bit em info+0x1c)
+0x0803EF20,Boot_ResetSystemAndState,func,sequencia de reset de hardware e estado
+0x0803EF8C,BgMap_FillRect16,func,preenche retangulo do mapa de fundo com um tile
+0x0803EFD8,BgMap_FillRectWrapped,func,igual ao anterior com troca de bloco 32x32
+0x0803F15C,BgMap_CopyRectWithOffset,func,copia retangulo do mapa somando base
+0x0803F1C8,BgMap_CopyRectWrapped,func,copia retangulo com troca de bloco 32x32
+0x0803F3A8,Assets_LoadPairAndFastCopy,func,descomprime dois blocos e copia um terceiro
+0x0803F3E0,Video_EnableBg0AndLoadTiles,func,liga BG0 e carrega tiles
+0x0803F624,Mem_FillBytes,func,preenche n bytes com valor
+0x0803F65C,Mem_SwapBytes,func,troca n bytes entre dois buffers
+0x0803F684,Palette_FadeRowsToColorA,func,mistura linhas de paleta com cor (fade) e envia a BG
+0x0803F998,Palette_FadeRowsToColorB,func,igual ao anterior com outro destino (provavel)
+0x080393BC,ObjectScript_RunUntilFlagThenFlush,func,espera flag do script e descarrega (chute)
+0x0803F41C,get_portrait,func,descomprime tiles de retrato e copia paleta (mtbe)
+0x0803F480,LoadPortraitToVram_Unk,func,liga BG0 e desenha retrato 8x8 (mtbe)
+0x0803F51C,Move_Character_Portraits,func,animacao de 9 quadros de retrato (mtbe)
+0x0803F63C,Mem_CopyBytes,func,copia n bytes em ordem crescente
+0x0803FAA0,Obj_InitSlotAndLoad,func,zera bloco 0x28 e inicializa slot (provavel)
+0x0803FB0C,Obj_ResetStateFields,func,reset de campos do bloco DAT_0803fb38 (chute)
+0x0803FB3C,StateMachine_DispatchStep,func,despacha handler pelo estado (byte +4); retorna estado>7 (provavel)
+0x0803FD28,ScriptVM_RunOpcodes,func,laco do interpretador de script; opcodes F7-FF sao controle (provavel)
+0x0803FEA8,Script_OpAdvanceStep,func,avanca pc do script em 1 (confirmado)
+0x0803FEB8,Script_OpShowPortrait,func,opcode de script que mostra retrato do personagem (provavel)
+0x08040038,Text_RenderGlyphStep,func,passo de texto por coluna com quebra em 0xD1 px (provavel)
+0x080402B4,Text_RenderGlyphStepVariant,func,variante de texto com subcomandos 0..4 por jump table (provavel)
+0x0804056C,Text_FlushAndNextLine,func,fecha coluna pendente; linha 1 -> 2; linha 2 -> fim (provavel)
+0x080405D0,Text_WaitKeyOrClearBox,func,fim de pagina: indicador e espera de A/B, limpa caixa (provavel)
+0x0804070C,Script_OpWaitFramesOrKey,func,opcode de espera N quadros ou tecla (0xFF) (provavel)
+0x080407A4,Script_OpWaitFrames,func,opcode de espera de N quadros sem tecla; 0xFF nao espera (confirmado)
+0x08040820,Script_OpSubcommandOrNextState,func,opcode 0xFF: subcomando 0..4 por tabela, senao avanca estado (provavel)
+0x08040B90,Slot_SetupFromRecordList,func,le lista de registros de 3 bytes ate terminador >0xFA e grava halfword no slot (provavel)
+0x08040BD8,Anim_RunSlotScript,func,interpretador de animacao por slot: duracao, quadro, salto, fim (confirmado lógica)
+0x08040CD0,Tile_ClearSlots,func,zera count slots a partir de first via CpuSet (provavel)
+0x08040D0C,Slot_ClearAttrMask,func,AND de atributo halfword +0 em count slots (confirmado)
