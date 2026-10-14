@@ -169,12 +169,12 @@ Ghidra MCP usado sem salvar. Nomes já aplicados no Ghidra ficam listados em FL5
 - O que faz: tick por frame de dois objetos de animação. (1) Se o contador +0x16 do slot está zerado, liga o bit
   0x8000 e roda `Anim_RunSlotScript` com o script escolhido pela tabela DAT_0803c6ec (índice = byte +0x2D); senão
   decrementa. (2) Se o timer +0x2B do segundo objeto zerou, chama `Anim_AdvanceSlotTileOffset`, soma o delta da tabela
-  DAT_0803c734 (índice = byte +0x23) a +4 e avança +0x23 módulo 0x20; senão decrementa. Termina por jump table
-  indireta (não recuperada).
-- Chama: `Anim_RunSlotScript`, `Anim_AdvanceSlotTileOffset`, e uma jump table não recuperada. Chamada por: não verificado.
+  DAT_0803c734 (índice = byte +0x23) a +4 e avança +0x23 módulo 0x20; senão decrementa. Termina em retorno
+  normal (`pop {r0}; bx r0`), sem jump table (JT4; a DAT_0803c6ec/DAT_0803c734 são tabelas de dados).
+- Chama: `Anim_RunSlotScript`, `Anim_AdvanceSlotTileOffset`. Chamada por: não verificado.
 - Memória: slots de 0x40 bytes em DAT_0803c6a0 e DAT_0803c6f0; tabelas DAT_0803c6ec e DAT_0803c734.
 - Para o Lua: porta como dois contadores de animação por slot que disparam scripts e avançam tiles.
-- Confiança: provável (lógica lida; a jump table no fim não recuperada).
+- Confiança: confirmado (disassemble lido; sem jump table, JT4).
 
 ## 0x0803D2A8 FightPreview_StepSideLoad
 - Assinatura: `void FightPreview_StepSideLoad(void)`
@@ -388,14 +388,14 @@ Ghidra MCP usado sem salvar. Nomes já aplicados no Ghidra ficam listados em FL5
 - O que faz: linha do tempo de uma introdução de tela. No frame 0 toca a música 2, configura BLDCNT (0x244 / 0x1000),
   liga DISPCNT bit 0x400, habilita IRQ e DISPSTAT (bit 0x10), e preenche uma tabela de 0xA0 halfwords com uma curva
   (`aux_div_u32(0x10000, 0x100 - i*4)`, simétrica em torno de 0x7F). Nos frames seguintes: a partir de 0x41 limpa um
-  bit de flags, chama `battle_slot_init(5,2)` e salta para um handler por jump table (não recuperada). Em 0x39 cria um
+  bit de flags, chama `battle_slot_init(5,2)` e segue por uma cadeia de if/else no contador (0x41 etc.), sem jump
+  table (JT4; o salto que o Ghidra acusava é o `pop {r0}; bx r0` da função anterior). Em 0x39 cria um
   objeto de renderização (`Map_InitializeObjectRenderSlot`) e chama `battle_slot_init(4,2)`. Incrementa o contador
   de frames +8.
-- Chama: `snd_song_request`, `aux_div_u32`, `battle_slot_init`, `Map_InitializeObjectRenderSlot`, jump table não
-  recuperada. Chamada por: não verificado.
+- Chama: `snd_song_request`, `aux_div_u32`, `battle_slot_init`, `Map_InitializeObjectRenderSlot`. Chamada por: não verificado.
 - Memória: REG_BLDCNT, REG_IE, REG_DISPSTAT, REG_DISPCNT; tabela de curva em DAT_0806db20; contexto PTR_DAT_0806db08 (+8).
 - Para o Lua: porta como timeline de intro (fade por curva em tempo fixo, depois objetos aparecem).
-- Confiança: provável (lógica lida; jump table não recuperada).
+- Confiança: provável (lógica lida; sem jump table, JT4).
 
 ## 0x0806EB28 Fx_StepFadeLatch
 - Assinatura: `void Fx_StepFadeLatch(void)`
