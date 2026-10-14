@@ -488,6 +488,12 @@ address,name,kind,count,comment
 0x080045DC,PartEditor_BlendOutStep,func_thumb,,"[FS1] [confirmado] SetGpuBlendMode(6,0x3F,0x20); sub++"
 0x08004610,PartEditor_WaitBlendStep,func_thumb,,[FS1] [confirmado] espera GpuBlend_TickStep; sub++
 0x08004644,PartEditor_DispatchSubmodeStep,func_thumb,,[FS1] [confirmado] jump table por byte +0x5A (<5); tabela em DAT_08004678 nao recuperada
+0x0800467C,PartEditor_SubmodeJumpTable,data,,[JT7] tabela real de 5 ponteiros (indice = byte ctx+0x5A
+0x08004690,PartEditor_SubmodeCase0_CountParts,label,,[JT7] caso 0 da tabela 0x0800467C: Mem_FillBytes + Parts_CountInventoryMatches; grava 4/8 nos estados; JT7
+0x080046C4,PartEditor_SubmodeCase1_Init,label,,[JT7] caso 1 da tabela 0x0800467C: init do sub-bloco com ctx+0x5C; r4[2]=0; cauda comum; JT7
+0x080046E8,PartEditor_SubmodeCase2_Init,label,,[JT7] caso 2 da tabela 0x0800467C: init do sub-bloco com ctx+0x5D; r4[2]=1; cauda comum; JT7
+0x08004708,PartEditor_SubmodeCase3_Init,label,,[JT7] caso 3 da tabela 0x0800467C: init do sub-bloco com ctx+0x5E; r4[2]=2; cauda comum; JT7
+0x08004728,PartEditor_SubmodeCase4_Init,label,,[JT7] caso 4 da tabela 0x0800467C: init do sub-bloco com ctx+0x5F; r4[2]=3; cauda comum; JT7
 0x08004764,BattlePreview_InitSlotSpritesStep,func_thumb,,"[FS1] [confirmado] CreateSlotSprites9, camada 5, Slot_ClearAttrMask(0,4); tabelas 0x083AC520/0x083AC540"
 0x08004798,BattlePreview_WaitTimerStep,func_thumb,,[FS1] [confirmado] timer > 0x3C -> sub 0x30 ou paleta; sem BL na ROM (FS1_lista dizia BL de 0x08003D6E: errado)
 0x080047EC,BattlePreview_FadeOutStep,func_thumb,,[FS1] [confirmado] fade 0x21 passos A/B

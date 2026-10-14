@@ -105,6 +105,12 @@ F	0x080045C4	PartEditor_BuildEquipTableStep
 F	0x080045DC	PartEditor_BlendOutStep
 F	0x08004610	PartEditor_WaitBlendStep
 F	0x08004644	PartEditor_DispatchSubmodeStep
+L	0x0800467C	PartEditor_SubmodeJumpTable
+L	0x08004690	PartEditor_SubmodeCase0_CountParts
+L	0x080046C4	PartEditor_SubmodeCase1_Init
+L	0x080046E8	PartEditor_SubmodeCase2_Init
+L	0x08004708	PartEditor_SubmodeCase3_Init
+L	0x08004728	PartEditor_SubmodeCase4_Init
 F	0x08004764	BattlePreview_InitSlotSpritesStep
 F	0x08004798	BattlePreview_WaitTimerStep
 F	0x080047EC	BattlePreview_FadeOutStep
