@@ -113,6 +113,17 @@ def main():
         if k != "func_thumb" and len(r) > 2 and r[2].startswith("func"):
             r[2] = k  # camada nova diz que é rótulo/dado, não função
 
+    # Enderecos que o ultimo MedabotsSync achou no miolo de outra funcao viram rotulo.
+    log = os.path.join(ROOT, "ghidra", "medabots_sync_log.txt")
+    if os.path.exists(log):
+        inside = set()
+        for line in open(log, encoding="utf-8", errors="replace"):
+            m = re.match(r"miolo ([0-9a-fA-F]{8}) ", line)
+            if m:
+                inside.add("0x%08X" % int(m.group(1), 16))
+        for r in body:
+            if len(r) > 2 and r[2].startswith("func") and norm(r[0], True) in inside:
+                r[2] = "label"
     body.sort(key=lambda r: int(r[0], 16))
     out = io.StringIO()
     csv.writer(out, lineterminator=nl).writerows([header] + body)

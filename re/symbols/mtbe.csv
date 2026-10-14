@@ -669,7 +669,7 @@ address,name,kind,count,comment
 0x080102C0,Scr_HideSpritesPlaySong8,func_thumb,,provável: oculta 4 sprites e pede música 8
 0x08010478,Screen_ScrollRevealRowsStep,func_thumb,,[FL10] revelação por linhas no mapa de fundo; contador +0x48; subsistema não confirmado
 0x0801053C,Fight_ResetTemplateAndPalette,func_thumb,,"zera estado +0x132, paleta e area; provavel"
-0x08010540,Fight_ResetTemplateAndPalette,func_thumb,,[EN] GH-EN: chama Fight_BeginEncounterTemplateSelection; zera +0x132; limpa VRAM/paleta com bios_cpufastset. Confirmado.
+0x08010540,Fight_ResetTemplateAndPalette,label,,[EN] GH-EN: chama Fight_BeginEncounterTemplateSelection; zera +0x132; limpa VRAM/paleta com bios_cpufastset. Confirmado.
 0x0801058C,Fight_InitBotPartSelectScreen,func_thumb,,"[provavel] tela de selecao de pecas do bot: decompress x5, desenha Fight_Draw*"
 0x08010814,Fight_ShowPreBattleTextForCharacter,func_thumb,,[TX] GH-TX: r0 = StateMachine_DispatchStep(gTextPreBattleMessage[byte 0x03001800 = FightTemplate.character_id]); se !=0 chama Fight_UpdateBotPartEntryMotion 0x08012098 e incrementa 0x0300137C. Sem funcao no Ghidra; nome provavel
 0x08010A20,Tile_ResetBlendAndClearSlots,func_thumb,,"[provavel] SetGpuBlendMode(0,0,0), 2x FillRect16, Tile_ClearSlots"
@@ -685,7 +685,7 @@ address,name,kind,count,comment
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
 0x08011764,Fight_InitBotPartPanel,func_thumb,,provável: monta painel de peças do bot na luta
 0x08011BB8,Gfx_ResetScreenBgAndBlend,func_thumb,,"[FL10] reset de tela: limpa slots, 4 mapas BG, SetGpuBlendMode(3,0x3F,0x20)"
-0x08011C44,Gfx_ResetScreenBgAndBlend,func_thumb,,"[BT2] [GH-BT2] grava gamestate_menu=8 (literal 0x08011C80) e 2 em 0x08011C7C; escritor provavel de menu=8, chamador nao achado"
+0x08011C44,Gfx_ResetScreenBgAndBlend,label,,"[BT2] [GH-BT2] grava gamestate_menu=8 (literal 0x08011C80) e 2 em 0x08011C7C; escritor provavel de menu=8, chamador nao achado"
 0x08011DB0,Fight_BeginEncounterTemplateSelection,func_thumb,,[R0] prepara escolha de template do encontro (provavel)
 0x08011DE4,Fight_CopyEncounterTemplateEntry,func_thumb,,[R0] copia 2 bytes para entrada de template (provavel)
 0x08011E20,Fight_SelectTemplateForCurrentEncounter,func_thumb,,"Simon/Rokusho: Selects the active FightTemplate for the current encounter, copies it into fight_information.template, and if template_flags == 0 rerolls each bot's head/right/left/legs part ids. The bot loop indexes the copied template as raw bytes because the code memcpy's the 0x28-byte template into RAM first; offsets +4..+7 within each 0x0C bot record are the four part ids, not stat_nibbles_packed."
@@ -701,9 +701,9 @@ address,name,kind,count,comment
 0x080121CC,Fight_TryAssignBotPartByRoll,func_thumb,,[R0] sorteia atribuicao de peca do bot (provavel)
 0x080121F0,Fight_CountAvailableBotParts,func_thumb,,[R0] pontua vagas de peca do bot (provavel)
 0x08012234,Fight_PickRandomAvailableBotPart,func_thumb,,[R0] procura slot de peca do bot por sorteio (provavel)
-0x080122A4,Fight_PickRandomAvailableBotPart,func_thumb,,[RW] GH-RW confirmado: slot=3+tab 0x083AD070[rand&F]; kind=rand&3; 1a peca que o jogador nao tem; grava 0x03001968/69/87
+0x080122A4,Fight_PickRandomAvailableBotPart,label,,[RW] GH-RW confirmado: slot=3+tab 0x083AD070[rand&F]; kind=rand&3; 1a peca que o jogador nao tem; grava 0x03001968/69/87
 0x080122F4,Fight_AssignRandomBotPartSlot,func_thumb,,[R0] grava slot e id da peca do bot (provavel)
-0x08012344,Fight_AssignRandomBotPartSlot,func_thumb,,[RW] GH-RW confirmado: sorteio cego de slot/kind (sem checar posse); grava 0x03001968/69/87
+0x08012344,Fight_AssignRandomBotPartSlot,label,,[RW] GH-RW confirmado: sorteio cego de slot/kind (sem checar posse); grava 0x03001968/69/87
 0x080123A0,Fight_DrawBotPartSprite,func_thumb,,[R0] sprite da peca do bot por slot 0..3 (provavel)
 0x08012468,Fight_UpdateIndicatorOscillation,func_thumb,,[R0] oscila contador de indicador (chute)
 0x080124B8,Fight_DrawBotPartSpriteBig,func_thumb,,[R0] sprite da peca do bot em tamanho grande (provavel)
@@ -717,7 +717,7 @@ address,name,kind,count,comment
 0x08012968,medaforce_list_ptr_literal,label,,[MF] [MF] palavra de literal que aponta para 0x083B7F8C (nao e tabela de bytes)
 0x08012970,Battle_FrameDispatchOrExit,func_thumb,,passo de batalha por quadro: checa saida e despacha tabela; provavel
 0x080129C8,Fight_SetupBattleBotStates,func_thumb,,[provavel] zera ctx+0x13A; se ctx+0x89!=1 roda ClearBattleBuffer/UpdateBotActiveFlagCount/RefreshBotPartRecords/InitializeEnemyBotStates; sempre RefreshBotPartSlotDisplays
-0x080129F2,Fight_SetupBattleBotStates,func_thumb,,"[EN] GH-EN: se ctx+0x89 != 1 chama Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords, Fight_InitializeEnemyBotStates. Confirmado no decompile; significado de ctx+0x89 aberto."
+0x080129F2,Fight_SetupBattleBotStates,label,,"[EN] GH-EN: se ctx+0x89 != 1 chama Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords, Fight_InitializeEnemyBotStates. Confirmado no decompile; significado de ctx+0x89 aberto."
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
 0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos"
 0x08012B94,Battle_CpuActionSelectStep,func_thumb,,[AI2] [AI2] entrada 3 da tabela de cena 0x083AD080 (GS=0x0300137C). Corpo: bl 0x080196C0; se byte 0x030004C9==1 pula; senao Fight_SelectActionsForBotGroup(3); GS++. Sem funcao no Ghidra ainda: ver AI2_lista.txt
@@ -733,7 +733,7 @@ address,name,kind,count,comment
 0x08013824,Fight_InitActionSlotSelect,func_thumb,,provável: inicializa bloco de seleção de ação do bot
 0x0801387C,Dispatch_ByteStateIndexTable,func_thumb,,"[FL10] despachante por byte de estado (<=5), tabela de 6 ponteiros; subsistema não confirmado (provável)"
 0x080138A8,Dispatch_ByteStateIndexTable_Table,data,,[JT2] [GH-JT2] 6 ponteiros thumb (sem bit) para os cases 0..5 do despachante 0x0801387C; indice = byte 0x03000579 (0x03000440+0x139); gemeo do J_02 (JT.md)
-0x08013904,Dispatch_ByteStateIndexTable,func_thumb,,"[BT] indice = byte 0x03000579 (cena 0..5), tabela 0x080138A8; confirmado (decompile, JT2)"
+0x08013904,Dispatch_ByteStateIndexTable,label,,"[BT] indice = byte 0x03000579 (cena 0..5), tabela 0x080138A8; confirmado (decompile, JT2)"
 0x08013AE4,Fight_MarkSelectedOptionFrame,func_thumb,,menu de 3 opcoes: OR de bit no +0x44 pelo cursor; provavel
 0x08013B8C,Fight_BattleSceneInit,func_thumb,,inicializa a cena de luta e desenha a UI (provavel)
 0x08013E30,UpdateSelectedMedabotPreviewScreen,func_thumb,,"Simon/Rokusho: Selected-Medabot/Medawatch full preview update loop. Refreshes the preview renderer, responds to button state, updates displayed part ids, and redraws both the small and large selected-bot previews for the current cursor position."
@@ -767,7 +767,7 @@ address,name,kind,count,comment
 0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,,"Simon/Rokusho: Resolve the current action entry from BattleBotStateRecord.speciality_action_table[current_speciality_cycle_index]. Values 1..3 try the part slots, value 4 clears the source and returns 0, and values 5..7 try medaforce slots."
 0x08015414,Fight_AdvanceSpecialityCycleIndex,func_thumb,,[R0a] avanca indice do ciclo de especialidade (+0x3F) (confirmado)
 0x08015464,Fight_SelectFallbackActionFromPriorityList,func_thumb,,"Simon/Rokusho: Choose a fallback action source when the current speciality-cycle entry cannot be used directly. This scans the 4-byte priority list in fight_information and falls back to Fight_SelectActionSource(bot, 0) when no usable entry exists."
-0x08015488,Fight_SelectFallbackActionFromPriorityList,func_thumb,,"[MF] [MF] CPU com B+0xC1==0x50 sorteia Fight_TrySelectMedaforceAction(bot,0,1)"
+0x08015488,Fight_SelectFallbackActionFromPriorityList,label,,"[MF] [MF] CPU com B+0xC1==0x50 sorteia Fight_TrySelectMedaforceAction(bot,0,1)"
 0x080154E0,Fight_IsPartActionLockedByPendingEffect,func_thumb,,Simon/Rokusho: Return nonzero when pending effect kind 0x2B targets the requested part slot. This is used by action availability and description UI to show an override/locked state for that slot.
 0x08015508,Fight_IsHeadActionUnavailable,func_thumb,,Simon/Rokusho
 0x08015528,Fight_IsPartActionUnavailable,func_thumb,,Simon/Rokusho
@@ -904,7 +904,7 @@ address,name,kind,count,comment
 0x08019544,Fight_UpdateBotMeterDisplayObject,func_thumb,,Simon/Rokusho (antes: Fight_UpdateTargetResolutionIndicatorAnimation)
 0x080195C0,Fight_DrawActiveBotsOverlay,func_thumb,,[R1] Laco 6 bots ativos desenha icones de status; provavel
 0x08019600,Fight_DrawSecondaryEffectIcon,func_thumb,,"Simon/Rokusho: Update indicator objects for the secondary long-lived effect block. Current confirmed kinds are AutoRecover (0x1F), Boost_Chrg (0x26), and Drain_Chrg (0x29). (antes: Fight_UpdateSecondaryEffectIndicatorObjects)"
-0x080196C0,Battle_CpuActionSelectPrep,func_thumb,,[AI2] [AI2] chamada pelo passo 0x08012B94 antes da escolha da CPU. Sem funcao no Ghidra; nao lida (nome provisorio)
+0x080196C0,Battle_CpuActionSelectPrep,label,,[AI2] [AI2] chamada pelo passo 0x08012B94 antes da escolha da CPU. Sem funcao no Ghidra; nao lida (nome provisorio)
 0x08019720,Fight_DrawPendingEffectIcon,func_thumb,,[R1] Despachante de icone por tipo pendente (+0xC9); confirmado
 0x08019B40,Fight_DrawPartStatusIcon,func_thumb,,"Simon/Rokusho: Render the small reaction-source icon for a bot. Uses reaction_status_flags, reaction_source_part_id, and reaction_source_action_kind to choose the icon and sprite frame. (antes: Fight_DrawReactionSourceIcon) (antes: Fight_DrawPartStatusIcon) (antes: Hud_PartStatusIconAlias)"
 0x08019D9C,Fight_PlaceBotStatusIconObject,func_thumb,,[R1] Preenche objeto de tela do icone de status (x/y/tile/paleta); provavel
@@ -2182,8 +2182,8 @@ address,name,kind,count,comment
 0x080407A4,Script_OpWaitFrames,func_thumb,,[R2] opcode de espera de N quadros sem tecla; 0xFF nao espera (confirmado)
 0x08040820,Script_OpSubcommandOrNextState,func_thumb,,[R2] opcode 0xFF: subcomando 0..4 por tabela; senao avanca estado (provavel)
 0x08040884,MsgFF_SubcommandTable,data,,[MS] tabela de 5 ponteiros Thumb do FF n (n=0..4); lida na ROM; confirmado
-0x08040898,MsgFF_SfxAdvanceCtx,func_thumb,,"[MS] FF n=0,2,3: se flag ctx+0 & mascara != 0 -> SFX 0x0D (snd_sfx_request via 08074DE0) e estado++; mascara provavel"
-0x080408BC,MsgFF_AdvanceOtherObj,func_thumb,,"[MS] FF n=1,4: estado++ de outro objeto (r3), sem SFX; provavel; alvo nao identificado"
+0x08040898,MsgFF_SfxAdvanceCtx,label,,"[MS] FF n=0,2,3: se flag ctx+0 & mascara != 0 -> SFX 0x0D (snd_sfx_request via 08074DE0) e estado++; mascara provavel"
+0x080408BC,MsgFF_AdvanceOtherObj,label,,"[MS] FF n=1,4: estado++ de outro objeto (r3), sem SFX; provavel; alvo nao identificado"
 0x080408D0,MsgState_DispatchByScriptByte,func_thumb,,"[MS] estado 6: byte do roteiro em pc+1, indice byte*4 sobre tabela 0x083B2940, chama via 0807CCF0; provavel (faixa do indice aberta)"
 0x080408F4,MsgState9_CtxB1BDispatch,func_thumb,,[confirmado] CallViaR0(tabela[ctx+0x1B*4]); tabela em DAT_0804090C (antes: Dispatch_CallHandlerByByte1B)
 0x08040914,MsgState10_CtxB1BDispatch,func_thumb,,despachante por tabela indexada por ctx+0x1B; provavel; subsistema chute (antes: Dispatch_CallHandlerByByte1B)
@@ -2343,7 +2343,7 @@ address,name,kind,count,comment
 0x080476E8,MainState_RequestModeTransition,func_thumb,,[FN2] provavel: Switch de modo 0..0xC: grava gMainState=1 e flags de init; limpa globais em 10 e 0xB
 0x08047878,GameState_StartFlowByCommand,func_thumb,,Simon/Rokusho: Start a top-level flow selected by a command id. Important confirmed cases: command 0x20 starts a scripted/forced battle flow (sets gCurrentBattleSourceFlag = 1); command 0x21 starts the random encounter battle flow (sets gCurrentBattleSourceFlag = 0); command 3 opens a shop using param_2 as shop id.
 0x080479A0,GameState_StartFlowByCommand_CaseNote,label,,"[RW] GH-RW confirmado: caso 0x20 grava E+0xC2D=1, 0x0300178C=0, 0x03002B8C=6, 0x0300137C=0; caso 0x21 grava E+0xC2D=0 (antes: GameState_StartFlowByCommand)"
-0x08047B98,GameState_StartFlowByCommand_store_tail,func_thumb,,[RW] GH-RW: cauda compartilhada de GameState_StartFlowByCommand (sem nome confirmado; NAO renomeado)
+0x08047B98,GameState_StartFlowByCommand_store_tail,label,,[RW] GH-RW: cauda compartilhada de GameState_StartFlowByCommand (sem nome confirmado; NAO renomeado)
 0x08047BA8,Snd_SfxRequestWrapper,func_thumb,,Simon/Rokusho: Start the map-transition effect selected by the current warp/event transition state. Commonly triggered when a matched MapWarpRecord requests a non-zero transition kind. (antes: Overworld_StartMapTransitionEffect; decisao CF)
 0x08047BB4,Sound_RequestSong,func_thumb,,[R2b] Wrapper de snd_song_request
 0x08047BC0,Sound_RequestFade,func_thumb,,[R2b] Wrapper de snd_fade_request
@@ -2420,14 +2420,14 @@ address,name,kind,count,comment
 0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
 0x0804A764,Overworld_InitMapScene,func_thumb,,"Simon/Rokusho: Primary overworld map-scene initialization. Clears OAM/VRAM shadow state, resets event/object work areas, installs the core overworld/map/event pointers, loads the current map and entities, clamps the camera, and enables the main overworld rendering path."
-0x0804A7A0,Overworld_InitMapScene,func_thumb,,"[EV] entrada de cena do mapa: zera Pendente (C88), StateByte (C89), cursor (C8A); carrega mapa e entidades (confirmado)"
+0x0804A7A0,Overworld_InitMapScene,label,,"[EV] entrada de cena do mapa: zera Pendente (C88), StateByte (C89), cursor (C8A); carrega mapa e entidades (confirmado)"
 0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
 0x0804A900,Overworld_FinishTransitionInitPlayer,func_thumb,,"[FL10] fim da transição: sprites do jogador, marcador, direção; estado=5 (provável)"
 0x0804A944,Overworld_ReloadMapSceneAfterReset,func_thumb,,"Simon/Rokusho: Reload the current map scene after a heavier display/reset step. Clears OAM/object state, resets blend state, rebuilds the current map scene, reclamps the camera, restores the main display configuration, and resumes the overworld scene loop."
 0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene.
 0x0804AFB8,Screen_UpdateStepWrap,func_thumb,,wrapper: chama Screen_UpdateByStep com passo ctx+0x14 (confirmado)
 0x0804B008,Map_FinishEnterTransition,func_thumb,,"[provavel] map entry after transition: camera, player tile clamp, OAM clear"
-0x0804B036,Map_FinishEnterTransition,func_thumb,,[OW2] fim da transicao: se state+0x14 == 0 grava gCurrentMapId = state+0x26 (confirmado no decompile); centraliza camera e prende posicao no mapa
+0x0804B036,Map_FinishEnterTransition,label,,[OW2] fim da transicao: se state+0x14 == 0 grava gCurrentMapId = state+0x26 (confirmado no decompile); centraliza camera e prende posicao no mapa
 0x0804B124,lit_EventDbBase3,label,,literal da base do banco de eventos
 0x0804B1B0,Map_UpdateEventObjectDepthAndMarkerState,func_thumb,,Simon/Rokusho: Refresh per-object depth/marker bytes after the current map scene loads or updates. Converts live event object screen-space positions into depth buckets and updates a couple of special marker slots when the player and overlay markers align.
 0x0804B248,Map_ClearOamShadowViaDma,func_thumb,,Simon/Rokusho: Clear the shadow OAM buffer with DMA before rebuilding overworld/map object sprites.
@@ -2451,7 +2451,7 @@ address,name,kind,count,comment
 0x0804B9B0,Event_Op0B_WarpA,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0B_SetConfigFlagAndRead5Bytes)
 0x0804B9CC,Event_Op0C_WarpB,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0C_ClearConfigFlagAndRead5Bytes)
 0x0804B9E8,Script_ReadStateBlock,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 0A and 0B. Reads 5 configuration bytes from the event stream into a small overworld/event config block, snapshots the current player facing into a sixth byte, then sets gCurrentEventStateByte = 1. (antes: EventInit_Read5ConfigBytesAndMarkInitialized)"
-0x0804B9F4,Script_ReadStateBlock,func_thumb,,[OW2] le 5 bytes do script para bloco de estado da cena; NAO grava gCurrentMapId (xref era leitura)
+0x0804B9F4,Script_ReadStateBlock,label,,[OW2] le 5 bytes do script para bloco de estado da cena; NAO grava gCurrentMapId (xref era leitura)
 0x0804BA5C,Event_Op0D_PlayerFaceDirection,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0D_ReadFacingAndApplyToPlayer)
 0x0804BA9C,Event_Op0E_PlayerHopInPlace,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0E_StartMapTransitionFromStoredState)
 0x0804BAEC,Event_Op0F_PlayerHopInDirection,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0F_ReadByteAndMarkInitialized)
@@ -2637,7 +2637,7 @@ address,name,kind,count,comment
 0x0804EB0C,EventOpcode38_GetPart,func_thumb,,Simon/Rokusho
 0x0804EC38,EventOpcode39_LosePart,func_thumb,,Simon/Rokusho
 0x0804ED88,EventOpcode3A_GetMoney,func_thumb,,Simon/Rokusho
-0x0804EDC6,EventOpcode3A_GetMoney,func_thumb,,[RW] GH-RW: unico chamador visto de AddClampedCounter (dinheiro ganho so por evento)
+0x0804EDC6,EventOpcode3A_GetMoney,label,,[RW] GH-RW: unico chamador visto de AddClampedCounter (dinheiro ganho so por evento)
 0x0804EE00,EventOpcode3B_LoseMoney,func_thumb,,Simon/Rokusho
 0x0804EE8C,EventOpcode3C_GetMedal,func_thumb,,Simon/Rokusho
 0x0804EF5C,EventOpcode3D_GetTinpet,func_thumb,,Simon/Rokusho
@@ -2725,7 +2725,7 @@ address,name,kind,count,comment
 0x08051078,Overworld_MapSub1_WaitObject,func_thumb,,[FM2] [FM2] sub 1 do mapa: espera objeto e avanca para sub 2 (confirmado)
 0x080510C0,Overworld_MapSub2_IdleInput,func_thumb,,"[FM2] [FM2] sub 2 do mapa: controle normal (A, B, R, andar); B novo com E+0xC33 abre ramo de menu (confirmado; nome provavel)"
 0x0805134C,Overworld_MapSub3_WaitScene,func_thumb,,[FM2] [FM2] sub 3 do mapa: espera 0x08049E08(0x7FFF) e vai para sub 4 (confirmado)
-0x08051368,Overworld_UpdateMapSceneStateMachine,func_thumb,,[OW2] maquina de cena do mapa; chama Overworld_ApplyWarpAtCurrentTile em um dos estados (confirmado)
+0x08051368,Overworld_UpdateMapSceneStateMachine,label,,[OW2] maquina de cena do mapa; chama Overworld_ApplyWarpAtCurrentTile em um dos estados (confirmado)
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
 0x08051416,Map_LoadEntitySpawnsForCurrentMap,label,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234) (antes: Map_LoadEntitySpawnsForCurrentMap) (antes: Map_LoadEntitySpawns_GroupLoop)
 0x08051484,MapSpawn_ChapterFilterLiteral,data,,[PR] literal de 0x03005FDF dentro de Map_LoadEntitySpawnsForCurrentMap; filtro (mascara u16 +6 >> capitulo)&1 (EX.md)
@@ -2745,7 +2745,7 @@ address,name,kind,count,comment
 0x080521A8,Overworld_TickRandomObjectAnim,func_thumb,,Simon/Rokusho: Update idle facing-trigger animation markers. Periodically picks a random active facing event marker and changes its displayed facing/animation variant when the event entry is marked as animation-capable. (antes: Map_UpdateIdleFacingEventAnimation)
 0x08052204,Map_TickAllObjectAnimations,func_thumb,,"Simon/Rokusho: Refresh the animation for active objects whose record kind is 6, using the current event/object state to decide whether their type-6 marker animation should advance. (antes: Map_RefreshType6MarkerAnimations)"
 0x08052284,Map_CheckFacingEventTriggerAhead,func_thumb,,Simon/Rokusho: Check for a facing-triggered map event or facing-sensitive marker immediately in front of the player. ActiveMapObjectEntry.record_kind_and_event_id high nibble selects whether the record arms an event or only updates marker facing.
-0x08052330,Map_CheckFacingEventTriggerAhead,func_thumb,,"[EV] gatilho de frente (kind 0/4/6 na casa à frente); Pendente=1, id em E+0xC8E, StateByte=0, cursor=0, índice em E+0xCB4 (confirmado)"
+0x08052330,Map_CheckFacingEventTriggerAhead,label,,"[EV] gatilho de frente (kind 0/4/6 na casa à frente); Pendente=1, id em E+0xC8E, StateByte=0, cursor=0, índice em E+0xCB4 (confirmado)"
 0x08052400,Map_CheckWalkOverTrigger,func_thumb,,Simon/Rokusho: Scan the live ActiveMapObjectEntry table for a walk-over trigger at the player's current tile. record_kind_and_event_id high nibble 0x8 denotes a walk-over event trigger; low 12 bits become current_event.
 0x080524C8,Map_GetAdjacentCollisionTileByDirection,func_thumb,,Simon/Rokusho: Return the collision/metatile byte for the tile adjacent to the player in the requested direction using the current map collision layer.
 0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,,Simon/Rokusho
@@ -2803,7 +2803,7 @@ address,name,kind,count,comment
 0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador
 0x0805716C,FieldMenu_DispatchSubstate,func_thumb,,[FM] [FM] despachante do menu 2 de MainState1 (provavel); push lr; base 0x083D5FF4 + gamestate_subroutine*4; SEM funcao no Ghidra (nao renomeado no Ghidra)
 0x0805718C,Overworld_InitChoiceMenuScreen,func_thumb,,inicia tela de escolha do overworld; Overworld_CheckStepAllowed por linha; provavel
-0x08057244,Overworld_InitChoiceMenuScreen,func_thumb,,[OW2] monta menu de 4 linhas; CheckStepAllowed(k) == 1 desenha linha ativa (confirmado)
+0x08057244,Overworld_InitChoiceMenuScreen,label,,[OW2] monta menu de 4 linhas; CheckStepAllowed(k) == 1 desenha linha ativa (confirmado)
 0x08057440,Map_TickChoiceListOpen,func_thumb,,"[provavel] abre lista de escolha em 0x10 passos (FUN_080492A8 + Map_CreateChoiceSprites); ao fim, GameState_AdvanceSubroutine"
 0x080574D4,FieldMenu_ChoiceSub2_SelectRow,func_thumb,,"[FM2] [FM2] sub 2 do menu de escolha 0x083D5FF4 (Thumb, sem funcao no Ghidra); linha ativa via Overworld_CheckStepAllowed; switch 0..5 pela tabela 0x08057534"
 0x08057534,FieldMenu_RowActionTable,table,,"[FM2] [FM2] tabela do switch de linha: idx0=0x080575D4, idx1=0x0805754C (sub 0x0B), idx2=0x08057564 (sub 0x0D), idx3..5=0x08057570 (sub 0x0F)"
@@ -2819,7 +2819,7 @@ address,name,kind,count,comment
 0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23
 0x08057FD4,Map_UpdateCursorSpritePosition,func_thumb,,[R3] (mtbe) posiciona sprite do cursor
 0x08058070,Map_CreateChoiceSprites,func_thumb,,[R3] (mtbe) cria 4 sprites de opcao (slots 0x20..0x23)
-0x08058080,Map_CreateChoiceSprites,func_thumb,,[OW2] chama CheckStepAllowed com kinds 0..3 (nome de caller)
+0x08058080,Map_CreateChoiceSprites,label,,[OW2] chama CheckStepAllowed com kinds 0..3 (nome de caller)
 0x080581C8,Map_DrawChoiceBackgroundRow,func_thumb,,[R3] (mtbe) desenha linha de fundo do painel (nome chute)
 0x08058208,Map_HandleMarkerCommandFromState,func_thumb,,[R3] (mtbe) chama 0805821c com byte de estado (nome chute)
 0x0805821C,Map_HandleMarkerCommand,func_thumb,,[R3] (mtbe) comandos 0/1/5/6 do marcador
@@ -3312,8 +3312,8 @@ address,name,kind,count,comment
 0x08072D90,Snd_OpcodeTablePtr,data,,[SN2] literal da tabela de 32 ponteiros E0..FF do interpretador (confirmado)
 0x08072D94,Snd_OpcodeTable_E0_FF,data,,[SN2] tabela de handlers de E0..FF (32 entradas u32; confirmado no disasm)
 0x08072E14,Snd_OpE1_Entry,label,,[SN2] SN2: entrada de E1 na tabela
-0x08072F04,Snd_DispatchBelowE0,func_thumb,,[SN2] despacho de 00..DF por op&0xF0: 80-8F rest; 90/A0/B0/C0 NOP 1 byte; D0 volume; resto nota (confirmado)
-0x08072F2E,Snd_OpE0_Rest,func_thumb,,[SN2] E0 = pausa igual 0x80 (confirmado)
+0x08072F04,Snd_DispatchBelowE0,label,,[SN2] despacho de 00..DF por op&0xF0: 80-8F rest; 90/A0/B0/C0 NOP 1 byte; D0 volume; resto nota (confirmado)
+0x08072F2E,Snd_OpE0_Rest,label,,[SN2] E0 = pausa igual 0x80 (confirmado)
 0x08072F7C,snd_track_cmd_ext,func_thumb,,"[R4] R4: decodificador alternativo de comandos (Dn volume, E1/E2 gravam +2C/+69, FF zera); provavel"
 0x08073058,snd_track_update,func_thumb,,[R4] R4: avanca cursor da trilha enquanto a espera +0x28 for zero; provavel
 0x08073094,snd_update_frame,func_thumb,,[R4] R4: percorre trilhas e subgrupos do driver por quadro; provavel

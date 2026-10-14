@@ -289,7 +289,7 @@ L	0x08010264	Scene_GsDispatch_Menu6_Encounter
 F	0x080102C0	Scr_HideSpritesPlaySong8
 F	0x08010478	Screen_ScrollRevealRowsStep
 F	0x0801053C	Fight_ResetTemplateAndPalette
-F	0x08010540	Fight_ResetTemplateAndPalette_08010540
+L	0x08010540	Fight_ResetTemplateAndPalette_08010540
 F	0x0801058C	Fight_InitBotPartSelectScreen
 F	0x08010814	Fight_ShowPreBattleTextForCharacter
 F	0x08010A20	Tile_ResetBlendAndClearSlots
@@ -305,7 +305,7 @@ F	0x08011500	Gfx_ResetBgLayersAndSong
 F	0x08011644	Fx_InitBlendTableAndTick
 F	0x08011764	Fight_InitBotPartPanel
 F	0x08011BB8	Gfx_ResetScreenBgAndBlend
-F	0x08011C44	Gfx_ResetScreenBgAndBlend_08011C44
+L	0x08011C44	Gfx_ResetScreenBgAndBlend_08011C44
 F	0x08011DB0	Fight_BeginEncounterTemplateSelection
 F	0x08011DE4	Fight_CopyEncounterTemplateEntry
 F	0x08011E20	Fight_SelectTemplateForCurrentEncounter
@@ -321,9 +321,9 @@ F	0x080121A8	Fight_FormatBotLabelText
 F	0x080121CC	Fight_TryAssignBotPartByRoll
 F	0x080121F0	Fight_CountAvailableBotParts
 F	0x08012234	Fight_PickRandomAvailableBotPart
-F	0x080122A4	Fight_PickRandomAvailableBotPart_080122A4
+L	0x080122A4	Fight_PickRandomAvailableBotPart_080122A4
 F	0x080122F4	Fight_AssignRandomBotPartSlot
-F	0x08012344	Fight_AssignRandomBotPartSlot_08012344
+L	0x08012344	Fight_AssignRandomBotPartSlot_08012344
 F	0x080123A0	Fight_DrawBotPartSprite
 F	0x08012468	Fight_UpdateIndicatorOscillation
 F	0x080124B8	Fight_DrawBotPartSpriteBig
@@ -337,7 +337,7 @@ F	0x080127DC	Fight_AwardPartExperience
 L	0x08012968	medaforce_list_ptr_literal
 F	0x08012970	Battle_FrameDispatchOrExit
 F	0x080129C8	Fight_SetupBattleBotStates
-F	0x080129F2	Fight_SetupBattleBotStates_080129F2
+L	0x080129F2	Fight_SetupBattleBotStates_080129F2
 F	0x08012A20	Fight_PartPanelStep
 F	0x08012B40	Gfx_FadeStepPaletteRows
 F	0x08012B94	Battle_CpuActionSelectStep
@@ -353,7 +353,7 @@ F	0x08013798	Init_CopyTileSetsAndSetBlend
 F	0x08013824	Fight_InitActionSlotSelect
 F	0x0801387C	Dispatch_ByteStateIndexTable
 L	0x080138A8	Dispatch_ByteStateIndexTable_Table
-F	0x08013904	Dispatch_ByteStateIndexTable_08013904
+L	0x08013904	Dispatch_ByteStateIndexTable_08013904
 F	0x08013AE4	Fight_MarkSelectedOptionFrame
 F	0x08013B8C	Fight_BattleSceneInit
 F	0x08013E30	UpdateSelectedMedabotPreviewScreen
@@ -387,7 +387,7 @@ F	0x08015358	Fight_SelectActionFromCycleOrPendingOverride
 F	0x08015390	Fight_TrySelectActionFromSpecialityCycle
 F	0x08015414	Fight_AdvanceSpecialityCycleIndex
 F	0x08015464	Fight_SelectFallbackActionFromPriorityList
-F	0x08015488	Fight_SelectFallbackActionFromPriorityList_08015488
+L	0x08015488	Fight_SelectFallbackActionFromPriorityList_08015488
 F	0x080154E0	Fight_IsPartActionLockedByPendingEffect
 F	0x08015508	Fight_IsHeadActionUnavailable
 F	0x08015528	Fight_IsPartActionUnavailable
@@ -524,7 +524,7 @@ F	0x08019440	Fight_UpdateBotScreenXFromMeterInverted
 F	0x08019544	Fight_UpdateBotMeterDisplayObject
 F	0x080195C0	Fight_DrawActiveBotsOverlay
 F	0x08019600	Fight_DrawSecondaryEffectIcon
-F	0x080196C0	Battle_CpuActionSelectPrep
+L	0x080196C0	Battle_CpuActionSelectPrep
 F	0x08019720	Fight_DrawPendingEffectIcon
 F	0x08019B40	Fight_DrawPartStatusIcon
 F	0x08019D9C	Fight_PlaceBotStatusIconObject
@@ -1801,8 +1801,8 @@ F	0x0804070C	Script_OpWaitFramesOrKey
 F	0x080407A4	Script_OpWaitFrames
 F	0x08040820	Script_OpSubcommandOrNextState
 L	0x08040884	MsgFF_SubcommandTable
-F	0x08040898	MsgFF_SfxAdvanceCtx
-F	0x080408BC	MsgFF_AdvanceOtherObj
+L	0x08040898	MsgFF_SfxAdvanceCtx
+L	0x080408BC	MsgFF_AdvanceOtherObj
 F	0x080408D0	MsgState_DispatchByScriptByte
 F	0x080408F4	MsgState9_CtxB1BDispatch
 F	0x08040914	MsgState10_CtxB1BDispatch
@@ -1962,7 +1962,7 @@ F	0x0804763C	MainState1
 F	0x080476E8	MainState_RequestModeTransition
 F	0x08047878	GameState_StartFlowByCommand
 L	0x080479A0	GameState_StartFlowByCommand_CaseNote
-F	0x08047B98	GameState_StartFlowByCommand_store_tail
+L	0x08047B98	GameState_StartFlowByCommand_store_tail
 F	0x08047BA8	Snd_SfxRequestWrapper
 F	0x08047BB4	Sound_RequestSong
 F	0x08047BC0	Sound_RequestFade
@@ -2039,14 +2039,14 @@ L	0x0804A3B6	lit_EventDbBase0
 L	0x0804A584	lit_EventDbBase1
 F	0x0804A60C	Map_InitScreenAndTransition
 F	0x0804A764	Overworld_InitMapScene
-F	0x0804A7A0	Overworld_InitMapScene_0804A7A0
+L	0x0804A7A0	Overworld_InitMapScene_0804A7A0
 L	0x0804A8C8	lit_EventDbBase2
 F	0x0804A900	Overworld_FinishTransitionInitPlayer
 F	0x0804A944	Overworld_ReloadMapSceneAfterReset
 F	0x0804AA74	Overworld_ReloadCurrentMapScene
 F	0x0804AFB8	Screen_UpdateStepWrap
 F	0x0804B008	Map_FinishEnterTransition
-F	0x0804B036	Map_FinishEnterTransition_0804B036
+L	0x0804B036	Map_FinishEnterTransition_0804B036
 L	0x0804B124	lit_EventDbBase3
 F	0x0804B1B0	Map_UpdateEventObjectDepthAndMarkerState
 F	0x0804B248	Map_ClearOamShadowViaDma
@@ -2070,7 +2070,7 @@ F	0x0804B958	Event_Op0A_FadeFromWhite
 F	0x0804B9B0	Event_Op0B_WarpA
 F	0x0804B9CC	Event_Op0C_WarpB
 F	0x0804B9E8	Script_ReadStateBlock
-F	0x0804B9F4	Script_ReadStateBlock_0804B9F4
+L	0x0804B9F4	Script_ReadStateBlock_0804B9F4
 F	0x0804BA5C	Event_Op0D_PlayerFaceDirection
 F	0x0804BA9C	Event_Op0E_PlayerHopInPlace
 F	0x0804BAEC	Event_Op0F_PlayerHopInDirection
@@ -2256,7 +2256,7 @@ F	0x0804EA18	EventOpcode37_LoseItem
 F	0x0804EB0C	EventOpcode38_GetPart
 F	0x0804EC38	EventOpcode39_LosePart
 F	0x0804ED88	EventOpcode3A_GetMoney
-F	0x0804EDC6	EventOpcode3A_GetMoney_0804EDC6
+L	0x0804EDC6	EventOpcode3A_GetMoney_0804EDC6
 F	0x0804EE00	EventOpcode3B_LoseMoney
 F	0x0804EE8C	EventOpcode3C_GetMedal
 F	0x0804EF5C	EventOpcode3D_GetTinpet
@@ -2344,7 +2344,7 @@ F	0x08050F94	Overworld_MapSub0_TileArrive
 F	0x08051078	Overworld_MapSub1_WaitObject
 F	0x080510C0	Overworld_MapSub2_IdleInput
 F	0x0805134C	Overworld_MapSub3_WaitScene
-F	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
+L	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
 L	0x08051416	Map_LoadEntitySpawnsForCurrentMap_08051416
 L	0x08051484	MapSpawn_ChapterFilterLiteral
@@ -2364,7 +2364,7 @@ F	0x0805218C	Map_SetEventMarkerFacingVariant
 F	0x080521A8	Overworld_TickRandomObjectAnim
 F	0x08052204	Map_TickAllObjectAnimations
 F	0x08052284	Map_CheckFacingEventTriggerAhead
-F	0x08052330	Map_CheckFacingEventTriggerAhead_08052330
+L	0x08052330	Map_CheckFacingEventTriggerAhead_08052330
 F	0x08052400	Map_CheckWalkOverTrigger
 F	0x080524C8	Map_GetAdjacentCollisionTileByDirection
 F	0x080525BC	Overworld_CheckMovementObjectBlocker
@@ -2422,7 +2422,7 @@ F	0x08054280	Scene_DispatchStateHandlerTail
 F	0x080567F0	Overworld_EnterSceneState
 F	0x0805716C	FieldMenu_DispatchSubstate
 F	0x0805718C	Overworld_InitChoiceMenuScreen
-F	0x08057244	Overworld_InitChoiceMenuScreen_08057244
+L	0x08057244	Overworld_InitChoiceMenuScreen_08057244
 F	0x08057440	Map_TickChoiceListOpen
 F	0x080574D4	FieldMenu_ChoiceSub2_SelectRow
 L	0x08057534	FieldMenu_RowActionTable
@@ -2438,7 +2438,7 @@ F	0x08057F1C	Menu_StepCursorWrap
 F	0x08057FB4	Map_ReleaseMarkerRenderSlots
 F	0x08057FD4	Map_UpdateCursorSpritePosition
 F	0x08058070	Map_CreateChoiceSprites
-F	0x08058080	Map_CreateChoiceSprites_08058080
+L	0x08058080	Map_CreateChoiceSprites_08058080
 F	0x080581C8	Map_DrawChoiceBackgroundRow
 F	0x08058208	Map_HandleMarkerCommandFromState
 F	0x0805821C	Map_HandleMarkerCommand
@@ -2931,8 +2931,8 @@ F	0x08072D68	Snd_TrackStepInterpreter
 L	0x08072D90	Snd_OpcodeTablePtr
 L	0x08072D94	Snd_OpcodeTable_E0_FF
 L	0x08072E14	Snd_OpE1_Entry
-F	0x08072F04	Snd_DispatchBelowE0
-F	0x08072F2E	Snd_OpE0_Rest
+L	0x08072F04	Snd_DispatchBelowE0
+L	0x08072F2E	Snd_OpE0_Rest
 F	0x08072F7C	snd_track_cmd_ext
 F	0x08073058	snd_track_update
 F	0x08073094	snd_update_frame
@@ -3450,6 +3450,7 @@ C	0x08007584
 C	0x0800C7E4
 C	0x0800CE70
 C	0x08010264
+C	0x080196C0
 C	0x0801D6A4
 C	0x0801D878
 C	0x0801D95C
@@ -3528,6 +3529,8 @@ C	0x0803D5E0
 C	0x0803D608
 C	0x0803D6AC
 C	0x0803D71C
+C	0x08040898
+C	0x080408BC
 C	0x080479A0
 C	0x0804A6A0
 C	0x0804A6BC
@@ -3566,6 +3569,7 @@ C	0x08050E6C
 C	0x08050F2A
 C	0x08050F38
 C	0x08050F40
+C	0x08051368
 C	0x08057534
 C	0x0805C988
 C	0x0805E404
