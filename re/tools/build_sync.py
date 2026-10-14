@@ -105,6 +105,8 @@ def main():
             r[4] = (r[4] + " (antes: %s)" % r[1]).strip()
             r[1] = name
             changed += 1
+        if k != "func_thumb" and len(r) > 2 and r[2].startswith("func"):
+            r[2] = k  # camada nova diz que é rótulo/dado, não função
 
     body.sort(key=lambda r: int(r[0], 16))
     out = io.StringIO()

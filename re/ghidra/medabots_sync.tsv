@@ -122,8 +122,8 @@ F	0x08006E08	Parts_ClampPartId
 F	0x08006E44	Parts_ValidateSet
 F	0x08006F14	Parts_RefreshPanelIfDirty
 F	0x08006F34	Parts_DispatchSlotAction
-F	0x08006F44	PartSet_UpdateFromCurrentLoadoutMaybe
-F	0x08006FA0	PartSet_EquipCurrentLoadoutMaybe
+L	0x08006F44	Parts_DispatchSlotAction_ReadActionIndex
+L	0x08006FA0	Parts_DispatchSlotAction_CheckByte9B
 F	0x08006FB0	Parts_BuildEquipTable
 F	0x080070F0	Parts_CountInventoryMatches
 F	0x0800712C	Parts_BuildSlotIcons
@@ -501,15 +501,15 @@ F	0x0801A6B0	Fight_AnyBotFlagSet
 F	0x0801A6EC	Fight_IsSlotFlag44Set
 F	0x0801A744	Fight_ClearSlotFlag44
 F	0x0801A788	Fight_RunStateDispatch
-F	0x0801A7D8	Fight_RunStateDispatch_State0
-F	0x0801A818	Fight_RunStateDispatch_State1
-F	0x0801A85C	Fight_RunStateDispatch_State2
-F	0x0801A8BC	Fight_RunStateDispatch_State3
-F	0x0801A910	Fight_RunStateDispatch_State4
-F	0x0801A950	Fight_RunStateDispatch_State5
-F	0x0801A958	Fight_RunStateDispatch_State6
-F	0x0801A998	Fight_RunStateDispatch_0801A998
-F	0x0801A9C8	Fight_RunStateDispatch_State8
+L	0x0801A7D8	Fight_RunStateDispatch_State0
+L	0x0801A818	Fight_RunStateDispatch_State1
+L	0x0801A85C	Fight_RunStateDispatch_State2
+L	0x0801A8BC	Fight_RunStateDispatch_State3
+L	0x0801A910	Fight_RunStateDispatch_State4
+L	0x0801A950	Fight_RunStateDispatch_State5
+L	0x0801A958	Fight_RunStateDispatch_State6
+L	0x0801A998	Fight_RunStateDispatch_State7
+L	0x0801A9C8	Fight_RunStateDispatch_State8
 F	0x0801ABF8	Fight_MaybeStartUiAction
 F	0x0801AC24	Fight_TryUiActionByIndex
 F	0x0801AC6C	Fight_TryUiActionDefault
@@ -621,18 +621,18 @@ L	0x0801D6A4	Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx
 F	0x0801D738	Fight_PrepareFollowupSourceDisplay
 L	0x0801D878	Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry
 L	0x0801D95C	Fight_DispatchOnSubstateAA_E_04_StepBotSlot
-F	0x0801D9DC	Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace
+L	0x0801D9DC	Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace
 L	0x0801DADE	Fight_DispatchOnSubstateAA_E_05_ReturnTail
 L	0x0801DAEC	Fight_DispatchOnSubstateAA_E_06_ShowPartsHud
 L	0x0801DC74	Fight_DispatchOnSubstateAA_E_07_SpawnSlot21
-F	0x0801DD30	Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30
+L	0x0801DD30	Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30
 L	0x0801DD74	Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim
 L	0x0801DDDC	Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget
 F	0x0801DE1C	Fight_DispatchOnSubstateAA_F
 L	0x0801DE44	Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair
 L	0x0801DED4	Fight_DispatchOnSubstateAA_F_02_HoldFlag
 F	0x0801DEE4	Fight_DispatchOnSubstateAA_G
-F	0x0801DF0C	Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles
+L	0x0801DF0C	Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles
 L	0x0801DF60	Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen
 L	0x0801DFE0	Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged
 L	0x0801E08C	Fight_DispatchOnSubstateAA_G_02_ReturnTail
@@ -644,7 +644,7 @@ F	0x0801E2D8	Fight_DispatchOnSubstateAA_H
 L	0x0801E300	Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles
 L	0x0801E3C0	Fight_DispatchOnSubstateAA_H_01_ChooseActionPath
 L	0x0801E43C	Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40
-F	0x0801E474	Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj
+L	0x0801E474	Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj
 L	0x0801E54C	Fight_DispatchOnSubstateAA_H_04_WaitSlotOffset10
 L	0x0801E578	Fight_DispatchOnSubstateAA_H_06_CheckHitOrSkip
 L	0x0801E5DC	Fight_DispatchOnSubstateAA_H_07_LoadStageGfx
@@ -1935,9 +1935,9 @@ F	0x0804C9C4	Event_Op49_Play_Map_Music
 F	0x0804C9D4	Event_Op4A_Jump_If_Not_Player_Direction
 F	0x0804CA28	Event_Op4B_Jump_If_Item_Count_Below_Amount
 F	0x0804CA84	Event_Op4C_Jump_If_Missing_Part
-F	0x0804CAD8	EventOpcode4B_JumpIfItemCountBelowAmount
+L	0x0804CAD8	Event_Op4C_TakeJumpIfPartMissing
 F	0x0804CAE8	Event_Op4D_Jump_If_Not_Has_Medal
-F	0x0804CB04	EventOpcode4C_JumpIfMissingPart
+L	0x0804CB04	Event_Op4D_CallHasMedalCheck
 F	0x0804CB34	Event_Op4E_Jump_If_Not_Has_Money
 F	0x0804CB94	Event_Op4F_Jump_If_Previous_Scene_Command_Failed
 F	0x0804CBDC	Event_Op50_Jump_If_Event_Counter_Below
@@ -1990,8 +1990,8 @@ F	0x0804D4AC	Event_Op7E_Move_All_Tracked_Actors_C
 F	0x0804D4D4	Event_Op7F
 F	0x0804D4FC	Event_Op80_Begin_Batched_Object_Command_Block
 F	0x0804D580	Event_Op81_Queue_Batched_Object_Command
-F	0x0804D584	EventOpcode02_RunEmbeddedInitOpcodeWithSavedArgs
-F	0x0804D59C	Event_RunEmbeddedInitOpcode
+L	0x0804D584	Event_Op81_CallReadArgs8
+L	0x0804D59C	Event_Op81_SelectSavedArgRecord
 F	0x0804D5DC	Event_Op82_Execute_Batched_Object_Command_Block
 F	0x0804D5F0	Event_Op83_Set_Object_Render_Mode
 F	0x0804D758	Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up
@@ -2464,6 +2464,7 @@ F	0x0806A114	dispatch_scene_state
 F	0x0806A3C4	scene_sequence_a
 F	0x0806A654	scene_sequence_b
 F	0x0806A718	wait_gate_0xf1
+F	0x0806A748	Battle_EmitBotSpritesInDepthOrder
 F	0x0806B01C	slots_move_group3
 F	0x0806B0D4	slots_update_anim
 F	0x0806B2F4	Obj_UpdateSlotPosition
@@ -2923,12 +2924,15 @@ C	0x0800D684
 C	0x0801D6A4
 C	0x0801D878
 C	0x0801D95C
+C	0x0801D9DC
 C	0x0801DAEC
 C	0x0801DC74
+C	0x0801DD30
 C	0x0801DD74
 C	0x0801DDDC
 C	0x0801DE44
 C	0x0801DED4
+C	0x0801DF0C
 C	0x0801DF60
 C	0x0801DFE0
 C	0x0801E09C
@@ -2938,6 +2942,7 @@ C	0x0801E2B8
 C	0x0801E300
 C	0x0801E3C0
 C	0x0801E43C
+C	0x0801E474
 C	0x0801E54C
 C	0x0801E578
 C	0x0801E5DC

@@ -368,8 +368,8 @@ address,name,kind,count,comment
 0x08006E44,Parts_ValidateSet,func_thumb,,[R0] valida conjunto de 5 partes e redesenha painel (chute)
 0x08006F14,Parts_RefreshPanelIfDirty,func_thumb,,[R0] atualiza painel se flag suja (provavel)
 0x08006F34,Parts_DispatchSlotAction,func_thumb,,[R0] dispatch por jump table de acao de slot (chute)
-0x08006F44,PartSet_UpdateFromCurrentLoadoutMaybe,func_thumb,,Simon/Rokusho
-0x08006FA0,PartSet_EquipCurrentLoadoutMaybe,func_thumb,,Simon/Rokusho
+0x08006F44,Parts_DispatchSlotAction_ReadActionIndex,label,,Simon/Rokusho (antes: PartSet_UpdateFromCurrentLoadoutMaybe)
+0x08006FA0,Parts_DispatchSlotAction_CheckByte9B,label,,Simon/Rokusho (antes: PartSet_EquipCurrentLoadoutMaybe)
 0x08006FB0,Parts_BuildEquipTable,func_thumb,,[R0] monta tabela de partes equipadas (provavel)
 0x080070F0,Parts_CountInventoryMatches,func_thumb,,[R0] conta partes disponiveis no inventario (provavel)
 0x0800712C,Parts_BuildSlotIcons,func_thumb,,[R0] monta sprites pequenos dos componentes (provavel)
@@ -747,15 +747,15 @@ address,name,kind,count,comment
 0x0801A6EC,Fight_IsSlotFlag44Set,func_thumb,,[R1] Testa bit do slot 0/1/2 em +0x44 (01/02/04); confirmado
 0x0801A744,Fight_ClearSlotFlag44,func_thumb,,[R1] Limpa bit do slot 0/1/2 em +0x44; confirmado
 0x0801A788,Fight_RunStateDispatch,func_thumb,,[R1] Despachante de 9 estados via byte +0x13A e tabela de salto (nao recuperada); confirmado
-0x0801A7D8,Fight_RunStateDispatch_State0,func_thumb,,[R1] Carrega 4 graficos ROM->VRAM e marca estado; provavel
-0x0801A818,Fight_RunStateDispatch_State1,func_thumb,,[R1] Carrega 4 graficos ROM->VRAM; provavel
-0x0801A85C,Fight_RunStateDispatch_State2,func_thumb,,[R1] Carrega 5 graficos ROM->VRAM; provavel
-0x0801A8BC,Fight_RunStateDispatch_State3,func_thumb,,[R1] Carrega 5 graficos ROM->VRAM; provavel
-0x0801A910,Fight_RunStateDispatch_State4,func_thumb,,[R1] Carrega 3 graficos ROM->VRAM; provavel
-0x0801A950,Fight_RunStateDispatch_State5,func_thumb,,[R1] Sem graficos; so repassa 0x9D; confirmado
-0x0801A958,Fight_RunStateDispatch_State6,func_thumb,,[R1] Carrega 3 graficos ROM->VRAM; provavel
-0x0801A998,Fight_RunStateDispatch,func_thumb,,[R1] Chama 0803EF8C (preenchimento); chute (antes: Fight_RunStateDispatch_State7)
-0x0801A9C8,Fight_RunStateDispatch_State8,func_thumb,,[R1] Salta para 0801AADE; confirmado
+0x0801A7D8,Fight_RunStateDispatch_State0,label,,[R1] Carrega 4 graficos ROM->VRAM e marca estado; provavel
+0x0801A818,Fight_RunStateDispatch_State1,label,,[R1] Carrega 4 graficos ROM->VRAM; provavel
+0x0801A85C,Fight_RunStateDispatch_State2,label,,[R1] Carrega 5 graficos ROM->VRAM; provavel
+0x0801A8BC,Fight_RunStateDispatch_State3,label,,[R1] Carrega 5 graficos ROM->VRAM; provavel
+0x0801A910,Fight_RunStateDispatch_State4,label,,[R1] Carrega 3 graficos ROM->VRAM; provavel
+0x0801A950,Fight_RunStateDispatch_State5,label,,[R1] Sem graficos; so repassa 0x9D; confirmado
+0x0801A958,Fight_RunStateDispatch_State6,label,,[R1] Carrega 3 graficos ROM->VRAM; provavel
+0x0801A998,Fight_RunStateDispatch_State7,label,,[R1] Chama 0803EF8C (preenchimento); chute (antes: Fight_RunStateDispatch_State7) (antes: Fight_RunStateDispatch)
+0x0801A9C8,Fight_RunStateDispatch_State8,label,,[R1] Salta para 0801AADE; confirmado
 0x0801ABF8,Fight_MaybeStartUiAction,func_thumb,,"[R1] Guarda (flag ou fase +0x89) e chama FUN_0803faa0(1,2,0); chute no efeito; confirmado guarda"
 0x0801AC24,Fight_TryUiActionByIndex,func_thumb,,[R1] Mesma guarda; chama FUN_0803fb3c com item de tabela por indice; confirmado guarda
 0x0801AC6C,Fight_TryUiActionDefault,func_thumb,,[R1] Mesma guarda; retorna FUN_08041ca4(); confirmado guarda
@@ -867,18 +867,18 @@ address,name,kind,count,comment
 0x0801D738,Fight_PrepareFollowupSourceDisplay,func_thumb,,"Simon/Rokusho: Prepare the chained/follow-up source bot for display. Copies the source bot's live battle state into a temporary display area, rebuilds its displayed part ids, and creates the temporary composite sprite used for the follow-up presentation."
 0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,label,,"Simon/Rokusho: Animate the follow-up source bot's temporary display sprite into view. When the intro completes, seeds the temporary bot state for the follow-up action and advances the action sequence. (antes: Fight_AnimateFollowupSourceIntro)"
 0x0801D95C,Fight_DispatchOnSubstateAA_E_04_StepBotSlot,label,,Simon/Rokusho: Advance the temporary follow-up source display toward its next staged position while animating its composite sprite. (antes: Fight_AdvanceFollowupSourceApproach)
-0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,func_thumb,,"Simon/Rokusho: Action-family entry for Recovery. Drives a temporary source/target movement or presentation step, then advances into the later follow-up/repair-state pipeline once the animated approach reaches its threshold. (antes: ActionFamily_Recovery_Handler; decisao CF)"
+0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,label,,"Simon/Rokusho: Action-family entry for Recovery. Drives a temporary source/target movement or presentation step, then advances into the later follow-up/repair-state pipeline once the animated approach reaches its threshold. (antes: ActionFamily_Recovery_Handler; decisao CF)"
 0x0801DADE,Fight_DispatchOnSubstateAA_E_05_ReturnTail,label,,"bx r0 = retorno normal (pop r0), nao tabela; ao chegar fi+0xAA += 1 (E05 -> E06)"
 0x0801DAEC,Fight_DispatchOnSubstateAA_E_06_ShowPartsHud,label,,"Simon/Rokusho: Finalize the follow-up source presentation, refresh the displayed parts, reset temporary motion fields, and advance after the source sprite reaches its commit position. (antes: ActionFamily_AutoRecover_Handler)"
 0x0801DC74,Fight_DispatchOnSubstateAA_E_07_SpawnSlot21,label,,"Simon/Rokusho: Action-family entry for Repair. Waits on a timer-like presentation counter, then creates the temporary repair indicator object and advances into the repair-family resolution pipeline. (antes: ActionFamily_Repair_Handler)"
-0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,func_thumb,,Simon/Rokusho (antes: ActionFamily_Reactivate_Handler; decisao CF)
+0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,label,,Simon/Rokusho (antes: ActionFamily_Reactivate_Handler; decisao CF)
 0x0801DD74,Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim,label,,"Simon/Rokusho: Show the follow-up source part label/text for the currently selected chained-action source, then advance once the text object setup is ready. (antes: ActionFamily_AntiAir_Handler)"
 0x0801DDDC,Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget,label,,Simon/Rokusho: Commit the chained/follow-up action source into active battle state. Transfers the selected source relationship into the main acting bot state and marks the outer action-sequence step complete. (antes: ActionFamily_Scout_Handler)
 0x0801DE1C,Fight_DispatchOnSubstateAA_F,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0801DE44,Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair,label,,Simon/Rokusho: Queue text for the selected part action by copying both action-description text keyed by BattlePartState_Clean.speciality and technique text keyed by BattlePartState_Clean.technique_or_leg_type. (antes: ActionFamily_DrainCharge_Handler)
 0x0801DED4,Fight_DispatchOnSubstateAA_F_02_HoldFlag,label,,Simon/Rokusho (antes: ActionFamily_Impair_Handler)
 0x0801DEE4,Fight_DispatchOnSubstateAA_G,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,func_thumb,,Simon/Rokusho (antes: ActionFamily_Sacrifice_Handler)
+0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,label,,Simon/Rokusho (antes: ActionFamily_Sacrifice_Handler)
 0x0801DF60,Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen,label,,[HA2] G idx01; escreve 0x04000008 (BGxCNT); +1; provavel (antes: Fight_DispatchOnSubstateAA_G_SetBgControl)
 0x0801DFE0,Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged,label,,3 etapas por frame; +1 na etapa 2; tail-call nao recuperado; confirmado
 0x0801E08C,Fight_DispatchOnSubstateAA_G_02_ReturnTail,label,,"bx r0 = retorno normal (pop r0), nao tabela; etapa 2 faz fi+0xAA += 1 (G02 -> G03)"
@@ -890,7 +890,7 @@ address,name,kind,count,comment
 0x0801E300,Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles,label,,"Simon/Rokusho: Action-family entry for Counterattack in the later sequence table. Loads the dedicated presentation assets, initializes the mirrored side-preview objects and per-side object state, then advances the action state. (antes: ActionFamily_Counterattack_Handler)"
 0x0801E3C0,Fight_DispatchOnSubstateAA_H_01_ChooseActionPath,label,,Simon/Rokusho: Advance the outer action-sequence state machine based on defender_followup_flags and action_result_flow_flags. Successful normal resolution increments action usage and Medaforce charge; affinity-result and follow-up cases branch into dedicated sequence states. (antes: Fight_AdvanceSequenceFromResultFlags)
 0x0801E43C,Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40,label,,Simon/Rokusho (antes: ActionFamily_InterruptChange_Handler)
-0x0801E474,Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj,func_thumb,,Simon/Rokusho: Action-family entry for Attack Change. Builds a temporary indicator object and seeds its position from the current preview anchors before advancing the action state. (antes: ActionFamily_AttackChange_Handler)
+0x0801E474,Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj,label,,Simon/Rokusho: Action-family entry for Attack Change. Builds a temporary indicator object and seeds its position from the current preview anchors before advancing the action state. (antes: ActionFamily_AttackChange_Handler)
 0x0801E54C,Fight_DispatchOnSubstateAA_H_04_WaitSlotOffset10,label,,"Simon/Rokusho: Action-family entry for Defense Change. Waits for a helper-driven condition, then seeds a short delay counter and advances the action state. (antes: ActionFamily_DefenseChange_Handler)"
 0x0801E578,Fight_DispatchOnSubstateAA_H_06_CheckHitOrSkip,label,,"+1, 0x0A ou +1 conforme byte +0x49 e bit 0x20; confirmado"
 0x0801E5DC,Fight_DispatchOnSubstateAA_H_07_LoadStageGfx,label,,gfx por etapa +0x8B; +1; confirmado
@@ -2182,9 +2182,9 @@ address,name,kind,count,comment
 0x0804C9D4,Event_Op4A_Jump_If_Not_Player_Direction,func_thumb,,"[HE3] confirmado Ghidra; 2 args (dir,jump); compara com 0x03003811"
 0x0804CA28,Event_Op4B_Jump_If_Item_Count_Below_Amount,func_thumb,,"[HE3] confirmado Ghidra; 3 args (item,amount,jump); contagem via Map64_GetValue em 0x03002BA0 (64x2)"
 0x0804CA84,Event_Op4C_Jump_If_Missing_Part,func_thumb,,"[HE3] confirmado Ghidra; 3 args (bot,part,jump); guarda indice em 0x03006440"
-0x0804CAD8,EventOpcode4B_JumpIfItemCountBelowAmount,func_thumb,,"Simon/Rokusho: Primary handler for opcode 0x4B. Reads item id / amount / jump, then branches when the current item count is zero or less than the requested amount. The old parser name 'Jump_If_More_Than_Amount_of_Item' was backwards."
+0x0804CAD8,Event_Op4C_TakeJumpIfPartMissing,label,,"Simon/Rokusho: Primary handler for opcode 0x4B. Reads item id / amount / jump, then branches when the current item count is zero or less than the requested amount. The old parser name 'Jump_If_More_Than_Amount_of_Item' was backwards. (antes: EventOpcode4B_JumpIfItemCountBelowAmount)"
 0x0804CAE8,Event_Op4D_Jump_If_Not_Has_Medal,func_thumb,,"[HE3] confirmado Ghidra; 2 args (medal,jump); Slot_FindByIdPlus1 em 0x03000BE0 (30x0x40)"
-0x0804CB04,EventOpcode4C_JumpIfMissingPart,func_thumb,,Simon/Rokusho: Primary handler for opcode 0x4C. Reads bot / part / jump and branches when the requested part is missing rather than present. On success it caches a matching slot index into event runtime state.
+0x0804CB04,Event_Op4D_CallHasMedalCheck,label,,Simon/Rokusho: Primary handler for opcode 0x4C. Reads bot / part / jump and branches when the requested part is missing rather than present. On success it caches a matching slot index into event runtime state. (antes: EventOpcode4C_JumpIfMissingPart)
 0x0804CB34,Event_Op4E_Jump_If_Not_Has_Money,func_thumb,,"[HE3] confirmado Ghidra; 3 args (Short money*10, jump); dinheiro = u32 0x03002B70"
 0x0804CB94,Event_Op4F_Jump_If_Previous_Scene_Command_Failed,func_thumb,,Simon/Rokusho (antes: EventOpcode4F_JumpIfPreviousSceneCommandFailed)
 0x0804CBDC,Event_Op50_Jump_If_Event_Counter_Below,func_thumb,,"[HE3] confirmado Ghidra; 3 args (sel,value,jump); (s8)[sel?0x0300649D:0x0300649C] < value; C# diz 2 args"
@@ -2237,8 +2237,8 @@ address,name,kind,count,comment
 0x0804D4D4,Event_Op7F,func_thumb,,[HE4] sem definicao; 1 byte -> args + pendente; continuacao 0x0804FC7C
 0x0804D4FC,Event_Op80_Begin_Batched_Object_Command_Block,func_thumb,,"Simon/Rokusho: Reset the event-script runtime block at gEventScriptRuntimeState, fetch the first event opcode byte into gCurrentEventOpcodeByte, clear the event initialization/state byte and opcode substate, and dispatch the initialization handler for the new event. (antes: EventOpcode80_BeginBatchedObjectCommandBlock)"
 0x0804D580,Event_Op81_Queue_Batched_Object_Command,func_thumb,,Simon/Rokusho (antes: EventOpcode81_QueueBatchedObjectCommand)
-0x0804D584,EventOpcode02_RunEmbeddedInitOpcodeWithSavedArgs,func_thumb,,"Simon/Rokusho: Normal event opcode 0x02. |  | Reads an inline argument block, pushes it into the embedded-init runtime stack, then immediately runs one embedded initialization opcode through Event_RunEmbeddedInitOpcode. |  | This explains why some event behaviors that look like 'normal opcodes' actually route through the initialization-opcode table."
-0x0804D59C,Event_RunEmbeddedInitOpcode,func_thumb,,"Simon/Rokusho: Run one embedded event-initialization opcode using a saved 8-byte argument block. |  | Copies a saved argument record into gEventScriptArguments, fetches the next byte as an init opcode, clears gCurrentEventStateByte and gCurrentEventOpcodeSubstate, then dispatches through sEventInitializationOpcodeHandlerTable. |  | This is the bridge between the normal event VM and the initialization-opcode VM."
+0x0804D584,Event_Op81_CallReadArgs8,label,,"Simon/Rokusho: Normal event opcode 0x02. |  | Reads an inline argument block, pushes it into the embedded-init runtime stack, then immediately runs one embedded initialization opcode through Event_RunEmbeddedInitOpcode. |  | This explains why some event behaviors that look like 'normal opcodes' actually route through the initialization-opcode table. (antes: EventOpcode02_RunEmbeddedInitOpcodeWithSavedArgs)"
+0x0804D59C,Event_Op81_SelectSavedArgRecord,label,,"Simon/Rokusho: Run one embedded event-initialization opcode using a saved 8-byte argument block. |  | Copies a saved argument record into gEventScriptArguments, fetches the next byte as an init opcode, clears gCurrentEventStateByte and gCurrentEventOpcodeSubstate, then dispatches through sEventInitializationOpcodeHandlerTable. |  | This is the bridge between the normal event VM and the initialization-opcode VM. (antes: Event_RunEmbeddedInitOpcode)"
 0x0804D5DC,Event_Op82_Execute_Batched_Object_Command_Block,func_thumb,,Simon/Rokusho (antes: EventOpcode82_ExecuteBatchedObjectCommandBlock_Setup)
 0x0804D5F0,Event_Op83_Set_Object_Render_Mode,func_thumb,,Simon/Rokusho (antes: EventOpcode53_Primary)
 0x0804D758,Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up,func_thumb,,"Simon/Rokusho: Primary handler for event opcode 0x84. Reads one byte argument (map scene variant), marks the opcode as deferred, and lets the continuation wait until the player facing byte reaches 0 before committing the requested map scene variant to the same runtime byte used by opcode 0x69. (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp)"
@@ -2711,6 +2711,7 @@ address,name,kind,count,comment
 0x0806A3C4,scene_sequence_a,func_thumb,,[R4] R4: sequencia de cena por passos 0x96..6; provavel
 0x0806A654,scene_sequence_b,func_thumb,,[R4] R4: espera 0xB4 quadros e 3 sprites; provavel
 0x0806A718,wait_gate_0xf1,func_thumb,,[R4] R4: timer 0xF1 com pre-condicao; provavel
+0x0806A748,Battle_EmitBotSpritesInDepthOrder,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
 0x0806B01C,slots_move_group3,func_thumb,,"[R4] R4: move 3 slots grupo, limite -15 em y; provavel"
 0x0806B0D4,slots_update_anim,func_thumb,,[R4] R4: loop de 20 slots com frame e reinicio; provavel
 0x0806B2F4,Obj_UpdateSlotPosition,func_thumb,,[provavel] object slot velocity and screen position update
