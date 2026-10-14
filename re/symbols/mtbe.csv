@@ -2717,9 +2717,9 @@ address,name,kind,count,comment
 0x08047E3C,Tinpet_CreateRecord_Wrapper,func_thumb,,[FN2] confirmado: Wrapper que chama Tinpet_CreateRecord(arg1)
 0x08047E4C,Overworld_NoOpStateHandler,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: handler vazio (so retorna)
 0x08047E50,PartSet_GetLegIconIndexForMatchingSlotPartId,func_thumb,,"Simon/Rokusho: Search the predefined 9 part sets for a set containing the given part id in the requested slot, then return that set's legs icon index. This is used by preview UIs that need a stable set-level icon even when only one slot's part id is currently selected. [CS2] CONFIRMADO decompile: busca entrada (id parte"
-0x08047EF0,PartSet_HasMatchingSlotPartId,func_thumb,,Simon/Rokusho: Check whether one of the predefined 9 part sets contains the given part id in the requested slot. Used by the preview/replacement UI to map a selected part back to a full four-part set.
-0x08047F50,PartSet_FindCompleteEntryIndex,func_thumb,,[R3] indice (0..8) do registro com +3..+6 iguais a v; -1 se nenhum
-0x08047F9C,Team_CountSlotsWithStatus3,func_thumb,,Simon/Rokusho: Count entries in gPartSetTable whose state byte is 3 (complete set). (antes: PartSet_CountCompleteEntries)
+0x08047EF0,PartSet_HasMatchingSlotPartId,func_thumb,,Simon/Rokusho: Check whether one of the predefined 9 part sets contains the given part id in the requested slot. Used by the preview/replacement UI to map a selected part back to a full four-part set. [RV13] [RV13] confirmado: 1 se algum slot tem o part id na categoria (0-3)
+0x08047F50,PartSet_FindCompleteEntryIndex,func_thumb,,[R3] indice (0..8) do registro com +3..+6 iguais a v; -1 se nenhum [RV13] [RV13] confirmado: indice da 1a entrada status 3 com 4 campos iguais ao parametro; -1 se nenhuma
+0x08047F9C,Team_CountSlotsWithStatus3,func_thumb,,Simon/Rokusho: Count entries in gPartSetTable whose state byte is 3 (complete set). (antes: PartSet_CountCompleteEntries) [RV13] [RV13] confirmado: conta 9 slots com status 3
 0x08047FBC,PartSet_HasCompleteMonochromeEntry,func_thumb,,Simon/Rokusho: Return whether gPartSetTable contains a complete set entry whose four part ids (head/right/left/legs) all match the supplied monochrome part id. [HE3] confirmado Ghidra (GH-HE3-redo); 0x030017A0 byte0==3 e +3..+6 == part
 0x08048000,Fx_SetupLayersAndInitRecord8,func_thumb,,[FS7] [FS7] grava 0x500 e 0x1F60 em registradores de display; Fx_InitRecord8; provavel (nome chute)
 0x08048088,Map_GetEncounterRecordByte,func_thumb,,[VA3] arg0 -> ROM[gMapEncounters + map*8 + 2]; arg1 -> +3; outro -> 0. provavel
@@ -2733,15 +2733,15 @@ address,name,kind,count,comment
 0x0804842C,SND_PolicyRequest,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling. (antes: Overworld_ApplyMapSceneModePolicy)
 0x08048684,Map_GetObjectPoseByGroup,func_thumb,,[CS] CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim (antes: Map_GetSpriteListEntry)
 0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,,Simon/Rokusho: Load the palette set used by event objects / overworld NPC sprites for the current map. Resolves the per-slot sprite palette ids for the current map and copies each palette block into the shared object palette staging area. [CS2] CONFIRMADO: copia paleta 0x20 B de ROM[0x083F83C0+4*id] para EWRAM 0x0202F800+0x20*n por DMA3; fixa 0x085FB684 -> 0x0202F9C0
-0x080487C8,Map_ResetObjectField0B,func_thumb,,[HE4] objeto+0xB = 0xFF/0/0x40 pela tabela do tipo; usado pelo 0x83
-0x08048830,Overworld_ResetMapSceneBlendState,func_thumb,,Simon/Rokusho: Reset the map-scene blend registers and cached screen-transition blend coefficients before showing the rebuilt overworld scene.
-0x08048864,Map_InitializeObjectRenderSlot,func_thumb,,"Simon/Rokusho: Initialize one map/object render slot descriptor with a base tile resource id, palette/graphic set id, and mode bytes."
-0x08048888,Map_ResetObjectRenderSlot,func_thumb,,Simon/Rokusho
-0x080488AC,Map_CountDecimalDigits,func_thumb,,[R3] numero de digitos decimais de n
+0x080487C8,Map_ResetObjectField0B,func_thumb,,[HE4] objeto+0xB = 0xFF/0/0x40 pela tabela do tipo; usado pelo 0x83 [RV13] [RV13] confirmado: define +0xb do objeto a partir de tabela (0/1/2 -> 0x40/0x00/0xff)
+0x08048830,Overworld_ResetMapSceneBlendState,func_thumb,,Simon/Rokusho: Reset the map-scene blend registers and cached screen-transition blend coefficients before showing the rebuilt overworld scene. [RV13] [RV13] provavel: grava constantes de blend/registro de cena no ctx do mapa
+0x08048864,Map_InitializeObjectRenderSlot,func_thumb,,"Simon/Rokusho: Initialize one map/object render slot descriptor with a base tile resource id, palette/graphic set id, and mode bytes. [RV13] [RV13] confirmado: preenche campos do slot de render do objeto (0x40 B)"
+0x08048888,Map_ResetObjectRenderSlot,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: zera 0x40 B do slot e chama FUN_08049344 (callee sem nome)
+0x080488AC,Map_CountDecimalDigits,func_thumb,,[R3] numero de digitos decimais de n [RV13] [RV13] confirmado: conta digitos decimais (max 10)
 0x080488E8,Map_FormatDecimalDigits,func_thumb,,[R3] extrai digitos decimais de n com zeros a esquerda
 0x08048960,KeyItem_CanUseHere,func_thumb,,"[KI] [KI] era FUN_08048960 (nao e batalha). Switch no id do key item. id 0: E+0xC5D bit 0x20 set -> 3, senao se gMapArea[mapa]==0x0A -> 2, senao 1. ids 1,5,C,D,13h,27h,28h: E+0xC5D bit0 set -> 3; senao E+0xC5C-1 > 1 -> 1 e senao 4. Outros: 0. Literais: E=0x030057E0, mapa=0x03005FDE"
-0x08048B70,Fixed_Mul88,func_thumb,,[R3] (a*b)>>8 com arredondamento para zero (8.8)
-0x08048BA0,Fixed_ReciprocalQ16,func_thumb,,[R3] 0x10000 / a
+0x08048B70,Fixed_Mul88,func_thumb,,[R3] (a*b)>>8 com arredondamento para zero (8.8) [RV13] [RV13] confirmado: multiplicacao 8.8 com arredondamento para zero
+0x08048BA0,Fixed_ReciprocalQ16,func_thumb,,[R3] 0x10000 / a [RV13] [RV13] confirmado: 0x10000 / x
 0x08048BB8,Map_ResetAffineScaleBlock,func_thumb,,[FR3] [FR3] zera bloco afim e escala 0x100 (identidade); chamada por Map_ResetRenderAffineState 0x08049318 (provavel)
 0x08048CF0,Map_CopyTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Copy a decompressed 16-bit tilemap into the four BG screenblock quadrants, applying a base tile offset."
 0x08048E24,Map_ExpandMetaTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Expand a compact metatile/attribute map into BG screenblock tile entries, handling quadrant selection within 2x2 metatiles."
@@ -3002,10 +3002,10 @@ address,name,kind,count,comment
 0x0804EC38,EventOpcode39_LosePart,func_thumb,,Simon/Rokusho
 0x0804ED88,EventOpcode3A_GetMoney,func_thumb,,Simon/Rokusho
 0x0804EDC6,EventOpcode3A_GetMoney,label,,[RW] GH-RW: unico chamador visto de AddClampedCounter (dinheiro ganho so por evento)
-0x0804EE00,EventOpcode3B_LoseMoney,func_thumb,,Simon/Rokusho
-0x0804EE8C,EventOpcode3C_GetMedal,func_thumb,,Simon/Rokusho
-0x0804EF5C,EventOpcode3D_GetTinpet,func_thumb,,Simon/Rokusho
-0x0804EFFC,EventOpcode40_RunPulsedScreenTransitionLoop,func_thumb,,Simon/Rokusho
+0x0804EE00,EventOpcode3B_LoseMoney,func_thumb,,Simon/Rokusho [RV17] confirmado - subtrai dinheiro (Save_GetMoney
+0x0804EE8C,EventOpcode3C_GetMedal,func_thumb,,Simon/Rokusho [RV17] confirmado - checa slot de medalha
+0x0804EF5C,EventOpcode3D_GetTinpet,func_thumb,,Simon/Rokusho [RV17] confirmado - cria registro de Tinpet se pool nao cheia; nome mantido
+0x0804EFFC,EventOpcode40_RunPulsedScreenTransitionLoop,func_thumb,,Simon/Rokusho [RV17] confirmado - loop de transicao de tela com contador decrescente; nome mantido
 0x0804F0A4,Event_Op41_Cont_FlickerAllActors,func_thumb,,Simon/Rokusho: Tick flicker state for all active tracked actors and end the opcode when all participating actors are finished. (antes: EventOpcode41_FlickerAllActors)
 0x0804F110,EventOpcode42_MovePlayerOneStep,func_thumb,,"Simon/Rokusho: Perform a one-step forced player movement using the current facing/direction nibble, then wait for the movement helper to report completion before ending the opcode."
 0x0804F188,Map_CameraFollowStepByDir,func_thumb,,[FN2] provavel: Move alvo e camera (Map_AddCameraScrollX/Y) em 4 direcoes por arg 0..3; usa ikki_x/y_to_tile no fim
@@ -3087,7 +3087,7 @@ address,name,kind,count,comment
 0x08050F2A,Event_RunSceneCommandSequence_AltEntry_8050f2a,label,,[QA5] alvo de desvio/tabela dentro do host (Ghidra: corpo contém; sem BL/prologo PUSH); rotulo
 0x08050F38,SceneCommandStep3_Advance,label,,[SC] [SC] passo 3 (sem funcao): so avanca o passo
 0x08050F40,SceneCommandStep4_WaitTransitionEnd,label,,[SC] [SC] passo 4 (sem funcao): cmd 8 termina; outros esperam 0x08049E08 terminar e devolvem 1
-0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions."
+0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions. [RV18] provavel: se estado>4 atualiza marcadores/sprites; senao despacha por tabela em +1"
 0x08050F80,Overworld_MapSubstateTable,table,,"[FM] [FM] tabela de 5 sub-estados do mapa (byte 0x03005311); entradas 0x08050F94, 0x08051078, 0x080510C0, 0x0805134C, 0x08051368; handlers sem funcao no Ghidra"
 0x08050F94,Overworld_MapSub0_TileArrive_Label,label,,[FM2] [FM2] sub 0 do mapa: chegada ao tile; gatilho -> sub 1; senao sub 2 (confirmado no disasm) (antes: Overworld_MapSub0_TileArrive)
 0x08051078,Overworld_MapSub1_WaitObject_Label,label,,[FM2] [FM2] sub 1 do mapa: espera objeto e avanca para sub 2 (confirmado) (antes: Overworld_MapSub1_WaitObject)

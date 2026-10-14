@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x08000000,entry,label,provavel: entrada da ROM (cabecalho que desvia para crt0); sem funcao no Ghidra
+0x080000C0,crt0,func_thumb,confirmado: ponteiro de IRQ em 0x080000FC = IntrMain e chama AgbMain (DAT_08000100) em laco
+0x08000104,IntrMain,func_thumb,confirmado: le REG_IE/REG_IF e despacha o handler pela tabela 0x08000214
+0x0800025C,AgbMain,func_thumb,confirmado: init (reset, IRQ, link, som), depois laco VBlankWait -> input -> gMainStateTable -> OAM shadow -> link
+0x08000458,InitializeInterruptsAndDefaultHandlers,func_thumb,confirmado: CpuSet das tabelas de vetor/handlers padrao, DISPSTAT, REG_IME; chama Save_InvokeFlashOp no fim
+0x080004E0,ResetHardwareAndMemory,func_thumb,confirmado: CpuFastSet zera IWRAM 0x03000000 e EWRAM 0x02000000 e paleta; chama ClearOamAndVramShadow
+0x08000540,ClearOamAndVramShadow,func_thumb,confirmado: CpuFastSet zera o shadow de OAM (0x07000000 via buffer 0xA0) e a VRAM 0x06000000
+0x0800065C,VBlankIrqHandler,func_thumb,confirmado: scroll do shadow, copia OAM/paleta por DMA no VBlank, callbacks CallViaR0, snd_track_dispatch_all e snd_frame_tick
+0x08000840,NoOpActionHandler,func_thumb,confirmado: corpo vazio (return); placeholder de handler
+0x08000844,get_player_inputs,func_thumb,confirmado: le KEYINPUT, calcula pressionados/soltos/segurados e auto-repeat (intervalo 4 quadros apos 0x10); nome mantido
+0x08000964,SoftReset_CheckComboAndRun,func_thumb,confirmado: (antes: is_input_soft_reset) combo de 4 botoes (0xF) + bit 8 novo: chama SoftResetSequence, get_player_inputs, retorna 1
+0x080009BC,Lz_DecodeIfMagic,func_thumb,confirmado: (antes: decompress_and_store) so decodifica se o cabecalho for 'Le'; escolhe Malias_DecodeLZ ou Malias_DecodeLZ_Halfword pelo tamanho; retorna 0 se nao for LZ
+0x08001520,BuildShadowOamFromObjectState,func_thumb,confirmado: varre 0x80 objetos ativos (flag 0x8000), ordena por prioridade, monta entradas de OAM (afim, flip, paleta) no shadow
+0x08001CAC,SetObjectAffineMatrixFromAngleAndScale,func_thumb,confirmado: calcula ds/dy/dx/dy da matriz afim por seno/cosseno (tabela de 0x100 entradas) e escala; divarm por escala
+0x08001EA8,SetObjectScaleVectorFromMode,func_thumb,confirmado: grava os vetores de escala (0x4000 ou 0x400000 / escala) conforme flags do modo (0x1000/0x2000)
+0x08001FF8,RotateObjectOffsetByAffineAngle,func_thumb,confirmado: gira o vetor (x,y) pelo seno/cosseno do angulo afim do objeto (<<14)
+0x08002060,SortActiveObjectIndicesByPriority,func_thumb,confirmado: comb sort (gap *0xA000>>16) da lista de indices por byte de prioridade (+1)
+0x080020C8,InitializeLinkTransferState,func_thumb,confirmado: zera estado serial/link, CpuSet dos buffers e ponteiros de fila (+0x30..+0xA8)
+0x080021F4,UpdateLinkTransferState,func_thumb,confirmado: maquina de handshake do link; chama Link_CollectReceivedPackets; soma contador e monta flags de retorno
+0x080022DC,QueueLinkTransferPacket,func_thumb,confirmado: monta pacote (cabecalho, XOR de bytes, CpuSet dos dados, checksum = ~soma de 4 halfwords) e marca pronto
+0x080023D8,SwapDisplayBuffersOnVBlank,func_thumb,provavel: (antes: sem nome) troca pares de ponteiros de buffer (0x24/0x28 sempre; 0x1C/0x20 se flag) e escreve um registro de controle 0x80/0xC0; nome e interpretacao nao fechados
+0x08002534,MainState0,func_thumb,confirmado: estado 0 de gMainStateTable; despacha pela tabela indexada por byte (sub-estado de menu)
+0x080027BC,MainState0_Menu1_DispatchSub,func_thumb,confirmado: CallViaR0 na tabela de sub-estados indexada por byte (menu 1)
+0x080027DC,MainState0_Menu1_Sub0_InitScreen,func_thumb,confirmado: DISPCNT 0x1F60, BG0CNT 0x500, 5 blocos LZ via Lz_DecodeIfMagic, snd_song_request(6) e contador de entrada
+0x08003374,PartScreen_DispatchSubstate,func_thumb,confirmado: CallViaR0 na tabela de sub-estados indexada por byte (menu 2, tela de pecas)
+0x08003394,Gfx_InitBgLayersAndEnableDisplay,func_thumb,confirmado: (antes: MainState0_Menu2_Sub0_InitBg; Ghidra ja tinha este nome) limpa pares, DISPCNT, 3 camadas BG via Lz/LoadTilesWithMalias, mapa BG, liga display 0x1F60
+0x08003A38,BattleStatusScreen_InitStep,func_thumb,confirmado: (antes: InitializeBattleStatusScreen) maquina de passos por byte de estado (0: LZ e estado++; 1: tiles e CpuFastSet; 2: sprites, icones, rotulos), nao e init unico
+0x0800406C,InitializeBattleSceneScreen,func_thumb,confirmado: BG0CNT 0x500, 8 blocos LZ + 4 tiles BG, paletas via CpuFastSet, liga display, cria sprites compostos e desenha stats de pecas
+0x080048D8,FightPreview_CachePlayerLoadoutForScene,func_thumb,confirmado: limpa 0x80 atributos OBJ e copia loadout de 3 pecas via GetPartStats para o bloco de preview; grava gMainState 3/4/5
+0x08004FD0,BattlePreview_LoadSlotTiles9,func_thumb,confirmado: laco de 9 slots, LoadCompositeBattleSpriteTiles para cada slot ativo
+0x08005000,BattlePreview_CreateSlotSprites9,func_thumb,confirmado: laco de 9 slots; cria objetos de sprite composto (CreateCompositeBattleSpriteObjects) ou limpa mascara de atributos
+0x0800508C,Menu_DrawPartIconGrid,func_thumb,confirmado: laco de 9 slots; desenha bloco de icone da peca (GetPartStats; 0xFF se vazio ou id >= 0x78)
+0x08005118,BattlePreview_DrawMedalLabel,func_thumb,confirmado: limpa atributos e escreve o rotulo da medalha (glifos repetidos ou nome do slot) via Text_LayoutGlyphSprites
+0x0800519C,BattlePreview_DrawNameLabel,func_thumb,confirmado: limpa atributos e escreve o rotulo do nome (glifos repetidos ou copia de 0xB bytes) via Text_LayoutGlyphSprites
+0x0800522C,BattlePreview_LoadEntryPalette,func_thumb,confirmado: CpuFastSet de 0x20 bytes (paleta do slot) e preenche retangulo do tilemap BG (2,2,1,0x10)
+0x0800529C,BattlePartState_Init,func_thumb,confirmado: zera 3 buffers (0xD0, 0x800, 0x60), CompositePreviewContext_Init e BuildFourPartLargePreviewComposite (4 pecas)
+0x080053C8,BattlePartPreview_Rebuild,func_thumb,confirmado: reconstroi o composto grande de 4 pecas (BuildFourPartLargePreviewComposite) e copia buffer de 0x200 via CpuFastSet; zera 2 flags
+0x080054C0,BattlePreview_BuildLargeCompositeLayer5,func_thumb,confirmado: monta composto grande da camada 5 do slot selecionado (se o slot nao vazio)
+0x08005588,PartSelect_HandleDirectionInput,func_thumb,confirmado: le direcional (4 bits), troca o indice de peca pela tabela, SFX 2, reposiciona 4 slots e redesenha rotulos/preview
+0x08005628,ObjectSlots_Init4Overlay,func_thumb,confirmado: inicializa os slots de overlay 4..7 (posicao base e offsets 0x00/0x10/0x20/0x30) via ObjectSlot_UpdatePositionOverlay
+0x080056A4,ObjectSlot_UpdatePositionOverlay,func_thumb,confirmado: recalcula posicao do slot de overlay (CompositeSprite_ComputeClampedOffsetWord), escreve x/y, atributos 0x400/0xC e fase
+0x08005798,ObjectSlots_ApplyMaskOverlay4to7,func_thumb,provavel: (antes: aplica_mascara_slots_b) limpa ou liga bit 0x4000 nos atributos dos slots 4..7 conforme flag de estado e chama ObjectSlot_UpdatePositionOverlay(4..7); sentido exato do bit em aberto
+0x080058A4,Parts_HandleSlotSwapInput,func_thumb,confirmado: SELECT (bit 4) alterna modo comparacao; troca dois slots (Mem_SwapBytes 8 B), redesenha e chama ObjectSlots_ApplyMaskOverlay4to7
+0x08005948,Parts_CheckSpriteIdsSetSpeed,func_thumb,confirmado: se AreBattleSpritePartIdsValid, ajusta velocidade da animacao do composto para 8
+0x0800598C,Parts_CheckSpriteIdsUpdateMotion,func_thumb,confirmado: mesma validacao de ids; se valido chama Sprite_UpdateComposite4Motion
+0x08005D1C,PartSlot_DrawStatsPanelKind0,func_thumb,confirmado: (antes: Parts_DrawStatsPanel) painel de stats da peca de cabeca (kind 0): GetPartStats, copia 0x10 B, preenche retangulo BG 0x10x0xB
+0x08006154,PartSlot_DrawStatsPanelKind3,func_thumb,confirmado: painel de stats da peca de perna (kind 3): mesmo padrao, retangulo BG 0x10x0x11
+0x08006514,Sprite_ToggleFlag4000Pair,func_thumb,confirmado: se bit 8 de *DAT ausente, grava 0x4000 nos dois sprites do par; senao limpa 0x4000
+0x0800656C,Battle_InitPartSprites,func_thumb,confirmado: zera buffers (0xD0, 0x800, 0x60), CompositePreviewContext_Init e BuildFourPartLargePreviewComposite; quase identico a BattlePartState_Init (0x0800529C)
+0x0800667C,Battle_InitPartSpriteObj,func_thumb,confirmado: monta composto grande de 4 pecas e copia 0x200 B; mesmo corpo de BattlePartPreview_Rebuild (0x080053C8), nome 'Init' e duplicata
+0x08006764,Parts_BuildLargeCompositePreview,func_thumb,confirmado: (antes: Parts_CreateIconSprite) monta composto grande 0x3C x 0x32 (camada 5) das 4 pecas; nao cria sprite de icone
+0x08006824,Parts_DispatchSlotHandler,func_thumb,confirmado: se flag 8 em um ponteiro, salta pela tabela indexada pelo byte de slot (+0x5A, <5); tabela nao recuperada pelo Ghidra
+0x08006E44,Parts_ValidateSet,func_thumb,confirmado: valida ids das 5 pecas (AreBattleSpritePartIdsValid); se valido ajusta velocidade 8 e marca flag; senao recria objetos de sprite
+0x08006F34,Parts_DispatchSlotAction,func_thumb,confirmado: se flag 1, salta pela tabela indexada por byte de slot (+0x5A, <5)
+0x08008CF4,PartsGrid_SubStateA0_DispatchCtx18,func_thumb,provavel: alvo do caso 0 de PartsGrid_SubStateSwitchStep (0x08008CA0); nao e funcao no Ghidra (Ghidra devolve o switch pai), nome segue PG.md; nao renomeado
+0x08008D00,PartsGrid_SubStateA1_DispatchCtx1C,func_thumb,provavel: alvo do caso 1 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08008D0C,PartsGrid_SubStateA2_CellLookup,func_thumb,provavel: alvo do caso 2 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08008D30,PartsGrid_SubStateA3_CellLookupB,func_thumb,provavel: alvo do caso 3 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08008D54,PartsGrid_SubStateA4_DispatchCtx20,func_thumb,provavel: alvo do caso 4 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08000258,MainStateNop,func_thumb,confirmado: corpo vazio (return); estados 4 e 5 de gMainStateTable
