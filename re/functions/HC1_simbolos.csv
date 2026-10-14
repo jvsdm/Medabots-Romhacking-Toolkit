@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x0804DC34,Event_Op00_Cont_NoOp,func_thumb,"continuacao comum de 53 opcodes (return); HC1 confirmado"
+0x0804DC38,Event_Op01_Cont_ShowMessageA,func_thumb,"fase 0: FUN_08047C00 + banco/id da msg em 0x030057A0; fase 1: FUN_08047C24 ate retornar nao-zero, depois Event_EndOpcode; HC1 confirmado (fluxo), provavel (desenho)"
+0x0804DCF8,Event_Op02_Cont_Finish,func_thumb,"so Event_EndOpcode 0x08050290; divergencia com 0x01 (caixa nao aparece aqui), nao verificada no emulador"
+0x0804DD04,Event_Op03_Cont_CloseMessageBox,func_thumb,"StateMachine_DispatchSub a cada quadro; fim = Event_EndOpcode; HC1 confirmado (decompile)"
+0x0804DD18,Event_Op04_Cont_WaitFrames,func_thumb,"contador em E+0xC94 (frames), decrementa; 0 = Event_EndOpcode; N+1 quadros; HC1 confirmado"
+0x0804DD5C,Event_Op07_Cont_FadeToBlack,func_thumb,"Overworld_RunScreenTransitionStep(0) ate retornar nao-zero; fim = Event_EndOpcode; HC1 confirmado"
+0x0804DD70,Event_Op08_Cont_FadeFromBlack,func_thumb,"Overworld_RunScreenTransitionStep(0) ate nonzero; fim = Event_EndOpcode; corpo igual ao 0x07; HC1 confirmado"
+0x0804DDB4,Event_Op0B_Cont_WarpA_LoadScene,func_thumb,"tail-call Map_LoadCurrentSceneResources 0x0804DDCC (que termina em Event_EndOpcode); HC1 confirmado"
+0x0804DDC0,Event_Op0C_Cont_WarpB_LoadScene,func_thumb,"igual ao 0x0B (Map_LoadCurrentSceneResources); difere na variante de cena da primaria; HC1 confirmado"
+0x0804E43C,Event_Op1A_Cont_NpcDoAnimation,func_thumb,"Map_ObjectAnimStep 0x080508B4 ate nonzero; fim = Event_EndOpcode; HC1 confirmado"
+0x0804E450,Event_Op1D_Cont_HopEventNpc,func_thumb,"Map_ObjectArcStep 0x08050918 ate nonzero; fim = Event_EndOpcode; HC1 confirmado"
