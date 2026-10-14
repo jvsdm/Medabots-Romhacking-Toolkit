@@ -611,6 +611,7 @@ address,name,kind,count,comment
 0x080129F2,Fight_SetupBattleBotStates,func_thumb,,"[EN] GH-EN: se ctx+0x89 != 1 chama Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords, Fight_InitializeEnemyBotStates. Confirmado no decompile; significado de ctx+0x89 aberto."
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
 0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos"
+0x08012B94,Battle_CpuActionSelectStep,func_thumb,,[AI2] [AI2] entrada 3 da tabela de cena 0x083AD080 (GS=0x0300137C). Corpo: bl 0x080196C0; se byte 0x030004C9==1 pula; senao Fight_SelectActionsForBotGroup(3); GS++. Sem funcao no Ghidra ainda: ver AI2_lista.txt
 0x08012C64,Fight_BotSelectMenuFrame,func_thumb,,frame do menu de selecao de bot; cursor +0x80; provavel
 0x08012E40,Fight_EntryScreenStep,func_thumb,,passo de quadro da tela de entrada da luta (provavel)
 0x0801303C,Fight_RunEntryAnimStep,func_thumb,,"[provavel] fight entry frame: overlay, entry anim, sprite motion, tile clears"
@@ -663,6 +664,7 @@ address,name,kind,count,comment
 0x08015668,Fight_SelectMedaforceActionSource,func_thumb,,"Simon/Rokusho: Commit a medaforce action source selection. This caches the medal medaforce list, copies the selected medaforce descriptor into battle scratch, and selects action source values 4..6."
 0x080156D0,Fight_RandomizePriorityListSlot,func_thumb,,"[R0a] sorteia slot da lista de prioridade (chute; nome sugerido, sem rename)"
 0x080156F0,gFightPriorityRowTable,data,,[AI] [GH-AI] ponteiro (literal) para ROM 0x083AD470: 32 linhas de 4 B usadas como lista de fallback; conteudo nao fechado
+0x080156F4,gFightPriorityListDst,data,,"[AI2] [AI2] literal = 0x03001864 (fi+0x64, lista de 4 bytes do fallback; mesma RAM dos ids da previa de PS). Confirmado"
 0x080156F8,Fight_IsPartActionBlocked,func_thumb,,"Simon/Rokusho: Return nonzero when a requested part action slot is blocked (0 = available). This first honors the pending effect that locks a specific part slot, then rejects broken/unusable parts, then runs the shared part-action validation path."
 0x08015738,Fight_LoadHudTileset,func_thumb,,[R0b] Carrega 0x200 bytes de tiles (bloco 3) da ROM
 0x08015760,Fight_FillPartTilemapRows,func_thumb,,[R0b] Preenche tilemap das 6 linhas de partes dos bots
@@ -781,6 +783,7 @@ address,name,kind,count,comment
 0x08019544,Fight_UpdateBotMeterDisplayObject,func_thumb,,Simon/Rokusho (antes: Fight_UpdateTargetResolutionIndicatorAnimation)
 0x080195C0,Fight_DrawActiveBotsOverlay,func_thumb,,[R1] Laco 6 bots ativos desenha icones de status; provavel
 0x08019600,Fight_DrawSecondaryEffectIcon,func_thumb,,"Simon/Rokusho: Update indicator objects for the secondary long-lived effect block. Current confirmed kinds are AutoRecover (0x1F), Boost_Chrg (0x26), and Drain_Chrg (0x29). (antes: Fight_UpdateSecondaryEffectIndicatorObjects)"
+0x080196C0,Battle_CpuActionSelectPrep,func_thumb,,[AI2] [AI2] chamada pelo passo 0x08012B94 antes da escolha da CPU. Sem funcao no Ghidra; nao lida (nome provisorio)
 0x08019720,Fight_DrawPendingEffectIcon,func_thumb,,[R1] Despachante de icone por tipo pendente (+0xC9); confirmado
 0x08019B40,Fight_DrawPartStatusIcon,func_thumb,,"Simon/Rokusho: Render the small reaction-source icon for a bot. Uses reaction_status_flags, reaction_source_part_id, and reaction_source_action_kind to choose the icon and sprite frame. (antes: Fight_DrawReactionSourceIcon) (antes: Fight_DrawPartStatusIcon) (antes: Hud_PartStatusIconAlias)"
 0x08019D9C,Fight_PlaceBotStatusIconObject,func_thumb,,[R1] Preenche objeto de tela do icone de status (x/y/tile/paleta); provavel
@@ -3237,6 +3240,7 @@ address,name,kind,count,comment
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
 0x083AF080,gFightSlotRandomTable16,data,,[AI] [GH-AI] 16 B lidos; usada por Fight_RandomSlotFromTable16 (randbyte&0xF)
+0x083AF090,gPartActionHandlerTable,data,,"[AI2] [AI2] tabela de ponteiros de handler de acao de peca (188 entradas, indexada pelo byte +0x49 da peca). Ponteiros nao lidos"
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
 0x083AF380,gRollDieFaceTable,data,,[TX] GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable)"

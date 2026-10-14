@@ -330,6 +330,7 @@ F	0x080129C8	Fight_SetupBattleBotStates
 F	0x080129F2	Fight_SetupBattleBotStates_080129F2
 F	0x08012A20	Fight_PartPanelStep
 F	0x08012B40	Gfx_FadeStepPaletteRows
+F	0x08012B94	Battle_CpuActionSelectStep
 F	0x08012C64	Fight_BotSelectMenuFrame
 F	0x08012E40	Fight_EntryScreenStep
 F	0x0801303C	Fight_RunEntryAnimStep
@@ -382,6 +383,7 @@ F	0x08015648	Fight_IsMedaforceSelectionBlockedByBattleState
 F	0x08015668	Fight_SelectMedaforceActionSource
 F	0x080156D0	Fight_RandomizePriorityListSlot
 L	0x080156F0	gFightPriorityRowTable
+L	0x080156F4	gFightPriorityListDst
 F	0x080156F8	Fight_IsPartActionBlocked
 F	0x08015738	Fight_LoadHudTileset
 F	0x08015760	Fight_FillPartTilemapRows
@@ -500,6 +502,7 @@ F	0x08019440	Fight_UpdateBotScreenXFromMeterInverted
 F	0x08019544	Fight_UpdateBotMeterDisplayObject
 F	0x080195C0	Fight_DrawActiveBotsOverlay
 F	0x08019600	Fight_DrawSecondaryEffectIcon
+F	0x080196C0	Battle_CpuActionSelectPrep
 F	0x08019720	Fight_DrawPendingEffectIcon
 F	0x08019B40	Fight_DrawPartStatusIcon
 F	0x08019D9C	Fight_PlaceBotStatusIconObject
@@ -2955,6 +2958,7 @@ L	0x083AECD8	gFightSceneSteps
 L	0x083AEEA0	gTechniqueActionSetupHandlerTable
 L	0x083AEF90	gTechniqueActionValidationHandlerTable
 L	0x083AF080	gFightSlotRandomTable16
+L	0x083AF090	gPartActionHandlerTable
 L	0x083AF180	gActionScriptOpcodeHandlerTable
 L	0x083AF380	gRollDieFaceTable
 L	0x083AF8C0	gObjectOpcodeHandlerTable

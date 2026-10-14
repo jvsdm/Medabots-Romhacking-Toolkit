@@ -5,3 +5,5 @@
 0x0803D538	BT2: menu_list[10], despachante por GS-0x10 (tabela 0x083AFC78)
 0x0800C7E4	DB: opcao Item do menu de debug
 0x0800CE70	DB: opcao Mdlpic do menu de debug
+0x08012B94   driver da escolha da CPU (passo GS=3 da tabela 0x083AD080). Bloco 0x08012B94..0x08012BB4 (push {lr} ... bx r0). Contem o BL 0x08012BA6 -> Fight_SelectActionsForBotGroup
+0x080196C0   chamada antes da escolha da CPU no driver 0x08012B94 (nao lida)
