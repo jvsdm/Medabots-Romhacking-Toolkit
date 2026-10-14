@@ -1,24 +1,24 @@
 address,name,kind,comment
 0x0801D6A4,Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx,label,+1 incondicional; fases 1B/1C/1D carregam gfx; confirmado
-0x0801D738,Fight_DispatchOnSubstateAA_E_CopyBotBuffers,label,E idx02; copia blocos do bot (+0xDE-1) de 0x030042B0; +1; provavel
-0x0801D878,Fight_DispatchOnSubstateAA_E_SetupObjects,label,E idx03; objetos OAM/posicoes 0x03002C30; +1; provavel
+0x0801D738,Fight_DispatchOnSubstateAA_E_02_CopyBotBuffers,label,E idx02; copia 4 blocos de 0x40 do bot (+0xDE-1) para buffers; objeto 0x03002C30; +1 incondicional; confirmado (provavel: direcao da copia)
+0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,label,E idx03; anima entrada 60 frames (contador 0x030004C4); sfx 0x40; +1 ao chegar a 0x3C; confirmado
 0x0801D95C,Fight_DispatchOnSubstateAA_E_04_StepBotSlot,label,anda slot ate chegar; +1 so ao chegar; confirmado
 0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,label,desliza Y ate 0x78; +1 ao chegar; tail-call nao recuperado; provavel
 0x0801DAEC,Fight_DispatchOnSubstateAA_E_06_ShowPartsHud,label,sobe slot; ao chegar sfx 0x41 + composite; +1; confirmado
 0x0801DC74,Fight_DispatchOnSubstateAA_E_07_SpawnSlot21,label,espera contador 0x1E; cria slot 0x21; +1; confirmado
-0x0801DD30,,label,E idx08; efeito id 0x30; +1; provavel (id)
+0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,label,E idx08; conta byte 0x03003478 ate 0x40; sfx 0x30 (som, nao efeito); +1; confirmado (significado dos bytes 848/849: chute)
 0x0801DD74,Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim,label,anim slot 0x21 ate -1; A6=0x16; +1; confirmado
 0x0801DDDC,Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget,label,marca alvo bot/parte; +B5=1 hold; confirmado
 0x0801DE44,Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair,label,2 copias de 14; A6=0x17; +1; confirmado
-0x0801DED4,,label,F idx02; so +B5=1; hold; confirmado
-0x0801DF0C,Fight_DispatchOnSubstateAA_G_LoadPaletteTiles,label,G idx00; CpuFastSet paleta 0x05000120 e VRAM 0x06004120; +1; provavel
-0x0801DF60,Fight_DispatchOnSubstateAA_G_SetBgControl,label,G idx01; escreve 0x04000008 (BGxCNT); +1; provavel
+0x0801DED4,Fight_DispatchOnSubstateAA_F_02_HoldFlag,label,F idx02; so +B5=1; hold; confirmado
+0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,label,G idx00; fill zero paleta 0x05000120 e 0x11111111 tiles 0x06004120; zera 0x030004C4; +1 incondicional; confirmado (0x11111111 significado: provavel)
+0x0801DF60,Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen,label,G idx01; loop 10 frames FUN_0803F15C com contador 0x030004C4 e BG0CNT; flag 0x03001800+0x1AE; +1 ao c=9; confirmado (origem do Y 0x083B4E04: chute)
 0x0801DFE0,Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged,label,3 etapas por frame; +1 na etapa 2; tail-call nao recuperado; confirmado
-0x0801E09C,Fight_DispatchOnSubstateAA_G_BuildBattleBackground,label,G idx03; maior handler (157 instr); VRAM 0x06017400; +1; provavel
+0x0801E09C,Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground,label,G idx03; 2 etapas (byte 0x03000579): BGs+cenario, depois gfx OBJ e blend; +1 na etapa 1; confirmado
 0x0801E200,Fight_DispatchOnSubstateAA_G_04_ResetSideSprites,label,reset sprites laterais; +1; confirmado
 0x0801E248,Fight_DispatchOnSubstateAA_G_05_SlideSideSpritesIn,label,10 frames; +1 em c==9; confirmado
-0x0801E2B8,,label,G idx06; espera de animacao; hold; provavel (hold)
-0x0801E300,Fight_DispatchOnSubstateAA_H_LoadSpritesTiles,label,H idx00; OBJ VRAM 0x06006400.. e paleta 0x05000140..; +1; provavel
+0x0801E2B8,Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold,label,G idx06; um passo dos sprites laterais; +B5=1 hold; confirmado
+0x0801E300,Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles,label,H idx00; 4 decompress para OBJ VRAM 0x06006400..0x06006800, 3 paletas OBJ; tiles laterais; +1; confirmado
 0x0801E3C0,Fight_DispatchOnSubstateAA_H_01_ChooseActionPath,label,bits B7/B8 -> 0x28/0x0A/0x30/0x38 ou +1; confirmado
 0x0801E43C,Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40,label,bit 0x40 de +BC -> 6 ou +1; confirmado
 0x0801E474,Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj,label,gfx + campos de objeto; sfx 0x72; +1; confirmado (offsets chute)
@@ -28,16 +28,16 @@ address,name,kind,comment
 0x0801E830,Fight_DispatchOnSubstateAA_H_08_AdvanceSlotOffsetByStage,label,timer 0x3C; +1 ao terminar; confirmado
 0x0801E864,Fight_DispatchOnSubstateAA_H_0A_SetupFourSprites,label,gfx + 4 sprites; +1; confirmado
 0x0801E8DC,Fight_DispatchOnSubstateAA_H_0B_TickSpriteTimers,label,timer 10; +1 ao terminar; confirmado
-0x0801E918,,label,H idx0D; efeito id 0x5B; +1; provavel (id)
+0x0801E918,Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow,label,H idx0D; gfx VRAM 0x06010000; digitos de numero e linha de sprites; som 0x5B; +1; confirmado (significado: provavel)
 0x0801E9B0,Fight_DispatchOnSubstateAA_H_0E_WaitSpriteStep10,label,timer 0x3C; +1; confirmado
 0x0801E9E0,Fight_DispatchOnSubstateAA_H_10_SfxStep2F,label,sfx 0x2F; +1; confirmado
 0x0801E9FC,Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows,label,icones de parte; timer 0x3C; +1 ao fim; confirmado
 0x0801EA5C,Fight_DispatchOnSubstateAA_H_13_BackupStatsOrSkip,label,+1 ou +3 (pula ate H16) conforme +D1; confirmado
 0x0801EA94,Fight_DispatchOnSubstateAA_H_14_StepByOrientation,label,+1; confirmado
-0x0801EAC4,,label,H idx15; so +B5=1; hold; confirmado
+0x0801EAC4,Fight_DispatchOnSubstateAA_H_15_HoldFlag,label,H idx15; so +B5=1; hold; confirmado
 0x0801EAD4,Fight_DispatchOnSubstateAA_H_16_SetupPartSpritesAt,label,gfx + sprites de parte; timer 0x1E delegado; +1; confirmado
 0x0801EB5C,Fight_DispatchOnSubstateAA_H_17_RunSlot10Anim,label,anim slot 10 ate -1; +1; confirmado
-0x0801EBB8,,label,H idx18; +1 para H19; confirmado
+0x0801EBB8,Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance,label,H idx18; timer 0x3C em 0x030004C6 (0x03000440+0x86); +1; confirmado; quem consome o timer: chute
 0x0801EBD4,Fight_DispatchOnSubstateAA_AO_0E_UpdateSpritesWait60,label,sprites duas camadas; timer 0x3C; +1; confirmado
 0x0801EBF8,Fight_DispatchOnSubstateAA_H_1A_QueueBrokenBotOrSkip,label,+1 ou +3 conforme byte +0x59; confirmado
 0x0801EC3C,Fight_DispatchOnSubstateAA_H_1D_WaitOrAdvance,label,0x20 (espera) ou +1 conforme contador/flags; confirmado (valores)
