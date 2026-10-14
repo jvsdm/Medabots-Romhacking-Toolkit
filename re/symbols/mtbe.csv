@@ -304,6 +304,7 @@ address,name,kind,count,comment
 0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03006D38,gWalkSpeedBlock,data,,[OW2] literal 0x03006D38 em Map_GetScaledStepDelta; bloco de velocidade
 0x03006D3A,gWalkSpeedMul,data,,[OW] RAM byte: multiplicador do passo (provavel corrida)
+0x03006D3E,gObjectPoseBaseByte,data,,[CU2] CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado
 0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03007014,SND_DriverPtr,data,,[SN] ponteiro para o driver de som
@@ -2359,11 +2360,11 @@ address,name,kind,count,comment
 0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
 0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
 0x080481D8,Map_UpdateBackgroundAnimations,func_thumb,,[MP2] animacao de tiles do mapa: DMA3 de [0x030057DC]+idx*T*0x20 para 0x06009020; descritor ROM 0x08409480[m]
-0x08048210,Map_ResolveSpriteId,func_thumb,,[CS] CONFIRMADO decompile: id 0 -> byte por 0x03006418/0x0300643C; >=0xD0 -> lista RAM 0x03006418+k; >=0xC0 -> (id-0xC0)*2+IWRAM[0x03006D3E]+0x28
+0x08048210,Map_PoseIdToTileIndex,func_thumb,,[CS] CONFIRMADO decompile: id 0 -> byte por 0x03006418/0x0300643C; >=0xD0 -> lista RAM 0x03006418+k; >=0xC0 -> (id-0xC0)*2+IWRAM[0x03006D3E]+0x28 (antes: Map_ResolveSpriteId)
 0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area."
 0x0804830C,Map_LoadMapPaletteToShadowBuffer,func_thumb,,[MP2] paleta do mapa ROM 0x083F9980[m] -> DMA3 para 0x0202FA00 (0x1A0 B)
 0x0804842C,SND_PolicyRequest,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling. (antes: Overworld_ApplyMapSceneModePolicy)
-0x08048684,Map_GetSpriteListEntry,func_thumb,,[CS] CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim
+0x08048684,Map_GetObjectPoseByGroup,func_thumb,,[CS] CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim (antes: Map_GetSpriteListEntry)
 0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,,Simon/Rokusho: Load the palette set used by event objects / overworld NPC sprites for the current map. Resolves the per-slot sprite palette ids for the current map and copies each palette block into the shared object palette staging area.
 0x080487C8,Map_ResetObjectField0B,func_thumb,,[HE4] objeto+0xB = 0xFF/0/0x40 pela tabela do tipo; usado pelo 0x83
 0x08048830,Overworld_ResetMapSceneBlendState,func_thumb,,Simon/Rokusho: Reset the map-scene blend registers and cached screen-transition blend coefficients before showing the rebuilt overworld scene.
@@ -2607,8 +2608,8 @@ address,name,kind,count,comment
 0x0804E5D0,Event_Op29_Cont_MoveAllTrackedActorsA,func_thumb,,Simon/Rokusho (antes: EventOpcode29_MoveAllActorsA)
 0x0804E5E0,Event_Op2A_Cont_MoveAllTrackedActorsB,func_thumb,,Simon/Rokusho (antes: EventOpcode2A_MoveAllActorsB)
 0x0804E5F0,Event_RunAllTrackedActorsStepSequence,func_thumb,,"Simon/Rokusho: Shared multi-actor movement sequence. |  | Iterates the four tracked actor slots, starts or ticks a directional step sequence on each active actor, and ends the current opcode when all participating actors are finished."
-0x0804E700,EventOpcode2B_InitiateActor,func_thumb,,Simon/Rokusho
-0x0804E784,EventOpcode2D_RotateActor,func_thumb,,Simon/Rokusho
+0x0804E700,Event_Op2B_Cont_SpawnAndStepActor,func_thumb,,Simon/Rokusho (antes: EventOpcode2B_InitiateActor)
+0x0804E784,Event_Op2D_Cont_StepActor,func_thumb,,Simon/Rokusho (antes: EventOpcode2D_RotateActor)
 0x0804E7DC,Event_Op2E_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode2E_NoOp)
 0x0804E7E0,Event_Op2F_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode2F_NoOp)
 0x0804E7E4,Event_Op30_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode30_NoOp)
@@ -2651,7 +2652,7 @@ address,name,kind,count,comment
 0x0804F860,Event_Op6A_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F860)
 0x0804F864,Event_Op6C_Cont_Initiate_Moving_Actor_C,func_thumb,,confirmado fluxo; 2 passos: FUN_08050358 cria objeto + FUN_080500BC inicia Move; espera 0805018C; provavel papel dos auxiliares
 0x0804F8E8,Event_StepWaitThenEndOpcode,func_thumb,,[provavel] espera FUN_0805018c e chama Event_EndOpcode
-0x0804F940,Event_MapObjectStepOpcode,func_thumb,,opcode de evento: cria objeto de mapa e espera Map_TickObjectStep; provavel
+0x0804F940,Event_Op6E_Cont_SpawnAndStepActorFast,func_thumb,,opcode de evento: cria objeto de mapa e espera Map_TickObjectStep; provavel (antes: Event_MapObjectStepOpcode)
 0x0804F9C4,Event_OpWaitMapObjectStep,func_thumb,,opcode de evento que espera Map_TickObjectStep; provável
 0x0804FA1C,Event_Op70_Cont_Run_Scene_Command_13,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x13, 0) until completion before ending the opcode. (antes: EventOpcode70_RunSceneCommand13)"
 0x0804FA5C,Event_Op71_Cont_Run_Scene_Command_00,func_thumb,,"confirmado; FUN_08050CC0 + FUN_08050CCC(0,0) ate != 0"
@@ -3641,6 +3642,7 @@ address,name,kind,count,comment
 0x08411FE7,gWarpList_Map23,data,,"[OW2] lab de New Game; entrada (18,14) -> mapa 0 (18,5) (confirmado vs pesquisa)"
 0x08412E60,gWarpTablePtrs,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable (antes: gMapWarps)
 0x08413160,gMapSpriteIndexByMap,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable (antes: gMapSprites)
+0x08413EE0,gPoseIdNestedTablePtrs,data,,[CU2] CU2: ponteiros para tabelas aninhadas de Map_PoseIdToTileIndex (ids >= 0xD0)
 0x084144B4,gTextDialogue_084144B4,ptr,248,tabela de texto: Diálogo de NPCs (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x084798F4,gTextDialogue_084798F4,ptr,389,tabela de texto: Diálogo de história (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08479F0C,gTextDialogue_08479F0C,ptr,237,tabela de texto: Diálogo de história (2); fonte: dump_text_clean_v2.py (traducao PT-BR)

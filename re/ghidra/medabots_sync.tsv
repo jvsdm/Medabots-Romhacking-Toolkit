@@ -1986,11 +1986,11 @@ F	0x080480D4	Table_GetWordByIndex_080480e0
 F	0x080480E4	Map_LoadCurrentMapAndEntities
 F	0x08048174	Map_UpdateBackgroundAnimations
 F	0x080481D8	Map_UpdateBackgroundAnimations_080481D8
-F	0x08048210	Map_ResolveSpriteId
+F	0x08048210	Map_PoseIdToTileIndex
 F	0x08048288	Map_LoadOverworldSpriteGraphicsForCurrentMap
 F	0x0804830C	Map_LoadMapPaletteToShadowBuffer
 F	0x0804842C	SND_PolicyRequest
-F	0x08048684	Map_GetSpriteListEntry
+F	0x08048684	Map_GetObjectPoseByGroup
 F	0x08048708	Map_LoadCurrentEventObjectPalettes
 F	0x080487C8	Map_ResetObjectField0B
 F	0x08048830	Overworld_ResetMapSceneBlendState
@@ -2234,8 +2234,8 @@ F	0x0804E5BC	Event_Op28_Cont_HopActor
 F	0x0804E5D0	Event_Op29_Cont_MoveAllTrackedActorsA
 F	0x0804E5E0	Event_Op2A_Cont_MoveAllTrackedActorsB
 F	0x0804E5F0	Event_RunAllTrackedActorsStepSequence
-F	0x0804E700	EventOpcode2B_InitiateActor
-F	0x0804E784	EventOpcode2D_RotateActor
+F	0x0804E700	Event_Op2B_Cont_SpawnAndStepActor
+F	0x0804E784	Event_Op2D_Cont_StepActor
 F	0x0804E7DC	Event_Op2E_Cont_NoOp
 F	0x0804E7E0	Event_Op2F_Cont_NoOp
 F	0x0804E7E4	Event_Op30_Cont_NoOp
@@ -2278,7 +2278,7 @@ F	0x0804F850	Event_Op67_Cont_Skip_Two_Bytes_Wait
 F	0x0804F860	Event_Op6A_Cont_NoOp
 F	0x0804F864	Event_Op6C_Cont_Initiate_Moving_Actor_C
 F	0x0804F8E8	Event_StepWaitThenEndOpcode
-F	0x0804F940	Event_MapObjectStepOpcode
+F	0x0804F940	Event_Op6E_Cont_SpawnAndStepActorFast
 F	0x0804F9C4	Event_OpWaitMapObjectStep
 F	0x0804FA1C	Event_Op70_Cont_Run_Scene_Command_13
 F	0x0804FA5C	Event_Op71_Cont_Run_Scene_Command_00
@@ -3268,6 +3268,7 @@ L	0x08411E08	gWarpList_Map0
 L	0x08411FE7	gWarpList_Map23
 L	0x08412E60	gWarpTablePtrs
 L	0x08413160	gMapSpriteIndexByMap
+L	0x08413EE0	gPoseIdNestedTablePtrs
 L	0x084144B4	gTextDialogue_084144B4
 L	0x084798F4	gTextDialogue_084798F4
 L	0x08479F0C	gTextDialogue_08479F0C

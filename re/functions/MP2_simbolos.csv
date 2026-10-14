@@ -1,0 +1,28 @@
+# address,name,kind,comment
+0x080481D8,Map_UpdateBackgroundAnimations,function,animacao de tiles do mapa: DMA3 de [0x030057DC]+idx*T*0x20 para 0x06009020; descritor ROM 0x08409480[m]
+0x0804830C,Map_LoadMapPaletteToShadowBuffer,function,paleta do mapa ROM 0x083F9980[m] -> DMA3 para 0x0202FA00 (0x1A0 B)
+0x080529DC,Map_GetInitialScrollTileOrigin,function,le (u16,u16) da struct apontada por [0x03006D14]; nao calcula centralizacao
+0x0805290C,Map_CenterCameraForSmallMaps,function,centralizacao de mapa menor que a tela: gMapState+0xC48/+0xC4A = (15-w16)*8 / (10-h16)*8
+0x08051416,Map_LoadEntitySpawnsForCurrentMap,function,pessoas: registro 8 B (+5 grupo, +6 mascara capitulo, +2 kind/evento, +4 sprite/facing)
+0x08051DDC,Overworld_ProcessDirectionInput,function,passo do jogador por direcao: limite, bloqueio por objeto/tile, depois WalkStepByDirection
+0x08052CC0,Overworld_CheckMovementCollision,function,limite do mapa/camera (nao colisao de tile)
+0x080525D0,Overworld_CheckMovementObjectBlocker,function,bloqueio por tabela 0x030063F0[v] (v = colisao 0..3) e estado 0x0300643C
+0x08051BC8,Overworld_WalkStepByDirection,function,move jogador/camera 1 passo; ao fechar o passo chama warp e encontro
+0x08052EA0,Overworld_ApplyWarpAtCurrentTile,function,aplica warp: dest mapa +2, facing +3, pos +6/+7; nao le +4/+5
+0x08052C68,Map_FindWarpTriggerAtTile,function,procura warp no tile; grava tipo (+3 alto) no estado
+0x0804D17C,Event_Op69_Set_Map_Scene_Variant,function,troca variante de cena: copia 8 B para gMapState+0xC10 (tabela de passabilidade)
+0x03006D14,gMapDecompressBufferPtr,data,ponteiro IWRAM: destino LZ77 da camada 0 e base da struct de origem (provavel)
+0x030057DC,gMapAnimFramesPtr,data,ponteiro para o buffer LZ77 dos quadros de animacao de tiles (bloco 4 de MP)
+0x03006414,gMapAnimEnabled,data,base+0xC34: animacao de tiles ligada se != 0
+0x03006415,gMapAnimFrameIndex,data,base+0xC35: indice atual na sequencia de quadros
+0x03006416,gMapAnimDelay,data,base+0xC36: contador (3 chamadas por quadro)
+0x03006428,gMapCameraClampX,data,base+0xC48: deslocamento X de centralizacao (px)
+0x0300642A,gMapCameraClampY,data,base+0xC4A: deslocamento Y de centralizacao (px)
+0x030063F0,gMapPassTable,data,base+0xC10: 4 B por valor de colisao 0..3; != 0 bloqueia (3 = condicional)
+0x0300643C,gMapPlayerWalkState,data,base+0xC5C: estado do bloqueador (2 = verifica tile)
+0x08409480,gMapAnimDescTable,table,4 B por mapa -> descritor (T, nq, enable, sequencia FF)
+0x083F8D80,gMapAnimLZ77Table,table,4 B por mapa -> bloco LZ77 de quadros de animacao (ou 0)
+0x083F9980,gMapPaletteTable,table,4 B por mapa -> paleta BGR555 de 13 bancos (0x1A0 B)
+0x08483234,gMapPeopleTable,table,4 B por mapa -> lista de pessoas (8 B, FF)
+0x08412E60,gWarpPtrTable,table,4 B por mapa -> lista de warps (8 B, FF); +4/+5 sem leitor achado
+0x0202FA00,gPaletteShadowBuffer,data,buffer de paleta EWRAM (0x200 B) enviado por CopyPaletteBuffersToHardware

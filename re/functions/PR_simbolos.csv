@@ -1,0 +1,22 @@
+# address,name,kind,comment
+0x0804D208,Event_Op6B_Set_Current_Chapter,function,grava 1 byte do script em 0x03005FDF (gCurrentChapter); unico escritor achado (GH-PR)
+0x03005FDF,gCurrentChapter,data,capitulo = E+0x7FF; save +0x17F7 (derivado de SV.md); confirmado no decompile do 0x6B
+0x03005FDE,gCurrentMapId,data,mapa atual (EX.md)
+0x030057D8,gEventFlagArrayBase,data,base do vetor de flags/campos de 3 bits (2 bytes por par de ids; ver PR.md 2); conflito de save a conferir
+0x03005FD8,gEventFlagArrayEnd,data,fim provavel do vetor (0x7FF bytes a partir de 0x030057D8); provavel
+0x0300649C,gEventCounterA,data,contador sel 0 (E+0xCBC); teto 0x20 ao somar no sel 0 cai em CBD (bug do jogo, HE2)
+0x0300649D,gEventCounterB,data,contador sel != 0 (E+0xCBD); teto 0x20
+0x080531E0,EventFlag_IsSetByPackedId,function,le flag: par bit 0x80 / impar bit 0x08 do byte [base + id>>1]
+0x080531A0,EventFlag_SetIndexedFlagByPackedId,function,liga flag do id empacotado (opcode 0x13 remove permanente)
+0x08053168,EventFlag_ClearIndexedFlagByPackedId,function,desliga flag do id empacotado (opcode 0x12 adiciona permanente)
+0x0805321C,EventFlag_SetOrClearByPackedId,function,liga ou desliga conforme argumento
+0x08053238,EventField3Bit_SetByPackedId,function,campo 3 bits do id (par bits 4-6; impar bits 0-2) = arg & 7
+0x08053280,EventField3Bit_IncrementByPackedId,function,campo 3 bits do id += 1 (opcode 0x18)
+0x080532D4,EventField3Bit_GetByPackedId,function,le campo 3 bits do id (opcode 0x2F usa o id do evento atual)
+0x0804C444,Event_Op2F_JumpTableByEventField,function,salto por tabela inline indexada pelo campo 3 bits do evento atual
+0x0804C778,Event_Op3E_IncreaseCappedEventCounter,function,contador += qtd; teto 0x20 (' ')
+0x0804C7DC,Event_Op3F_DecreaseCappedEventCounter,function,contador -= qtd; piso 0
+0x0804CBDC,Event_Op50_Jump_If_Event_Counter_Below,function,salta se contador(sel) < valor (com sinal no contador)
+0x08015648,Fight_IsMedaforceBlockedByChapter,function,bloqueia medaforca de bot >= 3 se gCurrentChapter <= 2 (AI2.md)
+0x08051484,MapSpawn_ChapterFilterLiteral,data,literal de 0x03005FDF dentro de Map_LoadEntitySpawnsForCurrentMap; filtro (mascara u16 +6 >> capitulo)&1 (EX.md)
+0x083D6298,unknown_ChapterLiteralPool,data,literal 0x03005FDF sem leitor de funcao conhecido; perto de CBC/CBD (0x083D6274/78); pendente
