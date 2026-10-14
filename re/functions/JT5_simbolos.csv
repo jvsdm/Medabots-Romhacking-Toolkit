@@ -1,0 +1,40 @@
+# address,name,kind,comment
+0x0803C680,Anim_SlotScriptTick,label,retorno pop r0/bx r0 em 0x0803C732; tabelas 0x0803C6EC/0x0803C734 sao dados (JT5 item 1)
+0x08007D28,Tile_ClearSlotsAndDispatchState_JumpTable,data,tabela real 5 ponteiros em 0x08007D50 (indice byte +0x3C <=4); JT5
+0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,mov pc,r0 (tabela real 5 entradas); JT5
+0x08006844,Parts_DispatchSlotHandler_JumpA,label,mov pc (bit 8 ligado): tabela 0x08006854 (5 helpers 0x08006238/284/2D0/31C/368 com arg 0); JT5
+0x080068A2,Parts_DispatchSlotHandler_JumpB,label,mov pc (bit 8 desligado): tabela 0x080068AC (mesmos helpers com arg 1); JT5
+0x08006F56,Parts_DispatchSlotAction_Jump,label,mov pc: tabela real 5 entradas em 0x08006F64 (idx +0x5A <=4); JT5
+0x08027A16,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_Jump,label,mov pc: tabela real 5 entradas em 0x08027A34 (idx +0xA8-4); JT5
+0x08028526,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_Jump,label,mov pc: tabela real 29 entradas em 0x08028534 (idx +0xA8-0xC); JT5
+0x08028AB4,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump,label,mov pc em 0x08028AB4: tabela 6 ponteiros em 0x08028AD8 (idx +0x51 <=5); JT5
+0x0802844C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_Jump,label,mov pc: tabela real 29 entradas em 0x0802845C (tecnica 12..40); JT5
+0x08050CEA,Event_RunSceneCommandSequence_Jump,label,mov pc: tabela real 5 entradas em 0x08050CF4 (idx byte +0xB de 0x03006D20); JT5
+0x08050E4E,Event_RunSceneCommandSequence_JumpCmd,label,mov pc: tabela real 33 entradas em 0x08050E6C (comando 0..32); JT5
+0x08050CF4,Event_RunSceneCommandSequence_JumpTable,data,tabela real 5 ponteiros (0x08050D08/D40/D72/F38/F40); JT5
+0x08050E6C,Event_RunSceneCommandSequence_JumpTableCmd,data,tabela real 33 ponteiros (comandos 0..32); JT5
+0x0802845C,Fight_SelectVariantByTechnique_JumpTable,data,tabela real 29 ponteiros (tecnica 12..40); JT5
+0x08020B4C,Fight_DispatchOnSubstateAA_R_08,label,retorno pop r0/bx r0 (0x08020CD6); sem tabela (JT5 item 6)
+0x08025858,Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics,label,retorno (0x08025944); sem tabela (JT5 item 7)
+0x08026D98,Fight_DispatchOnSubstateAA_AP_0x18,label,retorno (0x08026EB0); sem tabela (JT5 item 9)
+0x0806BC48,Fight_TickBattleFrame,label,retorno pop r0/bx r0 (0x0806BC92); sem tabela (JT5 item 3)
+0x08071F74,FUN_08071F74,label,retorno com r0 = 1/0 (pop r1/bx r1 em 0x08071FF6); sem tabela (JT5 item 5)
+0x08054280,Scene_DispatchStateHandlerTail,label,mov pc tabela 0x080542B0 (0x8C handlers por codigo; 90 = 0x080567F0); JT5
+0x080542A2,Scene_DispatchStateHandlerTail_Jump,label,mov pc: tabela real 0x8C ptrs em 0x080542B0 (literal 0x080542AC); JT5
+0x080542B0,Scene_DispatchStateHandler_CodeTable,data,tabela real 0x8C ptrs (codigo 0..0x8B); JT5
+0x08058328,Screen_UpdateByStep_JumpStep,label,mov pc: tabela real 8 ptrs em 0x08058334 (step 0..7); JT5
+0x08058378,Screen_UpdateByStep_JumpState6,label,mov pc: tabela real 6 ptrs em 0x08058384; JT5
+0x08058572,Screen_UpdateByStep_JumpState5,label,mov pc: tabela real 6 ptrs em 0x0805857C; JT5
+0x08058716,Screen_UpdateByStep_JumpState4,label,mov pc: tabela real 5 ptrs em 0x08058720; JT5
+0x08058858,Screen_UpdateByStep_JumpState7,label,mov pc: tabela real 7 ptrs em 0x0805886C; JT5
+0x08058C44,Screen_RedrawAndDispatchStep_Jump,label,mov pc: tabela real 8 ptrs em 0x08058C54 (step 0..7); JT5
+0x08058C54,Screen_RedrawAndDispatchStep_Table,data,tabela 8 ptrs; JT5
+0x08058334,Screen_UpdateByStep_TableStep,data,tabela 8 ptrs; JT5
+0x0806A12A,dispatch_scene_state_Jump,label,mov pc: tabela real 23 ptrs em 0x0806A134 (estado RAM 0x03006F88); JT5
+0x0806A134,dispatch_scene_state_Table,data,tabela 23 ptrs; JT5
+0x0806BD8C,dispatch_state_8_Jump,label,mov pc: tabela real 8 ptrs em 0x0806BD98 (byte +0x20 de 0x03002C30); JT5
+0x0806BD98,dispatch_state_8_Table,data,tabela 8 ptrs; JT5
+0x0806CB58,anim_dispatch_state_Jump,label,mov pc: tabela real 7 ptrs em 0x0806CB6C ((byte +0x20)-1); JT5
+0x0806CB6C,anim_dispatch_state_Table,data,tabela 7 ptrs; JT5
+0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,mov pc: tabela real 41 ptrs em 0x0805D2C8 (halfword EWRAM 0x02040000+id*4); JT5
+0x0805D2C8,KeyItemBag_ListInputStep_Table,data,tabela 41 ptrs (0..40); JT5
