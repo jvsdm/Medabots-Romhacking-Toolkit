@@ -36,7 +36,7 @@ TIERS = [
 NEVER_FUNC = {0x08000000}
 KEEP_MTBE = {"0x08035754", "0x08035814", "0x08035880", "0x08035740"}
 # Listas de endereços que devem virar função (alvos de tabela de ponteiros).
-CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt", "JT6_criar.txt", "JT7_criar.txt", "JT8_criar.txt", "BA2_criar.txt", "PG_criar.txt", "IN3_criar.txt", "BT3_criar.txt"]
+CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt", "JT6_criar.txt", "JT7_criar.txt", "JT8_criar.txt", "BA2_criar.txt", "IN3_criar.txt", "BT3_criar.txt"]
 # Funções que o Ghidra engoliu dentro de outra (QA5): o sync tira a hospedeira, cria estas e recria a hospedeira.
 SPLIT_LISTS = ["QA5_criar.txt"]
 
