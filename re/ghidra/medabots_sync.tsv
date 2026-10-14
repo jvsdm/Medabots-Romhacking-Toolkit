@@ -51,6 +51,8 @@ F	0x080026A4	Portrait_TickMoveAndFlagDone
 F	0x080026E0	StateMachine_InitTableAndStep
 F	0x08002730	Fx_TickDispatchAndInitRecord
 F	0x0800277C	Sm_RunSelectedDispatch_FlagDone
+F	0x080027BC	MainState0_Menu1_DispatchSub
+F	0x080027DC	MainState0_Menu1_Sub0_InitScreen
 F	0x080028AC	Screen_RevealStepShowNumber
 F	0x08002A2C	Menu_CursorStepAndConfirm
 F	0x08002AF8	Gfx_BgStripeStep
@@ -1982,6 +1984,7 @@ F	0x08047BC0	Sound_RequestFade
 F	0x08047BCC	Table_GetWordByIndex_08047bd8
 F	0x08047BDC	GetBotName
 F	0x08047BEC	GetPartName
+F	0x08047C00	FieldMenu_CloseChoice_Provavel
 F	0x08047C84	Text_WriteDecimalToSlot
 F	0x08047CE4	Text_CopyStringToSlot
 F	0x08047D24	Num_FormatTable4EntryToGlyphs
@@ -2449,7 +2452,10 @@ L	0x08057570	FieldMenu_RowAction3_Sub0F
 F	0x080575DC	Menu_ChoiceCountdownStep
 F	0x08057AD0	Overworld_FinishTransitionInitCursor
 F	0x08057B0C	Map_ExitStateDispatchFlow
+F	0x08057B6C	FieldMenu_Sub0B_RowMachine
 F	0x08057CB0	Flow_WaitObjectThenCount
+F	0x08057D04	FieldMenu_Sub0D_Close
+F	0x08057D40	FieldMenu_Sub0F_Close
 F	0x08057D80	Overworld_CheckStepAllowed
 F	0x08057F1C	Menu_StepCursorWrap
 F	0x08057FB4	Map_ReleaseMarkerRenderSlots
@@ -2533,6 +2539,7 @@ F	0x0805CDAC	KeyItemBag_InitListScreen
 F	0x0805CED0	Screen_FadeStepThenLoadObj
 F	0x0805CF58	Shop_UpdateSlotAndDispatchState
 F	0x0805CFB4	Shop_ItemListInputStep
+L	0x0805D2C2	KeyItemBag_ListInputStep_Jump
 L	0x0805D2C8	KeyItemBag_DispatchTable
 L	0x0805D36C	ItemListSwitch_Table
 L	0x0805D384	KeyItemBag_Case_Id1
@@ -3149,6 +3156,7 @@ L	0x083ABB50	SND_PsgFreqTable
 L	0x083ABF98	gMainStateTable
 L	0x083ABFB0	gSpriteSetTable0
 L	0x083AC2C8	gMainStateTable_083AC2C8
+L	0x083AC404	MainState0_Menu1_SubTable
 L	0x083AC560	BattleStepTable_Base_Unresolved
 L	0x083AC568	BattleStepTable_Unknown
 L	0x083AC614	debug_mdlpic_model_ptrs
@@ -3477,8 +3485,6 @@ L	0x087F314C	gGfx_Logo_Char
 L	0x087F5500	gTextDump
 C	0x08002574
 C	0x0800275C
-C	0x080027BC
-C	0x080027DC
 C	0x08003374
 C	0x080039E0
 C	0x08004A40

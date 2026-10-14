@@ -435,6 +435,8 @@ address,name,kind,count,comment
 0x080026E0,StateMachine_InitTableAndStep,func_thumb,,grava tabela de 10 bytes; passo de maquina de estados; provavel
 0x08002730,Fx_TickDispatchAndInitRecord,func_thumb,,"[provavel] StateMachine_DispatchStep; se !=0 Fx_InitRecord8(0,0x16,7) e contador++"
 0x0800277C,Sm_RunSelectedDispatch_FlagDone,func_thumb,,provável: despacha StateMachine_DispatchStep e marca flag em DAT_080027b8
+0x080027BC,MainState0_Menu1_DispatchSub,func_thumb,,"[FM3] [FM3] menu_list[1] (gMainState=0, menu=1): wrapper que despacha por gamestate_subroutine na tabela 0x083AC404; SEM funcao no Ghidra (nao renomeado)"
+0x080027DC,MainState0_Menu1_Sub0_InitScreen,func_thumb,,[FM3] [FM3] sub 0 de menu 1: carrega 6 conjuntos de graficos na VRAM e chama 0x08074B88(6); tela cheia (nao a faixa de 4 linhas); nome pendente
 0x080028AC,Screen_RevealStepShowNumber,func_thumb,,[FL10] tick de revelação por passos (0x84); tiles nos passos 10/12; mostra número ao fim; subsistema não confirmado
 0x08002A2C,Menu_CursorStepAndConfirm,func_thumb,,cursor 0..3 + confirmar; provavel
 0x08002AF8,Gfx_BgStripeStep,func_thumb,,passo por frame da revelacao de faixas BG; contador ctx+0x84 (provavel)
@@ -2367,6 +2369,7 @@ address,name,kind,count,comment
 0x08047BCC,Table_GetWordByIndex_08047bd8,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x08047BD8 [arg]
 0x08047BDC,GetBotName,func_thumb,,gBotNames[bot]
 0x08047BEC,GetPartName,func_thumb,,"GetPartName(kind, bot): gPartNames[bot*4 + kind]"
+0x08047C00,FieldMenu_CloseChoice_Provavel,func_thumb,,[FM3] [FM3] chamado pelos subs 0x0D e 0x0F antes de 0x0804A210; nome chute (nao lido)
 0x08047C84,Text_WriteDecimalToSlot,func_thumb,,[R2b] Escreve número decimal no buffer de texto (terminador 0xFE)
 0x08047CE4,Text_CopyStringToSlot,func_thumb,,[R2b] Copia até 16 bytes para buffer de texto (terminador 0xFE)
 0x08047D24,Num_FormatTable4EntryToGlyphs,func_thumb,,[FN2] provavel: Copia 4 palavras de tabela 0x08047D48 e formata a entrada [arg] como decimal em glifos
@@ -2834,7 +2837,10 @@ address,name,kind,count,comment
 0x080575DC,Menu_ChoiceCountdownStep,func_thumb,,provável: contagem regressiva que abre janelas de escolha; jump table final não recuperada
 0x08057AD0,Overworld_FinishTransitionInitCursor,func_thumb,,[FL10] fim da transição: sprite do cursor do mapa (slot 0x7F); estado=2 (provável)
 0x08057B0C,Map_ExitStateDispatchFlow,func_thumb,,saida de tela de mapa: escolhe fluxo 0x41/0x42/0x43 pelo estado +0x65; provavel
+0x08057B6C,FieldMenu_Sub0B_RowMachine,func_thumb,,[FM3] [FM3] sub 0x0B da tabela 0x083D5FF4: sub-maquina por linha (ctx+0x65) e passo ctx+0x70; SEM funcao no Ghidra; codigo 2 cai aqui
 0x08057CB0,Flow_WaitObjectThenCount,func_thumb,,[FR1] waits FUN_08047C24 (object state machine) per table id then counts up to 6 steps
+0x08057D04,FieldMenu_Sub0D_Close,func_thumb,,[FM3] [FM3] sub 0x0D: BL 0x08047C00; BL 0x0804A210 (fim de lista); retorna. Saida do menu (codigo 3). SEM funcao no Ghidra
+0x08057D40,FieldMenu_Sub0F_Close,func_thumb,,[FM3] [FM3] sub 0x0F: corpo igual ao 0x0D (BL 0x08047C00; BL 0x0804A210). Saida do menu (codigos 4..6). SEM funcao no Ghidra
 0x08057D80,Overworld_CheckStepAllowed,func_thumb,,"[R3] (mtbe) decide passo por direcao; 0 livre, 1..6 bloqueio; dir 3 usa colisao 3 e parte 0x6B"
 0x08057F1C,Menu_StepCursorWrap,func_thumb,,[R3] (mtbe) move cursor de menu com volta (botoes 0x40/0x80)
 0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23
@@ -2918,6 +2924,7 @@ address,name,kind,count,comment
 0x0805CED0,Screen_FadeStepThenLoadObj,func_thumb,,provável: fade de 9 passos e carga de objeto no fim
 0x0805CF58,Shop_UpdateSlotAndDispatchState,func_thumb,,"[FL10] loja: destaque do slot, id de gShopItems ou 0x3F, StateMachine_DispatchStep (provável)"
 0x0805CFB4,Shop_ItemListInputStep,func_thumb,,"entrada da lista de itens da loja (paginas de 5, gShopItems); provavel"
+0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,,[JT5] mov pc: tabela real 41 ptrs em 0x0805D2C8 (halfword EWRAM 0x02040000+id*4); JT5
 0x0805D2C8,KeyItemBag_DispatchTable,data,,"[IN2] [IN2] 0x28 entradas de alvo por id de key item (<=0x28); alvos especiais 0,1,5,12,13,19,39; resto 0x0805D410"
 0x0805D36C,ItemListSwitch_Table,label,,[IN] [IN] ponto de tabela 0x28 entradas de despacho (pendente)
 0x0805D384,KeyItemBag_Case_Id1,label,,[IN2] [IN2] alvo da entrada id 1
@@ -3534,6 +3541,7 @@ address,name,kind,count,comment
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
 0x083AC2C8,gMainStateTable,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list)
+0x083AC404,MainState0_Menu1_SubTable,table,,"[FM3] [FM3] tabela de sub-estados de MainState0 menu 1: [0]=0x080027DC (tela cheia, 6 graficos), [1]=0x080028AC, [2]=0x08002A2C"
 0x083AC560,BattleStepTable_Base_Unresolved,data,,"[TP2] [GH-TP2] base sem literal na ROM; entradas 0x080049C9, 0x080049ED, 0x08004A19 (0x568 idx), 0x08004A41, 0x08004A79, 0x08004AF9, 0x08004C59"
 0x083AC568,BattleStepTable_Unknown,data,,[TP] [GH-TP] tabela de ponteiros de passos GS; 0x08004A19 e entrada 0 desta linha; despachante nao achado
 0x083AC614,debug_mdlpic_model_ptrs,data,,"[DB2] GH-DB2: 150 ponteiros para dados comprimidos de modelo, indice v0*5+v1 (v0 0..0x1D, v1 0..4); provavel"
