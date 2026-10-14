@@ -78,9 +78,9 @@ F	0x0800522C	BattlePreview_LoadEntryPalette
 F	0x0800529C	BattlePartState_Init
 F	0x080053C8	BattlePartPreview_Rebuild
 F	0x080054C0	BattlePreview_BuildLargeCompositeLayer5
-F	0x08005588	troca_selecao_parte
-F	0x08005628	init_4_slots_b
-F	0x080056A4	atualiza_slot_b
+F	0x08005588	PartSelect_HandleDirectionInput
+F	0x08005628	ObjectSlots_Init4Overlay
+F	0x080056A4	ObjectSlot_UpdatePositionOverlay
 F	0x08005798	aplica_mascara_slots_b
 F	0x080058A4	Parts_HandleSlotSwapInput
 F	0x08005948	Parts_CheckSpriteIdsSetSpeed
@@ -98,11 +98,11 @@ F	0x08005F68	PartSlot_DrawNameLabelKind2
 F	0x08005FEC	PartSlot_DrawStatsPanelKind2
 F	0x080060D0	PartSlot_DrawNameLabelKind3
 F	0x08006154	PartSlot_DrawStatsPanelKind3
-F	0x08006238	estilo_linha_stats_9
-F	0x08006284	estilo_linha_stats_B
-F	0x080062D0	estilo_linha_stats_D
-F	0x0800631C	estilo_linha_stats_F
-F	0x08006368	estilo_linha_stats_11
+F	0x08006238	PartStats_FillBandH9
+F	0x08006284	PartStats_FillBandHB
+F	0x080062D0	PartStats_FillBandHD
+F	0x0800631C	PartStats_FillBandHF
+F	0x08006368	PartStats_FillBandH11
 F	0x080063B4	Stats_DrawValueD
 F	0x08006414	Parts_DrawIconsRow
 F	0x08006444	Parts_DrawSlotsPanel
@@ -276,6 +276,7 @@ F	0x0801022C	BgMap_FillRectTickCounter
 F	0x080102C0	Scr_HideSpritesPlaySong8
 F	0x08010478	Screen_ScrollRevealRowsStep
 F	0x0801053C	Fight_ResetTemplateAndPalette
+F	0x08010540	Fight_ResetTemplateAndPalette_08010540
 F	0x0801058C	Fight_InitBotPartSelectScreen
 F	0x08010814	Fight_ShowPreBattleTextForCharacter
 F	0x08010A20	Tile_ResetBlendAndClearSlots
@@ -319,6 +320,7 @@ F	0x080127DC	Fight_AwardPartExperience
 L	0x08012968	medaforce_list_ptr_literal
 F	0x08012970	Battle_FrameDispatchOrExit
 F	0x080129C8	Fight_SetupBattleBotStates
+F	0x080129F2	Fight_SetupBattleBotStates_080129F2
 F	0x08012A20	Fight_PartPanelStep
 F	0x08012B40	Gfx_FadeStepPaletteRows
 F	0x08012C64	Fight_BotSelectMenuFrame
@@ -354,6 +356,7 @@ F	0x08014F44	Fight_CopyBotIdentityRecords
 F	0x08014F90	Fight_InitializePartStates
 F	0x080150C0	Fight_InitializeEnemyBotStates
 F	0x080150FC	Fight_InitializeBotFromTemplate
+L	0x080151E8	gSpecialityTablePtr
 F	0x0801520C	Fight_BuildBotPartDisplayStats
 F	0x0801528C	Fight_RefreshBotPartSlotDisplays
 F	0x0801531C	Fight_SelectActionsForBotGroup
@@ -1789,7 +1792,7 @@ F	0x0804361C	Slot_FindNextActiveWrap
 F	0x080436AC	PartSelect_CycleNextValid
 F	0x080437E0	Util_Are4ByteFieldsEqual
 F	0x08043814	AreBattleSpritePartIdsValid
-L	0x08043820	site_BotCountValidator
+L	0x08043820	AreBattleSpritePartIdsValid_08043820
 F	0x0804384C	Lookup_FindPartIndexById
 F	0x0804387C	reset_step_and_get_encounter_flag
 F	0x080438C4	Overworld_ShouldTriggerRandomEncounter
@@ -1818,7 +1821,7 @@ F	0x08044934	PartPreview_LoadLargeDisplaySprite
 F	0x08044A3C	MotionPlayStep
 F	0x08044B28	Gfx_LoadDefaultAsset
 F	0x08044B34	Roster_ResolveIdIfZero
-L	0x08044B58	site_StarterBot
+L	0x08044B58	Bot_InitStarterRecord
 F	0x08044BA8	FightPreview_InitSideState
 F	0x08044C38	FightPreview_SetSceneMode
 F	0x08044CDC	Dispatch_Sub4Mode
@@ -2375,7 +2378,7 @@ F	0x0805DAD4	StateTable_JumpOnDone_6Or9Or13
 F	0x0805DB20	Fx_StepThenInitRecord8
 F	0x0805DB4C	StateTable_JumpOnDone_6Or9
 F	0x0805DB84	Save_StepThenFlashOp
-F	0x0805DBC4	Site_SaveLoadPromptStep
+F	0x0805DBC4	SaveLoad_PromptStep
 F	0x0805DC4C	StateMachine_TickWithFrameTimer
 F	0x0805DC88	Screen_ResetPalettesAndAdvance
 F	0x0805DCB0	StateTable_WaitSubThenAdvance_C
@@ -2385,8 +2388,8 @@ F	0x0805DD88	Screen_InitBlendFade
 F	0x0805DDEC	Site_RunSaveLoadOption
 F	0x0805DEB0	Save_InvokeFlashOp
 F	0x0805DEC8	Save_ClearAndRetryLoad
-L	0x0805DF18	site_LoadGame
-L	0x0805E010	site_SaveGame
+L	0x0805DF18	SaveLoad_LoadGame
+L	0x0805E010	SaveLoad_SaveGame
 F	0x0805E138	Save_ReadVerify
 F	0x0805E248	Save_WriteBlocksEeprom
 F	0x0805E2D8	Obj_SetFieldFromTable4
@@ -2645,12 +2648,12 @@ F	0x0806FDA4	counter_2_digits
 F	0x0806FE44	format_6_digits
 F	0x0806FF2C	cursor_step_sprites
 F	0x080700C8	clear_text_buffer
-F	0x08070108	init_fila_4
+F	0x08070108	ListRing_InitFour
 F	0x08070170	zero_counters_f0
 F	0x080701A8	init_hide_sprites
 F	0x080701F8	timer_enable_bg2
-F	0x0807028C	init_tela_bg0
-F	0x08070464	init_tela_bg0_v2
+F	0x0807028C	Screen_InitBg0Tilemap
+F	0x08070464	Screen_InitBg0TilemapAlt
 F	0x08070550	slots11_update
 F	0x080707BC	slot_start
 F	0x08070804	timer_if_flag
@@ -2925,7 +2928,7 @@ L	0x083AD080	Battle_FrameDispatchTable
 L	0x083AD0F0	table_medabot_screen_states
 L	0x083AD10C	Battle_SceneInitTable
 L	0x083AD190	Battle_StepFrameTable
-L	0x083AD380	gSpecialityWeightTable
+L	0x083AD380	gSpeciality8ByteTable
 L	0x083AD470	gFightFallbackPriorityRows
 L	0x083AD524	cursor_cell_xy_table
 L	0x083AECD8	gFightSceneSteps
@@ -2961,7 +2964,7 @@ L	0x083B7F8C	medal_medaforce_list
 L	0x083B80C0	gTextMedaforceDesc1
 L	0x083B82F0	gTextSpecialAttackDesc
 L	0x083B83FC	gPartStats
-L	0x083BA658	gBotNames
+L	0x083BA658	gPartRecordPtrTable
 L	0x083BBB4C	gPartNames
 L	0x083BCFEC	gTextPartCodeNames
 L	0x083BDA04	gTextStatDescriptions

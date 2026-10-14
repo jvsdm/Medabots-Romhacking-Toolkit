@@ -84,7 +84,7 @@ address,name,kind,count,comment
 0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798)"
 0x030017A0,team_records_9x8,label,,"[PS] [PS] time: 9 registros de 8 B [estado, genero, medalha, cabeca, braco D, braco E, pernas, indice]; confirmado pela troca"
-0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation)"
+0x03001800,fight_information_template,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -342,9 +342,9 @@ address,name,kind,count,comment
 0x0800529C,BattlePartState_Init,func_thumb,,"Simon/Rokusho: Initialize the software/auxiliary portrait renderer used by the battle preview screen. Clears the working buffers, initializes the renderer state, and draws the first preview portrait frame for the selected entry. (antes: InitializeBattlePreviewPortraitRenderer) (antes: init_estado_parte_batalha)"
 0x080053C8,BattlePartPreview_Rebuild,func_thumb,,"Simon/Rokusho: Battle preview small portrait uses the same side split as the large portrait caller: side flag at menu state +0x5E selects param_12 0/1 and changes the destination cached OAM span buffer offset, while the CompositePreviewContext still points at 0x02026000/0x020260D0. (antes: RenderBattlePreviewPortraitFrame) (antes: desenha_parte_batalha)"
 0x080054C0,BattlePreview_BuildLargeCompositeLayer5,func_thumb,,"Simon/Rokusho: RenderBattlePreviewLargePortraitFrame calls BuildFourPartLargePreviewComposite(..., param_10=8, mode=5, side=0/1). Because param_10 low bit is 0, this large-portrait path does not request the appearance-row variant increment used by LoadCompositePreviewDescriptorRecursive. (antes: RenderBattlePreviewLargePortraitFrame) (antes: desenha_slot_batalha_5)"
-0x08005588,troca_selecao_parte,func_thumb,,"Simon/Rokusho: Handle directional input in the battle menu/status UI. Updates the current selection through a small transition table, plays the cursor sound, and refreshes the dependent UI widgets when the selection changes. (antes: HandleBattleMenuDirectionalInput)"
-0x08005628,init_4_slots_b,func_thumb,,Simon/Rokusho: Initialize the small comparison/overlay composite sprites used by the battle preview toggle state. Clears four sprite slots and prepares them through the shared preview-sprite setup helper. (antes: InitializeBattlePreviewComparisonSprites)
-0x080056A4,atualiza_slot_b,func_thumb,,"Simon/Rokusho: Update one comparison/overlay preview sprite slot by recomputing its position, frame selection, and affine state from the current preview-toggle selection. (antes: UpdateBattlePreviewComparisonSpriteSlot)"
+0x08005588,PartSelect_HandleDirectionInput,func_thumb,,"Simon/Rokusho: Handle directional input in the battle menu/status UI. Updates the current selection through a small transition table, plays the cursor sound, and refreshes the dependent UI widgets when the selection changes. (antes: HandleBattleMenuDirectionalInput) (antes: troca_selecao_parte)"
+0x08005628,ObjectSlots_Init4Overlay,func_thumb,,Simon/Rokusho: Initialize the small comparison/overlay composite sprites used by the battle preview toggle state. Clears four sprite slots and prepares them through the shared preview-sprite setup helper. (antes: InitializeBattlePreviewComparisonSprites) (antes: init_4_slots_b)
+0x080056A4,ObjectSlot_UpdatePositionOverlay,func_thumb,,"Simon/Rokusho: Update one comparison/overlay preview sprite slot by recomputing its position, frame selection, and affine state from the current preview-toggle selection. (antes: UpdateBattlePreviewComparisonSpriteSlot) (antes: atualiza_slot_b)"
 0x08005798,aplica_mascara_slots_b,func_thumb,,Simon/Rokusho: Refresh the four comparison/overlay preview sprite slots. Either hides them when preview compare mode is off or updates their visible state and per-slot animation when compare mode is active. (antes: RefreshBattlePreviewComparisonSprites)
 0x080058A4,Parts_HandleSlotSwapInput,func_thumb,,"Simon/Rokusho: Handle the button press that toggles the part-preview/compare state in the battle menu. Swaps preview data when needed, rebuilds the dependent widgets, and refreshes the preview sprite. (antes: HandleBattlePartPreviewToggle) (antes: processa_troca_slots)"
 0x08005948,Parts_CheckSpriteIdsSetSpeed,func_thumb,,Simon/Rokusho: Refresh the currently selected battle part preview sprite. Validates the selected part-id set and enables animation on the corresponding composite sprite if the ids are valid. (antes: RefreshBattlePartPreviewSprite) (antes: checa_parte_sinal)
@@ -362,11 +362,11 @@ address,name,kind,count,comment
 0x08005FEC,PartSlot_DrawStatsPanelKind2,func_thumb,,[R0] stats da peca id +0x9A modo 2 via GetPartStats (provavel) (antes: desenha_stats_parte_c)
 0x080060D0,PartSlot_DrawNameLabelKind3,func_thumb,,[R0] icone de parte por +0x9B (provavel) (antes: desenha_icone_h)
 0x08006154,PartSlot_DrawStatsPanelKind3,func_thumb,,Simon/Rokusho: Update the legs-part UI marker based on whether the selected legs part's RomPartRecord.attribute_id matches the currently selected medal's required/compatible attribute. (antes: PartDetail_UpdateLegsAttributeMatchMarker) (antes: desenha_stats_parte_d)
-0x08006238,estilo_linha_stats_9,func_thumb,,[R0] cor da linha de stats camada 9 (provavel)
-0x08006284,estilo_linha_stats_B,func_thumb,,[R0] cor da linha de stats camada B (provavel)
-0x080062D0,estilo_linha_stats_D,func_thumb,,[R0] cor da linha de stats camada D (provavel)
-0x0800631C,estilo_linha_stats_F,func_thumb,,[R0] cor da linha de stats camada F (provavel)
-0x08006368,estilo_linha_stats_11,func_thumb,,[R0] cor da linha de stats camada 11 (provavel)
+0x08006238,PartStats_FillBandH9,func_thumb,,[R0] cor da linha de stats camada 9 (provavel) (antes: estilo_linha_stats_9)
+0x08006284,PartStats_FillBandHB,func_thumb,,[R0] cor da linha de stats camada B (provavel) (antes: estilo_linha_stats_B)
+0x080062D0,PartStats_FillBandHD,func_thumb,,[R0] cor da linha de stats camada D (provavel) (antes: estilo_linha_stats_D)
+0x0800631C,PartStats_FillBandHF,func_thumb,,[R0] cor da linha de stats camada F (provavel) (antes: estilo_linha_stats_F)
+0x08006368,PartStats_FillBandH11,func_thumb,,[R0] cor da linha de stats camada 11 (provavel) (antes: estilo_linha_stats_11)
 0x080063B4,Stats_DrawValueD,func_thumb,,[R0] valor numerico da linha de stats modo 3 (provavel)
 0x08006414,Parts_DrawIconsRow,func_thumb,,[R0] linha de icones das 4 partes (provavel)
 0x08006444,Parts_DrawSlotsPanel,func_thumb,,[R0] painel dos 4 slots de parte (provavel)
@@ -540,6 +540,7 @@ address,name,kind,count,comment
 0x080102C0,Scr_HideSpritesPlaySong8,func_thumb,,provável: oculta 4 sprites e pede música 8
 0x08010478,Screen_ScrollRevealRowsStep,func_thumb,,[FL10] revelação por linhas no mapa de fundo; contador +0x48; subsistema não confirmado
 0x0801053C,Fight_ResetTemplateAndPalette,func_thumb,,"zera estado +0x132, paleta e area; provavel"
+0x08010540,Fight_ResetTemplateAndPalette,func_thumb,,[EN] GH-EN: chama Fight_BeginEncounterTemplateSelection; zera +0x132; limpa VRAM/paleta com bios_cpufastset. Confirmado.
 0x0801058C,Fight_InitBotPartSelectScreen,func_thumb,,"[provavel] tela de selecao de pecas do bot: decompress x5, desenha Fight_Draw*"
 0x08010814,Fight_ShowPreBattleTextForCharacter,func_thumb,,[TX] GH-TX: r0 = StateMachine_DispatchStep(gTextPreBattleMessage[byte 0x03001800 = FightTemplate.character_id]); se !=0 chama Fight_UpdateBotPartEntryMotion 0x08012098 e incrementa 0x0300137C. Sem funcao no Ghidra; nome provavel
 0x08010A20,Tile_ResetBlendAndClearSlots,func_thumb,,"[provavel] SetGpuBlendMode(0,0,0), 2x FillRect16, Tile_ClearSlots"
@@ -583,6 +584,7 @@ address,name,kind,count,comment
 0x08012968,medaforce_list_ptr_literal,label,,[MF] [MF] palavra de literal que aponta para 0x083B7F8C (nao e tabela de bytes)
 0x08012970,Battle_FrameDispatchOrExit,func_thumb,,passo de batalha por quadro: checa saida e despacha tabela; provavel
 0x080129C8,Fight_SetupBattleBotStates,func_thumb,,[provavel] zera ctx+0x13A; se ctx+0x89!=1 roda ClearBattleBuffer/UpdateBotActiveFlagCount/RefreshBotPartRecords/InitializeEnemyBotStates; sempre RefreshBotPartSlotDisplays
+0x080129F2,Fight_SetupBattleBotStates,func_thumb,,"[EN] GH-EN: se ctx+0x89 != 1 chama Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords, Fight_InitializeEnemyBotStates. Confirmado no decompile; significado de ctx+0x89 aberto."
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
 0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos"
 0x08012C64,Fight_BotSelectMenuFrame,func_thumb,,frame do menu de selecao de bot; cursor +0x80; provavel
@@ -618,6 +620,7 @@ address,name,kind,count,comment
 0x08014F90,Fight_InitializePartStates,func_thumb,,"Simon/Rokusho: Initialize the four live BattlePartState records for each bot. The first 0x0D bytes of each BattlePartState come from the ROM part_information subrecord for head/right/left/legs. Runtime fields are then populated, including current_durability and part_id. The head/right/left/legs part records live at BattleBotStateRecord.parts[0..3]."
 0x080150C0,Fight_InitializeEnemyBotStates,func_thumb,,[R0a] setup dos bots inimigos (indice base 3) (provavel)
 0x080150FC,Fight_InitializeBotFromTemplate,func_thumb,,"Simon/Rokusho: Initialize one enemy-side BattleBotStateRecord from the copied FightTemplate in fight_information. The function copies a RomMedalInfo record into gBattleScratchBuffer, transfers selected medal metadata into BattleBotHeader, copies the head-part ROM record into the live bot state, expands the 4 packed speciality seed bytes from the template into 8 raw speciality levels, then scales those 8 levels through the medal's speciality base table and medal level to produce the final live speciality levels."
+0x080151E8,gSpecialityTablePtr,ptr,,[EN] GH-EN: ponteiro para 0x083AD380. Confirmado.
 0x0801520C,Fight_BuildBotPartDisplayStats,func_thumb,,[R0a] tabela de estatistica de peca para exibicao (provavel)
 0x0801528C,Fight_RefreshBotPartSlotDisplays,func_thumb,,"[R0a] atualiza slots de peca via FUN_08031A3C (chute; nome sugerido, sem rename)"
 0x0801531C,Fight_SelectActionsForBotGroup,func_thumb,,[R0a] escolhe acao de 3 bots a partir de first_bot (provavel)
@@ -2054,7 +2057,7 @@ address,name,kind,count,comment
 0x080436AC,PartSelect_CycleNextValid,func_thumb,,"ciclo de pecas (cmp #0x78 = Tinpet macho); antes site_PartCycle; Simon/Rokusho: Cycle through owned part-set ids for equip/detail UI. Hardcoded boundary values 0x78/0x79 define the end/sentinel behavior for the current 120-family set, and the function also indexes the 0xF0-stride inventory block. (antes: Part_FindNextOwnedPartWithMatchingGender) (antes: site_PartCycle)"
 0x080437E0,Util_Are4ByteFieldsEqual,func_thumb,,[G] 1 se 4 bytes +0x98..+0x9B sao iguais (confirmado)
 0x08043814,AreBattleSpritePartIdsValid,func_thumb,,"Simon/Rokusho: Validate composite battle sprite family ids. Rejects ids above 0x77 (119), so adding battle sprites for new Medabot families requires patching this guard plus expanding the composite sprite pointer/palette tables."
-0x08043820,site_BotCountValidator,label,,imediato do validador de Medabot (BotCount)
+0x08043820,AreBattleSpritePartIdsValid,label,,imediato do validador de Medabot (BotCount) (antes: site_BotCountValidator)
 0x0804384C,Lookup_FindPartIndexById,func_thumb,,[G] Indice na tabela de 9 registros pelo id; 0xFF se nao acha (provavel)
 0x0804387C,reset_step_and_get_encounter_flag,func_thumb,,Simon/Rokusho
 0x080438C4,Overworld_ShouldTriggerRandomEncounter,func_thumb,,"Simon/Rokusho: Return whether the current landing tile should trigger a random encounter. Random encounters are blocked when gRandomEncounterModeFlags bit 0 is set, when encounter disable bytes are nonzero, or when the map's encounter enable byte is zero."
@@ -2083,7 +2086,7 @@ address,name,kind,count,comment
 0x08044A3C,MotionPlayStep,func_thumb,,"antes site_MoveStyleRead: roteiro = gMoveScriptTable[tipo*7 + gMoveStyle[bot]], toca um passo; le gMoveScriptTable[kind*7 + gMoveStyle[bot das pernas]]"
 0x08044B28,Gfx_LoadDefaultAsset,func_thumb,,[R2a] R2a: wrapper de decompress_and_store sem argumentos
 0x08044B34,Roster_ResolveIdIfZero,func_thumb,,[R2a] R2a: id 0 vira byte da tabela de roster atual; senao devolve o id
-0x08044B58,site_StarterBot,label,,rotina do bot inicial
+0x08044B58,Bot_InitStarterRecord,label,,rotina do bot inicial (antes: site_StarterBot)
 0x08044BA8,FightPreview_InitSideState,func_thumb,,[R2a] R2a: zera estado de um lado da previa; grava modo e lado
 0x08044C38,FightPreview_SetSceneMode,func_thumb,,[R2a] R2a: configura tipos e contadores da cena de previa conforme modo 0..3
 0x08044CDC,Dispatch_Sub4Mode,func_thumb,,[R2a] R2a: despacha modo 0..3 para FUN_08064BEC/0C/2C/4C
@@ -2640,7 +2643,7 @@ address,name,kind,count,comment
 0x0805DB20,Fx_StepThenInitRecord8,func_thumb,,[FR1] state machine on +0x48 then Fx_InitRecord8(1
 0x0805DB4C,StateTable_JumpOnDone_6Or9,func_thumb,,"[N2] [N2] tabela 0x08483634 idx 29: se DispatchByIndex != 0, salta para 6 ou 9 (confirmado)"
 0x0805DB84,Save_StepThenFlashOp,func_thumb,,passo de etapa de save; para som e chama Save_InvokeFlashOp; provavel
-0x0805DBC4,Site_SaveLoadPromptStep,func_thumb,,passo que chama opção salvar/carregar e toca música 6; provável
+0x0805DBC4,SaveLoad_PromptStep,func_thumb,,passo que chama opção salvar/carregar e toca música 6; provável (antes: Site_SaveLoadPromptStep)
 0x0805DC4C,StateMachine_TickWithFrameTimer,func_thumb,,[provavel] contador 16 bits + StateMachine_DispatchStep(ctx+0x2C); conta quadros > 60
 0x0805DC88,Screen_ResetPalettesAndAdvance,func_thumb,,"[N2] [N2] tabela 0x08483634 idx 24: Obj_ResetStateFields, CopyPaletteBuffersToHardware, ++0x0300137C (confirmado)"
 0x0805DCB0,StateTable_WaitSubThenAdvance_C,func_thumb,,[N2] [N2] tabela 0x08483634 idx 25: igual a StateTable_WaitSubThenAdvance (confirmado)
@@ -2650,8 +2653,8 @@ address,name,kind,count,comment
 0x0805DDEC,Site_RunSaveLoadOption,func_thumb,,[R3] opções salvar/carregar do site (chute)
 0x0805DEB0,Save_InvokeFlashOp,func_thumb,,[R3] chama FUN_0807c918 (chute)
 0x0805DEC8,Save_ClearAndRetryLoad,func_thumb,,[R3] para som e tenta carregar save 4x (provavel)
-0x0805DF18,site_LoadGame,label,,load do save (inventario como halfword no original)
-0x0805E010,site_SaveGame,label,,save (inventario como halfword no original)
+0x0805DF18,SaveLoad_LoadGame,label,,load do save (inventario como halfword no original) (antes: site_LoadGame)
+0x0805E010,SaveLoad_SaveGame,label,,save (inventario como halfword no original) (antes: site_SaveGame)
 0x0805E138,Save_ReadVerify,func_thumb,,[R3] lê 0x398 blocos da EEPROM e valida save (provavel)
 0x0805E248,Save_WriteBlocksEeprom,func_thumb,,"[R3] regrava blocos da EEPROM, diferencial ou total (confirmado)"
 0x0805E2D8,Obj_SetFieldFromTable4,func_thumb,,[R3] campo de objeto por tabela de 4 (chute)
@@ -2910,12 +2913,12 @@ address,name,kind,count,comment
 0x0806FE44,format_6_digits,func_thumb,,[R4] R4: monta 6 digitos decimais de dois valores; provavel
 0x0806FF2C,cursor_step_sprites,func_thumb,,[R4] R4: cursor com 3 entradas e sprites; chute
 0x080700C8,clear_text_buffer,func_thumb,,[R4] R4: zera buffer de texto 13 halfwords; provavel
-0x08070108,init_fila_4,func_thumb,,[R4] R4: init de 4 nos de lista; provavel
+0x08070108,ListRing_InitFour,func_thumb,,[R4] R4: init de 4 nos de lista; provavel (antes: init_fila_4)
 0x08070170,zero_counters_f0,func_thumb,,[R4] R4: zera contadores +F0/+F2 do objeto de numeros; confirmado
 0x080701A8,init_hide_sprites,func_thumb,,[R4] R4: zera estado e joga 6 sprites para y=200; confirmado
 0x080701F8,timer_enable_bg2,func_thumb,,[R4] R4: 60 quadros e liga BG2 (DISPCNT 0x400); confirmado no fluxo
-0x0807028C,init_tela_bg0,func_thumb,,[R4] R4: copia tabela para VRAM/paleta e liga BG0; provavel
-0x08070464,init_tela_bg0_v2,func_thumb,,[R4] R4: variante de init_tela_bg0 com paleta 0xF80; provavel
+0x0807028C,Screen_InitBg0Tilemap,func_thumb,,[R4] R4: copia tabela para VRAM/paleta e liga BG0; provavel (antes: init_tela_bg0)
+0x08070464,Screen_InitBg0TilemapAlt,func_thumb,,[R4] R4: variante de init_tela_bg0 com paleta 0xF80; provavel (antes: init_tela_bg0_v2)
 0x08070550,slots11_update,func_thumb,,[R4] R4: 11 slots de efeito com periodo por tipo e call_r1; provavel
 0x080707BC,slot_start,func_thumb,,"[R4] R4: cria slot de efeito (kind, sorteio); confirmado"
 0x08070804,timer_if_flag,func_thumb,,[R4] R4: incrementa contador se flag bit0; confirmado
@@ -3190,7 +3193,7 @@ address,name,kind,count,comment
 0x083AD0F0,table_medabot_screen_states,label,,[PS] [PS] tabela de estados da tela do Medabot (stride 4); entrada 9 = UpdateSelectedMedabotPreviewScreen
 0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA
 0x083AD190,Battle_StepFrameTable,data,,"[BT] tabela de modos; entrada 0 = Fight_StepBattleFrame, 8 = 0x08014548; quem indexa: LACUNA"
-0x083AD380,gSpecialityWeightTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas
+0x083AD380,gSpeciality8ByteTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas (antes: gSpecialityWeightTable)
 0x083AD470,gFightFallbackPriorityRows,data,,[AI] [GH-AI] 32 x 4 B na ROM; sorteadas por Fight_RandomizePriorityListSlot; valores nao batem com ids de peca (provavel nome)
 0x083AD524,cursor_cell_xy_table,data,,"[PS] [PS] 9 celulas x 2 B (x,y) do cursor 3x3 do Medabot selecionado"
 0x083AECD8,gFightSceneSteps,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado)
@@ -3226,7 +3229,7 @@ address,name,kind,count,comment
 0x083B80C0,gTextMedaforceDesc1,ptr,5,tabela de texto: Descrições das Medaforças1; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B82F0,gTextSpecialAttackDesc,ptr,8,tabela de texto: Descrições de ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B; Simon: gRomPartRecordTable
-0x083BA658,gBotNames,ptr,120,nomes dos bots; Simon: gPartNamePointerTable
+0x083BA658,gPartRecordPtrTable,ptr,120,nomes dos bots; Simon: gPartNamePointerTable (antes: gBotNames)
 0x083BBB4C,gPartNames,ptr,480,nomes das pecas (bot*4 + kind)
 0x083BCFEC,gTextPartCodeNames,ptr,480,tabela de texto: Códigos das peças; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083BDA04,gTextStatDescriptions,ptr,11,tabela de texto: Descrições de estatísticas; fonte: dump_text_clean_v2.py (traducao PT-BR)
