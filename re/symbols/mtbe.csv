@@ -104,7 +104,7 @@ address,name,kind,count,comment
 0x03000651,battle_robot_1_current_medaforce,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000659,battle_bot0_status_C9,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_status_effect)"
 0x0300065F,battle_bot0_protect_mask_CF,label,,"[SS2] bot+0xCF mascara de protecao: 01 Bug/Virus, 08 Freeze, 02 Hold, 04 Fire (C, SS2 secao 1)"
-0x03000666,gFightBot0Flags_D6,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_form)"
+0x03000666,gFightBot0Flags_D6,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_form) [RM2] provavel (antes: battle_robot_1_form): bot0+0xD6 bit0 testado em Fight_IsOpticClassAction; nome antigo errado"
 0x0300066D,battle_bot0_chosen_part_DD,label,,"[SS2] bot+0xDD peca escolhida 1..3 (DF.md, Fight_SelectActionSource) (C, SS2)"
 0x0300066E,battle_bot0_part_icon_DE,label,,"[SS2] bot+0xDE indice 1-based da peca do icone de status; escritor nao achado (A, SS2)"
 0x0300066F,battle_bot0_part_icon_type_DF,label,,"[SS2] bot+0xDF tipo de acao/tecnica do icone de peca (C, SS2)"
@@ -112,11 +112,11 @@ address,name,kind,count,comment
 0x03000B90,gLinkLocalSlotIndex,label,,[MN] [MN] byte: indice do slot local usado no teste de reset por link (0 -> le halfword em +8 e +0xC conforme); provavel
 0x03000B94,SAVE_OPT_C,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b3-4 (validado <3; nome nao confirmado)
 0x03000BE0,gMedalRecords_RAM,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleMedalStateRecord[30][1920] (antes: gBattleMedalStateTable) (antes: gPartRoster_BuildRecords)"
-0x03000BE1,gMedalRecord_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_Id)"
-0x03000BE4,gMedalRecord_Attribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_attribute)"
-0x03000BE5,gMedalRecord_Level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_level)"
-0x03000BE6,gMedalRecord_Aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_aim)"
-0x03000BE7,gMedalRecord_Compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_compatibility)"
+0x03000BE1,gMedalRecord_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_Id) [RM2] confirmado (antes: first_medal_Id): campo +1 do registro; ""first"" era errado"
+0x03000BE4,gMedalRecord_Attribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_attribute) [RM2] provavel (antes: first_medal_attribute): campo +4"
+0x03000BE5,gMedalRecord_Level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_level) [RM2] confirmado (antes: first_medal_level): campo +5 comparado com 10/30/60 em Fight_AwardPartExperience"
+0x03000BE6,gMedalRecord_Aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_aim) [RM2] provavel (antes: first_medal_aim): campo +6"
+0x03000BE7,gMedalRecord_Compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_compatibility) [RM2] provavel (antes: first_medal_compatibility): campo +7"
 0x03000BEA,object_slot_records,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_name) [DB] GH-DB provavel: base dos registros de objeto (0x40 por slot) gravados por Debug_PartsSpawnScreen"
 0x03001360,SAVE_OPT_B,data,,[A6] flag (byte) lido em Fight_TryUiActionByIndex; 0 = pode disparar; confirmado (literal) (antes: gMessageBusyFlag)
 0x0300137C,gMainSubStateCounter,label,,"passo interno da cena atual (debug: 0 init, 1 menu, 2 sai, 3 opcao); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: gamestate_subroutine) [RW] GH-RW: contador/estado de fluxo; zerado e setado pela recompensa (0x3E) e pelo flow 0x20 (nome provavel, nao confirmado)"
@@ -130,8 +130,8 @@ address,name,kind,count,comment
 0x030017F0,gCtx_VBlankCallback,label,,"[BI] BI: callback de um quadro, chamado no VBlank e reposto ao padrão. Escrito por G03 (0x08043E49), J02 (0x08044101), SceneStep53 (nop). Confirmado (leitura pelo VBlank)."
 0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information) (antes: fight_information_template) (antes: gFightInformation)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM2] confirmado: contador de loop em Fight_CreateBotPartEntrySprites (fight_information+2)"
-0x03001804,gFightBot0PartIds,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: bot_one_in_fight_information)"
-0x03001806,gFightBot0PartId_Slot2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: bot_1_head)"
+0x03001804,gFightBot0PartIds,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: bot_one_in_fight_information) [RM2] confirmado (antes: bot_one_in_fight_information): 4 bytes de ids de parte"
+0x03001806,gFightBot0PartId_Slot2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: bot_1_head) [RM2] provavel (antes: bot_1_head): byte +2 do bloco do bot 0; ""head"" nao confirmado"
 0x03001808,gFight_StepSceneIndex,label,,[FI] u32 indice de passo de cena (JT2) provavel
 0x03001828,fight_scout_bonus_table_0x28,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: team_1_scout_score) (antes: gFight_TeamSupportRecord) (antes: fight_support_record_0x28)"
 0x0300182A,gFight_TargetDamageRecord,label,,[FI] registro 8B x N (+0x89) provavel
@@ -139,7 +139,7 @@ address,name,kind,count,comment
 0x0300182C,team_1_trap_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM2] chute: par de team_1_trap"
 0x03001838,gFight_GfxIndex,label,,[FI] indice gfx tabela 0x083B2628 provavel
 0x03001840,gFight_GfxHalfword,label,,[FI] halfword gfx provavel
-0x03001851,gTeamPickCounter,label,,[FI] modo de efeito 0..3 (HA4 S_0) conf (antes: gFight_EffectMode)
+0x03001851,gTeamPickCounter,label,,[FI] modo de efeito 0..3 (HA4 S_0) conf (antes: gFight_EffectMode) [RM2] provavel (antes: gFight_EffectMode): escrito em TeamPick_ResetCounterStep e Overlay_ResetFieldsAtState18; nao e da batalha
 0x03001852,gFight_PartModeCopy,label,,[FI] copia do byte +0x49 da peca provavel
 0x03001853,gFight_SideBPhase,label,,[FI] fase do lado B provavel
 0x03001855,gFight_SecondaryPhaseMask,label,,[FI] bitmask fase secundaria provavel
@@ -266,22 +266,22 @@ address,name,kind,count,comment
 0x03006417,gRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] [RM3] provavel; indice lido e gravado em Random_NextScaled 0x08049790"
 0x03006428,gMapCameraScrollX,data,,[MP2] base+0xC48: deslocamento X de centralizacao (px) (antes: gMapCameraClampX) [RM3] confirmado (antes: gMapCameraClampX); posicao X da camera lida em Map_GetCameraScrollX e gravada em Map_CenterCameraForSmallMaps
 0x0300642A,gMapCameraScrollY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gEventFlagList_selectedEncounterBattleId) (antes: gMapCameraClampY) [RM3] confirmado (antes: gMapCameraClampY); posicao Y da camera lida em Map_GetCameraScrollY e gravada em Map_CenterCameraForSmallMaps"
-0x03006432,gPlayerPixelX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: ikki_x)"
-0x03006434,gPlayerPixelY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: ikki_y)"
+0x03006432,gPlayerPixelX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: ikki_x) [RM3] confirmado (antes: ikki_x); X em px do jogador; gravado em Overworld_InitPlayerSprites e Map_FinishEnterTransition"
+0x03006434,gPlayerPixelY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: ikki_y) [RM3] confirmado (antes: ikki_y); Y em px do jogador (par de gPlayerPixelX)"
 0x03006436,gPlayerTileX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_tile_x) [RM3] confirmado; tile X lido em Map_CheckWalkOverTrigger e Map_ClampCameraToLoadedMap; gravado em Overworld_UpdateMapSceneStateMachine"
 0x03006437,gPlayerTileY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gOverworldFacingDirection) [RM3] confirmado; tile Y gravado em Overworld_WalkStepByDirection e Overworld_ProcessDirectionInput"
-0x03006438,gPlayerWalkCooldown,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_walk_cooldown)"
-0x03006439,gPlayerQueuedDirection,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_look_dir)"
+0x03006438,gPlayerWalkCooldown,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_walk_cooldown) [RM3] provavel (antes: ikki_walk_cooldown); contador gravado em Overworld_ProcessDirectionInput e lido em WalkStepByDirection"
+0x03006439,gPlayerQueuedDirection,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_look_dir) [RM3] chute (antes: ikki_look_dir); zerado por Overworld_ClearFollowerQueuedMove e lido/gravado em Overworld_ProcessDirectionInput"
 0x0300643B,gCurrentMapSceneVariant,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643C,gMapPlayerWalkState,data,,"[KI] [KI] E+0xC5C: modo do uso de key item (3,4,5,8,6,7,0x0D); indice em 0x083D2A30 (Move_Player, HE1) (antes: KeyItem_ModeByte)"
 0x0300643D,gOverworldEventModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643E,gOverworldEventModeFlagsBackup,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643F,gEncounterSuppressB,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável) (antes: gEventRunSceneStepFlag)
 0x03006440,gEvt_MapObjIndexSaved,label,,[FI2] E+0xC60 indice guardado pelo Op4C e lido pelo Op51 confirmado (HE3_simbolos)
-0x03006447,gPlayerFacingDir,data,,[OW] RAM: facing inicial lido no load (antes: gLoadFacingSource)
+0x03006447,gPlayerFacingDir,data,,[OW] RAM: facing inicial lido no load (antes: gLoadFacingSource) [RM3] provavel (antes: gLoadFacingSource); direcao do jogador gravada por Overworld_SetPlayerFacingAndRefreshFollower e lida ao inicializar sprites
 0x03006449,gMapSecondaryWalkState,data,,[VA2] [VA2] E+0xC69: gravado pelo opcode 0x11 (mesmo valor de C5C e C28); lido por Overworld_UpdateSecondaryActorAnim
-0x0300644E,gSecondaryMarkerScreenX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_x)"
-0x03006450,gSecondaryMarkerScreenY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_y)"
+0x0300644E,gSecondaryMarkerScreenX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_x) [RM3] provavel (antes: str_ikki_x); X em tela do marcador secundario; lido em Map_UpdateSecondaryMarkerScreenPosition"
+0x03006450,gSecondaryMarkerScreenY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_y) [RM3] provavel (antes: str_ikki_y); Y em tela do marcador secundario; gravado em Overworld_InitFollowerFacingAndSfx57"
 0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006468,gCurrentEventPendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventPendingFlag) [FI2] E+0xC88 evento rodando (!=0) confirmado (EV) (antes: gEvt_PendingFlag)"
 0x03006469,gEventPendingByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventStateByte) [LK] [GH-LK] byte pendente do evento (E+0xC89); escrito com 1 pelo evento 0x76; confirmado"
@@ -319,7 +319,7 @@ address,name,kind,count,comment
 0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03006D38,gWalkSpeedBlock,data,,[OW2] literal 0x03006D38 em Map_GetScaledStepDelta; bloco de velocidade
 0x03006D3A,gWalkSpeedMul,data,,[OW] RAM byte: multiplicador do passo (provavel corrida)
-0x03006D3E,gEquippedLegPartByte,data,,[CU2] CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado (antes: gObjectPoseBaseByte)
+0x03006D3E,gEquippedLegPartByte,data,,[CU2] CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado (antes: gObjectPoseBaseByte) [RM3] confirmado (antes: gObjectPoseBaseByte); byte de perna equipada escrito por PartSet 0x08047E50 e zerado no fim de evento (GH-CS2)
 0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006F74,gKeyItemBagCursorPtr,label,,"[IN3] [IN3] ponteiro para struct do cursor da bolsa; +0x0C = indice (gShopItems/lista), +0x10 = 0 libera recusa 'cancelar'. Antes: nome Shop-like nao usado"
@@ -3240,7 +3240,7 @@ address,name,kind,count,comment
 0x08057D40,FieldMenu_Sub0F_Close,func_thumb,,[FM3] [FM3] sub 0x0F: corpo igual ao 0x0D (BL 0x08047C00; BL 0x0804A210). Saida do menu (codigos 4..6). SEM funcao no Ghidra [FS8] [FS8] nome ja existente (FM3); provavel: mesmo corpo do 0x0D
 0x08057D50,Obj_TwoStageInitSetState2_B,func_thumb,,[FN5] igual a _A com campo +0x200 (provavel)
 0x08057D80,Overworld_CheckStepAllowed,func_thumb,,"[R3] (mtbe) decide passo por direcao; 0 livre, 1..6 bloqueio; dir 3 usa colisao 3 e parte 0x6B [VA] [VA] confirmado: teste de opcao de menu (linha 3: item 0x26 + PartSet 0x6B completo + tile adjacente == 3); nao e teste de passo"
-0x08057F1C,Menu_StepCursorWrap,func_thumb,,[R3] (mtbe) move cursor de menu com volta (botoes 0x40/0x80)
+0x08057F1C,Menu_StepCursorWrap,func_thumb,,[R3] (mtbe) move cursor de menu com volta (botoes 0x40/0x80) [RV18] confirmado: move cursor para cima/baixo com wrap em N linhas (bits 0x40/0x80)
 0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23 [RV19] confirmado: reseta render slots 0x20-0x23
 0x08057FD4,Map_UpdateCursorSpritePosition,func_thumb,,[R3] (mtbe) posiciona sprite do cursor [RV19] confirmado: calcula X/Y de cursor a partir de campos do estado (+0x67 +0x6C +0x6D) e grava registro do sprite
 0x08058070,Map_CreateChoiceSprites,func_thumb,,[R3] (mtbe) cria 4 sprites de opcao (slots 0x20..0x23) [RV19] confirmado: cria 4 slots 0x20-0x23 com X=param*8+0x90 e Y em passos de 0x10
@@ -3444,7 +3444,7 @@ address,name,kind,count,comment
 0x08061860,Menu_HighlightOptionStep,func_thumb,,destaque de opção de menu com espera e avanço; provável
 0x080618B4,Screen_TickFadeOutAndReset,func_thumb,,[provavel] fade de 9 passos como Screen_TickFadeOutAndClear; limpa tilemap e variaveis
 0x08061998,Screen_ClearPairsAndAdvance,func_thumb,,[FS9] provavel (trivial): Clear4PairsHalfwords + contador; tabela 0x080AFBA4
-0x080619B0,Shop_InitPartSelectionScreen,func_thumb,,"Simon/Rokusho: Initialize the shop part-selection screen. Builds either the sellable inventory list or the current shop stock list, and computes each listed part's displayed price as RomPartRecord.price_hundreds * 100."
+0x080619B0,Shop_InitPartSelectionScreen,func_thumb,,"Simon/Rokusho: Initialize the shop part-selection screen. Builds either the sellable inventory list or the current shop stock list, and computes each listed part's displayed price as RomPartRecord.price_hundreds * 100. [RV19] confirmado: inicia tela de selecao de pecas da loja: LZ, sprites, Shop_BuildAvailablePartList, icones e totais"
 0x08061CE0,Shop_RefreshPartListScreen,func_thumb,,"[provavel] DISPCNT|=0x1000, desenha lista de pecas da loja e quantidades"
 0x08061E98,Shop_FadeInStepThenBlink,func_thumb,,fade de entrada de 9 passos e Shop_BlinkCursorAttr; provavel; nome Shop a confirmar
 0x08061F00,Shop_TickBuyQuantityMenu,func_thumb,,"[provavel] quadro da tela de quantidade da loja (0x57C bytes): limite 99, estoque gShopQuantities, total de preco; botao 1 confirma (SFX4), 2 cancela (SFX5)"
@@ -3479,7 +3479,7 @@ address,name,kind,count,comment
 0x080638E8,Battle_TickPanelTextTwoSlots,func_thumb,,[provavel] Anim_StepRecordCounter(ctx+0x50); desenha 2 textos de slot; senao limpa tiles e grava 0x14
 0x080639C4,Screen_InitNumberRevealLayout,func_thumb,,"[N2] [N2] copia 0x080AFC18 idx 0: setup da tela (musica 0x18, BG/OBJ, numero 2 digitos); ++0x0300137C (confirmado na estrutura)"
 0x08063EBC,Anim_FinishClearAndLoadSlot,func_thumb,,"ao fim do contador limpa 0x40 words, timer 600, Obj_InitSlotAndLoad; provavel"
-0x08063F08,Menu_CompareSelectionAndAdvance,func_thumb,,[chute] compara halfword de selecao com constantes; 0x1A ou contador++ e Obj_InitSlotAndLoad
+0x08063F08,Menu_CompareSelectionAndAdvance,func_thumb,,"[chute] compara halfword de selecao com constantes; 0x1A ou contador++ e Obj_InitSlotAndLoad [RV19] provavel: compara selecao com valores fixos, grava estado 0x1A ou avanca contador e limpa flag"
 0x08063FB0,Sprite_ScriptRecordStep,func_thumb,,provável: interpreta comandos de sprite (0xFF00/0xFE00/0xC000) e carrega objeto
 0x080640DC,StateTable_AdvanceIndex,func_thumb,,[N2] [N2] copia 0x080AFC18 idx 4: apenas ++0x0300137C (confirmado)
 0x080640EC,Anim_ScrollTileRowsThenCountdown,func_thumb,,[FL10] StateMachine_DispatchStep(+0x64); rola linhas e conta +0x3C; estado++ ao zerar (provável)
