@@ -1,0 +1,61 @@
+# address,name,kind,comment
+0x08068F50,FightPreview_LoadCachedAndEncounterLoadouts,func_thumb,provavel: carrega tiles de sprite dos loadouts em cache (2 lados) e configura DISPCNT
+0x08069490,Scene_LoadBankAAndResetFx,func_thumb,provavel (antes: scene_init_b): carrega banco A de tiles/paleta, FX blend e zera 2 pares
+0x08069910,Scene_LoadLzTilemapsDma,func_thumb,provavel (antes: scene_init_e): LZ77 para VRAM via DMA3 e seta bit 14 nos tilemaps
+0x0806A024,Hud_UpdateCursorIdx,func_thumb,provavel (antes: hud_update_cursor_idx): se a entrada de 12 B estiver zerada, cursor = contador mod 11; senao copia byte de cursor da entrada
+0x0806B4A4,Scroll_StepPairIfFlag,func_thumb,provavel (antes: scroll_tick_flag): se bit0 do flag, decrementa palavra 0 e incrementa short 1 de um par de posicao
+0x0806B718,Obj_SetupSlotPtr,func_thumb,provavel (antes: slot_ptr_stub): monta par de ponteiros com slot = base gObjectSlots-like + idx*0x40; retorna o 3o campo
+0x0806BF18,Select_MaxActiveEntry,func_thumb,provavel (antes: select_entity_max): varre 8 entradas de 0x20 com flag ativo e pega a de maior valor; ramo alternativo escolhe valor por modo e sprite 0x47/0x49
+0x0806C218,Fight_FireStateStep,func_thumb,provavel (antes: battle_state_fire): passo da fase de disparo: janela de alvo, spawn de 2 efeitos, sfx 0x61, fim com snd_song 0 e 0xE
+0x0806CFEC,Anim_DmaCopyFramesTick,func_thumb,provavel (antes: battle_anim_copy_frames): a cada 8 frames copia frames via DMA3 e ajusta ramp de escala/sprite
+0x0806E9E0,Menu_SetupPreviewState2,func_thumb,provavel (antes: menu_state2_setup): no estado 2 monta struct de preview, camada de sprite composta e MotionPlayStep
+0x0806F23C,Screen_TextCounterStep,func_thumb,confirmado: contador de tela com digitos (counter_2_digits) e text_step_char; ao chegar em 0x187 muda estado
+0x0806F5A0,Screen_TextCounterStepAlt,func_thumb,provavel (antes: Screen_TextCounterStepB): variante do contador com outro tile/estado final (9)
+0x0806FF2C,cursor_step_sprites,func_thumb,provavel: passo de sprites do cursor; posiciona slots de render a partir de tabela de 3 bytes e grava ponteiro de sprite
+0x08071138,Anim_DisableAnim4IfIdle,func_thumb,confirmado: se flag +0x660 zero, disable_anim4(0x19,0x4b) e incrementa contador
+0x08071EFC,Anim_RampStepThenSfx54,func_thumb,confirmado: rampa de valores (+0x104, +0x102) e ao fim Obj_SetupSlotPtr(8) + sfx 0x54
+0x08071F74,Anim_RampStepThenSfx54Alt,func_thumb,provavel (antes: Anim_RampStepThenSfx54B): mesma rampa com limites diferentes, slot 9 e sfx 0x54
+0x080723AC,Snd_DriverInit,func_thumb,provavel (antes: snd_driver_init_block): limpa bloco por bios_cpuset, init de tracks, define 2 bytes e snd_hw_init
+0x08072910,snd_cmd_note,func_thumb,confirmado: comando de nota: le byte de nota, calcula freq (snd_freq_lookup), vibrato e Bar_ResetPhase1
+0x08072AC0,snd_cmd_rest,func_thumb,confirmado: comando de pausa: freq 0xff, duracao do proximo byte, flag 0x52
+0x08072B18,snd_cmd_E1_set_track_2c,func_thumb,confirmado: grava parametro em campo +0x2c do track
+0x08072B20,snd_cmd_E2_set_track_69,func_thumb,confirmado: grava em +0x69 e marca flag 0x51
+0x08072B34,snd_cmd_voice,func_thumb,confirmado: le byte de voz para +0x67 e marca flag 0x20
+0x08072B74,snd_cmd_set_field6b_clamp30,func_thumb,provavel (antes: snd_cmd_E9): le byte para +0x6b e limita em 0x30
+0x08072B90,snd_cmd_EA_set_track_6f,func_thumb,confirmado: grava byte em +0x6f e marca flag 0x40
+0x08072BAC,snd_cmd_inc_field4c,func_thumb,provavel (antes: snd_cmd_EB): incrementa short em +0x4c
+0x08072BB8,snd_cmd_loop_start,func_thumb,confirmado: le contagem para +0x52 e grava ponteiro de inicio de loop em +0x18
+0x08072BCC,snd_cmd_loop_end,func_thumb,confirmado: decrementa contagem +0x52 e volta ao inicio enquanto nao zero
+0x08072BE4,snd_cmd_loop2_start,func_thumb,confirmado: como loop_start mas contagem +0x53 e inicio em +0x1c
+0x08072BF8,snd_cmd_loop2_end,func_thumb,confirmado: como loop_end para o segundo loop
+0x08072C10,snd_cmd_jump,func_thumb,confirmado: le u32 e grava como ponteiro de script
+0x08072C20,snd_cmd_call,func_thumb,confirmado: salva ponteiro de retorno em +0x20 e salta para u32
+0x08072C34,snd_cmd_return,func_thumb,confirmado: restaura ponteiro de +0x20
+0x08072C3C,snd_cmd_set_field54_default8,func_thumb,provavel (antes: snd_cmd_F7): le byte para +0x54 (0 vira 8) e marca flag 8
+0x08072C64,snd_cmd_set_field55,func_thumb,provavel (antes: snd_cmd_F8): le byte para +0x55
+0x08072C74,snd_cmd_lfo,func_thumb,confirmado: le 2 bytes: +0x56 = param, +0x57/+0x58 = nibbles (profundidade/taxa); mesmos campos de snd_calc_vibrato
+0x08072CB0,snd_cmd_envelope,func_thumb,confirmado: le 4 bytes para +0x5b..+0x5e, marca +0x62=1 e reseta fase se modo<3
+0x08072D04,snd_cmd_set_flag62_on,func_thumb,provavel (antes: snd_cmd_FC): +0x62=1 e reset de fase se modo<3
+0x08072D28,snd_cmd_set_flag62_off,func_thumb,provavel (antes: snd_cmd_FD): +0x62=0 e reset de fase se modo<3
+0x08072D4C,snd_cmd_mode,func_thumb,confirmado: grava byte de modo em +99
+0x08072D5C,snd_cmd_end,func_thumb,confirmado: chama snd_track_stop_callback
+0x08072D68,Snd_TrackStepInterpreter,func_thumb,confirmado: despacha opcodes de track: E0-EB, F0-FF (comandos) e faixa 0x80-0xD0 (nota/volume por nibble)
+0x08073C5C,snd_store_field_720,func_thumb,confirmado: grava parametro em global+0x720
+0x08073C70,snd_store_field_var,func_thumb,confirmado: grava parametro em global + offset variavel
+0x08073CDC,snd_channel_ctrl_word,func_thumb,provavel: monta palavra de controle do canal a partir de tabelas (id do canal, +0x3c, +0x40/+0x3f) e grava em registrador
+0x08073E1C,snd_channel_set_state3,func_thumb,confirmado: +0x3e=3
+0x08073E24,snd_channel_restart_from_block,func_thumb,provavel (antes: snd_block_tick): reset do canal, init com campos do bloco, taxa pela nota, freq, start e vibrato_init
+0x08073F2C,snd_channel_setup_fields,func_thumb,provavel (antes: snd_channel_setup_b): grava 8 campos do canal e state=1
+0x080741F4,snd_buffer_release,func_thumb,provavel: se buffer nao nulo, preenche com 0xFF (bios_cpuset) e zera flag +0x30
+0x08074540,snd_track_test_flag2,func_thumb,confirmado: retorna bit 1 do byte de flags do track
+0x0807474C,Snd_TrackUpdateFlagged,func_thumb,provavel: atualiza canal +0x1d0 e, se flag2 zero, marca 0x5f e atualiza o track principal
+0x08074A78,snd_song_table_set,func_thumb,confirmado: grava parametro em global+0x688
+0x08074C0C,snd_track_set_flag40,func_thumb,provavel: grava r9 em +0x70 do track e marca flag 0x40 (param via r9, nao anotado pelo Ghidra)
+0x08074C30,snd_track_apply_flag40_all,func_thumb,provavel (antes: snd_track_apply_all_0c): aplica snd_track_set_flag40 a 7 tracks
+0x08074CA0,Snd_ApplyAllTracksCounted,func_thumb,confirmado: incrementa contador busy +0x730 (com teto), aplica a todos e decrementa
+0x08074D3C,snd_store_global_word,func_thumb,confirmado: grava parametro em global+offset
+0x08074E64,snd_track_set_flag40_if_id,func_thumb,confirmado: se id do track (+0x4e) == r9[0] e +0x14 nao nulo, grava r9[1] em +0x70 e marca 0x40
+0x08074EA0,snd_track_apply_sfx_all,func_thumb,provavel: aplica snd_track_set_flag40_if_id a 6 tracks (sfx)
+0x08074FE8,snd_store_global_728,func_thumb,confirmado: grava parametro em global+0x728
+0x080750AC,snd_track_fade_group,func_thumb,confirmado: chama snd_track_fade_if_active para os tracks 0,1,2,3,8,9
+0x080726D4,snd_calc_vibrato,func_thumb,confirmado: calcula profundidade do vibrato (diferenca de freq entre nota e nota+2 x profundidade / taxa) em +0x34 e zera +0x38; usa campos +0x56..+0x58

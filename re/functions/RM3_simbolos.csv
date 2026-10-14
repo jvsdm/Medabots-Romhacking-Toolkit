@@ -1,0 +1,41 @@
+addr,nome,kind,comentario
+0x0300640A,gEncounterSlotIndex,data,provavel; escrito em Event_Op33_StartBattle e lido em Fight_SelectTemplateForCurrentEncounter
+0x0300640B,gStepCounter,data,confirmado; +1 por passo em Overworld_ShouldTriggerRandomEncounter 0x080438EA; zerado em Overworld_ResetEncounterStepState
+0x0300640C,gEncounterBlockFlags,data,provavel; primeira trava (==0) de Overworld_ShouldTriggerRandomEncounter; gravado por Event_Op5F
+0x03006414,gMapAnimEnabled,data,confirmado; flag ligada lida em Map_UpdateBackgroundAnimations 0x08048178
+0x03006415,gMapAnimFrameIndex,data,confirmado; indice de quadro avancado em Map_UpdateBackgroundAnimations
+0x03006416,gMapAnimDelay,data,confirmado; contador regressivo (reset 2) em Map_UpdateBackgroundAnimations
+0x03006417,gRandomIndex,data,provavel; indice lido e gravado em Random_NextScaled 0x08049790
+0x03006428,gMapCameraScrollX,data,confirmado (antes: gMapCameraClampX); posicao X da camera lida em Map_GetCameraScrollX e gravada em Map_CenterCameraForSmallMaps
+0x0300642A,gMapCameraScrollY,data,confirmado (antes: gMapCameraClampY); posicao Y da camera lida em Map_GetCameraScrollY e gravada em Map_CenterCameraForSmallMaps
+0x03006432,gPlayerPixelX,data,confirmado (antes: ikki_x); X em px do jogador; gravado em Overworld_InitPlayerSprites e Map_FinishEnterTransition, lido em Map_UpdatePlayerMarkerScreenPosition
+0x03006434,gPlayerPixelY,data,confirmado (antes: ikki_y); Y em px do jogador (par de gPlayerPixelX)
+0x03006436,gPlayerTileX,data,confirmado; tile X lido em Map_CheckWalkOverTrigger e Map_ClampCameraToLoadedMap; gravado em Overworld_UpdateMapSceneStateMachine
+0x03006437,gPlayerTileY,data,confirmado; tile Y gravado em Overworld_WalkStepByDirection e Overworld_ProcessDirectionInput
+0x03006438,gPlayerWalkCooldown,data,provavel (antes: ikki_walk_cooldown); contador gravado em Overworld_ProcessDirectionInput e lido em WalkStepByDirection
+0x03006439,gPlayerQueuedDirection,data,chute (antes: ikki_look_dir); zerado por Overworld_ClearFollowerQueuedMove e lido/gravado em Overworld_ProcessDirectionInput
+0x0300643C,gMapPlayerWalkState,data,provavel; sem revisao de xrefs nesta rodada
+0x03006447,gPlayerFacingDir,data,provavel (antes: gLoadFacingSource); direcao do jogador gravada por Overworld_SetPlayerFacingAndRefreshFollower e lida ao inicializar sprites
+0x03006449,gMapSecondaryWalkState,data,provavel; alternado por Overworld_WalkStateToggleTo1/2 e GameState_ToggleAndAdvance; lido em UiDone_RestoreWalkFromC69
+0x0300644E,gSecondaryMarkerScreenX,data,provavel (antes: str_ikki_x); X em tela do marcador secundario; lido em Map_UpdateSecondaryMarkerScreenPosition
+0x03006450,gSecondaryMarkerScreenY,data,provavel (antes: str_ikki_y); Y em tela do marcador secundario; gravado em Overworld_InitFollowerFacingAndSfx57
+0x03006470,gCurrentEventIdMirror,data,provavel; gravado por Map_CheckWalkOverTrigger e Map_CheckFacingEventTriggerAhead; lido em Event_DispatchContinuation
+0x03006472,gEvt_ContinuationIndex,data,provavel; lido em Event_DispatchContinuation; gravado em Event_Op80/Op81 (lotes de comando de objeto)
+0x03006D3E,gEquippedLegPartByte,data,confirmado (antes: gObjectPoseBaseByte); byte de perna equipada escrito por PartSet 0x08047E50 e zerado no fim de evento (GH-CS2)
+0x03006463,gSecondaryMarkerFacing,data,provavel (antes: dpad_input_3); gravado em Map_SetSecondaryMarkerFacing; lido em Map_InitSecondaryMarkerOverlay (nao e entrada de D-pad)
+0x03006473,gEvt_SubState,data,provavel; gravado em Script_DispatchHandler, Event_Op06_End e Overworld_InitMapScene
+0x03006474,gEventScriptArguments,data,provavel; argumentos lidos pelos Event_Op2B/27/17/10/22/68
+0x030064A1,gObjTwoStageSubstate,data,chute (antes: gEventScriptRuntimeState_vm_substate); gravado por Obj_TwoStageInitThenDispatch e FieldMenu_ClearTwoSlotPairs (nao e estado da VM de evento)
+0x030064A2,gEventScriptRuntimeState_queued_action_timers,data,provavel; lido em EventOpcode82_ExecuteBatchedObjectCommandBlock e Map_TickObjectMoveRecords
+0x030064AA,gEventScriptRuntimeState_queued_action_phases,data,provavel; params de Event_Op80/Op85 e leitura em Op82
+0x030064B2,gEventScriptRuntimeState_queued_action_bytes,data,provavel; lido e gravado em Event_Op81_Queue_Batched_Object_Command e Op86
+0x030064F2,gEventScriptRuntimeState_queued_action_count,data,provavel; Op81/Op86 leem e gravam
+0x03006505,gEventScriptRuntimeState_choice_selected_index,data,provavel; gravado por Overworld_InitChoiceMenuScreen e Menu_StepCursorWrap
+0x0300650C,gEventScriptRuntimeState_choice_cursor_x_tiles,data,provavel; gravado em Overworld_InitChoiceMenuScreen; lido em Map_UpdateCursorSpritePosition
+0x03006D14,gMapLayerBufferPtr,data,provavel; lido em Map_LoadCurrentMapLayers
+0x03006D30,gOverworldAuxBufferPtr,data,chute; so referencias DATA (tabelas) nesta rodada
+0x03006D38,gWalkSpeedBlock,data,chute; so referencias DATA e limpeza em EventScript_ClearGlobals
+0x03006D40,gMapRenderScratch,data,provavel; gravado em Map_ResetRenderAffineState
+0x03006F40,gScreenTransitionState,data,provavel; gravado em Overworld_SetTransitionStepAndDispatch; lido em Anim_UpdateSoftFloatStep
+0x03006F74,gKeyItemBagCursorPtr,data,chute; gravado em MainState_Dispatch2 e lido em hud_draw_row_tiles
+0x03007014,SND_DriverPtr,data,confirmado; driver=[0x03007014] segundo pc/research/README.md (SND8)

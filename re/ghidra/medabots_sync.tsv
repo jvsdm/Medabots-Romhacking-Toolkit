@@ -2910,7 +2910,7 @@ F	0x0805BA34	Screen_LoadLZ77TileBlock
 F	0x0805BAA0	Screen_ShiftTileRowAttr
 F	0x0805BB0C	Screen_ReadTwoBitField
 F	0x0805BBE0	MainState_Dispatch2
-L	0x0805BC54	Unnamed_ShopTableBaseRef
+L	0x0805BC54	gFrameTableBasePtr
 F	0x0805BC5C	Screen_DrawCellAdvance
 F	0x0805BCB0	Screen_HighlightGridRow
 F	0x0805BD44	Screen_SetRowPalette3
@@ -2947,7 +2947,7 @@ L	0x0805D262	KeyItemBag_Result2to4_Message
 L	0x0805D2A0	KeyItemBag_UseItem
 L	0x0805D2C2	KeyItemBag_ListInputStep_Jump
 L	0x0805D2C8	KeyItemBag_DispatchTable
-L	0x0805D36C	ItemListSwitch_Table
+L	0x0805D36C	KeyItemBag_Case_Id0
 L	0x0805D384	KeyItemBag_Case_Id1
 L	0x0805D398	KeyItemBag_Case_Id5
 L	0x0805D3AC	KeyItemBag_Case_Id12
@@ -3080,7 +3080,7 @@ F	0x08062D60	Anim_ScrollTileRows
 F	0x08062DFC	Anim_ScrollTileColumnsAlt
 F	0x08062ED8	Anim_ScrollTileRowsAlt
 F	0x08062FB4	BattlePanel_SceneInit
-L	0x080631C0	gBattlePanel_Literal_Char_Src
+L	0x080631C0	gBattlePanel_CharSrcPtr
 F	0x08063208	Battle_TickPanelTimerAndDraw
 F	0x08063254	BattlePanel_UpdateSelectionFrame
 F	0x08063354	Shop_TickItemTransferAnim
@@ -3197,7 +3197,7 @@ F	0x08068328	Fx_FadeInStepThenAdvance
 F	0x08068374	Fx_BlendAndStateStep
 F	0x080683C8	Anim_WaitRecordThenSetState
 F	0x08068400	Dispatch_CallHandlerLocalCopy
-F	0x08068440	MainState3
+F	0x08068440	MainState_Dispatch3
 F	0x08068460	fx_screen_setup_a
 F	0x08068684	fx_screen_setup_b
 F	0x08068888	fx_step_table_a

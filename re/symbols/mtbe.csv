@@ -282,7 +282,7 @@ address,name,kind,count,comment
 0x03006449,gMapSecondaryWalkState,data,,[VA2] [VA2] E+0xC69: gravado pelo opcode 0x11 (mesmo valor de C5C e C28); lido por Overworld_UpdateSecondaryActorAnim
 0x0300644E,gSecondaryMarkerScreenX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_x) [RM3] provavel (antes: str_ikki_x); X em tela do marcador secundario; lido em Map_UpdateSecondaryMarkerScreenPosition"
 0x03006450,gSecondaryMarkerScreenY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_y) [RM3] provavel (antes: str_ikki_y); Y em tela do marcador secundario; gravado em Overworld_InitFollowerFacingAndSfx57"
-0x03006463,gSecondaryMarkerFacing,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: dpad_input_3)"
+0x03006463,gSecondaryMarkerFacing,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: dpad_input_3) [RM3] provavel (antes: dpad_input_3); gravado em Map_SetSecondaryMarkerFacing; lido em Map_InitSecondaryMarkerOverlay (nao e entrada de D-pad)"
 0x03006468,gCurrentEventPendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventPendingFlag) [FI2] E+0xC88 evento rodando (!=0) confirmado (EV) (antes: gEvt_PendingFlag)"
 0x03006469,gEventPendingByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventStateByte) [LK] [GH-LK] byte pendente do evento (E+0xC89); escrito com 1 pelo evento 0x76; confirmado"
 0x0300646A,gEvt_ContinuationCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gCurrentEventScriptCursor) [FI] cursor continuacao provavel"
@@ -300,7 +300,7 @@ address,name,kind,count,comment
 0x0300649C,gEventCounterA,label,,[FI2] E+0xCBC contador lido pelo Op50 (sel 0) leitura confirmada; escritor aberto (antes: gEvt_CounterA)
 0x0300649D,gEventCounterB,label,,[FI2] E+0xCBD contador lido pelo Op50 (sel 1) leitura confirmada; escritor aberto (antes: gEvt_CounterB)
 0x030064A0,FieldMenu_ChoiceState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state (antes: gEventScriptRuntimeState) [FM2] [FM2] estado do menu de escolha: +0x65 linha, +0x66, +0x67 contador do sub 2, +0x6F contador de abertura, +0x70 flag (provavel)"
-0x030064A1,gObjTwoStageSubstate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gEventScriptRuntimeState_vm_substate)"
+0x030064A1,gObjTwoStageSubstate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gEventScriptRuntimeState_vm_substate) [RM3] chute (antes: gEventScriptRuntimeState_vm_substate); gravado por Obj_TwoStageInitThenDispatch e FieldMenu_ClearTwoSlotPairs (nao e estado da VM de evento)"
 0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; lido em EventOpcode82_ExecuteBatchedObjectCommandBlock e Map_TickObjectMoveRecords"
 0x030064AA,gEventScriptRuntimeState_queued_action_phases,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; params de Event_Op80/Op85 e leitura em Op82"
 0x030064B2,gEventScriptRuntimeState_queued_action_bytes,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; lido e gravado em Event_Op81_Queue_Batched_Object_Command e Op86"
@@ -2737,13 +2737,13 @@ address,name,kind,count,comment
 0x08048038,Fx_StateMachine_Dispatch3,func_thumb,,"[FN4] provavel (hint FN2 aceito): maquina de 3 estados no byte +0x64 do ator: 0/1 espera StateMachine_DispatchSubB, 2 chama StateTable_DispatchByIndex; chamadores 0804E816/0804E88A (antes: FUN_08048038)"
 0x08048088,Map_GetEncounterRecordByte,func_thumb,,[VA3] arg0 -> ROM[gMapEncounters + map*8 + 2]; arg1 -> +3; outro -> 0. provavel
 0x080480D4,Table_GetWordByIndex_080480e0,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x080480E0 [arg]
-0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
-0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
+0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play. [RV23] confirmado: copia cabecalho do mapa (coords/ptrs) carrega paleta camadas animacoes spawns e sprites; nome mantido"
+0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM. [RV23] confirmado: avanca frame de animacao de tile e grava descritor de copia (bit 31) para VRAM; nome mantido"
 0x080481D8,Map_UpdateBackgroundAnimations_AltEntry_80481d8,label,,[MP2] animacao de tiles do mapa: DMA3 de [0x030057DC]+idx*T*0x20 para 0x06009020; descritor ROM 0x08409480[m] (antes: Map_UpdateBackgroundAnimations)
 0x08048210,Map_PoseIdToTileIndex,func_thumb,,[CS] CONFIRMADO decompile: id 0 -> byte por 0x03006418/0x0300643C; >=0xD0 -> lista RAM 0x03006418+k; >=0xC0 -> (id-0xC0)*2+IWRAM[0x03006D3E]+0x28 (antes: Map_ResolveSpriteId)
-0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area."
+0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area. [RV23] confirmado: laco por grupo de pose descompacta LZ77 para VRAM com passo 0x900; nome mantido"
 0x080482CC,Gfx_LoadLz77Table12ByIndex,func_thumb,,[FN4] provavel (hint FN2 aceito): Map_PoseIdToTileIndex(0x08048210) e 12 bios_lz77_vram com passo 0x900 a partir de tabela de ponteiros; chamador 08059970 (antes: FUN_080482cc)
-0x0804830C,Map_LoadMapPaletteToShadowBuffer,func_thumb,,[MP2] paleta do mapa ROM 0x083F9980[m] -> DMA3 para 0x0202FA00 (0x1A0 B)
+0x0804830C,Map_LoadMapPaletteToShadowBuffer,func_thumb,,[MP2] paleta do mapa ROM 0x083F9980[m] -> DMA3 para 0x0202FA00 (0x1A0 B) [RV23] chute: escreve registros de 3 palavras (entrada da tabela ou 14 pares default); nao ha copia de paleta visivel; nome mantido por falta de prova melhor (ver RV23.md)
 0x080483F8,Bot_ReadCurrentByteOrDefault,func_thumb,,[FN4] provavel (hint FN2 aceito): le 1 B de um de dois enderecos conforme byte +0xC30 == 0xFF; chamadores 080484CC/08048576/08048590/080485BA/08048664 (antes: FUN_080483f8)
 0x0804842C,SND_PolicyRequest,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling. (antes: Overworld_ApplyMapSceneModePolicy)
 0x08048684,Map_GetObjectPoseByGroup,func_thumb,,[CS] CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim (antes: Map_GetSpriteListEntry)
@@ -2760,15 +2760,15 @@ address,name,kind,count,comment
 0x08048B70,Fixed_Mul88,func_thumb,,[R3] (a*b)>>8 com arredondamento para zero (8.8) [RV13] [RV13] confirmado: multiplicacao 8.8 com arredondamento para zero
 0x08048BA0,Fixed_ReciprocalQ16,func_thumb,,[R3] 0x10000 / a [RV13] [RV13] confirmado: 0x10000 / x
 0x08048BB8,Map_ResetAffineScaleBlock,func_thumb,,[FR3] [FR3] zera bloco afim e escala 0x100 (identidade); chamada por Map_ResetRenderAffineState 0x08049318 (provavel)
-0x08048CF0,Map_CopyTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Copy a decompressed 16-bit tilemap into the four BG screenblock quadrants, applying a base tile offset."
-0x08048E24,Map_ExpandMetaTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Expand a compact metatile/attribute map into BG screenblock tile entries, handling quadrant selection within 2x2 metatiles."
-0x08049110,BgMap_WriteTileEntry,func_thumb,,[R3] entrada de tilemap BG: tile + paleta<<12 + flips
+0x08048CF0,Map_CopyTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Copy a decompressed 16-bit tilemap into the four BG screenblock quadrants, applying a base tile offset. [RV23] confirmado: copia retangulo de tilemap para screenblocks 32x32 somando offset de tile; nome mantido"
+0x08048E24,Map_ExpandMetaTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Expand a compact metatile/attribute map into BG screenblock tile entries, handling quadrant selection within 2x2 metatiles. [RV23] confirmado: expande meta-tilemap 2x2 em entradas de BG com flips via BgMap_WriteTileEntry; nome mantido"
+0x08049110,BgMap_WriteTileEntry,func_thumb,,[R3] entrada de tilemap BG: tile + paleta<<12 + flips [RV23] confirmado: monta e grava uma entrada de tilemap (tile paleta flips); nome mantido
 0x080491B8,BgMap_FillRectTilePalette,func_thumb,,[FN2] provavel: Preenche retangulo w x h do tilemap (stride 0x20 ou 0x40) com tile + (paleta << 12)
 0x08049210,BgMap_CopyRectWithAttrs,func_thumb,,[FN2] provavel: Copia retangulo de array fonte para tilemap aplicando mascara e atributos (paleta << 12)
 0x080492A8,BgMap_CopyRectAddOffset,func_thumb,,[FN2] provavel: Copia retangulo de array fonte para tilemap somando param9 a cada entrada (passo 0x20 ou 0x40)
-0x08049318,Map_ResetRenderAffineState,func_thumb,,Simon/Rokusho: Reset the per-map affine/render scratch state before rebuilding visible map object and overlay transforms.
+0x08049318,Map_ResetRenderAffineState,func_thumb,,Simon/Rokusho: Reset the per-map affine/render scratch state before rebuilding visible map object and overlay transforms. [RV23] confirmado: zera 2 campos e grava 32 entradas afins identidade (0x100 0x100 0); nome mantido
 0x08049344,Slot_ClearIndexedBuffers,func_thumb,,[FN4] confirmado no decompile: zera 4 B e 0x40 B em dois blocos indexados por arg & 0xFF (hint FN2 aceito); chamador 0804889E (antes: FUN_08049344)
-0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,,Simon/Rokusho: Recompute the affine/render coefficients for one map render entry from its angle/scale scratch values.
+0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,,Simon/Rokusho: Recompute the affine/render coefficients for one map render entry from its angle/scale scratch values. [RV23] provavel: recalcula 4 coeficientes afins por recíprocos Q16 da entrada; nome mantido
 0x08049420,Map_SetObjectAnimationVariant,func_thumb,,Simon/Rokusho: Set the active animation variant for one map/object render slot and reset its local frame timers. [CS2] CONFIRMADO decompile: grava +0x24 = anim e zera +0x22 e +0x23
 0x08049440,Map_TickObjectAnimation,func_thumb,,[R3] interpretador de animacao de objeto de mapa (codigos 0..5)
 0x08049714,Mem_SetZeros,func_thumb,,Simon/Rokusho (antes: set_zeros) [RV13] [RV13] confirmado (antes: set_zeros): zera N bytes
@@ -2782,7 +2782,7 @@ address,name,kind,count,comment
 0x08049D0C,Overworld_ResetScreenTransitionResources,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: CopyPaletteBuffersToHardware
 0x08049D18,Overworld_StartScreenTransitionEffect,func_thumb,,Simon/Rokusho: Start a screen-transition effect using the supplied resource/config ids without first resetting the transition resource state. [RV13] [RV13] confirmado: blend de paleta com sf32 e agenda passo de transicao
 0x08049D90,Overworld_ResetAndStartScreenTransitionEffect,func_thumb,,"Simon/Rokusho: Reset screen-transition resources, then start a configured screen-transition effect for a map load / transition sequence. [RV13] [RV13] confirmado: reset de recursos + inicio de transicao (variante)"
-0x08049E08,Overworld_RunScreenTransitionStep,func_thumb,,Simon/Rokusho: Advance one step of the overworld screen-transition interpolator. Updates two screen-space coordinates toward their targets and returns nonzero when the transition completes.
+0x08049E08,Overworld_RunScreenTransitionStep,func_thumb,,Simon/Rokusho: Advance one step of the overworld screen-transition interpolator. Updates two screen-space coordinates toward their targets and returns nonzero when the transition completes. [RV23] confirmado: passo de fade de paleta (duas cores) decrementa valor e retorna 1 ao fim; nome mantido
 0x08049EC0,Palette_FadeRowsToColorA_Wrapper,func_thumb,,[FN2] confirmado: Wrapper que chama Palette_FadeRowsToColorA
 0x08049ED4,Palette_FadeRowsToColorB_Wrapper,func_thumb,,[FN2] confirmado: Wrapper que chama Palette_FadeRowsToColorB
 0x0804A210,GameState_AdvanceSubroutine,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: incrementa subrotina do estado
@@ -2794,13 +2794,13 @@ address,name,kind,count,comment
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
 0x0804A6E0,Map_TickSceneStateMachine,func_thumb,,[FM6] [FM6] sub 5 de gEventSubTable (0x083D212C): so chama Overworld_UpdateMapSceneStateMachine; confirmado
 0x0804A6F8,Map_ResetOamAndRenderSlotsStep,func_thumb,,"[FM6] [FM6] sub 7 de gEventSubTable: limpa OAM por DMA, reconstroi slots, SND_PolicyRequest(5,0), GS=5 (retomada do mapa); confirmado"
-0x0804A764,Overworld_InitMapScene,func_thumb,,"Simon/Rokusho: Primary overworld map-scene initialization. Clears OAM/VRAM shadow state, resets event/object work areas, installs the core overworld/map/event pointers, loads the current map and entities, clamps the camera, and enables the main overworld rendering path."
+0x0804A764,Overworld_InitMapScene,func_thumb,,"Simon/Rokusho: Primary overworld map-scene initialization. Clears OAM/VRAM shadow state, resets event/object work areas, installs the core overworld/map/event pointers, loads the current map and entities, clamps the camera, and enables the main overworld rendering path. [RV23] confirmado: limpa buffers carrega mapa atual reseta encontro pede som e inicia transicao; nome mantido"
 0x0804A7A0,Overworld_InitMapScene,label,,"[EV] entrada de cena do mapa: zera Pendente (C88), StateByte (C89), cursor (C8A); carrega mapa e entidades (confirmado)"
 0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
 0x0804A900,Overworld_FinishTransitionInitPlayer,func_thumb,,"[FL10] fim da transição: sprites do jogador, marcador, direção; estado=5 (provável)"
 0x0804A944,Overworld_ReloadMapSceneAfterReset,func_thumb,,"Simon/Rokusho: Reload the current map scene after a heavier display/reset step. Clears OAM/object state, resets blend state, rebuilds the current map scene, reclamps the camera, restores the main display configuration, and resumes the overworld scene loop. [FM6] [FM6] sub 0x0D de gEventSubTable: recarrega mapa (DISPCNT 0x1E40, Map_LoadCurrentMapAndEntities, transicao), GS++ (-> 0x0E); NAO chama Menu_SetStateByArg01; confirmado"
 0x0804AA44,GameState_ToggleAndAdvance,func_thumb,,[VA3] C5C = C69 (ou 0 se igual; zera C69). confirmado
-0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene.
+0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene. [RV23] confirmado: recarrega mapa atual sem reinicializar slots (limpa OAM pede som transicao); nome mantido
 0x0804AB60,Overworld_WalkStateToggleTo1,func_thumb,,[VA3] C5C = C69 se C5C==1; senao C69=C5C e C5C=1. confirmado
 0x0804ABCC,Overworld_WalkStateToggleTo2,func_thumb,,[VA3] C5C = C69 se C5C==2; senao C69=C5C e C5C=2. confirmado
 0x0804ACC8,Map_AdvanceSubroutineStep_F,func_thumb,,[FN4] confirmado: so chama GameState_AdvanceSubroutine; mesmo padrao de Map_AdvanceSubroutineStep_A..E; ptr 083D21AC (antes: FUN_0804acc8)
@@ -3251,7 +3251,7 @@ address,name,kind,count,comment
 0x080582B8,Map_SyncMarkerEventFields,func_thumb,,[R3] (mtbe) sincroniza flag e campo 3 bits do marcador [RV19] confirmado: modo 1 le flag e campo 3 bits do evento para os campos ou grava de volta
 0x0805830C,Screen_UpdateByStep,func_thumb,,[R3] (mtbe) tela com passos 0..7 (nome chute)
 0x08058328,Screen_UpdateByStep_JumpStep,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058334 (step 0..7); JT5
-0x08058334,Screen_UpdateByStep_TableStep,data,,[JT5] tabela 8 ptrs; JT5
+0x08058334,Screen_UpdateByStep_TableStep,data,,[JT5] tabela 8 ptrs; JT5 [RD3] confirmado: 8 x 4 (ptrs Thumb) lidos na ROM; JT5
 0x08058378,Screen_UpdateByStep_JumpState6,label,,[JT5] mov pc: tabela real 6 ptrs em 0x08058384; JT5
 0x08058572,Screen_UpdateByStep_JumpState5,label,,[JT5] mov pc: tabela real 6 ptrs em 0x0805857C; JT5
 0x08058716,Screen_UpdateByStep_JumpState4,label,,[JT5] mov pc: tabela real 5 ptrs em 0x08058720; JT5
@@ -3263,7 +3263,7 @@ address,name,kind,count,comment
 0x08058B90,Map_CycleSlotIndex,func_thumb,,[R3] ciclo de opcao; table==5 chama Screen_BuildMainPanels (chute no nome)
 0x08058C0C,Screen_RedrawAndDispatchStep,func_thumb,,[R3] redesenha e despacha passo por tabela (chute no nome)
 0x08058C44,Screen_RedrawAndDispatchStep_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058C54 (step 0..7); JT5
-0x08058C54,Screen_RedrawAndDispatchStep_Table,data,,[JT5] tabela 8 ptrs; JT5
+0x08058C54,Screen_RedrawAndDispatchStep_Table,data,,[JT5] tabela 8 ptrs; JT5 [RD3] confirmado: 8 x 4 (ptrs Thumb) lidos na ROM; JT5
 0x080593FA,Screen_ReturnEpilogue,func_thumb,,"[R3] retorno sem efeito (antes: Screen_NoopReturn) [RV19] confirmado: epilogo add sp,4; pop r4-r5; pop r0; bx r0 (sem corpo; nao e noop nem tabela) (antes: Screen_NoopReturn)"
 0x08059434,Screen_PrepareNibbleRowsAndReset,func_thumb,,[FS8] [FS8] provavel: chama Screen_DrawPackedNibbleRows (0x08059734) e Map_ResetObjectRenderSlot; RAM 0x030057A0
 0x080594C8,Screen_HandleStateTransition,func_thumb,,"Simon/Rokusho: Consume the MapTransitionState written by warp/event transition logic. transition_phase gates the reload flow, scene_mode_id selects special post-transition sprite reload cases, and queued_map_id is used by earlier map-switch setup. (antes: Overworld_RunPostTransitionMapSpriteReload) [R3] transicao de estado 3/4 | revisto CH3: provável - estado 3 chama Scene_DispatchStateHandler; se devolver 4, zera byte de estado e, para mapas 0x0E/0x12, recarrega sprites e registro secundário de marcador, depois Overworld_ResetUiRenderState"
@@ -3295,7 +3295,7 @@ address,name,kind,count,comment
 0x0805BAA0,Screen_ShiftTileRowAttr,func_thumb,,[R3] soma dx e paleta em linha de tilemap (provavel)
 0x0805BB0C,Screen_ReadTwoBitField,func_thumb,,[R3] grava campo de 2 bits (chute)
 0x0805BBE0,MainState_Dispatch2,func_thumb,,estado 2 [MU] [MU] gMainStateTable[2]; indexa MS2 0x08483594 (confirmado) (antes: MainState2)
-0x0805BC54,Unnamed_ShopTableBaseRef,label,,"[IN2] [IN2] literal 0x08483594 (base de tabela de quadros da tela, +0x10 = 0x084835A4); funcao dona nao localizada"
+0x0805BC54,gFrameTableBasePtr,label,,"[IN2] [IN2] literal 0x08483594 (base de tabela de quadros da tela, +0x10 = 0x084835A4); funcao dona nao localizada (antes: Unnamed_ShopTableBaseRef)"
 0x0805BC5C,Screen_DrawCellAdvance,func_thumb,,[R3] escreve célula de tilemap e devolve idx+1 (chute)
 0x0805BCB0,Screen_HighlightGridRow,func_thumb,,[R3] destaca linha/quantidade em 3x20 do tilemap (provavel)
 0x0805BD44,Screen_SetRowPalette3,func_thumb,,"[R3] paleta 0x7000 na linha escolhida, 3x11 (provavel)"
@@ -3331,8 +3331,8 @@ address,name,kind,count,comment
 0x0805D262,KeyItemBag_Result2to4_Message,label,,"[IN3] [IN3] retornos 2..4: SFX 6, limpa bit 0x4000 de 0x03004070 e 0x030040B0 (provavel), GS=9. Id da mensagem NAO confirmado (r0 nao vai para 0x0803FB0C)"
 0x0805D2A0,KeyItemBag_UseItem,label,,"[IN3] [IN3] retorno 1: SFX 4, depois le id de 0x02040000+idx*4 e cmp #0x28"
 0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,,[JT5] mov pc: tabela real 41 ptrs em 0x0805D2C8 (halfword EWRAM 0x02040000+id*4); JT5
-0x0805D2C8,KeyItemBag_DispatchTable,data,,"[IN2] [IN2] 0x28 entradas de alvo por id de key item (<=0x28); alvos especiais 0,1,5,12,13,19,39; resto 0x0805D410"
-0x0805D36C,ItemListSwitch_Table,label,,[IN] [IN] ponto de tabela 0x28 entradas de despacho (pendente)
+0x0805D2C8,KeyItemBag_DispatchTable,data,,"[IN2] [IN2] 0x28 entradas de alvo por id de key item (<=0x28); alvos especiais 0,1,5,12,13,19,39; resto 0x0805D410 [RD3] confirmado: 41 x 4 (ids 0..0x28"
+0x0805D36C,KeyItemBag_Case_Id0,label,,[IN] [IN] ponto de tabela 0x28 entradas de despacho (pendente) (antes: ItemListSwitch_Table)
 0x0805D384,KeyItemBag_Case_Id1,label,,[IN2] [IN2] alvo da entrada id 1
 0x0805D398,KeyItemBag_Case_Id5,label,,[IN2] [IN2] alvo da entrada id 5
 0x0805D3AC,KeyItemBag_Case_Id12,label,,[IN2] [IN2] alvo da entrada id 12
@@ -3465,7 +3465,7 @@ address,name,kind,count,comment
 0x08062DFC,Anim_ScrollTileColumnsAlt,func_thumb,,[R3] variante de rolagem de colunas (provavel)
 0x08062ED8,Anim_ScrollTileRowsAlt,func_thumb,,[R3] variante de rolagem de linhas (provavel)
 0x08062FB4,BattlePanel_SceneInit,func_thumb,,"init do painel de batalha (música 0x18, tiles, texto, BGs); provável"
-0x080631C0,gBattlePanel_Literal_Char_Src,data,,[IC] [GH-IC] literal do pool usado por BattlePanel_SceneInit 0x08062FB4: fonte 0x08785EC0
+0x080631C0,gBattlePanel_CharSrcPtr,data,,[IC] [GH-IC] literal do pool usado por BattlePanel_SceneInit 0x08062FB4: fonte 0x08785EC0 (antes: gBattlePanel_Literal_Char_Src)
 0x08063208,Battle_TickPanelTimerAndDraw,func_thumb,,[provavel] Anim_StepRecordCounter(ctx+0x50); grava 600 em ctx+0x3C; BattlePanel_DrawSlotText
 0x08063254,BattlePanel_UpdateSelectionFrame,func_thumb,,seleciona slot do painel de batalha e redesenha texto; provavel
 0x08063354,Shop_TickItemTransferAnim,func_thumb,,[provavel] anima troca de 1 item entre dois slots (Inv_SubCountClampZero + Inv_AddCountClamp99) ao zerar +0x3C; SFX 0x4B
@@ -3518,7 +3518,7 @@ address,name,kind,count,comment
 0x08065710,Anim_StepRecordCounter,func_thumb,,"[R3] passo de contador de animação, devolve 1 ao fim (chute)"
 0x08065790,LinkMenu15Step0,func_thumb,,[LK2] [GH-LK2] passo 0 do menu 0x15 (preparo); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step0)
 0x080657C4,Sm_StepSfxRepeat3,func_thumb,,repete passo com SFX até 3 vezes e depois avança; provável (jump table não recuperada)
-0x08065870,Sm_StepSfxRepeat3_JumpTable,data,,[JT4] tabela real de 6 ponteiros (indice = estado +8); JT4
+0x08065870,Sm_StepSfxRepeat3_JumpTable,data,,[JT4] tabela real de 6 ponteiros (indice = estado +8); JT4 [RD3] confirmado: 6 x 4 (ptrs Thumb); JT4
 0x08065888,Sm_StepSfxRepeat3_Case0,label,,[JT4] caso 0 da tabela; confere condicao e SFX 0x0D; JT4
 0x080658DC,Sm_StepSfxRepeat3_Case1to3,label,,[JT4] casos 1-3: espera tecla A 3 vezes; JT4
 0x08065970,Sm_StepSfxRepeat3_Case4,label,,[JT4] caso 4 da tabela; JT4
@@ -3530,22 +3530,22 @@ address,name,kind,count,comment
 0x08065C98,LinkMenu15Step6,func_thumb,,[LK2] [GH-LK2] passo 6 do menu 0x15: toca 0x03005010 e 0x03000B90 (troca de comandos); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step6)
 0x08065CFC,LinkMenu15Step7,func_thumb,,[LK2] [GH-LK2] passo 7 do menu 0x15 (fim da etapa); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step7)
 0x08065D10,Fight_CallHandlerWithArgCopy,func_thumb,,[confirmado] copia 32 bytes de DAT_08065D3C e CallViaR0(tabela[byte DAT_08065D40])
-0x08065D44,LinkMenu14_InitScreen,func_thumb,,[LK3] [GH-LK3] sub 0 do menu 0x14: sem funcao no Ghidra (code Thumb valido); pendente (antes: LinkMenu14Step0)
+0x08065D44,LinkMenu14_InitScreen,func_thumb,,"[LK3] [GH-LK3] sub 0 do menu 0x14: sem funcao no Ghidra (code Thumb valido); pendente (antes: LinkMenu14Step0) [RV19] provavel: init do estado 14: limpa VRAM/OAM, carrega tiles LZ77, liga camadas DISPCNT, timer e musica 0x18 (antes: LinkMenu14Step0)"
 0x08065ED0,Screen_DispatchByState3A,func_thumb,,provável: despacho por estado ctx+0x3A (jump tables não recuperadas) (antes: Screen_DispatchByState3A) (antes: LinkCommand1_Handler)
-0x08065F04,Screen_DispatchByState3A_TableA,data,,"[JT3] tabela ramo A (6 ponteiros, idx = halfword 0x03006F74+0x3A)"
+0x08065F04,Screen_DispatchByState3A_TableA,data,,"[JT3] tabela ramo A (6 ponteiros, idx = halfword 0x03006F74+0x3A) [RD3] confirmado: 6 x 4 (ptrs Thumb); ramo A; JT3"
 0x08065F1C,Screen_DispatchByState3A_A0,label,,"[JT3] caso A0 (corpo de 0x08065ED0), ver JT3_lista.txt"
-0x080660AC,Screen_DispatchByState3A_TableB,data,,"[JT3] tabela ramo B (6 ponteiros, mesmo idx)"
+0x080660AC,Screen_DispatchByState3A_TableB,data,,"[JT3] tabela ramo B (6 ponteiros, mesmo idx) [RD3] confirmado: 6 x 4 (ptrs Thumb); ramo B; JT3"
 0x080660C4,Screen_DispatchByState3A_B0,label,,"[JT3] caso B0 (corpo de 0x08065ED0), ver JT3_lista.txt"
 0x08066240,Anim_CounterDoneInitObjectSlot,func_thumb,,"[FL10] ao fim de Anim_StepRecordCounter: estado++, Obj_InitSlotAndLoad(1,0,1), flag 0x4000 (provável)"
 0x08066280,Link_SelectFiveOptionsStep,func_thumb,,menu de 5 opcoes com cursor +5 e marca 0xEF00; provavel (antes: Menu_SelectionFiveOptionsStep)
 0x08066460,Link_CommandExchangeStep,func_thumb,,"[LK2] [GH-LK2] comando 0xEF00|cmd: pai envia, filho guarda cmd em obj+5 e ecoa; timer 0xFE0F; confirmado (ex FUN_08066460)"
 0x08066534,Save_WaitSfxThenFlash,func_thumb,,[provavel] waits record and SFX 4 then Save_InvokeFlashOp
 0x08066574,Save_RunOptionsThenBlendFade,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
-0x080665B0,LinkMenu14_WaitThenSetPreviewScene,func_thumb,,[LK3] [GH-LK3] sub 6 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step6)
+0x080665B0,LinkMenu14_WaitThenSetPreviewScene,func_thumb,,[LK3] [GH-LK3] sub 6 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step6) [RV19] provavel: espera contador do registro e chama FightPreview_SetSceneMode ou grava estado 0x1B (antes: LinkMenu14Step6)
 0x080665FC,Fx_InitStringStateMachine,func_thumb,,copia sequência de bytes e roda máquina de estados de efeito; provável
-0x0806668C,LinkMenu14_DispatchIndexCountOrSkip,func_thumb,,[LK3] [GH-LK3] sub 9 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step9)
+0x0806668C,LinkMenu14_DispatchIndexCountOrSkip,func_thumb,,"[LK3] [GH-LK3] sub 9 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step9) [RV19] provavel: despacha por indice; se ok incrementa contador e reseta campos, ou soma 3 quando flag ativa (antes: LinkMenu14Step9)"
 0x080666C8,Fx_TickStateThenInitRecord8,func_thumb,,"[confirmado] StateMachine_DispatchStep(ctx+0x48); Fx_InitRecord8(1,0x16,7)"
-0x080666F4,LinkMenu14_DispatchIndexCountReset,func_thumb,,[LK3] [GH-LK3] sub 11 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step11)
+0x080666F4,LinkMenu14_DispatchIndexCountReset,func_thumb,,[LK3] [GH-LK3] sub 11 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step11) [RV19] provavel: despacha por indice; se ok incrementa contador e chama Obj_ResetStateFields (antes: LinkMenu14Step11)
 0x08066714,Text_BuildMessageAndStep,func_thumb,,monta mensagem em ctx+0x270 (terminador 0xFF) e avanca state machine; provavel; codigos chute [LK3] [GH-LK3] sub 12 do menu 0x14: monta mensagem (2 bytes de fim -1) e avanca maquina; ao fim decide sub 5 ou sub 3 pelos halfwords de link; confirmado (codigo)
 0x08066824,Menu14_CallSubstateHandler,func_thumb,,[confirmado] copia 0x34 bytes de DAT_08066860 e CallViaR0(tabela[byte DAT_08066864]); contadores se bit 1 (antes: Fight_CallHandlerCopyArgs52)
 0x08066860,Menu14_CallSubstateHandler_Pool,label,,[QA5] DADO: pool de literais lido por LDR em 0x08066828 (1o palavra 0x080AFCC0); nao e funcao
@@ -3579,10 +3579,10 @@ address,name,kind,count,comment
 0x08068238,Fx_WhiteFadeStepThenLoadSlot,func_thumb,,"[N2] [N2] copia 0x080B003C idx 2: fade de paleta para 0xFFFF em 9 passos, depois Obj_InitSlotAndLoad(1,2,0) (confirmado)"
 0x08068298,Fx_BlendStepThenLoadMedalArt,func_thumb,,"[N2] [N2] copia 0x080B003C idx 3: fade B 0x7FFF; carrega arte de medalha (0x03000BE0, byte 0x030017EC) para VRAM 0x06010000 (provavel)"
 0x08068328,Fx_FadeInStepThenAdvance,func_thumb,,[N2] [N2] copia 0x080B003C idx 4: fade de volta para 0x7FFF; Obj_ResetStateFields; ++0x0300137C (confirmado)
-0x08068374,Fx_BlendAndStateStep,func_thumb,,[JT3] alvo de 0x08068400 idx 5 (ja existe)
+0x08068374,Fx_BlendAndStateStep,func_thumb,,"[JT3] alvo de 0x08068400 idx 5 (ja existe) [RV19] confirmado: mistura particulas, despacha passo do registro +0x48 e, se terminou com flag, grava timer e incrementa contador"
 0x080683C8,Anim_WaitRecordThenSetState,func_thumb,,espera contador de animação e troca estado; provável
 0x08068400,Dispatch_CallHandlerLocalCopy,func_thumb,,[confirmado] copia tabela de 7 palavras para a pilha; CallViaR0(local[*DAT_08068438])
-0x08068440,MainState3,func_thumb,,estado 3 (estado inicial no boot) [MU] [MU] gMainStateTable[3]; indexa MS3 0x084856E8 (confirmado)
+0x08068440,MainState_Dispatch3,func_thumb,,estado 3 (estado inicial no boot) [MU] [MU] gMainStateTable[3]; indexa MS3 0x084856E8 (confirmado) (antes: MainState3)
 0x08068460,fx_screen_setup_a,func_thumb,,[R4] R4: setup de efeito de tela por modo 1-4; provavel
 0x08068684,fx_screen_setup_b,func_thumb,,[R4] R4: variante de fx_screen_setup_a com fade de paleta; provavel
 0x08068888,fx_step_table_a,func_thumb,,[R4] R4: maquina de estados com handler por CallViaR0; provavel
@@ -3627,7 +3627,7 @@ address,name,kind,count,comment
 0x0806A08C,intro_scene_step,func_thumb,,[R4] R4: cena de dialogo 2 estados; provavel
 0x0806A114,dispatch_scene_state,func_thumb,,[R4] R4: despacho 0..0x16 por jumptable nao recuperada; provavel
 0x0806A12A,dispatch_scene_state_Jump,label,,[JT5] mov pc: tabela real 23 ptrs em 0x0806A134 (estado RAM 0x03006F88); JT5
-0x0806A134,dispatch_scene_state_Table,data,,[JT5] tabela 23 ptrs; JT5
+0x0806A134,dispatch_scene_state_Table,data,,[JT5] tabela 23 ptrs; JT5 [RD3] confirmado: 23 x 4 (ptrs Thumb); JT5
 0x0806A3C4,scene_sequence_a,func_thumb,,[R4] R4: sequencia de cena por passos 0x96..6; provavel
 0x0806A654,scene_sequence_b,func_thumb,,[R4] R4: espera 0xB4 quadros e 3 sprites; provavel
 0x0806A718,wait_gate_0xf1,func_thumb,,[R4] R4: timer 0xF1 com pre-condicao; provavel
@@ -3658,7 +3658,7 @@ address,name,kind,count,comment
 0x0806BD3C,Screen_ResetDisplayAndStopSong,func_thumb,,"[FL10] entrada de tela: DAT_0806BD68=0xFF/0x10, REG_DISPCNT mask, snd_song_request(0) (provável)"
 0x0806BD70,dispatch_state_8,func_thumb,,[R4] R4: despacho 8 estados (jumptable nao recuperada); provavel
 0x0806BD8C,dispatch_state_8_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x0806BD98 (byte +0x20 de 0x03002C30); JT5
-0x0806BD98,dispatch_state_8_Table,data,,[JT5] tabela 8 ptrs; JT5
+0x0806BD98,dispatch_state_8_Table,data,,[JT5] tabela 8 ptrs; JT5 [RD3] confirmado: 8 x 4 (ptrs Thumb); JT5
 0x0806BF18,select_entity_max,func_thumb,,[R4] R4: escolhe max entre 8 entidades; chute
 0x0806BFEC,counter_oscillate_x,func_thumb,,[R4] R4: oscila x em passos de 3; provavel
 0x0806C084,fsm_obj_states_1_3,func_thumb,,[R4] R4: FSM 1..3 com timers 24 e 20; provavel
@@ -3671,7 +3671,7 @@ address,name,kind,count,comment
 0x0806C958,effect_anim_phase2,func_thumb,,[R4] R4: animacao 2 estados com 6 objetos a cada 4 quadros e som 0x3D; provavel
 0x0806CB28,anim_dispatch_state,func_thumb,,[R4] R4: despacho por tabela de saltos para 7 estados de animacao; confirmado
 0x0806CB58,anim_dispatch_state_Jump,label,,[JT5] mov pc: tabela real 7 ptrs em 0x0806CB6C ((byte +0x20)-1); JT5
-0x0806CB6C,anim_dispatch_state_Table,data,,[JT5] tabela 7 ptrs; JT5
+0x0806CB6C,anim_dispatch_state_Table,data,,[JT5] tabela 7 ptrs; JT5 [RD3] confirmado: 7 x 4 (ptrs Thumb); JT5
 0x0806CC80,battle_frame_tile_state_a,func_thumb,,[R4] R4: seletor de tile de quadro por estado (0x1A..0x20); confirmado valores
 0x0806CD68,battle_frame_tile_target,func_thumb,,[R4] R4: seletor de tile 0-6 e 0x2B..0x2D pelo byte +0x41 do alvo; confirmado faixas
 0x0806CEDC,battle_frame_tile_state_c,func_thumb,,[R4] R4: seletor de tile 7..0x12 por contador e byte +0x38; confirmado valores
@@ -3765,7 +3765,7 @@ address,name,kind,count,comment
 0x08071138,Anim_DisableAnim4IfIdle,func_thumb,,[FR1] if flag at DAT_0807115C+0x660 is 0: disable_anim4(0x19 [RV20] confirmado: se flag +0x660 zero
 0x08071164,Anim_StageDispatch,func_thumb,,[provavel] animation stage dispatcher via jump table DAT_08071180
 0x08071304,Screen_TableStepTimedSetup,func_thumb,,[FR2] provável; passo de tabela com limite 0x19 e fx_screen_setup_b(4
-0x08071328,Screen_TableStepTimedSetup_JumpTable,data,,[JT4] tabela real de 26 ponteiros (indice = estado +8); JT4
+0x08071328,Screen_TableStepTimedSetup_JumpTable,data,,[JT4] tabela real de 26 ponteiros (indice = estado +8); JT4 [RD3] confirmado: 26 x 4 (ptrs Thumb; cmp #0x19); JT4
 0x08071390,Screen_TableStepTimedSetup_Case0,label,,[JT4] setup inicial; JT4
 0x0807139C,Screen_TableStepTimedSetup_CaseAdvance,label,,[JT4] casos 4/8/12/16/20/24; JT4
 0x080713A2,Screen_TableStepTimedSetup_CaseWaitData,label,,[JT4] casos 1/5/9/13/17/21; JT4
@@ -3775,7 +3775,7 @@ address,name,kind,count,comment
 0x08071424,Screen_TableStepTimedSetup_CaseCall,label,,[JT4] casos 3/7/11/15/19/23; JT4
 0x08071460,Scene_InitObjectRenderSlots,func_thumb,,"[FR3] [FR3] inicializa slots de render de objeto e enable_anim4(0x18,0x3F,0xC) (provavel)"
 0x08071630,Dispatch_CallHandlerOrStartAnims,func_thumb,,[provavel] jumptable tabela DAT_0807164C se idx<8; senao enable_anim4 x3 e slot_start_v2 x2; tabela nao recuperada
-0x08071650,Dispatch_CallHandlerOrStartAnims_Table,data,,[JT2] [GH-JT2] 8 labels thumb (passos 0..7) indexados por fi+0x08 (word 0x03001808); impares = espera por 0x0803FB3C
+0x08071650,Dispatch_CallHandlerOrStartAnims_Table,data,,[JT2] [GH-JT2] 8 labels thumb (passos 0..7) indexados por fi+0x08 (word 0x03001808); impares = espera por 0x0803FB3C [RD3] confirmado: 8 x 4 (ptrs Thumb); JT2
 0x08071744,Snd_FadeOutThenSetState,func_thumb,,pede fade de som 0x20 e define estado 2 se flag zerada; provavel
 0x08071778,Scene_SongRequest0AndSetState3,func_thumb,,"[FS10] FS10 snd_song_request(0) + FUN_08047850(3); ptr 0x08485BAC; confianca confirmado (codigo), nome provavel"
 0x0807178C,slots26_update,func_thumb,,"[R4] R4: 26 slots de efeito, despacho por call_r1 a cada quadro; confirmado"
@@ -3959,8 +3959,8 @@ address,name,kind,count,comment
 0x08075130,snd_any_track_active,func_thumb,,[R4] R4: alguma trilha ainda ativa? (1/0); provavel
 0x080751E4,snd_cmd_push,func_thumb,,"[R4] R4: empilha comando (cmd,arg) no driver de som; provavel"
 0x08075244,snd_driver_state_get,func_thumb,,[R4] R4: devolve ponteiro do estado global do driver de som; confirmado
-0x08075C50,gObjTextGlyphFrameRecords,data,936,quadros dos glifos 8x8 (12 B: count 1, attr0, attr1, tile 0x3A0+char-1, 0, largura?) para chars 0x01-0x4E
-0x08075FF8,gObjTextGlyphFrames,ptr,78,set 0 de gSpriteSetTable0: quadro = char-1; so 78 (0x01-0x4E), acento le fora da tabela
+0x08075C50,gObjTextGlyphFrameRecords,data,936,quadros dos glifos 8x8 (12 B: count 1 [RD3] confirmado: 78 x 12 (936 B; fecha exatamente em 0x08075FF8), attr0, attr1, tile 0x3A0+char-1, 0, largura?) para chars 0x01-0x4E
+0x08075FF8,gObjTextGlyphFrames,ptr,78,set 0 de gSpriteSetTable0: quadro = char-1; so 78 (0x01-0x4E) [RD3] (antes kind ptr) confirmado: 78 x 4 (ptrs p/ records de 12 B; valores 0x08075C50 +12 cada), acento le fora da tabela
 0x0807C8B0,bios_set_reg_by_id,func_thumb,,[R4] R4: escreve registrador de hardware por id (lib); chute
 0x0807C918,bios_store_idx,func_thumb,,[R4] R4: grava indice e endereco (lib); chute
 0x0807C92C,Snd_TM0CNT_Candidate,label,,[SN2] SN2: unico literal 0x04000100 achado; sem funcao no Ghidra; nao confirmado como som
@@ -4036,19 +4036,19 @@ address,name,kind,count,comment
 0x0807E874,SoundTrackHandlerPtrs_IrqIdx5_6,data,,[AN2] [AN2] entradas idx5/idx6 da tabela IRQ 0x0807E860 (IRQ 0x200 e 0x400 = DMA1/DMA2); provavel
 0x0807E8EC,gMoveScriptTable,label,,roteiros de deslocamento em batalha: [kind*7 + estilo] [AN] GH-AN confirmado: u32[kind*7+gMoveStyle[bot]] = roteiro r (ex.: idx 91 -> 44)
 0x0807EE10,gPreviewJointTemplates,data,96,"provavel: 4 registros de 0x18 B (juntas sinteticas 3-6 do preview grande: cabeca, esq, dir, pernas); byte 0x10 = molde raiz da peca, 0x0D invertido (-2-x) no lado 1; ver re/reference/large_part_layout.md"
-0x0807EE70,gGfx_PartLarge_DescTable_Sz0,data,1952,preview cabeca: 122 x 16 B (antes: gPreviewHead)
-0x0807F610,gGfx_PartLarge_DescTable_Sz1,data,1952,preview braco direito: 122 x 16 B (antes: gPreviewRightArm)
-0x0807FDB0,gGfx_PartLarge_DescTable_Sz2,data,1952,preview braco esquerdo: 122 x 16 B (antes: gPreviewLeftArm)
-0x08080550,gGfx_PartLarge_DescTable_Sz3,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable (antes: gPreviewLegs)
-0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
-0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
+0x0807EE70,gGfx_PartLarge_DescTable_Sz0,data,1952,preview cabeca: 122 x 16 B (antes: gPreviewHead) [RD3] provavel: 122 x 0x10 (ocupa ate a proxima tabela; 0x7A0 B); IC
+0x0807F610,gGfx_PartLarge_DescTable_Sz1,data,1952,preview braco direito: 122 x 16 B (antes: gPreviewRightArm) [RD3] provavel: 122 x 0x10 (0x7A0 B); IC
+0x0807FDB0,gGfx_PartLarge_DescTable_Sz2,data,1952,preview braco esquerdo: 122 x 16 B (antes: gPreviewLeftArm) [RD3] provavel: 122 x 0x10 (0x7A0 B); IC
+0x08080550,gGfx_PartLarge_DescTable_Sz3,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable (antes: gPreviewLegs) [RD3] provavel: 122 x 0x20 (0xF40 B; ate 0x08081490); IC
+0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0 [RD3] confirmado: 50 x 1 (bytes
+0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui [RD3] (antes kind label) provavel: dados dos roteiros de movimento ate 0x080ABE00 (tamanho nao fechado); roteiro 0 vazio aponta aqui
 0x080A89F2,Data_080A89F2,data,,[SN3] NAO e codigo (BFF4=IT
-0x080AEB74,gLZ77RecordTable,data,,[CS2] registros de 16 B usados pelo passo 0xFFFC (src +4
+0x080AEB74,gLZ77RecordTable,data,,[CS2] registros de 16 B usados pelo passo 0xFFFC (src +4 [RD3] confirmado: registros de 16 B (src +4
 0x080AF8CA,Opt_SongTable,data,,"[OP] [OP] bytes 9,10,11,9; indice = valor da opcao 0x03000B94; confirmado (leitura da ROM)"
-0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C)
+0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C) [RD3] provavel: blocos de 12 ptrs (0x30 B) copiados por 0x0806463C com idx 0x0300137C; N nao contado; N2/JT3
 0x080AFC88,LinkMenu15StepTable,data,,[LK2] [GH-LK2] tabela de 8 passos do menu 0x15 (sub 0..7); confirmado
 0x080AFCC0,LinkMenu14SubstateTable,data,,"[LK2] [GH-LK2] 13 ponteiros de handler de comando de link (indice=comando, provavel); referenciada por 0x08066860 (antes: LinkCommandHandlerTable)"
-0x080B003C,StateTable_CopySrc_8400,data,,[JT3] 7 ponteiros copiados para pilha por 0x08068400
+0x080B003C,StateTable_CopySrc_8400,data,,[JT3] 7 ponteiros copiados para pilha por 0x08068400 [RD3] provavel: blocos de 7 ptrs (0x1C B) copiados por 0x08068400 com idx 0x0300137C; N nao contado; JT3
 0x080B012C,SND_SongTable,data,,[SN] tabela de ponteiros de musica (4 B por id; ids 0..53; driver+0x688)
 0x080B0204,SND_Song0Header,data,,[SN] cabecalho da musica 0 (confirmado por leitura da tabela)
 0x080B16E4,SND_SampleTable,data,,[SN] tabela de ponteiros de amostra PCM (128 entradas; cabecalho {u32 tam
