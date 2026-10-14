@@ -1,0 +1,25 @@
+# address,name,kind,comment
+0x08072818,snd_pitch_slide_tick,func_thumb,confirmado (SN4): nome mantido. Pitch slide sobre a struct do canal (+0x40 atual, +0x42 alvo, +0x44 passo, +0x3C contador, +0x66 multiplicador); seta flag +0x50|=2 consumida por snd_channel_flush_freq_scaled. Chamadores so tick de som (snd_tick_envelope_vibrato_pitch, snd_track_tick_wait, snd_tick_vibrato_and_pitch_slide), NAO objeto
+0x08072F7C,snd_track_cmd_ext,func_thumb,confirmado (SN4): nome mantido. Decodificador de comandos da trilha (Dn volume, E1 -> snd_cmd_E1_set_track_2c, E2 -> snd_cmd_E2_set_track_69, FF silencia e zera cursor +0x24). Unico chamador: snd_track_tick_wait via tabela 0x083ABD60 (tag FF03)
+0x08073010,snd_track_tick_wait,func_thumb,provavel (SN4) (antes: Obj_TickWaitCountdown): tick de espera da trilha: se cursor +0x24 != 0 decrementa contador +0x30 e, ao zerar, chama snd_track_cmd_ext; senao snd_pitch_slide_tick. Entrada da tabela 0x083ABD60 (tag FF03). Ghidra sem decompile (halt_baddata), so bytes
+0x08072FF4,snd_tick_envelope_vibrato_pitch,func_thumb,confirmado (SN4) (antes: Bar_TickWithSoundModulation): tick de canal = snd_vibrato_tick + snd_env_tick_by_state + snd_pitch_slide_tick. Entrada da tabela 0x083ABD60 (tags 00..02 e FF00..FF02). Struct e de som
+0x08073044,snd_tick_vibrato_and_pitch_slide,func_thumb,confirmado (bytes, SN4): chama snd_vibrato_tick 0x080727D0 e snd_pitch_slide_tick; entrada da tabela 0x083ABD60 (tags FF04/FF05). Ghidra sem decompile (halt_baddata)
+0x080723F8,snd_env_reset,func_thumb,confirmado (SN4) (antes: Bar_Reset): reseta maquina de envelope de canal. Chamador so Bar-irmaos (snd), nao objeto
+0x08072414,snd_env_step_start,func_thumb,confirmado (SN4) (antes: Bar_StepStart): passo inicial do envelope (contador/repeticoes)
+0x0807244C,snd_env_step_decrement,func_thumb,provavel (SN4) (antes: Bar_StepDecrement): decrementa nivel do envelope em passos
+0x080724B0,snd_env_step_cond,func_thumb,confirmado (SN4) (antes: Bar_StepCond): passo condicionado ao limite +0x28/+0x5D
+0x080724D8,snd_env_update,func_thumb,provavel (SN4) (antes: Bar_Update): atualiza envelope; chamador so Bar_StepLevel3 e Bar_TickPhase3
+0x0807250C,snd_env_step_level3,func_thumb,provavel (SN4) (antes: Bar_StepLevel3): fase 3 do envelope, nibbles de +0x5C
+0x0807254C,snd_env_step_level2,func_thumb,confirmado (SN4) (antes: Bar_StepLevel2): fase 2; nibble alto de +0x5B vira +0x5F, nibble baixo vira +0x60 (taxa/alvo)
+0x0807258C,snd_env_reset_phase1,func_thumb,confirmado (SN4) (antes: Bar_ResetPhase1): entra na fase 1 (contador=1, estado=1); chamado por snd_cmd_envelope, snd_cmd_note, snd_cmd_FC, snd_cmd_FD
+0x080725B0,snd_env_tick_phase1,func_thumb,confirmado (SN4) (antes: Bar_TickPhase1): fase 1 (ataque); ao zerar chama snd_env_step_level2
+0x080725D0,snd_env_tick_phase2,func_thumb,confirmado (SN4) (antes: Bar_TickPhase2): fase 2; ao zerar snd_env_step_level3; senao soma +0x60 a +0x66 (max 15) e seta flag +0x50|=2
+0x08072618,snd_env_tick_phase3,func_thumb,confirmado (SN4) (antes: Bar_TickPhase3): fase 3; ao zerar snd_env_update; senao soma reps a +0x66 (min 0)
+0x08072660,snd_env_tick_phase4,func_thumb,confirmado (SN4) (antes: Bar_TickPhase4): fase 4; so chama snd_env_step_cond
+0x0807266C,snd_env_tick_by_state,func_thumb,confirmado (SN4) (antes: Bar_TickByState): despacha fases pelo estado +0x61 (1..5), gate +0x62; chamado so por snd_tick_envelope_vibrato_pitch
+0x08072CB0,snd_cmd_envelope,func_thumb,confirmado (SN4) (antes: Ghidra snd_cmd_set_flag62_on): le 4 bytes do cursor para +0x5B..+0x5E, gate +0x62=1, snd_env_reset_phase1 se +0x64<3
+0x08074540,snd_driver_test_flag_bit1,func_thumb,provavel (SN4) (antes: snd_track_test_flag2): le bit1 do byte [0x03007014]+0x72C (driver+0x72C); gate das snd_update_channelN_if_track_flag e de snd_update_frame. Nao e flag de trilha, e do driver
+0x080732C8,snd_channel_flush_flag8,func_thumb,confirmado (SN4) (antes: Obj_FlushFlag8ToWord): se flag +0x50 bit 8, grava byte +0x54 no registrador (u16) e limpa o bit. Chamador snd_channel_update_1
+0x080733BC,snd_channel_flush_freq_scaled,func_thumb,confirmado (SN4) (antes: Obj_FlushFlag2ScaledValue): se flag +0x50 bit 2, freq = (+0x40 * +0x66) & mascara DAT_08073400, grava em +0x4A e no registrador; seta bit 1
+0x080734F4,snd_channel_flush_ctrl69,func_thumb,confirmado (SN4) (antes: Obj_FlushFlag1Value69): se flag +0x50 bit 1, grava (+0x69 | 0x8000) no registrador e limpa o bit
+0x083ABD60,ObjTbl_SndChannelTick,table,tabela de registros de 12 bytes {update_fn, tick_fn, tag}, 13 entradas (tags 00..02, FF00..FF05); tick_fn e de som (SN4). Lida em snd_track_init_all 0x08074A04 (ref 0x08074A70). Nao e tabela de objeto
