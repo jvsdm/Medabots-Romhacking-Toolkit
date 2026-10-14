@@ -976,10 +976,14 @@ address,name,kind,count,comment
 0x08016138,Fight_StepAllIndicatorSlotAnims,func_thumb,,[R0b] Loop dos 6 slots de animacao
 0x08016154,Fight_StepIndicatorSlotAnim,func_thumb,,[R0b] Avanca frame do indicador; 1 se deu a volta (provavel)
 0x08016288,Fight_HorizontalCursorInput,func_thumb,,[R1] Cursor esq/dir da escolha de tipo/acao (estado +0x83); provavel
+0x0801630C,Fight_MarkEntrySelected,func_thumb,,"[FS6] [FS6] provavel; marca entrada selecionada (attr 0x20, contador +0x22)"
+0x08016370,Obj_SpawnGroup_FromTable4,func_thumb,,[FS6] [FS6] provavel; grava grupo de OBJ a partir de registro de 4 bytes
 0x08016438,Fight_UpdateSpriteGroupMoveAnim,func_thumb,,[R1] Anima e move grupo de objetos em passos de 4 px; retorna 1 ao fim; provavel
 0x080164F4,Fight_AnimateEntryFrames,func_thumb,,[R1] Anima 4 quadros de tile por contador (+0x1B); provavel
 0x08016554,Fight_MarkEntrySelectedAlt,func_thumb,,[R1] Como 0x0801630C com altura 0x60 (bit 0x04); provavel
 0x080165B0,Fight_CopyTableByteToVar,func_thumb,,[R1] Copia byte de tabela indexada pelo tipo; provavel
+0x080165D0,Fight_StepSixEntryHeights,func_thumb,,[FS6] [FS6] provavel; passo de altura de 6 entradas (+8/+9)
+0x08016614,Fight_DrawTwoFieldsIfCounterLow10,func_thumb,,[FS6] [FS6] confirmado (nome ja existia)
 0x08016660,Fight_DrawTwoFieldsIfCounterLow5,func_thumb,,[R1] Como 0x08016614 com limite 5; provavel
 0x080166AC,Scene_LoadTwoTileSets,func_thumb,,[FN1] provável: carrega dois conjuntos de tiles (LoadTilesWithMalias)
 0x080166F0,Fight_DrawFieldIfCounterLow4,func_thumb,,[R1] Campo com contador < 4; provavel
@@ -996,6 +1000,7 @@ address,name,kind,count,comment
 0x08016C0C,Fight_DrawSelectedActionStatusText,func_thumb,,"Simon/Rokusho: Draw the selected action's status/override text. This chooses between generic action description text, support/utility text variants, and the pending-effect override text shown when effect kind 0x2B targets the selected part slot."
 0x08016D18,Fight_DrawSelectedActionIcon,func_thumb,,[R1] Icone da acao da peca (byte +0x49); provavel
 0x08016DA4,Fight_LoadSelectedKindFromBot,func_thumb,,[R1] Le +0xDD do bot ativo para o tipo selecionado; provavel
+0x08016DCC,Fight_DrawBotFractionPanel,func_thumb,,[FS6] [FS6] confirmado no corpo; DIVERGE de R1 (Fight_DrawActionPanelForKind)
 0x08016E5C,Fight_IsPartTechniqueSupportUtilityClass,func_thumb,,"Simon/Rokusho: Check whether a part's technique belongs to the support/utility bucket used by the action description and availability UI. Current confirmed members are CancelOptic, CancelBomb, CancelGrav, Accel_Chrg, and Strengthen."
 0x08016E90,Fight_DrawCounterFieldPair12,func_thumb,,[R1] Familia contador: 2 campos se contador < 12; provavel na forma
 0x08016EDC,Fight_DrawCounterFieldPair4,func_thumb,,[R1] Familia contador: 2 campos se contador < 4; provavel na forma
@@ -1013,13 +1018,17 @@ address,name,kind,count,comment
 0x08017208,Fight_InitKindObjectG,func_thumb,,"[R1] Objeto de tipo em (0x84,0x78) (par de D); provavel"
 0x080175FC,Fight_UpdatePartKindSelectorB,func_thumb,,"[R1] Mesma maquina de tipo que 0x080169AC, para o outro lado; provavel"
 0x0801767C,Fight_InitKindObjectsForStateB,func_thumb,,[R1] Despacha init dos objetos E/F/G/84 pelo tipo; provavel
+0x08017734,Fight_DrawBotInfoPanel,func_thumb,,[FS6] [FS6] provavel; painel de info do bot
 0x08017914,Fight_FillSideLabelBandForBot,func_thumb,,[FN1] provável: wrapper que escolhe banda B se 0xC1=='P' senão A
 0x08017948,Fight_DrawCounterFieldPair12B,func_thumb,,[R1] Familia contador: 2 campos se contador < 12; provavel na forma
 0x08017994,Fight_DrawBotSlotSprite,func_thumb,,[R1] Sprite de slot do bot (ativo ou nao) pelo indice fight_information+0x3D/+0x46; provavel
 0x08017A14,Fight_DrawSideBotSlots,func_thumb,,"[R1] Laco dos 3 bots de um lado (presentes, +0x40); provavel"
+0x08017A7C,Fight_DrawBotSlotSpriteB,func_thumb,,[FS6] [FS6] provavel; composto de 4 sprites da peca (nome de R1)
 0x08017B24,Fight_DrawSelectCursorObject,func_thumb,,"[HD2] [HD2] Cursor 3x3 da luta: OBJ slot 0x40 (0x03002C30+0x200), tile 0x306/0x307, x +-0x10, y da tabela 0x083AD524; estado 0x03000440+0x3C/+0x3D. Renomeada (antes FUN_08017b24)"
 0x08017BD0,Fight_DrawActiveBotNameBox,func_thumb,,[R1] Caixa de nome do bot ativo por lado; provavel
+0x08017C50,Fight_FillInfoBand_BlinkState,func_thumb,,[FS6] [FS6] provavel; faixa de info conforme estado de pisca
 0x08017CE8,Ui_TickBlinkCounter,func_thumb,,"[G] Contador de piscar, bit 3 (provavel)"
+0x08017D14,Fight_DrawFiveSlotRowsB,func_thumb,,[FS6] [FS6] confirmado; 5 faixas de tilemap (nome de R1)
 0x08017D50,Fight_LoadActiveBotIconTiles,func_thumb,,[HD2] [HD2] CpuFastSet de 0x20 words da ROM 0x084C29D8+(bot+1)*0x80 para VRAM 0x06007800. Renomeada (antes FUN_08017d50)
 0x08017D90,Fight_DrawActiveBotNameSprites,func_thumb,,[HD2] [HD2] Nome do bot ativo em sprites de texto (0xB bytes da tabela 0x083B6590 para 0x030004DE; Text_LayoutGlyphSprites). Renomeada (antes FUN_08017d90)
 0x08017E00,Fight_DrawFourPartIcons,func_thumb,,[R1] Icones das 4 pecas do bot ativo; provavel na forma
@@ -2125,6 +2134,7 @@ address,name,kind,count,comment
 0x08036B50,FightPreview_AdvanceRowSlots,func_thumb,,[R2] avanca ate 5 slots sem marcar +9
 0x08036B84,Fight_CopyPartArmorToDisplayValues,func_thumb,,[R2] copia id da peca do bot para o sprite (antes: FightPreview_SetPartSpriteId)
 0x08036BB8,FightPreview_ConsumePartCount,func_thumb,,[R2] consome 1 unidade de peca do bot (retorna 0) ou retorna 1 se zero
+0x08036BF4,Ui_FillRect12x13_ByFlag,func_thumb,,[FS6] [FS6] confirmado no corpo; largura 0x10 ou 2 conforme flag
 0x08036C20,FightPreview_SetupOneSprite,func_thumb,,[R2] configura 1 sprite com posicao tabela+x/y
 0x08036CCC,FightPreview_SplitCountByCapacity,func_thumb,,Simon/Rokusho (antes: Fight_ClampRepairToMissingArmor)
 0x08036D24,Fight_RepairPartTick,func_thumb,,Simon/Rokusho
@@ -2159,8 +2169,12 @@ address,name,kind,count,comment
 0x08037A94,FightPreview_SpawnEffectSpriteAlt,func_thumb,,[R2] variante de SpawnEffectSprite com tiles 0x30/0x34
 0x08037B9C,FightPreview_DispatchEffectSlots,func_thumb,,[R2] despacha 27 slots de efeito por tabela (+0x29)
 0x08037BF4,Anim_TickSlotAndAdvanceFrame,func_thumb,,[provavel] roda script do slot e avanca quadro ate 0x14
+0x08037C50,Fight_SlotStepMoveOrSpawnEffect,func_thumb,,"[FS6] [FS6] provavel; passo de slot (script, move, efeito); tabela 0x083AF6B8 sem dona"
 0x08037E2C,Fight_EffectSpriteAnimStep,func_thumb,,"passo de animacao de efeito (regs 0x40 bytes, modo fi+0x51); provavel"
+0x0803809C,Fight_StepEndClearSlotAttr,func_thumb,,[FS6] [FS6] provavel; limpa atributo do slot
+0x080380F0,Fight_SlotStepAdvanceXFromTable,func_thumb,,[FS6] [FS6] provavel; soma X por tabela
 0x08038178,Anim_SlotTickStep,func_thumb,,avanca slot de animacao por RunSlotScript + timer 0x40 (provavel)
+0x080381E0,Fight_SlotStepSlideX16,func_thumb,,[FS6] [FS6] provavel; desliza X em 16
 0x08038258,Anim_SlideSlotX16,func_thumb,,[provavel] per-slot 0x40-byte X slide by 16 and counter
 0x080382F4,Anim_SlotSlideStep,func_thumb,,deslize de slot 0x40 com direcao de fight+0xF8; provavel
 0x0803836C,FightPreview_ClearPartCounters3,func_thumb,,Simon/Rokusho (antes: Fight_ClearMultiTargetResolutionScratch)
@@ -2175,6 +2189,7 @@ address,name,kind,count,comment
 0x08038804,Anim_StepSlotScriptAndRelease,func_thumb,,provável: passo de script do slot e liberação ao fim (slot +0x22 == -1)
 0x0803884C,FightPreview_DispatchEffectSlotsC,func_thumb,,[R2] copia do despacho de 27 slots (terceira tabela)
 0x080388A4,Anim_SlideSlotStepAndSpawn,func_thumb,,[FL10] slot desliza +-4 ate limite; sfx 0x54; cria slot novo (idx+3); limpa ao fim do contador 0x27 (provável)
+0x08038AC0,Fight_SlotStepPlaceBotMarkers,func_thumb,,[FS6] [FS6] provavel; posiciona marcadores do bot
 0x08038BC0,Fight_ComputeTotalRos,func_thumb,,"Simon/Rokusho: Compute total ROS / attack strength. This includes a direct Scout/support additive term from fight_information.support_bonus_slots[slot_index * 8 + 0], where slot_index comes from fight_information[0x89]. Scout therefore has a real shared ROS/success bonus in the core formula."
 0x08038D30,Fight_HandleDefenderFollowupFlags,func_thumb,,"Simon/Rokusho: Post-ROS follow-up handler for the defender. Uses selected target metadata, total ROS scratch, and defender flags to set follow-up state bits and possibly pick a retaliatory target part."
 0x08038E54,Fight_ResolveDefenderRosReductions,func_thumb,,"Simon/Rokusho: Resolve the defender-side ROS reduction phase. If defender_resolution_flags does not already bypass both evasion and defense, run evasion reduction first and only run defense reduction if evasion did not fully terminate the ROS path. Otherwise fall back to the critical-override check."
@@ -2257,8 +2272,10 @@ address,name,kind,count,comment
 0x0803B884,ObjScript_Op3A_StartTwinSlotsSfx,func_thumb,,[HO1] confirmado: slots 10/11 estado 0x3A e sfx 0x10; argc 0
 0x0803B8C8,Dispatch39Slots,func_thumb,,[R2] despacha 39 handlers por indice (sugestao)
 0x0803B900,Fight_EffectEntryTriggerStep,func_thumb,,passo de registro de efeito: marca +0x2B e contador +0x29; provavel
+0x0803B9A4,Fight_StepPreviewCompositeLayers,func_thumb,,[FS6] [FS6] provavel; monta camadas de composto de previa por lado
 0x0803BBE0,FightPreview_ApplyObjectMotionKind,func_thumb,,copia gObjectSlots[atual]+0x2C para o tipo de movimento do lado (fight_information+0x112) depois da espera +0x30
 0x0803BE44,Fight_BotSlideScroll,func_thumb,,deslize horizontal do bot e scroll (provavel)
+0x0803C044,Fight_SlotStepSaveXYAndAdvanceTile,func_thumb,,[FS6] [FS6] provavel; guarda X/Y e avanca tile
 0x0803C0CC,Fight_ScrollSlotPhase_C0CC,func_thumb,,"[ST2] [ST2] sem funcao no Ghidra; le AFC2C[fight+0x38] (literal 0x0803C170); nome sugerido, nao confirmado"
 0x0803C33C,Fight_ScrollEntryPhase,func_thumb,,[provavel] entry scroll phase with thresholds 0x78/0x160/0x188
 0x0803C5F8,Anim_SlotFrameStep,func_thumb,,"passo por frame de slot de animacao, roda script; provavel"
@@ -2269,10 +2286,15 @@ address,name,kind,count,comment
 0x0803C9E0,Anim_StepSlotDelayAndBlit,func_thumb,,"provável: atraso, passo de script e blit de retângulo do slot"
 0x0803CAB0,Anim_StepSlotScriptOrWait,func_thumb,,[FL10] espera +0x30; Fight_StepAnimScriptSlot; BgMap_CopyRectWrapped; limpa se +0x66==-1 (provável)
 0x0803CB54,ObjectSlot_TickRepeat,func_thumb,,conta +0x30 e +0x2C do slot atual; com +0x2E recarrega +0x2C de +0x2D
+0x0803CBD0,Fight_SlotStepSpawnNextRecord,func_thumb,,[FS6] [FS6] provavel; carrega proximo registro de slot
 0x0803CC40,Fight_EffectSlotScriptStep,func_thumb,,roda script de slot do efeito; libera tile se +0x22==0xFF; provavel
 0x0803CC8C,Fight_SpawnEffectTimed,func_thumb,,gera efeito de slot a cada N quadros (provavel)
 0x0803CDCC,Anim_StepSlotScript,func_thumb,,[provavel] runs slot animation script from table DAT_0803CE08
 0x0803CE18,Anim_PaletteFadeStep,func_thumb,,fade de paleta A/B por frame sobre slot 0x40; provavel
+0x0803CECC,Fight_StepPaletteFadeToColor,func_thumb,,[FS6] [FS6] provavel; fade de paleta para duas cores
+0x0803CF7C,Fight_SlotStepAdvanceTileOffset,func_thumb,,[FS6] [FS6] provavel; avanca offset de tile
+0x0803CFC8,Fight_SlotStepStartScriptAfterDelay,func_thumb,,[FS6] [FS6] provavel; roda script de slot apos atraso
+0x0803D0BC,Fight_SlotStepSlideYByDelta,func_thumb,,"[FS6] [FS6] provavel; desliza Y pelo passo, para no limite"
 0x0803D2A8,FightPreview_StepSideLoad,func_thumb,,carga progressiva de peças na prévia de batalha; provável
 0x0803D3C0,Anim_TickSlotOffsetAndReload,func_thumb,,[provavel] Anim_RunSlotScript(+0x26); recarrega halfword +6 com byte +0x28
 0x0803D424,ObjectScript_ReadWord,func_thumb,,"A3: le halfword do roteiro de objeto (ponteiro em DAT_0803d44c+0x100, indice vindo de DAT_0803d44c+0xF9)."
@@ -2285,16 +2307,31 @@ address,name,kind,count,comment
 0x0803D634,LinkTick_MenuStep3,func_thumb,,[LK2] [GH-LK2] passo 3 do menu 10: se slot local==0 escreve 0x8000|byte em 0x03005016 e conta gFrameCount; confirmado
 0x0803D674,LinkTick_MenuStep4,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 10: tick de link semelhante ao passo 3; provavel
 0x0803D74C,Screen_InitOverlayAndLoadAssets,func_thumb,,[FN2] provavel: Init de tela: limpa; CpuFastSet; DISPCNT; 4x decompress_and_store; layout overlay; snd_song_request(8)
+0x0803D928,Link_StepPaletteFadeDown,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 8; sentido do fade e chute
+0x0803D980,Link_StepLoadObjAndAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 9
 0x0803D9A0,Fight_ShowPreBattleTextIndex1,func_thumb,,"[TX] GH-TX: StateMachine_DispatchStep(gTextPreBattleMessage[1]) (indice fixo, ldr [r0,#4]). Confirmado pelo corpo 0x0803D9A0..0x0803D9BD (sem funcao no Ghidra)"
+0x0803D9C8,Link_StepCopyPaletteAndAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 11 e 42
+0x0803D9F0,Link_StepPaletteFadeUp,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 12
+0x0803DA40,Link_StepPaletteFadeUp_B,func_thumb,,[FS6] [FS6] confirmado (copia de D9F0); tabela menu 10 idx 43
 0x0803DA90,Fight_ClearBattleBgAndBlend,func_thumb,,"[provavel] SetGpuBlendMode(0,0,0), limpa 2 mapas de fundo 32x32 e 0x80 slots de tile"
 0x0803DAEC,Fight_InitSelectBlockA,func_thumb,,chute: zera bloco 0x14 e põe modo 1
 0x0803DB1C,Snd_RequestSongByFlag,func_thumb,,[FL10] pede musica 0x0E ou 0x0F conforme byte +0x9C==1; contador DB48++ (confirmado; evento não confirmado)
 0x0803DB4C,Fight_ShowPostBattleTextIndex1,func_thumb,,[TX] GH-TX: StateMachine_DispatchStep(gTextPostBattleMessage[1]) (indice fixo). Sem funcao no Ghidra
+0x0803DB94,Link_StepDispatchSubB_ThenAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 37
+0x0803DBB8,Link_StepDispatchStateMachine,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 38
+0x0803DBE0,Link_StepWaitOverlayTarget,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 39
+0x0803DC0C,Link_StepCycleTimer9,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 40
+0x0803DC3C,Link_StepSoundFadeOut,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 41
+0x0803DC58,Link_StepSetStateWordByFlag,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 44
 0x0803DC8C,Screen_ResetAndSetSub4Mode,func_thumb,,"[provavel] limpa VRAM/slots, SetGpuBlendMode(5,0x3F,0x20), Dispatch_Sub4Mode(3)"
 0x0803DCDC,Overlay_InitScreenGraphics,func_thumb,,"init de tela do overlay: gfx, blend, paleta, OAM, musica 0x14; provavel"
 0x0803DDC6,Overlay_InitScreenGraphics_AltEntry_803ddc6,label,,[HD2] [HD2] Chama Overlay_DrawSixDigitRow (0x0803E8EC) na inicializacao (antes: Overlay_InitScreenGraphics)
+0x0803DE70,Link_StepGpuBlendTick,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 49
+0x0803DE90,Link_StepLoadSlotAndAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 50
+0x0803DEB0,Link_StepDispatchByFlag,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 51
 0x0803DEF0,LinkSync_MenuStep52,func_thumb,,[LK2] [GH-LK2] passo 0x34 do menu 10 le 0x03005010 (sincronia); provavel
 0x0803DF98,LinkSync_MenuStep53,func_thumb,,[LK2] [GH-LK2] passo 0x35 do menu 10 le 0x03005010; provavel
+0x0803E018,Link_StepGaugeAndTween,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 54
 0x0803E03C,Anim_RunSlotScriptThenSfx54,func_thumb,,[FS7] [FS7] passo por quadro; roda script de slot; SFX 0x54 ao fim; provavel
 0x0803E098,Anim_TweenUntilDoneThenReset,func_thumb,,[FS7] [FS7] tween ate alvo; som de barra cheia; reseta direcao; provavel
 0x0803E0C0,Anim_TweenClampThenSfx2A,func_thumb,,[FS7] [FS7] tween com fixacao no alvo; SFX 0x2A; provavel

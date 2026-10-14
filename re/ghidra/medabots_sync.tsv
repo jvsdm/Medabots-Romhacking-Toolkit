@@ -593,10 +593,14 @@ F	0x08016080	Fight_SetupIndicatorSlotAlt
 F	0x08016138	Fight_StepAllIndicatorSlotAnims
 F	0x08016154	Fight_StepIndicatorSlotAnim
 F	0x08016288	Fight_HorizontalCursorInput
+F	0x0801630C	Fight_MarkEntrySelected
+F	0x08016370	Obj_SpawnGroup_FromTable4
 F	0x08016438	Fight_UpdateSpriteGroupMoveAnim
 F	0x080164F4	Fight_AnimateEntryFrames
 F	0x08016554	Fight_MarkEntrySelectedAlt
 F	0x080165B0	Fight_CopyTableByteToVar
+F	0x080165D0	Fight_StepSixEntryHeights
+F	0x08016614	Fight_DrawTwoFieldsIfCounterLow10
 F	0x08016660	Fight_DrawTwoFieldsIfCounterLow5
 F	0x080166AC	Scene_LoadTwoTileSets
 F	0x080166F0	Fight_DrawFieldIfCounterLow4
@@ -613,6 +617,7 @@ F	0x08016AD8	Fight_DrawSelectedActionDescription
 F	0x08016C0C	Fight_DrawSelectedActionStatusText
 F	0x08016D18	Fight_DrawSelectedActionIcon
 F	0x08016DA4	Fight_LoadSelectedKindFromBot
+F	0x08016DCC	Fight_DrawBotFractionPanel
 F	0x08016E5C	Fight_IsPartTechniqueSupportUtilityClass
 F	0x08016E90	Fight_DrawCounterFieldPair12
 F	0x08016EDC	Fight_DrawCounterFieldPair4
@@ -630,13 +635,17 @@ F	0x080171C0	Fight_InitKindObjectF
 F	0x08017208	Fight_InitKindObjectG
 F	0x080175FC	Fight_UpdatePartKindSelectorB
 F	0x0801767C	Fight_InitKindObjectsForStateB
+F	0x08017734	Fight_DrawBotInfoPanel
 F	0x08017914	Fight_FillSideLabelBandForBot
 F	0x08017948	Fight_DrawCounterFieldPair12B
 F	0x08017994	Fight_DrawBotSlotSprite
 F	0x08017A14	Fight_DrawSideBotSlots
+F	0x08017A7C	Fight_DrawBotSlotSpriteB
 F	0x08017B24	Fight_DrawSelectCursorObject
 F	0x08017BD0	Fight_DrawActiveBotNameBox
+F	0x08017C50	Fight_FillInfoBand_BlinkState
 F	0x08017CE8	Ui_TickBlinkCounter
+F	0x08017D14	Fight_DrawFiveSlotRowsB
 F	0x08017D50	Fight_LoadActiveBotIconTiles
 F	0x08017D90	Fight_DrawActiveBotNameSprites
 F	0x08017E00	Fight_DrawFourPartIcons
@@ -1741,6 +1750,7 @@ F	0x08036B1C	FightPreview_AdvanceRowSlotsMarked
 F	0x08036B50	FightPreview_AdvanceRowSlots
 F	0x08036B84	Fight_CopyPartArmorToDisplayValues
 F	0x08036BB8	FightPreview_ConsumePartCount
+F	0x08036BF4	Ui_FillRect12x13_ByFlag
 F	0x08036C20	FightPreview_SetupOneSprite
 F	0x08036CCC	FightPreview_SplitCountByCapacity
 F	0x08036D24	Fight_RepairPartTick
@@ -1775,8 +1785,12 @@ F	0x080378F0	FightPreview_SpawnEffectSprite
 F	0x08037A94	FightPreview_SpawnEffectSpriteAlt
 F	0x08037B9C	FightPreview_DispatchEffectSlots
 F	0x08037BF4	Anim_TickSlotAndAdvanceFrame
+F	0x08037C50	Fight_SlotStepMoveOrSpawnEffect
 F	0x08037E2C	Fight_EffectSpriteAnimStep
+F	0x0803809C	Fight_StepEndClearSlotAttr
+F	0x080380F0	Fight_SlotStepAdvanceXFromTable
 F	0x08038178	Anim_SlotTickStep
+F	0x080381E0	Fight_SlotStepSlideX16
 F	0x08038258	Anim_SlideSlotX16
 F	0x080382F4	Anim_SlotSlideStep
 F	0x0803836C	FightPreview_ClearPartCounters3
@@ -1791,6 +1805,7 @@ F	0x08038700	Fight_PlaceBotMarkerAndRunSlotAnim
 F	0x08038804	Anim_StepSlotScriptAndRelease
 F	0x0803884C	FightPreview_DispatchEffectSlotsC
 F	0x080388A4	Anim_SlideSlotStepAndSpawn
+F	0x08038AC0	Fight_SlotStepPlaceBotMarkers
 F	0x08038BC0	Fight_ComputeTotalRos
 F	0x08038D30	Fight_HandleDefenderFollowupFlags
 F	0x08038E54	Fight_ResolveDefenderRosReductions
@@ -1873,8 +1888,10 @@ L	0x0803B794	ObjScript_Op39_SpawnEffectSlot4NoPrioShift_0803B794
 F	0x0803B884	ObjScript_Op3A_StartTwinSlotsSfx
 F	0x0803B8C8	Dispatch39Slots
 F	0x0803B900	Fight_EffectEntryTriggerStep
+F	0x0803B9A4	Fight_StepPreviewCompositeLayers
 F	0x0803BBE0	FightPreview_ApplyObjectMotionKind
 F	0x0803BE44	Fight_BotSlideScroll
+F	0x0803C044	Fight_SlotStepSaveXYAndAdvanceTile
 F	0x0803C0CC	Fight_ScrollSlotPhase_C0CC
 F	0x0803C33C	Fight_ScrollEntryPhase
 F	0x0803C5F8	Anim_SlotFrameStep
@@ -1885,10 +1902,15 @@ F	0x0803C8AC	Fight_TickSlotAnimAndCopyRect
 F	0x0803C9E0	Anim_StepSlotDelayAndBlit
 F	0x0803CAB0	Anim_StepSlotScriptOrWait
 F	0x0803CB54	ObjectSlot_TickRepeat
+F	0x0803CBD0	Fight_SlotStepSpawnNextRecord
 F	0x0803CC40	Fight_EffectSlotScriptStep
 F	0x0803CC8C	Fight_SpawnEffectTimed
 F	0x0803CDCC	Anim_StepSlotScript
 F	0x0803CE18	Anim_PaletteFadeStep
+F	0x0803CECC	Fight_StepPaletteFadeToColor
+F	0x0803CF7C	Fight_SlotStepAdvanceTileOffset
+F	0x0803CFC8	Fight_SlotStepStartScriptAfterDelay
+F	0x0803D0BC	Fight_SlotStepSlideYByDelta
 F	0x0803D2A8	FightPreview_StepSideLoad
 F	0x0803D3C0	Anim_TickSlotOffsetAndReload
 F	0x0803D424	ObjectScript_ReadWord
@@ -1901,16 +1923,31 @@ F	0x0803D5A0	Fight_ResetStateFlagsAndCounter
 F	0x0803D634	LinkTick_MenuStep3
 F	0x0803D674	LinkTick_MenuStep4
 F	0x0803D74C	Screen_InitOverlayAndLoadAssets
+F	0x0803D928	Link_StepPaletteFadeDown
+F	0x0803D980	Link_StepLoadObjAndAdvance
 F	0x0803D9A0	Fight_ShowPreBattleTextIndex1
+F	0x0803D9C8	Link_StepCopyPaletteAndAdvance
+F	0x0803D9F0	Link_StepPaletteFadeUp
+F	0x0803DA40	Link_StepPaletteFadeUp_B
 F	0x0803DA90	Fight_ClearBattleBgAndBlend
 F	0x0803DAEC	Fight_InitSelectBlockA
 F	0x0803DB1C	Snd_RequestSongByFlag
 F	0x0803DB4C	Fight_ShowPostBattleTextIndex1
+F	0x0803DB94	Link_StepDispatchSubB_ThenAdvance
+F	0x0803DBB8	Link_StepDispatchStateMachine
+F	0x0803DBE0	Link_StepWaitOverlayTarget
+F	0x0803DC0C	Link_StepCycleTimer9
+F	0x0803DC3C	Link_StepSoundFadeOut
+F	0x0803DC58	Link_StepSetStateWordByFlag
 F	0x0803DC8C	Screen_ResetAndSetSub4Mode
 F	0x0803DCDC	Overlay_InitScreenGraphics
 L	0x0803DDC6	Overlay_InitScreenGraphics_AltEntry_803ddc6
+F	0x0803DE70	Link_StepGpuBlendTick
+F	0x0803DE90	Link_StepLoadSlotAndAdvance
+F	0x0803DEB0	Link_StepDispatchByFlag
 F	0x0803DEF0	LinkSync_MenuStep52
 F	0x0803DF98	LinkSync_MenuStep53
+F	0x0803E018	Link_StepGaugeAndTween
 F	0x0803E03C	Anim_RunSlotScriptThenSfx54
 F	0x0803E098	Anim_TweenUntilDoneThenReset
 F	0x0803E0C0	Anim_TweenClampThenSfx2A
@@ -3831,15 +3868,6 @@ C	0x08011D80
 C	0x08012BC0
 C	0x08012BE4
 C	0x080140B0
-C	0x0801630C
-C	0x08016370
-C	0x080165D0
-C	0x08016614
-C	0x08016DCC
-C	0x08017734
-C	0x08017A7C
-C	0x08017C50
-C	0x08017D14
 C	0x08033C10
 C	0x08033CF0
 C	0x08033D00
@@ -3869,39 +3897,11 @@ C	0x080344B4
 C	0x080344D0
 C	0x080344EC
 C	0x08034508
-C	0x08036BF4
-C	0x08037C50
-C	0x0803809C
-C	0x080380F0
-C	0x080381E0
-C	0x08038AC0
-C	0x0803B9A4
-C	0x0803C044
-C	0x0803CBD0
-C	0x0803CECC
-C	0x0803CF7C
-C	0x0803CFC8
-C	0x0803D0BC
 C	0x0803D15C
 C	0x0803D5E0
 C	0x0803D608
 C	0x0803D6AC
 C	0x0803D71C
-C	0x0803D928
-C	0x0803D980
-C	0x0803D9C8
-C	0x0803D9F0
-C	0x0803DA40
-C	0x0803DB94
-C	0x0803DBB8
-C	0x0803DBE0
-C	0x0803DC0C
-C	0x0803DC3C
-C	0x0803DC58
-C	0x0803DE70
-C	0x0803DE90
-C	0x0803DEB0
-C	0x0803E018
 C	0x0804A6A0
 C	0x0804A6BC
 C	0x0804A6C8

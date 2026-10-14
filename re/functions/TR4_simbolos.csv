@@ -1,0 +1,10 @@
+address,name,kind,comment
+0x080305E0,ActionFamily_StatusCheckFamily_Handler,func_thumb,[TR4] consumidor de fi+0xA6 (C); entradas AA 0x02/0x0C/0x1A e Z 0x02/0x10 apontam para ele; sem renome nesta rodada
+0x08023718,Fight_DispatchOnSubstateAA_AA_0B_SetStepCode1D,func_thumb,[TR4] confirmado: grava fi+0xA6=0x1D e fi+0xAA++; nao grava +0xB9
+0x08023415,Fight_DispatchOnSubstateAA_Z_0F_SetStepCode1C,func_thumb,[TR4] confirmado: grava fi+0xA6=0x1C (Scout, tec 36) e fi+0xAA++
+0x08022FF0,Fight_DispatchOnSubstateAA_Z,func_thumb,[TR4] despachante Z (tabela 0x083ADDEC[fi+0xAA]); usado pelo opcode 0x30
+0x0803447C,ActionScript_Op30_CallSubstateZ,func_thumb,[TR4] opcode 0x30 do roteiro de Scout (0x083C6AA2) chama Fight_DispatchOnSubstateAA_Z
+0x08030E54,Fight_DispatchOnSubstateAA_BR_31_RunStepCodeMessage,func_thumb,[TR4] tambem consome fi+0xA6 (Fight_RunSubstateDispatch) e faz GS++
+0x0801C0BC,Fight_RunSubstateDispatch,func_thumb,[TR4] confirmado: grava fi+0xA2=codigo e chama table 0x083AD580[fi+0xA1]
+0x0801AC24,Fight_TryUiActionByIndex,func_thumb,[TR4] confirmado: StateMachine_DispatchStep(0x083C6744[codigo]) (texto de mensagem)
+0x0802342C,Fight_DispatchOnSubstateAA_AA,func_thumb,[TR4] despachante AA (tabela 0x083ADE40[fi+0xAA]); usado pelo opcode 0x31
