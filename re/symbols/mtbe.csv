@@ -6,7 +6,7 @@ address,name,kind,count,comment
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
 0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
 0x02030000,SAVE_STAGING_EWRAM,data,,"[SV] [SV] buffer de staging do save (EWRAM), 0x1CC0 B (confirmado por literal)"
-0x03000440,gMessageCtx,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra (antes: gTextState)"
+0x03000440,ctx_team_screen,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra (antes: gTextState) (antes: gMessageCtx)"
 0x03000448,current_dialog_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x0300044C,current_character_in_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x0300045A,text_speed,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -32,8 +32,8 @@ address,name,kind,count,comment
 0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
 0x0300056F,gCurrentObjectSlot,label,,u8: slot de gObjectSlots em uso
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
-0x0300058C,just_pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
-0x03000590,gPlayerBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
+0x0300058C,keys_pressed_edge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: just_pressed_buttons)"
+0x03000590,battle_bot_blocks,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768] (antes: gPlayerBattleSideState)"
 0x03000591,battle_robot_1_medalID,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000594,battle_robot_1_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000595,battle_robot_1_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -82,7 +82,8 @@ address,name,kind,count,comment
 0x03001788,SAVE_OPT_A,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b0-1 (validado <3; nome nao confirmado)
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state
 0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x03001798,pressed_buttons_03001798,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798)"
+0x030017A0,team_records_9x8,label,,"[PS] [PS] time: 9 registros de 8 B [estado, genero, medalha, cabeca, braco D, braco E, pernas, indice]; confirmado pela troca"
 0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -90,6 +91,7 @@ address,name,kind,count,comment
 0x03001828,team_1_scout_score,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300182B,team_1_trap,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300182C,team_1_trap_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001864,team_preview_part_ids,label,,"[PS] [PS] 4 ids da previa do Medabot selecionado (cabeca, braco D, braco E, pernas)"
 0x03001882,DPAD_press,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001887,robot_doing_an_action,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001888,index_of_targetted_robot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -546,6 +548,7 @@ address,name,kind,count,comment
 0x08010B54,Battle_GaugeTickStep,func_thumb,,barra que conta ate alvo + musica 0xE/0xF; provavel
 0x08010BD0,Fight_ShowPostBattleTextForCharacter,func_thumb,,"[TX] GH-TX: mesmo padrao do PRE, com gTextPostBattleMessage[character_id] e StateMachine_DispatchStep 0x0803FB3C. Sem funcao no Ghidra; nome provavel"
 0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,,Simon/Rokusho: Post-battle reward handler keyed by gPostBattleModeFlags low nibble. Low nibble 0 runs the normal reward grant path; nonzero clears the mode byte and jumps directly to subroutine 0x3E.
+0x08010CCA,Fight_RewardAddsPartToInventory_Call,label,,[IN] [IN] chamada Inv_AddCountClamp99 no fim da recompensa de batalha
 0x08011344,Scene_InitBgAndLoadRecord,func_thumb,,reset de BG e cópia de registro de 4 bytes; provável (registro não identificado)
 0x08011500,Gfx_ResetBgLayersAndSong,func_thumb,,"pede musica 1, limpa tiles/slots e mapas BG0-BG3; provavel"
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
@@ -2616,6 +2619,7 @@ address,name,kind,count,comment
 0x0805CED0,Screen_FadeStepThenLoadObj,func_thumb,,provável: fade de 9 passos e carga de objeto no fim
 0x0805CF58,Shop_UpdateSlotAndDispatchState,func_thumb,,"[FL10] loja: destaque do slot, id de gShopItems ou 0x3F, StateMachine_DispatchStep (provável)"
 0x0805CFB4,Shop_ItemListInputStep,func_thumb,,"entrada da lista de itens da loja (paginas de 5, gShopItems); provavel"
+0x0805D36C,ItemListSwitch_Table,label,,[IN] [IN] ponto de tabela 0x28 entradas de despacho (pendente)
 0x0805D4A0,Slot_ActivateCursor,func_thumb,,[R3] ativa cursor de slot (provavel)
 0x0805D4E0,StateTable_WaitSubThenAdvance,func_thumb,,"[N2] [N2] tabela 0x08483634 idx 7: se StateMachine_DispatchSub != 0, ++0x0300137C (confirmado)"
 0x0805D4FC,Gfx_FadeOutThenClear,func_thumb,,"fade de saida das paletas, limpa REG_DISPCNT e tiles (provavel)"
@@ -3173,18 +3177,22 @@ address,name,kind,count,comment
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
 0x083AC2C8,menu_list,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
+0x083AC880,table_partsgrid_states,label,,[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas)
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
 0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]
 0x083ACA80,debug_menu_option_table,ptr,11,rotinas das 11 opcoes (debug_menu_subroutines a partir do indice 9)
 0x083ACAC0,StateHandlerTable_BAD8,data,,"[JT3] 34 ponteiros, idx byte 0x03000473; BE6C = +0x0C, D168 = +0x54"
+0x083ACAE0,table_partsbuild_states,label,,"[PS] [PS] tabela de estados da montagem (stride 0xC; coluna do meio = tick): linha0 PartsBuild_UpdateStatusPanel, linha6 PartsBuild_UpdateEditPanel"
 0x083ACB48,gTextProcessStrings,ptr,11,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]"
 0x083ACBCC,gTextProcessStrings3,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083AD080,Battle_FrameDispatchTable,data,,"[BT] tabela de 4+ ponteiros indexada por GS (usada por Battle_FrameDispatchOrExit); conteudo lido: 0x08012A20.., confirmado (ponteiros)"
+0x083AD0F0,table_medabot_screen_states,label,,[PS] [PS] tabela de estados da tela do Medabot (stride 4); entrada 9 = UpdateSelectedMedabotPreviewScreen
 0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA
 0x083AD190,Battle_StepFrameTable,data,,"[BT] tabela de modos; entrada 0 = Fight_StepBattleFrame, 8 = 0x08014548; quem indexa: LACUNA"
 0x083AD380,gSpecialityWeightTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas
 0x083AD470,gFightFallbackPriorityRows,data,,[AI] [GH-AI] 32 x 4 B na ROM; sorteadas por Fight_RandomizePriorityListSlot; valores nao batem com ids de peca (provavel nome)
+0x083AD524,cursor_cell_xy_table,data,,"[PS] [PS] 9 celulas x 2 B (x,y) do cursor 3x3 do Medabot selecionado"
 0x083AECD8,gFightSceneSteps,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado)
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
