@@ -1,0 +1,20 @@
+# address,name,kind,comment
+0x030018A8,fight_technique_script_id,data,F+0xA8 = id do roteiro (tecnica 0..59, medaforca 0x50+id); gravado em BR_14 (0x08030C68) e BR_49 (0x08031940); lido em LookupActionScriptByte/AdvanceCursor/ReadInlineArgs/WaitByteMatch/WaitChoiceByteMatch
+0x030018AB,fight_action_result,data,F+0xAB = resultado da acao (0 normal, 1/2 alternativos; nome) usado pelo opcode 0x03; gravadores em TA.md s3
+0x03000638,bot0_active_technique,data,B+0xA8 do bot 0 (bot base 0x03000590 + bot*0x100 + 0xA8); tecnica ativa do bot p/ efeitos; gravada por Op1B; bot k = 0x03000638 + k*0x100
+0x08034E94,Fight_LookupActionScriptByte,function,ROM[gTechniqueActionScriptPtrTable[F+0xA8] + F+0xBC] (roteiro)
+0x08027A04,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor,function,B+0xA8-4 <5 -> jump table; senao sprite e som 0x33
+0x08028512,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,function,B+0xA8-0x0C >0x1C -> efeito padrao; senao jump table de 29 variantes
+0x0802B0FC,Fight_DispatchOnSubstateAA_BE_LoadEffectGfx,function,carga de gfx do efeito; B+0xA8==0x1E escolhe variante; som 0x4C
+0x0802B1DA,Fight_DispatchOnSubstateAA_BE_SelectTargets,function,B+0xA8==0x1E marca alvo perna 'd' (+0xD2=1) senao 'j' (+0xD2=2)
+0x0803A4BA,ObjScript_Op1E_SpawnEffectSlot23PartPal,function,paleta: peca B+0xA7*0x18+0x49 se B+0xDD<4 senao B+0xA8+0x50
+0x08033F04,ActionScript_Op15_MarkStateFromDamageBelowThreshold,function,handler do opcode 0x15 (tabela 0x083AF1D4); corrige nome antigo Opcode1D
+0x08033F64,ActionScript_Op16_SetStateFromPartFlag1C,function,handler do opcode 0x16 (tabela 0x083AF1D8); corrige nome antigo Opcode1C
+0x0801D2BA,Fight_DispatchOnSubstateAA_A_2D_EndResult0,function,grava fight+0xAB = 0 (normal)
+0x0801D2D0,Fight_DispatchOnSubstateAA_A_2E_EndResult1,function,grava fight+0xAB = 1
+0x0801D2E6,Fight_DispatchOnSubstateAA_A_2F_EndResult2,function,grava fight+0xAB = 2
+0x0801D378,Fight_DispatchOnSubstateAA_B_03_EndResult1,function,grava fight+0xAB = 1
+0x0801D404,Fight_DispatchOnSubstateAA_C_03_EndResult1,function,grava fight+0xAB = 1
+0x080340F8,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,function,grava B+0xA8 (tecnica ativa do bot); funcao que contem o endereco
+0x08030C64,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,function,grava fight+0xA8 (id do roteiro) em 0x08030C68
+0x080318DE,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,function,grava fight+0xA8 em 0x08031940 (medaforca)
