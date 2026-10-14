@@ -30,8 +30,8 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_E_02_CopyBotBuffers(void)` (Ghidra: FUN_0801d738)
 - Passo: copia os dados do bot da vez para os buffers de trabalho e prepara a posição e a composição do objeto.
 - O que faz: `bot = bloco+0xDE - 1`. Copia 4 blocos de 0x40 bytes com `0x0803F63C`: um por par de argumentos
-  `((bot-1)*0x100 + 0x030042B0 + k*0x40, 0x03003470 + k*0x40)` para k = 0..3 (origem = 0x030042B0 - 0xE40/0xE00/0xDC0/0xD80;
-  a ordem dos argumentos dst/src é provável). Depois `Slot_ClearAttrMask(0x21, 4)`,
+  `((bot-1)*0x100 + 0x030042B0 + k*0x40, 0x03003470 + k*0x40)` para k = 0..3 (DC3: sentido SRC->DST, decompile 0x0801D738: origem = 1º argumento = (bot-1)*0x100 + 0x030042B0 + k*0x40, destino = 2º = 0x03003470 + k*0x40;
+  ordem confirmada, ver acima). Depois `Slot_ClearAttrMask(0x21, 4)`,
   `Fight_GetDisplayedPartIdsOrBrokenGlyphs(bot-1, bloco+0x64)`, `Sprite_WriteComposite4Objects(...)` com X/Y lidos de
   `0x03002C30 + bot*0x100 + 0x1642` e `+0x1644 - 4`, slot `bot*4+0x56`, e `FUN_08043240(bot*4+0x56, 8)`. Zera o byte
   `0x030004C4` (= `0x03000440 + 0x84`) e faz `+0xAA += 1`.

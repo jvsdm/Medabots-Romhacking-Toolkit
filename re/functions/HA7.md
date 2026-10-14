@@ -28,7 +28,7 @@ Transições "->" sem handler confirmado são inferidas pelo +1 dos handlers viz
 - `Fight_StepSlotTowardTarget(0x21)`; quando retorna 1 (chegou), fight+0xAA += 1. Próximo: 0x0B.
 - Confiança: confirmado (decompile lido; o nome é provável).
 ### 0x08024210 AE 0x0B: Fight_DispatchOnSubstateAA_AE_ResetBotGfx
-- Copia 4x 0x40 bytes do bot (0x880..0x940) via `FUN_0803f63c`; zera bytes do bot; `Slot_ClearAttrMask(0x22,4)`; mostra slot; sfx 0x34. Próximo: 0x0C.
+- Copia 4x 0x40 bytes de 0x880..0x940 para o bot (bot*0x100+0x1680..0x1740) via `FUN_0803f63c` (DC3: sentido SRC->DST, decompile 0x08024210); zera bytes do bot; `Slot_ClearAttrMask(0x22,4)`; mostra slot; sfx 0x34. Próximo: 0x0C.
 ### 0x080242F8 AE 0x0C: Fight_DispatchOnSubstateAA_AE_StepSlotAnim
 - Move cursor ±0x10 conforme +0xF8 e `FUN_08036ac4(0x21,0)`; anima 4 slots (índices bot*4+0x5A..0x5D). Ao terminar: esconde slot, sfx 0x41. Próximo: 0x0D.
 ### 0x08024488 AE 0x0D: Fight_DispatchOnSubstateAA_AE_SetupFourSlots

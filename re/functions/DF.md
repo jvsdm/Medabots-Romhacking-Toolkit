@@ -64,8 +64,8 @@ Status: PARCIAL (pendencias no fim do arquivo). Nada gravado no Ghidra. Endereç
   bot+0x48+0x18*k (k = fi+0xA7 = peca escolhida, bot = fi+0x87): +0x48 <- fi+0x11C; +0x49 (tecnica) <- fi+0x... (DAT_0801B4B8);
   +0x4D, +0x4E, +0x4F, +0x54 e +0x5F (id da peca) <- campos do fi. Depois Fight_RefreshDisplayedPartSpritesForActiveBots e
   Fight_PlaceActiveBotObjects. NAO grava +0x4C (max) nem +0x59 (atual).
-- Fight_CopyBotSlotRecords 0x08014EE8 (CONFIRMADO): copia o bloco do bot (0x40 B em bot+0x00..0x3F) de volta para o registro
-  da medalha no roster (0x03000BE0 + slot*0x40) — sentido bloco -> save (escrita NO ROSTER, nao no bloco).
+- Fight_CopyBotSlotRecords 0x08014EE8 (CONFIRMADO): copia 0x40 B do registro de medalha do roster para o bloco do bot (bot+0x00..0x3F)
+  (DC3: sentido SRC->DST; origem = 0x03000BE0 + slot*0x40, destino = bot+0x00).
 - Fight_InitializeBotFromTemplate 0x080150FC (inimigos, EN.md §5): escreve bot+0x00..0x09, cabeca em +0x0A (14 B), especialidade
   em +0x18..+0x27. Nao escreve +0x48..+0x5F. Quem preenche +0x48..+0x5F dos inimigos: AINDA PENDENTE.
 - Formato do registro de peca (0x18 B, base bot+0x48+0x18*k), somando os decompiles:
@@ -73,14 +73,14 @@ Status: PARCIAL (pendencias no fim do arquivo). Nada gravado no Ghidra. Endereç
   +0x0C (0x54) campo; +0x11 (0x59) armadura ATUAL (0 = quebrada); +0x17 (0x5F) id da peca.
   Nota: RW.md dizia "+0x13 do registro que comeca em +0x4C" = 0x5F; e o mesmo (0x5F - 0x4C = 0x13).
 - CORRECAO: +0x41 e campo de fi (fi+0x41+i), nao do bot (Fight_UpdateBotActiveFlagCount e Fight_CopyBotIdentityRecords usam fi como base).
-- Fight_CopyBotIdentityRecords 0x08014F44 (CONFIRMADO): copia bot+0x00..0x07 (cabecalho de identidade, 8 B) para a tabela de 8 B
-  indexada pelo id do slot de fi+0x41+i.
+- Fight_CopyBotIdentityRecords 0x08014F44 (CONFIRMADO): copia o registro do time (0x030017A0 + t*8, 8 B; t = (fi+0x41+i)&0xF) para bot+0x40..+0x47
+  (DC3: sentido SRC->DST; ver PB.md, passo 3.3).
 
 ## TABELA DO BLOCO DO BOT 0x03000590 + bot*0x100 (Ghidra; slots 0..2 jogador, 3..5 inimigo)
 Legenda: C = confirmado no decompile/literal; P = provavel; A = aberto (quem escreve nao achado).
 | Offset | Campo | Quem escreve | Quem le | Conf. |
 |---|---|---|---|---|
-| +0x00 | cabecalho de identidade (0x80 nos inimigos) | Fight_InitializeBotFromTemplate 0x080150FC | Fight_CopyBotIdentityRecords 0x08014F44 | C |
+| +0x00 | cabecalho de identidade (0x80 nos inimigos) | Fight_InitializeBotFromTemplate 0x080150FC | - (DC3: Fight_CopyBotIdentityRecords nao le +0x00; copia o time para +0x40..+0x47) | C |
 | +0x01, +0x04, +0x06, +0x07 | bytes de medalha (gMedals[rec+8]) | InitializeBotFromTemplate | - | C |
 | +0x05 | nivel do bot (rec+9) | InitializeBotFromTemplate | Fight_AwardPartExperience 0x080127DC, FL3 (media) | C |
 | +0x09 | rec+0x0E (uso aberto) | InitializeBotFromTemplate | - | C (escrita) / A (leitura) |

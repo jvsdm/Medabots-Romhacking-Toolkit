@@ -38,8 +38,8 @@ Cadeia em `Fight_InitializeEnemyBotStates` 0x080150C0 (count = fi+0x5B), para ca
    - **+0x59+0x18k (armadura ATUAL) <- +0x4C+0x18k** (copia o maximo no inicio);
    - **+0x5F+0x18k (id da peca) <- B+0x43+k**.
    Para o jogador, `Fight_RefreshBotPartRecords` 0x08014EC8 chama `Fight_InitializePartStates(0, n)` depois de
-   `Fight_CopyBotSlotRecords` e `Fight_CopyBotIdentityRecords`. A origem de B+0x43..+0x46 do jogador (roster -> bloco)
-   nao foi achada nesta rodada.
+   `Fight_CopyBotSlotRecords` e `Fight_CopyBotIdentityRecords`. A origem de B+0x43..+0x46 do jogador (DC3: time -> bloco, em Fight_CopyBotIdentityRecords, SRC->DST)
+   foi achada depois (ver PB.md, passo 3.3).
 Correcao ao DF.md: +0x4C NAO e "sem escritor": e escrito por `Fight_InitializePartStates` (copia de gPartStats+4).
 
 ## Passo 2 - derrota de fato (CONFIRMADO no decompile)
@@ -62,7 +62,7 @@ Correcao ao DF.md: +0x4C NAO e "sem escritor": e escrito por `Fight_InitializePa
   (0x080121CC) + Inv_AddCountClamp99 + GS++; senao limpa o byte e GS = 0x3E (CONFIRMADO).
 
 ## Pendencias
-1. Origem de B+0x43..+0x46 (ids de peca) e de B+0x41..+0x42 do JOGADOR (roster -> bloco no inicio da luta): nao achada.
+1. Origem de B+0x43..+0x46 (ids de peca) e de B+0x41..+0x42 do JOGADOR (DC3: time -> bloco no inicio da luta, via Fight_CopyBotIdentityRecords, SRC->DST; ver PB.md passo 3.3).
 2. Varredura limitada ao literal 0x03000590: outros acessos (base 0x03000890 do inimigo por literal proprio) nao cobertos.
    Para confirmar que so K_00 pode gravar +0xBA = 2 / +0x40 = 0, varrer com os outros literais de base.
 3. Se a derrota do lider bloqueia a sequencia depois de BR_50 (fade, GS e tela de resultado): so se conhece o GS++ comum;

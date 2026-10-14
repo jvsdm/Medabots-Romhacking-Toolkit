@@ -21,18 +21,18 @@ Nada gravado no Ghidra (so leitura). Simbolos em `PB_simbolos.csv`.
   0x08014F3C = **0x03000BA0** (roster base - 0x40; o indice vem de Slot_FindByIdPlus1, que devolve indice+1); 0x08014F40 = 0x03000590 (blocos).
 - `Fight_RefreshBotPartRecords` 0x08014EC8: chama, nesta ordem:
   1. `Fight_CopyBotSlotRecords()`;
-  2. `Fight_CopyBotIdentityRecords()` (DF2: copia bot+0x00..0x07 para tabela de 8 B por id);
+  2. `Fight_CopyBotIdentityRecords()` (DF2 dizia 'copia bot+0x00..0x07 para tabela'; ERRADO, DC3: copia time -> bloco+0x40..0x47);
   3. `Fight_InitializePartStates(0, fi+0x5A)` (contagem = fi+0x5A = bots ativos do jogador).
 - `Fight_CopyBotSlotRecords` 0x08014EE8 (CONFIRMADO): para i = 0 .. fi+0x5A - 1:
   - `t = (fi+0x41+i) & 0xF`; `medalha = time[t*8 + 2]` (0x030017A0 + t*8 + 2);
   - `slot = Slot_FindByIdPlus1(medalha)` (indice+1 do registro de medalha no roster);
   - `Mem_CopyBytes(0x03000BA0 + slot*0x40, 0x03000590 + i*0x100, 0x40)`.
-  => **sentido BLOCO -> ROSTER (save)**: os 0x40 B do bloco do bot i voltam para o registro de medalha do roster (0x03000BE0 + idx*0x40).
-  Efeito no save: grava no registro de medalha o que estiver no bloco (bot+0x00..0x3F): cabecalho (+0x01,+0x04..+0x07),
+  => **sentido ROSTER -> BLOCO** (DC3: sentido SRC->DST; a leitura antiga 'bloco -> roster' estava invertida): os 0x40 B do registro de medalha do roster (0x03000BE0 + idx*0x40) entram em bot+0x00..0x3F.
+  Efeito: o bloco do bot recebe do registro de medalha (bot+0x00..0x3F): cabecalho (+0x01,+0x04..+0x07),
   nivel (+0x05), cabeca e especialidade (+0x0A..+0x27), pecas (+0x48..+0x5F), status (+0xBA), etc. Ou seja, o bloco
-  e a copia de trabalho e o roster recebe o estado de volta (pendente: ver "Pendente" sobre quando o registro muda).
+  e a copia de trabalho; nesta funcao o roster nao recebe nada de volta (pendente: ver "Pendente" sobre quando o registro muda).
 - Consequencia: fi+0x41+i = indice do time (0..8) do bot i do jogador (teampick) — provavel, o escritor ainda nao foi achado.
-- Confianca: confirmado (leitura de Mem_CopyBytes(dst, src, n); literais lidos). Slot_FindByIdPlus1 = indice+1: provavel (pelo literal 0x03000BA0).
+- Confianca: confirmado (Mem_CopyBytes(src, dst, n), decompile 0x0803F63C; literais lidos; DC3). Slot_FindByIdPlus1 = indice+1: provavel (pelo literal 0x03000BA0).
 
 ## CORRECAO DE SENTIDO (passo 3): Mem_CopyBytes(SRC, DST, n)
 - `Mem_CopyBytes` 0x0803F63C (decompile): `*param_2 = *param_1` -> **param_1 = origem, param_2 = destino**.

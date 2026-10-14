@@ -45,7 +45,7 @@ inferido pelo código de chamada e pelas escritas, sem confirmar o uso no fluxo 
 
 ## 0x08043E54 Obj_CopySlot8Bytes
 - Assinatura: `void f(void)`
-- O que faz: copia 8 bytes do campo +0x74 do objeto (DAT_08043E70) para a tabela em `DAT_08043E74 + byte(+0x38) * 8`, via FUN_0803F63C (cópia de bytes).
+- O que faz: copia 8 bytes da tabela em `DAT_08043E74 + byte(+0x38) * 8` para o campo +0x74 do objeto (DAT_08043E70) (DC3: sentido SRC->DST, decompile 0x08043E54), via FUN_0803F63C (cópia de bytes).
 - Chama: FUN_0803F63C. Chamada por: não lido.
 - Memória: RAM do objeto (+0x38, +0x74..+0x7B) e tabela de 8 bytes.
 - Para o Lua: não precisa.
