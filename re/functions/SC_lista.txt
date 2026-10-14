@@ -1,0 +1,15 @@
+# Código de comandos de cena sem função própria no Ghidra (SC). Endereço, o que é, situação.
+0x08050D08	passo 0 de Event_RunSceneCommandSequence (corpo; disasm 0x08050D08..0x08050D36)	lido, sem nome próprio (SceneCommandStep0_ResetTransition)
+0x08050D40	passo 1 (corpo; 0x08050D40..0x08050D50, e 0x08050D52..0x08050D70)	lido, sem nome próprio (SceneCommandStep1_WaitAndStartFlow)
+0x08050D72	passo 2 (corpo longo; 0x08050D72..0x08050F26)	lido, sem nome próprio (SceneCommandStep2_LoadScene)
+0x08050F38	passo 3 (avanço)	lido (SceneCommandStep3_Advance)
+0x08050F40	passo 4 (espera fim de transição)	lido (SceneCommandStep4_WaitTransitionEnd)
+0x08050EF0..0x08050F22	alvos do switch por cmd (mov r0,#código; b 0x08050F1A)	lido; tabela 0x08050E6C
+0x08050F2A	avanço comum (incrementa +0xB do passo; usado por 21 cmds sem política)	lido
+0x080479A0	miolo de GameState_StartFlowByCommand (caso 0x20 e 0x21); o Ghidra diz "No function found"	lido como miolo
+0x08050E6C	tabela de 33 entradas (switch por cmd)	lido (SceneCommandCodeTable)
+0x08050CF4	tabela de 5 entradas (passos)	lido (SceneCommandStepTable)
+0x080505FC	Overworld_BuildEncounterNpcSnapshot: função existe no mtbe, não foi lida neste lote	pendente (só chamada)
+0x08049E08	Overworld_RunScreenTransitionStep: função existe, não lida neste lote	pendente (só chamada)
+0x08049D18	Overworld_StartScreenTransitionEffect: função existe, não lida neste lote	pendente (só chamada)
+0x08050BC8	Map_ModeDispatch: função existe, não lida neste lote	pendente (só chamada)

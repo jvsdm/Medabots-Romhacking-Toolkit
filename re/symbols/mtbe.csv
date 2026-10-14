@@ -30,7 +30,9 @@ address,name,kind,count,comment
 0x03000493,selected_tinpet_has_all_parts,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300049A,selected_tinpet_selected_part,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300049C,gCtx_TeamWinner,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf
-0x030004C9,gDeterministicRandom,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1]"
+0x030004C4,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
+0x030004C6,gCtx_WaitTimer,label,,[FI] timer de espera u16 conf
+0x030004C9,gCtx_FreeFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1] (antes: gDeterministicRandom)"
 0x030004CC,random_number,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004CD,gDeterministicRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004CE,menu_selected_item,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -39,6 +41,7 @@ address,name,kind,count,comment
 0x030004D9,selected_tinpet_left_arm,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004DA,selected_tinpet_right_arm,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004DB,selected_tinpet_legs,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004DC,gCtx_TeamWinner,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf
 0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
 0x03000536,IWRAM_PlayerSpecialtyBase,func_thumb,,[DM] [aberto] 7 bytes 0x03000537..0x0300053D = 0x03000440+0xF7..0xFD; origem nao achada; usados por Medabot_SpawnFromRecord
@@ -171,6 +174,7 @@ address,name,kind,count,comment
 0x030019A0,gFight_BarValue,label,,[FI] barra 0..0x60 provavel
 0x030019AE,gFight_Flag1AE,label,,[FI] flag provavel
 0x03001C00,keys_released,label,,[MN] [MN] u16: teclas soltas neste quadro (prev & ~held); confirmado (get_player_inputs)
+0x03002040,gFight_GfxHalfword,label,,[FI] halfword gfx provavel
 0x03002410,gFrameFlagClear,label,,[MN] [MN] byte zerado por AgbMain a cada quadro antes de get_player_inputs; confirmado escrita; sem funcao clara
 0x03002418,keys_repeat_timer,label,,"[MN] [MN] byte: contador da repeticao (16 no aperto novo, depois 3..0); confirmado"
 0x03002420,gShopShopId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: current_shop) (antes: gFlowParam)"
@@ -229,6 +233,7 @@ address,name,kind,count,comment
 0x03006438,ikki_walk_cooldown,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006439,ikki_look_dir,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643B,gCurrentMapSceneVariant,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300643C,KeyItem_ModeByte,data,,"[KI] [KI] E+0xC5C: modo do uso de key item (3,4,5,8,6,7,0x0D); indice em 0x083D2A30 (Move_Player, HE1)"
 0x0300643D,gOverworldEventModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643E,gOverworldEventModeFlagsBackup,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643F,gEncounterSuppressB,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável) (antes: gEventRunSceneStepFlag)
@@ -242,7 +247,7 @@ address,name,kind,count,comment
 0x0300646C,gCurrentEventAuxWord646C,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x0300646E,gCurrentEventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
 0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
-0x03006472,gCurrentEventOpcodeByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006472,gEvt_ContinuationIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeByte)"
 0x03006473,gEvt_SubState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate) (antes: gCurrentEventSubstate)"
 0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006484,gTrackedObjectSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32]"
@@ -1695,7 +1700,7 @@ address,name,kind,count,comment
 0x08033754,Fight_ValidateEnemyHasPartWithSpeciality23,func_thumb,,Simon/Rokusho
 0x080337CC,Fight_ValidateAllyHasTechnique4Part,func_thumb,,Simon/Rokusho
 0x08033840,Fight_RunActionScriptLoop,func_thumb,,"Simon/Rokusho: Run the action-script interpreter loop. Repeatedly reads opcodes from the current action script, skips high-bit-prefixed control bytes, and dispatches via gActionScriptOpcodeHandlerTable until the current script marks completion."
-0x080338DC,ActionScript_Op01_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos
+0x080338DC,ActionScript_Op01_EndSetsSceneAndGs,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos (antes: ActionScript_Op01_pendente)
 0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,,Simon/Rokusho
 0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,,Simon/Rokusho
 0x080339F4,ActionScript_Op04_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
@@ -1730,43 +1735,43 @@ address,name,kind,count,comment
 0x08034728,ActionScript_Op43_SumSideField4,func_thumb,,[AS2] GH-AS2: opcode 0x43 soma campo +4 dos 3 bots do lado em u16; provavel
 0x0803476C,ActionScript_Op44_SideSpritesAP,func_thumb,,[AS2] GH-AS2: opcode 0x44 -> side sprites + ..._AP
 0x080347AC,ActionScript_Op45_IncrementUsageCounter,func_thumb,,[AS2] GH-AS2: opcode 0x45 -> Fight_IncrementActionUsageCounter
-0x080347BC,ActionScript_Op46_SumPartDamageOfTargetBot,func_thumb,,[AS2] GH-AS2: opcode 0x46 soma (armadura max - atual) das 4 pecas do bot indicado; provavel
+0x080347BC,ActionScript_Op46_SumArmorMaxMinusCur,func_thumb,,[AS2] GH-AS2: opcode 0x46 soma (armadura max - atual) das 4 pecas do bot indicado; provavel (antes: ActionScript_Op46_SumPartDamageOfTargetBot)
 0x080347F8,ActionScript_Op47_SideSpritesCopyTarget,func_thumb,,[AS2] GH-AS2: opcode 0x47 side sprites + Fight_CopySelectedTargetToFightInfo; cauda pendente
 0x080348D0,ActionScript_Op48_SideSpritesAQ,func_thumb,,[AS2] GH-AS2: opcode 0x48 -> side sprites + ..._AQ
-0x08034910,ActionScript_Op49_HalfArmorOfActiveBot,func_thumb,,[AS2] GH-AS2: opcode 0x49 fight+0xD6+2k = armadura_k>>1 do bot ativo; fight+0xEC += metades; confirmado disasm
+0x08034910,ActionScript_Op49_HalfArmorSelfBot,func_thumb,,[AS2] GH-AS2: opcode 0x49 fight+0xD6+2k = armadura_k>>1 do bot ativo; fight+0xEC += metades; confirmado disasm (antes: ActionScript_Op49_HalfArmorOfActiveBot)
 0x0803496C,ActionScript_Op4A_AllySideLoop,func_thumb,,soma 10 em ctx+0x8C por peca zerada do lado; semantica do 10 chute; provavel (antes: Fight_AccumulatePartBonusForSide)
 0x080349D8,ActionScript_Op4B_FindBotWithPartAndPickPart,func_thumb,,Simon/Rokusho: Choose a target bot/part for reaction-driven targeting. Prefer an opponent that currently advertises a usable reaction source; otherwise fall back to a random active opponent and random target part. Writes selected_target_bot_id and selected_target_part_id. (antes: Fight_SelectReactionTargetFromOpponentState)
-0x08034A68,ActionScript_Op4C_CopyPartArmorToEC,func_thumb,,[confirmado] le halfword bot+0x59+0x18*parte para ctx+0xEC; chama Fight_AdvanceActionScriptCursor (antes: Fight_CopyBotPartWordAndAdvance)
+0x08034A68,ActionScript_Op4C_ArmorOfTargetPart,func_thumb,,[confirmado] le halfword bot+0x59+0x18*parte para ctx+0xEC; chama Fight_AdvanceActionScriptCursor (antes: Fight_CopyBotPartWordAndAdvance) (antes: ActionScript_Op4C_CopyPartArmorToEC)
 0x08034AA0,Fight_RollDamageFromTwoDice,func_thumb,,[AS2] GH-AS2: opcode 0x4D chama randbyte duas vezes; provavel (antes: ActionScript_Op4D_RandomChance)
-0x08034AF4,ActionScript_Op4E_FindActiveBotWithGroupAndPickPart,func_thumb,,provável: escolhe alvo adversário e parte; avança script de ação (antes: Fight_PickOpponentTargetStep)
+0x08034AF4,ActionScript_Op4E_FindBotGroupRandom,func_thumb,,provável: escolhe alvo adversário e parte; avança script de ação (antes: Fight_PickOpponentTargetStep) (antes: ActionScript_Op4E_FindActiveBotWithGroupAndPickPart)
 0x08034B68,ActionScript_Op4F_FindActiveBotWithGroup,func_thumb,,"[FL10] +0x60 = lado adversario; FUN_08037830(base,side); 0xFF -> +0xEC=10; avanca cursor do roteiro (provável) (antes: Fight_SetOpponentBaseAndAdvanceScript)"
 0x08034BA0,ActionScript_Op50_CallAR,func_thumb,,[AS2] GH-AS2: opcode 0x50 (AR) dano em peca aleatoria dos adversarios; ver HN2.md
-0x08034BBC,ActionScript_Op51_CallAS,func_thumb,,[AS2] GH-AS2: opcode 0x51 (AS) estado por tecnica no proprio bot; ver HN2.md
-0x08034BD8,ActionScript_Op52_CallAT,func_thumb,,[AS2] GH-AS2: opcode 0x52 (AT) bonus de suporte do time; ver HN2.md
-0x08034BF4,ActionScript_Op53_CallAU,func_thumb,,[AS2] GH-AS2: opcode 0x53 (AU) marca de reacao no proprio bot; ver HN2.md
-0x08034C10,ActionScript_Op54_CallAV,func_thumb,,[AS2] GH-AS2: opcode 0x54 (AV) estado em todos os adversarios; ver HN2.md
-0x08034C2C,ActionScript_Op55_CallAW,func_thumb,,"[AS2] GH-AS2: opcode 0x55 -> Fight_DispatchOnSubstateAA_AW (0x08028C40); time, protecao contra status (nota)"
-0x08034C48,ActionScript_Op56_CallAX,func_thumb,,[AS2] GH-AS2: opcode 0x56 -> Fight_DispatchOnSubstateAA_AX (0x080294B4); time (nota)
-0x08034C64,ActionScript_Op57_CallAY,func_thumb,,"[AS2] GH-AS2: opcode 0x57 -> Fight_DispatchOnSubstateAA_AY (0x08029840); time, reparo de armadura (nota)"
-0x08034C80,ActionScript_Op58_CallAZ,func_thumb,,"[AS2] GH-AS2: opcode 0x58 -> Fight_DispatchOnSubstateAA_AZ (0x08029E0C); time, restaurar pecas (nota)"
-0x08034C9C,ActionScript_Op59_CallBA,func_thumb,,"[AS2] GH-AS2: opcode 0x59 -> Fight_DispatchOnSubstateAA_BA (0x0802A0E8); time, gauge (nota)"
-0x08034CB8,ActionScript_Op5A_CallBB,func_thumb,,[AS2] GH-AS2: opcode 0x5A -> Fight_DispatchOnSubstateAA_BB (0x0802A6AC); tecnica sem dano (nota)
-0x08034CD4,ActionScript_Op5B_CallBC,func_thumb,,[AS2] GH-AS2: opcode 0x5B -> Fight_DispatchOnSubstateAA_BC (0x0802AAD0)
-0x08034CF0,ActionScript_Op5C_CallBD,func_thumb,,[AS2] GH-AS2: opcode 0x5C -> Fight_DispatchOnSubstateAA_BD (0x0802ACCC)
-0x08034D0C,ActionScript_Op5D_CallBE,func_thumb,,[AS2] GH-AS2: opcode 0x5D -> Fight_DispatchOnSubstateAA_BE (0x0802B000)
-0x08034D28,ActionScript_Op5E_CallBF,func_thumb,,[AS2] GH-AS2: opcode 0x5E -> Fight_DispatchOnSubstateAA_BF (0x0802B7E8)
-0x08034D44,ActionScript_Op5F_CallBG,func_thumb,,[AS2] GH-AS2: opcode 0x5F -> Fight_DispatchOnSubstateAA_BG (0x0802BD6C)
-0x08034D60,ActionScript_Op60_CallBH,func_thumb,,[AS2] GH-AS2: opcode 0x60 -> Fight_DispatchOnSubstateAA_BH (0x0802C2AC)
-0x08034D7C,ActionScript_Op61_CallBI,func_thumb,,[AS2] GH-AS2: opcode 0x61 -> Fight_DispatchOnSubstateAA_BI (0x0802C644)
-0x08034D98,ActionScript_Op62_CallBJ,func_thumb,,[AS2] GH-AS2: opcode 0x62 -> Fight_DispatchOnSubstateAA_BJ (0x0802CBE8)
-0x08034DB4,ActionScript_Op63_CallBK,func_thumb,,[AS2] GH-AS2: opcode 0x63 -> Fight_DispatchOnSubstateAA_BK (0x0802D688)
-0x08034DD0,ActionScript_Op64_CallBL,func_thumb,,[AS2] GH-AS2: opcode 0x64 -> Fight_DispatchOnSubstateAA_BL (0x0802DCB4)
-0x08034DEC,ActionScript_Op65_CallBM,func_thumb,,[AS2] GH-AS2: opcode 0x65 -> Fight_DispatchOnSubstateAA_BM (0x0802E424)
-0x08034E08,ActionScript_Op66_CallBN,func_thumb,,[AS2] GH-AS2: opcode 0x66 -> Fight_DispatchOnSubstateAA_BN (0x0802EBC0)
-0x08034E24,ActionScript_Op67_CallBO,func_thumb,,[AS2] GH-AS2: opcode 0x67 -> Fight_DispatchOnSubstateAA_BO (0x0802F030)
-0x08034E40,ActionScript_Op68_CallBP,func_thumb,,[AS2] GH-AS2: opcode 0x68 -> Fight_DispatchOnSubstateAA_BP (0x0802F628)
-0x08034E5C,ActionScript_Op69_CallBQ,func_thumb,,[AS2] GH-AS2: opcode 0x69 -> Fight_DispatchOnSubstateAA_BQ (0x0802F990)
-0x08034E78,ActionScript_Op6A_CallBR,func_thumb,,[AS2] GH-AS2: opcode 0x6A -> Fight_DispatchOnSubstateAA_BR (0x0802FE50)
+0x08034BBC,ActionScript_Op51_StateByTechniqueSelf,func_thumb,,[AS2] GH-AS2: opcode 0x51 (AS) estado por tecnica no proprio bot; ver HN2.md (antes: ActionScript_Op51_CallAS)
+0x08034BD8,ActionScript_Op52_TeamSupportBonus,func_thumb,,[AS2] GH-AS2: opcode 0x52 (AT) bonus de suporte do time; ver HN2.md (antes: ActionScript_Op52_CallAT)
+0x08034BF4,ActionScript_Op53_ReactionMarkSelf,func_thumb,,[AS2] GH-AS2: opcode 0x53 (AU) marca de reacao no proprio bot; ver HN2.md (antes: ActionScript_Op53_CallAU)
+0x08034C10,ActionScript_Op54_StateAllOpponents,func_thumb,,[AS2] GH-AS2: opcode 0x54 (AV) estado em todos os adversarios; ver HN2.md (antes: ActionScript_Op54_CallAV)
+0x08034C2C,ActionScript_Op55_TeamProtectStatus,func_thumb,,"[AS2] GH-AS2: opcode 0x55 -> Fight_DispatchOnSubstateAA_AW (0x08028C40); time, protecao contra status (nota) (antes: ActionScript_Op55_CallAW)"
+0x08034C48,ActionScript_Op56_TeamHeal,func_thumb,,[AS2] GH-AS2: opcode 0x56 -> Fight_DispatchOnSubstateAA_AX (0x080294B4); time (nota) (antes: ActionScript_Op56_CallAX)
+0x08034C64,ActionScript_Op57_TeamRepairArmor,func_thumb,,"[AS2] GH-AS2: opcode 0x57 -> Fight_DispatchOnSubstateAA_AY (0x08029840); time, reparo de armadura (nota) (antes: ActionScript_Op57_CallAY)"
+0x08034C80,ActionScript_Op58_TeamRestoreParts,func_thumb,,"[AS2] GH-AS2: opcode 0x58 -> Fight_DispatchOnSubstateAA_AZ (0x08029E0C); time, restaurar pecas (nota) (antes: ActionScript_Op58_CallAZ)"
+0x08034C9C,ActionScript_Op59_TeamGauge,func_thumb,,"[AS2] GH-AS2: opcode 0x59 -> Fight_DispatchOnSubstateAA_BA (0x0802A0E8); time, gauge (nota) (antes: ActionScript_Op59_CallBA)"
+0x08034CB8,ActionScript_Op5A_TechniqueNoDamage,func_thumb,,[AS2] GH-AS2: opcode 0x5A -> Fight_DispatchOnSubstateAA_BB (0x0802A6AC); tecnica sem dano (nota) (antes: ActionScript_Op5A_CallBB)
+0x08034CD4,ActionScript_Op5B_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x5B -> Fight_DispatchOnSubstateAA_BC (0x0802AAD0) (antes: ActionScript_Op5B_CallBC)
+0x08034CF0,ActionScript_Op5C_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x5C -> Fight_DispatchOnSubstateAA_BD (0x0802ACCC) (antes: ActionScript_Op5C_CallBD)
+0x08034D0C,ActionScript_Op5D_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x5D -> Fight_DispatchOnSubstateAA_BE (0x0802B000) (antes: ActionScript_Op5D_CallBE)
+0x08034D28,ActionScript_Op5E_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x5E -> Fight_DispatchOnSubstateAA_BF (0x0802B7E8) (antes: ActionScript_Op5E_CallBF)
+0x08034D44,ActionScript_Op5F_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x5F -> Fight_DispatchOnSubstateAA_BG (0x0802BD6C) (antes: ActionScript_Op5F_CallBG)
+0x08034D60,ActionScript_Op60_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x60 -> Fight_DispatchOnSubstateAA_BH (0x0802C2AC) (antes: ActionScript_Op60_CallBH)
+0x08034D7C,ActionScript_Op61_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x61 -> Fight_DispatchOnSubstateAA_BI (0x0802C644) (antes: ActionScript_Op61_CallBI)
+0x08034D98,ActionScript_Op62_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x62 -> Fight_DispatchOnSubstateAA_BJ (0x0802CBE8) (antes: ActionScript_Op62_CallBJ)
+0x08034DB4,ActionScript_Op63_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x63 -> Fight_DispatchOnSubstateAA_BK (0x0802D688) (antes: ActionScript_Op63_CallBK)
+0x08034DD0,ActionScript_Op64_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x64 -> Fight_DispatchOnSubstateAA_BL (0x0802DCB4) (antes: ActionScript_Op64_CallBL)
+0x08034DEC,ActionScript_Op65_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x65 -> Fight_DispatchOnSubstateAA_BM (0x0802E424) (antes: ActionScript_Op65_CallBM)
+0x08034E08,ActionScript_Op66_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x66 -> Fight_DispatchOnSubstateAA_BN (0x0802EBC0) (antes: ActionScript_Op66_CallBN)
+0x08034E24,ActionScript_Op67_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x67 -> Fight_DispatchOnSubstateAA_BO (0x0802F030) (antes: ActionScript_Op67_CallBO)
+0x08034E40,ActionScript_Op68_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x68 -> Fight_DispatchOnSubstateAA_BP (0x0802F628) (antes: ActionScript_Op68_CallBP)
+0x08034E5C,ActionScript_Op69_pendente,func_thumb,,[AS2] GH-AS2: opcode 0x69 -> Fight_DispatchOnSubstateAA_BQ (0x0802F990) (antes: ActionScript_Op69_CallBQ)
+0x08034E78,ActionScript_Op6A_BR,func_thumb,,[AS2] GH-AS2: opcode 0x6A -> Fight_DispatchOnSubstateAA_BR (0x0802FE50) (antes: ActionScript_Op6A_CallBR)
 0x08034E94,Fight_LookupActionScriptByte,func_thumb,,[TQ] le byte do roteiro = ROM[ptr(0x083C6CA8)[F+0xA8] + F+0xBC]; era FUN_08034e94 (chute FN2 do GH-AS2); GH-TQ
 0x08034EB8,Fight_ReadActionScriptInlineArgs,func_thumb,,Simon/Rokusho: Decode the current action-script opcode's inline argument payload into fight_information.action_script_inline_args[0..].
 0x08034F08,Fight_AdvanceActionScriptCursor,func_thumb,,Simon/Rokusho: Advance fight_information.action_script_cursor past the current opcode byte and its inline argument payload length. Also clears the action-script repeat/continue byte at +0xAA. (antes: Fight_AdvanceActionScriptCursor) (antes: ActionScript_Advance)
@@ -1823,6 +1828,7 @@ address,name,kind,count,comment
 0x08036120,FightPreview_LoadDisplayedPartIdsForSide,func_thumb,,Simon/Rokusho: Load the displayed part ids or broken-part glyph ids for the requested preview side into fight_information. Which bot is sampled depends on preview_orientation_flags and whether a mirrored/follow-up presentation flag is active.
 0x080361A8,FightPreview_ResetSequenceStepFlags,func_thumb,,Simon/Rokusho: Reset the left and right preview step-flag bytes in fight_information.preview_sequence_state to 0x29 before beginning a fresh side-preview sequence.
 0x080361C4,FightPreview_AdvanceLeftSideSequenceStep,func_thumb,,Simon/Rokusho
+0x080361F6,FightPreview_AdvanceLeftSideSequenceStep,func_thumb,,"[AN] GH-AN: MotionPlayStep(0, fight+0x112, fight+0x67); bit 0x80 = tipo concluido"
 0x08036218,FightPreview_AdvanceRightSideSequenceStep,func_thumb,,Simon/Rokusho
 0x08036270,Fight_IncrementActionUsageCounter,func_thumb,,Simon/Rokusho: Increment the action usage counter for the currently active action entry in fight_information. Used after a successful action base step. (antes: Fight_IncrementActionUsageCounter_08036270)
 0x0803628C,Fight_AddMedaforceChargeFromAction,func_thumb,,Simon/Rokusho: Add Medaforce charge/token progress for the acting bot after a successful action. Uses a larger gain when the relevant battle-status bit is set and clamps the total at 0x50.
@@ -2265,6 +2271,7 @@ address,name,kind,count,comment
 0x08048888,Map_ResetObjectRenderSlot,func_thumb,,Simon/Rokusho
 0x080488AC,Map_CountDecimalDigits,func_thumb,,[R3] numero de digitos decimais de n
 0x080488E8,Map_FormatDecimalDigits,func_thumb,,[R3] extrai digitos decimais de n com zeros a esquerda
+0x08048960,KeyItem_CanUseHere,func_thumb,,"[KI] [KI] era FUN_08048960 (nao e batalha). Switch no id do key item. id 0: E+0xC5D bit 0x20 set -> 3, senao se gMapArea[mapa]==0x0A -> 2, senao 1. ids 1,5,C,D,13h,27h,28h: E+0xC5D bit0 set -> 3; senao E+0xC5C-1 > 1 -> 1 e senao 4. Outros: 0. Literais: E=0x030057E0, mapa=0x03005FDE"
 0x08048B70,Fixed_Mul88,func_thumb,,[R3] (a*b)>>8 com arredondamento para zero (8.8)
 0x08048BA0,Fixed_ReciprocalQ16,func_thumb,,[R3] 0x10000 / a
 0x08048BB8,Map_ResetAffineScaleBlock,func_thumb,,[FR3] [FR3] zera bloco afim e escala 0x100 (identidade); chamada por Map_ResetRenderAffineState 0x08049318 (provavel)
@@ -2740,7 +2747,9 @@ address,name,kind,count,comment
 0x0805D3C0,KeyItemBag_Case_Id13,label,,[IN2] [IN2] alvo da entrada id 13
 0x0805D3D4,KeyItemBag_Case_Id19,label,,[IN2] [IN2] alvo da entrada id 19
 0x0805D3E8,KeyItemBag_Case_Id39,label,,[IN2] [IN2] alvo da entrada id 39
+0x0805D3FC,KeyItemBag_Case_Id40,label,,[KI] [KI] id 40 (0x28): E+0xC5C=0x0D -> 0x0805D418
 0x0805D410,KeyItemBag_Case_Default,label,,[IN2] [IN2] alvo padrao das demais entradas 0..0x28 da tabela 0x0805D2C8
+0x0805D418,KeyItemBag_CommonTail,label,,[KI] [KI] ctx 0x030004C4 = 0 ; GS(0x0300137C)=0x0D
 0x0805D4A0,Slot_ActivateCursor,func_thumb,,[R3] ativa cursor de slot (provavel)
 0x0805D4E0,StateTable_WaitSubThenAdvance,func_thumb,,"[N2] [N2] tabela 0x08483634 idx 7: se StateMachine_DispatchSub != 0, ++0x0300137C (confirmado)"
 0x0805D4FC,Gfx_FadeOutThenClear,func_thumb,,"fade de saida das paletas, limpa REG_DISPCNT e tiles (provavel)"
@@ -3393,6 +3402,7 @@ address,name,kind,count,comment
 0x083C6744,gTextGameMessages,ptr,176,tabela de texto: Mensagens do jogo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083C6A04,gTechniqueScriptStream_Generic,label,,[TQ] inicio de roteiro compartilhado por 20 tecnicas (0..9 13..20 34 35); conflito em TQ.md sec 5
 0x083C6CA8,gTechniqueActionScriptPtrTable,table,,[TQ] ponteiro de roteiro por indice F+0xA8 (tecnica 0..59; medaforca 0x50+id); lido por FUN_08034e94 (GH-TQ)
+0x083C6EB8,gActionScriptArgLenTable,data,,"[MF2] 1 B por opcode: LEN[2]=1, LEN[3]=4, demais 0 na faixa 0x00..0x6B; base do LEN (confirmado pelo decompile)"
 0x083CAD78,gMoveStyle,data,122,estilo de deslocamento em batalha (0-6) por bot das pernas
 0x083CE164,FightPreview_SceneRowPointerTable,data,,A5: 132 ponteiros para linhas de halfwords (indexadas por sequence_cursor). Linha = sel de +0xF9. Dump: pc/research/A5_preview_rows.tsv
 0x083CE374,ObjectScript_ArgCountTable,data,,A5: blocos (byte count + ...) apontados por Row[cursor] (signed halfword). Count = numero de halfwords copiadas por 0x0803D450. (antes: FightPreview_EntryCountBlocks)
@@ -3445,9 +3455,9 @@ address,name,kind,count,comment
 0x0847E644,gMapMusic,data,192,musica por mapa
 0x08483234,gMapEntityPtrTable,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople)
 0x08483594,gMainState2MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel
-0x084835A4,ScreenFrameTable_Entry0,data,,[IN2] [IN2] tabela de quadros (ponteiros); entrada 0 = Dispatch_StateTableFrameCount 0x0805CB50; nao ha xref direto
+0x084835A4,KeyItemBag_MenuTable4,data,,[IN2] [IN2] tabela de quadros (ponteiros); entrada 0 = Dispatch_StateTableFrameCount 0x0805CB50; nao ha xref direto (antes: ScreenFrameTable_Entry0)
 0x08483614,SAVE_HANDLER_InitScreen,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar -> Save_InitScreen (confirmado)
-0x08483634,StateTable_CB50,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C"
+0x08483634,KeyItemBag_SubStateTable,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C (antes: StateTable_CB50)"
 0x08483688,SAVE_HANDLER_StepThenFlashOp,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x084836B4,SAVE_SIGNATURE_ROM,data,,[SV] [SV] 16 B 'MEDAROT2 Ver.KBT' copiados p/ save +0 (confirmado)
 0x084836C5,SAVE_ERASE_HEADER_ROM,data,,[SV] [SV] 16 B copiados p/ save +0 pelo apagar (op 2); comeca com 'MEDAROT2' mas nao e a assinatura (confirmado)
