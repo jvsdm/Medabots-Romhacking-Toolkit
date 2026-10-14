@@ -11,6 +11,10 @@ Símbolos: `TA_simbolos.csv`. Base do que já está em `TQ.md`, `TQ2.md`, `DM.md
 - **B+0xA8** = bot `0x03000590 + bot*0x100` + 0xA8 (`0x03000638` para bot 0; `bot*0x100` por bot; `bot = fight+0x87`
   nos leitores de efeito). É a **técnica ativa do bot** para os efeitos: gravada por `ActionScript_Op1B_LoadPaletteAndSetTechniqueId`
   (funcao que contem 0x080340F8) e lida pelos despachantes de efeito/objeto abaixo. Valor 0x00 a 0x3B e medaforça 0x50+.
+  **(TA2/TA3) CORREÇÃO:** Op1B **não grava** B+0xA8 (só lê, e grava bot+0x69/+0xA9). O gravador confirmado é
+  `Fight_SelectMedaforceActionSource` 0x08015668 (copia o descritor de 6 B para B+0xA8..+0xAD, TA3 §1). Na ação normal
+  (peça) B+0xA8 **não é escrito** pelas funções lidas (TA3 §2); a técnica da peça vai só para F+0xA8. Por isso a premissa
+  "técnica ativa do bot" está em aberto (TA3 §4).
 
 ## 1. Leitores de F+0xA8 (0x030018A8) — Ghidra get_xrefs_to, confirmado
 
@@ -82,5 +86,5 @@ já tem os nomes certos (confirmado hoje):
 - Decompile dos 15 leitores de B+0xA8 listados em §2 (cada um dá a decisão por técnica: setup/efeito/som/dano).
 - Confirmar em runtime (mGBA, rec_2) o valor de B+0xA8 para Sword (0) e Missile (6): o roteiro é igual (TQ2), então
   a diferença de efeito deve sair daqui.
-- Quem grava B+0xA8 além de 0x1B (`ActionScript_Op1B_LoadPaletteAndSetTechniqueId`): não varrido.
+- (TA2/TA3) Quem grava B+0xA8: **Fight_SelectMedaforceActionSource 0x08015668 confirmado** (descritor de medaforça). Op1B 0x1B NÃO grava (só lê). Ação normal não escreve B+0xA8 pelas funções lidas (TA3 §2). Ver TA3.md.
 - Semântica de fight+0xAB = 1/2 (§3) só por nome.

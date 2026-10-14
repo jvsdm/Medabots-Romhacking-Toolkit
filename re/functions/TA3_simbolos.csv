@@ -1,0 +1,28 @@
+# address,name,kind,comment
+0x08015668,Fight_SelectMedaforceActionSource,function,copia 3 B da medalha (0x083B7F8C) e 6 B do descritor (0x083B7E54[id*6]) para bot+0xA8..0xAD (B+0xA8 = id da medaforca); TA3 confirmado
+0x08014DEC,Fight_SelectMedaforceSourceStep,function,chama Fight_SelectMedaforceActionSource com slot = bot+0xDD-4 (TA3)
+0x080156C0,Fight_MedaforceBotBaseLiteral,data,literal 0x03000590 (base do bloco do bot) usado por Fight_SelectMedaforceActionSource
+0x080156C4,Fight_MedaforceMedalTableLiteral,data,literal 0x083B7F8C (tabela de medalha 3 B por linha)
+0x080156C8,Fight_MedaforceScratchLiteral,data,literal 0x0300052E (buffer de 3 B por slot de medaforca)
+0x080156CC,Fight_MedaforceDescriptorLiteral,data,literal 0x083B7E54 (descritor de medaforca 6 B por id)
+0x083B7E54,MedaforceDescriptorTable,data,descritor de 6 B por medaforca: byte0 = id (B+0xA8); bytes 1..5 sem leitor confirmado
+0x083B7F8C,MedaforceMedalTable,data,3 B por medalha; indexado por bot+0x01 (TA3)
+0x0300052E,MedaforceScratch,data,RAM: 3 B escolhidos da tabela de medalha; indexado pelo slot de medaforca
+0x03000638,BotSlot0TechniqueId,data,bot 0 +0xA8 = tecnica ativa do bot (lida por AS/AV/AW/BF/BE; gravada, achado so por medaforca na varredura; TA3)
+0x08030A24,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,function,grava F+0xA8 = byte +0x49 da peca (tecnica); nao grava bot+0xA8 (TA3)
+0x08015564,Fight_SelectActionSource,function,grava bot+0xDD, +0xE0, +0xE1 (peca escolhida); nao grava +0xA8 (TA3)
+0x08014DA2,Fight_SelectActionSourceStep,function,chama Fight_SelectActionSource para a acao normal (TA3)
+0x08031A84,Fight_DispatchPartPreparation,function,le tecnica da peca (+0x49) e chama setup 0x083AEEA0[tec]; nao grava A8 (TA3)
+0x08031AC0,Fight_DispatchPartExecution,function,le tecnica da peca e chama validacao/execucao 0x083AEF90[tec]; nao grava A8 (TA3)
+0x08031A3C,Fight_BuildPartActionMetadataForAllParts,function,laco de 3 pecas: preparacao + execucao (TA3)
+0x08031AFC,Fight_SetupTargetSelectionBySpeciality,function,setup de alvo para tecnicas 2..9; nao grava A8 (TA3)
+0x083AEEA0,TechniqueSetupHandlerTable,data,ponteiros de setup por tecnica (0..59)
+0x083AEF90,TechniqueValidateExecuteTable,data,ponteiros de validacao/execucao por tecnica; 0x08000840 = stub vazio para a maioria
+0x080332ED,Fight_ValidatePart_ClearPartByte0F,function,validacao de tecnicas 22,31,33,38,39,41,42,44,46,47,50: zera part+0x57 (TA3)
+0x08027974,Fight_DispatchOnSubstateAA_AS_SelectVariantByTechnique,function,le B+0xA8 (leitor) e grava fight+0x51 e +0xAA (TA3)
+0x08014F1E,Fight_CopyBotSlotRecords,function,copia bloco de 0x40 B de cada bot para gObjectSlots; nao grava A8 (TA3)
+0x08014F6E,Fight_CopyBotIdentityRecords,function,copia 8 B para bot+0; nao grava A8 (TA3)
+0x08036FB0,Fight_ResetBotPartState,function,zera flags do bot (+0x40,+0x59,+0xB9..+0xBD,+0xC4..+0xCF,+0xDC..+0xE3); nao zera A8 (TA3)
+0x0801D5E0,Fight_FindAllyFollowupActionSource,function,procura aliado para acao de seguimento; nao grava A8 (TA3)
+0x08026838,Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs,function,copia blobs de peca; nao grava A8 (TA3)
+0x080340F8,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,function,LE B+0xA8 (+0x50) e grava bot+0x69/+0xA9; NAO grava B+0xA8 (correcao TA3)

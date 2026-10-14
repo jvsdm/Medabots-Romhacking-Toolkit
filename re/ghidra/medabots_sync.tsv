@@ -1985,8 +1985,10 @@ F	0x08047FBC	PartSet_HasCompleteMonochromeEntry
 F	0x080480D4	Table_GetWordByIndex_080480e0
 F	0x080480E4	Map_LoadCurrentMapAndEntities
 F	0x08048174	Map_UpdateBackgroundAnimations
+F	0x080481D8	Map_UpdateBackgroundAnimations_080481D8
 F	0x08048210	Map_ResolveSpriteId
 F	0x08048288	Map_LoadOverworldSpriteGraphicsForCurrentMap
+F	0x0804830C	Map_LoadMapPaletteToShadowBuffer
 F	0x0804842C	SND_PolicyRequest
 F	0x08048684	Map_GetSpriteListEntry
 F	0x08048708	Map_LoadCurrentEventObjectPalettes
@@ -2155,6 +2157,7 @@ F	0x0804D094	Event_Op66_Animate_Tracked_Object_Transition
 F	0x0804D0E0	Event_Op67_Skip_Two_Bytes_Wait
 F	0x0804D100	Event_Op68_Clear_Collision_For_Packed_Object
 F	0x0804D158	Event_Op69_Set_Map_Scene_Variant
+F	0x0804D17C	Event_Op69_Set_Map_Scene_Variant_0804D17C
 F	0x0804D204	Event_Op6A_NoOp
 F	0x0804D208	Event_Op6B_Set_Current_Chapter
 F	0x0804D224	Event_Op6C_Initiate_Moving_Actor_C
@@ -2330,14 +2333,16 @@ F	0x08050F5C	Overworld_UpdateMapSceneStateMachine
 L	0x08050F80	Overworld_MapSubstateTable
 F	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
-L	0x08051416	Map_LoadEntitySpawns_GroupLoop
+L	0x08051416	Map_LoadEntitySpawnsForCurrentMap_08051416
 L	0x08051484	MapSpawn_ChapterFilterLiteral
 F	0x080517F0	Overworld_InitPlayerSprites
 F	0x08051940	Map_GetScaledStepDelta
 F	0x0805196C	Overworld_ClearFollowerQueuedMove
 F	0x08051988	Overworld_WalkStepByDirection
+F	0x08051BC8	Overworld_WalkStepByDirection_08051BC8
 F	0x08051C64	Map_RemapInputDirectionByConveyorTile
 F	0x08051CB8	Overworld_ProcessDirectionInput
+F	0x08051DDC	Overworld_ProcessDirectionInput_08051DDC
 F	0x08051E38	Overworld_SetActorAnimFrameByTable
 F	0x08051ED8	Overworld_ClearPendingStepIfFlag
 F	0x08051EFC	Overworld_UpdateFollowerFacing
@@ -2350,11 +2355,13 @@ F	0x08052330	Map_CheckFacingEventTriggerAhead_08052330
 F	0x08052400	Map_CheckWalkOverTrigger
 F	0x080524C8	Map_GetAdjacentCollisionTileByDirection
 F	0x080525BC	Overworld_CheckMovementObjectBlocker
+F	0x080525D0	Overworld_CheckMovementObjectBlocker_080525D0
 F	0x08052624	Map_FindDirectionalTriggerAtAdjacentTile
 F	0x0805273C	Map_PixelXToTileX
 F	0x08052760	Map_PixelYToTileY
 F	0x08052784	Map_UpdateVisibleEventObjectSprites
 F	0x080528F8	Map_CenterCameraForSmallMaps
+F	0x0805290C	Map_CenterCameraForSmallMaps_0805290C
 F	0x080529AC	Map_GetMapSizeHalfTileByAxis
 F	0x080529DC	Map_GetInitialScrollTileOrigin
 F	0x08052A10	Map_SetCameraScrollX
@@ -2374,6 +2381,7 @@ F	0x08052E0C	Overworld_SetPlayerFacingAndRefreshFollower
 F	0x08052E34	Map_SetSecondaryMarkerFacing
 F	0x08052E58	set_collision
 F	0x08052E88	Overworld_ApplyWarpAtCurrentTile
+F	0x08052EA0	Overworld_ApplyWarpAtCurrentTile_08052EA0
 F	0x08052F64	Map_InitSecondaryMarkerOverlay
 F	0x0805309C	Overworld_SyncFollowerPositionAfterWarp
 F	0x08053108	Map_UpdateSecondaryMarkerScreenPosition
@@ -3253,7 +3261,7 @@ L	0x083F8D80	gMapTilesetExtraPtrTable
 L	0x083F9080	gMapLayerPtrTable
 L	0x083F9980	gMapPalettePtrTable
 L	0x08404334	gMapCollisionPtrTable
-L	0x08409480	gMapBlockA
+L	0x08409480	gMapAnimDescTable
 L	0x0840F880	gMapBlockB
 L	0x08411AE0	gTextDialogue_08411AE0
 L	0x08411E08	gWarpList_Map0
