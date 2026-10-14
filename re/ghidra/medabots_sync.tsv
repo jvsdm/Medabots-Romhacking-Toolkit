@@ -81,8 +81,8 @@ F	0x08005588	troca_selecao_parte
 F	0x08005628	init_4_slots_b
 F	0x080056A4	atualiza_slot_b
 F	0x08005798	aplica_mascara_slots_b
-F	0x080058A4	processa_troca_slots
-F	0x08005948	checa_parte_sinal
+F	0x080058A4	Parts_HandleSlotSwapInput
+F	0x08005948	Parts_CheckSpriteIdsSetSpeed
 F	0x0800598C	checa_parte_sinal_b
 F	0x080059D0	prepara_4_partes
 F	0x08005AD0	desenha_icone_c
@@ -90,7 +90,7 @@ F	0x08005B44	carrega_paleta_icone_b
 F	0x08005BB4	desenha_texto_parte_a
 F	0x08005C10	desenha_icone_d
 F	0x08005C9C	desenha_icone_e
-F	0x08005D1C	desenha_stats_parte
+F	0x08005D1C	Parts_DrawStatsPanel
 F	0x08005E00	desenha_icone_f
 F	0x08005E84	desenha_stats_parte_b
 F	0x08005F68	desenha_icone_g
@@ -229,6 +229,7 @@ F	0x0800D25C	Dispatch_CallHandlerByByte33_b
 F	0x0800D27C	Menu_TickSingleCountSelector
 F	0x0800D3C4	Dispatch_CallHandlerByMode_B
 F	0x0800D3E4	PartsBuild_UpdateEditPanel
+F	0x0800D684	Menu_ClearObjectAttrsAndAdvance
 F	0x0800D6A8	FightPreview_BuildLayers
 F	0x0800D710	DebugMotion_Main
 F	0x0800D90C	DebugMotion_PlayKind
@@ -291,12 +292,12 @@ F	0x08011E20	Fight_SelectTemplateForCurrentEncounter
 F	0x08011F20	Fight_SelectTierPartId
 F	0x08011F50	Fight_DrawHeaderNameText
 F	0x08011FA0	Fight_DrawStatusLabelText
-F	0x08011FEC	Fight_DrawBotPartEntrySprites
-F	0x08012024	Fight_DrawBotPartEntryIcons
-F	0x08012098	Fight_DrawBotPartEntryTiles
+F	0x08011FEC	Fight_LoadBotPartEntryTiles
+F	0x08012024	Fight_CreateBotPartEntrySprites
+F	0x08012098	Fight_UpdateBotPartEntryMotion
 F	0x080120C8	Fight_DrawBotPartIconRow
 F	0x0801214C	Fight_SetupFlagSprite
-F	0x080121A8	Fight_FormatBotLabelText
+F	0x080121A8	Fight_CopyBotLabelRecord
 F	0x080121CC	Fight_TryAssignBotPartByRoll
 F	0x080121F0	Fight_CountAvailableBotParts
 F	0x08012234	Fight_PickRandomAvailableBotPart
@@ -394,6 +395,7 @@ F	0x080164F4	Fight_AnimateEntryFrames
 F	0x08016554	Fight_MarkEntrySelectedAlt
 F	0x080165B0	Fight_CopyTableByteToVar
 F	0x08016660	Fight_DrawTwoFieldsIfCounterLow5
+F	0x080166AC	Scene_LoadTwoTileSets
 F	0x080166F0	Fight_DrawFieldIfCounterLow4
 F	0x0801672C	Fight_DrawFieldRowByCounter
 F	0x0801677C	Fight_InitObjectDefault
@@ -425,6 +427,7 @@ F	0x080171C0	Fight_InitKindObjectF
 F	0x08017208	Fight_InitKindObjectG
 F	0x080175FC	Fight_UpdatePartKindSelectorB
 F	0x0801767C	Fight_InitKindObjectsForStateB
+F	0x08017914	Fight_FillSideLabelBandForBot
 F	0x08017948	Fight_DrawCounterFieldPair12B
 F	0x08017994	Fight_DrawBotSlotSprite
 F	0x08017A14	Fight_DrawSideBotSlots
@@ -508,7 +511,7 @@ L	0x0801A8BC	Fight_RunStateDispatch_State3
 L	0x0801A910	Fight_RunStateDispatch_State4
 L	0x0801A950	Fight_RunStateDispatch_State5
 L	0x0801A958	Fight_RunStateDispatch_State6
-L	0x0801A998	Fight_RunStateDispatch_State7
+L	0x0801A998	Fight_RunStateDispatch_0801A998
 L	0x0801A9C8	Fight_RunStateDispatch_State8
 F	0x0801ABF8	Fight_MaybeStartUiAction
 F	0x0801AC24	Fight_TryUiActionByIndex
@@ -1307,6 +1310,7 @@ F	0x08032FFC	Fight_HasAnyCandidateTarget
 F	0x0803301C	Fight_PickRandomCandidateTargetSlot
 F	0x08033074	Fight_RandomSlotFromTable16
 F	0x08033090	Fight_PickRandomActiveBotInSide
+F	0x080330E8	Fight_RollStatusRowRandomEntry_Wrapper
 F	0x080330F4	Fight_PickRandomIntactPart
 F	0x08033154	Fight_SetPartActionMetadata
 F	0x08033184	Fight_PickMostDamagedRepairablePart1Based
@@ -1572,6 +1576,7 @@ F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4EC	Fight_ScrollEntryCoords
 F	0x0803D5A0	Fight_ResetStateFlagsAndCounter
+F	0x0803D74C	Screen_InitOverlayAndLoadAssets
 F	0x0803DA90	Fight_ClearBattleBgAndBlend
 F	0x0803DAEC	Fight_InitSelectBlockA
 F	0x0803DB1C	Snd_RequestSongByFlag
@@ -1625,8 +1630,12 @@ F	0x0803FAA0	Obj_InitSlotAndLoad
 F	0x0803FB0C	Obj_ResetStateFields
 F	0x0803FB3C	StateMachine_DispatchStep
 F	0x0803FB6C	Gfx_PaletteFlushStep
+F	0x0803FB94	MsgState_FadeToneStep
+F	0x0803FBDC	MsgState_BG0OnThenDispatch
 F	0x0803FC20	Gfx_LoadTileSetStep3
+F	0x0803FCC8	MsgState_ClearBoxAndRunScript
 F	0x0803FD28	ScriptVM_RunOpcodes
+L	0x0803FE86	MsgScriptVM_TextCallSite
 F	0x0803FEA8	Script_OpAdvanceStep
 F	0x0803FEB8	Script_OpShowPortrait
 F	0x08040038	Text_RenderGlyphStep
@@ -1637,13 +1646,21 @@ F	0x080405D0	Text_WaitKeyOrClearBox
 F	0x0804070C	Script_OpWaitFramesOrKey
 F	0x080407A4	Script_OpWaitFrames
 F	0x08040820	Script_OpSubcommandOrNextState
+L	0x08040884	MsgFF_SubcommandTable
+F	0x08040898	MsgFF_SfxAdvanceCtx
+F	0x080408BC	MsgFF_AdvanceOtherObj
+F	0x080408D0	MsgState_DispatchByScriptByte
 F	0x080408F4	Dispatch_CallHandlerByByte1B
 F	0x08040914	Dispatch_CallHandlerByByte1B_08040914
 F	0x08040934	Fight_CallHandlerByIndex
 F	0x08040954	Dispatch_CallHandlerByIdx1B
-F	0x08040974	Dispatch_CallHandlerByByteAt1B
+F	0x08040974	MsgState13_CtxB1BDispatch
 F	0x08040994	BgMap_TickRectFillState
 F	0x08040A00	BgMap_TickFlashStep
+F	0x08040A40	BgMap_LoadTileStageStep
+F	0x08040AF0	Slot_AdvanceStepByFlag
+F	0x08040B0C	Palette_FadeStepAndDispatch
+F	0x08040B50	Slot_SetTimer8
 F	0x08040B90	Slot_SetupFromRecordList
 F	0x08040BD8	Anim_RunSlotScript
 F	0x08040CD0	ClearObjectAttributeEntries
@@ -1669,6 +1686,7 @@ F	0x08041920	Anim_SpawnSlotObject
 F	0x080419CC	Slot_SlideStepClamp
 F	0x08041A28	Menu_CursorStepHandler
 F	0x08041BA4	Slot_CountdownAndClearTile
+F	0x08041BF4	Slot_SetFrameFromStepAndAdvance
 F	0x08041C14	Slot_SetPosStepByMode
 F	0x08041C5C	Slot_SetPosYStepByMode
 F	0x08041CA4	StateMachine_DispatchSub
@@ -1687,7 +1705,7 @@ F	0x08042170	Inv_SubCountClampZero
 F	0x080421A0	Tinpet_InitIds
 F	0x080421B4	Tinpet_ActivateMatchingEntry
 F	0x08042218	Tinpet_IsPoolFull
-L	0x08042238	site_TinpetCreate
+L	0x08042238	Tinpet_CreateRecord
 F	0x08042278	Map64_GetValue
 F	0x080422B8	Map64_AddCountClamp99
 F	0x08042318	Map64_SubRemoveIfZero
@@ -1713,7 +1731,7 @@ F	0x080432A0	Sprite_UpdateComposite4Motion
 F	0x08043560	AdjustInventoryPartCount
 F	0x080435B0	DrawPartIconTileBlock
 F	0x0804361C	Slot_FindNextActiveWrap
-F	0x080436AC	site_PartCycle
+F	0x080436AC	PartSelect_CycleNextValid
 F	0x080437E0	Util_Are4ByteFieldsEqual
 F	0x08043814	AreBattleSpritePartIdsValid
 L	0x08043820	site_BotCountValidator
@@ -1786,20 +1804,30 @@ F	0x08047414	CompositePreviewContext_Init
 F	0x08047428	MotionInterpolateKeyframe
 F	0x08047574	EventScript_ClearGlobals
 F	0x0804763C	MainState1
+F	0x080476E8	MainState_RequestModeTransition
 F	0x08047878	GameState_StartFlowByCommand
 F	0x08047BA8	Snd_SfxRequestWrapper
 F	0x08047BB4	Sound_RequestSong
 F	0x08047BC0	Sound_RequestFade
+F	0x08047BCC	Table_GetWordByIndex_08047bd8
 F	0x08047BDC	GetBotName
 F	0x08047BEC	GetPartName
 F	0x08047C84	Text_WriteDecimalToSlot
 F	0x08047CE4	Text_CopyStringToSlot
+F	0x08047D24	Num_FormatTable4EntryToGlyphs
 F	0x08047D4C	Save_GetMoney
 F	0x08047D58	AddClampedCounter
 F	0x08047D74	SubClampedCounter
 F	0x08047D8C	Inventory_GetItemCount
+F	0x08047D9C	Inv_ReadCounter16_Wrapper
 F	0x08047DB0	Medal_FindSlotPlus1
+F	0x08047DC0	Map64_AddCountDefault1_Wrapper
+F	0x08047DD8	Map64_SubDefault1_Wrapper
+F	0x08047DF0	Inv_AddCountClamp99_Wrapper
 F	0x08047E08	Inv_SubCountClampZeroTail
+F	0x08047E20	Medabot_SpawnFromRecord_Wrapper
+F	0x08047E30	Tinpet_IsPoolFull_Wrapper
+F	0x08047E3C	Tinpet_CreateRecord_Wrapper
 F	0x08047E4C	Overworld_NoOpStateHandler
 F	0x08047E50	PartSet_GetLegIconIndexForMatchingSlotPartId
 F	0x08047EF0	PartSet_HasMatchingSlotPartId
@@ -2261,10 +2289,13 @@ F	0x0805CED0	Screen_FadeStepThenLoadObj
 F	0x0805CF58	Shop_UpdateSlotAndDispatchState
 F	0x0805CFB4	Shop_ItemListInputStep
 F	0x0805D4A0	Slot_ActivateCursor
+F	0x0805D4E0	StateTable_WaitSubThenAdvance
 F	0x0805D4FC	Gfx_FadeOutThenClear
 F	0x0805D580	Flow_StepCounterTickB
 F	0x0805D5A4	Menu_ResetOnInput
+F	0x0805D5D0	Fx_SetBldcntAndAdvance
 F	0x0805D5F0	Screen_StepToBlank
+F	0x0805D658	StateTable_WaitSubThenAdvance_B
 F	0x0805D674	Screen_TickFadeOutAndClear
 F	0x0805D6E4	Obj_SetAttrFromTable
 F	0x0805D704	Obj_UpdateFrameAndSetAttr
@@ -2273,10 +2304,14 @@ F	0x0805D790	Screen_InitLZ77TileBlocks
 F	0x0805D860	Stats_DrawSummaryScreen
 F	0x0805DA14	Gfx_FadeInStepAndEnableBg
 F	0x0805DAB0	Flow_StepDispatchCounter
+F	0x0805DAD4	StateTable_JumpOnDone_6Or9Or13
 F	0x0805DB20	Fx_StepThenInitRecord8
+F	0x0805DB4C	StateTable_JumpOnDone_6Or9
 F	0x0805DB84	Save_StepThenFlashOp
 F	0x0805DBC4	Site_SaveLoadPromptStep
 F	0x0805DC4C	StateMachine_TickWithFrameTimer
+F	0x0805DC88	Screen_ResetPalettesAndAdvance
+F	0x0805DCB0	StateTable_WaitSubThenAdvance_C
 F	0x0805DCCC	Palette_FadeStepThenClear
 F	0x0805DD50	Menu_TickDispatchWithTimeout
 F	0x0805DD88	Screen_InitBlendFade
@@ -2365,11 +2400,15 @@ F	0x080636FC	Fight_PanelFadeStep
 F	0x0806379C	BattlePanel_DrawSlotsStep
 F	0x08063840	BattlePanel_StepUpdate
 F	0x080638E8	Battle_TickPanelTextTwoSlots
+F	0x080639C4	Screen_InitNumberRevealLayout
 F	0x08063EBC	Anim_FinishClearAndLoadSlot
 F	0x08063F08	Menu_CompareSelectionAndAdvance
 F	0x08063FB0	Sprite_ScriptRecordStep
+F	0x080640DC	StateTable_AdvanceIndex
 F	0x080640EC	Anim_ScrollTileRowsThenCountdown
 F	0x0806412C	Fx_NumberRevealStep
+F	0x0806445C	Anim_ScrollCountdownSlide
+F	0x080644D8	Anim_ScrollThenLoadSlotAndSfx
 F	0x08064524	Flow_StepSfxCommit
 F	0x080645A0	Obj_StepThenTimerOnMatch
 F	0x08064610	Anim_WaitCounterThenAdvance
@@ -2425,6 +2464,7 @@ F	0x08067BDC	set_state_timed
 F	0x08067C04	fx_particles_blend_step
 F	0x08067D00	Screen_LoadSceneWithSong
 F	0x08067F64	PartsInfo_InitScreen
+F	0x08068238	Fx_WhiteFadeStepThenLoadSlot
 F	0x08068374	Fx_BlendAndStateStep
 F	0x080683C8	Anim_WaitRecordThenSetState
 F	0x08068400	Dispatch_CallHandlerLocalCopy
@@ -2465,6 +2505,7 @@ F	0x0806A3C4	scene_sequence_a
 F	0x0806A654	scene_sequence_b
 F	0x0806A718	wait_gate_0xf1
 F	0x0806A748	Battle_EmitBotSpritesInDepthOrder
+F	0x0806ADB0	Battle_UpdateCompositeBotMotion
 F	0x0806B01C	slots_move_group3
 F	0x0806B0D4	slots_update_anim
 F	0x0806B2F4	Obj_UpdateSlotPosition
@@ -2577,7 +2618,7 @@ F	0x08072080	Palette_FadeStepWithSfx
 F	0x08072188	FightPreview_TickIntroAndBuildLayer
 F	0x08072234	Preview_InitCompositeAndMotion
 F	0x080722B0	Preview_StepSfxSequenceAndMotion
-F	0x080723AC	scene_start_block
+F	0x080723AC	snd_driver_init_block
 F	0x080723F8	Bar_Reset
 F	0x08072414	Bar_StepStart
 F	0x0807244C	Bar_StepDecrement
@@ -2742,18 +2783,18 @@ F	0x0807CF40	aux_mod_u32
 F	0x0807D000	sf64_pack
 F	0x0807D148	sf_unpack
 F	0x0807D220	sf64_add_core
-F	0x0807D48C	SoftFloat64_AddWrapper
-F	0x0807D4BC	SoftFloat_Add64
+F	0x0807D48C	SoftF64_AddAlt1
+F	0x0807D4BC	SoftF64_Add
 F	0x0807D4F4	SoftFloat_Binary64Op
 F	0x0807D79C	SoftFloat64_Divide
 F	0x0807D924	sf64_cmp_core
 F	0x0807DA24	Sf64_CmpWrapper
-F	0x0807DA50	SoftFloat64_Compare
+F	0x0807DA50	SoftF64_Compare
 F	0x0807DA9C	Math_SoftF64Compare
-F	0x0807DAE8	Math_Sf64CompareSafeAlt
-F	0x0807DB34	Math_Sf64CompareSafe
+F	0x0807DAE8	SoftF64_CompareAlt3
+F	0x0807DB34	SoftF64_CompareAlt2
 F	0x0807DB80	Math_SoftFloat64Compare
-F	0x0807DBCC	SoftFloat64_CompareSafe
+F	0x0807DBCC	SoftF64_CompareAlt1
 F	0x0807DC18	sf_from_i32
 F	0x0807DC94	sf_to_i32
 F	0x0807DD30	sf64_pack_wrap
@@ -2811,6 +2852,7 @@ L	0x083AFE88	gPortraitImages
 L	0x083B1748	gPortraitPalettes
 L	0x083B1A08	gBattleSprites
 L	0x083B291C	gMessageStateHandlerTable
+L	0x083B2940	MsgState6_DispatchTable
 L	0x083B2990	Dispatch_CallHandlerByByteAt1B_Table
 L	0x083B29EC	gRandomLUT
 L	0x083B4C60	Fight_AnimSlot_TableB
@@ -2920,7 +2962,6 @@ L	0x08769EC0	gEventPointerTable
 L	0x087852CF	gStarterData
 L	0x08785FB4	sSharedPartScreenTileSheet
 L	0x087F5500	gTextDump
-C	0x0800D684
 C	0x0801D6A4
 C	0x0801D878
 C	0x0801D95C
@@ -3043,22 +3084,5 @@ C	0x08034E24
 C	0x08034E40
 C	0x08034E5C
 C	0x08034E78
-C	0x08040A40
-C	0x08040AF0
-C	0x08040B0C
-C	0x08040B50
-C	0x08041BF4
-C	0x0805D4E0
-C	0x0805D5D0
-C	0x0805D658
-C	0x0805DAD4
-C	0x0805DB4C
-C	0x0805DC88
-C	0x0805DCB0
-C	0x080639C4
-C	0x080640DC
-C	0x0806445C
-C	0x080644D8
-C	0x08068238
 C	0x08068298
 C	0x08068328

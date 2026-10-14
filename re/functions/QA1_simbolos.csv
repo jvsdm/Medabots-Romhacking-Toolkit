@@ -1,0 +1,11 @@
+address,name,kind,comment
+0x0800B890,DebugMenu_Dispatch,func_thumb,"QA1: real (Thumb valido); ponteiro na tabela 0x083AC3C4"
+0x0800BA74,DebugMenu_Exit,func_thumb,"QA1: real (Thumb valido); ponteiro na tabela 0x083ACA64"
+0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,"QA1: real; ponteiro na tabela 0x083ACF00"
+0x08030860,Fight_SceneMain,func_thumb,"QA1: real; ponteiro na tabela 0x083AC2E8"
+0x08033840,Fight_RunActionScriptLoop,func_thumb,"QA1: real; ponteiro na tabela 0x083AC2EC"
+0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,"QA1: real; ponteiro na tabela 0x083AF1B0"
+0x08033C20,Fight_ApplyPendingEffectStatusFlags,func_thumb,"QA1: real; ponteiro na tabela 0x083AF1B8"
+0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,"QA1: real; ponteiro na tabela 0x083AF1C0"
+0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,"QA1: real; ponteiro na tabela 0x083AF1CC"
+0x08045A40,IsCompositePreviewPointOnScreen,func_thumb,"QA1: real (3 BL em 0x08045B24/0x08045BB0/0x08045C70); CF.md dizia pool: errado; Ghidra corpo de 1 byte"
