@@ -2081,6 +2081,7 @@ address,name,kind,count,comment
 0x08047F50,PartSet_FindCompleteEntryIndex,func_thumb,,[R3] indice (0..8) do registro com +3..+6 iguais a v; -1 se nenhum
 0x08047F9C,Team_CountSlotsWithStatus3,func_thumb,,Simon/Rokusho: Count entries in gPartSetTable whose state byte is 3 (complete set). (antes: PartSet_CountCompleteEntries)
 0x08047FBC,PartSet_HasCompleteMonochromeEntry,func_thumb,,Simon/Rokusho: Return whether gPartSetTable contains a complete set entry whose four part ids (head/right/left/legs) all match the supplied monochrome part id.
+0x080480D4,Table_GetWordByIndex_080480e0,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x080480E0 [arg]
 0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
 0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
 0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area."
@@ -2528,7 +2529,7 @@ address,name,kind,count,comment
 0x0805CAF4,Anim_WaitRecordThenState3,func_thumb,,[FR1] waits Anim_StepRecordCounter(obj+0x50) then state 3
 0x0805CB20,Dispatch_CallArgsByIndex,func_thumb,,copia 6 palavras e chama table[idx] com CallViaR0; confirmado (tabela desconhecida)
 0x0805CB50,Dispatch_StateTableFrameCount,func_thumb,,despacho por tabela de estado mais dois contadores; provável
-0x0805CB90,Screen_SetSlotHighlight,func_thumb,,[R3] flip de célula de slot por estado (chute)
+0x0805CB90,Shop_SetSlotHighlight,func_thumb,,[R3] flip de célula de slot por estado (chute) (antes: Screen_SetSlotHighlight)
 0x0805CBFC,Screen_ResetLayersAndCounter,func_thumb,,"[provavel] zera tela/pares, REG_DISPCNT=0x160, contador em *DAT_0805CC38"
 0x0805CC3C,Screen_InitSpritesAndLoadTiles,func_thumb,,carrega tiles LZ77 e preenche tabela de sprites de tela; provavel
 0x0805CDAC,Shop_InitItemListScreen,func_thumb,,"[provavel] zera estado, Shop_BuildItemList64 + Shop_DrawItemListPage; 5 por pagina; liga DISPCNT 0x200-0x1000"
@@ -2628,7 +2629,7 @@ address,name,kind,count,comment
 0x08062970,Shop_FadeInStep,func_thumb,,[provavel] shop palette fade-in then Shop_BlinkCursorAttr
 0x080629DC,Dispatch_CallHandlerByByteIndex4,func_thumb,,[FR2] provável; despacho por byte para 4 ponteiros via CallViaR0 (FUN_080629dc)
 0x08062A10,BattlePanel_InitOrRedraw,func_thumb,,[R3] inicializa/redesenha painel de peça (chute)
-0x08062B48,BattlePanel_DrawSlotText,func_thumb,,[R3] desenha texto de lado do painel (chute)
+0x08062B48,BattlePanel_LoadSlotPartSprite,func_thumb,,[R3] desenha texto de lado do painel (chute) (antes: BattlePanel_DrawSlotText)
 0x08062BEC,Text_CopyFEStringTo20,func_thumb,,"[R3] copia string até 0xFE, max 0x14 (provavel)"
 0x08062C28,Sprite_LoadAndInitObj,func_thumb,,[R3] descomprime asset e inicia objeto de sprite (provavel)
 0x08062C98,Anim_ScrollTileColumns,func_thumb,,[R3] rolagem de colunas de tiles (provavel)
@@ -2706,12 +2707,14 @@ address,name,kind,count,comment
 0x08067524,bg_copy_panel_rows,func_thumb,,[R4] R4: copia 3 linhas de painel p/ tilemap; provavel
 0x08067578,bg_scroll_rows_up,func_thumb,,[R4] R4: rola 3 linhas do tilemap; provavel
 0x080675D4,Screen_InitRingSpritesSong5,func_thumb,,provável: tela com 36 sprites em anel (raio 0x32) e música 5
-0x080678D4,Text_TypewriterRowStep,func_thumb,,[FL10] impressora letra a letra: 14 colunas por linha; bg_copy_panel_rows ao fim (provável)
+0x080678D4,Menu_RingPanelColumnStep,func_thumb,,[FL10] impressora letra a letra: 14 colunas por linha; bg_copy_panel_rows ao fim (provável) (antes: Text_TypewriterRowStep)
 0x08067BDC,set_state_timed,func_thumb,,"[R4] R4: gMainState=2, timer=0x18; provavel"
 0x08067C04,fx_particles_blend_step,func_thumb,,[R4] R4: 16 particulas com fade BLDCNT; provavel
 0x08067D00,Screen_LoadSceneWithSong,func_thumb,,"monta tela: musica 0x19, tiles LZ77, 16 sprites (provavel)"
 0x08067F64,PartsInfo_InitScreen,func_thumb,,[provavel] parts info screen init: asset decompress + 16-char text + two 2-digit numbers + BG layer enable
 0x08068238,Fx_WhiteFadeStepThenLoadSlot,func_thumb,,"[N2] [N2] copia 0x080B003C idx 2: fade de paleta para 0xFFFF em 9 passos, depois Obj_InitSlotAndLoad(1,2,0) (confirmado)"
+0x08068298,Fx_BlendStepThenLoadMedalArt,func_thumb,,"[N2] [N2] copia 0x080B003C idx 3: fade B 0x7FFF; carrega arte de medalha (0x03000BE0, byte 0x030017EC) para VRAM 0x06010000 (provavel)"
+0x08068328,Fx_FadeInStepThenAdvance,func_thumb,,[N2] [N2] copia 0x080B003C idx 4: fade de volta para 0x7FFF; Obj_ResetStateFields; ++0x0300137C (confirmado)
 0x08068374,Fx_BlendAndStateStep,func_thumb,,[JT3] alvo de 0x08068400 idx 5 (ja existe)
 0x080683C8,Anim_WaitRecordThenSetState,func_thumb,,espera contador de animação e troca estado; provável
 0x08068400,Dispatch_CallHandlerLocalCopy,func_thumb,,[confirmado] copia tabela de 7 palavras para a pilha; CallViaR0(local[*DAT_08068438])

@@ -27,12 +27,12 @@ TIERS = [
     r"FH|JT|DT|FL\d*",
     r"FR\d+|JT\d+|SD|A6|DT\d+",
     r"N\d+|QA\d+|CH\d+|MS|TX|FN\d+|MD|AS\d+",
-    r"CF|NM",
+    r"CF\d*|NM\d*",
 ]
 # MERGE_NOTAS: aqui o nome do mtbe é o correto.
 KEEP_MTBE = {"0x08035754", "0x08035814", "0x08035880", "0x08035740"}
 # Listas de endereços que devem virar função (alvos de tabela de ponteiros).
-CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt"]
+CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt"]
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 GENERIC = re.compile(r"^(FUN|sub|DAT|LAB|PTR|thunk_FUN)_", re.I)

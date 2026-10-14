@@ -1,0 +1,18 @@
+# Enderecos sem funcao no Ghidra (criar como funcao Thumb; sao alvos de ponteiro/tabela)
+0x0803FB94  estado 1 gMessageStateHandlerTable (MsgState_FadeToneStep)
+0x0803FBDC  estado 2 (MsgState_BG0OnThenDispatch)
+0x0803FCC8  estado 4 (MsgState_ClearBoxAndRunScript)
+0x080408D0  estado 6 (MsgState_DispatchByScriptByte)
+0x080408F4  estado 9
+0x08040914  estado 10
+0x08040934  estado 11
+0x08040954  estado 12
+0x08040974  estado 13 (despachante ctx+1B, ja em JT2)
+0x08040994  estado 14 / 20
+0x08040A00  estado 15 / 21
+0x08040A40  estado 16 / 22
+0x08040AF0  estado 17
+0x08040B0C  estado 18
+0x08040B50  estado 19
+0x08040898  FF n=0,2,3 (MsgFF_SfxAdvanceCtx)
+0x080408BC  FF n=1,4 (MsgFF_AdvanceOtherObj)

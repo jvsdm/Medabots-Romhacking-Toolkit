@@ -1834,6 +1834,7 @@ F	0x08047EF0	PartSet_HasMatchingSlotPartId
 F	0x08047F50	PartSet_FindCompleteEntryIndex
 F	0x08047F9C	Team_CountSlotsWithStatus3
 F	0x08047FBC	PartSet_HasCompleteMonochromeEntry
+F	0x080480D4	Table_GetWordByIndex_080480e0
 F	0x080480E4	Map_LoadCurrentMapAndEntities
 F	0x08048174	Map_UpdateBackgroundAnimations
 F	0x08048288	Map_LoadOverworldSpriteGraphicsForCurrentMap
@@ -2281,7 +2282,7 @@ F	0x0805CABC	Flow_SubStepInitTimer
 F	0x0805CAF4	Anim_WaitRecordThenState3
 F	0x0805CB20	Dispatch_CallArgsByIndex
 F	0x0805CB50	Dispatch_StateTableFrameCount
-F	0x0805CB90	Screen_SetSlotHighlight
+F	0x0805CB90	Shop_SetSlotHighlight
 F	0x0805CBFC	Screen_ResetLayersAndCounter
 F	0x0805CC3C	Screen_InitSpritesAndLoadTiles
 F	0x0805CDAC	Shop_InitItemListScreen
@@ -2381,7 +2382,7 @@ F	0x080627A0	Gfx_FadeThenPreviewInit
 F	0x08062970	Shop_FadeInStep
 F	0x080629DC	Dispatch_CallHandlerByByteIndex4
 F	0x08062A10	BattlePanel_InitOrRedraw
-F	0x08062B48	BattlePanel_DrawSlotText
+F	0x08062B48	BattlePanel_LoadSlotPartSprite
 F	0x08062BEC	Text_CopyFEStringTo20
 F	0x08062C28	Sprite_LoadAndInitObj
 F	0x08062C98	Anim_ScrollTileColumns
@@ -2459,12 +2460,14 @@ F	0x080674BC	draw_text_rtl_tiles
 F	0x08067524	bg_copy_panel_rows
 F	0x08067578	bg_scroll_rows_up
 F	0x080675D4	Screen_InitRingSpritesSong5
-F	0x080678D4	Text_TypewriterRowStep
+F	0x080678D4	Menu_RingPanelColumnStep
 F	0x08067BDC	set_state_timed
 F	0x08067C04	fx_particles_blend_step
 F	0x08067D00	Screen_LoadSceneWithSong
 F	0x08067F64	PartsInfo_InitScreen
 F	0x08068238	Fx_WhiteFadeStepThenLoadSlot
+F	0x08068298	Fx_BlendStepThenLoadMedalArt
+F	0x08068328	Fx_FadeInStepThenAdvance
 F	0x08068374	Fx_BlendAndStateStep
 F	0x080683C8	Anim_WaitRecordThenSetState
 F	0x08068400	Dispatch_CallHandlerLocalCopy
@@ -3084,5 +3087,3 @@ C	0x08034E24
 C	0x08034E40
 C	0x08034E5C
 C	0x08034E78
-C	0x08068298
-C	0x08068328

@@ -1,0 +1,2 @@
+address,name,kind,comment
+0x080678D4,Menu_RingPanelColumnStep,func_thumb,"MS: nao e a impressora de texto (essa e Text_RenderGlyphStep 0x08040038); anel de pontos com 14 colunas de painel"
