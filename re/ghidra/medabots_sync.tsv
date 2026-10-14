@@ -3885,7 +3885,7 @@ L	0x0847D124	gTextDialogue_0847D124
 L	0x0847D5C0	gTextDialogue_0847D5C0
 L	0x0847DAD0	gTextDialogue_0847DAD0
 L	0x0847DF24	gTextPointerTable
-L	0x0847E388	get_item_text
+L	0x0847E388	gEventItemTextTable
 L	0x0847E644	gMapMusic
 L	0x08483234	gMapPeoplePtrTable
 L	0x08483594	gMainState2MenuTable
@@ -3904,7 +3904,7 @@ L	0x08483774	gMapAreaB
 L	0x084838E4	gShops
 L	0x08483ED8	gTextKeyItems
 L	0x084850CA	KeyItemBag_MsgScript
-L	0x0848521C	KeyItemBag_MsgStateObj
+L	0x0848521C	gTextShopDialogue
 L	0x084856E8	gMainState3MenuTable
 L	0x084859D8	gBootSubStateTable
 L	0x08485F88	gTextTournamentMessages
@@ -3939,7 +3939,7 @@ L	0x084C58F4	gGfx_FightScene_Tiles_Bg1
 L	0x084C59AC	gItalicFont
 L	0x084C7C54	gGfx_Overlay_Tiles_Bg1
 L	0x084C7E7C	gGfx_Overlay_Tiles_Bg2
-L	0x084C8034	gGfx_Obj_Malias_09C0
+L	0x084C8034	gObjTextFontGfx
 L	0x084C8034	gObjTextFontGfx
 L	0x084C88B8	gGfx_PartsGrid_Tiles_Bg3
 L	0x084C92B0	gGfx_BotPartSelect_Tiles_Obj
@@ -3986,11 +3986,11 @@ L	0x0850F318	sPartScreenObjPaletteBlockA
 L	0x0850F378	sPartScreenObjPaletteBlockB
 L	0x0850F498	gMiniSpritePalettes
 L	0x08765EC0	gEventDb
-L	0x08765EC4	event_operation_list
+L	0x08765EC4	gEventDb_HeaderPad
 L	0x08769EC0	gEventPointerTable
 L	0x087852CF	gStarterData
 L	0x08785EC0	gGfx_BattlePanel_Char
-L	0x08785FB4	gGfx_Shop_PartSelect_Obj
+L	0x08785FB4	gGfx_PartSelect_Obj
 L	0x0878F7E8	gGfx_TitleMenu_Char
 L	0x0879DA90	gGfx_BattlePanel_Tiles
 L	0x0879EFC0	gGfx_BattlePanel_Map_Bg0

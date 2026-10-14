@@ -1,5 +1,5 @@
 address,name,kind,count,comment
-0x02000000,gGfxDefaultAssetBuffer,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000 (antes: gShopItems)"
+0x02000000,gGfxDefaultAssetBuffer,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000 (antes: gShopItems) [RM5] destino de Gfx_LoadDefaultAsset HO1.md provavel; 219 refs na ROM (antes: gShopItems)"
 0x02023000,EWRAM_LevelSortScratch,label,,"quantidade por item na loja (1 byte por bot) (antes: gShopQuantities) [DM] [confirmado] 30 registros de 8 B (chave u16 em +0), limpos por CpuFastSet em Level_ComputeReferenceFromSlots"
 0x02024B84,gBattlePreviewCachedOamList,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x02026000,CompositePreviewContext,data,,"[IC2] [GH-IC2] contexto EWRAM do sprite grande: +0 estado, +4 vetor de tipos 0x083D1D78, +8 OAM (0x020260D0 + slot*0x410) [RM5] IC2.md confirmado (CompositePreviewContext_Init)"
@@ -34,29 +34,29 @@ address,name,kind,count,comment
 0x0300047D,gPartsGridCursorIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: currently_selected_medal) [RM1] confirmado (antes: currently_selected_medal): ctx+0x3D = indice 0..35 do cursor da grade; PartsGrid_SplitRowCol faz /6 e %6 (decompile)"
 0x0300047F,gPartsGridCursorRow,label,,"[FI2] ctx+0x3F estado da tela de time (PS) conflito com PS2 (slot) aberto (antes: gCtx_TeamScreenState) [RM1] confirmado (antes: gCtx_TeamScreenState): ctx+0x3F = linha (index/6), gravado por PartsGrid_SplitRowCol (decompile). Conflita com nota FI2 (PS=estado); ver RM1.md"
 0x03000484,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
-0x03000486,gCtx_Byte46,label,,[FI] timer de espera u16 conf (antes: gCtx_WaitTimer)
+0x03000486,gCtx_Byte46,label,,[FI] timer de espera u16 conf (antes: gCtx_WaitTimer) [RM5] ctx+0x46 (ctx 0x03000440) PG.md le 0/1/2 provavel (antes: gCtx_WaitTimer; o timer e +0x86 = 0x030004C6)
 0x03000489,gCtx_FreeFlag,label,,[FI] flag ctx livre provavel
-0x03000491,gCtx_PartGaugePhaseSideA,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_in_menu)"
-0x03000493,gCtx_PartGaugePhaseSideB,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_has_all_parts)"
-0x0300049A,gSelBot_SelectedPartIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_selected_part)"
-0x0300049C,gCtx_Byte5C,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf (antes: gCtx_TeamWinner)
+0x03000491,gCtx_PartGaugePhaseSideA,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_in_menu) [RM5] ctx+0x51 fase 0..3 do lado A BT.md/FL6.md/FI.md provavel (antes: selected_tinpet_in_menu)"
+0x03000493,gCtx_PartGaugePhaseSideB,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_has_all_parts) [RM5] ctx+0x53 fase 0..3 do lado B BT.md/FL6.md provavel (antes: selected_tinpet_has_all_parts)"
+0x0300049A,gSelBot_SelectedPartIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_selected_part) [RM5] ctx+0x5A indice de peca selecionada JT7.md provavel; FL6 descreve ctx+0x5A como contador, conflito a checar (antes: selected_tinpet_selected_part)"
+0x0300049C,gCtx_Byte5C,label,,"[FI] vencedor de Fight_EvaluateTeamWinState conf (antes: gCtx_TeamWinner) [RM5] ctx+0x5C sem nome; JT7.md casos 1..4, chute (antes: gCtx_TeamWinner duplicado; vencedor e +0x9C = 0x030004DC)"
 0x030004C0,gCtx_EntryByte,label,,[FI2] ctx+0x80 byte de entrada da luta (Fight_AnimateEntryFrames) nao confirmado no ctx 0x03000440 (FL2/FL3)
 0x030004C4,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
 0x030004C5,gCtx_ClearAtEnd,label,,[FI2] ctx+0x85 zerado no fim do despachante GS (BT2) provavel
 0x030004C6,gCtx_WaitTimer,label,,[FI] timer de espera u16 conf [RM1] confirmado: Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance grava 0x3C (u16) em ctx+0x86 (decompile)
 0x030004C9,gCtx_FreeFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1] (antes: gDeterministicRandom) [FI] flag ctx livre provavel"
-0x030004CC,gCtx_Byte8C,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: random_number)"
+0x030004CC,gCtx_Byte8C,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: random_number) [RM5] ctx+0x8C escrito pelo contexto de batalha FL7.md provavel (antes: random_number)"
 0x030004CD,gCtx_RandIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gDeterministicRandomIndex) [FI2] ctx+0x8D indice do randbyte (ROM 0x083B29EC) provavel (DT)"
-0x030004CE,gCtx_Byte8E,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: menu_selected_item)"
+0x030004CE,gCtx_Byte8E,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: menu_selected_item) [RM5] ctx+0x8E estado 0/1/2 FL3.md; ctx via DAT_08002C50 nao confirmado como 0x03000440, chute (antes: menu_selected_item)"
 0x030004D0,gCtx_BlendMode,label,,[FI2] ctx+0x90 modo do efeito de blend (R2) provavel
 0x030004D2,gCtx_BlendStep,label,,[FI2] ctx+0x92 passo do efeito de blend (R2) provavel
-0x030004D7,gSelBot_Medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: tinpet_sel_medal)"
-0x030004D8,gSelBot_HeadPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_head)"
+0x030004D7,gSelBot_Medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: tinpet_sel_medal) [RM5] ctx+0x97 sem doc, chute (antes: tinpet_sel_medal)"
+0x030004D8,gSelBot_HeadPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_head) [RM5] ctx+0x98 cabeca do bot selecionado RM1.md candidato provavel (antes: selected_tinpet_head)"
 0x030004D9,gSelBot_LeftArmPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_left_arm)"
 0x030004DA,gSelBot_RightArmPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_right_arm)"
-0x030004DB,gSelBot_LegsPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_legs)"
+0x030004DB,gSelBot_LegsPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_legs) [RM5] ctx+0x9B RM1.md candidato provavel (antes: selected_tinpet_legs)"
 0x030004DC,gCtx_TeamWinner,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf [RM1] provavel: DC.md diz vencedor = ctx+0x9C (0x030004DC); nao reconferido no xref nesta rodada
-0x030004DE,gCtx_NameBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: text_ram_access)"
+0x030004DE,gCtx_NameBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: text_ram_access) [RM5] ctx+0x9E buffer de 8 bytes de nome DB.md/DB2.md provavel (antes: text_ram_access)"
 0x0300052E,MedaforceScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1] (antes: gBattleScratchBuffer)"
 0x03000536,IWRAM_PlayerSpecialtyBase,func_thumb,,[DM] [aberto] 7 bytes 0x03000537..0x0300053D = 0x03000440+0xF7..0xFD; origem nao achada; usados por Medabot_SpawnFromRecord
 0x03000537,gCtx_PlayerSpecialty,label,,[FI2] ctx+0xF7 inicio de 7 bytes de especialidade do jogador (IWRAM_PlayerSpecialtyBase) aberto (DM)
@@ -67,41 +67,41 @@ address,name,kind,count,comment
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
 0x0300058C,keys_pressed_edge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: just_pressed_buttons)"
 0x03000590,battle_bot_block_base,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768] (antes: gPlayerBattleSideState) (antes: battle_bot_blocks)"
-0x03000591,BattleBot_MedalId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medalID)"
-0x03000594,BattleBot_MedalAttribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_compatibility)"
-0x03000595,BattleBot_Level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_level)"
-0x03000597,BattleBot_CompatibilityBonus,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_compatibility_bonus)"
-0x0300059A,BattleBot_Name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_name)"
-0x030005A8,BattleBot_SpecialityCycle,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_autobattle_rotation)"
-0x030005B0,BattleBot_SpecialityCycleWeights,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_stats)"
+0x03000591,BattleBot_MedalId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medalID) [RM5] +1 do bot; id da medalha (antes: battle_robot_1_medalID) chute"
+0x03000594,BattleBot_MedalAttribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_compatibility) [RM5] +4 do bot; atributo da medalha DM.md s0 (antes: battle_robot_1_medal_compatibility) provavel"
+0x03000595,BattleBot_Level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_level) [RM5] +5 do bot; nivel DM.md s0; comparado com 10/30/60 em AI.md confirmado (antes: battle_robot_1_medal_level)"
+0x03000597,BattleBot_CompatibilityBonus,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_compatibility_bonus) [RM5] +7 do bot; bonus de compatibilidade DM.md s0 provavel (antes: battle_robot_1_medal_compatibility_bonus)"
+0x0300059A,BattleBot_Name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_name) [RM5] +0x0A do bot; sem doc, chute (antes: battle_robot_1_name)"
+0x030005A8,BattleBot_SpecialityCycle,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_autobattle_rotation) [RM5] +0x18..+0x1F do bot; ciclo de especialidade 8 passos AI.md confirmado (antes: battle_robot_1_autobattle_rotation)"
+0x030005B0,BattleBot_SpecialityCycleWeights,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_stats) [RM5] +0x20..+0x27 do bot; pesos por passo do ciclo AI.md provavel (antes: battle_robot_1_medal_stats)"
 0x030005D0,gBotBlock0Ident,data,,[PB] [GH-PB] = bloco do bot 0 +0x40 (destino de Fight_CopyBotIdentityRecords)
-0x030005D3,BattleBot_Head_PartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_partId)"
-0x030005D8,BattleBot_Head_Medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_medal_compatibility)"
-0x030005D9,BattleBot_Head_Technique,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_animation)"
-0x030005DA,BattleBot_Head_Speciality,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_speciality)"
-0x030005DC,BattleBot_Head_ArmorMax,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_max_hp)"
-0x030005DD,BattleBot_Head_Success,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_RoS)"
-0x030005DE,BattleBot_Head_Power,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_power)"
-0x030005E0,BattleBot_Head_Uses,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_max_amount_of_uses)"
-0x030005E8,BattleBot_Head_Usable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_uses)"
-0x030005E9,BattleBot_Head_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_hp)"
-0x03000601,BattleBot_Arm1_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_left_arm_hp)"
-0x03000619,BattleBot_Arm2_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_right_arm_hp)"
-0x03000621,BattleBot_Legs_Type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_type)"
-0x03000624,BattleBot_Legs_ArmorMax,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_max_hp)"
-0x03000631,BattleBot_Legs_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_hp)"
-0x03000632,BattleBot_Legs_Propulsion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_propulsion)"
-0x03000633,BattleBot_Legs_Evasion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_evasion)"
-0x03000634,BattleBot_Legs_Defense,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_defense)"
-0x03000635,BattleBot_Legs_Proximity,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_proximity)"
-0x03000636,BattleBot_Legs_Distance,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_remoteness)"
-0x03000637,BattleBot_Legs_PartCosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_part_cosmetic)"
+0x030005D3,BattleBot_Head_PartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_partId) [RM5] +0x43 do bot; antes do bloco da cabeca, sem doc, chute (antes: battle_robot_1_head_partId)"
+0x030005D8,BattleBot_Head_Medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_medal_compatibility) [RM5] P0 da cabeca (+0x48) byte 0 = medalha DM.md s0 provavel (antes: battle_robot_1_head_medal_compatibility)"
+0x030005D9,BattleBot_Head_Technique,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_animation) [RM5] P0+1 da cabeca = tecnica DM.md s7.1 confirmado (antes: battle_robot_1_head_animation)"
+0x030005DA,BattleBot_Head_Speciality,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_speciality) [RM5] P0+2 da cabeca = especialidade DM.md s7.2 confirmado (antes: battle_robot_1_head_speciality)"
+0x030005DC,BattleBot_Head_ArmorMax,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_max_hp) [RM5] P0+4 da cabeca = armadura maxima DM.md s0 provavel (antes: battle_robot_1_head_max_hp)"
+0x030005DD,BattleBot_Head_Success,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_RoS) [RM5] P0+5 da cabeca = sucesso DM.md s0 provavel (antes: battle_robot_1_head_RoS)"
+0x030005DE,BattleBot_Head_Power,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_power) [RM5] P0+6 da cabeca = poder DM.md s0 provavel (antes: battle_robot_1_head_power)"
+0x030005E0,BattleBot_Head_Uses,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_max_amount_of_uses) [RM5] P0+8 da cabeca = usos DM.md s0 provavel (antes: battle_robot_1_head_max_amount_of_uses)"
+0x030005E8,BattleBot_Head_Usable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_uses) [RM5] P0+0x10 (=bot+0x58) cabeca usavel AI.md s1 provavel; nome antigo uses nao bate (antes: battle_robot_1_head_uses)"
+0x030005E9,BattleBot_Head_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_hp) [RM5] P0+0x11 da cabeca = armadura atual DM.md s0 provavel (antes: battle_robot_1_head_hp)"
+0x03000601,BattleBot_Arm1_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_left_arm_hp) [RM5] P1+0x11 = armadura atual do braco k=1 provavel; DM.md chama k=1 de braco D, nome antigo left_arm contradiz (antes: battle_robot_1_left_arm_hp) CONFLITO de lado"
+0x03000619,BattleBot_Arm2_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_right_arm_hp) [RM5] P2+0x11 = armadura atual do braco k=2 provavel; lado conflita com nome antigo (antes: battle_robot_1_right_arm_hp)"
+0x03000621,BattleBot_Legs_Type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_type) [RM5] P3+1 = tipo de perna DM.md s0 confirmado (antes: battle_robot_1_legs_type)"
+0x03000624,BattleBot_Legs_ArmorMax,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_max_hp) [RM5] P3+4 armadura maxima provavel (antes: battle_robot_1_legs_max_hp)"
+0x03000631,BattleBot_Legs_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_hp) [RM5] P3+0x11 armadura atual provavel (antes: battle_robot_1_legs_hp)"
+0x03000632,BattleBot_Legs_Propulsion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_propulsion) [RM5] +0xA2 propulsao DM.md s0 confirmado (antes: battle_robot_1_legs_propulsion)"
+0x03000633,BattleBot_Legs_Evasion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_evasion) [RM5] +0xA3 evasao DM.md s0 confirmado (antes: battle_robot_1_legs_evasion)"
+0x03000634,BattleBot_Legs_Defense,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_defense) [RM5] +0xA4 defesa DM.md s0 confirmado (antes: battle_robot_1_legs_defense)"
+0x03000635,BattleBot_Legs_Proximity,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_proximity) [RM5] +0xA5 proximidade DM.md s0 confirmado (antes: battle_robot_1_legs_proximity)"
+0x03000636,BattleBot_Legs_Distance,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_remoteness) [RM5] +0xA6 distancia DM.md s0 confirmado (antes: battle_robot_1_legs_remoteness)"
+0x03000637,BattleBot_Legs_PartCosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_part_cosmetic) [RM5] +0xA7 sem doc, chute (antes: battle_robot_1_legs_part_cosmetic)"
 0x03000638,bot0_active_technique,data,,[TA] B+0xA8 do bot 0 (bot base 0x03000590 + bot*0x100 + 0xA8); tecnica ativa do bot p/ efeitos; gravada por Op1B; bot k = 0x03000638 + k*0x100
 0x03000649,battle_bot_conceal_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: player_1_conceal_value)"
 0x0300064C,battle_bot0_flags_BC,label,,"[SS2] bot+0xBC: bits 01/02 (ator), 04 (bypass esquiva), 08 (bypass defesa), 10 (esquivou), 20 (defendeu), 40 (critico) (C, SS2)"
 0x0300064D,battle_bot0_flags_BD,label,,"[SS2] bot+0xBD: 08 = carga (W_07, E00, icone modo A); 10 = icone modo B (AM_0A) (C, SS2)"
 0x0300064F,battle_bot0_affinity_BF,label,,"[SS2] bot+0xBF: codigo de afinidade do ataque (2 optico, 3 bomba, 4 gravidade) (P, R2.md; nao reconfirmado)"
-0x03000651,BattleBot_MedaforceGauge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_current_medaforce)"
+0x03000651,BattleBot_MedaforceGauge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_current_medaforce) [RM5] +0xC1 medidor de medaforca AB.md Q4 provavel; valor 'P' = 0x50 = teto em AI.md (antes: battle_robot_1_current_medaforce)"
 0x03000659,battle_bot0_status_C9,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_status_effect)"
 0x0300065F,battle_bot0_protect_mask_CF,label,,"[SS2] bot+0xCF mascara de protecao: 01 Bug/Virus, 08 Freeze, 02 Hold, 04 Fire (C, SS2 secao 1)"
 0x03000666,gFightBot0Flags_D6,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_form) [RM2] provavel (antes: battle_robot_1_form): bot0+0xD6 bit0 testado em Fight_IsOpticClassAction; nome antigo errado"
@@ -606,7 +606,7 @@ address,name,kind,count,comment
 0x08007D04,PartsGrid_BlendStartStep,func_thumb,,"[FS2] provavel: SetGpuBlendMode(6,0x3F,0x20) + contador; entradas 13 e 20 de 0x083AC86C; renomeado"
 0x08007D28,Tile_ClearSlotsAndDispatchState_JumpTable,data,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5) (antes: Tile_ClearSlotsAndDispatchState)"
 0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,,[JT5] mov pc
-0x08007DDC,PartsGrid_SelectNextStateByCursor,func_thumb,,"[PG] [PG] provavel: ClearObjectAttributeEntries(0,0x80); escreve 8/0x18/0x28/0x38 conforme byte +0x42 (0..3); eixo (X/Y) chute; entradas 22,38,54,70; renomeado no Ghidra (antes: PartsGrid_SetSelectorPosByIndex)"
+0x08007DDC,PartsGrid_SelectNextStateByCursor,func_thumb,,"[PG] [PG] provavel: ClearObjectAttributeEntries(0,0x80); escreve 8/0x18/0x28/0x38 conforme byte +0x42 (0..3); eixo (X/Y) chute; entradas 22,38,54,70; renomeado no Ghidra (antes: PartsGrid_SetSelectorPosByIndex) [CH6] [CH6] revisto CH6: confirmado no efeito, nome provavel (antes: PartsGrid_SetSelectorPosByIndex). Limpa OAM (0,0x80); le ctx 0x03000440 +0x42 (cursor 0..3) e escreve em GS 0x0300137C o valor 8/0x18/0x28/0x38 (proximo estado). Nao escreve posicao. Entradas 22,38,54,70 da tabela 0x083AC86C"
 0x08007E38,PartsGrid_InitScreen,func_thumb,,"monta tela de grade de pecas (decompress, tiles, PartsGrid_Draw*); provavel"
 0x0800801C,PartsGrid_SlideDetailStep,func_thumb,,"[FS2] provavel: passo de posicao do painel de detalhe (modo 8) + blend; entradas 25, 31, 37 de 0x083AC86C; renomeado"
 0x08008050,PartsGrid_SlideLoadStep,func_thumb,,[FS2] provavel: passo de posicao (modo 8) + Obj_InitSlotAndLoad; entrada 26 de 0x083AC86C; renomeado
@@ -4234,50 +4234,50 @@ address,name,kind,count,comment
 0x083D6298,unknown_ChapterLiteralPool,data,,"[PR] literal 0x03005FDF sem leitor de funcao conhecido; perto de CBC/CBD (0x083D6274/78); pendente [RD5] chute: pool de literais RAM (0x03005FDF, 0x03006413, 0x030057B1); sem leitor conhecido (PR); nome mantido"
 0x083D6A2C,gArcHeightTable,data,,"[CU] 16 linhas de 0x10 B; valor (short) de cada linha = altura do arco em 1/16 px (Map_ObjectArcStep, GH-CU) [RD5] confirmado: 16 x 16 B = 256 (CU; altura do arco, forma simetrica no byte de cada linha)"
 0x083F7B80,gObjectAnimScriptPtrTable,data,,[CS] ponteiros de roteiro por anim = facing+4*grupo (CONFIRMADO dump: 12 primeiros)
-0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
-0x083F7E80,gMapSpritePtrTable,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites) (antes: gGfx_Overworld_PonteirosSprite)
-0x083F83C0,gMapSpritePaletteTablePtr,data,,[CS2] ponteiros de paleta OBJ por id de sprite (61 validas; entrada 0 = usa id 1)
-0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B; Simon: sMapDimensionsInMetaTilesTable
+0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0 [RD6] provavel: 0x100 B ate 0x083F7E80; bytes nao monotonicos; xrefs de Random_NextScaled e fx/Obj (DATA); nome mantido
+0x083F7E80,gMapSpritePtrTable,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites) (antes: gGfx_Overworld_PonteirosSprite) [RD6] provavel: slots id-indexados 0x540 B = 336 x 4 B; ~61 validos (CS.md/CS2); ponteiro LZ77 de sprite (antes: Overworld_Sprites)
+0x083F83C0,gMapSpritePaletteTablePtr,data,,[CS2] ponteiros de paleta OBJ por id de sprite (61 validas; entrada 0 = usa id 1) [RD6] provavel: slots 336 x 4 B (mesmo tamanho); 61 validos (CS2.md); entrada 0 = usa id 1
+0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B; Simon: sMapDimensionsInMetaTilesTable [RD6] confirmado: 192 x 2 B (largura
 0x083F8A80,gMapTilesetPtrTable,ptr,192,graficos do tileset (LZ77); Simon: sMapTilesetGraphicsPointerTable (antes: gMapTilesetGfx) (antes: gGfx_Overworld_PonteirosTileB) [MP] [MP] confirmado: 4 B por mapa -> tileset LZ77 para VRAM 0x06009000
 0x083F8D80,gMapTilesetExtraPtrTable,ptr,192,atributos de cor; Simon: sMapColorAttributePointerTable (antes: gMapColorAttr) [MP] [MP] confirmado no codigo: 4 B por mapa -> LZ77 para ponteiro 0x030057DC (opcional); conteudo nao lido
 0x083F9080,gMapLayerPtrTable,ptr,576,"camadas: 192 x 3 ponteiros LZ77; Simon: sMapLayerTilemapPointerTable (antes: gMapLayers) (antes: gGfx_Overworld_PonteirosTileA) [MP] [MP] confirmado: 12 B por mapa = 3 ponteiros LZ77 (camadas 0,1,2) de tilemap GBA 8x8; cabecalho 16 B: u16 lw@0, u16 lh@4"
 0x083F9980,gMapPalettePtrTable,ptr,192,paletas do tileset (0x200 B); Simon: sMapTilesetPaletteDataPointerTable (antes: gMapTilesetPal) [MP] [MP] provavel (extract_map.py): 4 B por mapa -> paleta de 0x200 B; nao lido no Ghidra
 0x08404334,gMapCollisionPtrTable,ptr,192,"colisao (1 B por metatile 16x16); Simon: collision_table (antes: gMapCollision) (antes: gGfx_Overworld_PonteirosCamada) [MP] [MP] confirmado: 4 B por mapa -> colisao bruta, 1 B por metatile 16x16 (valores 0..3); NAO e tabela de camadas (GF3 errou)"
-0x08409480,gMapAnimDescTable,ptr,192,bloco por mapa A; Simon: sMapBackgroundAnimationPointerTable (antes: gMapBlockA)
-0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B)
-0x08411AE0,gTextDialogue_08411AE0,ptr,202,tabela de texto: Diálogo de NPCs (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x08411E08,gWarpList_Map0,data,,"[OW2] 8 B por entrada: +0 X origem, +1 Y, +2 mapa destino, +3 nibble alto som/tipo, nibble baixo facing, +6 X dest, +7 Y dest"
+0x08409480,gMapAnimDescTable,ptr,192,bloco por mapa A; Simon: sMapBackgroundAnimationPointerTable (antes: gMapBlockA) [RD6] confirmado: 192 x 4 B; descritor ROM[+4m] por gCurrentMapId (MP2.md) (antes: gMapBlockA)
+0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B) [RD6] confirmado: 192 x 4 B ponteiros (run exato de 192)
+0x08411AE0,gTextDialogue_08411AE0,ptr,202,tabela de texto: Diálogo de NPCs (2); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 202 entradas (CSV/dump)
+0x08411E08,gWarpList_Map0,data,,"[OW2] 8 B por entrada: +0 X origem, +1 Y, +2 mapa destino, +3 nibble alto som/tipo, nibble baixo facing, +6 X dest, +7 Y dest [RD6] confirmado: 8 B por entrada (warps do mapa 0; OW2.md); tamanho nao fechado"
 0x08411FE7,gWarpList_Map23,data,,"[OW2] lab de New Game; entrada (18,14) -> mapa 0 (18,5) (confirmado vs pesquisa)"
-0x08412E60,gWarpTablePtrs,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable (antes: gMapWarps)
-0x08413160,gMapSpriteIndexByMap,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable (antes: gMapSprites)
-0x08413EE0,gPoseIdNestedTablePtrs,data,,[CU2] CU2: ponteiros para tabelas aninhadas de Map_PoseIdToTileIndex (ids >= 0xD0)
-0x084144B4,gTextDialogue_084144B4,ptr,248,tabela de texto: Diálogo de NPCs (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x084798F4,gTextDialogue_084798F4,ptr,389,tabela de texto: Diálogo de história (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x08479F0C,gTextDialogue_08479F0C,ptr,237,tabela de texto: Diálogo de história (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847A2C4,gTextDialogue_0847A2C4,ptr,303,tabela de texto: Diálogo de história (3); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847A784,gTextDialogue_0847A784,ptr,323,tabela de texto: Diálogo de história (4); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847AC94,gTextDialogue_0847AC94,ptr,286,tabela de texto: Diálogo de história (5); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847B110,gTextDialogue_0847B110,ptr,295,tabela de texto: Diálogo de história (6); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847B5B0,gTextDialogue_0847B5B0,ptr,259,tabela de texto: Diálogo de história (7); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847B9C0,gTextDialogue_0847B9C0,ptr,263,tabela de texto: Diálogo de história (8); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847BDE0,gTextDialogue_0847BDE0,ptr,281,tabela de texto: Diálogo de história (9); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847C248,gTextDialogue_0847C248,ptr,256,tabela de texto: Diálogo de história (10); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847C64C,gTextDialogue_0847C64C,ptr,277,tabela de texto: Diálogo de história (11); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847CAA8,gTextDialogue_0847CAA8,ptr,180,tabela de texto: Diálogo de história (12); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847CD7C,gTextDialogue_0847CD7C,ptr,233,tabela de texto: Diálogo de história (13); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847D124,gTextDialogue_0847D124,ptr,293,tabela de texto: Diálogo de história (14); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847D5C0,gTextDialogue_0847D5C0,ptr,323,tabela de texto: Diálogo de história (15); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847DAD0,gTextDialogue_0847DAD0,ptr,276,tabela de texto: Diálogo de história (16); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto
-0x0847E388,get_item_text,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4]
+0x08412E60,gWarpTablePtrs,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable (antes: gMapWarps) [RD6] confirmado: 192 x 4 B (run de 384 = esta + tabela seguinte de 192) (antes: gMapWarps)
+0x08413160,gMapSpriteIndexByMap,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable (antes: gMapSprites) [RD6] confirmado: 192 x 4 B ponteiros; lista de sprites por mapa (CS.md) (antes: gMapSprites)
+0x08413EE0,gPoseIdNestedTablePtrs,data,,[CU2] CU2: ponteiros para tabelas aninhadas de Map_PoseIdToTileIndex (ids >= 0xD0) [RD6] provavel: ponteiros para tabelas aninhadas ids >=0xD0 (CU2.md); >=16 x 4 B
+0x084144B4,gTextDialogue_084144B4,ptr,248,tabela de texto: Diálogo de NPCs (1); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 248 entradas (CSV/dump)
+0x084798F4,gTextDialogue_084798F4,ptr,389,tabela de texto: Diálogo de história (1); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 389 entradas (CSV/dump)
+0x08479F0C,gTextDialogue_08479F0C,ptr,237,tabela de texto: Diálogo de história (2); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 237 entradas (CSV/dump)
+0x0847A2C4,gTextDialogue_0847A2C4,ptr,303,tabela de texto: Diálogo de história (3); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 303 entradas (CSV/dump)
+0x0847A784,gTextDialogue_0847A784,ptr,323,tabela de texto: Diálogo de história (4); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 323 entradas (CSV/dump)
+0x0847AC94,gTextDialogue_0847AC94,ptr,286,tabela de texto: Diálogo de história (5); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 286 entradas (CSV/dump)
+0x0847B110,gTextDialogue_0847B110,ptr,295,tabela de texto: Diálogo de história (6); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 295 entradas (CSV/dump)
+0x0847B5B0,gTextDialogue_0847B5B0,ptr,259,tabela de texto: Diálogo de história (7); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 259 entradas (CSV/dump)
+0x0847B9C0,gTextDialogue_0847B9C0,ptr,263,tabela de texto: Diálogo de história (8); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 263 entradas (CSV/dump)
+0x0847BDE0,gTextDialogue_0847BDE0,ptr,281,tabela de texto: Diálogo de história (9); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 281 entradas (CSV/dump)
+0x0847C248,gTextDialogue_0847C248,ptr,256,tabela de texto: Diálogo de história (10); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 256 entradas (CSV/dump)
+0x0847C64C,gTextDialogue_0847C64C,ptr,277,tabela de texto: Diálogo de história (11); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 277 entradas (CSV/dump)
+0x0847CAA8,gTextDialogue_0847CAA8,ptr,180,tabela de texto: Diálogo de história (12); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 180 entradas (CSV/dump)
+0x0847CD7C,gTextDialogue_0847CD7C,ptr,233,tabela de texto: Diálogo de história (13); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 233 entradas (CSV/dump)
+0x0847D124,gTextDialogue_0847D124,ptr,293,tabela de texto: Diálogo de história (14); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 293 entradas (CSV/dump)
+0x0847D5C0,gTextDialogue_0847D5C0,ptr,323,tabela de texto: Diálogo de história (15); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 323 entradas (CSV/dump)
+0x0847DAD0,gTextDialogue_0847DAD0,ptr,276,tabela de texto: Diálogo de história (16); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 276 entradas (CSV/dump)
+0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto [RD6] confirmado: 16 x 4 B
+0x0847E388,gEventItemTextTable,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4] (antes: get_item_text)
 0x0847E644,gMapMusic,data,192,musica por mapa
 0x08483234,gMapPeoplePtrTable,ptr,192,"pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople) (antes: gMapEntityPtrTable) [MP] [MP] provavel (extract_objects.py + dados): 4 B por mapa -> lista de registros de 8 B (x,y,kind<<12|evento,sprite,grupo,mascara cap.) terminada em 0xFF; leitor nao lido"
 0x08483594,gMainState2MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel
-0x084835A4,KeyItemBag_MenuTable4,data,,[IN2] [IN2] tabela de quadros (ponteiros); entrada 0 = Dispatch_StateTableFrameCount 0x0805CB50; nao ha xref direto (antes: ScreenFrameTable_Entry0)
+0x084835A4,KeyItemBag_MenuTable4,data,,[IN2] [IN2] tabela de quadros (ponteiros); entrada 0 = Dispatch_StateTableFrameCount 0x0805CB50; nao ha xref direto (antes: ScreenFrameTable_Entry0) [RD6] provavel: tabela de quadros; menu 4 da MainState2 (base 0x08483594
 0x0848360C,gTitleMenuSubStateTable,data,,[TL] tabela de ponteiros do menu do título (GS 0..11)
 0x08483614,SAVE_HANDLER_InitScreen,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar -> Save_InitScreen (confirmado)
-0x08483634,KeyItemBag_SubStateTable,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C (antes: StateTable_CB50)"
-0x08483670,gMainState2_Menu5SubTable,table,,[FM4] [FM4] tabela do menu 5 de MainState2: 0=0x0805D750; 1=0x0805D790; 2=0x0805D860; 3=0x0805DA14; 4=0x0805DAB0; 5=0x0805DAD4 (antes: MainState2_Menu5_SubTable)
+0x08483634,KeyItemBag_SubStateTable,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C (antes: StateTable_CB50) [RD6] provavel: 30 x 4 B; indice 2 = tela da bolsa (IN2); usada tambem por Shop_InitItemListScreen (IN2/IN3); nome mantido"
+0x08483670,gMainState2_Menu5SubTable,table,,[FM4] [FM4] tabela do menu 5 de MainState2: 0=0x0805D750; 1=0x0805D790; 2=0x0805D860; 3=0x0805DA14; 4=0x0805DAB0; 5=0x0805DAD4 (antes: MainState2_Menu5_SubTable) [RD6] provavel: tabela do menu 5 (save); FM4 diz 6 entradas
 0x08483688,SAVE_HANDLER_StepThenFlashOp,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x084836B4,SAVE_SIGNATURE_ROM,data,,[SV] [SV] 16 B 'MEDAROT2 Ver.KBT' copiados p/ save +0 (confirmado)
 0x084836C5,SAVE_ERASE_HEADER_ROM,data,,[SV] [SV] 16 B copiados p/ save +0 pelo apagar (op 2); comeca com 'MEDAROT2' mas nao e a assinatura (confirmado)
@@ -4285,109 +4285,109 @@ address,name,kind,count,comment
 0x08483724,SAVE_HANDLER_FinishFlashStep,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x08483770,SAVE_HANDLER_WriteEepromAndFinish,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B) [DT3] 192 B copia de gMapArea (difere em 4 bytes); sem leitor confirmado
-0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents
-0x08483ED8,gTextKeyItems,ptr,64,tabela de texto: Key Items; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents [RD6] confirmado: 15 lojas x 4 slots x 1 B (ID de bot
+0x08483ED8,gTextKeyItems,ptr,64,tabela de texto: Key Items; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: 64 x 4 B ponteiros de texto (dump)
 0x084850CA,KeyItemBag_MsgScript,data,,[IN3] [IN3-2] bytecode do script de recusa (+0x20 de 0x0848521C). Nao decodificado: id de mensagem a descobrir
-0x0848521C,KeyItemBag_MsgStateObj,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextShopDialogue) [IN3] [IN3-2] objeto de estado (ROM) usado pelo sub 9 (Flow_StepCounterTickB): +0x20 = 0x084850CA (script). Recusa 2..4 cai aqui; id de mensagem NAO confirmado
+0x0848521C,gTextShopDialogue,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextShopDialogue) [IN3] [IN3-2] objeto de estado (ROM) usado pelo sub 9 (Flow_StepCounterTickB): +0x20 = 0x084850CA (script). Recusa 2..4 cai aqui; id de mensagem NAO confirmado (antes: KeyItemBag_MsgStateObj)
 0x084856E8,gMainState3MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState3; [0]=boot (0x0806E460); [3..6] handlers; provavel
 0x084859D8,gBootSubStateTable,data,,[TL] tabela de ponteiros do boot (GS 0..10)
-0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: 31 x 4 B ponteiros de texto (dump)
+0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: 12 x 4 B ponteiros de texto (dump)
 0x08486E54,SND_LitFifoA,data,,[SN] literal 0x040000A0 (FIFO A do DMA de PCM)
 0x08486E58,SND_LitFifoB,data,,[SN] literal 0x040000A4 (FIFO B do DMA de PCM)
-0x08486E6C,gGfx_Dialog_Moldura,data,,[GF3] Moldura da caixa de dialogo (Malias +2 0x0220); GF3
-0x084881E0,gGfx_Battle_BotTiles_B,data,,[GF] Malias +2=0x0038; LoadTilesWithMalias bloco 0x11; Fight_LoadBattleBotTilesSet (GF)
-0x08488240,gGfx_Battle_BotTiles_C,data,,[GF] Malias +2=0x004C; LoadTilesWithMalias bloco 0x0F; Fight_LoadBattleBotTilesSet (GF)
-0x08488290,gGfx_Battle_BotTiles_D,data,,[GF] Malias +2=0x0060; LoadTilesWithMalias bloco 0x10; Fight_LoadBattleBotTilesSet (GF)
-0x084882CC,gGfx_Battle_BotTiles_A,data,,[GF] Malias +2=0x0070; LoadTilesWithMalias bloco 0x0D; Fight_LoadBattleBotTilesSet 0x08015A90 (GF)
-0x08488520,gGfx_Dialog_PaletaOrnamento,data,,[GF3] Paleta banco 15 da caixa de dialogo (cru); GF3
-0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias)"
-0x084C29D8,gGfx_BotIconTable_Base,label,,sprites de medalha: 2x64 tiles 4bpp (antes: gMedalSprites)
-0x084C2E58,gGfx_MedalIcon_Kuwagata,data,,"[IC] [GH-IC] 128 B = bloco 9 de 0x084C29D8 (medalha 0 Kuwagata, hipotese); destino VRAM tiles 960..963 na tela BUILD"
-0x084C38D8,gGfx_BotIcon_Default30,data,,[IC2] [GH-IC2] = 0x084C29D8 + 30*0x80: icone padrao/vazio usado quando o slot >= 30
-0x084C39D8,gGfx_Dialog_Tiles2,data,,[GF3] Tiles auxiliares da caixa de dialogo/escolha (Malias +2 0x0040); GF3
-0x084C3A24,gGfx_PartsGrid_Tiles_Bg1,data,,[GF] Malias 0x0340; grade 0x06006280; tambem Screen_LoadSceneWithSong 0x06000080 (GF)
-0x084C3BF8,gGfx_PartsGrid_Tiles_Bg2,data,,[GF] Malias 0x0580 -> VRAM 0x06006800; PartsGrid_InitScreen (GF)
-0x084C3E64,gGfx_PartDetail_Tiles_Bg6,data,,[GF2] Malias 0x0140 -> VRAM 0x06007880; PartDetailScreen_Init (GF2)
-0x084C3F0C,gGfx_FightScene_Tiles_Bg2,data,,[GF2] Malias 0x0280 -> VRAM 0x06007200; Fight_BattleSceneInit (GF2)
-0x084C4B4C,gGfx_PartDetail_Tiles_Bg3,data,,[GF2] Malias 0x0100 -> VRAM 0x06007100; PartDetailScreen_Init (GF2)
-0x084C4BDC,gGfx_PartDetail_Tiles_Bg1,label,,Simon/Rokusho em 0x084C4C00 (antes: sPartDetailTileSheetA)
-0x084C4FBC,gGfx_PartDetail_Tiles_Bg2,data,,[GF2] Malias 0x0040 -> VRAM 0x06007080; PartDetailScreen_Init (GF2)
-0x084C4FFC,gGfx_PartDetail_Tiles_Bg4,data,,[GF2] Malias 0x0100 -> VRAM 0x06007200; PartDetailScreen_Init (GF2)
-0x084C50D0,gGfx_BattleScene_Tiles_Bg1a,data,,[GF2] Malias 0x0200 -> VRAM 0x06006000; InitializeBattleSceneScreen (GF2)
-0x084C5250,gGfx_BattleScene_Tiles_Bg1b,data,,[GF2] Malias 0x0200 -> VRAM 0x06006200; InitializeBattleSceneScreen (GF2)
-0x084C53C8,gGfx_PartDetail_Tiles_Bg5,data,,[GF2] Malias 0x0380 -> VRAM 0x06007300; PartDetailScreen_Init (GF2)
-0x084C55CC,gGfx_BattleScene_Tiles_Bg3,data,,[GF2] Malias 0x0380 -> VRAM 0x06006E00; InitializeBattleSceneScreen e Fight_BattleSceneInit (GF2)
-0x084C58D8,gGfx_FightScene_Tiles_Bg3,data,,[GF2] Malias 0x0040 -> VRAM 0x06007480; Fight_BattleSceneInit (GF2)
-0x084C58F4,gGfx_FightScene_Tiles_Bg1,data,,[GF2] Malias 0x0100 -> VRAM 0x06006000; Fight_BattleSceneInit (GF2)
-0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
-0x084C7C54,gGfx_Overlay_Tiles_Bg1,data,,[GF2] Malias 0x08C0 -> VRAM 0x06007000; Overlay_InitScreenGraphics (GF2)
-0x084C7E7C,gGfx_Overlay_Tiles_Bg2,data,,[GF2] Malias 0x0120 -> VRAM 0x06007A00; Overlay_InitScreenGraphics (GF2)
-0x084C8034,gGfx_Obj_Malias_09C0,label,,Simon/Rokusho em 0x084C8058 (antes: sShopPartScreenUiTileSheet)
+0x08486E6C,gGfx_Dialog_Moldura,data,,[GF3] Moldura da caixa de dialogo (Malias +2 0x0220); GF3 [RD6] confirmado: Malias
+0x084881E0,gGfx_Battle_BotTiles_B,data,,[GF] Malias +2=0x0038; LoadTilesWithMalias bloco 0x11; Fight_LoadBattleBotTilesSet (GF) [RD6] confirmado: Malias
+0x08488240,gGfx_Battle_BotTiles_C,data,,[GF] Malias +2=0x004C; LoadTilesWithMalias bloco 0x0F; Fight_LoadBattleBotTilesSet (GF) [RD6] confirmado: Malias
+0x08488290,gGfx_Battle_BotTiles_D,data,,[GF] Malias +2=0x0060; LoadTilesWithMalias bloco 0x10; Fight_LoadBattleBotTilesSet (GF) [RD6] confirmado: Malias
+0x084882CC,gGfx_Battle_BotTiles_A,data,,[GF] Malias +2=0x0070; LoadTilesWithMalias bloco 0x0D; Fight_LoadBattleBotTilesSet 0x08015A90 (GF) [RD6] confirmado: Malias
+0x08488520,gGfx_Dialog_PaletaOrnamento,data,,[GF3] Paleta banco 15 da caixa de dialogo (cru); GF3 [RD6] provavel: 1 paleta de 16 cores BGR15 (32 B) cru
+0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias) [RD6] provavel: 128 x 0x20 B (4bpp 8x16); bytes iniciais 0x11 (cor 1 = fundo) (antes: label)"
+0x084C29D8,gGfx_BotIconTable_Base,label,,sprites de medalha: 2x64 tiles 4bpp (antes: gMedalSprites) [RD6] confirmado: icones de 0x80 B em stride; +30*0x80 = gGfx_BotIcon_Default30 (aritmetica confirmada)
+0x084C2E58,gGfx_MedalIcon_Kuwagata,data,,"[IC] [GH-IC] 128 B = bloco 9 de 0x084C29D8 (medalha 0 Kuwagata, hipotese); destino VRAM tiles 960..963 na tela BUILD [RD6] provavel: 0x80 B = base+9*0x80 (IC.md; medalha 0 hipotese)"
+0x084C38D8,gGfx_BotIcon_Default30,data,,[IC2] [GH-IC2] = 0x084C29D8 + 30*0x80: icone padrao/vazio usado quando o slot >= 30 [RD6] confirmado: base+30*0x80 (icone padrao quando slot>=30)
+0x084C39D8,gGfx_Dialog_Tiles2,data,,[GF3] Tiles auxiliares da caixa de dialogo/escolha (Malias +2 0x0040); GF3 [RD6] confirmado: Malias
+0x084C3A24,gGfx_PartsGrid_Tiles_Bg1,data,,[GF] Malias 0x0340; grade 0x06006280; tambem Screen_LoadSceneWithSong 0x06000080 (GF) [RD6] confirmado: Malias
+0x084C3BF8,gGfx_PartsGrid_Tiles_Bg2,data,,[GF] Malias 0x0580 -> VRAM 0x06006800; PartsGrid_InitScreen (GF) [RD6] confirmado: Malias
+0x084C3E64,gGfx_PartDetail_Tiles_Bg6,data,,[GF2] Malias 0x0140 -> VRAM 0x06007880; PartDetailScreen_Init (GF2) [RD6] confirmado: Malias
+0x084C3F0C,gGfx_FightScene_Tiles_Bg2,data,,[GF2] Malias 0x0280 -> VRAM 0x06007200; Fight_BattleSceneInit (GF2) [RD6] confirmado: Malias
+0x084C4B4C,gGfx_PartDetail_Tiles_Bg3,data,,[GF2] Malias 0x0100 -> VRAM 0x06007100; PartDetailScreen_Init (GF2) [RD6] confirmado: Malias
+0x084C4BDC,gGfx_PartDetail_Tiles_Bg1,label,,Simon/Rokusho em 0x084C4C00 (antes: sPartDetailTileSheetA) [RD6] confirmado: Malias
+0x084C4FBC,gGfx_PartDetail_Tiles_Bg2,data,,[GF2] Malias 0x0040 -> VRAM 0x06007080; PartDetailScreen_Init (GF2) [RD6] confirmado: Malias
+0x084C4FFC,gGfx_PartDetail_Tiles_Bg4,data,,[GF2] Malias 0x0100 -> VRAM 0x06007200; PartDetailScreen_Init (GF2) [RD6] confirmado: Malias
+0x084C50D0,gGfx_BattleScene_Tiles_Bg1a,data,,[GF2] Malias 0x0200 -> VRAM 0x06006000; InitializeBattleSceneScreen (GF2) [RD6] confirmado: Malias
+0x084C5250,gGfx_BattleScene_Tiles_Bg1b,data,,[GF2] Malias 0x0200 -> VRAM 0x06006200; InitializeBattleSceneScreen (GF2) [RD6] confirmado: Malias
+0x084C53C8,gGfx_PartDetail_Tiles_Bg5,data,,[GF2] Malias 0x0380 -> VRAM 0x06007300; PartDetailScreen_Init (GF2) [RD6] confirmado: Malias
+0x084C55CC,gGfx_BattleScene_Tiles_Bg3,data,,[GF2] Malias 0x0380 -> VRAM 0x06006E00; InitializeBattleSceneScreen e Fight_BattleSceneInit (GF2) [RD6] confirmado: Malias
+0x084C58D8,gGfx_FightScene_Tiles_Bg3,data,,[GF2] Malias 0x0040 -> VRAM 0x06007480; Fight_BattleSceneInit (GF2) [RD6] confirmado: Malias
+0x084C58F4,gGfx_FightScene_Tiles_Bg1,data,,[GF2] Malias 0x0100 -> VRAM 0x06006000; Fight_BattleSceneInit (GF2) [RD6] confirmado: Malias
+0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU) [RD6] provavel: 128 x 0x20 B (4bpp 8x16); CSV nota ROM EU danificada (antes: label)
+0x084C7C54,gGfx_Overlay_Tiles_Bg1,data,,[GF2] Malias 0x08C0 -> VRAM 0x06007000; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: Malias +2=0x08C0 -> VRAM 0x06007000 (GF2)
+0x084C7E7C,gGfx_Overlay_Tiles_Bg2,data,,[GF2] Malias 0x0120 -> VRAM 0x06007A00; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: Malias +2=0x0120 -> VRAM 0x06007A00 (GF2)
+0x084C8034,gObjTextFontGfx,label,,Simon/Rokusho em 0x084C8058 (antes: sShopPartScreenUiTileSheet) (antes: gGfx_Obj_Malias_09C0)
 0x084C8034,gObjTextFontGfx,data,,fonte 8x8 dos rotulos em sprite (comprimida, 0x9C0 B = 78 tiles 4bpp), carregada em OBJ tile 0x3A0 (0x06017400)
-0x084C88B8,gGfx_PartsGrid_Tiles_Bg3,data,,[GF] Malias 0x01C0 -> VRAM 0x06017E00; PartsGrid_InitScreen (GF)
-0x084C92B0,gGfx_BotPartSelect_Tiles_Obj,data,,[GF4] Malias +2 0x0800 -> VRAM 0x06012800; Fight_InitBotPartSelectScreen; GF4
-0x084E3698,gGfx_Overlay_Obj_Sprites,data,,[GF2] Malias 0x2580 -> OBJ 0x06010000; Overlay_InitScreenGraphics (GF2)
-0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR)
-0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
-0x084E6BF0,gGfx_BattleStatus_Char,data,,[GF3] Char principal do status de batalha (Malias +2 0x1320 -> VRAM 0x06004000); GF3
-0x084E776C,gGfx_BattleScene_Tiles_Bg0,data,,[GF2] Malias 0x11A0 -> VRAM 0x06004000; InitializeBattleSceneScreen 0x080040BC (GF2)
-0x084E823C,gGfx_BotPartSelect_Tiles_Bg0,data,,[GF4] Malias +2 0x0AE0 -> VRAM 0x06004000; Fight_InitBotPartSelectScreen 0x0801058C; GF4
-0x084E9650,gGfx_PartsGrid_Tiles_Bg0,data,,[GF] Malias 0x1CA0 -> VRAM 0x06004000; PartsGrid_InitScreen 0x08007A04 (GF)
-0x084EC1F8,gGfx_PartsGrid_CharEntrada,data,,[GF3] Char principal da grade de pecas na entrada (Malias +2 0x2B00 -> VRAM 0x06004000); GF3
-0x084EE0DC,gGfx_PartDetail_Tiles_Bg0,data,,[GF2] Malias 0x0FE0 -> VRAM 0x06004000; PartDetailScreen_Init 0x0800E0BC (GF2)
-0x084EEA64,gGfx_FightScene_Tiles_Bg0,data,,[GF2] Malias 0x10A0 -> VRAM 0x06004000; Fight_BattleSceneInit 0x08013C14 (GF2)
-0x084EF490,gGfx_Overlay_Tiles_Bg0,data,,[GF2] Malias 0x2F40 -> VRAM 0x06004000; Overlay_InitScreenGraphics 0x0803DD60 (GF2)
-0x084F08B0,gGfx_BattleScene_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
-0x084F0920,gGfx_PartsGrid_Map_Bg0,data,,[GF] Malias tilemap 2048 B; BGCNT 0x0500; PartsGrid_InitScreen (GF)
-0x084F0B44,gGfx_PartDetail_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
-0x084F0B7C,gGfx_FightScene_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
-0x084F0C08,gGfx_Overlay_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
-0x084F0F68,gGfx_BattleScene_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
-0x084F0FD4,gGfx_BotPartSelect_Map_Bg,data,,[GF4] Malias mapa +2 0x0810; LoadTilesWithMalias via Fight_InitBotPartSelectScreen; GF4
-0x084F1180,gGfx_PartsGrid_Map_Bg1,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1801; PartsGrid_InitScreen (GF)
-0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
-0x084F1608,gGfx_PartDetail_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
-0x084F16C8,gGfx_FightScene_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
-0x084F1734,gGfx_Overlay_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
-0x084F198C,gGfx_BattleScene_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
-0x084F1C28,gGfx_PartsGrid_Map_Bg2,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1902; PartsGrid_InitScreen (GF)
-0x084F2244,gGfx_PartDetail_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
-0x084F22C4,gGfx_FightScene_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
-0x084F233C,gGfx_Overlay_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
-0x084F2960,gGfx_BattleScene_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
-0x084F2C88,gGfx_PartsGrid_Map_Bg3,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1A03; PartsGrid_InitScreen (GF)
-0x084F3468,gGfx_PartDetail_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
-0x084F35FC,gGfx_FightScene_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
-0x084F3788,gGfx_Overlay_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
-0x084F4300,gGfx_PartsGrid_Palette_Banks,data,,[GF] cru 0x70 words -> 0x05000000; PartsGrid_InitScreen (GF)
-0x084F4840,gGfx_PartsGrid_Palette_Bank2,data,,[GF4] cru 0x70 words -> paleta BG 0x05000000; PartsGrid_EnterScreenInit 0x080087CC (0x0800886C); GF4
-0x084F4BC0,gGfx_PartDetail_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; PartDetailScreen_Init (GF2)
-0x084F4D80,gGfx_FightScene_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; Fight_BattleSceneInit (GF2)
-0x084F4F40,gGfx_Overlay_Palette_Bg,data,,[GF2] cru 0x60 words -> 0x05000000; Overlay_InitScreenGraphics (GF2)
-0x0850F2F8,sCompositeBattleSpritePaletteSet,label,,Simon/Rokusho em 0x0850F31C
-0x0850F318,sPartScreenObjPaletteBlockA,label,,Simon/Rokusho em 0x0850F33C
-0x0850F378,sPartScreenObjPaletteBlockB,label,,Simon/Rokusho em 0x0850F39C
-0x0850F498,gMiniSpritePalettes,data,128,4 paletas OBJ do mini sprite (a 4a zerada); Simon: sPartSelectionComponentPaletteSet
-0x08765EC0,gEventDb,label,,base do banco de eventos (header: offsets das tabelas)
-0x08765EC4,event_operation_list,label,,Simon/Rokusho em 0x08765EE4
-0x08769EC0,gEventPointerTable,label,,tabela de ponteiros de eventos (base + 0x4000)
-0x087852CF,gStarterData,label,,dados do bot inicial
+0x084C88B8,gGfx_PartsGrid_Tiles_Bg3,data,,[GF] Malias 0x01C0 -> VRAM 0x06017E00; PartsGrid_InitScreen (GF) [RD7] confirmado: Malias +2=0x01C0 -> VRAM 0x06017E00 (GF)
+0x084C92B0,gGfx_BotPartSelect_Tiles_Obj,data,,[GF4] Malias +2 0x0800 -> VRAM 0x06012800; Fight_InitBotPartSelectScreen; GF4 [RD7] confirmado: Malias +2=0x0800 -> VRAM 0x06012800 (GF4)
+0x084E3698,gGfx_Overlay_Obj_Sprites,data,,[GF2] Malias 0x2580 -> OBJ 0x06010000; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: Malias +2=0x2580 -> OBJ 0x06010000 (GF2)
+0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR) [RD7] confirmado: 16 cores = 32 B (bytes 0000 27DF 237D...); paleta BG 14 do texto do dialogo (HANDOFF). (kind label->data)
+0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C [RD7] confirmado: paleta crua 8 words = 16 cores (32 B) -> 0x050003C0 (GF3). (kind label->data)
+0x084E6BF0,gGfx_BattleStatus_Char,data,,[GF3] Char principal do status de batalha (Malias +2 0x1320 -> VRAM 0x06004000); GF3 [RD7] confirmado: Malias +2=0x1320 -> VRAM 0x06004000 (GF3)
+0x084E776C,gGfx_BattleScene_Tiles_Bg0,data,,[GF2] Malias 0x11A0 -> VRAM 0x06004000; InitializeBattleSceneScreen 0x080040BC (GF2) [RD7] confirmado: Malias +2=0x11A0 -> VRAM 0x06004000 (GF2)
+0x084E823C,gGfx_BotPartSelect_Tiles_Bg0,data,,[GF4] Malias +2 0x0AE0 -> VRAM 0x06004000; Fight_InitBotPartSelectScreen 0x0801058C; GF4 [RD7] confirmado: Malias +2=0x0AE0 -> VRAM 0x06004000 (GF4)
+0x084E9650,gGfx_PartsGrid_Tiles_Bg0,data,,[GF] Malias 0x1CA0 -> VRAM 0x06004000; PartsGrid_InitScreen 0x08007A04 (GF) [RD7] confirmado: Malias +2=0x1CA0 -> VRAM 0x06004000 (GF)
+0x084EC1F8,gGfx_PartsGrid_CharEntrada,data,,"[GF3] Char principal da grade de pecas na entrada (Malias +2 0x2B00 -> VRAM 0x06004000); GF3 [RD7] confirmado: Malias +2=0x2B00 -> VRAM 0x06004000 (GF3, GF4)"
+0x084EE0DC,gGfx_PartDetail_Tiles_Bg0,data,,[GF2] Malias 0x0FE0 -> VRAM 0x06004000; PartDetailScreen_Init 0x0800E0BC (GF2) [RD7] confirmado: Malias +2=0x0FE0 (GF2)
+0x084EEA64,gGfx_FightScene_Tiles_Bg0,data,,[GF2] Malias 0x10A0 -> VRAM 0x06004000; Fight_BattleSceneInit 0x08013C14 (GF2) [RD7] confirmado: Malias +2=0x10A0 (GF2)
+0x084EF490,gGfx_Overlay_Tiles_Bg0,data,,[GF2] Malias 0x2F40 -> VRAM 0x06004000; Overlay_InitScreenGraphics 0x0803DD60 (GF2) [RD7] confirmado: Malias +2=0x2F40 (GF2)
+0x084F08B0,gGfx_BattleScene_Map_Bg0,data,,"[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2) [RD7] confirmado: tilemap Malias 2048 B (+2=0x0810), BGCNT 0x0500 (GF2)"
+0x084F0920,gGfx_PartsGrid_Map_Bg0,data,,"[GF] Malias tilemap 2048 B; BGCNT 0x0500; PartsGrid_InitScreen (GF) [RD7] confirmado: tilemap Malias 2048 B, BGCNT 0x0500 (GF)"
+0x084F0B44,gGfx_PartDetail_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F0B7C,gGfx_FightScene_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F0C08,gGfx_Overlay_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F0F68,gGfx_BattleScene_Map_Bg1,data,,"[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2) [RD7] confirmado: tilemap Malias 2048 B, BGCNT 0x1801 (GF2)"
+0x084F0FD4,gGfx_BotPartSelect_Map_Bg,data,,[GF4] Malias mapa +2 0x0810; LoadTilesWithMalias via Fight_InitBotPartSelectScreen; GF4 [RD7] confirmado: tilemap Malias 2048 B (GF4)
+0x084F1180,gGfx_PartsGrid_Map_Bg1,data,,"[GF] Malias tilemap 2048 B; BGCNT 0x1801; PartsGrid_InitScreen (GF) [RD7] confirmado: tilemap Malias 2048 B, BGCNT 0x1801 (GF)"
+0x084F1514,gPartListTilemap,label,,"tilemap Malias da lista de pecas (contem o '/30') [RD7] confirmado: tilemap Malias 2048 B (+2=0x0810), BG1, 32 colunas; contem o '/30' (EXPANSAO). (kind label->data)"
+0x084F1608,gGfx_PartDetail_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F16C8,gGfx_FightScene_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F1734,gGfx_Overlay_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F198C,gGfx_BattleScene_Map_Bg2,data,,"[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2) [RD7] confirmado: tilemap Malias 2048 B, BGCNT 0x1902 (GF2)"
+0x084F1C28,gGfx_PartsGrid_Map_Bg2,data,,"[GF] Malias tilemap 2048 B; BGCNT 0x1902; PartsGrid_InitScreen (GF) [RD7] confirmado: tilemap Malias 2048 B, BGCNT 0x1902 (GF)"
+0x084F2244,gGfx_PartDetail_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F22C4,gGfx_FightScene_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F233C,gGfx_Overlay_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F2960,gGfx_BattleScene_Map_Bg3,data,,"[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2) [RD7] confirmado: tilemap Malias 2048 B, BGCNT 0x1A03 (GF2)"
+0x084F2C88,gGfx_PartsGrid_Map_Bg3,data,,"[GF] Malias tilemap 2048 B; BGCNT 0x1A03; PartsGrid_InitScreen (GF) [RD7] confirmado: tilemap Malias 2048 B, BGCNT 0x1A03 (GF)"
+0x084F3468,gGfx_PartDetail_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F35FC,gGfx_FightScene_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F3788,gGfx_Overlay_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: tilemap Malias 2048 B (GF2)
+0x084F4300,gGfx_PartsGrid_Palette_Banks,data,,[GF] cru 0x70 words -> 0x05000000; PartsGrid_InitScreen (GF) [RD7] confirmado: paleta crua 0x70 words = 224 B (7 bancos x 16 cores) -> 0x05000000 (GF)
+0x084F4840,gGfx_PartsGrid_Palette_Bank2,data,,[GF4] cru 0x70 words -> paleta BG 0x05000000; PartsGrid_EnterScreenInit 0x080087CC (0x0800886C); GF4 [RD7] confirmado: paleta crua 0x70 words -> paleta BG (GF4)
+0x084F4BC0,gGfx_PartDetail_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; PartDetailScreen_Init (GF2) [RD7] confirmado: paleta crua 0x70 words -> 0x05000000 (GF2)
+0x084F4D80,gGfx_FightScene_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; Fight_BattleSceneInit (GF2) [RD7] confirmado: paleta crua 0x70 words -> 0x05000000 (GF2)
+0x084F4F40,gGfx_Overlay_Palette_Bg,data,,[GF2] cru 0x60 words -> 0x05000000; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: paleta crua 0x60 words -> 0x05000000 (GF2)
+0x0850F2F8,sCompositeBattleSpritePaletteSet,label,,Simon/Rokusho em 0x0850F31C [RD7] confirmado: paleta crua 8 words = 32 B (GF2). (kind label->data)
+0x0850F318,sPartScreenObjPaletteBlockA,label,,"Simon/Rokusho em 0x0850F33C [RD7] provavel: paleta crua -> OBJ 0x050003A0 (GF3, GF4). (kind label->data)"
+0x0850F378,sPartScreenObjPaletteBlockB,label,,"Simon/Rokusho em 0x0850F39C [RD7] provavel: paleta crua, tamanho nao lido (vizinha de A em 0x60 B). (kind label->data)"
+0x0850F498,gMiniSpritePalettes,data,128,4 paletas OBJ do mini sprite (a 4a zerada); Simon: sPartSelectionComponentPaletteSet [RD7] confirmado (mtbe): 4 paletas OBJ = 128 B (4a zerada). Divergencia: GF2 diz 0x40 words (256 B); conferir
+0x08765EC0,gEventDb,label,,"base do banco de eventos (header: offsets das tabelas) [RD7] confirmado bytes: header u16[0]=0x4000, u16[2]=0x51E0 -> 2288 eventos (0x51E0-0x4000)/2. (kind label->table)"
+0x08765EC4,gEventDb_HeaderPad,label,,Simon/Rokusho em 0x08765EE4 (antes: event_operation_list)
+0x08769EC0,gEventPointerTable,label,,tabela de ponteiros de eventos (base + 0x4000) [RD7] confirmado EV.md: 2288 x u16 LE = 0x11E0 B (ponteiro = base+0x4000). Tabela de bancos em base+0x51E0 (1 B por evento). (kind label->table)
+0x087852CF,gStarterData,label,,dados do bot inicial [RD7] chute: sem xref de literal nem de Ghidra; Bot_InitStarterRecord (0x08044B58) nao le daqui (escreve direto). Bytes em grupos de 4 B (2B idx 01 38/3D). Nome mantido
 0x08785EC0,gGfx_BattlePanel_Char,data,,[GF3] Asset Malias +2 0x03E0 do painel de batalha; GF3 [IC] [GH-IC] Malias 0x03E0 (31 tiles) decomprimido para VRAM 0x06004000 + tamanho(bloco 0x0879DA90); destino provavel 0x06006FE0 (confirmar no emulador)
-0x08785FB4,gGfx_Shop_PartSelect_Obj,label,,Simon/Rokusho em 0x08785FD8 (antes: sSharedPartScreenTileSheet)
-0x0878F7E8,gGfx_TitleMenu_Char,data,,[GF3] Char do menu do titulo (LZ77 0x3880 -> VRAM 0x06004000); GF3
-0x0879DA90,gGfx_BattlePanel_Tiles,data,,[GF4] LZ77 0x10 size 0x2FE0 -> buffer 0x02030000 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock 0x08044D0C; GF4
-0x0879EFC0,gGfx_BattlePanel_Map_Bg0,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit 0x08062FB4; BGCNT nao fechado; GF4
-0x0879F138,gGfx_BattlePanel_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4
-0x0879F3D0,gGfx_BattlePanel_Map_Bg2,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4
-0x0879F80C,gGfx_NumberReveal_Tiles,data,,[GF4] LZ77 0x10 size 0x2EC0 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock; Screen_InitNumberRevealLayout 0x080639C4; GF4
+0x08785FB4,gGfx_PartSelect_Obj,label,,Simon/Rokusho em 0x08785FD8 (antes: sSharedPartScreenTileSheet) (antes: gGfx_Shop_PartSelect_Obj)
+0x0878F7E8,gGfx_TitleMenu_Char,data,,[GF3] Char do menu do titulo (LZ77 0x3880 -> VRAM 0x06004000); GF3 [RD7] confirmado: LZ77 0x3880 -> VRAM 0x06004000 (GF3)
+0x0879DA90,gGfx_BattlePanel_Tiles,data,,[GF4] LZ77 0x10 size 0x2FE0 -> buffer 0x02030000 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock 0x08044D0C; GF4 [RD7] confirmado: LZ77 0x2FE0 -> buffer 0x02030000 -> VRAM 0x06004000 (GF4)
+0x0879EFC0,gGfx_BattlePanel_Map_Bg0,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit 0x08062FB4; BGCNT nao fechado; GF4 [RD7] confirmado: LZ77 0x810 (2048 B mapa). BGCNT aberto (GF4)
+0x0879F138,gGfx_BattlePanel_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4 [RD7] confirmado: LZ77 0x810 (2048 B mapa). BGCNT aberto (GF4)
+0x0879F3D0,gGfx_BattlePanel_Map_Bg2,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4 [RD7] confirmado: LZ77 0x810 (2048 B mapa). BGCNT aberto (GF4)
+0x0879F80C,gGfx_NumberReveal_Tiles,data,,[GF4] LZ77 0x10 size 0x2EC0 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock; Screen_InitNumberRevealLayout 0x080639C4; GF4 [RD7] confirmado: LZ77 0x2EC0 -> VRAM 0x06004000 (GF4)
 0x087A0D04,gGfx_NumberReveal_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
 0x087A0FB4,gGfx_NumberReveal_Map_Bg0,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
 0x087A10F0,gGfx_NumberReveal_Map_Bg3,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
 0x087A1244,gGfx_NumberReveal_Map_Bg2,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
-0x087AEFD0,gGfx_Title_OBJ,data,,[GF3] Sprites OBJ do titulo (LZ77 0x5060 -> VRAM 0x06010000); GF3
-0x087B67B0,gGfx_Title_BG0,data,,[GF3] Char BG0 do titulo (LZ77 0x61C0 -> VRAM 0x06008000); GF3
-0x087BB2A0,gGfx_Title_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x500 -> VRAM 0x06006D00 (trace IN1 linha 70); GF4
+0x087AEFD0,gGfx_Title_OBJ,data,,[GF3] Sprites OBJ do titulo (LZ77 0x5060 -> VRAM 0x06010000); GF3 [RD7] confirmado: LZ77 0x5060 -> OBJ 0x06010000 (GF3)
+0x087B67B0,gGfx_Title_BG0,data,,[GF3] Char BG0 do titulo (LZ77 0x61C0 -> VRAM 0x06008000); GF3 [RD7] confirmado: LZ77 0x61C0; VRAM vem do chamador (DC2)
+0x087BB2A0,gGfx_Title_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x500 -> VRAM 0x06006D00 (trace IN1 linha 70); GF4 [RD7] confirmado: LZ77 0x500 -> VRAM 0x06007000 (QA3). Divergencia: GF4 cita 0x06006D00 (trace)
 0x087BB7E0,gGfx_Title_Map_Bg2_ANOMALIA,data,,[GF4] SEM cabecalho LZ77 em +0 (zeros); destino trace 0x06007500; nao confiar ate conferir no emulador; GF4
-0x087F314C,gGfx_Logo_Char,data,,[GF3] Char do logo NATSUME (LZ77 0x0DE0 -> VRAM 0x06000000); GF3
-0x087F5500,gTextDump,label,,inicio do texto
+0x087F314C,gGfx_Logo_Char,data,,[GF3] Char do logo NATSUME (LZ77 0x0DE0 -> VRAM 0x06000000); GF3 [RD7] confirmado: LZ77 0x0DE0 -> VRAM 0x06000000 (GF3)
+0x087F5500,gTextDump,label,,inicio do texto [RD7] provavel: inicio do texto; primeiros 16 B zerados. Nome mantido
