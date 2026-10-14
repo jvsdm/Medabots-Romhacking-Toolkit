@@ -1886,7 +1886,7 @@ F	0x08047574	EventScript_ClearGlobals
 F	0x0804763C	MainState1
 F	0x080476E8	MainState_RequestModeTransition
 F	0x08047878	GameState_StartFlowByCommand
-F	0x080479A0	GameState_StartFlowByCommand_080479A0
+L	0x080479A0	GameState_StartFlowByCommand_CaseNote
 F	0x08047B98	GameState_StartFlowByCommand_store_tail
 F	0x08047BA8	Snd_SfxRequestWrapper
 F	0x08047BB4	Sound_RequestSong
@@ -2248,6 +2248,13 @@ F	0x08050BC8	Map_ModeDispatch
 F	0x08050C94	Overworld_ResetUiRenderState
 F	0x08050CC0	Event_ResetSceneCommandStep
 F	0x08050CCC	Event_RunSceneCommandSequence
+L	0x08050CF4	SceneCommandStepTable
+L	0x08050D08	SceneCommandStep0_ResetTransition
+L	0x08050D40	SceneCommandStep1_WaitAndStartFlow
+L	0x08050D72	SceneCommandStep2_LoadScene
+L	0x08050E6C	SceneCommandCodeTable
+L	0x08050F38	SceneCommandStep3_Advance
+L	0x08050F40	SceneCommandStep4_WaitTransitionEnd
 F	0x08050F5C	Overworld_UpdateMapSceneStateMachine
 F	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
@@ -3057,7 +3064,7 @@ L	0x083CF530	gTextSystemMessages
 L	0x083D1D78	gMoldTable
 L	0x083D1E40	gMotionAngleTable
 L	0x083D1F2C	gMotionOffsetTable
-L	0x083D2018	gMotionDurationTable
+L	0x083D2018	gMotionDurTable
 L	0x083D2104	gMainState1MenuTable
 L	0x083D212C	gSceneSubroutineTable
 L	0x083D222C	gEventPrimaryOpcodeTable
