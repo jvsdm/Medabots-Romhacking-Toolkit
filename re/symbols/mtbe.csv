@@ -585,10 +585,12 @@ address,name,kind,count,comment
 0x08007480,Parts_UpdateSlotSprites,func_thumb,,[R0] atualiza bit 0x4000 dos sprites de slot (provavel)
 0x0800750C,Parts_DrawModeHeader,func_thumb,,[R0] cabecalho do modo de slots (provavel)
 0x08007540,Parts_CountFilledSlots,func_thumb,,[R0] conta slots preenchidos (provavel)
+0x08007584,PartsGrid_DispatchStateTable,func_thumb,,"[PG] [PG] confirmado: Battle_CheckExitShortcut()==0 -> CallViaR0(gPartsGridStateTable[*0x0300137C]); literal 0x080075A4=0x083AC86C, 0x080075A8=0x0300137C; renomeado no Ghidra"
 0x080075AC,PartsGrid_SceneInit,func_thumb,,"init da tela da grade de peças (gráficos, tiles, sprites, música 7); provável"
 0x08007834,PartsGrid_SlideInStep,func_thumb,,[FS2] provavel: passo de movimento do slot (Slot_SetPosStepByMode 0x18) + GpuBlend; sentido 'entrada' chute; entrada 1 de 0x083AC86C; renomeado
 0x08007868,PartsGrid_InputStep,func_thumb,,"[FS2] confirmado: entrada da grade (cursor, A/B, SFX); indice da celula = row*6+col; entrada 2 de 0x083AC86C; renomeado"
 0x08007964,PartsGrid_BlendInStep,func_thumb,,[FS2] provavel: blend + passo de posicao; entradas 3 e 104 de 0x083AC86C; renomeado
+0x08007998,PartsGrid_SlideOutStep,func_thumb,,"[PG] [PG] provavel: igual a PartsGrid_SlideInStep (Slot_SetPosStepByMode 0x18 + GpuBlend), contador diferente (0x080079C8); entradas 4,7,105 da tabela; renomeado no Ghidra"
 0x080079CC,PartsGrid_ResetOamAndDispatch,func_thumb,,"[FS2] provavel: limpa OAM; se obj+0x3C==4 chama Dispatch_Sub4Mode(0), senao seta dois contadores; entrada 5 de 0x083AC86C; renomeado"
 0x08007A04,PartsGrid_InitScreen_CellGraphics,func_thumb,,"[provavel] init da tela de pecas: DISPCNT 0x1F60, decompress x4, LoadTilesWithMalias x4, PartsGrid_Draw* (antes: PartsGrid_InitScreen)"
 0x08007BD8,PartsGrid_BlendTickStep,func_thumb,,"[FS2] provavel: Sprite_ToggleFlag4000PairC + GpuBlend_TickStep + contador; entradas 9, 14, 21 de 0x083AC86C; renomeado"
@@ -598,6 +600,7 @@ address,name,kind,count,comment
 0x08007D04,PartsGrid_BlendStartStep,func_thumb,,"[FS2] provavel: SetGpuBlendMode(6,0x3F,0x20) + contador; entradas 13 e 20 de 0x083AC86C; renomeado"
 0x08007D28,Tile_ClearSlotsAndDispatchState_JumpTable,data,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5) (antes: Tile_ClearSlotsAndDispatchState)"
 0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,,[JT5] mov pc
+0x08007DDC,PartsGrid_SetSelectorPosByIndex,func_thumb,,"[PG] [PG] provavel: ClearObjectAttributeEntries(0,0x80); escreve 8/0x18/0x28/0x38 conforme byte +0x42 (0..3); eixo (X/Y) chute; entradas 22,38,54,70; renomeado no Ghidra"
 0x08007E38,PartsGrid_InitScreen,func_thumb,,"monta tela de grade de pecas (decompress, tiles, PartsGrid_Draw*); provavel"
 0x0800801C,PartsGrid_SlideDetailStep,func_thumb,,"[FS2] provavel: passo de posicao do painel de detalhe (modo 8) + blend; entradas 25, 31, 37 de 0x083AC86C; renomeado"
 0x08008050,PartsGrid_SlideLoadStep,func_thumb,,[FS2] provavel: passo de posicao (modo 8) + Obj_InitSlotAndLoad; entrada 26 de 0x083AC86C; renomeado
@@ -623,6 +626,17 @@ address,name,kind,count,comment
 0x08008BB8,PartsGrid_DispatchStepC,func_thumb,,[FS2] provavel: StateMachine_DispatchStep(obj+0x14) + contador; entrada 73 de 0x083AC86C; renomeado
 0x08008BE0,PartsGrid_SlotScriptInputStep,func_thumb,,"[FS2] provavel: Anim_RunSlotScript(...,6) + leitura de entrada (SFX 4/5, estados 0x4E e 0x40+); entrada 74 de 0x083AC86C; renomeado"
 0x08008CA0,PartsGrid_SubStateSwitchStep,func_thumb,,[FS2] provavel: switch por +0x42 (0..2) e +0x44 com jump table nao recuperada pelo Ghidra; entrada 75 de 0x083AC86C; renomeado
+0x08008CF4,PartsGrid_SubStateA0_DispatchCtx18,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x18)); sem funcao no Ghidra (criar)
+0x08008D00,PartsGrid_SubStateA1_DispatchCtx1C,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x1C)); sem funcao no Ghidra (criar)
+0x08008D0C,PartsGrid_SubStateA2_CellLookup,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: lookup de celula (+0x3D*0x40 + base 0x03000BE0 + 4) -> ponteiro -> DispatchStep; sem funcao no Ghidra (criar)
+0x08008D30,PartsGrid_SubStateA3_CellLookupB,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: lookup de celula (+6) -> ponteiro -> DispatchStep; sem funcao no Ghidra (criar)
+0x08008D54,PartsGrid_SubStateA4_DispatchCtx20,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x20)); sem funcao no Ghidra (criar)
+0x08008D90,PartsGrid_SubStateB0_CellOrTable,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: se byte celula+5 <= 9: DispatchStep(*(ctx+0x10)); senao copia 3+6 bytes e DispatchStep da tabela por ctx+0xF0; sem funcao no Ghidra (criar)
+0x08008E08,PartsGrid_SubStateB1_CellOrTable,func_thumb,,"[PG] [PG] alvo de jump table em 0x08008CA0: igual B0, limiar 0x1D, ramo DispatchStep(*(ctx+0x10)); senao copia e tabela por ctx+0xF0; sem funcao no Ghidra (criar)"
+0x08008E80,PartsGrid_SubStateB2_CellOrTable,func_thumb,,"[PG] [PG] alvo de jump table em 0x08008CA0: igual B0, limiar 0x3B, ramo DispatchStep(*(ctx+0x10)); senao copia e tabela por ctx+0xF0; sem funcao no Ghidra (criar)"
+0x08008EF8,PartsGrid_SubStateB3_DispatchCtx24,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x24)); sem funcao no Ghidra (criar)
+0x08008F04,PartsGrid_SubStateB4_DispatchCtx28,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x28)); sem funcao no Ghidra (criar)
+0x08008F10,PartsGrid_SubStateB5_SwitchOn46,func_thumb,,"[PG] [PG] alvo de jump table em 0x08008CA0: le ctx+0x46: 0 -> 0x08008F32, 1 -> 0x08008FA8, 2 -> 0x0800901C, outro -> nada; sem funcao no Ghidra (criar)"
 0x080090D0,PartsGrid_SpritePairStep,func_thumb,,[FS2] provavel: CpuFastSet + init de sprite pair e tamanho conforme +0x42 (0/1/2); entrada 78 de 0x083AC86C; renomeado
 0x08009174,PartsGrid_ReloadRowTilesAndSetup,func_thumb,,"[FL10] tick da grade de peças: cursor, limpa bits +0x40/+0x80, recarrega tiles 0x12x0xC"
 0x080091E0,PartsGrid_OptionRowStep,func_thumb,,"[FS2] provavel: passo de posicao (modo 7, 0xA8) + ciclo da linha de opcoes (CycleOptionRow3) + SFX 4/5; entrada 97 de 0x083AC86C; renomeado"
@@ -1287,7 +1301,7 @@ address,name,kind,count,comment
 0x0801DE1C,Fight_DispatchOnSubstateAA_F,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0801DE44,Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair,func_thumb,,Simon/Rokusho: Queue text for the selected part action by copying both action-description text keyed by BattlePartState_Clean.speciality and technique text keyed by BattlePartState_Clean.technique_or_leg_type. (antes: ActionFamily_DrainCharge_Handler)
 0x0801DED4,Fight_DispatchOnSubstateAA_F_02_HoldFlag,label,,Simon/Rokusho (antes: ActionFamily_Impair_Handler)
-0x0801DEE4,Fight_DispatchOnSubstateAA_G,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
+0x0801DEE4,Fight_DispatchOnSubstateAA_G_stub,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel (antes: Fight_DispatchOnSubstateAA_G)
 0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,func_thumb,,Simon/Rokusho (antes: ActionFamily_Sacrifice_Handler)
 0x0801DF60,Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen,func_thumb,,[HA2] G idx01; escreve 0x04000008 (BGxCNT); +1; provavel (antes: Fight_DispatchOnSubstateAA_G_SetBgControl)
 0x0801DFE0,Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged,func_thumb,,3 etapas por frame; +1 na etapa 2; tail-call nao recuperado; confirmado
@@ -1297,7 +1311,7 @@ address,name,kind,count,comment
 0x0801E200,Fight_DispatchOnSubstateAA_G_04_ResetSideSprites,func_thumb,,Simon/Rokusho (antes: ActionFamily_Strengthen_Handler)
 0x0801E248,Fight_DispatchOnSubstateAA_G_05_SlideSideSpritesIn,func_thumb,,10 frames; +1 em c==9; confirmado
 0x0801E2B8,Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold,func_thumb,,Simon/Rokusho: Action-family entry for Confusion in the later sequence table. Advances the preview/side sprite sequence and then marks the current handler step complete. (antes: ActionFamily_Confusion_Handler)
-0x0801E2D8,Fight_DispatchOnSubstateAA_H,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
+0x0801E2D8,Fight_DispatchOnSubstateAA_H_stub,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel (antes: Fight_DispatchOnSubstateAA_H)
 0x0801E300,Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles,func_thumb,,"Simon/Rokusho: Action-family entry for Counterattack in the later sequence table. Loads the dedicated presentation assets, initializes the mirrored side-preview objects and per-side object state, then advances the action state. (antes: ActionFamily_Counterattack_Handler)"
 0x0801E3C0,Fight_DispatchOnSubstateAA_H_01_ChooseActionPath,func_thumb,,Simon/Rokusho: Advance the outer action-sequence state machine based on defender_followup_flags and action_result_flow_flags. Successful normal resolution increments action usage and Medaforce charge; affinity-result and follow-up cases branch into dedicated sequence states. (antes: Fight_AdvanceSequenceFromResultFlags)
 0x0801E43C,Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40,label,,Simon/Rokusho (antes: ActionFamily_InterruptChange_Handler)
@@ -1916,7 +1930,7 @@ address,name,kind,count,comment
 0x08030624,Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10,func_thumb,,"Simon/Rokusho: Action-family entry for Heal Change. Waits on either a button press or a countdown, clears the temporary object slot when done, and advances the action state. (antes: ActionFamily_HealChange_Handler)"
 0x08030674,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[HN5] indice 0x0E de 19 despachantes: espera +86 ou avanco rapido (confirmado) (antes: Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip) (antes: Fight_DispatchOnSubstateAA_U_09_WaitTimerOrSkip)
 0x08030680,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[BI] BI: mesmo padrão de timer 0x030004C6; decrementa e +AA+=1 ao zerar. Confirmado (decompile).
-0x080306B8,ActionFamily_Change_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Change. Waits for either a confirm-button press or a countdown, then clears all active temporary object slots in the tracked range and advances the action state."
+0x080306B8,Fight_DispatchOnSubstateAA_H_0F_WaitTimerClearSlots,func_thumb,,"Simon/Rokusho: Action-family entry for Change. Waits for either a confirm-button press or a countdown, then clears all active temporary object slots in the tracked range and advances the action state. (antes: ActionFamily_Change_Handler)"
 0x08030780,Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer,func_thumb,,[HN6] AG 0x09: slot 0x21 +0x18 +-0x40/frame (&0x3FF); timer 0x03000440+0x86 (A pula); +0xAA++ (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_ScrollSlotWaitTimer)
 0x0803080C,Fight_DispatchOnSubstateAA_Shared_SetDone,func_thumb,,"[HN6] terminal compartilhado (48 tabelas, J 0x04, AG 0x03): +0xB5 = 1 (confirmado; renomeado no Ghidra)"
 0x0803081C,Fight_DispatchOnSubstateAA_AG_0E_WaitSlotScriptEnd,func_thumb,,[HN6] AG 0x0E: roteiro do slot 0x21 (0x083B6100[+0x84]); +0xAA++ quando gObjectSlots+0x862 == 0xFF (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_WaitSlotScriptEnd)
@@ -2044,9 +2058,11 @@ address,name,kind,count,comment
 0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,,"Simon/Rokusho: If the defender has the required status bit and the currently referenced part is still active, compare current damage scratch against the defender threshold and raise defender_followup_flags when the threshold condition is met."
 0x0803402C,ActionScript_Op19_DispatchOnSubstateAA_F,func_thumb,,[AB] AB; despachante F (0x083AD730); copia dados da peca (2 x 14)
 0x08034048,ActionScript_Op1A_DispatchOnSubstateAA_G,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]. (antes: FightPreview_SetupSceneFromPartTechnique)
+0x08034056,ActionScript_Op1A_DispatchOnSubstateAA_G,label,,"[BI2] BI2: op de script G (endereço = ponto de chamada do stub G; entrada da função não conferida). Seta byte+0x130=1, chama stub G, se +0xB5!=0 avança cursor. Confirmado (decompile)."
 0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
 0x080340F6,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA2] LE B+0xA8 (paleta +0x50) e grava +0xF9/+0x69/+0xA9; NAO grava B+0xA8 (corrige TA.md)
 0x080340F8,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA] grava B+0xA8 (tecnica ativa do bot); funcao que contem o endereco
+0x080341DE,ActionScript_Op1E_CallSubstateH,label,,"[BI2] BI2: op de script H (endereço = ponto de chamada do stub H; entrada não conferida). Atualiza side sprites e sequências laterais, chama stub H, se +0xB5!=0 avança cursor. Confirmado (decompile)."
 0x0803447C,ActionScript_Op30_CallSubstateZ,func_thumb,,[TR4] [TR4] opcode 0x30 do roteiro de Scout (0x083C6AA2) chama Fight_DispatchOnSubstateAA_Z
 0x08034498,ActionScript_Op31_CallSubstateAA,func_thumb,,[TR2] [TR2] opcode 0x31 do roteiro de Conceal (0x083C6AA4): chama Fight_DispatchOnSubstateAA_AA e avanca o roteiro (C)
 0x08034524,ActionScript_Op36_CallAF,func_thumb,,[AS2] GH-AS2: opcode 0x36 wrapper -> Fight_DispatchOnSubstateAA_AF + avanço se +0xB5; sem funcao no Ghidra
@@ -3917,12 +3933,13 @@ address,name,kind,count,comment
 0x083ABB50,SND_PsgFreqTable,data,,[SN] 74 halfwords de frequencia PSG (Hz=131072/(2048-v))
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
-0x083AC2C8,gMainStateTable,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list)
+0x083AC2C8,gMenuList0Table,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list) (antes: gMainStateTable)
 0x083AC404,MainState0_Menu1_SubTable,table,,"[FM3] [FM3] tabela de sub-estados de MainState0 menu 1: [0]=0x080027DC (tela cheia, 6 graficos), [1]=0x080028AC, [2]=0x08002A2C"
 0x083AC454,MainState0_Menu2_SubTable,table,,"[FM4] [FM4] tabela do menu 2 de MainState0: 0=0x08003394 Gfx_InitBgLayersAndEnableDisplay; 1=0x080034A4; 2=0x08003504; 3=0x08003620; 4=0x08003654; 5=0x080036A8; 6,7=NoOp; 8=0x080036C8; 9=0x080036F4"
 0x083AC560,BattleStepTable_Base_Unresolved,data,,"[TP2] [GH-TP2] base sem literal na ROM; entradas 0x080049C9, 0x080049ED, 0x08004A19 (0x568 idx), 0x08004A41, 0x08004A79, 0x08004AF9, 0x08004C59"
 0x083AC568,BattleStepTable_Unknown,data,,[TP] [GH-TP] tabela de ponteiros de passos GS; 0x08004A19 e entrada 0 desta linha; despachante nao achado
 0x083AC614,debug_mdlpic_model_ptrs,data,,"[DB2] GH-DB2: 150 ponteiros para dados comprimidos de modelo, indice v0*5+v1 (v0 0..0x1D, v1 0..4); provavel"
+0x083AC86C,gPartsGridStateTable,table,,"[PG] [PG] 112 ponteiros Thumb u32 (stride 4), indice = word em 0x0300137C; dispatcher FUN_08007584 (PartsGrid_DispatchStateTable); substitui table_partsgrid_states 0x083AC880 stride 0xC (errado)"
 0x083AC880,table_partsgrid_states,label,,[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas)
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
 0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]

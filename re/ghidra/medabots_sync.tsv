@@ -202,10 +202,12 @@ F	0x08007440	Parts_FindTypeInSlots
 F	0x08007480	Parts_UpdateSlotSprites
 F	0x0800750C	Parts_DrawModeHeader
 F	0x08007540	Parts_CountFilledSlots
+F	0x08007584	PartsGrid_DispatchStateTable
 F	0x080075AC	PartsGrid_SceneInit
 F	0x08007834	PartsGrid_SlideInStep
 F	0x08007868	PartsGrid_InputStep
 F	0x08007964	PartsGrid_BlendInStep
+F	0x08007998	PartsGrid_SlideOutStep
 F	0x080079CC	PartsGrid_ResetOamAndDispatch
 F	0x08007A04	PartsGrid_InitScreen_CellGraphics
 F	0x08007BD8	PartsGrid_BlendTickStep
@@ -215,6 +217,7 @@ F	0x08007C4C	PartsGrid_CursorInputStep
 F	0x08007D04	PartsGrid_BlendStartStep
 L	0x08007D28	Tile_ClearSlotsAndDispatchState_JumpTable
 L	0x08007D46	Tile_ClearSlotsAndDispatchState_Jump
+F	0x08007DDC	PartsGrid_SetSelectorPosByIndex
 F	0x08007E38	PartsGrid_InitScreen
 F	0x0800801C	PartsGrid_SlideDetailStep
 F	0x08008050	PartsGrid_SlideLoadStep
@@ -240,6 +243,17 @@ F	0x08008B80	PartsGrid_ClearAndInitStep
 F	0x08008BB8	PartsGrid_DispatchStepC
 F	0x08008BE0	PartsGrid_SlotScriptInputStep
 F	0x08008CA0	PartsGrid_SubStateSwitchStep
+F	0x08008CF4	PartsGrid_SubStateA0_DispatchCtx18
+F	0x08008D00	PartsGrid_SubStateA1_DispatchCtx1C
+F	0x08008D0C	PartsGrid_SubStateA2_CellLookup
+F	0x08008D30	PartsGrid_SubStateA3_CellLookupB
+F	0x08008D54	PartsGrid_SubStateA4_DispatchCtx20
+F	0x08008D90	PartsGrid_SubStateB0_CellOrTable
+F	0x08008E08	PartsGrid_SubStateB1_CellOrTable
+F	0x08008E80	PartsGrid_SubStateB2_CellOrTable
+F	0x08008EF8	PartsGrid_SubStateB3_DispatchCtx24
+F	0x08008F04	PartsGrid_SubStateB4_DispatchCtx28
+F	0x08008F10	PartsGrid_SubStateB5_SwitchOn46
 F	0x080090D0	PartsGrid_SpritePairStep
 F	0x08009174	PartsGrid_ReloadRowTilesAndSetup
 F	0x080091E0	PartsGrid_OptionRowStep
@@ -904,7 +918,7 @@ F	0x0801DDDC	Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget
 F	0x0801DE1C	Fight_DispatchOnSubstateAA_F
 F	0x0801DE44	Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair
 L	0x0801DED4	Fight_DispatchOnSubstateAA_F_02_HoldFlag
-F	0x0801DEE4	Fight_DispatchOnSubstateAA_G
+F	0x0801DEE4	Fight_DispatchOnSubstateAA_G_stub
 F	0x0801DF0C	Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles
 F	0x0801DF60	Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen
 F	0x0801DFE0	Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged
@@ -914,7 +928,7 @@ L	0x0801E1B4	Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground_0801E1B4
 F	0x0801E200	Fight_DispatchOnSubstateAA_G_04_ResetSideSprites
 F	0x0801E248	Fight_DispatchOnSubstateAA_G_05_SlideSideSpritesIn
 F	0x0801E2B8	Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold
-F	0x0801E2D8	Fight_DispatchOnSubstateAA_H
+F	0x0801E2D8	Fight_DispatchOnSubstateAA_H_stub
 F	0x0801E300	Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles
 F	0x0801E3C0	Fight_DispatchOnSubstateAA_H_01_ChooseActionPath
 L	0x0801E43C	Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40
@@ -1533,7 +1547,7 @@ F	0x08030608	ActionFamily_TrapFamily_Handler
 F	0x08030624	Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10
 F	0x08030674	Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip
 F	0x08030680	Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip_08030680
-F	0x080306B8	ActionFamily_Change_Handler
+F	0x080306B8	Fight_DispatchOnSubstateAA_H_0F_WaitTimerClearSlots
 F	0x08030780	Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer
 F	0x0803080C	Fight_DispatchOnSubstateAA_Shared_SetDone
 F	0x0803081C	Fight_DispatchOnSubstateAA_AG_0E_WaitSlotScriptEnd
@@ -1661,8 +1675,10 @@ F	0x08033F64	ActionScript_Op16_SetStateFromPartFlag1C
 F	0x08033F9C	Fight_MarkDefenderFollowupFromDamageThreshold
 F	0x0803402C	ActionScript_Op19_DispatchOnSubstateAA_F
 F	0x08034048	ActionScript_Op1A_DispatchOnSubstateAA_G
+L	0x08034056	ActionScript_Op1A_DispatchOnSubstateAA_G_08034056
 L	0x080340F6	ActionScript_Op1B_LoadPaletteAndSetTechniqueId
 L	0x080340F8	ActionScript_Op1B_LoadPaletteAndSetTechniqueId_080340F8
+L	0x080341DE	ActionScript_Op1E_CallSubstateH
 F	0x0803447C	ActionScript_Op30_CallSubstateZ
 F	0x08034498	ActionScript_Op31_CallSubstateAA
 F	0x08034524	ActionScript_Op36_CallAF
@@ -3533,12 +3549,13 @@ L	0x080B16E4	SND_SampleTable
 L	0x083ABB50	SND_PsgFreqTable
 L	0x083ABF98	gMainStateTable
 L	0x083ABFB0	gSpriteSetTable0
-L	0x083AC2C8	gMainStateTable_083AC2C8
+L	0x083AC2C8	gMenuList0Table
 L	0x083AC404	MainState0_Menu1_SubTable
 L	0x083AC454	MainState0_Menu2_SubTable
 L	0x083AC560	BattleStepTable_Base_Unresolved
 L	0x083AC568	BattleStepTable_Unknown
 L	0x083AC614	debug_mdlpic_model_ptrs
+L	0x083AC86C	gPartsGridStateTable
 L	0x083AC880	table_partsgrid_states
 L	0x083ACA4C	debug_menu_more_idk
 L	0x083ACA5C	debug_menu_subroutines
@@ -3871,9 +3888,6 @@ C	0x0800275C
 C	0x080039E0
 C	0x08004A40
 C	0x08004A78
-C	0x08007584
-C	0x08007998
-C	0x08007DDC
 C	0x080140B0
 C	0x08033C10
 C	0x08033CF0
