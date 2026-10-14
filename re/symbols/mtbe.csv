@@ -1,14 +1,14 @@
 address,name,kind,count,comment
-0x02000000,gShopItems,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000"
+0x02000000,gGfxDefaultAssetBuffer,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000 (antes: gShopItems)"
 0x02023000,EWRAM_LevelSortScratch,label,,"quantidade por item na loja (1 byte por bot) (antes: gShopQuantities) [DM] [confirmado] 30 registros de 8 B (chave u16 em +0), limpos por CpuFastSet em Level_ComputeReferenceFromSlots"
 0x02024B84,gBattlePreviewCachedOamList,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x02026000,CompositePreviewContext,data,,"[IC2] [GH-IC2] contexto EWRAM do sprite grande: +0 estado, +4 vetor de tipos 0x083D1D78, +8 OAM (0x020260D0 + slot*0x410)"
-0x020260CC,gMotionCounter,label,,[AN] GH-AN: contador de quadro do lado 0 (+1 por lado)
-0x020260CE,gMotionKeyframe,label,,[AN] GH-AN: keyframe atual do lado 0 (+1 por lado)
-0x020260D0,gMotionState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois; Simon: gSelectedMedabotPreviewTemplateTable (antes: gBattlePartState)
+0x02026000,CompositePreviewContext,data,,"[IC2] [GH-IC2] contexto EWRAM do sprite grande: +0 estado, +4 vetor de tipos 0x083D1D78, +8 OAM (0x020260D0 + slot*0x410) [RM5] IC2.md confirmado (CompositePreviewContext_Init)"
+0x020260CC,gMotionCounter,label,,[AN] GH-AN: contador de quadro do lado 0 (+1 por lado) [RM5] quadro do lado s = +s AN.md s24 confirmado
+0x020260CE,gMotionKeyframe,label,,[AN] GH-AN: keyframe atual do lado 0 (+1 por lado) [RM5] keyframe do lado s = +s AN.md s24 confirmado
+0x020260D0,gMotionState,label,,"estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois; Simon: gSelectedMedabotPreviewTemplateTable (antes: gBattlePartState) [RM5] base dos moldes, s*0x410 AN.md s25 confirmado"
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
 0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
-0x0202FA00,gPaletteShadowBuffer,data,,[MP2] buffer de paleta EWRAM (0x200 B) enviado por CopyPaletteBuffersToHardware
+0x0202FA00,gPaletteShadowBuffer,data,,[MP2] buffer de paleta EWRAM (0x200 B) enviado por CopyPaletteBuffersToHardware [RM5] buffer CpuFastSet de paleta/fundo GF2.md/GF3.md provavel
 0x02030000,SAVE_STAGING_EWRAM,data,,"[SV] [SV] buffer de staging do save (EWRAM), 0x1CC0 B (confirmado por literal)"
 0x03000430,debug_motion_mode_flag,label,,[DB] GH-DB provavel: zerado ao sair do Motion (B); mesmo byte do CpuFastSet em JT3 (==2)
 0x03000440,gScreenCtx,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra (antes: gTextState) (antes: gMessageCtx) (antes: ctx_team_screen) [RM1] confirmado (antes: ctx_team_screen): base do ctx de tela; xrefs [PARAM] em PartsGrid_*, PartDetail_*, Fight_*, Debug_*, Scene_*: nao e so da tela de time"
@@ -34,29 +34,29 @@ address,name,kind,count,comment
 0x0300047D,gPartsGridCursorIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: currently_selected_medal) [RM1] confirmado (antes: currently_selected_medal): ctx+0x3D = indice 0..35 do cursor da grade; PartsGrid_SplitRowCol faz /6 e %6 (decompile)"
 0x0300047F,gPartsGridCursorRow,label,,"[FI2] ctx+0x3F estado da tela de time (PS) conflito com PS2 (slot) aberto (antes: gCtx_TeamScreenState) [RM1] confirmado (antes: gCtx_TeamScreenState): ctx+0x3F = linha (index/6), gravado por PartsGrid_SplitRowCol (decompile). Conflita com nota FI2 (PS=estado); ver RM1.md"
 0x03000484,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
-0x03000486,gCtx_WaitTimer,label,,[FI] timer de espera u16 conf
+0x03000486,gCtx_Byte46,label,,[FI] timer de espera u16 conf (antes: gCtx_WaitTimer)
 0x03000489,gCtx_FreeFlag,label,,[FI] flag ctx livre provavel
-0x03000491,selected_tinpet_in_menu,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03000493,selected_tinpet_has_all_parts,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x0300049A,selected_tinpet_selected_part,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x0300049C,gCtx_TeamWinner,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf
+0x03000491,gCtx_PartGaugePhaseSideA,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_in_menu)"
+0x03000493,gCtx_PartGaugePhaseSideB,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_has_all_parts)"
+0x0300049A,gSelBot_SelectedPartIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_selected_part)"
+0x0300049C,gCtx_Byte5C,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf (antes: gCtx_TeamWinner)
 0x030004C0,gCtx_EntryByte,label,,[FI2] ctx+0x80 byte de entrada da luta (Fight_AnimateEntryFrames) nao confirmado no ctx 0x03000440 (FL2/FL3)
 0x030004C4,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
 0x030004C5,gCtx_ClearAtEnd,label,,[FI2] ctx+0x85 zerado no fim do despachante GS (BT2) provavel
 0x030004C6,gCtx_WaitTimer,label,,[FI] timer de espera u16 conf [RM1] confirmado: Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance grava 0x3C (u16) em ctx+0x86 (decompile)
 0x030004C9,gCtx_FreeFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1] (antes: gDeterministicRandom) [FI] flag ctx livre provavel"
-0x030004CC,random_number,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004CC,gCtx_Byte8C,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: random_number)"
 0x030004CD,gCtx_RandIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gDeterministicRandomIndex) [FI2] ctx+0x8D indice do randbyte (ROM 0x083B29EC) provavel (DT)"
-0x030004CE,menu_selected_item,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004CE,gCtx_Byte8E,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: menu_selected_item)"
 0x030004D0,gCtx_BlendMode,label,,[FI2] ctx+0x90 modo do efeito de blend (R2) provavel
 0x030004D2,gCtx_BlendStep,label,,[FI2] ctx+0x92 passo do efeito de blend (R2) provavel
-0x030004D7,tinpet_sel_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x030004D8,selected_tinpet_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x030004D9,selected_tinpet_left_arm,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x030004DA,selected_tinpet_right_arm,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x030004DB,selected_tinpet_legs,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004D7,gSelBot_Medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: tinpet_sel_medal)"
+0x030004D8,gSelBot_HeadPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_head)"
+0x030004D9,gSelBot_LeftArmPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_left_arm)"
+0x030004DA,gSelBot_RightArmPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_right_arm)"
+0x030004DB,gSelBot_LegsPartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_legs)"
 0x030004DC,gCtx_TeamWinner,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf [RM1] provavel: DC.md diz vencedor = ctx+0x9C (0x030004DC); nao reconferido no xref nesta rodada
-0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004DE,gCtx_NameBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: text_ram_access)"
 0x0300052E,MedaforceScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1] (antes: gBattleScratchBuffer)"
 0x03000536,IWRAM_PlayerSpecialtyBase,func_thumb,,[DM] [aberto] 7 bytes 0x03000537..0x0300053D = 0x03000440+0xF7..0xFD; origem nao achada; usados por Medabot_SpawnFromRecord
 0x03000537,gCtx_PlayerSpecialty,label,,[FI2] ctx+0xF7 inicio de 7 bytes de especialidade do jogador (IWRAM_PlayerSpecialtyBase) aberto (DM)
@@ -67,41 +67,41 @@ address,name,kind,count,comment
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
 0x0300058C,keys_pressed_edge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: just_pressed_buttons)"
 0x03000590,battle_bot_block_base,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768] (antes: gPlayerBattleSideState) (antes: battle_bot_blocks)"
-0x03000591,battle_robot_1_medalID,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000594,battle_robot_1_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000595,battle_robot_1_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000597,battle_robot_1_medal_compatibility_bonus,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x0300059A,battle_robot_1_name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005A8,battle_robot_1_autobattle_rotation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005B0,battle_robot_1_medal_stats,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000591,BattleBot_MedalId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medalID)"
+0x03000594,BattleBot_MedalAttribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_compatibility)"
+0x03000595,BattleBot_Level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_level)"
+0x03000597,BattleBot_CompatibilityBonus,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_compatibility_bonus)"
+0x0300059A,BattleBot_Name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_name)"
+0x030005A8,BattleBot_SpecialityCycle,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_autobattle_rotation)"
+0x030005B0,BattleBot_SpecialityCycleWeights,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_stats)"
 0x030005D0,gBotBlock0Ident,data,,[PB] [GH-PB] = bloco do bot 0 +0x40 (destino de Fight_CopyBotIdentityRecords)
-0x030005D3,battle_robot_1_head_partId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005D8,battle_robot_1_head_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005D9,battle_robot_1_head_animation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005DA,battle_robot_1_head_speciality,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005DC,battle_robot_1_head_max_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005DD,battle_robot_1_head_RoS,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005DE,battle_robot_1_head_power,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005E0,battle_robot_1_head_max_amount_of_uses,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005E8,battle_robot_1_head_uses,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030005E9,battle_robot_1_head_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000601,battle_robot_1_left_arm_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000619,battle_robot_1_right_arm_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000621,battle_robot_1_legs_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000624,battle_robot_1_legs_max_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000631,battle_robot_1_legs_hp,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000632,battle_robot_1_legs_propulsion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000633,battle_robot_1_legs_evasion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000634,battle_robot_1_legs_defense,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000635,battle_robot_1_legs_proximity,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000636,battle_robot_1_legs_remoteness,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000637,battle_robot_1_legs_part_cosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005D3,BattleBot_Head_PartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_partId)"
+0x030005D8,BattleBot_Head_Medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_medal_compatibility)"
+0x030005D9,BattleBot_Head_Technique,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_animation)"
+0x030005DA,BattleBot_Head_Speciality,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_speciality)"
+0x030005DC,BattleBot_Head_ArmorMax,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_max_hp)"
+0x030005DD,BattleBot_Head_Success,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_RoS)"
+0x030005DE,BattleBot_Head_Power,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_power)"
+0x030005E0,BattleBot_Head_Uses,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_max_amount_of_uses)"
+0x030005E8,BattleBot_Head_Usable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_uses)"
+0x030005E9,BattleBot_Head_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_hp)"
+0x03000601,BattleBot_Arm1_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_left_arm_hp)"
+0x03000619,BattleBot_Arm2_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_right_arm_hp)"
+0x03000621,BattleBot_Legs_Type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_type)"
+0x03000624,BattleBot_Legs_ArmorMax,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_max_hp)"
+0x03000631,BattleBot_Legs_ArmorCurrent,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_hp)"
+0x03000632,BattleBot_Legs_Propulsion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_propulsion)"
+0x03000633,BattleBot_Legs_Evasion,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_evasion)"
+0x03000634,BattleBot_Legs_Defense,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_defense)"
+0x03000635,BattleBot_Legs_Proximity,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_proximity)"
+0x03000636,BattleBot_Legs_Distance,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_remoteness)"
+0x03000637,BattleBot_Legs_PartCosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_part_cosmetic)"
 0x03000638,bot0_active_technique,data,,[TA] B+0xA8 do bot 0 (bot base 0x03000590 + bot*0x100 + 0xA8); tecnica ativa do bot p/ efeitos; gravada por Op1B; bot k = 0x03000638 + k*0x100
 0x03000649,battle_bot_conceal_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: player_1_conceal_value)"
 0x0300064C,battle_bot0_flags_BC,label,,"[SS2] bot+0xBC: bits 01/02 (ator), 04 (bypass esquiva), 08 (bypass defesa), 10 (esquivou), 20 (defendeu), 40 (critico) (C, SS2)"
 0x0300064D,battle_bot0_flags_BD,label,,"[SS2] bot+0xBD: 08 = carga (W_07, E00, icone modo A); 10 = icone modo B (AM_0A) (C, SS2)"
 0x0300064F,battle_bot0_affinity_BF,label,,"[SS2] bot+0xBF: codigo de afinidade do ataque (2 optico, 3 bomba, 4 gravidade) (P, R2.md; nao reconfirmado)"
-0x03000651,battle_robot_1_current_medaforce,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000651,BattleBot_MedaforceGauge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_current_medaforce)"
 0x03000659,battle_bot0_status_C9,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_status_effect)"
 0x0300065F,battle_bot0_protect_mask_CF,label,,"[SS2] bot+0xCF mascara de protecao: 01 Bug/Virus, 08 Freeze, 02 Hold, 04 Fire (C, SS2 secao 1)"
 0x03000666,gFightBot0Flags_D6,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_form) [RM2] provavel (antes: battle_robot_1_form): bot0+0xD6 bit0 testado em Fight_IsOpticClassAction; nome antigo errado"
@@ -593,7 +593,7 @@ address,name,kind,count,comment
 0x08007540,Parts_CountFilledSlots,func_thumb,,[R0] conta slots preenchidos (provavel)
 0x08007584,PartsGrid_DispatchStateTable,func_thumb,,"[PG] [PG] confirmado: Battle_CheckExitShortcut()==0 -> CallViaR0(gPartsGridStateTable[*0x0300137C]); literal 0x080075A4=0x083AC86C, 0x080075A8=0x0300137C; renomeado no Ghidra"
 0x080075AC,PartsGrid_SceneInit,func_thumb,,"init da tela da grade de peças (gráficos, tiles, sprites, música 7); provável"
-0x08007834,PartsGrid_SlideInStep,func_thumb,,[FS2] provavel: passo de movimento do slot (Slot_SetPosStepByMode 0x18) + GpuBlend; sentido 'entrada' chute; entrada 1 de 0x083AC86C; renomeado
+0x08007834,PartsGrid_SlideInStep,func_thumb,,[FS2] provavel: passo de movimento do slot (Slot_SetPosStepByMode 0x18) + GpuBlend; sentido 'entrada' chute; entrada 1 de 0x083AC86C; renomeado [CH6] [CH6] revisto CH6: confianca provavel (mantido). Corpo identico ao gemeo 0x08007998 (mesmos alvos BL e mesmos literais 0x03001780 / GS 0x0300137C); so a entrada da tabela 0x083AC86C (GS=1) da o sentido 'entrada'
 0x08007868,PartsGrid_InputStep,func_thumb,,"[FS2] confirmado: entrada da grade (cursor, A/B, SFX); indice da celula = row*6+col; entrada 2 de 0x083AC86C; renomeado"
 0x08007964,PartsGrid_BlendInStep,func_thumb,,[FS2] provavel: blend + passo de posicao; entradas 3 e 104 de 0x083AC86C; renomeado
 0x08007998,PartsGrid_SlideOutStep,func_thumb,,"[PG] [PG] provavel: igual a PartsGrid_SlideInStep (Slot_SetPosStepByMode 0x18 + GpuBlend), contador diferente (0x080079C8); entradas 4,7,105 da tabela; renomeado no Ghidra"
@@ -606,7 +606,7 @@ address,name,kind,count,comment
 0x08007D04,PartsGrid_BlendStartStep,func_thumb,,"[FS2] provavel: SetGpuBlendMode(6,0x3F,0x20) + contador; entradas 13 e 20 de 0x083AC86C; renomeado"
 0x08007D28,Tile_ClearSlotsAndDispatchState_JumpTable,data,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5) (antes: Tile_ClearSlotsAndDispatchState)"
 0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,,[JT5] mov pc
-0x08007DDC,PartsGrid_SetSelectorPosByIndex,func_thumb,,"[PG] [PG] provavel: ClearObjectAttributeEntries(0,0x80); escreve 8/0x18/0x28/0x38 conforme byte +0x42 (0..3); eixo (X/Y) chute; entradas 22,38,54,70; renomeado no Ghidra"
+0x08007DDC,PartsGrid_SelectNextStateByCursor,func_thumb,,"[PG] [PG] provavel: ClearObjectAttributeEntries(0,0x80); escreve 8/0x18/0x28/0x38 conforme byte +0x42 (0..3); eixo (X/Y) chute; entradas 22,38,54,70; renomeado no Ghidra (antes: PartsGrid_SetSelectorPosByIndex)"
 0x08007E38,PartsGrid_InitScreen,func_thumb,,"monta tela de grade de pecas (decompress, tiles, PartsGrid_Draw*); provavel"
 0x0800801C,PartsGrid_SlideDetailStep,func_thumb,,"[FS2] provavel: passo de posicao do painel de detalhe (modo 8) + blend; entradas 25, 31, 37 de 0x083AC86C; renomeado"
 0x08008050,PartsGrid_SlideLoadStep,func_thumb,,[FS2] provavel: passo de posicao (modo 8) + Obj_InitSlotAndLoad; entrada 26 de 0x083AC86C; renomeado
@@ -4391,44 +4391,3 @@ address,name,kind,count,comment
 0x087BB7E0,gGfx_Title_Map_Bg2_ANOMALIA,data,,[GF4] SEM cabecalho LZ77 em +0 (zeros); destino trace 0x06007500; nao confiar ate conferir no emulador; GF4
 0x087F314C,gGfx_Logo_Char,data,,[GF3] Char do logo NATSUME (LZ77 0x0DE0 -> VRAM 0x06000000); GF3
 0x087F5500,gTextDump,label,,inicio do texto
-0x103C6A04,gActionScript_AntiSea,data,,"[TQ2] roteiro de action-script da tecnica 35 (GH-TQ2); fluxo linear, entrada em 103C6A04; mesma entrada que tec 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 18, 19, 20, 34"
-0x103C6A57,gActionScript_GrapTrap,data,,"[TQ2] roteiro de action-script da tecnica 10 (GH-TQ2); fluxo linear, entrada em 103C6A57"
-0x103C6A59,gActionScript_ShotTrap,data,,"[TQ2] roteiro de action-script da tecnica 11 (GH-TQ2); fluxo linear, entrada em 103C6A59"
-0x103C6A5B,gActionScript_AttackClr,data,,"[TQ2] roteiro de action-script da tecnica 12 (GH-TQ2); fluxo linear, entrada em 103C6A5B"
-0x103C6A65,gActionScript_BreakForm,data,,"[TQ2] roteiro de action-script da tecnica 21 (GH-TQ2); fluxo linear, entrada em 103C6A65"
-0x103C6A67,gActionScript_Stability,data,,"[TQ2] roteiro de action-script da tecnica 22 (GH-TQ2); fluxo linear, entrada em 103C6A67"
-0x103C6A6B,gActionScript_ForceBind,data,,"[TQ2] roteiro de action-script da tecnica 23 (GH-TQ2); fluxo linear, entrada em 103C6A6B"
-0x103C6A6D,gActionScript_CancelOptic,data,,"[TQ2] roteiro de action-script da tecnica 24 (GH-TQ2); fluxo linear, entrada em 103C6A6D"
-0x103C6A6E,gActionScript_CancelBomb,data,,"[TQ2] roteiro de action-script da tecnica 25 (GH-TQ2); fluxo linear, entrada em 103C6A6E"
-0x103C6A6F,gActionScript_CancelGrav,data,,"[TQ2] roteiro de action-script da tecnica 26 (GH-TQ2); fluxo linear, entrada em 103C6A6F"
-0x103C6A70,gActionScript_Defence,data,,"[TQ2] roteiro de action-script da tecnica 27 (GH-TQ2); fluxo linear, entrada em 103C6A70"
-0x103C6A72,gActionScript_FullBlock,data,,"[TQ2] roteiro de action-script da tecnica 28 (GH-TQ2); fluxo linear, entrada em 103C6A72"
-0x103C6A74,gActionScript_HalfBlock,data,,"[TQ2] roteiro de action-script da tecnica 29 (GH-TQ2); fluxo linear, entrada em 103C6A74"
-0x103C6A76,gActionScript_Recovery,data,,"[TQ2] roteiro de action-script da tecnica 30 (GH-TQ2); fluxo linear, entrada em 103C6A76"
-0x103C6A87,gActionScript_AutoRecover,data,,"[TQ2] roteiro de action-script da tecnica 31 (GH-TQ2); fluxo linear, entrada em 103C6A87"
-0x103C6A8B,gActionScript_Repair,data,,"[TQ2] roteiro de action-script da tecnica 32 (GH-TQ2); fluxo linear, entrada em 103C6A8B"
-0x103C6A9C,gActionScript_Reactivate,data,,"[TQ2] roteiro de action-script da tecnica 33 (GH-TQ2); fluxo linear, entrada em 103C6A9C"
-0x103C6AA2,gActionScript_Scout,data,,"[TQ2] roteiro de action-script da tecnica 36 (GH-TQ2); fluxo linear, entrada em 103C6AA2"
-0x103C6AA4,gActionScript_Conceal,data,,"[TQ2] roteiro de action-script da tecnica 37 (GH-TQ2); fluxo linear, entrada em 103C6AA4"
-0x103C6AA6,gActionScript_BoostChrg,data,,"[TQ2] roteiro de action-script da tecnica 38 (GH-TQ2); fluxo linear, entrada em 103C6AA6"
-0x103C6AAA,gActionScript_RapidChrg,data,,"[TQ2] roteiro de action-script da tecnica 39 (GH-TQ2); fluxo linear, entrada em 103C6AAA"
-0x103C6AAE,gActionScript_AccelChrg,data,,"[TQ2] roteiro de action-script da tecnica 40 (GH-TQ2); fluxo linear, entrada em 103C6AAE"
-0x103C6AAF,gActionScript_DrainChrg,data,,"[TQ2] roteiro de action-script da tecnica 41 (GH-TQ2); fluxo linear, entrada em 103C6AAF"
-0x103C6AB3,gActionScript_Pushover,data,,"[TQ2] roteiro de action-script da tecnica 42 (GH-TQ2); fluxo linear, entrada em 103C6AB3"
-0x103C6AB8,gActionScript_Impair,data,,"[TQ2] roteiro de action-script da tecnica 43 (GH-TQ2); fluxo linear, entrada em 103C6AB8"
-0x103C6ABC,gActionScript_Confusion,data,,"[TQ2] roteiro de action-script da tecnica 44 (GH-TQ2); fluxo linear, entrada em 103C6ABC"
-0x103C6AC0,gActionScript_UseDrain,data,,"[TQ2] roteiro de action-script da tecnica 45 (GH-TQ2); fluxo linear, entrada em 103C6AC0"
-0x103C6AC4,gActionScript_NoEscape,data,,"[TQ2] roteiro de action-script da tecnica 46 (GH-TQ2); fluxo linear, entrada em 103C6AC4"
-0x103C6AC8,gActionScript_NoDefense,data,,"[TQ2] roteiro de action-script da tecnica 47 (GH-TQ2); fluxo linear, entrada em 103C6AC8"
-0x103C6ACC,gActionScript_Destroy,data,,"[TQ2] roteiro de action-script da tecnica 48 (GH-TQ2); fluxo linear, entrada em 103C6ACC"
-0x103C6AFF,gActionScript_Sacrifice,data,,"[TQ2] roteiro de action-script da tecnica 49 (GH-TQ2); fluxo linear, entrada em 103C6AFF"
-0x103C6B2C,gActionScript_Forcedrain,data,,"[TQ2] roteiro de action-script da tecnica 50 (GH-TQ2); fluxo linear, entrada em 103C6B2C"
-0x103C6B30,gActionScript_TeamForm,data,,"[TQ2] roteiro de action-script da tecnica 51 (GH-TQ2); fluxo linear, entrada em 103C6B30"
-0x103C6B32,gActionScript_TeamAttack,data,,"[TQ2] roteiro de action-script da tecnica 52 (GH-TQ2); fluxo linear, entrada em 103C6B32"
-0x103C6B85,gActionScript_Strengthen,data,,"[TQ2] roteiro de action-script da tecnica 53 (GH-TQ2); fluxo linear, entrada em 103C6B85"
-0x103C6B86,gActionScript_CntrAttk,data,,"[TQ2] roteiro de action-script da tecnica 54 (GH-TQ2); fluxo linear, entrada em 103C6B86"
-0x103C6B88,gActionScript_Change,data,,"[TQ2] roteiro de action-script da tecnica 55 (GH-TQ2); fluxo linear, entrada em 103C6B88"
-0x103C6B8A,gActionScript_ItrpChange,data,,"[TQ2] roteiro de action-script da tecnica 56 (GH-TQ2); fluxo linear, entrada em 103C6B8A"
-0x103C6B8C,gActionScript_AttkChange,data,,"[TQ2] roteiro de action-script da tecnica 57 (GH-TQ2); fluxo linear, entrada em 103C6B8C"
-0x103C6B8E,gActionScript_DEFChange,data,,"[TQ2] roteiro de action-script da tecnica 58 (GH-TQ2); fluxo linear, entrada em 103C6B8E"
-0x103C6B90,gActionScript_HealChange,data,,"[TQ2] roteiro de action-script da tecnica 59 (GH-TQ2); fluxo linear, entrada em 103C6B90"

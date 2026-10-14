@@ -223,7 +223,7 @@ F	0x08007C4C	PartsGrid_CursorInputStep
 F	0x08007D04	PartsGrid_BlendStartStep
 L	0x08007D28	Tile_ClearSlotsAndDispatchState_JumpTable
 L	0x08007D46	Tile_ClearSlotsAndDispatchState_Jump
-F	0x08007DDC	PartsGrid_SetSelectorPosByIndex
+F	0x08007DDC	PartsGrid_SelectNextStateByCursor
 F	0x08007E38	PartsGrid_InitScreen
 F	0x0800801C	PartsGrid_SlideDetailStep
 F	0x08008050	PartsGrid_SlideLoadStep
