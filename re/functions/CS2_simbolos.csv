@@ -1,0 +1,26 @@
+# address,name,kind,comment
+0x08047E50,PartSet_GetLegIconIndexForMatchingSlotPartId,func_thumb,CONFIRMADO decompile: busca entrada (id parte, kind 0..3) em IWRAM 0x030017A0 e grava byte+1 em IWRAM 0x03006D3E (+6 de 0x03006D38); unico chamador Event_Op4C
+0x0804CAA6,Event_Op4C_Jump_If_Missing_Part (call site),call_site,CONFIRMADO xref: chama PartSet_GetLegIconIndexForMatchingSlotPartId
+0x03006D3E,gPartLegSpriteIndex,ram_byte,CONFIRMADO escritor (PartSet 0x08047E50) e zerado em Event_Op06_End; leitor Map_PoseIdToTileIndex; semantica provavel: indice de sprite da perna equipada
+0x030017A0,gPartSpriteLookupTable,ram_data,IWRAM 9 entradas de 8 B usada por PartSet_GetLegIconIndexForMatchingSlotPartId (literal 0x08047E88); quem preenche nao rastreado
+0x08047EE0,(literal) gPartLegSpriteIndex base,data,literal 0x03006D38 (base; +6 = 0x03006D3E)
+0x0804B840,(literal) Event_Op06_End base,data,literal 0x03006D38; Event_Op06_End zera +6 (0x03006D3E)
+0x08049420,Map_SetObjectAnimationVariant,func_thumb,CONFIRMADO decompile: grava +0x24 = anim e zera +0x22 e +0x23
+0x08052D90,Map_SetObjectRenderSlotFacingVariant,func_thumb,CONFIRMADO decompile: +0x20/+0x21 = facing; +0x06 frame = (+0x2B grupo)*12 + facing*3
+0x08049440,Map_TickObjectAnimation,func_thumb,CONFIRMADO decompile: passo 8 B; switch op+0xFFFF0006 (FFFA casos 0 le +0x2F; FFFB default; FFFC LZ77; FFFD SFX; FFFE laco a1 em passos; FFFF fim)
+0x08049480,(literal) gObjectSlots base (Map_TickObjectAnimation),data,CONFIRMADO literal 0x03002C30 (base dos 128 slots de 0x40 B)
+0x0804947C,(literal) gObjectAnimScriptPtrTable (Map_TickObjectAnimation),data,CONFIRMADO literal 0x083F7B80
+0x08049484,(literal) Map_TickObjectAnimation op bias,data,literal 0xFFFF0006; op + bias seleciona o caso
+0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,CONFIRMADO: copia paleta 0x20 B de ROM[0x083F83C0+4*id] para EWRAM 0x0202F800+0x20*n por DMA3; fixa 0x085FB684 -> 0x0202F9C0
+0x083F83C0,gMapSpritePaletteTablePtr,data,ponteiros de paleta OBJ por id de sprite (61 validas; entrada 0 = usa id 1)
+0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,CONFIRMADO (ja em CS.md): bloco LZ77 por posicao da lista -> VRAM 0x06010000 + i*0x900 (72 tiles de 32 B)
+0x08048210,Map_PoseIdToTileIndex,func_thumb,CONFIRMADO (ja em CS.md): ids 0xC0..0xCF usam (id-0xC0)*2 + byte[0x03006D3E] + 0x28
+0x080487C8,Map_ResetObjectField0B,func_thumb,CONFIRMADO decompile: +0x0B = tab[pose] com tab em 0x083D2C5D (2->0xFF, 1->0x00, outro->0x40)
+0x083D2C5D,gObjectField0BByPoseTable,data,tabela de bytes indexada por pose (+0x30); os 32 primeiros sao zero
+0x08048864,Map_InitializeObjectRenderSlot,func_thumb,CONFIRMADO decompile: grava +0x00/+0x32 = valor, +0x06 frame, +0x0A grupo, +0x1C flag (base do slot = DAT_08048884)
+0x0805160A,Map_LoadEntitySpawnsForCurrentMap (call site),call_site,CONFIRMADO: spawn chama InitializeObjectRenderSlot(slot 0x31+k, 0xC804, grupo*12, grupo) e ResetField0B
+0x08052FFC,(call site) Map_InitSecondaryMarkerOverlay,call_site,chamador de Map_ResetObjectField0B (xref CONFIRMADO)
+0x080504D6,(call site) Map_InitObjectSprite,call_site,chamador de Map_ResetObjectField0B (xref CONFIRMADO)
+0x08050300,Overworld_GetObjectAnimationIndexForFacing,func_thumb,anim = facing + 4*grupo (ja em CS.md)
+0x083F7B80,gObjectAnimScriptPtrTable,data,128 ponteiros validos (0x200 B) para roteiros por anim (anim = facing+4*grupo); roteiros de 0x24 B; anim 0 = frames 1,0,2,0
+0x080AEB74,gLZ77RecordTable,data,registros de 16 B usados pelo passo 0xFFFC (src +4, dst +8, flag +0)

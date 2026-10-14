@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x080027BC,MainState0_Menu1_DispatchSub,func_thumb,"[FM3] menu_list[1] (gMainState=0, menu=1): wrapper que despacha por gamestate_subroutine na tabela 0x083AC404; SEM funcao no Ghidra (nao renomeado)"
+0x083AC404,MainState0_Menu1_SubTable,table,"[FM3] tabela de sub-estados de MainState0 menu 1: [0]=0x080027DC (tela cheia, 6 graficos), [1]=0x080028AC, [2]=0x08002A2C"
+0x080027DC,MainState0_Menu1_Sub0_InitScreen,func_thumb,"[FM3] sub 0 de menu 1: carrega 6 conjuntos de graficos na VRAM e chama 0x08074B88(6); tela cheia (nao a faixa de 4 linhas); nome pendente"
+0x0805716C,FieldMenu_DispatchSubstate,func_thumb,"[FM3] despachante do menu 2 de MainState1 (ja em FM); sem funcao no Ghidra"
+0x08057534,FieldMenu_RowActionTable,table,"[FM3] switch por codigo-1 de Overworld_CheckStepAllowed: idx0=0x080575D4 saida comum, idx1=0x0805754C (sub 0x0B), idx2=0x08057564 (sub 0x0D), idx3..5=0x08057570 (sub 0x0F)"
+0x08057B6C,FieldMenu_Sub0B_RowMachine,func_thumb,"[FM3] sub 0x0B da tabela 0x083D5FF4: sub-maquina por linha (ctx+0x65) e passo ctx+0x70; SEM funcao no Ghidra; codigo 2 cai aqui"
+0x08057D04,FieldMenu_Sub0D_Close,func_thumb,"[FM3] sub 0x0D: BL 0x08047C00; BL 0x0804A210 (fim de lista); retorna. Saida do menu (codigo 3). SEM funcao no Ghidra"
+0x08057D40,FieldMenu_Sub0F_Close,func_thumb,"[FM3] sub 0x0F: corpo igual ao 0x0D (BL 0x08047C00; BL 0x0804A210). Saida do menu (codigos 4..6). SEM funcao no Ghidra"
+0x08057D80,Overworld_CheckStepAllowed,func,"[FM3] retorna CODIGO 0..6 por linha (0 = fora; 1 = item ausente; 2 = parte ausente; 3, 4, 5, 6 = condicoes/ acao)"
+0x08057CB0,Flow_WaitObjectThenCount,func_thumb,"[FM3] nome existente; sub 12 (0x0C), nao o 0x0D; nao usado pelo switch de linha"
+0x08047C00,FieldMenu_CloseChoice_Provavel,func_thumb,"[FM3] chamado pelos subs 0x0D e 0x0F antes de 0x0804A210; nome chute (nao lido)"
