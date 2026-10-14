@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x0804F83C,Event_Op66_Cont_Animate_Tracked_Object_Transition,func_thumb,"confirmado; continuacao do 0x66: chama Map_TickTrackedObjectTransition (0x080509EC) por quadro, Event_EndOpcode quando != 0"
+0x0804F850,Event_Op67_Cont_Skip_Two_Bytes_Wait,func_thumb,"confirmado; continuacao do 0x67: so Event_EndOpcode (espera 1 quadro)"
+0x0804F860,Event_Op6A_Cont_NoOp,func_thumb,"confirmado; bx lr; 0x6A nao liga pendente, continuacao nunca roda"
+0x0804F864,Event_Op6C_Cont_Initiate_Moving_Actor_C,func_thumb,"confirmado fluxo; 2 passos: FUN_08050358 cria objeto + FUN_080500BC inicia Move; espera 0805018C; provavel papel dos auxiliares"
+0x0804FA5C,Event_Op71_Cont_Run_Scene_Command_00,func_thumb,"confirmado; FUN_08050CC0 + FUN_08050CCC(0,0) ate != 0"
+0x0804FA9C,Event_Op72_Cont_Run_Scene_Command_02,func_thumb,"confirmado; FUN_08050CC0 + FUN_08050CCC(2,0) ate != 0"
+0x0804FADC,Event_Op73_Cont_Run_Scene_Command_08,func_thumb,"confirmado; FUN_08050CC0 + FUN_08050CCC(8,0) ate != 0"
+0x0804FB1C,Event_Op76_Cont_Start_Flow4_Then_Scene_Command_05,func_thumb,"confirmado; StartFlowByCommand(4,0); checa 0x03006D20+0xC==7 uma vez; depois cena 5"
+0x0804FC1C,Event_Op7A_Cont_Run_Scene_Command_11,func_thumb,"confirmado; cena 0x11 e depois FUN_0804B738 != 0 grava 1 em 0x03005349 (HE4 dizia zera 0x03005310)"
+0x0804FC6C,Event_Op7E_Cont_Move_All_Tracked_Actors_C,func_thumb,"confirmado chamada; chama Event_RunAllTrackedActorsStepSequence (0x0804E5F0) com (0,0); padrao vem de E+0xC94"
+0x0804FC7C,Event_Op7F_Cont_Copy_Tracked_Actor_Records,func_thumb,"confirmado; copia blocos de 0x40 (0x03003FF0/0x03004A70 + arg0*0x40 -> 0x03003830/0x030042B0), grava 0xFFFF em 0x030055A0; significado chute"
