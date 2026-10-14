@@ -1,7 +1,7 @@
 # address,name,kind,comment
 0x08052330,Map_CheckFacingEventTriggerAhead,func_thumb,"gatilho de frente (kind 0/4/6 na casa à frente); Pendente=1, id em E+0xC8E, StateByte=0, cursor=0, índice em E+0xCB4 (confirmado)"
 0x08052400,Map_CheckWalkOverTrigger,func_thumb,"gatilho de passagem (kind 8 na casa do jogador); Pendente=1, id em 0x0300646E, índice em 0x03006494 (confirmado)"
-0x08051416,Map_LoadEntitySpawnsForCurrentMap,func_thumb,"carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234)"
+0x08051416,Map_LoadEntitySpawns_GroupLoop,label,"EX: miolo de Map_LoadEntitySpawnsForCurrentMap (inicio 0x080513C8); carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234)"
 0x0804A7A0,Overworld_InitMapScene,func_thumb,"entrada de cena do mapa: zera Pendente (C88), StateByte (C89), cursor (C8A); carrega mapa e entidades (confirmado)"
 0x0804A220,EventScript_RunCurrent,func_thumb,"laço por quadro da VM de eventos; sem evento chama 0x083D212C[0x0300137C]; com evento despacha primária/continuação (confirmado)"
 0x0804B6F4,Script_DispatchHandler,func_thumb,"lê opcode, grava E+0xC92, zera E+0xC89 e E+0xC93, chama 0x083D222C[op] (confirmado)"

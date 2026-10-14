@@ -550,6 +550,7 @@ address,name,kind,count,comment
 0x0801013C,PartDetail_DispatchModeHandler,func_thumb,,[R0] dispatch por modo; retorna modo==3 (chute)
 0x080101E8,Slot_CountdownStepAndClear,func_thumb,,"contagem regressiva de byte de contexto +0x108; limpa slot (4,1) ao zerar; provavel"
 0x0801022C,BgMap_FillRectTickCounter,func_thumb,,"[provavel] BgMap_FillRect16(12,8,18,5,tile) + contador de byte++"
+0x08010264,Scene_GsDispatch_Menu6,label,,"[BT2] [GH-BT2] menu_list[6]; despachante por GS com tabela 0x083ACE24, DMA limpeza se 0x03000430==2; sem funcao no Ghidra; nao confirmado como volta ao mapa"
 0x080102C0,Scr_HideSpritesPlaySong8,func_thumb,,provável: oculta 4 sprites e pede música 8
 0x08010478,Screen_ScrollRevealRowsStep,func_thumb,,[FL10] revelação por linhas no mapa de fundo; contador +0x48; subsistema não confirmado
 0x0801053C,Fight_ResetTemplateAndPalette,func_thumb,,"zera estado +0x132, paleta e area; provavel"
@@ -568,6 +569,7 @@ address,name,kind,count,comment
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
 0x08011764,Fight_InitBotPartPanel,func_thumb,,provável: monta painel de peças do bot na luta
 0x08011BB8,Gfx_ResetScreenBgAndBlend,func_thumb,,"[FL10] reset de tela: limpa slots, 4 mapas BG, SetGpuBlendMode(3,0x3F,0x20)"
+0x08011C44,Gfx_ResetScreenBgAndBlend,func_thumb,,"[BT2] [GH-BT2] grava gamestate_menu=8 (literal 0x08011C80) e 2 em 0x08011C7C; escritor provavel de menu=8, chamador nao achado"
 0x08011DB0,Fight_BeginEncounterTemplateSelection,func_thumb,,[R0] prepara escolha de template do encontro (provavel)
 0x08011DE4,Fight_CopyEncounterTemplateEntry,func_thumb,,[R0] copia 2 bytes para entrada de template (provavel)
 0x08011E20,Fight_SelectTemplateForCurrentEncounter,func_thumb,,"Simon/Rokusho: Selects the active FightTemplate for the current encounter, copies it into fight_information.template, and if template_flags == 0 rerolls each bot's head/right/left/legs part ids. The bot loop indexes the copied template as raw bytes because the code memcpy's the 0x28-byte template into RAM first; offsets +4..+7 within each 0x0C bot record are the four part ids, not stat_nibbles_packed."
@@ -771,7 +773,7 @@ address,name,kind,count,comment
 0x080195C0,Fight_DrawActiveBotsOverlay,func_thumb,,[R1] Laco 6 bots ativos desenha icones de status; provavel
 0x08019600,Fight_DrawSecondaryEffectIcon,func_thumb,,"Simon/Rokusho: Update indicator objects for the secondary long-lived effect block. Current confirmed kinds are AutoRecover (0x1F), Boost_Chrg (0x26), and Drain_Chrg (0x29). (antes: Fight_UpdateSecondaryEffectIndicatorObjects)"
 0x08019720,Fight_DrawPendingEffectIcon,func_thumb,,[R1] Despachante de icone por tipo pendente (+0xC9); confirmado
-0x08019B40,Hud_PartStatusIconAlias,func_thumb,,"Simon/Rokusho: Render the small reaction-source icon for a bot. Uses reaction_status_flags, reaction_source_part_id, and reaction_source_action_kind to choose the icon and sprite frame. (antes: Fight_DrawReactionSourceIcon) (antes: Fight_DrawPartStatusIcon)"
+0x08019B40,Fight_DrawPartStatusIcon,func_thumb,,"Simon/Rokusho: Render the small reaction-source icon for a bot. Uses reaction_status_flags, reaction_source_part_id, and reaction_source_action_kind to choose the icon and sprite frame. (antes: Fight_DrawReactionSourceIcon) (antes: Fight_DrawPartStatusIcon) (antes: Hud_PartStatusIconAlias)"
 0x08019D9C,Fight_PlaceBotStatusIconObject,func_thumb,,[R1] Preenche objeto de tela do icone de status (x/y/tile/paleta); provavel
 0x08019EF0,Fight_UpdateBotPositionEvents,func_thumb,,[R1] Varre bots ativos e soma eventos de posicao (Y de descanso/fora da tela); provavel
 0x08019FBC,Fight_CheckBotYAtRestPos,func_thumb,,[R1] Checa bot sem bit 04 com Y 68/88; enfileira evento se bate; confirmado
@@ -1910,6 +1912,7 @@ address,name,kind,count,comment
 0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,"Simon/Rokusho: Advance the preview sequence cursor to the next table entry, skipping the current entry header plus its variable-length payload. Used by the side-preview scene step handlers after consuming sequence_arg_0..sequence_arg_6."
 0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,A6 (rec_2): cursor(+0x100 = 0x03001900) += 1 + byte(0x083CE374 + s16(Row[cursor])); escrita pc 0x0803D4DC; chamada pelos handlers 8-12 do roteiro de objeto
 0x0803D4EC,Fight_ScrollEntryCoords,func_thumb,,[R2] soma/subtrai delta em 20 entradas com mascara (chute)
+0x0803D538,Scene_GsDispatch_Menu10_Link,label,,"[BT2] [GH-BT2] menu_list[10]; despachante por GS-0x10 com tabela 0x083AFC78 e guarda 0x0803EED8; sem funcao no Ghidra; nome sugerido, nao confirmado"
 0x0803D5A0,Fight_ResetStateFlagsAndCounter,func_thumb,,"zera ctx+0x84/+0x86 e incrementa contador; lista diz 428 bytes, corpo real 48; provavel"
 0x0803D74C,Screen_InitOverlayAndLoadAssets,func_thumb,,[FN2] provavel: Init de tela: limpa; CpuFastSet; DISPCNT; 4x decompress_and_store; layout overlay; snd_song_request(8)
 0x0803D9A0,Fight_ShowPreBattleTextIndex1,func_thumb,,"[TX] GH-TX: StateMachine_DispatchStep(gTextPreBattleMessage[1]) (indice fixo, ldr [r0,#4]). Confirmado pelo corpo 0x0803D9A0..0x0803D9BD (sem funcao no Ghidra)"
@@ -2502,7 +2505,7 @@ address,name,kind,count,comment
 0x08050CCC,Event_RunSceneCommandSequence,func_thumb,,"Simon/Rokusho: Run a multi-step scene/event command sequence selected by a small command id. |  | This helper is not map-load-specific. Depending on the command id, it can: | - launch top-level game/menu flows through GameState_StartFlowByCommand | - run scene transitions | - trigger side-effect commands through 0x0804842C | - advance an internal step byte in gEventScriptArguments[0x0B] |  | Returns nonzero when the sequence has finished."
 0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions."
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
-0x08051416,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234)
+0x08051416,Map_LoadEntitySpawns_GroupLoop,label,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234) (antes: Map_LoadEntitySpawnsForCurrentMap)
 0x080517F0,Overworld_InitPlayerSprites,func_thumb,,"Simon/Rokusho: Initialize the player's map marker / cursor UI after a map load. Converts the player's world position to tile coordinates, loads the marker graphics, seeds the marker sprite state, and sets the initial on-screen position relative to the current camera. (antes: Map_InitPlayerMapMarker)"
 0x08051940,Map_GetScaledStepDelta,func_thumb,,"[R3] revisto CH3: provável - devolve produto de dois bytes de DAT_08051960 (um indexado pelo byte +0x2A do slot idx, outro por DAT_08051968+2); passo de movimento escalado"
 0x0805196C,Overworld_ClearFollowerQueuedMove,func_thumb,,"Simon/Rokusho: Clear the follower's queued movement/facing state, then reset the follower animation queue helper used when the player changes facing without taking a full step."

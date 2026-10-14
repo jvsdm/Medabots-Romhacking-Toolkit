@@ -275,6 +275,7 @@ F	0x080100BC	PartDetail_MoveAttributeCursor
 F	0x0801013C	PartDetail_DispatchModeHandler
 F	0x080101E8	Slot_CountdownStepAndClear
 F	0x0801022C	BgMap_FillRectTickCounter
+L	0x08010264	Scene_GsDispatch_Menu6
 F	0x080102C0	Scr_HideSpritesPlaySong8
 F	0x08010478	Screen_ScrollRevealRowsStep
 F	0x0801053C	Fight_ResetTemplateAndPalette
@@ -293,6 +294,7 @@ F	0x08011500	Gfx_ResetBgLayersAndSong
 F	0x08011644	Fx_InitBlendTableAndTick
 F	0x08011764	Fight_InitBotPartPanel
 F	0x08011BB8	Gfx_ResetScreenBgAndBlend
+F	0x08011C44	Gfx_ResetScreenBgAndBlend_08011C44
 F	0x08011DB0	Fight_BeginEncounterTemplateSelection
 F	0x08011DE4	Fight_CopyEncounterTemplateEntry
 F	0x08011E20	Fight_SelectTemplateForCurrentEncounter
@@ -496,7 +498,7 @@ F	0x08019544	Fight_UpdateBotMeterDisplayObject
 F	0x080195C0	Fight_DrawActiveBotsOverlay
 F	0x08019600	Fight_DrawSecondaryEffectIcon
 F	0x08019720	Fight_DrawPendingEffectIcon
-F	0x08019B40	Hud_PartStatusIconAlias
+F	0x08019B40	Fight_DrawPartStatusIcon
 F	0x08019D9C	Fight_PlaceBotStatusIconObject
 F	0x08019EF0	Fight_UpdateBotPositionEvents
 F	0x08019FBC	Fight_CheckBotYAtRestPos
@@ -1634,6 +1636,7 @@ F	0x0803D450	FightPreview_UnpackSequenceEntry
 F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4EC	Fight_ScrollEntryCoords
+L	0x0803D538	Scene_GsDispatch_Menu10_Link
 F	0x0803D5A0	Fight_ResetStateFlagsAndCounter
 F	0x0803D74C	Screen_InitOverlayAndLoadAssets
 F	0x0803D9A0	Fight_ShowPreBattleTextIndex1
@@ -2226,7 +2229,7 @@ F	0x08050CC0	Event_ResetSceneCommandStep
 F	0x08050CCC	Event_RunSceneCommandSequence
 F	0x08050F5C	Overworld_UpdateMapSceneStateMachine
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
-F	0x08051416	Map_LoadEntitySpawnsForCurrentMap_08051416
+L	0x08051416	Map_LoadEntitySpawns_GroupLoop
 F	0x080517F0	Overworld_InitPlayerSprites
 F	0x08051940	Map_GetScaledStepDelta
 F	0x0805196C	Overworld_ClearFollowerQueuedMove
