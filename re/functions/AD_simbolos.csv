@@ -1,0 +1,36 @@
+# address,name,kind,comment
+0x080249C0,Fight_DispatchOnSubstateAA_AF_00_AccumPartAndCheckTech,passo,AF idx 00; acumula peca e custo; +1 ou 0x04
+0x08024A30,Fight_DispatchOnSubstateAA_AF_08_SetupOverlay,passo,AF idx 08; overlay do slot; +1
+0x08024AF4,Fight_DispatchOnSubstateAA_AF_0B_InitSlotAttrs,passo,AF idx 0B; atributos do slot; +1 (0x0C inferido)
+0x08024BCC,Fight_DispatchOnSubstateAA_AF_0C_WaitSlot22,passo,AF idx 0C; espera slot 0x22; +1 (0x0E inferido)
+0x08024BF8,Fight_DispatchOnSubstateAA_AF_0E_SetSlotFlagsPos,passo,AF idx 0E; flags e posicao do slot; +1
+0x08024C44,Fight_DispatchOnSubstateAA_AF_0F_CountDownToMark,passo,AF idx 0F; contador ate marca; +1
+0x08024C94,Fight_DispatchOnSubstateAA_AF_10_OscillateSlot,passo,AF idx 10; oscila slot; +1
+0x08024D18,Fight_DispatchOnSubstateAA_AF_11_SetSlotParams,passo,AF idx 11; parametros do bot; +1
+0x08024DA8,Fight_DispatchOnSubstateAA_AF_12_CopyTileData,passo,AF idx 12; copia 0xE bytes; +1
+0x08024E2C,Fight_DispatchOnSubstateAA_AG_00_AccumPartAndCheckTech,passo,AG idx 00; igual AF_00; +1 ou 0x04
+0x08024E9C,Fight_DispatchOnSubstateAA_AG_08_SetupSlots,passo,AG idx 08; grafico e flags; +1
+0x08030780,Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer,passo,AG idx 09; desloca slot 0x21; +1 (0x0A)
+0x08024F90,Fight_DispatchOnSubstateAA_AG_0B_PlaySfx33SetFlags,passo,AG idx 0B; SFX 0x33; +1
+0x08024FC4,Fight_DispatchOnSubstateAA_AG_0C_SlideSlotsIn,passo,AG idx 0C; desliza slot; +1
+0x0802503C,Fight_DispatchOnSubstateAA_AG_0D_SpawnEffectSlot,passo,AG idx 0D; setup slot 0x21; +1
+0x0803081C,Fight_DispatchOnSubstateAA_AG_0E_WaitSlotScriptEnd,passo,AG idx 0E; roteiro do slot; +1
+0x08025104,Fight_DispatchOnSubstateAA_AG_0F_SetBotParamsFromE8EC,passo,AG idx 0F; campos do bot de E8/EC; +1
+0x08025174,Fight_DispatchOnSubstateAA_AG_10_SetStep33,passo,AG idx 10; fight+0xA6=0x33; +1
+0x08026184,Fight_DispatchOnSubstateAA_AM_04_SetupBotSpriteSlot,passo,AM idx 04; sprite do bot; +1
+0x08026284,Fight_DispatchOnSubstateAA_AM_05_WaitAnimThenPlaceSprite,passo,AM idx 05; anim e sprite; +1
+0x080262FC,Fight_DispatchOnSubstateAA_AM_06_StepDownCounterWithSfx,passo,AM idx 06; contador -8 ate marca; SFX 0x53; +1
+0x08026340,Fight_DispatchOnSubstateAA_AM_07_StepCounterUntilP,passo,AM idx 07; contador ate P; +1
+0x08026378,Fight_DispatchOnSubstateAA_AM_08_StepDownCounterUntilAt,passo,AM idx 08; contador -4 ate marca; +1
+0x08026484,Fight_DispatchOnSubstateAA_AN_00_AccumPartCheckCostFlagAB,passo,AN idx 00; liga +0xAB; +1
+0x080264E4,Fight_DispatchOnSubstateAA_AN_04_SetupEffectSpritesAndSfx,passo,AN idx 04; grafico e sprite; +1
+0x08026628,Fight_DispatchOnSubstateAA_AN_05_WaitFramesWithAnimations,passo,AN idx 05; anim 0x21/0x22 ate 0x5A; +1
+0x08026678,Fight_DispatchOnSubstateAA_AN_06_ApplyRandomPartReplacementEffect,passo,AN idx 06; troca aleatoria de peca; +1
+0x08026810,Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs,passo,AN idx 07; copia blobs de peca; +1
+0x080268AC,Fight_DispatchOnSubstateAA_AO_01_RollPartValueForBot,passo,AO idx 01; sorteia valor de peca; +1
+0x080268D4,Fight_DispatchOnSubstateAA_AO_02_ClampPartCountsToLimit,passo,AO idx 02; limite das 4 pecas; +1
+0x08026924,Fight_DispatchOnSubstateAA_AO_03_ShowFourPartValues,passo,AO idx 03; mostra 4 valores; SFX 0x5B; +1
+0x08026A24,Fight_DispatchOnSubstateAA_AO_04_WaitPartRowsDrawn,passo,AO idx 04; espera linhas; +1
+0x08026A74,Fight_DispatchOnSubstateAA_AO_07_DrawPartIconsWaitReady,passo,AO idx 07; icones de peca; +1
+0x08026AF4,Fight_DispatchOnSubstateAA_AO_09_ShowPartFlagsOrBackup,passo,AO idx 09; efeito por peca com flag; +1 ou 0x0D
+0x08026CBC,Fight_DispatchOnSubstateAA_AO_10_QueueHeadBreakIfDefenderHeadZero,passo,AO idx 10; quebra de cabeca do alvo; +1

@@ -1275,23 +1275,23 @@ address,name,kind,count,comment
 0x08024890,Fight_DispatchOnSubstateAA_AE_LoadSlotGfx,func_thumb,,[HA7] AE substado 0x1C; carrega gfx e slot; provavel
 0x0802494C,Fight_DispatchOnSubstateAA_AE_RunSlotScript,func_thumb,,[HA7] AE substado 0x1D; roda script de slot; provavel
 0x08024998,Fight_DispatchOnSubstateAA_AF,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x080249C0,Fight_DispatchOnSubstateAA_AF_AccumPartAndCheckTech,func_thumb,,AF substado 0x00; acumula parte e checa tecnica 16; provavel
-0x08024A30,Fight_DispatchOnSubstateAA_AF_SetupOverlay,func_thumb,,[HA7] AF substado 0x08; setup de overlay; provavel
-0x08024AF4,Fight_DispatchOnSubstateAA_AF_InitSlotAttrs,func_thumb,,AF substado 0x0B; atributos de slot e sfx 0x6A; provavel
-0x08024BCC,Fight_DispatchOnSubstateAA_AF_WaitSlot22,func_thumb,,AF substado 0x0C; espera slot 0x22; compartilhado com AI; provavel
-0x08024BF8,Fight_DispatchOnSubstateAA_AF_SetSlotFlagsPos,func_thumb,,AF substado 0x0E; flags 0x220 e posicao; compartilhado com AI; provavel
-0x08024C44,Fight_DispatchOnSubstateAA_AF_CountDownToMark,func_thumb,,[HA7] AF substado 0x0F; contagem ate marca; provavel
-0x08024C94,Fight_DispatchOnSubstateAA_AF_OscillateSlot,func_thumb,,[HA7] AF substado 0x10; oscila x do slot; provavel
-0x08024D18,Fight_DispatchOnSubstateAA_AF_SetSlotParams,func_thumb,,[HA7] AF substado 0x11; parametros do slot; provavel
-0x08024DA8,Fight_DispatchOnSubstateAA_AF_CopyTileData,func_thumb,,[HA7] AF substado 0x12; copia 0xE bytes; provavel
+0x080249C0,Fight_DispatchOnSubstateAA_AF_00_AccumPartAndCheckTech,func_thumb,,AF substado 0x00; acumula parte e checa tecnica 16; provavel (antes: Fight_DispatchOnSubstateAA_AF_AccumPartAndCheckTech)
+0x08024A30,Fight_DispatchOnSubstateAA_AF_08_SetupOverlay,func_thumb,,[HA7] AF substado 0x08; setup de overlay; provavel (antes: Fight_DispatchOnSubstateAA_AF_SetupOverlay)
+0x08024AF4,Fight_DispatchOnSubstateAA_AF_0B_InitSlotAttrs,func_thumb,,AF substado 0x0B; atributos de slot e sfx 0x6A; provavel (antes: Fight_DispatchOnSubstateAA_AF_InitSlotAttrs)
+0x08024BCC,Fight_DispatchOnSubstateAA_AF_0C_WaitSlot22,func_thumb,,AF substado 0x0C; espera slot 0x22; compartilhado com AI; provavel (antes: Fight_DispatchOnSubstateAA_AF_WaitSlot22)
+0x08024BF8,Fight_DispatchOnSubstateAA_AF_0E_SetSlotFlagsPos,func_thumb,,AF substado 0x0E; flags 0x220 e posicao; compartilhado com AI; provavel (antes: Fight_DispatchOnSubstateAA_AF_SetSlotFlagsPos)
+0x08024C44,Fight_DispatchOnSubstateAA_AF_0F_CountDownToMark,func_thumb,,[HA7] AF substado 0x0F; contagem ate marca; provavel (antes: Fight_DispatchOnSubstateAA_AF_CountDownToMark)
+0x08024C94,Fight_DispatchOnSubstateAA_AF_10_OscillateSlot,func_thumb,,[HA7] AF substado 0x10; oscila x do slot; provavel (antes: Fight_DispatchOnSubstateAA_AF_OscillateSlot)
+0x08024D18,Fight_DispatchOnSubstateAA_AF_11_SetSlotParams,func_thumb,,[HA7] AF substado 0x11; parametros do slot; provavel (antes: Fight_DispatchOnSubstateAA_AF_SetSlotParams)
+0x08024DA8,Fight_DispatchOnSubstateAA_AF_12_CopyTileData,func_thumb,,[HA7] AF substado 0x12; copia 0xE bytes; provavel (antes: Fight_DispatchOnSubstateAA_AF_CopyTileData)
 0x08024E04,Fight_DispatchOnSubstateAA_AG,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x08024E2C,Fight_DispatchOnSubstateAA_AG_AccumPartAndCheckTech,func_thumb,,AG substado 0x00; codigo igual ao AF 0x00; provavel
-0x08024E9C,Fight_DispatchOnSubstateAA_AG_SetupSlots,func_thumb,,[HA7] AG substado 0x08; setup de slots; provavel
-0x08024F90,Fight_DispatchOnSubstateAA_AG_PlaySfx33SetFlags,func_thumb,,AG substado 0x0B; sfx 0x33 e flags 0x220; provavel
-0x08024FC4,Fight_DispatchOnSubstateAA_AG_SlideSlotsIn,func_thumb,,[HA7] AG substado 0x0C; desliza slot; provavel
-0x0802503C,Fight_DispatchOnSubstateAA_AG_SpawnEffectSlot,func_thumb,,[HA7] AG substado 0x0D; slot de efeito; sfx 0x4F; provavel
-0x08025104,Fight_DispatchOnSubstateAA_AG_SetBotParamsFromE8EC,func_thumb,,AG substado 0x0F; params do bot por +0xE8/+0xEC; provavel
-0x08025174,Fight_DispatchOnSubstateAA_AG_SetStep33,func_thumb,,AG substado 0x10; passo 0x33; provavel
+0x08024E2C,Fight_DispatchOnSubstateAA_AG_00_AccumPartAndCheckTech,func_thumb,,AG substado 0x00; codigo igual ao AF 0x00; provavel (antes: Fight_DispatchOnSubstateAA_AG_AccumPartAndCheckTech)
+0x08024E9C,Fight_DispatchOnSubstateAA_AG_08_SetupSlots,func_thumb,,[HA7] AG substado 0x08; setup de slots; provavel (antes: Fight_DispatchOnSubstateAA_AG_SetupSlots)
+0x08024F90,Fight_DispatchOnSubstateAA_AG_0B_PlaySfx33SetFlags,func_thumb,,AG substado 0x0B; sfx 0x33 e flags 0x220; provavel (antes: Fight_DispatchOnSubstateAA_AG_PlaySfx33SetFlags)
+0x08024FC4,Fight_DispatchOnSubstateAA_AG_0C_SlideSlotsIn,func_thumb,,[HA7] AG substado 0x0C; desliza slot; provavel (antes: Fight_DispatchOnSubstateAA_AG_SlideSlotsIn)
+0x0802503C,Fight_DispatchOnSubstateAA_AG_0D_SpawnEffectSlot,func_thumb,,[HA7] AG substado 0x0D; slot de efeito; sfx 0x4F; provavel (antes: Fight_DispatchOnSubstateAA_AG_SpawnEffectSlot)
+0x08025104,Fight_DispatchOnSubstateAA_AG_0F_SetBotParamsFromE8EC,func_thumb,,AG substado 0x0F; params do bot por +0xE8/+0xEC; provavel (antes: Fight_DispatchOnSubstateAA_AG_SetBotParamsFromE8EC)
+0x08025174,Fight_DispatchOnSubstateAA_AG_10_SetStep33,func_thumb,,AG substado 0x10; passo 0x33; provavel (antes: Fight_DispatchOnSubstateAA_AG_SetStep33)
 0x0802518C,Fight_DispatchOnSubstateAA_AH,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x080251B4,Fight_DispatchOnSubstateAA_AH_AccumPartBranchOn58,func_thumb,,AH substado 0x00; ramo por bot+0x58; provavel
 0x08025230,Fight_DispatchOnSubstateAA_AH_SetupOverlay,func_thumb,,AH substado 0x08; setup de overlay; provavel
@@ -1330,27 +1330,27 @@ address,name,kind,count,comment
 0x08026108,Fight_DispatchOnSubstateAA_AM,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026130,Fight_DispatchOnSubstateAA_AM_00_AccumPartCheckCostNoTech,func_thumb,,Handler AM idx 0x00: acumula peca; custo de status; uso ou 0x1A; avanca
 0x08026184,Fight_DispatchOnSubstateAA_AM_04_SetupBotSpriteSlot,func_thumb,,Handler AM idx 0x04: gfx LZ77; sprite do bot ativo; slot 0x21; avanca
-0x08026284,Fight_DispatchOnSubstateAA_AM_WaitAnimThenPlaceSprite,func_thumb,,[HA8] Handler AM idx 0x05: espera slot 0x21 e posiciona sprite; avanca
-0x080262FC,Fight_DispatchOnSubstateAA_AM_StepDownCounterWithSfx,func_thumb,,[HA8] Handler AM idx 0x06: contador -8 por frame; SFX 0x53 ao chegar em '@'; avanca
+0x08026284,Fight_DispatchOnSubstateAA_AM_05_WaitAnimThenPlaceSprite,func_thumb,,[HA8] Handler AM idx 0x05: espera slot 0x21 e posiciona sprite; avanca (antes: Fight_DispatchOnSubstateAA_AM_WaitAnimThenPlaceSprite)
+0x080262FC,Fight_DispatchOnSubstateAA_AM_06_StepDownCounterWithSfx,func_thumb,,[HA8] Handler AM idx 0x06: contador -8 por frame; SFX 0x53 ao chegar em '@'; avanca (antes: Fight_DispatchOnSubstateAA_AM_StepDownCounterWithSfx)
 0x08026340,Fight_DispatchOnSubstateAA_AM_07_StepCounterUntilP,func_thumb,,Handler AM idx 0x07: espera ate byte de controle == 'P'; avanca
 0x08026378,Fight_DispatchOnSubstateAA_AM_08_StepDownCounterUntilAt,func_thumb,,Handler AM idx 0x08: contador -4 ate '@'; timer 0x3C; avanca
 0x080263BC,Fight_DispatchOnSubstateAA_AM_0A_ClearSlotSetPartDisplayValue,func_thumb,,Handler AM idx 0x0A: limpa slot 0x21; copia tecnica da peca; soma valor ate 0xFF; avanca
 0x08026444,Fight_DispatchOnSubstateAA_AM_0B_SetMessage2AAdvance,func_thumb,,Handler AM idx 0x0B: grava +0xA6=0x2A; avanca
 0x0802645C,Fight_DispatchOnSubstateAA_AN,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026484,Fight_DispatchOnSubstateAA_AN_00_AccumPartCheckCostFlagAB,func_thumb,,Handler AN idx 0x00: como AI_00; liga/zera +0xAB; avanca ou vai para 4
-0x080264E4,Fight_DispatchOnSubstateAA_AN_SetupEffectSpritesAndSfx,func_thumb,,[HA8] Handler AN idx 0x04: LZ77 + 2 slots de animacao + SFX 0x5E; avanca
-0x08026628,Fight_DispatchOnSubstateAA_AN_WaitFramesWithAnimations,func_thumb,,[HA8] Handler AN idx 0x05: espera timer +0x86 ate 0x5A rodando animacoes; avanca
-0x08026678,Fight_ApplyRandomPartReplacementEffect,func_thumb,,"Simon/Rokusho: Apply the in-battle random part replacement effect to the currently selected bot/part. Saves the old BattlePartState into fight_information staging, selects a replacement part id via Fight_SelectReplacementPartIdByIconFamily, copies the replacement ROM part fields into the live part state, refreshes action metadata, and advances the outer action sequence."
+0x080264E4,Fight_DispatchOnSubstateAA_AN_04_SetupEffectSpritesAndSfx,func_thumb,,[HA8] Handler AN idx 0x04: LZ77 + 2 slots de animacao + SFX 0x5E; avanca (antes: Fight_DispatchOnSubstateAA_AN_SetupEffectSpritesAndSfx)
+0x08026628,Fight_DispatchOnSubstateAA_AN_05_WaitFramesWithAnimations,func_thumb,,[HA8] Handler AN idx 0x05: espera timer +0x86 ate 0x5A rodando animacoes; avanca (antes: Fight_DispatchOnSubstateAA_AN_WaitFramesWithAnimations)
+0x08026678,Fight_DispatchOnSubstateAA_AN_06_ApplyRandomPartReplacementEffect,func_thumb,,"Simon/Rokusho: Apply the in-battle random part replacement effect to the currently selected bot/part. Saves the old BattlePartState into fight_information staging, selects a replacement part id via Fight_SelectReplacementPartIdByIconFamily, copies the replacement ROM part fields into the live part state, refreshes action metadata, and advances the outer action sequence. (antes: Fight_ApplyRandomPartReplacementEffect)"
 0x08026810,Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs,func_thumb,,Handler AN idx 0x07: limpa 2 slots; copia dois blocos de 15 bytes para tabela; msg 0x2F; avanca
 0x08026884,Fight_DispatchOnSubstateAA_AO,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x080268AC,Fight_DispatchOnSubstateAA_AO_01_RollPartValueForBot,func_thumb,,Handler AO idx 0x01: Fight_RollPartValue e FUN_080376f4 no bot ativo; avanca
-0x080268D4,Fight_DispatchOnSubstateAA_AO_ClampPartCountsToLimit,func_thumb,,[HA8] Handler AO idx 0x02: clampa 4 contadores de peca pelo limite +0xEC; avanca
-0x08026924,Fight_DispatchOnSubstateAA_AO_ShowFourPartValues,func_thumb,,[HA8] Handler AO idx 0x03: escreve 4 numeros de peca; SFX 0x5B; avanca
-0x08026A24,Fight_DispatchOnSubstateAA_AO_WaitPartRowsDrawn,func_thumb,,[HA8] Handler AO idx 0x04: espera 4 linhas de peca; timer 0x3C; avanca
-0x08026A74,Fight_DispatchOnSubstateAA_AO_DrawPartIconsWaitReady,func_thumb,,[HA8] Handler AO idx 0x07: desenha icones de peca; timer 0x3C quando 4 prontas; avanca
-0x08026AF4,Fight_DispatchOnSubstateAA_AO_ShowPartFlagsOrBackup,func_thumb,,[HA8] Handler AO idx 0x09: efeitos por peca; avanca ou vai para 0x0D com backup
+0x080268D4,Fight_DispatchOnSubstateAA_AO_02_ClampPartCountsToLimit,func_thumb,,[HA8] Handler AO idx 0x02: clampa 4 contadores de peca pelo limite +0xEC; avanca (antes: Fight_DispatchOnSubstateAA_AO_ClampPartCountsToLimit)
+0x08026924,Fight_DispatchOnSubstateAA_AO_03_ShowFourPartValues,func_thumb,,[HA8] Handler AO idx 0x03: escreve 4 numeros de peca; SFX 0x5B; avanca (antes: Fight_DispatchOnSubstateAA_AO_ShowFourPartValues)
+0x08026A24,Fight_DispatchOnSubstateAA_AO_04_WaitPartRowsDrawn,func_thumb,,[HA8] Handler AO idx 0x04: espera 4 linhas de peca; timer 0x3C; avanca (antes: Fight_DispatchOnSubstateAA_AO_WaitPartRowsDrawn)
+0x08026A74,Fight_DispatchOnSubstateAA_AO_07_DrawPartIconsWaitReady,func_thumb,,[HA8] Handler AO idx 0x07: desenha icones de peca; timer 0x3C quando 4 prontas; avanca (antes: Fight_DispatchOnSubstateAA_AO_DrawPartIconsWaitReady)
+0x08026AF4,Fight_DispatchOnSubstateAA_AO_09_ShowPartFlagsOrBackup,func_thumb,,[HA8] Handler AO idx 0x09: efeitos por peca; avanca ou vai para 0x0D com backup (antes: Fight_DispatchOnSubstateAA_AO_ShowPartFlagsOrBackup)
 0x08026BF8,Fight_DispatchOnSubstateAA_AO_0D_WaitPartEffectAnimsClear,func_thumb,,Handler AO idx 0x0D: espera animacoes de efeito por peca (slots 10..13); limpa; avanca
-0x08026CBC,Fight_QueueHeadBreakIfDefenderHeadZero,func_thumb,,"Simon/Rokusho: Queue the current defender in fight_information.part_resolution_scratch.head_break_bot_queue if its head armor has reached zero, then advance the action state machine."
+0x08026CBC,Fight_DispatchOnSubstateAA_AO_10_QueueHeadBreakIfDefenderHeadZero,func_thumb,,"Simon/Rokusho: Queue the current defender in fight_information.part_resolution_scratch.head_break_bot_queue if its head armor has reached zero, then advance the action state machine. (antes: Fight_QueueHeadBreakIfDefenderHeadZero)"
 0x08026CF4,Fight_DispatchOnSubstateAA_AP,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026D1C,Fight_DispatchOnSubstateAA_AP_01_WaitUnlessFlagB8Bit1,func_thumb,,"Handler AP idx 0x01: avanca, ou vai para 0x20 se +0xB8 bit 1 aceso"
 0x08026D44,Fight_DispatchOnSubstateAA_AP_ApplyDamageToRandomTargetPart,func_thumb,,[HA8] Handler AP idx 0x15: dano em peca sorteada do alvo; avanca +3; salto por tabela nao recuperada
@@ -1627,9 +1627,9 @@ address,name,kind,count,comment
 0x08030624,ActionFamily_HealChange_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Heal Change. Waits on either a button press or a countdown, clears the temporary object slot when done, and advances the action state."
 0x08030674,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[HN5] indice 0x0E de 19 despachantes: espera +86 ou avanco rapido (confirmado)
 0x080306B8,ActionFamily_Change_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Change. Waits for either a confirm-button press or a countdown, then clears all active temporary object slots in the tracked range and advances the action state."
-0x08030780,Fight_DispatchOnSubstateAA_AG_ScrollSlotWaitTimer,func_thumb,,[HN6] AG 0x09: slot 0x21 +0x18 +-0x40/frame (&0x3FF); timer 0x03000440+0x86 (A pula); +0xAA++ (confirmado; renomeado no Ghidra)
+0x08030780,Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer,func_thumb,,[HN6] AG 0x09: slot 0x21 +0x18 +-0x40/frame (&0x3FF); timer 0x03000440+0x86 (A pula); +0xAA++ (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_ScrollSlotWaitTimer)
 0x0803080C,Fight_DispatchOnSubstateAA_Shared_SetDone,func_thumb,,"[HN6] terminal compartilhado (48 tabelas, J 0x04, AG 0x03): +0xB5 = 1 (confirmado; renomeado no Ghidra)"
-0x0803081C,Fight_DispatchOnSubstateAA_AG_WaitSlotScriptEnd,func_thumb,,[HN6] AG 0x0E: roteiro do slot 0x21 (0x083B6100[+0x84]); +0xAA++ quando gObjectSlots+0x862 == 0xFF (confirmado; renomeado no Ghidra)
+0x0803081C,Fight_DispatchOnSubstateAA_AG_0E_WaitSlotScriptEnd,func_thumb,,[HN6] AG 0x0E: roteiro do slot 0x21 (0x083B6100[+0x84]); +0xAA++ quando gObjectSlots+0x862 == 0xFF (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_WaitSlotScriptEnd)
 0x08030860,Fight_SceneMain,func_thumb,,[HN10] menu_list[8]: chama 0x083AECD8[gamestate_subroutine] (sem função no Ghidra; nao renomeado). Tabela 0x083AECD8 = BR+0x40: indices 'BR 0x10+' da H_lista sao passos desta cena (passo = idx-0x10) (confirmado)
 0x08030890,Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx,func_thumb,,"[HN9] Na verdade cena 8 (menu_list[8] 0x08030860, tabela 0x083AECD8=BR+0x40) GS 0x00: reset flags, gfx 0x084CA064; GS++ (confirmado; renomeado)"
 0x08030910,Fight_DispatchOnSubstateAA_BR_11_ActionSelectSetupSlot3,func_thumb,,"[HN9] Cena 8 GS 0x01: slot 3 record list [0x083B6100+0x54], SFX 7; GS++ (confirmado; renomeado)"
@@ -1729,6 +1729,9 @@ address,name,kind,count,comment
 0x080339F4,ActionScript_Op04_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
 0x08033A10,ActionScript_Op05_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
 0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,,"Simon/Rokusho: Ensure the acting bot has selected target metadata. If selected_target_bot_id or selected_target_part_id is zero, populate them through helper routines before continuing the action flow."
+0x08033A78,ActionScript_Op07_DispatchOnSubstateAA_C,func_thumb,,[AB] AB; despachante C (0x083AD6B0); ramo pela peca-alvo
+0x08033A94,ActionScript_Op08_DispatchOnSubstateAA_D,func_thumb,,[AB] AB; despachante D (0x083AD6D0); sprite do bot de apoio no slot 9
+0x08033AB0,ActionScript_Op09_DispatchOnSubstateAA_E,func_thumb,,[AB] AB; despachante E (0x083AD6F0); follow-up: aliado entra e age
 0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,,"Simon/Rokusho: When a referenced target bot id is stored in the acting bot's selected action state, copy that bot's graphics/state blocks into the UI/work area and refresh battle presentation."
 0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,,Simon/Rokusho: Apply battle-status / damage flags based on the selected part's SpecialityId. Proximity-class specialities set one flag family; remoteness-class specialities set another.
 0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,,Simon/Rokusho: Action-script phase: compute total ROS for the current action and store it in fight_information.combat_resolution.total_ros.
@@ -1740,7 +1743,8 @@ address,name,kind,count,comment
 0x08033F04,Fight_HandleActionScriptOpcode1D,func_thumb,,Simon/Rokusho: Action-script opcode 0x1D handler. Uses current damage/ROS scratch and defender threshold data to set a small action-script result code in fight_information.
 0x08033F64,Fight_HandleActionScriptOpcode1C,func_thumb,,Simon/Rokusho: Action-script opcode 0x1C handler. Sets a small action-script result code in fight_information when the currently referenced action matches the expected state.
 0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,,"Simon/Rokusho: If the defender has the required status bit and the currently referenced part is still active, compare current damage scratch against the defender threshold and raise defender_followup_flags when the threshold condition is met."
-0x08034048,FightPreview_SetupSceneFromPartTechnique,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel].
+0x0803402C,ActionScript_Op19_DispatchOnSubstateAA_F,func_thumb,,[AB] AB; despachante F (0x083AD730); copia dados da peca (2 x 14)
+0x08034048,ActionScript_Op1A_DispatchOnSubstateAA_G,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]. (antes: FightPreview_SetupSceneFromPartTechnique)
 0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
 0x08034524,ActionScript_Op36_CallAF,func_thumb,,[AS2] GH-AS2: opcode 0x36 wrapper -> Fight_DispatchOnSubstateAA_AF + avanço se +0xB5; sem funcao no Ghidra
 0x08034540,ActionScript_Op37_CallAG,func_thumb,,[AS2] GH-AS2: opcode 0x37 wrapper -> ..._AG
