@@ -1948,6 +1948,7 @@ F	0x0804A944	Overworld_ReloadMapSceneAfterReset
 F	0x0804AA74	Overworld_ReloadCurrentMapScene
 F	0x0804AFB8	Screen_UpdateStepWrap
 F	0x0804B008	Map_FinishEnterTransition
+F	0x0804B036	Map_FinishEnterTransition_0804B036
 L	0x0804B124	lit_EventDbBase3
 F	0x0804B1B0	Map_UpdateEventObjectDepthAndMarkerState
 F	0x0804B248	Map_ClearOamShadowViaDma
@@ -1971,6 +1972,7 @@ F	0x0804B958	Event_Op0A_FadeFromWhite
 F	0x0804B9B0	Event_Op0B_WarpA
 F	0x0804B9CC	Event_Op0C_WarpB
 F	0x0804B9E8	Script_ReadStateBlock
+F	0x0804B9F4	Script_ReadStateBlock_0804B9F4
 F	0x0804BA5C	Event_Op0D_PlayerFaceDirection
 F	0x0804BA9C	Event_Op0E_PlayerHopInPlace
 F	0x0804BAEC	Event_Op0F_PlayerHopInDirection
@@ -2228,6 +2230,7 @@ F	0x08050C94	Overworld_ResetUiRenderState
 F	0x08050CC0	Event_ResetSceneCommandStep
 F	0x08050CCC	Event_RunSceneCommandSequence
 F	0x08050F5C	Overworld_UpdateMapSceneStateMachine
+F	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
 L	0x08051416	Map_LoadEntitySpawns_GroupLoop
 F	0x080517F0	Overworld_InitPlayerSprites
@@ -2249,8 +2252,8 @@ F	0x08052400	Map_CheckWalkOverTrigger
 F	0x080524C8	Map_GetAdjacentCollisionTileByDirection
 F	0x080525BC	Overworld_CheckMovementObjectBlocker
 F	0x08052624	Map_FindDirectionalTriggerAtAdjacentTile
-F	0x0805273C	ikki_x_to_tile
-F	0x08052760	ikki_y_to_tile
+F	0x0805273C	Map_PixelXToTileX
+F	0x08052760	Map_PixelYToTileY
 F	0x08052784	Map_UpdateVisibleEventObjectSprites
 F	0x080528F8	Map_CenterCameraForSmallMaps
 F	0x080529AC	Map_GetMapSizeHalfTileByAxis
@@ -2288,6 +2291,7 @@ F	0x0805424C	Scene_DispatchStateHandler
 F	0x08054280	Scene_DispatchStateHandlerTail
 F	0x080567F0	Overworld_EnterSceneState
 F	0x0805718C	Overworld_InitChoiceMenuScreen
+F	0x08057244	Overworld_InitChoiceMenuScreen_08057244
 F	0x08057440	Map_TickChoiceListOpen
 F	0x080575DC	Menu_ChoiceCountdownStep
 F	0x08057AD0	Overworld_FinishTransitionInitCursor
@@ -2298,6 +2302,7 @@ F	0x08057F1C	Menu_StepCursorWrap
 F	0x08057FB4	Map_ReleaseMarkerRenderSlots
 F	0x08057FD4	Map_UpdateCursorSpritePosition
 F	0x08058070	Map_CreateChoiceSprites
+F	0x08058080	Map_CreateChoiceSprites_08058080
 F	0x080581C8	Map_DrawChoiceBackgroundRow
 F	0x08058208	Map_HandleMarkerCommandFromState
 F	0x0805821C	Map_HandleMarkerCommand
@@ -3018,7 +3023,9 @@ L	0x08404334	gMapCollision
 L	0x08409480	gMapBlockA
 L	0x0840F880	gMapBlockB
 L	0x08411AE0	gTextDialogue_08411AE0
-L	0x08412E60	gMapWarps
+L	0x08411E08	gWarpList_Map0
+L	0x08411FE7	gWarpList_Map23
+L	0x08412E60	gWarpTablePtrs
 L	0x08413160	gMapSprites
 L	0x084144B4	gTextDialogue_084144B4
 L	0x084798F4	gTextDialogue_084798F4
@@ -3127,6 +3134,7 @@ L	0x08769EC0	gEventPointerTable
 L	0x087852CF	gStarterData
 L	0x08785FB4	gGfx_Shop_PartSelect_Obj
 L	0x087F5500	gTextDump
+C	0x08010264
 C	0x0801D6A4
 C	0x0801D878
 C	0x0801D95C
@@ -3203,3 +3211,4 @@ C	0x080344B4
 C	0x080344D0
 C	0x080344EC
 C	0x08034508
+C	0x0803D538

@@ -1,0 +1,8 @@
+# address,name,kind,comment
+0x083AD190,Battle_StepFrameTable,data,"[GH-BT2] 10 ponteiros: 0=0801427D Fight_StepBattleFrame, 8=08014549; sentinela 08000841 em 4..7 e 9; quem indexa: PENDENTE (0 literais)"
+0x083AD10C,Battle_SceneInitTable,data,"[GH-BT2] 8 ponteiros: 0=08013B8D Fight_BattleSceneInit; sentinela 08000841 em 4; quem indexa: PENDENTE (0 literais)"
+0x083AD080,Battle_FrameMenu7GsTable,data,"[GH-BT2] tabela por GS usada por Battle_FrameDispatchOrExit (0x0129C0 e' o unico literal); base de 0x083AD190 = +0x110 e de 0x083AD10C = +0x8C, hipotese nao testada"
+0x08010264,Scene_GsDispatch_Menu6,label,"[GH-BT2] menu_list[6]; despachante por GS com tabela 0x083ACE24, DMA limpeza se 0x03000430==2; sem funcao no Ghidra; nao confirmado como volta ao mapa"
+0x0803D538,Scene_GsDispatch_Menu10_Link,label,"[GH-BT2] menu_list[10]; despachante por GS-0x10 com tabela 0x083AFC78 e guarda 0x0803EED8; sem funcao no Ghidra; nome sugerido, nao confirmado"
+0x0801A9C8,Fight_RunStateDispatch_State8,label,"[GH-BT2] alvo 8 da tabela 0x0801A7B4; salta para 0x0801AADE (nao decompilado)"
+0x08011C44,Gfx_ResetScreenBgAndBlend,func_thumb,"[GH-BT2] grava gamestate_menu=8 (literal 0x08011C80) e 2 em 0x08011C7C; escritor provavel de menu=8, chamador nao achado"

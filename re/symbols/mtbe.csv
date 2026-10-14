@@ -207,6 +207,7 @@ address,name,kind,count,comment
 0x03006D14,gMapLayerBufferPtr,label,,ponteiro do buffer de camadas descomprimidas; Simon: gMapTilemapBufferPtr
 0x03006D20,gEventScriptArguments_03006D20,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03006D38,gWalkSpeedBlock,data,,[OW2] literal 0x03006D38 em Map_GetScaledStepDelta; bloco de velocidade
 0x03006D3A,gWalkSpeedMul,data,,[OW] RAM byte: multiplicador do passo (provavel corrida)
 0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -2224,6 +2225,7 @@ address,name,kind,count,comment
 0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene.
 0x0804AFB8,Screen_UpdateStepWrap,func_thumb,,wrapper: chama Screen_UpdateByStep com passo ctx+0x14 (confirmado)
 0x0804B008,Map_FinishEnterTransition,func_thumb,,"[provavel] map entry after transition: camera, player tile clamp, OAM clear"
+0x0804B036,Map_FinishEnterTransition,func_thumb,,[OW2] fim da transicao: se state+0x14 == 0 grava gCurrentMapId = state+0x26 (confirmado no decompile); centraliza camera e prende posicao no mapa
 0x0804B124,lit_EventDbBase3,label,,literal da base do banco de eventos
 0x0804B1B0,Map_UpdateEventObjectDepthAndMarkerState,func_thumb,,Simon/Rokusho: Refresh per-object depth/marker bytes after the current map scene loads or updates. Converts live event object screen-space positions into depth buckets and updates a couple of special marker slots when the player and overlay markers align.
 0x0804B248,Map_ClearOamShadowViaDma,func_thumb,,Simon/Rokusho: Clear the shadow OAM buffer with DMA before rebuilding overworld/map object sprites.
@@ -2247,6 +2249,7 @@ address,name,kind,count,comment
 0x0804B9B0,Event_Op0B_WarpA,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0B_SetConfigFlagAndRead5Bytes)
 0x0804B9CC,Event_Op0C_WarpB,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0C_ClearConfigFlagAndRead5Bytes)
 0x0804B9E8,Script_ReadStateBlock,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 0A and 0B. Reads 5 configuration bytes from the event stream into a small overworld/event config block, snapshots the current player facing into a sixth byte, then sets gCurrentEventStateByte = 1. (antes: EventInit_Read5ConfigBytesAndMarkInitialized)"
+0x0804B9F4,Script_ReadStateBlock,func_thumb,,[OW2] le 5 bytes do script para bloco de estado da cena; NAO grava gCurrentMapId (xref era leitura)
 0x0804BA5C,Event_Op0D_PlayerFaceDirection,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0D_ReadFacingAndApplyToPlayer)
 0x0804BA9C,Event_Op0E_PlayerHopInPlace,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0E_StartMapTransitionFromStoredState)
 0x0804BAEC,Event_Op0F_PlayerHopInDirection,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0F_ReadByteAndMarkInitialized)
@@ -2504,6 +2507,7 @@ address,name,kind,count,comment
 0x08050CC0,Event_ResetSceneCommandStep,func_thumb,,Simon/Rokusho
 0x08050CCC,Event_RunSceneCommandSequence,func_thumb,,"Simon/Rokusho: Run a multi-step scene/event command sequence selected by a small command id. |  | This helper is not map-load-specific. Depending on the command id, it can: | - launch top-level game/menu flows through GameState_StartFlowByCommand | - run scene transitions | - trigger side-effect commands through 0x0804842C | - advance an internal step byte in gEventScriptArguments[0x0B] |  | Returns nonzero when the sequence has finished."
 0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions."
+0x08051368,Overworld_UpdateMapSceneStateMachine,func_thumb,,[OW2] maquina de cena do mapa; chama Overworld_ApplyWarpAtCurrentTile em um dos estados (confirmado)
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
 0x08051416,Map_LoadEntitySpawns_GroupLoop,label,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234) (antes: Map_LoadEntitySpawnsForCurrentMap)
 0x080517F0,Overworld_InitPlayerSprites,func_thumb,,"Simon/Rokusho: Initialize the player's map marker / cursor UI after a map load. Converts the player's world position to tile coordinates, loads the marker graphics, seeds the marker sprite state, and sets the initial on-screen position relative to the current camera. (antes: Map_InitPlayerMapMarker)"
@@ -2525,8 +2529,8 @@ address,name,kind,count,comment
 0x080524C8,Map_GetAdjacentCollisionTileByDirection,func_thumb,,Simon/Rokusho: Return the collision/metatile byte for the tile adjacent to the player in the requested direction using the current map collision layer.
 0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,,Simon/Rokusho
 0x08052624,Map_FindDirectionalTriggerAtAdjacentTile,func_thumb,,"Simon/Rokusho: Compute the tile immediately in front of the player, clamp it against the current map bounds, then scan a per-map list of 4-byte directional trigger records {x, y, allowed_direction_mask, trigger_id}. Returns the matching trigger id or -1 when no directional trigger is active for the current facing."
-0x0805273C,ikki_x_to_tile,func_thumb,,Simon/Rokusho
-0x08052760,ikki_y_to_tile,func_thumb,,Simon/Rokusho
+0x0805273C,Map_PixelXToTileX,func_thumb,,Simon/Rokusho (antes: ikki_x_to_tile)
+0x08052760,Map_PixelYToTileY,func_thumb,,Simon/Rokusho (antes: ikki_y_to_tile)
 0x08052784,Map_UpdateVisibleEventObjectSprites,func_thumb,,"Simon/Rokusho: Refresh the subset of event/NPC object sprites that are currently visible within the camera window. Hides sprites that move off-screen, updates screen-space positions for visible objects, and selects the correct sprite frame / marker overlay."
 0x080528F8,Map_CenterCameraForSmallMaps,func_thumb,,Simon/Rokusho: Center the camera when the current map is smaller than the visible viewport. Uses compact map width/height metadata and writes X/Y camera offsets into the event/game-state blob.
 0x080529AC,Map_GetMapSizeHalfTileByAxis,func_thumb,,[R3] tamanho do mapa por eixo (dobro de tiles); provisorio
@@ -2564,6 +2568,7 @@ address,name,kind,count,comment
 0x08054280,Scene_DispatchStateHandlerTail,func_thumb,,[R3] (mtbe) entrada alternativa do despacho
 0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador
 0x0805718C,Overworld_InitChoiceMenuScreen,func_thumb,,inicia tela de escolha do overworld; Overworld_CheckStepAllowed por linha; provavel
+0x08057244,Overworld_InitChoiceMenuScreen,func_thumb,,[OW2] monta menu de 4 linhas; CheckStepAllowed(k) == 1 desenha linha ativa (confirmado)
 0x08057440,Map_TickChoiceListOpen,func_thumb,,"[provavel] abre lista de escolha em 0x10 passos (FUN_080492A8 + Map_CreateChoiceSprites); ao fim, GameState_AdvanceSubroutine"
 0x080575DC,Menu_ChoiceCountdownStep,func_thumb,,provável: contagem regressiva que abre janelas de escolha; jump table final não recuperada
 0x08057AD0,Overworld_FinishTransitionInitCursor,func_thumb,,[FL10] fim da transição: sprite do cursor do mapa (slot 0x7F); estado=2 (provável)
@@ -2574,6 +2579,7 @@ address,name,kind,count,comment
 0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23
 0x08057FD4,Map_UpdateCursorSpritePosition,func_thumb,,[R3] (mtbe) posiciona sprite do cursor
 0x08058070,Map_CreateChoiceSprites,func_thumb,,[R3] (mtbe) cria 4 sprites de opcao (slots 0x20..0x23)
+0x08058080,Map_CreateChoiceSprites,func_thumb,,[OW2] chama CheckStepAllowed com kinds 0..3 (nome de caller)
 0x080581C8,Map_DrawChoiceBackgroundRow,func_thumb,,[R3] (mtbe) desenha linha de fundo do painel (nome chute)
 0x08058208,Map_HandleMarkerCommandFromState,func_thumb,,[R3] (mtbe) chama 0805821c com byte de estado (nome chute)
 0x0805821C,Map_HandleMarkerCommand,func_thumb,,[R3] (mtbe) comandos 0/1/5/6 do marcador
@@ -3294,7 +3300,9 @@ address,name,kind,count,comment
 0x08409480,gMapBlockA,ptr,192,bloco por mapa A; Simon: sMapBackgroundAnimationPointerTable
 0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B)
 0x08411AE0,gTextDialogue_08411AE0,ptr,202,tabela de texto: Diálogo de NPCs (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x08412E60,gMapWarps,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable
+0x08411E08,gWarpList_Map0,data,,"[OW2] 8 B por entrada: +0 X origem, +1 Y, +2 mapa destino, +3 nibble alto som/tipo, nibble baixo facing, +6 X dest, +7 Y dest"
+0x08411FE7,gWarpList_Map23,data,,"[OW2] lab de New Game; entrada (18,14) -> mapa 0 (18,5) (confirmado vs pesquisa)"
+0x08412E60,gWarpTablePtrs,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable (antes: gMapWarps)
 0x08413160,gMapSprites,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable
 0x084144B4,gTextDialogue_084144B4,ptr,248,tabela de texto: Diálogo de NPCs (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x084798F4,gTextDialogue_084798F4,ptr,389,tabela de texto: Diálogo de história (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
