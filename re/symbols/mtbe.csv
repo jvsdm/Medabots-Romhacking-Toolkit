@@ -2579,6 +2579,7 @@ address,name,kind,count,comment
 0x08047F9C,Team_CountSlotsWithStatus3,func_thumb,,Simon/Rokusho: Count entries in gPartSetTable whose state byte is 3 (complete set). (antes: PartSet_CountCompleteEntries)
 0x08047FBC,PartSet_HasCompleteMonochromeEntry,func_thumb,,Simon/Rokusho: Return whether gPartSetTable contains a complete set entry whose four part ids (head/right/left/legs) all match the supplied monochrome part id.
 0x08048000,Fx_SetupLayersAndInitRecord8,func_thumb,,[FS7] [FS7] grava 0x500 e 0x1F60 em registradores de display; Fx_InitRecord8; provavel (nome chute)
+0x08048088,Map_GetEncounterRecordByte,func_thumb,,[VA3] arg0 -> ROM[gMapEncounters + map*8 + 2]; arg1 -> +3; outro -> 0. provavel
 0x080480D4,Table_GetWordByIndex_080480e0,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x080480E0 [arg]
 0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
 0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
@@ -2626,6 +2627,7 @@ address,name,kind,count,comment
 0x0804A220,EventScript_RunCurrent,func_thumb,,"Simon/Rokusho: Main overworld event VM tick. |  | State model: | - gCurrentEventPendingFlag == 0: run overworld startup/map-scene subroutine table | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte == 0: run one event-initialization opcode | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte != 0: dispatch the current normal event opcode |  | The VM is two-level: | - gCurrentEventOpcodeByte selects the current opcode handler | - gCurrentEventOpcodeSubstate is per-opcode local state used by multi-step normal opcode handlers |  | The event script stream is addressed through the installed event database, gCurrentEventId, and gCurrentEventScriptCursor."
 0x0804A2F0,new_game_start,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported. (antes: new_game_start) (antes: Menu_NewGame_Main)
 0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos
+0x0804A4A2,new_game_start,func_thumb,,[VA3] grava E+0xC5C=0 e E+0xC5B=1. confirmado
 0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
 0x0804A764,Overworld_InitMapScene,func_thumb,,"Simon/Rokusho: Primary overworld map-scene initialization. Clears OAM/VRAM shadow state, resets event/object work areas, installs the core overworld/map/event pointers, loads the current map and entities, clamps the camera, and enables the main overworld rendering path."
@@ -2633,7 +2635,14 @@ address,name,kind,count,comment
 0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
 0x0804A900,Overworld_FinishTransitionInitPlayer,func_thumb,,"[FL10] fim da transição: sprites do jogador, marcador, direção; estado=5 (provável)"
 0x0804A944,Overworld_ReloadMapSceneAfterReset,func_thumb,,"Simon/Rokusho: Reload the current map scene after a heavier display/reset step. Clears OAM/object state, resets blend state, rebuilds the current map scene, reclamps the camera, restores the main display configuration, and resumes the overworld scene loop."
+0x0804AA44,GameState_ToggleAndAdvance,func_thumb,,[VA3] C5C = C69 (ou 0 se igual; zera C69). confirmado
 0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene.
+0x0804AB60,Overworld_WalkStateToggleTo1,func_thumb,,[VA3] C5C = C69 se C5C==1; senao C69=C5C e C5C=1. confirmado
+0x0804ABCC,Overworld_WalkStateToggleTo2,func_thumb,,[VA3] C5C = C69 se C5C==2; senao C69=C5C e C5C=2. confirmado
+0x0804AD68,Overworld_TransitionDone_SetWalk0B,func_thumb,,[VA3] C5C = 0x0B quando a transicao termina. confirmado
+0x0804ADB4,Overworld_UiDone_RestoreWalkFromC69_A,func_thumb,,[VA3] C5C = C69 quando a cena de UI termina. provavel
+0x0804AE80,Overworld_SetWalk0C_UiScene,func_thumb,,[VA3] C5C = 0x0C antes de BeginUiSceneState(0x0E). confirmado
+0x0804AEC8,Overworld_UiDone_RestoreWalkFromC69_B,func_thumb,,[VA3] C5C = C69 quando a cena de UI termina (outro estado). provavel
 0x0804AFB8,Screen_UpdateStepWrap,func_thumb,,wrapper: chama Screen_UpdateByStep com passo ctx+0x14 (confirmado)
 0x0804B008,Map_FinishEnterTransition,func_thumb,,"[provavel] map entry after transition: camera, player tile clamp, OAM clear"
 0x0804B036,Map_FinishEnterTransition,label,,[OW2] fim da transicao: se state+0x14 == 0 grava gCurrentMapId = state+0x26 (confirmado no decompile); centraliza camera e prende posicao no mapa
@@ -2962,6 +2971,7 @@ address,name,kind,count,comment
 0x080524C8,Map_GetAdjacentCollisionTileByDirection,func_thumb,,Simon/Rokusho: Return the collision/metatile byte for the tile adjacent to the player in the requested direction using the current map collision layer.
 0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,,Simon/Rokusho
 0x080525D0,Overworld_CheckMovementObjectBlocker,label,,[MP2] bloqueio por tabela 0x030063F0[v] (v = colisao 0..3) e estado 0x0300643C
+0x080525E6,Overworld_CheckMovementObjectBlocker,func_thumb,,[VA3] se C5C==2 e tile 0/2: C5C = C69. confirmado
 0x08052624,Map_FindDirectionalTriggerAtAdjacentTile,func_thumb,,"Simon/Rokusho: Compute the tile immediately in front of the player, clamp it against the current map bounds, then scan a per-map list of 4-byte directional trigger records {x, y, allowed_direction_mask, trigger_id}. Returns the matching trigger id or -1 when no directional trigger is active for the current facing."
 0x0805273C,Map_PixelXToTileX,func_thumb,,Simon/Rokusho (antes: ikki_x_to_tile)
 0x08052760,Map_PixelYToTileY,func_thumb,,Simon/Rokusho (antes: ikki_y_to_tile)
@@ -3991,7 +4001,8 @@ address,name,kind,count,comment
 0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
 0x083D2A88,gPlayerSpeedByWalkState,data,,[VA] [VA] 16 B: 00 01 00 00 00 00 00 00 00 00 00 02 00 00 00 01
 0x083D2A98,gMapPassBlockTable,data,,"[VA] [VA] blocos de 8 B da variante; idx 0..9 lidos; idx 2 e 9 = 01 01 00 00 01 01 01 01, demais = 00 01 00 01 01 01 01 01"
-0x083D2B18,gCostumeToWalkStateTable,data,,[VA2] [VA2] indice = arg0 do opcode 0x11; valores 00 03 04 05 06 07 08 02 09 01 0A 0E 0F 0B 00 70 71 ... (tamanho nao medido); destino = E+0xC5C/C69/C28
+0x083D2B18,Event_Cont11_ArgWalkStateTable,data,,[VA2] [VA2] indice = arg0 do opcode 0x11; valores 00 03 04 05 06 07 08 02 09 01 0A 0E 0F 0B 00 70 71 ... (tamanho nao medido); destino = E+0xC5C/C69/C28 (antes: gCostumeToWalkStateTable)
+0x083D2B26,Table_DmaSource_Provavel,data,,[VA3] fonte DMA lida por 5 funcoes (provavel)
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083D2C5D,gObjectField0BByPoseTable,data,,[CS2] tabela de bytes indexada por pose (+0x30); os 32 primeiros sao zero
 0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU)"

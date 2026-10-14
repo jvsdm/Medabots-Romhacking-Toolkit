@@ -2195,6 +2195,7 @@ F	0x08047F50	PartSet_FindCompleteEntryIndex
 F	0x08047F9C	Team_CountSlotsWithStatus3
 F	0x08047FBC	PartSet_HasCompleteMonochromeEntry
 F	0x08048000	Fx_SetupLayersAndInitRecord8
+F	0x08048088	Map_GetEncounterRecordByte
 F	0x080480D4	Table_GetWordByIndex_080480e0
 F	0x080480E4	Map_LoadCurrentMapAndEntities
 F	0x08048174	Map_UpdateBackgroundAnimations
@@ -2242,6 +2243,7 @@ F	0x0804A210	GameState_AdvanceSubroutine
 F	0x0804A220	EventScript_RunCurrent
 F	0x0804A2F0	new_game_start
 L	0x0804A3B6	lit_EventDbBase0
+F	0x0804A4A2	new_game_start_0804A4A2
 L	0x0804A584	lit_EventDbBase1
 F	0x0804A60C	Map_InitScreenAndTransition
 F	0x0804A764	Overworld_InitMapScene
@@ -2249,7 +2251,14 @@ L	0x0804A7A0	Overworld_InitMapScene_0804A7A0
 L	0x0804A8C8	lit_EventDbBase2
 F	0x0804A900	Overworld_FinishTransitionInitPlayer
 F	0x0804A944	Overworld_ReloadMapSceneAfterReset
+F	0x0804AA44	GameState_ToggleAndAdvance
 F	0x0804AA74	Overworld_ReloadCurrentMapScene
+F	0x0804AB60	Overworld_WalkStateToggleTo1
+F	0x0804ABCC	Overworld_WalkStateToggleTo2
+F	0x0804AD68	Overworld_TransitionDone_SetWalk0B
+F	0x0804ADB4	Overworld_UiDone_RestoreWalkFromC69_A
+F	0x0804AE80	Overworld_SetWalk0C_UiScene
+F	0x0804AEC8	Overworld_UiDone_RestoreWalkFromC69_B
 F	0x0804AFB8	Screen_UpdateStepWrap
 F	0x0804B008	Map_FinishEnterTransition
 L	0x0804B036	Map_FinishEnterTransition_0804B036
@@ -2578,6 +2587,7 @@ F	0x08052400	Map_CheckWalkOverTrigger
 F	0x080524C8	Map_GetAdjacentCollisionTileByDirection
 F	0x080525BC	Overworld_CheckMovementObjectBlocker
 L	0x080525D0	Overworld_CheckMovementObjectBlocker_080525D0
+F	0x080525E6	Overworld_CheckMovementObjectBlocker_080525E6
 F	0x08052624	Map_FindDirectionalTriggerAtAdjacentTile
 F	0x0805273C	Map_PixelXToTileX
 F	0x08052760	Map_PixelYToTileY
@@ -3607,7 +3617,8 @@ L	0x083D2630	gEventContinuationTable
 L	0x083D2A40	gWalkSpeedTable
 L	0x083D2A88	gPlayerSpeedByWalkState
 L	0x083D2A98	gMapPassBlockTable
-L	0x083D2B18	gCostumeToWalkStateTable
+L	0x083D2B18	Event_Cont11_ArgWalkStateTable
+L	0x083D2B26	Table_DmaSource_Provavel
 L	0x083D2B6B	gMapArea
 L	0x083D2C5D	gObjectField0BByPoseTable
 L	0x083D2D0D	gObjectShadowFlagTable
@@ -3900,22 +3911,15 @@ C	0x0804A6F8
 C	0x0804A724
 C	0x0804A734
 C	0x0804AA04
-C	0x0804AA44
 C	0x0804AB04
 C	0x0804AB18
 C	0x0804AB24
 C	0x0804AB3C
-C	0x0804AB60
 C	0x0804ABA8
 C	0x0804ABC0
-C	0x0804ABCC
 C	0x0804AC14
 C	0x0804ACC8
 C	0x0804ACD4
-C	0x0804AD68
-C	0x0804ADB4
-C	0x0804AE80
-C	0x0804AEC8
 C	0x0804AF98
 C	0x0804AFCC
 C	0x0804AFE0
