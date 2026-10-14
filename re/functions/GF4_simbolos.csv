@@ -1,0 +1,20 @@
+address,name,kind,comment
+0x087BB2A0,gGfx_Title_Map_Bg1,data,LZ77 0x10 size 0x500 -> VRAM 0x06006D00 (trace IN1 linha 70); GF4
+0x087BB7E0,gGfx_Title_Map_Bg2_ANOMALIA,data,SEM cabecalho LZ77 em +0 (zeros); destino trace 0x06007500; nao confiar ate conferir no emulador; GF4
+0x0879EFC0,gGfx_BattlePanel_Map_Bg0,data,LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit 0x08062FB4; BGCNT nao fechado; GF4
+0x0879F138,gGfx_BattlePanel_Map_Bg1,data,LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4
+0x0879F3D0,gGfx_BattlePanel_Map_Bg2,data,LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4
+0x0879DA90,gGfx_BattlePanel_Tiles,data,LZ77 0x10 size 0x2FE0 -> buffer 0x02030000 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock 0x08044D0C; GF4
+0x084F4840,gGfx_PartsGrid_Palette_Bank2,data,cru 0x70 words -> paleta BG 0x05000000; PartsGrid_EnterScreenInit 0x080087CC (0x0800886C); GF4
+0x084E823C,gGfx_BotPartSelect_Tiles_Bg0,data,Malias +2 0x0AE0 -> VRAM 0x06004000; Fight_InitBotPartSelectScreen 0x0801058C; GF4
+0x084C92B0,gGfx_BotPartSelect_Tiles_Obj,data,Malias +2 0x0800 -> VRAM 0x06012800; Fight_InitBotPartSelectScreen; GF4
+0x084F0FD4,gGfx_BotPartSelect_Map_Bg,data,Malias mapa +2 0x0810; LoadTilesWithMalias via Fight_InitBotPartSelectScreen; GF4
+0x0879F80C,gGfx_NumberReveal_Tiles,data,LZ77 0x10 size 0x2EC0 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock; Screen_InitNumberRevealLayout 0x080639C4; GF4
+0x087A0FB4,gGfx_NumberReveal_Map_Bg0,data,LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
+0x087A0D04,gGfx_NumberReveal_Map_Bg1,data,LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
+0x087A1244,gGfx_NumberReveal_Map_Bg2,data,LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
+0x087A10F0,gGfx_NumberReveal_Map_Bg3,data,LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
+0x0807EE70,gGfx_PartLarge_DescTable_Sz0,data,tabela de descritores (entrada 0x10) para LoadPartLargeDisplaySpriteFromAppearanceTable 0x08046A60, size 0 (0x140); GF4
+0x0807F610,gGfx_PartLarge_DescTable_Sz1,data,tabela de descritores (entrada 0x10) LoadPartLargeDisplay..., size 1 (0x1A0); GF4
+0x0807FDB0,gGfx_PartLarge_DescTable_Sz2,data,tabela de descritores (entrada 0x10) LoadPartLargeDisplay..., size 2 (0x1E0); GF4
+0x08080550,gGfx_PartLarge_DescTable_Sz3,data,tabela de descritores (entrada 0x20) LoadPartLargeDisplay..., size 3 (0x220); GF4
