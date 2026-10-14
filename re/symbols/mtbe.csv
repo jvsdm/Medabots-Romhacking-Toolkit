@@ -4054,42 +4054,42 @@ address,name,kind,count,comment
 0x080B16E4,SND_SampleTable,data,,[SN] tabela de ponteiros de amostra PCM (128 entradas; cabecalho {u32 tam
 0x080EC9EE,Data_080EC9EE,func_thumb,,[SN3] provavel dado (LDMIA base-na-lista
 0x083ABB50,SND_PsgFreqTable,data,,[SN] 74 halfwords de frequencia PSG (Hz=131072/(2048-v))
-0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
-0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
+0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain [RD4] confirmado: 6 x 4 ponteiros thumb; despacho em MN.md e MU.md
+0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8 [RD4] provavel: 16 x 4 ponteiros de sets de quadro; set 0 -> gObjTextGlyphFrames 0x08075FF8 (HANDOFF.md)
 0x083AC2C8,gMenuList0Table,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list) (antes: gMainStateTable)
 0x083AC404,MainState0_Menu1_SubTable,table,,"[FM3] [FM3] tabela de sub-estados de MainState0 menu 1: [0]=0x080027DC (tela cheia, 6 graficos), [1]=0x080028AC, [2]=0x08002A2C [FM4] [FM4] 12 entradas: 0=0x080027DC init; 1=0x080028AC reveal; 2=0x08002A2C cursor/controle; 3=0x08002AF8 fecha (faixas); 4,5=NoOp; 6=0x08002C34 quadro do cursor; 7=0x08002D48 wipe; 8=0x08002DF4 slide; 9=0x08002EC4 destino por cursor (confirmado); 10,11=NoOp"
-0x083AC454,MainState0_Menu2_SubTable,table,,"[FM4] [FM4] tabela do menu 2 de MainState0: 0=0x08003394 Gfx_InitBgLayersAndEnableDisplay; 1=0x080034A4; 2=0x08003504; 3=0x08003620; 4=0x08003654; 5=0x080036A8; 6,7=NoOp; 8=0x080036C8; 9=0x080036F4"
+0x083AC454,MainState0_Menu2_SubTable,table,,"[FM4] [FM4] tabela do menu 2 de MainState0: 0=0x08003394 Gfx_InitBgLayersAndEnableDisplay; 1=0x080034A4; 2=0x08003504; 3=0x08003620; 4=0x08003654; 5=0x080036A8; 6,7=NoOp; 8=0x080036C8; 9=0x080036F4 [RD4] confirmado: tabela do despachante 0x08003374 (FM4/FM5); contiguo ate 0x083AC560, tamanho >=67 x 4"
 0x083AC4A0,gMenu3SubTable,table,,[FM6] [FM6] 14 ponteiros; sub 0 = 0x08003A38 (provavel tela de pods MEDABOTS); despachante 0x080039E0 (Scene_FrameTickSubstateDispatch)
 0x083AC560,BattleStepTable_Base_Unresolved,data,,"[TP2] [GH-TP2] base sem literal na ROM; entradas 0x080049C9, 0x080049ED, 0x08004A19 (0x568 idx), 0x08004A41, 0x08004A79, 0x08004AF9, 0x08004C59"
 0x083AC568,BattleStepTable_Unknown,data,,[TP] [GH-TP] tabela de ponteiros de passos GS; 0x08004A19 e entrada 0 desta linha; despachante nao achado
 0x083AC614,debug_mdlpic_model_ptrs,data,,"[DB2] GH-DB2: 150 ponteiros para dados comprimidos de modelo, indice v0*5+v1 (v0 0..0x1D, v1 0..4); provavel"
-0x083AC86C,gPartsGridStateTable,table,,"[PG] [PG] 112 ponteiros Thumb u32 (stride 4), indice = word em 0x0300137C; dispatcher FUN_08007584 (PartsGrid_DispatchStateTable); substitui table_partsgrid_states 0x083AC880 stride 0xC (errado)"
-0x083AC880,gPartsGridStateTable_Entry5,label,,"[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas) (PG: meio da tabela 0x083AC86C, stride 4; antes: table_partsgrid_states) (antes: gPartsGridStateTable_Entry5) (antes: table_partsgrid_states)"
+0x083AC86C,gPartsGridStateTable,table,,"[PG] [PG] 112 ponteiros Thumb u32 (stride 4), indice = word em 0x0300137C; dispatcher FUN_08007584 (PartsGrid_DispatchStateTable); substitui table_partsgrid_states 0x083AC880 stride 0xC (errado) [RD4] confirmado: 112 x 4 (FS2); despachante 0x08007584 indexado por 0x0300137C"
+0x083AC880,gPartsGridStateTable_Idx5,label,,"[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas) (PG: meio da tabela 0x083AC86C, stride 4; antes: table_partsgrid_states) (antes: gPartsGridStateTable_Entry5) (antes: table_partsgrid_states) (antes: gPartsGridStateTable_Entry5)"
 0x083AC9F8,table_partsgrid_row1_9F8,label,,[JT8] JT8 registro 1 (stride 0xC) de tabela de estados da grade; NAO cabecalho; inicio provavel 0x083AC9EC; ver JT8.md sec 2
-0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
+0x083ACA4C,gObjStepTable_ACA4C,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4] (antes: debug_menu_more_idk)
 0x083ACA5C,debug_menu_subroutines,label,,"Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4] [DB] GH-DB confirmado: 0 Init, 1 controls, 2 Exit, 3 RunOption, 4-5 NoOp; indice 0x0300137C"
 0x083ACA80,debug_menu_option_table,ptr,11,rotinas das 11 opcoes (debug_menu_subroutines a partir do indice 9) [DB] GH-DB confirmado: 11 opcoes (0..10) + entrada 11 NoOp; indice 0x03000472 (gDebugMenuOption)
-0x083ACAC0,StateHandlerTable_BAD8,data,,"[JT3] 34 ponteiros, idx byte 0x03000473; BE6C = +0x0C, D168 = +0x54"
-0x083ACAE0,table_partsbuild_states,label,,"[PS] [PS] tabela de estados da montagem (stride 0xC; coluna do meio = tick): linha0 PartsBuild_UpdateStatusPanel, linha6 PartsBuild_UpdateEditPanel"
-0x083ACAE4,debug_tinpet_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Tinpet (idx 9 de 0x083ACAC0); slot 0 = Debug_TinpetScreen
-0x083ACAF0,debug_item_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Item (idx 12); slot 0 = Debug_ItemInventoryScreen
-0x083ACAFC,debug_face_table_base,data,,[DB2] GH-DB2: base da tabela de estados da Face (idx 15); slot 0 = Debug_FaceScreen
-0x083ACB08,debug_mdlpic_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Mdlpic (idx 18); slot 0 = Debug_MdlpicScreen
-0x083ACB14,debug_rndtk_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Rnd-tk (idx 21); slot 0 = Debug_RndTkScreen
-0x083ACB20,debug_battle_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Battle (idx 24); slot 0 = Debug_BattleScreen
-0x083ACB2C,debug_sound_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Sound (idx 27); slot 0 = Debug_SoundScreen
-0x083ACB38,debug_motion_table_base,data,,[DB] GH-DB: base da tabela de estados para Motion (= 0x083ACAC0 + 30*4)
-0x083ACB48,gTextProcessStrings,ptr,11,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]"
-0x083ACBCC,gTextProcessStrings3,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083ACC08,debug_parts_spawn_names,data,,[DB] GH-DB: ponteiros de nome das linhas de Debug_PartsSpawnScreen
-0x083ACC2C,debug_item_grant_names,data,,[DB] GH-DB: ponteiros de nome das linhas de Debug_ItemCountGrantScreen
-0x083ACC40,debug_tinpet_name,data,,[DB2] GH-DB2: nome de 8 bytes da tela Tinpet (ponteiro em literal 0x0800C7AC)
-0x083ACC5C,debug_item_label_table,data,,"[DB2] GH-DB2: tabela de 3 ponteiros para rotulos das linhas da tela Item (0x083ACC44, 0x083ACC4C, 0x083ACC54)"
-0x083ACC78,debug_face_label_table,data,,"[DB2] GH-DB2: tabela de 2 ponteiros para rotulos das linhas da Face e do Mdlpic (0x083ACC68, 0x083ACC70)"
-0x083ACCA0,debug_rndtk_name_ptr,data,,[DB2] GH-DB2: ponteiro para o nome Rnd-tk (0x083ACC98)
-0x083ACCAC,debug_battle_name_ptr,data,,[DB2] GH-DB2: ponteiro para o nome Battle (0x083ACCA4)
-0x083ACCC0,debug_sound_label_table,data,,"[DB2] GH-DB2: tabela de 2 ponteiros para rotulos da tela Sound (0x083ACCB0, 0x083ACCB8)"
+0x083ACAC0,gDebugStateHandlerTable,data,,"[JT3] 34 ponteiros, idx byte 0x03000473; BE6C = +0x0C, D168 = +0x54 (antes: StateHandlerTable_BAD8)"
+0x083ACAE0,gDebugStateHandlerTable_Idx8,label,,"[PS] [PS] tabela de estados da montagem (stride 0xC; coluna do meio = tick): linha0 PartsBuild_UpdateStatusPanel, linha6 PartsBuild_UpdateEditPanel (antes: table_partsbuild_states)"
+0x083ACAE4,debug_tinpet_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Tinpet (idx 9 de 0x083ACAC0); slot 0 = Debug_TinpetScreen [RD4] confirmado DB2: 3 x 4 (idx 9); slot 0 = Debug_TinpetScreen
+0x083ACAF0,debug_item_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Item (idx 12); slot 0 = Debug_ItemInventoryScreen [RD4] confirmado DB2: 3 x 4 (idx 12); slot 0 = Debug_ItemInventoryScreen
+0x083ACAFC,debug_face_table_base,data,,[DB2] GH-DB2: base da tabela de estados da Face (idx 15); slot 0 = Debug_FaceScreen [RD4] confirmado DB2: 3 x 4 (idx 15)
+0x083ACB08,debug_mdlpic_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Mdlpic (idx 18); slot 0 = Debug_MdlpicScreen [RD4] confirmado DB2: 3 x 4 (idx 18)
+0x083ACB14,debug_rndtk_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Rnd-tk (idx 21); slot 0 = Debug_RndTkScreen [RD4] confirmado DB2: 3 x 4 (idx 21)
+0x083ACB20,debug_battle_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Battle (idx 24); slot 0 = Debug_BattleScreen [RD4] confirmado DB2: 3 x 4 (idx 24)
+0x083ACB2C,debug_sound_table_base,data,,[DB2] GH-DB2: base da tabela de estados do Sound (idx 27); slot 0 = Debug_SoundScreen [RD4] confirmado DB2: 3 x 4 (idx 27)
+0x083ACB38,debug_motion_table_base,data,,[DB] GH-DB: base da tabela de estados para Motion (= 0x083ACAC0 + 30*4) [RD4] confirmado DB: idx 30; ponteiros contiguos ate 0x083ACB48
+0x083ACB48,gTextProcessStrings,ptr,11,"tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] confirmado bytes: texto codificado, nao ponteiros; primeiro nome do debug_menu_text aponta aqui. Tamanho nao medido"
+0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4] [RD4] confirmado DB.md: 11 x 4 ponteiros de nome, indice 0x03000472"
+0x083ACBCC,gTextDebugStrings_ACBCC,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextProcessStrings3)
+0x083ACC08,debug_parts_spawn_names,data,,"[DB] GH-DB: ponteiros de nome das linhas de Debug_PartsSpawnScreen [RD4] confirmado bytes: 3 x 4 ponteiros (ACC08..ACC13), depois texto"
+0x083ACC2C,debug_item_grant_names,data,,[DB] GH-DB: ponteiros de nome das linhas de Debug_ItemCountGrantScreen [RD4] confirmado bytes: 3 x 4 ponteiros (ACC2C..ACC37)
+0x083ACC40,debug_tinpet_name_ptr,data,,[DB2] GH-DB2: nome de 8 bytes da tela Tinpet (ponteiro em literal 0x0800C7AC) (antes: debug_tinpet_name)
+0x083ACC5C,debug_item_label_table,data,,"[DB2] GH-DB2: tabela de 3 ponteiros para rotulos das linhas da tela Item (0x083ACC44, 0x083ACC4C, 0x083ACC54) [RD4] confirmado bytes: 3 x 4 ponteiros (DB2)"
+0x083ACC78,debug_face_label_table,data,,"[DB2] GH-DB2: tabela de 2 ponteiros para rotulos das linhas da Face e do Mdlpic (0x083ACC68, 0x083ACC70) [RD4] confirmado bytes: 2 x 4 ponteiros (DB2)"
+0x083ACCA0,debug_rndtk_name_ptr,data,,[DB2] GH-DB2: ponteiro para o nome Rnd-tk (0x083ACC98) [RD4] confirmado bytes: 1 ponteiro -> 0x083ACC98 (DB2)
+0x083ACCAC,debug_battle_name_ptr,data,,[DB2] GH-DB2: ponteiro para o nome Battle (0x083ACCA4) [RD4] confirmado bytes: 1 ponteiro -> 0x083ACCA4 (DB2)
+0x083ACCC0,debug_sound_label_table,data,,"[DB2] GH-DB2: tabela de 2 ponteiros para rotulos da tela Sound (0x083ACCB0, 0x083ACCB8) [RD4] confirmado bytes: 2 x 4 ponteiros (DB2)"
 0x083ACCD4,gMenu5StepTable_ACCD4,data,,"[ST2] [ST2] 72 ponteiros Thumb de passos do menu 5 (0x0300137C); idx0 MedabotGrid_InitScreen, idx64 PartDetail_SceneStep, idx66 0x0800EB34; fim 0x083ACDF0; renomeado no Ghidra"
 0x083ACE14,gSceneStepTable_ACE14,data,,[ST] [ST] bloco de 148 ponteiros Thumb (0x08000841 = vazio); lido por 0x0801013C com indice = byte 0x03002D59; confirmado no codigo; significado da cena pendente
 0x083ACE24,gSceneStepSub_ACE24,data,,[ST2] [ST2] subvetor ACE14+0x10 (menu 6); entrada 0 = 0x080102C0
@@ -4098,56 +4098,56 @@ address,name,kind,count,comment
 0x083ACF00,gRewardStateTable,data,,[RW] GH-RW: tabela de estados que chama Fight_HandleRewardGrantOrSkipByPostBattleFlags (xref DATA; nome provavel)
 0x083AD070,gBattlePartSlotPickTable,data,,"[RW] GH-RW confirmado: 16 B, indice rand&F -> slot inimigo 0..2 (0,1,2 ciclico)"
 0x083AD080,Battle_FrameDispatchTable,data,,"[BT] tabela de 4+ ponteiros indexada por GS (usada por Battle_FrameDispatchOrExit); conteudo lido: 0x08012A20.., confirmado (ponteiros)"
-0x083AD0F0,table_medabot_screen_states,label,,[PS] [PS] tabela de estados da tela do Medabot (stride 4); entrada 9 = UpdateSelectedMedabotPreviewScreen
-0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA
-0x083AD114,table_medabot_screen_entry9,label,,[PS2] [PS2] entrada 9 de 0x083AD0F0 (stride 4) = UpdateSelectedMedabotPreviewScreen; nenhuma palavra da ROM vale 0x083AD0F0
-0x083AD118,table_medabot_screen_entry10,label,,[PS2] [PS2] entrada 10 de 0x083AD0F0 = Fight_SelectScreenFrame
-0x083AD190,Battle_StepFrameTable,data,,"[BT] tabela de modos; entrada 0 = Fight_StepBattleFrame, 8 = 0x08014548; quem indexa: LACUNA"
+0x083AD0F0,table_medabot_screen_states,label,,"[PS] [PS] tabela de estados da tela do Medabot (stride 4); entrada 9 = UpdateSelectedMedabotPreviewScreen [RD4] provavel: tabela de estados da tela de medabot (PS.md); cadeia contigua ate AD37F, com AD10C/AD114/AD118/AD190 dentro dela"
+0x083AD10C,Battle_SceneInitTable,data,,"[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA [RD4] provavel: interior de 0x083AD080 (i=35, BT3) e idx 7 de table_medabot_screen_states; nome sem base propria"
+0x083AD114,table_medabot_screen_entry9,label,,[PS2] [PS2] entrada 9 de 0x083AD0F0 (stride 4) = UpdateSelectedMedabotPreviewScreen; nenhuma palavra da ROM vale 0x083AD0F0 [RD4] confirmado PS2: idx 9 de AD0F0 (UpdateSelectedMedabotPreviewScreen 0x08013E30)
+0x083AD118,table_medabot_screen_entry10,label,,[PS2] [PS2] entrada 10 de 0x083AD0F0 = Fight_SelectScreenFrame [RD4] confirmado PS2: idx 10 de AD0F0
+0x083AD190,Battle_StepFrameTable,data,,"[BT] tabela de modos; entrada 0 = Fight_StepBattleFrame, 8 = 0x08014548; quem indexa: LACUNA [RD4] confirmado BT: entrada 0 = Fight_StepBattleFrame 0x0801427C; interior de 0x083AD080 (i=68, BT3)"
 0x083AD380,gSpeciality8ByteTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas (antes: gSpecialityWeightTable)
 0x083AD470,gFightFallbackPriorityRows,data,,[AI] [GH-AI] 32 x 4 B na ROM; sorteadas por Fight_RandomizePriorityListSlot; valores nao batem com ids de peca (provavel nome)
-0x083AD524,cursor_cell_xy_table,data,,"[PS] [PS] 9 celulas x 2 B (x,y) do cursor 3x3 do Medabot selecionado"
+0x083AD524,cursor_cell_xy_table,data,,"[PS] [PS] 9 celulas x 2 B (x,y) do cursor 3x3 do Medabot selecionado [RD4] provavel: pares x,y de celula; bytes batem so para 6 pares (12 B); HD2 diz 9 celulas. Revisar"
 0x083AECD8,gFightSceneMainSubTable,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado) (antes: gFightSceneSteps)
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
-0x083AF080,gFightSlotRandomTable16,data,,[AI] [GH-AI] 16 B lidos; usada por Fight_RandomSlotFromTable16 (randbyte&0xF)
-0x083AF090,gPartActionHandlerTable,data,,"[AI2] [AI2] tabela de ponteiros de handler de acao de peca (188 entradas, indexada pelo byte +0x49 da peca). Ponteiros nao lidos"
-0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
+0x083AF080,gFightSlotRandomTable16,data,,[AI] [GH-AI] 16 B lidos; usada por Fight_RandomSlotFromTable16 (randbyte&0xF) [RD4] confirmado AI.md: 16 x u8 (rand&0xF)
+0x083AF090,gPartActionHandlerTable,data,,"[AI2] [AI2] tabela de ponteiros de handler de acao de peca (188 entradas, indexada pelo byte +0x49 da peca). Ponteiros nao lidos [RD4] provavel: 60 x 4 (F090..F17F, ate gActionScriptOpcodeHandlerTable); indexado pelo byte +0x49 da parte (AI2)"
+0x083AF180,gActionScriptOpcodeHandlerTable,label,,"Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4] [RD4] provavel: >=128 x 4 contiguos (F180..F37F), 4 B por entrada (AS1); fim nao confirmado"
 0x083AF380,gRollDieFaceTable,data,,[TX] GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado
-0x083AF620,gFightRowWaveTable,data,,[HD2] [HD2] Tabela u8 de deslocamento Y para a descida das linhas de peca ; valores nao lidos
+0x083AF620,gFightRowWaveTable,data,,[HD2] [HD2] Tabela u8 de deslocamento Y para a descida das linhas de peca ; valores nao lidos [RD4] confirmado FH/HD2: 16 x u8
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable) [DT2] GH-DT2: ponteiros thumb u32; 0x50 entradas (0x00..0x4F); validos 0x01..0x3A; 0x00 e 0x3B..0x4F = sentinela 0x08000841; leitor ObjectScript_OpcodeDispatch 0x080393EC (confirmado)"
 0x083AFC2C,gFightScrollSlotBytes_AFC2C,data,,"[ST2] [ST2] 12 bytes u8 indexados por fight_information+0x38 (0x03001800+0x38); lidos por Fight_BotSlideScroll, Fight_ScrollSlotPhase_C0CC, Fight_ScrollEntryPhase; renomeado no Ghidra"
 0x083AFC38,gSlotWaveTable_AFC38,data,,"[ST2] [ST2] 32 halfwords (0x40 B, fim em AFC78); Anim_SlotScriptTick soma AFC38[slot+0x23 & 0x1F] em slot+0x04; renomeado no Ghidra"
 0x083AFC78,gMenu10StepTable_AFC78,data,,"[ST2] [ST2] 96 ponteiros de passos do menu 10 (Link), lido por 0x0803D538 com 0x0300137C; renomeado no Ghidra"
 0x083AFCA0,gSceneStepTable_AFC78_A,data,,[ST] [ST] = bloco AFC78 + 0x28 (indice 10); entrada 0 = 0x0803D9A1 (PRE fixo); fim do bloco 0x083AFDF8 = 03020100; dono nao identificado
 0x083AFD08,gSceneStepTable_AFC78_B,data,,[ST] [ST] = bloco AFC78 + 0x90 (indice 36); entrada 0 = 0x0803DB4D (POST fixo); dono nao identificado
-0x083AFE88,gGfx_Portrait_PonteirosImagens,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images (antes: gPortraitImages)
+0x083AFE88,gGfx_Portrait_PonteirosImagens,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images (antes: gPortraitImages) [RD4] provavel: mtbe 1584 entradas (176 x 9); GF3 diz 1 ponteiro por personagem. Conflito nao resolvido; ponteiros de 4 B
 0x083B1748,gGfx_Portrait_Paleta,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes (antes: gPortraitPalettes)
-0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable
+0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable [RD4] provavel: mtbe 732 = 122 x 6 ponteiros; ponteiros de 4 B; tamanho nao medido
 0x083B291C,gMessageStateHandlerTable,data,,"[A6] tabela de handlers de estado do motor de mensagem (ctx 0x03000440 +4); 0 = Gfx_PaletteFlushStep, 5 = ScriptVM_RunOpcodes; confirmado (literal + decompile)"
 0x083B2940,MsgState6_DispatchTable,data,,[MS] tabela indexada pelo byte do roteiro (estado 6); literal confirmado; numero de entradas aberto
-0x083B2954,gMessageDispatch9Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 9
-0x083B296C,gMessageDispatch10Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 10
-0x083B2984,gMessageDispatch11Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 11
-0x083B2988,gMessageDispatch12Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 12
-0x083B2990,Dispatch_CallHandlerByByteAt1B_Table,data,,[JT2] [GH-JT2] 23 ponteiros de handler (indices 0..22) chamados via CallViaR0 (0x0807CCF0) por 0x08040974; indice = byte 0x0300045B (0x03000440+0x1B); sem limite no codigo; 0x083B29EC nao e ponteiro
-0x083B29EC,gRandomLUT,label,,Simon/Rokusho em 0x083B2A0C
-0x083B4C60,gGfx_Portrait_PonteirosLayout,data,,"[JT2] [GH-JT2] dados (nao codigo) indexados por slot+0x2C em 0x0803C7DC; passada a 0x0803F15C; passo 0x80; 8 entradas lidas, fim nao achado (antes: Fight_AnimSlot_TableB)"
-0x083B4E08,gFontWidths,data,512,larguras da fonte do dialogo: 2 B por glifo (o 1o e o avanco)
-0x083B5008,gItalicFontWidths,data,512,larguras da fonte italica
-0x083B5578,gTextDialogue_083B5578,ptr,23,tabela de texto: Diálogo inicial; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B6100,SlotScriptPtrTable,data,,[JT3] ponteiros para scripts de animacao (Anim_RunSlotScript 0x08040BD8); idx = byte slot+0x2D; fim nao determinado (>= 80)
+0x083B2954,gMessageDispatch9Table,data,,"[MS2] [MS2] tabela de ctx+1B do estado 9 [RD4] provavel: MS2, tabela de ctx+1B do estado 9; ~6 x 4 (B954..B96B)"
+0x083B296C,gMessageDispatch10Table,data,,"[MS2] [MS2] tabela de ctx+1B do estado 10 [RD4] provavel: MS2, estado 10; ~6 x 4 (B96C..B983)"
+0x083B2984,gMessageDispatch11Table,data,,"[MS2] [MS2] tabela de ctx+1B do estado 11 [RD4] provavel: MS2, estado 11; sobrepoe 0x083B2988 (+4); tamanho incerto"
+0x083B2988,gMessageDispatch12Table,data,,"[MS2] [MS2] tabela de ctx+1B do estado 12 [RD4] provavel: MS2, estado 12; sobreposto a 11 (+4); tamanho incerto"
+0x083B2990,Dispatch_CallHandlerByByteAt1B_Table,data,,"[JT2] [GH-JT2] 23 ponteiros de handler (indices 0..22) chamados via CallViaR0 (0x0807CCF0) por 0x08040974; indice = byte 0x0300045B (0x03000440+0x1B); sem limite no codigo; 0x083B29EC nao e ponteiro [RD4] provavel: 23 x 4 (B990..B9EB, FI2 tem 23 handlers); termina onde comeca gRandomLUT"
+0x083B29EC,gRandomLUT,label,,Simon/Rokusho em 0x083B2A0C [RD4] provavel: LUT de bytes do randbyte (AI/DT); tamanho nao medido
+0x083B4C60,gGfx_Portrait_PonteirosLayout,data,,"[JT2] [GH-JT2] dados (nao codigo) indexados por slot+0x2C em 0x0803C7DC; passada a 0x0803F15C; passo 0x80; 8 entradas lidas, fim nao achado (antes: Fight_AnimSlot_TableB) [RD4] provavel: entradas de 4 B (0x083B2B00, 0x083B2B80...); GF3 argumento de 0x0803F15C; tamanho ate B4E08 (106 x 4) nao confirmado"
+0x083B4E08,gFontWidths,data,512,larguras da fonte do dialogo: 2 B por glifo (o 1o e o avanco) [RD4] confirmado EXPANSAO_MEDABOTS.md: 512 B = 256 x 2 (avanco por glifo)
+0x083B5008,gItalicFontWidths,data,512,larguras da fonte italica [RD4] confirmado EXPANSAO_MEDABOTS.md: 512 B = 256 x 2
+0x083B5578,gTextDialogueIntro,ptr,23,tabela de texto: Diálogo inicial; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextDialogue_083B5578)
+0x083B6100,SlotScriptPtrTable,data,,"[JT3] ponteiros para scripts de animacao (Anim_RunSlotScript 0x08040BD8); idx = byte slot+0x2D; fim nao determinado (>= 80) [RD4] provavel: ponteiros de roteiro de slot (AD.md, HA3); fim nao separado ate B66EC; tamanho nao confirmado"
 0x083B62D8,gMedals,data,480,medalhas: 16 B cada (27 ou 30 entradas - confirmar); Simon: rom_medal_information [MD] 30 x 16 B; +0 id; +1 atributo casado com a peca (bot+4); +2 classe provavel; +3..+6 limiares de nivel (rank); +7 bonus de compatibilidade (bot+7); +8..+F bases de especialidade provavel; ver MD.md secao 1
 0x083B6590,debug_parts_record_table,ptr,34,tabela de texto: Nomes das Medalhas; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextMedalNames) [DB] GH-DB provavel: ponteiros de registro (11 bytes) para Medabot_SpawnFromRecord em Debug_PartsSpawnScreen
-0x083B66EC,gPartAttributeNamePointerTable,label,,Simon/Rokusho em 0x083B670C; tipo undefined *32[4]
-0x083B6B48,gTextMedalAbilityDesc1,ptr,27,tabela de texto: Compatibilidade peça→medalha; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B6FA4,gTextMedalAbilityDesc2,ptr,26,tabela de texto: Compatibilidade medalha→peça; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B7048,gTextAttackTypeNames,ptr,8,tabela de texto: Tipos de ataque; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B722C,gTextAttackTypeDesc,ptr,8,tabela de texto: Descrições dos ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B74B8,gTextMedaforceNames,ptr,50,tabela de texto: Nomes das Medaforças; 50 entradas (o script de traducao usava 52 e invadia MedaforceDesc); fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B7580,gTextMedaforceDesc,ptr,53,tabela de texto: Descrições das Medaforças; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B66EC,gPartAttributeNamePointerTable,label,,"Simon/Rokusho em 0x083B670C; tipo undefined *32[4] [RD4] provavel: ponteiros de nome, 4 B contiguos ate B6B47; tamanho nao confirmado"
+0x083B6B48,gTextMedalAbilityDesc1,ptr,27,tabela de texto: Compatibilidade peça→medalha; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] confirmado DT: 27 x 4 (B6B48..B6BB3)
+0x083B6FA4,gTextMedalAbilityDesc2,ptr,26,tabela de texto: Compatibilidade medalha→peça; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] confirmado DT: 26 x 4 (B6FA4..B700B)
+0x083B7048,gTextAttackTypeNames,ptr,8,tabela de texto: Tipos de ataque; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] confirmado bytes: 8 x 4 (B7048..B7067); B722C aponta para o fim
+0x083B722C,gTextAttackTypeDesc,ptr,8,tabela de texto: Descrições dos ataques; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] provavel: 8 x 4 (B722C..B724B)
+0x083B74B8,gTextMedaforceNames,ptr,50,tabela de texto: Nomes das Medaforças; 50 entradas (o script de traducao usava 52 e invadia MedaforceDesc); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] confirmado DT: 50 x 4 (B74B8..B757F)
+0x083B7580,gTextMedaforceDesc,ptr,53,"tabela de texto: Descrições das Medaforças; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] divergencia: DT diz 50 ponteiros; bytes so mostram 2 ponteiros em sequencia (B7580, B7584); mtbe diz 53. Nome mantido, tamanho nao confirmado"
 0x083B7E54,MedaforceDescriptorTable,data,,[MF] [MF] 6 B por medaforca (52 ids); byte0 = id/nome; bytes 1..5 nao identificados (antes: medaforce_descriptor_table) [TA3] descritor de 6 B por medaforca: byte0 = id (B+0xA8); bytes 1..5 sem leitor confirmado
 0x083B7F8C,MedaforceMedalTable,label,,Simon/Rokusho em 0x083B7FAC (antes: medal_medaforce_list)
-0x083B80C0,gTextMedaforceDesc1,ptr,5,tabela de texto: Descrições das Medaforças1; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B80C0,gTextMedaforceDesc1,ptr,5,tabela de texto: Descrições das Medaforças1; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD4] provavel: ponteiros de texto de 4 B (pelo menos 4 contiguos); tamanho nao medido
 0x083B82F0,gTextSpecialAttackDesc,ptr,8,tabela de texto: Descrições de ataques; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] confirmado: 8 x 4 B (ponteiros; JT8 'texto por especialidade')
 0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B; Simon: gRomPartRecordTable [RD5] confirmado: 480 x 16 B = 7680 (mtbe); campo armadura max em +4 (DF2)
 0x083BA658,gPartRecordPtrTable,ptr,120,"nomes dos bots; Simon: gPartNamePointerTable (antes: gBotNames) [EN] GH-EN: ponteiros para registro de peca (0x0E B copiados para o bot em Fight_InitializeBotFromTemplate), indice = id da peca. Provavel."

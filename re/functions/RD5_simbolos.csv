@@ -1,0 +1,71 @@
+addr,nome,kind,comentario
+0x083B82F0,gTextSpecialAttackDesc,table,confirmado: 8 x 4 B (ponteiros; JT8 'texto por especialidade')
+0x083B83FC,gPartStats,data,confirmado: 480 x 16 B = 7680 (mtbe); campo armadura max em +4 (DF2)
+0x083BBB4C,gPartNames,table,"confirmado: 480 x 4 B, indice bot*4+kind (R2b, GetPartName)"
+0x083BCFEC,gTextPartCodeNames,table,provavel: 480 x 4 B (run de ponteiros = mtbe); nomes de codigo das pecas; indexador nao lido
+0x083BDA04,gTextStatDescriptions,table,provavel: 11 x 4 B (run de ponteiros = mtbe). CONFLITO: JT8 diz indice 0x13 usado; ponteiro 11 nao e ponteiro
+0x083BE868,gTechniqueNames,table,confirmado: 60 x 4 B (DT3)
+0x083BEAFC,gTextLegTypes,table,provavel: 7 x 4 B (run = mtbe); tipos de perna
+0x083BEB68,gTextBattlefieldNames,table,provavel: 11 x 4 B (run 11 + zeros ate 0x083BEB94; mtbe 11); campos de batalha
+0x083BEB94,gPaletteFamily,data,confirmado: 122 x 1 B (DT; lido por CreateCompositeBattleSpriteObjects)
+0x083BEC10,gMapEncounters,data,"confirmado: 192 x 8 B = 1536 (DT, mtbe)"
+0x083BF210,gMapEncountersExtra,data,confirmado: 192 x 4 B = 768 (EN)
+0x083C1B80,gEncounterTemplatePtrs,table,confirmado: 246 x 4 B (EN; indice = id de template 0..245)
+0x083C40B8,gTextCharacterNames,table,"provavel: 97 x 4 B (run = mtbe); nomes de personagem (TX, FI)"
+0x083C47EC,gTextMenuLabels,table,provavel: 6 x 4 B (run = mtbe); rotulos de menu
+0x083C4B90,gTextStatusStrings,table,provavel: 128 x 4 B (run = mtbe); textos de status
+0x083C6A04,gTechniqueScriptStream_Generic,label,confirmado: 83 B ate gActionScript_GrapTrap; roteiro compartilhado por 20 tecnicas (TQ). Conflito em TQ.md sec 5 ja anotado
+0x083C6A57,gActionScript_GrapTrap,data,confirmado: entrada do roteiro da tecnica 10 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A59,gActionScript_ShotTrap,data,confirmado: entrada do roteiro da tecnica 11 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A5B,gActionScript_AttackClr,data,confirmado: entrada do roteiro da tecnica 12 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A65,gActionScript_BreakForm,data,confirmado: entrada do roteiro da tecnica 21 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A67,gActionScript_Stability,data,confirmado: entrada do roteiro da tecnica 22 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A6B,gActionScript_ForceBind,data,confirmado: entrada do roteiro da tecnica 23 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A6D,gActionScript_CancelOptic,data,confirmado: entrada do roteiro da tecnica 24 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A6E,gActionScript_CancelBomb,data,confirmado: entrada do roteiro da tecnica 25 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A6F,gActionScript_CancelGrav,data,confirmado: entrada do roteiro da tecnica 26 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A70,gActionScript_Defence,data,confirmado: entrada do roteiro da tecnica 27 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A72,gActionScript_FullBlock,data,confirmado: entrada do roteiro da tecnica 28 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A74,gActionScript_HalfBlock,data,confirmado: entrada do roteiro da tecnica 29 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A76,gActionScript_Recovery,data,confirmado: entrada do roteiro da tecnica 30 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A87,gActionScript_AutoRecover,data,confirmado: entrada do roteiro da tecnica 31 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A8B,gActionScript_Repair,data,confirmado: entrada do roteiro da tecnica 32 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6A9C,gActionScript_Reactivate,data,confirmado: entrada do roteiro da tecnica 33 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AA2,gActionScript_Scout,data,confirmado: entrada do roteiro da tecnica 36 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AA4,gActionScript_Conceal,data,confirmado: entrada do roteiro da tecnica 37 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AA6,gActionScript_BoostChrg,data,confirmado: entrada do roteiro da tecnica 38 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AAA,gActionScript_RapidChrg,data,confirmado: entrada do roteiro da tecnica 39 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AAE,gActionScript_AccelChrg,data,confirmado: entrada do roteiro da tecnica 40 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AAF,gActionScript_DrainChrg,data,confirmado: entrada do roteiro da tecnica 41 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AB3,gActionScript_Pushover,data,confirmado: entrada do roteiro da tecnica 42 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AB8,gActionScript_Impair,data,confirmado: entrada do roteiro da tecnica 43 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6ABC,gActionScript_Confusion,data,confirmado: entrada do roteiro da tecnica 44 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AC0,gActionScript_UseDrain,data,confirmado: entrada do roteiro da tecnica 45 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AC4,gActionScript_NoEscape,data,confirmado: entrada do roteiro da tecnica 46 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AC8,gActionScript_NoDefense,data,confirmado: entrada do roteiro da tecnica 47 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6ACC,gActionScript_Destroy,data,confirmado: entrada do roteiro da tecnica 48 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6AFF,gActionScript_Sacrifice,data,confirmado: entrada do roteiro da tecnica 49 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B2C,gActionScript_Forcedrain,data,confirmado: entrada do roteiro da tecnica 50 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B30,gActionScript_TeamForm,data,confirmado: entrada do roteiro da tecnica 51 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B32,gActionScript_TeamAttack,data,confirmado: entrada do roteiro da tecnica 52 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B85,gActionScript_Strengthen,data,confirmado: entrada do roteiro da tecnica 53 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B86,gActionScript_CntrAttk,data,confirmado: entrada do roteiro da tecnica 54 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B88,gActionScript_Change,data,confirmado: entrada do roteiro da tecnica 55 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B8A,gActionScript_ItrpChange,data,confirmado: entrada do roteiro da tecnica 56 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B8C,gActionScript_AttkChange,data,confirmado: entrada do roteiro da tecnica 57 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B8E,gActionScript_DEFChange,data,confirmado: entrada do roteiro da tecnica 58 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6B90,gActionScript_HealChange,data,confirmado: entrada do roteiro da tecnica 59 (TQ2 mapa id->endereco; bytes de entrada conferidos); tamanho variavel ate a proxima entrada
+0x083C6CA8,gTechniqueActionScriptPtrTable,table,"provavel: 132 x 4 B (run de ponteiros ROM); roteiro por id de tecnica 0..59 (F+0xA8), medaforca em 0x50+id (TQ, FI2, MF2). Nome mantido"
+0x083CE164,FightPreview_SceneRowPointerTable,table,confirmado: 132 x 4 B (A5; ponteiros para linhas de halfwords)
+0x083CEDF4,Fight_AnimSlot_TableA,table,provavel: 8 x 4 B (JT2 + mtbe 8 entradas); ponteiros de dados indexados por slot+0x2B; nome mantido
+0x083CF530,gTextSystemMessages,table,confirmado: 32 x 4 B (ponteiros 0..31; words 32..33 = 0)
+0x083D1D78,PartPreviewType_KindVector,table,"chute: tamanho nao fechado; nome provavel (vetor kind->struct, IC2). CONFLITO: DT3 chama gMoldTable; word0=0, misto ROM/RAM"
+0x083D2630,gEventContinuationTable,table,confirmado: 137 x 4 B (ponteiros Thumb; word137=0; EV/HC). DT2 reserva 0x400 B
+0x083D2A88,gPlayerSpeedByWalkState,data,"confirmado: 16 x 1 B (VA, Tabela A, indexada por E+0xC5C)"
+0x083D2A98,gMapPassBlockTable,data,provavel: <=26 x 8 B (211 B ate gMapArea; VA leu idx 0..9 de blocos de 8 B)
+0x083D2B6B,gMapArea,data,confirmado: 192 x 1 B (DT3; gMapArea[mapa])
+0x083D2C5D,gObjectField0BByPoseTable,data,provavel: indexada por pose (+0x30); 32 primeiros = 0; tamanho aberto (CS2)
+0x083D2D0D,gObjectShadowFlagTable,data,provavel: indexada por pose (+0x30); !=0 cria sombra (CU); tamanho aberto
+0x083D5FF4,Overworld_ChoiceSubstateTable,table,confirmado: 6 x 4 B (FM3; sub-estados 0..5 do menu de escolha)
+0x083D6298,unknown_ChapterLiteralPool,data,"chute: pool de literais RAM (0x03005FDF, 0x03006413, 0x030057B1); sem leitor conhecido (PR); nome mantido"
+0x083D6A2C,gArcHeightTable,data,"confirmado: 16 x 16 B = 256 (CU; altura do arco, forma simetrica no byte de cada linha)"
