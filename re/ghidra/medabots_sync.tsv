@@ -2246,7 +2246,7 @@ F	0x0804DDCC	Map_LoadCurrentSceneResources
 F	0x0804DE74	EventOpcode0E_PlayerHopInPlace
 F	0x0804DF40	EventOpcode0F_PlayerHopInDirection
 F	0x0804E134	EventOpcode10_MovePlayer
-F	0x0804E370	EventOpcode11_ChangePlayerCostume
+F	0x0804E370	Event_Cont11_ChangePlayerCostume
 F	0x0804E43C	Event_Op1A_Cont_NpcDoAnimation
 F	0x0804E450	Event_Op1D_Cont_HopEventNpc
 F	0x0804E464	Event_Op1E_Cont_FlickerNpc
@@ -3320,10 +3320,11 @@ L	0x083D2018	gMotionDurTable
 L	0x083D2104	gMainState1MenuTable
 L	0x083D212C	gMainState1_Menu10
 L	0x083D222C	gEventPrimaryOpcodeTable
-L	0x083D2630	gEventContinuationOpcodeTable
+L	0x083D2630	gEventContinuationTable
 L	0x083D2A40	gWalkSpeedTable
 L	0x083D2A88	gPlayerSpeedByWalkState
 L	0x083D2A98	gMapPassBlockTable
+L	0x083D2B18	gCostumeToWalkStateTable
 L	0x083D2B6B	gMapArea
 L	0x083D2C5D	gObjectField0BByPoseTable
 L	0x083D2D0D	gObjectShadowFlagTable

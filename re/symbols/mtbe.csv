@@ -276,6 +276,7 @@ address,name,kind,count,comment
 0x0300643F,gEncounterSuppressB,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável) (antes: gEventRunSceneStepFlag)
 0x03006440,gEvt_MapObjIndexSaved,label,,[FI2] E+0xC60 indice guardado pelo Op4C e lido pelo Op51 confirmado (HE3_simbolos)
 0x03006447,gLoadFacingSource,data,,[OW] RAM: facing inicial lido no load
+0x03006449,gMapSecondaryWalkState,data,,[VA2] [VA2] E+0xC69: gravado pelo opcode 0x11 (mesmo valor de C5C e C28); lido por Overworld_UpdateSecondaryActorAnim
 0x0300644E,str_ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006450,str_ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -287,7 +288,7 @@ address,name,kind,count,comment
 0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
 0x03006472,gEvt_ContinuationIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeByte)"
 0x03006473,gEvt_SubState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate) (antes: gCurrentEventSubstate)"
-0x03006474,gEvt_Args,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gEventScriptArguments)"
+0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gEventScriptArguments) (antes: gEvt_Args)"
 0x03006484,gTrackedActorSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32] (antes: gTrackedObjectSlotTable)"
 0x03006492,gEvt_ContinuationIndex,label,,[FI] indice table2 (E+0xC92) conf
 0x03006494,gEvt_ActiveObjIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gCurrentEventActiveMapObjectIndex) (antes: gCurrentEventObjectIndex)"
@@ -2631,7 +2632,7 @@ address,name,kind,count,comment
 0x0804DE74,EventOpcode0E_PlayerHopInPlace,func_thumb,,Simon/Rokusho
 0x0804DF40,EventOpcode0F_PlayerHopInDirection,func_thumb,,"Simon/Rokusho: Perform a directed player hop / short forced movement setup. |  | Seeds a temporary movement sequence, forces facing/input bits for one direction, animates the player hop motion, then cleans up and ends the current event opcode."
 0x0804E134,EventOpcode10_MovePlayer,func_thumb,,"Simon/Rokusho: Execute a scripted player movement path. |  | Uses per-opcode local state and an inline movement sequence buffer to emit up to four directional movement steps, updating live tile coordinates and held-direction state until the scripted path completes."
-0x0804E370,EventOpcode11_ChangePlayerCostume,func_thumb,,"Simon/Rokusho: Change the player visual/costume variant. |  | Loads the new scene/player visual selector into live event/map state, reloads map object palettes and overworld sprite graphics for the current map, copies the matching palette resource, then ends the current event opcode."
+0x0804E370,Event_Cont11_ChangePlayerCostume,func_thumb,,"Simon/Rokusho: Change the player visual/costume variant. |  | Loads the new scene/player visual selector into live event/map state, reloads map object palettes and overworld sprite graphics for the current map, copies the matching palette resource, then ends the current event opcode. (antes: EventOpcode11_ChangePlayerCostume)"
 0x0804E43C,Event_Op1A_Cont_NpcDoAnimation,func_thumb,,Simon/Rokusho (antes: EventOpcode1A_NpcDoAnimation)
 0x0804E450,Event_Op1D_Cont_HopEventNpc,func_thumb,,Simon/Rokusho (antes: EventOpcode1D_HopEventNpc)
 0x0804E464,Event_Op1E_Cont_FlickerNpc,func_thumb,,Simon/Rokusho (antes: EventOpcode1E_FlickerEventNpc)
@@ -3705,10 +3706,11 @@ address,name,kind,count,comment
 0x083D2104,gMainState1MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState1; [1]=EventScript_RunCurrent (mapa); [2]=0x0805716C (provavel); provavel
 0x083D212C,gMainState1_Menu10,label,,[EV] tabela indexada por 0x0300137C (gamestate_subroutine); usada sem evento e após despacho com E+0xC5F (confirmado no literal) (antes: gSceneSubroutineTable)
 0x083D222C,gEventPrimaryOpcodeTable,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable (antes: gEventOpcodeTableA)
-0x083D2630,gEventContinuationOpcodeTable,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable (antes: gEventOpcodeTableB)
+0x083D2630,gEventContinuationTable,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable (antes: gEventOpcodeTableB) (antes: gEventContinuationOpcodeTable)
 0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
 0x083D2A88,gPlayerSpeedByWalkState,data,,[VA] [VA] 16 B: 00 01 00 00 00 00 00 00 00 00 00 02 00 00 00 01
 0x083D2A98,gMapPassBlockTable,data,,"[VA] [VA] blocos de 8 B da variante; idx 0..9 lidos; idx 2 e 9 = 01 01 00 00 01 01 01 01, demais = 00 01 00 01 01 01 01 01"
+0x083D2B18,gCostumeToWalkStateTable,data,,[VA2] [VA2] indice = arg0 do opcode 0x11; valores 00 03 04 05 06 07 08 02 09 01 0A 0E 0F 0B 00 70 71 ... (tamanho nao medido); destino = E+0xC5C/C69/C28
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083D2C5D,gObjectField0BByPoseTable,data,,[CS2] tabela de bytes indexada por pose (+0x30); os 32 primeiros sao zero
 0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU)"
