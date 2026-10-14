@@ -54,6 +54,7 @@ F	0x08002328	Link_CollectReceivedPackets
 F	0x080023D8	SwapDisplayBuffersOnVBlank
 F	0x08002438	Link_SerialIrqTransferStep
 F	0x08002534	MainState0
+F	0x08002536	MainState0_08002536
 F	0x08002554	Dispatch_CallIndexedHandler
 L	0x0800256C	gMenuList0SubTablePtr
 F	0x080025B4	Menu_ReadPadMoveCursor
@@ -2257,7 +2258,7 @@ F	0x08044094	Anim_SetDefaultTimers
 F	0x08044098	Anim_SetDefaultTimers_08044098
 F	0x080440B4	Count_Entries3InTable9
 F	0x080440D4	Check_PairsAllEqual
-F	0x08044100	Obj_StepAccumMoveBThenSync
+F	0x08044100	Fight_StepAccumMoveBThenRingFrame
 F	0x08044118	TileMap_ReadRectToBuffer
 F	0x08044160	TileMap_WriteBufferToRect
 F	0x080441A8	Gfx_DecompressFixedAsset
@@ -3213,7 +3214,7 @@ F	0x08068CC8	fx_palette_fade_step
 F	0x08068DD0	Dispatch_ScrollTickThenHandler
 F	0x08068E00	Scene_EnterSetupA
 F	0x08068E88	Scene_FxStepAdvance
-F	0x08068EA8	Fx_StepTableBThenSetDispcnt
+F	0x08068EA8	Fx_ClearIwramBlockMaskDispcntDisarm
 F	0x08068F08	Scene_IntroStepAdvance
 F	0x08068F34	Screen_ResetWrap
 F	0x08068F50	FightPreview_LoadCachedAndEncounterLoadouts

@@ -438,6 +438,7 @@ address,name,kind,count,comment
 0x080023D8,SwapDisplayBuffersOnVBlank,func_thumb,,[R0] troca buffers duplos (chute)
 0x08002438,Link_SerialIrqTransferStep,func_thumb,,"[LK] [GH-LK] rodada SIO multiplayer: le SIOMULTI0-3, escreve SIOMLT_SEND, sentinela 0xFEFE, liga bit 7 no IntrCheck; confirmado (ex FUN_08002438)"
 0x08002534,MainState0,func_thumb,,"estado 0 (soft reset volta para ca) [MU] [MU] gMainStateTable[0]; cena do jogo, indexa menu_list 0x083AC2C8 (confirmado)"
+0x08002536,MainState0,func_thumb,,[OB] OB: estado 0 (soft reset). Chama table(0x083AC2C8)[byte 0x03002B8C]. Pool confirmado. Confirmado.
 0x08002554,Dispatch_CallIndexedHandler,func_thumb,,chama table[idx] via CallViaR0; confirmado (tabela nao identificada)
 0x0800256C,gMenuList0SubTablePtr,table,,[MN] [MN] ponteiro usado por Dispatch_CallIndexedHandler (menu_list[0]); indexa por byte 0x03000584?? nao confirmado (ler literal 0x08002570) (antes: gMenuListSubStepTable)
 0x080025B4,Menu_ReadPadMoveCursor,func_thumb,,le estado de entrada e move cursor; provável
@@ -2642,7 +2643,7 @@ address,name,kind,count,comment
 0x08044098,Anim_SetDefaultTimers,func_thumb,,[FM5] gMainState=1 menu=1 sub=7; chamado no fim do sub 3 da tela de B (confirmado)
 0x080440B4,Count_Entries3InTable9,func_thumb,,"[R2a] R2a: conta entradas com byte 3 em 9 registros de 8 bytes [LK3] [GH-LK3] conta bytes==3 em 9 registros de 8 B a partir de 0x030017A0 (BLOCO DE TIME, nao inventario); confirmado pelo literal"
 0x080440D4,Check_PairsAllEqual,func_thumb,,[R2a] R2a: 1 se todos os pares de bytes consecutivos sao iguais [LK3] [GH-LK3] varre 0x1E0 pares de bytes a partir de 0x03004C40 (inventario) e retorna 1 se byte0==byte1 em todos; confirmado (codigo); papel provavel
-0x08044100,Obj_StepAccumMoveBThenSync,func_thumb,,[FS7] [FS7] Obj_StepAccumMoveB (0x08043E78) e FUN_08043FEC com byte +0x38; provavel
+0x08044100,Fight_StepAccumMoveBThenRingFrame,func_thumb,,[FS7] [FS7] Obj_StepAccumMoveB (0x08043E78) e FUN_08043FEC com byte +0x38; provavel (antes: Obj_StepAccumMoveBThenSync)
 0x08044118,TileMap_ReadRectToBuffer,func_thumb,,[R2a] R2a: le retangulo do mapa de fundo (VRAM 0x06000000) para buffer [RV12] confirmado: le retangulo do tilemap BG (VRAM 0x06000000) para buffer; mantem nome
 0x08044160,TileMap_WriteBufferToRect,func_thumb,,[R2a] R2a: escreve buffer num retangulo do mapa de fundo (desenha campo de texto/numero) [RV12] confirmado: escreve buffer no retangulo do tilemap BG (inverso de ReadRect); mantem nome
 0x080441A8,Gfx_DecompressFixedAsset,func_thumb,,[R2a] R2a: decompress_and_store com endereco fixo [RV12] confirmado: Lz_DecodeIfMagic com destino fixo; mantem nome
@@ -3598,7 +3599,7 @@ address,name,kind,count,comment
 0x08068DD0,Dispatch_ScrollTickThenHandler,func_thumb,,[FL10] scroll_tick_flag se flag zero; CallViaR0(tabela[byte]) (provável)
 0x08068E00,Scene_EnterSetupA,func_thumb,,"[FN6] provavel: setup de cena (gfx_clear_regs_init, snd 0 e 0x13, fx_screen_setup_a, REG_DISPCNT|=0x1E00, zera campos) e proximo estado; ponteiro 0x08485730"
 0x08068E88,Scene_FxStepAdvance,func_thumb,,[FN6] provavel: se fx_step_table_a() != 0 copia valor (estado) ; ponteiro 0x08485734
-0x08068EA8,Fx_StepTableBThenSetDispcnt,func_thumb,,chama fx_step_table_b e ajusta REG_DISPCNT; provavel
+0x08068EA8,Fx_ClearIwramBlockMaskDispcntDisarm,func_thumb,,chama fx_step_table_b e ajusta REG_DISPCNT; provavel (antes: Fx_StepTableBThenSetDispcnt)
 0x08068F08,Scene_IntroStepAdvance,func_thumb,,"[FN6] provavel: se intro_scene_step() != 0 grava 0,4,2 nos campos de estado; ponteiro 0x0848573C"
 0x08068F34,Screen_ResetWrap,func_thumb,,wrapper: seta estado e chama Screen_ResetGfxAndState (confirmado)
 0x08068F50,FightPreview_LoadCachedAndEncounterLoadouts,func_thumb,,Simon/Rokusho: Load battle preview/composite sprites using the cached player preview loadout from fight_information.preview_loadout_cache and the selected encounter fight templates from list_of_all_fights. Also seeds the preview scene state before handing control to the scene-specific main loop. [RV20] provavel: carrega tiles de sprite dos loadouts em cache (2 lados) e configura DISPCNT
