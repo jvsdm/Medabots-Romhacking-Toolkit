@@ -443,6 +443,7 @@ address,name,kind,count,comment
 0x08003EE0,Gfx_ResetTileState,func_thumb,,[provavel] CpuFastSet + Tile_ClearSlots reset
 0x0800406C,InitializeBattleSceneScreen,func_thumb,,"Simon/Rokusho: Initialize the main battle scene screen. Configures BG layers, decompresses battle scene graphics/tilemaps, loads composite battle sprite resources, builds the sprite objects, initializes supporting scene widgets, and advances the current game subroutine state."
 0x080048D8,FightPreview_CachePlayerLoadoutForScene,func_thumb,,"Simon/Rokusho: Cache the current player-side preview loadout into fight_information.preview_loadout_cache. For each of the three player preview bots, store the leg icon index plus the four part ids used later by the preview/battle-intro scene."
+0x08004A18,BattleStep_PreRefreshBots,func_thumb,,"[TP] [GH-TP confirmado por bytes] passo GS (tabela 0x083AC568 idx0): BL 0x08004E74, 0x080054C0, Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords; GS++. Sem funcao no Ghidra"
 0x08004A2A,Fight_RefreshCaller_Unresolved,func_thumb,,[PB] [GH-PB] BL para Fight_RefreshBotPartRecords sem funcao no Ghidra (miolo nao detectado). Pendente
 0x08004DB4,Battle_SlotDrawStep,func_thumb,,passo de desenho dos slots de batalha por frame; provavel
 0x08004E74,Pair_TickUpCounterIfFlag,func_thumb,,[R0] incrementa contador e seguinte se bit0 de flag (provavel) (antes: tick_par_contador_b)
@@ -2274,6 +2275,7 @@ address,name,kind,count,comment
 0x08044160,TileMap_WriteBufferToRect,func_thumb,,[R2a] R2a: escreve buffer num retangulo do mapa de fundo (desenha campo de texto/numero)
 0x080441A8,Gfx_DecompressFixedAsset,func_thumb,,[R2a] R2a: decompress_and_store com endereco fixo
 0x080441B8,Screen_ResetGfxAndState,func_thumb,,[R2a] R2a: zera bloco de RAM e paleta de BG; reseta estado de tela
+0x080441EE,TeamSlots_ClearIndices_Candidate,func_thumb,,"[TP] [GH-TP confirmado por decode, sem funcao no Ghidra] strb 0 em fi+0x41..0x43 (r4=0). Prologo 0x080441B8 push {r4,r5,lr}. Nome provisorio"
 0x0804422C,Anim_AdvanceSlotTileOffset,func_thumb,,[R2a] R2a: soma deslocamentos de tabela em +4/+2 do slot e incrementa +0x27
 0x080442B4,Angle32FromDelta,func_thumb,,"[R2a] R2a: angulo do vetor (dx,dy) quantizado em setores 0..0x1C, soft-float sf32_*; enorme"
 0x080445F4,FightPreview_InitCompositeBuffers,func_thumb,,[R2a] R2a: limpa buffers da previa e chama CompositePreviewContext_Init
@@ -3114,6 +3116,7 @@ address,name,kind,count,comment
 0x0806B744,Dispatch_CallHandlerByWordIndex,func_thumb,,[FR2] provável; trampolim CallViaR0 com índice de byte*4 (FUN_0806b744)
 0x0806B764,Screen_InitFxSetup,func_thumb,,init de cena com música 0 e fx_screen_setup_a; provável
 0x0806B820,Screen_InitObjectSlotsLz77,func_thumb,,[provavel] 4 LZ77 para VRAM; ~13 Map_InitializeObjectRenderSlot; REG_DISPCNT |= 0x1E00
+0x0806B8CE,TeamSlots_WriteFi41_Candidate,func_thumb,,[TP] [GH-TP provavel] grava r3 em fi+0x41; escritor da escolha de time? valor/origem aberto
 0x0806BC48,Fight_TickBattleFrame,func_thumb,,[confirmado] despachante por quadro: counter_oscillate_x/battle_state_fire/select_entity_max ou battle_phase_spawn_move; depois battle_update_objects etc.; jump table nao recuperado
 0x0806BCFC,Fx_StepTableB_Check,func_thumb,,provável: checa fx_step_table_b e grava registro de efeito
 0x0806BD3C,Screen_ResetDisplayAndStopSong,func_thumb,,"[FL10] entrada de tela: DAT_0806BD68=0xFF/0x10, REG_DISPCNT mask, snd_song_request(0) (provável)"
@@ -3125,6 +3128,7 @@ address,name,kind,count,comment
 0x0806C3A0,battle_update_objects,func_thumb,,[R4] R4: loop de 8 objetos de batalha (3 tipos); provavel
 0x0806C660,battle_timer_release_slot,func_thumb,,[R4] R4: timer de 3 quadros que chama 0806B718(0x38); provavel
 0x0806C694,battle_phase_spawn_move,func_thumb,,[R4] R4: fase de batalha: spawn periodico e movimento de 2 sprites; provavel
+0x0806C7E4,TeamSlots_WriteFi41_Candidate2,func_thumb,,"[TP] [GH-TP provavel] grava r2 em fi+0x41; laco com ponteiro depois. Prologo 0x0806C694 push {r4-r6,lr}"
 0x0806C88C,effect_anim_fall,func_thumb,,"[R4] R4: animacao 2 estados (spawn 0x33/0x12, desce -2 a cada 8 quadros, sai em 0xEB ou tecla); provavel"
 0x0806C958,effect_anim_phase2,func_thumb,,[R4] R4: animacao 2 estados com 6 objetos a cada 4 quadros e som 0x3D; provavel
 0x0806CB28,anim_dispatch_state,func_thumb,,[R4] R4: despacho por tabela de saltos para 7 estados de animacao; confirmado
@@ -3461,6 +3465,7 @@ address,name,kind,count,comment
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
 0x083AC2C8,gMainStateTable,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list)
+0x083AC568,BattleStepTable_Unknown,data,,[TP] [GH-TP] tabela de ponteiros de passos GS; 0x08004A19 e entrada 0 desta linha; despachante nao achado
 0x083AC614,debug_mdlpic_model_ptrs,data,,"[DB2] GH-DB2: 150 ponteiros para dados comprimidos de modelo, indice v0*5+v1 (v0 0..0x1D, v1 0..4); provavel"
 0x083AC880,table_partsgrid_states,label,,[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas)
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]

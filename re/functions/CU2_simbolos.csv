@@ -1,0 +1,14 @@
+# address,name,kind,comment
+0x0804F0A4,Event_Op41_Cont_FlickerAllActors,func_thumb,CU2: continuacao 0x41; flicker de todos os rastreados; termina se todos inativos ou algum flicker devolve 1
+0x0804E700,Event_Op2B_Cont_SpawnAndStepActor,func_thumb,CU2: continuacao 0x2B; spawn E+0xC94..C97 + passo blk[10] speed 0 (E+0xC98); fase E+0xC93
+0x0804F940,Event_Op6E_Cont_SpawnAndStepActorFast,func_thumb,CU2: continuacao 0x6E; igual 0x2B com speed 1
+0x0804E784,Event_Op2D_Cont_StepActor,func_thumb,CU2: continuacao 0x2D; passo sem spawn, cmd em E+0xC95, speed 0 (nome mtbe RotateActor e enganoso)
+0x08048684,Map_GetObjectPoseByGroup,func_thumb,CU2: pose de objeto = byte[tabela do mapa(gCurrentMapId)+grupo] passada a Map_PoseIdToTileIndex; retorno vai para +0x30
+0x08048210,Map_PoseIdToTileIndex,func_thumb,CU2: id 0 -> lookup E+0xC5C; >0xCF -> tabela aninhada (E+0xC38); >0xBF -> (id-0xC0)*2 + byte[0x03006D3E] + 0x28
+0x08048864,Map_InitializeObjectRenderSlot,func_thumb,CU2: init de slot; grava +0x00 e +0x32 (mesmo valor), +0x06, +0x0A grupo, +0x1C flag
+0x080487C8,Map_ResetObjectField0B,func_thumb,CU2: +0x0B = tab[pose]: 2->0xFF, 1->0x00, outro 0x40
+0x03002C30,gObjectSlots,data,CU2: base dos slots de objeto (0x40 B cada); campos conferidos em CU2.md
+0x03006D3E,gObjectPoseBaseByte,data,CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado
+0x08413160,gMapObjectPoseTablePtrs,data,CU2: ponteiros por gCurrentMapId para tabela de grupo->pose (nao dumpado)
+0x08413EE0,gPoseIdNestedTablePtrs,data,CU2: ponteiros para tabelas aninhadas de Map_PoseIdToTileIndex (ids >= 0xD0)
+0x08001520,BuildShadowOamFromObjectState,func_thumb,CU2: builder de OAM (batalha); le +0x0B como chave de prioridade, +0x1C, +0x06; nao le +0x21/+0x2C

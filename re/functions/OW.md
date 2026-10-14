@@ -36,7 +36,7 @@ Base IWRAM `0x030057E0` (literais de `Overworld_*`/`Map_*`). Endereço = base + 
 | 0x03002C30 | — | gObjectSlots | 128 slots × 0x40 B (todos os objetos do mapa) | confirmado |
 | 0x030037F0 | slot 0x2F | gPlayerObject | objeto do jogador = slot 0x2F (`Map_SetObjectAnimationVariant(0x2F, facing)`) | confirmado no código |
 
-Campos do slot de objeto (0x40 B), vistos nas funções de passo: +0x10 (X em 8.8, `>>8` = pixel), +0x0C (Y em 8.8), +0x20 (eixo/sentido do passo: 0 X-, 1 X+, 2 Y-, 3 Y+ conforme `Map_TickObjectStep`), +0x27 (contador de quadros do passo), +0x28 (timer do passo, 16/velocidade), +0x2A (índice de velocidade na tabela ROM), +0x30 (halfword: código de pose; 0x71, 0x78, 0x81..0x84 tocam o som de passo 0x57), +0x04 X, +0x09 quadro, +0x18 ângulo (só na batalha, pesquisa G7). Ver §5.
+Campos do slot de objeto (0x40 B), vistos nas funções de passo: +0x0C (X em 8.8, `>>8` = pixel), +0x10 (Y em 8.8) (CU: +0x0C = X, +0x10 = Y; ver CU.md §3c e CU2.md), +0x20 (sentido do passo: 0 N = Y-, 1 S = Y+, 2 W = X-, 3 E = X+, conforme `Map_TickObjectStep`) (CU), +0x27 (contador de quadros do passo), +0x28 (timer do passo, 16/velocidade), +0x2A (índice de velocidade na tabela ROM), +0x30 (halfword: código de pose; 0x71, 0x78, 0x82..0x84 tocam o som de passo 0x57 (CU: 0x81 não entra)), +0x04 X, +0x09 quadro, +0x18 ângulo (só na batalha, pesquisa G7). Ver §5.
 
 ## 2. Teclas e direção (confirmado no código)
 
@@ -82,7 +82,7 @@ Ordem de troca: warp → transição (`Overworld_StartScreenTransitionEffect` 0x
 ## 5. Objetos e NPCs (parcial)
 
 - Tabela: gObjectSlots 0x03002C30, slot `k` em `0x03002C30 + k×0x40` (`Map_TickObjectStep` 0x0805018C usa `DAT_080501BC` = 0x03002C30).
-- `Map_TickObjectStep(slot, anim)` 0x0805018C: se +0x28 != 0, move o slot com `Map_GetScaledStepDelta` no eixo indicado em +0x20 (0/1 = eixo +0x10, 2/3 = eixo +0x0C). Chama `Map_TickObjectAnimationTimes` 0x08050168 se `anim != 0`. Quando o contador +0x28 chega a 0 (fim do quadro do passo), toca o som 0x57 para as poses 0x71, 0x78, 0x81..0x84, recalcula +0x28 = 16/delta e decrementa +0x27; devolve 1 quando o passo termina.
+- `Map_TickObjectStep(slot, anim)` 0x0805018C: se +0x28 != 0, move o slot com `Map_GetScaledStepDelta` no eixo indicado em +0x20 (0/1 = eixo +0x10 = Y, 2/3 = eixo +0x0C = X) (CU). Chama `Map_TickObjectAnimationTimes` 0x08050168 se `anim != 0`. Quando o contador +0x28 chega a 0 (fim do quadro do passo), toca o som 0x57 para as poses 0x71, 0x78, 0x82..0x84 (CU: 0x81 não entra) , recalcula +0x28 = 16/delta e decrementa +0x27; devolve 1 quando o passo termina.
 - `Map_ObjectAnimStep` 0x080508B4: máquina de 2 estados no bloco `DAT_080508C8` (byte +0 = estado; byte +10 = índice do objeto; +2 = quadros restantes). Estado 0: `Overworld_GetObjectAnimationIndexForFacing` (0x08050300) escolhe a animação pelo facing (+0x20 do objeto) e passa ao estado 1. Estado 1: `Map_TickObjectAnimation` 0x08049440 até +2 zerar, então devolve 1.
 - `Map_SpawnTrackedObjectAtTile` 0x08050358 e `Map_StartObjectStep` 0x080500BC: nascem/iniciam passos (eventos 0x1F/0x21/0x23/0x24).
 - Ator de andar com o jogador: `Overworld_UpdateFollowerFacing` 0x08051EFC e `Overworld_AdvanceWalkStep` 0x0805203C (passo do companheiro; não lido em detalhe).
