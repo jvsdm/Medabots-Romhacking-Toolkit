@@ -1,0 +1,41 @@
+# address,name,kind,comment
+0x0800277C,Sm_RunSelectedDispatch_FlagDone,function,provável: despacha StateMachine_DispatchStep e marca flag em DAT_080027b8
+0x08003104,Menu_AnimateRevealRows,function,provável: revela linhas em passos e monta números/texto da tela
+0x0800C6D8,Dispatch_CallHandlerByMode_A,function,wrapper: CallViaR0(tabela[ctx+0x33])
+0x0800D3C4,Dispatch_CallHandlerByMode_B,function,wrapper igual ao _A com outra tabela
+0x080087CC,PartsGrid_EnterScreenInit,function,provável: setup da tela de grade de peças (VRAM/tiles/PartsGrid_*)
+0x080102C0,Scr_HideSpritesPlaySong8,function,provável: oculta 4 sprites e pede música 8
+0x08011764,Fight_InitBotPartPanel,function,provável: monta painel de peças do bot na luta
+0x08012A20,Fight_PartPanelStep,function,provável: máquina de 3 estados do painel de peças
+0x08013824,Fight_InitActionSlotSelect,function,provável: inicializa bloco de seleção de ação do bot
+0x08014D94,Fight_SelectActionSourceStep,function,provável: chama Fight_SelectActionSource para bots > 2
+0x0801C3B0,Fight_BotEntryAnimStep,function,provável: passo de animação de entrada do bot (fases 0..5 em +0x9C)
+0x08034AF4,Fight_PickOpponentTargetStep,function,provável: escolhe alvo adversário e parte; avança script de ação
+0x08038804,Anim_StepSlotScriptAndRelease,function,provável: passo de script do slot e liberação ao fim (slot +0x22 == -1)
+0x0803C9E0,Anim_StepSlotDelayAndBlit,function,provável: atraso, passo de script e blit de retângulo do slot
+0x0803DAEC,Fight_InitSelectBlockA,function,chute: zera bloco 0x14 e põe modo 1
+0x08040954,Dispatch_CallHandlerByIdx1B,function,wrapper: CallViaR0(tabela[ctx+0x1B])
+0x08049740,Mem_CountDiffBytes,function,confirmado: conta bytes diferentes entre dois buffers
+0x0804A60C,Map_InitScreenAndTransition,function,provável: zera VRAM/OAM e inicia transição de tela
+0x080575DC,Menu_ChoiceCountdownStep,function,provável: contagem regressiva que abre janelas de escolha; jump table final não recuperada
+0x0805C574,Menu_ThreeRowCursorInput,function,provável: cursor de 3 linhas com A/B e direcionais
+0x0805CED0,Screen_FadeStepThenLoadObj,function,provável: fade de 9 passos e carga de objeto no fim
+0x0805D790,Screen_InitLZ77TileBlocks,function,provável: inicializa tela com blocos LZ77 e asset
+0x0805E478,Screen_InitFullLayoutLZ77,function,provável: layout completo de tela com LZ77 e 2 objetos
+0x0805F488,Menu_OptionsScreenStep,function,provável: passo da tela de opções (3 seções, contadores decimais)
+0x0805FEC8,Anim_CountdownThenHideLayer,function,provável: contador que halveia valor e oculta camada ao zerar
+0x080612E8,Text_CopyAndDispatchStep,function,provável: copia texto até 0xFF e roda máquina de estados
+0x08062484,Fight_PreviewFadeThenInit,function,provável: fade de 9 passos e init do preview (gShopItems)
+0x080633FC,BattlePanel_FadeAndScroll,function,provável: fade 0..0x40 e texto dos slots do painel de batalha
+0x08063FB0,Sprite_ScriptRecordStep,function,provável: interpreta comandos de sprite (0xFF00/0xFE00/0xC000) e carrega objeto
+0x080649BC,Dispatch_CallHandlerFromTable4,function,confirmado: CallViaR0 de tabela de 4 handlers
+0x08065ED0,Screen_DispatchByState3A,function,provável: despacho por estado ctx+0x3A (jump tables não recuperadas)
+0x080675D4,Screen_InitRingSpritesSong5,function,provável: tela com 36 sprites em anel (raio 0x32) e música 5
+0x08068BC4,Fx_PeriodicSineEmitStep,function,provável: emite 4 entradas de efeito a cada período; handler indireto não recuperado
+0x0806BCFC,Fx_StepTableB_Check,function,provável: checa fx_step_table_b e grava registro de efeito
+0x0806E460,Battle_DispatchThenEndTransition,function,provável: CallViaR0 de tabela indexada e fim de transição
+0x0806EEA8,Screen_InitObjectSlotsLZ77Vram,function,provável: tela de batalha com 7 blocos LZ77 na VRAM e slots de objeto
+0x0807105C,Anim_StartPairOnce,function,provável: inicia 2 animações e 2 slots uma vez
+0x080719B8,Anim_StepSlotTimerReturnStatus,function,provável: timer do slot; devolve 0xFF se timer < 0x19
+0x080746E0,Snd_UpdateChannelIfIdle,function,provável: atualiza canal de som se ctx+0x258 == 0
+0x0807DA24,Sf64_CmpWrapper,function,provável: wrapper de comparação soft-float 64 bits
