@@ -2964,7 +2964,7 @@ F	0x0805D4FC	Gfx_FadeOutThenClear
 F	0x0805D580	Flow_StepCounterTickB
 F	0x0805D5A4	Menu_ResetOnInput
 F	0x0805D5D0	Fx_SetBldcntAndAdvance
-F	0x0805D5F0	Screen_StepToBlank
+F	0x0805D5F0	KeyItemBag_Sub0C_FadeToBlankSetMenu10
 F	0x0805D658	StateTable_WaitSubThenAdvance_B
 F	0x0805D674	Screen_TickFadeOutAndClear
 F	0x0805D6E4	Obj_SetAttrFromTable
@@ -3903,7 +3903,8 @@ L	0x08483770	SAVE_HANDLER_WriteEepromAndFinish
 L	0x08483774	gMapAreaB
 L	0x084838E4	gShops
 L	0x08483ED8	gTextKeyItems
-L	0x0848521C	gTextShopDialogue
+L	0x084850CA	KeyItemBag_MsgScript
+L	0x0848521C	KeyItemBag_MsgStateObj
 L	0x084856E8	gMainState3MenuTable
 L	0x084859D8	gBootSubStateTable
 L	0x08485F88	gTextTournamentMessages

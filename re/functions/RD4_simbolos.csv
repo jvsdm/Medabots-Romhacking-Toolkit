@@ -1,0 +1,71 @@
+addr,nome,kind,comentario
+0x083ABF98,gMainStateTable,table,confirmado: 6 x 4 ponteiros thumb; despacho em MN.md e MU.md
+0x083ABFB0,gSpriteSetTable0,table,provavel: 16 x 4 ponteiros de sets de quadro; set 0 -> gObjTextGlyphFrames 0x08075FF8 (HANDOFF.md)
+0x083AC454,MainState0_Menu2_SubTable,table,"confirmado: tabela do despachante 0x08003374 (FM4/FM5); contiguo ate 0x083AC560, tamanho >=67 x 4"
+0x083AC560,gTeamPickBattleStepTable,table,"provavel: 16 x 4 (AC560..AC59F); idx0-1 TeamPick (TP2/FS1), idx2+ passos de batalha (TP.md, FN4) (antes: BattleStepTable_Base_Unresolved)"
+0x083AC568,gTeamPickBattleStepTable_Idx2,data,"confirmado: meio da tabela 0x083AC560 (idx 2), nao tabela propria (antes: BattleStepTable_Unknown)"
+0x083AC86C,gPartsGridStateTable,table,confirmado: 112 x 4 (FS2); despachante 0x08007584 indexado por 0x0300137C
+0x083AC880,gPartsGridStateTable_Idx5,data,"confirmado: idx 5 (+0x14) de gPartsGridStateTable; stride 4 pelos bytes, diverge do stride 0xC de PS.md (antes: gPartsGridStateTable_Entry5)"
+0x083ACA4C,gObjStepTable_ACA4C,table,"provavel: 63 x 4 ponteiros ate 0x083ACB48; idx0 = Obj_StepTableEntry_Flag4000AndCount (FN4). Divergencia: 0x083ACA80 (opcoes do debug, DB.md) cai no idx 13 (antes: debug_menu_more_idk)"
+0x083ACAC0,gDebugStateHandlerTable,table,"confirmado: 34 x 4 (ACAC0..AB47); base das tabelas de estado de cada opcao do debug (DB.md, DB2.md) (antes: StateHandlerTable_BAD8)"
+0x083ACAE0,gDebugStateHandlerTable_Idx8,data,"confirmado bytes: idx 8 de gDebugStateHandlerTable (+0x20), valor NoOp. Divergencia: PS.md assume tabela de montagem stride 0xC; bytes mostram stride 4 (antes: table_partsbuild_states)"
+0x083ACAE4,debug_tinpet_table_base,table,confirmado DB2: 3 x 4 (idx 9); slot 0 = Debug_TinpetScreen
+0x083ACAF0,debug_item_table_base,table,confirmado DB2: 3 x 4 (idx 12); slot 0 = Debug_ItemInventoryScreen
+0x083ACAFC,debug_face_table_base,table,confirmado DB2: 3 x 4 (idx 15)
+0x083ACB08,debug_mdlpic_table_base,table,confirmado DB2: 3 x 4 (idx 18)
+0x083ACB14,debug_rndtk_table_base,table,confirmado DB2: 3 x 4 (idx 21)
+0x083ACB20,debug_battle_table_base,table,confirmado DB2: 3 x 4 (idx 24)
+0x083ACB2C,debug_sound_table_base,table,confirmado DB2: 3 x 4 (idx 27)
+0x083ACB38,debug_motion_table_base,table,confirmado DB: idx 30; ponteiros contiguos ate 0x083ACB48
+0x083ACB48,gTextProcessStrings,data,"confirmado bytes: texto codificado, nao ponteiros; primeiro nome do debug_menu_text aponta aqui. Tamanho nao medido"
+0x083ACBA0,debug_menu_text,table,"confirmado DB.md: 11 x 4 ponteiros de nome, indice 0x03000472"
+0x083ACBCC,gTextDebugStrings_ACBCC,data,provavel: bloco de texto codificado do debug (bytes nao sao ponteiros; mtbe dizia ptr 22). Tamanho nao medido (antes: gTextProcessStrings3)
+0x083ACC08,debug_parts_spawn_names,table,"confirmado bytes: 3 x 4 ponteiros (ACC08..ACC13), depois texto"
+0x083ACC2C,debug_item_grant_names,table,confirmado bytes: 3 x 4 ponteiros (ACC2C..ACC37)
+0x083ACC40,debug_tinpet_name_ptr,data,confirmado bytes: 1 ponteiro (0x083ACC38) para nome de 8 B (antes: debug_tinpet_name)
+0x083ACC5C,debug_item_label_table,table,confirmado bytes: 3 x 4 ponteiros (DB2)
+0x083ACC78,debug_face_label_table,table,confirmado bytes: 2 x 4 ponteiros (DB2)
+0x083ACCA0,debug_rndtk_name_ptr,data,confirmado bytes: 1 ponteiro -> 0x083ACC98 (DB2)
+0x083ACCAC,debug_battle_name_ptr,data,confirmado bytes: 1 ponteiro -> 0x083ACCA4 (DB2)
+0x083ACCC0,debug_sound_label_table,table,confirmado bytes: 2 x 4 ponteiros (DB2)
+0x083ACCD4,gMenu5StepTable_ACCD4,table,"provavel: 84 x 4 (ACCD4..ACE23, ate o inicio de gSceneStepSub_ACE24); menu_list[5] (FM6/ST2)"
+0x083ACE24,gSceneStepSub_ACE24,table,provavel: 144 x 4 contiguos (ACE24..AD063); despachante do menu 6 (BT2)
+0x083AD0F0,table_medabot_screen_states,table,"provavel: tabela de estados da tela de medabot (PS.md); cadeia contigua ate AD37F, com AD10C/AD114/AD118/AD190 dentro dela"
+0x083AD10C,Battle_SceneInitTable,data,"provavel: interior de 0x083AD080 (i=35, BT3) e idx 7 de table_medabot_screen_states; nome sem base propria"
+0x083AD114,table_medabot_screen_entry9,data,confirmado PS2: idx 9 de AD0F0 (UpdateSelectedMedabotPreviewScreen 0x08013E30)
+0x083AD118,table_medabot_screen_entry10,data,confirmado PS2: idx 10 de AD0F0
+0x083AD190,Battle_StepFrameTable,data,"confirmado BT: entrada 0 = Fight_StepBattleFrame 0x0801427C; interior de 0x083AD080 (i=68, BT3)"
+0x083AD524,cursor_cell_xy_table,data,"provavel: pares x,y de celula; bytes batem so para 6 pares (12 B); HD2 diz 9 celulas. Revisar"
+0x083AEEA0,gTechniqueActionSetupHandlerTable,table,confirmado DT: 60 x 4 (EEA0..EF8F)
+0x083AEF90,gTechniqueActionValidationHandlerTable,table,confirmado DT: 60 x 4 (EF90..F07F)
+0x083AF080,gFightSlotRandomTable16,data,confirmado AI.md: 16 x u8 (rand&0xF)
+0x083AF090,gPartActionHandlerTable,table,"provavel: 60 x 4 (F090..F17F, ate gActionScriptOpcodeHandlerTable); indexado pelo byte +0x49 da parte (AI2)"
+0x083AF180,gActionScriptOpcodeHandlerTable,table,"provavel: >=128 x 4 contiguos (F180..F37F), 4 B por entrada (AS1); fim nao confirmado"
+0x083AF620,gFightRowWaveTable,data,confirmado FH/HD2: 16 x u8
+0x083AFC2C,gFightScrollSlotBytes_AFC2C,data,confirmado ST2: 12 x u8
+0x083AFC38,gSlotWaveTable_AFC38,data,"confirmado ST2: 32 x halfword (0x40 B, fim em AFC78)"
+0x083AFC78,gMenu10StepTable_AFC78,table,confirmado AN2/ST2: 96 x 4 (AFC78..AFDF7); menu_list[10] (BT2)
+0x083AFCA0,gSceneStepTable_AFC78_A,table,"confirmado ST2: 86 x 4 (AFCA0..AFDF7, bloco AFC78 +0x28)"
+0x083AFD08,gSceneStepTable_AFC78_B,table,"confirmado ST2: 60 x 4 (AFD08..AFDF7, bloco AFC78 +0x90)"
+0x083AFE88,gGfx_Portrait_PonteirosImagens,table,provavel: mtbe 1584 entradas (176 x 9); GF3 diz 1 ponteiro por personagem. Conflito nao resolvido; ponteiros de 4 B
+0x083B1A08,gBattleSprites,table,provavel: mtbe 732 = 122 x 6 ponteiros; ponteiros de 4 B; tamanho nao medido
+0x083B2954,gMessageDispatch9Table,table,"provavel: MS2, tabela de ctx+1B do estado 9; ~6 x 4 (B954..B96B)"
+0x083B296C,gMessageDispatch10Table,table,"provavel: MS2, estado 10; ~6 x 4 (B96C..B983)"
+0x083B2984,gMessageDispatch11Table,table,"provavel: MS2, estado 11; sobrepoe 0x083B2988 (+4); tamanho incerto"
+0x083B2988,gMessageDispatch12Table,table,"provavel: MS2, estado 12; sobreposto a 11 (+4); tamanho incerto"
+0x083B2990,Dispatch_CallHandlerByByteAt1B_Table,table,"provavel: 23 x 4 (B990..B9EB, FI2 tem 23 handlers); termina onde comeca gRandomLUT"
+0x083B29EC,gRandomLUT,data,provavel: LUT de bytes do randbyte (AI/DT); tamanho nao medido
+0x083B4C60,gGfx_Portrait_PonteirosLayout,table,"provavel: entradas de 4 B (0x083B2B00, 0x083B2B80...); GF3 argumento de 0x0803F15C; tamanho ate B4E08 (106 x 4) nao confirmado"
+0x083B4E08,gFontWidths,data,confirmado EXPANSAO_MEDABOTS.md: 512 B = 256 x 2 (avanco por glifo)
+0x083B5008,gItalicFontWidths,data,confirmado EXPANSAO_MEDABOTS.md: 512 B = 256 x 2
+0x083B5578,gTextDialogueIntro,table,provavel: 23 x 4 ponteiros (B5578..B55D3) para texto de dialogo inicial (mtbe) (antes: gTextDialogue_083B5578)
+0x083B6100,SlotScriptPtrTable,table,"provavel: ponteiros de roteiro de slot (AD.md, HA3); fim nao separado ate B66EC; tamanho nao confirmado"
+0x083B66EC,gPartAttributeNamePointerTable,table,"provavel: ponteiros de nome, 4 B contiguos ate B6B47; tamanho nao confirmado"
+0x083B6B48,gTextMedalAbilityDesc1,table,confirmado DT: 27 x 4 (B6B48..B6BB3)
+0x083B6FA4,gTextMedalAbilityDesc2,table,confirmado DT: 26 x 4 (B6FA4..B700B)
+0x083B7048,gTextAttackTypeNames,table,confirmado bytes: 8 x 4 (B7048..B7067); B722C aponta para o fim
+0x083B722C,gTextAttackTypeDesc,table,provavel: 8 x 4 (B722C..B724B)
+0x083B74B8,gTextMedaforceNames,table,confirmado DT: 50 x 4 (B74B8..B757F)
+0x083B7580,gTextMedaforceDesc,table,"divergencia: DT diz 50 ponteiros; bytes so mostram 2 ponteiros em sequencia (B7580, B7584); mtbe diz 53. Nome mantido, tamanho nao confirmado"
+0x083B7F8C,MedaforceMedalTable,data,"provavel: tabela de bytes u8 (sequencia 00,01,02... com marcadores); tamanho e sentido nao medidos"
+0x083B80C0,gTextMedaforceDesc1,table,provavel: ponteiros de texto de 4 B (pelo menos 4 contiguos); tamanho nao medido
