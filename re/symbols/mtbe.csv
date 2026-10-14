@@ -809,7 +809,7 @@ address,name,kind,count,comment
 0x0800EC44,PartsGrid_DrawFourEntryText,func_thumb,,[R0] desenha 4 entradas de texto da celula (provavel)
 0x0800ED10,PartsGrid_DrawFourIdCells,func_thumb,,[R0] 4 ids na coluna 0x16 (provavel)
 0x0800EDA0,PartsGrid_DrawFourIdCellsB,func_thumb,,[R0] 4 ids na coluna 0x19 (provavel)
-0x0800EE34,PartsGrid_DrawFourPartIcons,func_thumb,,Simon/Rokusho: Draw per-slot attribute match markers for the four parts in the selected part set. The marker is controlled by RomPartRecord.attribute_id. (antes: PartSetPreview_DrawAttributeMatchMarkers) [R0] 4 icones de partes da celula com GetPartStats (provavel)
+0x0800EE34,PartsGrid_DrawFourPartRows,func_thumb,,Simon/Rokusho: Draw per-slot attribute match markers for the four parts in the selected part set. The marker is controlled by RomPartRecord.attribute_id. (antes: PartSetPreview_DrawAttributeMatchMarkers) [R0] 4 icones de partes da celula com GetPartStats (provavel) (antes: PartsGrid_DrawFourPartIcons)
 0x0800EEE4,PartsGrid_SetupCursorSpritePair,func_thumb,,[R0] dois sprites de cursor com Y 0x4C e 0x8C (provavel)
 0x0800EF58,Sprite_ToggleAttr0ShapeBitB,func_thumb,,[R0] alterna bit 0x4000 do atributo 0 de sprite (chute)
 0x0800EFB0,Menu_SetupCursorSprite,func_thumb,,[R0] sprite do cursor de menu com linha 0..3 (provavel)
@@ -820,7 +820,7 @@ address,name,kind,count,comment
 0x0800F300,PartsGrid_RedrawLargeDisplay,func_thumb,,[R0] redesenha peca grande por tamanho (byte +0x3E) e limpa buffer (provavel)
 0x0800F440,PartsGrid_DrawLargeDisplayIfOwned,func_thumb,,[R0] desenha peca grande so se a contagem > 0 ou estado 2/3 (provavel)
 0x0800F60C,PartPreview_InitScreenBuffers,func_thumb,,[R0] mesmo esqueleto de InitScreenBuffers com ponteiros de gBattlePartState (provavel)
-0x0800F6CC,PartDetail_GetCurrentSelectionLegIconIndex,func_thumb,,Simon/Rokusho
+0x0800F6CC,PartDetail_GetCurrentSelectionNormalizedIndex,func_thumb,,Simon/Rokusho (antes: PartDetail_GetCurrentSelectionLegIconIndex)
 0x0800F6E4,PartDetail_DrawCurrentSelectionPartName,func_thumb,,Simon/Rokusho [R0] desenha nome da peca selecionada (confirmado)
 0x0800F77C,PartDetail_DrawCurrentSelectionAttributeName,func_thumb,,"Simon/Rokusho: Draw the current part's Attribute name by indexing gPartAttributeNamePointerTable with RomPartRecord.attribute_id, copying the custom-encoded glyph stream, then rendering it through BuildObjectTextFromGlyphStream. Confirmed decoded attribute strings in the English Rokusho ROM include Grapple, Shoot, Optic, Bomb, Gravity, Formation, Movement, Stop, Bind, Flow, Release, Cancel, Defense, Heal, Revive, Anti-Air, Anti-Sea, Scout, Conceal, Time, Interrupt, Destroy, Regenerate, Teamwork, Counterattack, Transform, and Nothing."
 0x0800F7D0,PartDetail_DrawCurrentSelectionSpecialityBadge,func_thumb,,[R0] bloco 2x2 do icone de especialidade (provavel)
@@ -1116,6 +1116,7 @@ address,name,kind,count,comment
 0x080175FC,Fight_UpdatePartKindSelectorB,func_thumb,,"[R1] Mesma maquina de tipo que 0x080169AC, para o outro lado; provavel"
 0x0801767C,Fight_InitKindObjectsForStateB,func_thumb,,[R1] Despacha init dos objetos E/F/G/84 pelo tipo; provavel
 0x08017734,Fight_DrawBotInfoPanel,func_thumb,,[FS6] [FS6] provavel; painel de info do bot
+0x080178CC,Fight_AnimateSideLabelBandIfPart,func_thumb,,[FN4] provavel: se a perna do bot do lado tem tipo 'P' (0x50) incrementa +0x85 e chama Fight_FillSideLabelBandA/B conforme bit 8; chamada por 08012C88 (antes: FUN_080178cc)
 0x08017914,Fight_FillSideLabelBandForBot,func_thumb,,[FN1] provável: wrapper que escolhe banda B se 0xC1=='P' senão A
 0x08017948,Fight_DrawCounterFieldPair12B,func_thumb,,[R1] Familia contador: 2 campos se contador < 12; provavel na forma
 0x08017994,Fight_DrawBotSlotSprite,func_thumb,,[R1] Sprite de slot do bot (ativo ou nao) pelo indice fight_information+0x3D/+0x46; provavel
@@ -1166,6 +1167,7 @@ address,name,kind,count,comment
 0x08019184,Fight_AddBotMeterCapped255,func_thumb,,[R1] Soma delta ao medidor +0xBB com teto 255; confirmado
 0x080191A4,Fight_SubBotMeterClampZero,func_thumb,,Simon/Rokusho (antes: Fight_SubtractActionChargeMeterClampZero) [R1] Subtrai delta do medidor +0xBB com piso 0; confirmado
 0x080191C0,Fight_CueIfBotFlagA1Clear,func_thumb,,[R1] Se +0xA1==0 soma 6 ao medidor; confirmado
+0x080191E4,Fight_AddBotMeterFromTable,func_thumb,,"[FN4] provavel: le 1 B de tabela indexada por (bot+0x91-100)*11 + byte +0x38, soma no medidor com Fight_AddBotMeterCapped255; chamada por 080190D6 (antes: FUN_080191e4)"
 0x0801922C,Fight_TickPendingEffectMeterGain,func_thumb,,[R1] Soma +0xCC ao medidor se tipo pendente 11/12/29; confirmado
 0x08019264,Fight_SubBotMeterByByte5Div10,func_thumb,,[R1] Subtrai byte+5/10 do medidor +0xBB; confirmado
 0x0801928C,Fight_SubBotMeterByByteA2Div20,func_thumb,,[R1] Subtrai byte+0xA2/20 do medidor +0xBB; confirmado
@@ -2176,6 +2178,7 @@ address,name,kind,count,comment
 0x0803526C,Fight_StepSlotCoordUpInRange,func_thumb,,[R1b] provavel: avanca coordenada de slot dentro de faixa
 0x080352EC,Fight_StepSlotCoordDownInRange,func_thumb,,[R1b] provavel: versao decrescente de Fight_StepSlotCoordUpInRange
 0x0803536C,Fight_SetFacingSlotX,func_thumb,,[R1b] provavel: grava X de slot com deslocamento por direcao
+0x080353AC,Ui_SetHalfwordModeFromBit1,func_thumb,,[FN4] confirmado no decompile: grava u16 0 ou 2 em +2 conforme bit 1 do argumento; chamadores 0801CC62 e 08021CA8. Comentario do Ghidra ja sugeria o nome (antes: FUN_080353ac)
 0x080353CC,Fight_StepSlotAnimOffsetTable,func_thumb,,[R1b] provavel: avanca tabela de passos de animacao do slot
 0x08035410,Slot_BlinkRepeatStep,func_thumb,,piscar de sprite com repetições (halfword de slot); provável
 0x08035478,Fight_SelectOpponentBotByExtremeValue,func_thumb,,Simon/Rokusho: Choose a target bot id and store it into BattleBotStateRecord_Annotated.selected_target_bot_id. Prefers the lowest/highest priority target metric depending on side. [R1b] provavel: escolhe bot alvo por menor/maior prioridade (antes: Fight_SelectLowestPriorityTargetBot)
@@ -2211,7 +2214,9 @@ address,name,kind,count,comment
 0x08035B9C,Fight_AddStrengthenDamageBonus,func_thumb,,Simon/Rokusho: Add strengthen-style damage bonus from equipped parts with technique id 0x05. Uses BattlePartState.power_or_evasion. [RV9] confirmado
 0x08035BD4,Fight_AddRandomBonusUpTo3,func_thumb,,[R2] proposto: se ctx+0xEC<3 soma rand&3 [RV9] confirmado
 0x08035BFC,Fight_ScaleDamageByPartScalar,func_thumb,,Simon/Rokusho: Scale the current damage value by BattlePartState.attack_damage_scalar. This uses the same shared ROM part coefficient seen in attack-value scaling. [RV9] confirmado
+0x08035C3C,Obj_SetWordFromBit0OfF8,func_thumb,,[FN4] provavel: escreve 0x110 ou valor base conforme bit 0 do byte +0xF8 em duas posicoes; chamador 0801E1C0 (antes: FUN_08035c3c)
 0x08035C70,FightPreview_InitializeSideSprites,func_thumb,,Simon/Rokusho: Initializes both fight-preview side sprite groups. Side 0 and side 1 call BuildCompositePreviewSpriteLayerWithOffset with different mode tuples; this is a separate renderer family from the plain battle large portrait caller. [RV9] confirmado
+0x08035DD4,Util_IsOffsetAbove0xA8,func_thumb,,[FN4] confirmado no decompile: retorna (arg + constante) > 0xA8; chamadores 08035E1E/08035EAE/08035F60/0803604C (antes: FUN_08035dd4)
 0x08035DE8,FightPreview_UpdateSingleLayerSideSprites,func_thumb,,"Simon/Rokusho: Single-layer fight-preview update path. Side 1 redraw uses BuildCompositePreviewSpriteLayerWithOffset(..., param10=1, param11=1), which becomes BuildFourPartLargePreviewComposite mode 6 instead of the plain large-portrait mode 5. [RV9] confirmado"
 0x08035F20,FightPreview_UpdateDualLayerSideSprites,func_thumb,,"Simon/Rokusho: Dual-layer fight-preview update path. Side 1 invokes BuildCompositePreviewSpriteLayerWithOffset twice with mode 6 and mode 6/5-style layering semantics, reinforcing that the mirrored side can be rendered through a different BuildFourPartLargePreviewComposite mode than the plain battle portrait path. [RV9] confirmado"
 0x08036120,FightPreview_LoadDisplayedPartIdsForSide,func_thumb,,Simon/Rokusho: Load the displayed part ids or broken-part glyph ids for the requested preview side into fight_information. Which bot is sampled depends on preview_orientation_flags and whether a mirrored/follow-up presentation flag is active. [RV9] confirmado
@@ -2398,6 +2403,7 @@ address,name,kind,count,comment
 0x0803CF7C,Fight_SlotStepAdvanceTileOffset,func_thumb,,[FS6] [FS6] provavel; avanca offset de tile
 0x0803CFC8,Fight_SlotStepStartScriptAfterDelay,func_thumb,,[FS6] [FS6] provavel; roda script de slot apos atraso
 0x0803D0BC,Fight_SlotStepSlideYByDelta,func_thumb,,"[FS6] [FS6] provavel; desliza Y pelo passo, para no limite"
+0x0803D15C,Anim_StepSlotScriptAndPosition,func_thumb,,"[FN4] provavel: roda Anim_RunSlotScript no slot indexado por byte (0x03000440 area, slot*0x40+0x2D), move +8/+9 e reposiciona com CompositeSprite_ComputeOffsetWord; ptr em 083AFBC4 (antes: FUN_0803d15c)"
 0x0803D2A8,FightPreview_StepSideLoad,func_thumb,,carga progressiva de peças na prévia de batalha; provável
 0x0803D3C0,Anim_TickSlotOffsetAndReload,func_thumb,,[provavel] Anim_RunSlotScript(+0x26); recarrega halfword +6 com byte +0x28
 0x0803D424,ObjectScript_ReadWord,func_thumb,,"A3: le halfword do roteiro de objeto (ponteiro em DAT_0803d44c+0x100, indice vindo de DAT_0803d44c+0xF9). [RV10] confirmado: le uma palavra (short) do roteiro atual indexada por +0x100; nome ok"
@@ -2814,7 +2820,7 @@ address,name,kind,count,comment
 0x0804B958,Event_Op0A_FadeFromWhite,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0A_StartScreenTransitionWithArgs) [HE1] confirmado; 1 byte; cor 0x7FFF; 32->0
 0x0804B9B0,Event_Op0B_WarpA,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0B_SetConfigFlagAndRead5Bytes) [HE1] confirmado; 5 bytes (map unk1 unk2 x y); scene variant 0x0300643B=1
 0x0804B9CC,Event_Op0C_WarpB,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0C_ClearConfigFlagAndRead5Bytes) [HE1] confirmado; 5 bytes; scene variant 0x0300643B=0
-0x0804B9E8,Script_ReadStateBlock,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 0A and 0B. Reads 5 configuration bytes from the event stream into a small overworld/event config block, snapshots the current player facing into a sixth byte, then sets gCurrentEventStateByte = 1. (antes: EventInit_Read5ConfigBytesAndMarkInitialized)"
+0x0804B9E8,Script_ReadStateBlock,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 0A and 0B. Reads 5 configuration bytes from the event stream into a small overworld/event config block, snapshots the current player facing into a sixth byte, then sets gCurrentEventStateByte = 1. (antes: EventInit_Read5ConfigBytesAndMarkInitialized) [RV14] [RV14] provavel: le 5 bytes de argumentos para bloco de estado, copia direcao atual do jogador (0x0300..+0xBE0) e seta flag"
 0x0804B9F4,Script_ReadStateBlock,label,,[OW2] le 5 bytes do script para bloco de estado da cena; NAO grava gCurrentMapId (xref era leitura)
 0x0804BA5C,Event_Op0D_PlayerFaceDirection,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0D_ReadFacingAndApplyToPlayer) [HE1] confirmado; 1 byte; imediato
 0x0804BA9C,Event_Op0E_PlayerHopInPlace,func_thumb,,Simon/Rokusho (antes: EventInitOpcode0E_StartMapTransitionFromStoredState) [HE1] confirmado; 0 bytes; som 0x70 + arco de 16 quadros (cont. 0x0804DE74)
@@ -2940,17 +2946,17 @@ address,name,kind,count,comment
 0x0804D59C,Event_Op81_SelectSavedArgRecord,label,,"Simon/Rokusho: Run one embedded event-initialization opcode using a saved 8-byte argument block. |  | Copies a saved argument record into gEventScriptArguments, fetches the next byte as an init opcode, clears gCurrentEventStateByte and gCurrentEventOpcodeSubstate, then dispatches through sEventInitializationOpcodeHandlerTable. |  | This is the bridge between the normal event VM and the initialization-opcode VM. (antes: Event_RunEmbeddedInitOpcode)"
 0x0804D5DC,Event_Op82_Execute_Batched_Object_Command_Block,func_thumb,,Simon/Rokusho (antes: EventOpcode82_ExecuteBatchedObjectCommandBlock_Setup)
 0x0804D5F0,Event_Op83_Set_Object_Render_Mode,func_thumb,,Simon/Rokusho (antes: EventOpcode53_Primary)
-0x0804D758,Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up,func_thumb,,"Simon/Rokusho: Primary handler for event opcode 0x84. Reads one byte argument (map scene variant), marks the opcode as deferred, and lets the continuation wait until the player facing byte reaches 0 before committing the requested map scene variant to the same runtime byte used by opcode 0x69. (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp)"
-0x0804D778,Event_Op85_Begin_Event_Object_Facing_Cycle_Block,func_thumb,,[HE4] ver HE4.md
-0x0804D7AC,Event_Op86_Queue_Event_Object_Facing_Cycle,func_thumb,,Simon/Rokusho (antes: EventOpcode56_Primary_0804D7AC)
-0x0804D7E4,Event_Op87_Execute_Event_Object_Facing_Cycle_Block,func_thumb,,Simon/Rokusho (antes: EventOpcode57_Primary_0804D7E4)
-0x0804D7F8,Event_Op88_Jump_If_Flag_C76_Clear,func_thumb,,"[HE4] sem definicao; 2 bytes, salto Short BE se 0x03006456==0"
+0x0804D758,Event_Op84_Set_Scene_Variant_Flag,func_thumb,,"Simon/Rokusho: Primary handler for event opcode 0x84. Reads one byte argument (map scene variant), marks the opcode as deferred, and lets the continuation wait until the player facing byte reaches 0 before committing the requested map scene variant to the same runtime byte used by opcode 0x69. (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp) (antes: Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up)"
+0x0804D778,Event_Op85_Begin_Event_Object_Facing_Cycle_Block,func_thumb,,[HE4] ver HE4.md [RV16] confirmado zera contador +0x52 e 3 blocos de slots
+0x0804D7AC,Event_Op86_Queue_Event_Object_Facing_Cycle,func_thumb,,Simon/Rokusho (antes: EventOpcode56_Primary_0804D7AC) [RV16] confirmado le 8 bytes e copia para slot indexado pelo contador
+0x0804D7E4,Event_Op87_Execute_Event_Object_Facing_Cycle_Block,func_thumb,,Simon/Rokusho (antes: EventOpcode57_Primary_0804D7E4) [RV16] provavel seta byte de flag=1 (dispara o bloco de ciclo)
+0x0804D7F8,Event_Op88_Jump_If_Flag_C76_Clear,func_thumb,,"[HE4] sem definicao; 2 bytes, salto Short BE se 0x03006456==0 [RV16] provavel le 2 bytes e soma offset relativo ao ponteiro se byte de flag==0; flag C76 vem do nome"
 0x0804D83C,EventScript_ReadNextByte,func_thumb,,"acha evento N em base + banco[N]*0x4000 + (ponteiro[N] - 0x4000); antes site_GetEventScript; Simon/Rokusho: Read one byte from the current event script stream. |  | Database model: | - installed event script database base pointer | - per-event offset table near base + 0x0000 | - per-event bank table near base + 0x4000 | - gCurrentEventId selects the event entry | - gCurrentEventScriptCursor is the byte offset within that event's script stream |  | The cursor is incremented after each read. [EV] lê 1 byte do script: base ROM (ptr em 0x03005590), ptr por id (u16 LE em base+0x4000+2*id), banco por id, cursor u16 E+0xC8A (confirmado)"
-0x0804D8CC,Script_ReadBytes,func_thumb,,Simon/Rokusho: Read N consecutive bytes from the current event script stream into gEventScriptArguments[0..N-1]. Used by both primary and continuation event opcode handlers to materialize inline operands. (antes: EventScript_ReadBytes)
-0x0804D8F4,Table64_FindIndexByKey,func_thumb,,Simon/Rokusho (antes: Map_FindActiveObjectIndexByPackedId)
-0x0804D938,Table64_FindOffsetByKey,func_thumb,,Simon/Rokusho: Scan gActiveMapObjectTable for an active runtime object whose packed_flags_and_event_id matches the requested packed id under the current mask. Returns the matching ActiveMapObjectEntry or null. (antes: Map_FindActiveObjectByPackedId)
-0x0804D980,Map_ClearActiveObjectEntry,func_thumb,,"Simon/Rokusho: Clear one ActiveMapObjectEntry from the live map object table, restore the underlying map collision value for its tile, reset any associated render slots, then zero the 8-byte entry. render_slot_and_flags low 5 bits identify the primary slot; bit 0x40 indicates an auxiliary paired slot is in use."
-0x0804D9F8,Map_FocusEventObjectRenderSlot,func_thumb,,"Simon/Rokusho: Reset special object render slots 0x30 and 0x5A, copy the chosen event object's render/object state into those staging slots, update tile/camera anchor bytes, refresh facing/animation, and set gOverworldEventModeFlags to a temporary focus value while caching the previous byte in gOverworldEventModeFlagsBackup."
+0x0804D8CC,Script_ReadBytes,func_thumb,,Simon/Rokusho: Read N consecutive bytes from the current event script stream into gEventScriptArguments[0..N-1]. Used by both primary and continuation event opcode handlers to materialize inline operands. (antes: EventScript_ReadBytes) [RV16] confirmado le N bytes via EventScript_ReadNextByte para buffer
+0x0804D8F4,Table64_FindIndexByKey,func_thumb,,Simon/Rokusho (antes: Map_FindActiveObjectIndexByPackedId) [RV16] confirmado busca chave em 64 entradas de 8 bytes; retorna indice ou 0xFFFFFFFF
+0x0804D938,Table64_FindOffsetByKey,func_thumb,,Simon/Rokusho: Scan gActiveMapObjectTable for an active runtime object whose packed_flags_and_event_id matches the requested packed id under the current mask. Returns the matching ActiveMapObjectEntry or null. (antes: Map_FindActiveObjectByPackedId) [RV16] confirmado mesma busca mas retorna offset da entrada; 0 se nao achar
+0x0804D980,Map_ClearActiveObjectEntry,func_thumb,,"Simon/Rokusho: Clear one ActiveMapObjectEntry from the live map object table, restore the underlying map collision value for its tile, reset any associated render slots, then zero the 8-byte entry. render_slot_and_flags low 5 bits identify the primary slot; bit 0x40 indicates an auxiliary paired slot is in use. [RV16] confirmado limpa colisao do tile"
+0x0804D9F8,Map_FocusEventObjectRenderSlot,func_thumb,,"Simon/Rokusho: Reset special object render slots 0x30 and 0x5A, copy the chosen event object's render/object state into those staging slots, update tile/camera anchor bytes, refresh facing/animation, and set gOverworldEventModeFlags to a temporary focus value while caching the previous byte in gOverworldEventModeFlagsBackup. [RV16] provavel copia slot 0x40 B"
 0x0804DB80,Map_RestoreFocusedEventModeFlags,func_thumb,,Simon/Rokusho: Restore gOverworldEventModeFlags from gOverworldEventModeFlagsBackup after Map_FocusEventObjectRenderSlot tears down the temporary focus presentation slots.
 0x0804DBB4,Map_ClearTrackedObjectSlotByIndex,func_thumb,,Simon/Rokusho: Clear the tracked active object slot mapping for a small selector id.
 0x0804DBD0,Event_SetTrackedActorSlot,func_thumb,,Simon/Rokusho: Map tracked-object slot mapping table writer. | Stores active object slot + 1 for a small logical tracked-object slot id so 0 remains the sentinel for no mapping. (antes: Map_SetTrackedObjectSlotByIndex) [CU] byte[0x03006484 + id] = slot+1 (GH-CU confirmado); HE2 chamava de Map_SetTrackedObjectSlotByIndex
@@ -3006,10 +3012,10 @@ address,name,kind,count,comment
 0x0804EE8C,EventOpcode3C_GetMedal,func_thumb,,Simon/Rokusho [RV17] confirmado - checa slot de medalha
 0x0804EF5C,EventOpcode3D_GetTinpet,func_thumb,,Simon/Rokusho [RV17] confirmado - cria registro de Tinpet se pool nao cheia; nome mantido
 0x0804EFFC,EventOpcode40_RunPulsedScreenTransitionLoop,func_thumb,,Simon/Rokusho [RV17] confirmado - loop de transicao de tela com contador decrescente; nome mantido
-0x0804F0A4,Event_Op41_Cont_FlickerAllActors,func_thumb,,Simon/Rokusho: Tick flicker state for all active tracked actors and end the opcode when all participating actors are finished. (antes: EventOpcode41_FlickerAllActors)
-0x0804F110,EventOpcode42_MovePlayerOneStep,func_thumb,,"Simon/Rokusho: Perform a one-step forced player movement using the current facing/direction nibble, then wait for the movement helper to report completion before ending the opcode."
+0x0804F0A4,Event_Op41_Cont_FlickerAllActors,func_thumb,,Simon/Rokusho: Tick flicker state for all active tracked actors and end the opcode when all participating actors are finished. (antes: EventOpcode41_FlickerAllActors) [RV17] confirmado - loop nos 4 slots de ator rastreado chamando Map_TickObjectFlicker; nome mantido
+0x0804F110,EventOpcode42_MovePlayerOneStep,func_thumb,,"Simon/Rokusho: Perform a one-step forced player movement using the current facing/direction nibble, then wait for the movement helper to report completion before ending the opcode. [RV17] provavel - inicia passo de objeto 0x2f (Obj_StartStepNoAnim) e segue camera por direcao; nome mantido (tail jump nao recuperado)"
 0x0804F188,Map_CameraFollowStepByDir,func_thumb,,[FN2] provavel: Move alvo e camera (Map_AddCameraScrollX/Y) em 4 direcoes por arg 0..3; usa ikki_x/y_to_tile no fim
-0x0804F3F8,EventOpcode43_ShakeCamera,func_thumb,,"Simon/Rokusho: Run a timed camera shake on X or Y, updating map scroll and player/secondary markers each tick until the shake duration expires."
+0x0804F3F8,EventOpcode43_ShakeCamera,func_thumb,,"Simon/Rokusho: Run a timed camera shake on X or Y, updating map scroll and player/secondary markers each tick until the shake duration expires. [RV17] confirmado - tremor de camera por contador"
 0x0804F5C8,Event_Op51_Cont_NoOp,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub. (antes: NoOp_0804F5C8) [HC3] continuacao 0x51: so bx lr (confirmado)"
 0x0804F5CC,Event_Op52_Cont_NoOp,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub. (antes: NoOp_0804F5CC) [HC3] continuacao 0x52: so bx lr (confirmado)"
 0x0804F5D0,Event_Op53_Cont_NoOp,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific immediate/deferred meaning belongs on the table entry, not this shared stub. (antes: NoOp_0804F5D0) [HC3] continuacao 0x53: so bx lr (confirmado)"
@@ -3217,9 +3223,9 @@ address,name,kind,count,comment
 0x08057D50,Obj_TwoStageInitSetState2_B,func_thumb,,[FN5] igual a _A com campo +0x200 (provavel)
 0x08057D80,Overworld_CheckStepAllowed,func_thumb,,"[R3] (mtbe) decide passo por direcao; 0 livre, 1..6 bloqueio; dir 3 usa colisao 3 e parte 0x6B [VA] [VA] confirmado: teste de opcao de menu (linha 3: item 0x26 + PartSet 0x6B completo + tile adjacente == 3); nao e teste de passo"
 0x08057F1C,Menu_StepCursorWrap,func_thumb,,[R3] (mtbe) move cursor de menu com volta (botoes 0x40/0x80)
-0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23
-0x08057FD4,Map_UpdateCursorSpritePosition,func_thumb,,[R3] (mtbe) posiciona sprite do cursor
-0x08058070,Map_CreateChoiceSprites,func_thumb,,[R3] (mtbe) cria 4 sprites de opcao (slots 0x20..0x23)
+0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23 [RV19] confirmado: reseta render slots 0x20-0x23
+0x08057FD4,Map_UpdateCursorSpritePosition,func_thumb,,[R3] (mtbe) posiciona sprite do cursor [RV19] confirmado: calcula X/Y de cursor a partir de campos do estado (+0x67 +0x6C +0x6D) e grava registro do sprite
+0x08058070,Map_CreateChoiceSprites,func_thumb,,[R3] (mtbe) cria 4 sprites de opcao (slots 0x20..0x23) [RV19] confirmado: cria 4 slots 0x20-0x23 com X=param*8+0x90 e Y em passos de 0x10
 0x08058080,Map_CreateChoiceSprites,label,,[OW2] chama CheckStepAllowed com kinds 0..3 (nome de caller)
 0x080581C8,Map_DrawChoiceBackgroundRow,func_thumb,,[R3] (mtbe) desenha linha de fundo do painel (nome chute)
 0x08058208,Map_HandleMarkerCommandFromState,func_thumb,,[R3] (mtbe) chama 0805821c com byte de estado (nome chute)

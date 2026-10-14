@@ -425,7 +425,7 @@ F	0x0800EC20	PartsGrid_SplitCursorIndexRowCol
 F	0x0800EC44	PartsGrid_DrawFourEntryText
 F	0x0800ED10	PartsGrid_DrawFourIdCells
 F	0x0800EDA0	PartsGrid_DrawFourIdCellsB
-F	0x0800EE34	PartsGrid_DrawFourPartIcons
+F	0x0800EE34	PartsGrid_DrawFourPartRows
 F	0x0800EEE4	PartsGrid_SetupCursorSpritePair
 F	0x0800EF58	Sprite_ToggleAttr0ShapeBitB
 F	0x0800EFB0	Menu_SetupCursorSprite
@@ -436,7 +436,7 @@ F	0x0800F218	PartsGrid_InitScreenBuffers
 F	0x0800F300	PartsGrid_RedrawLargeDisplay
 F	0x0800F440	PartsGrid_DrawLargeDisplayIfOwned
 F	0x0800F60C	PartPreview_InitScreenBuffers
-F	0x0800F6CC	PartDetail_GetCurrentSelectionLegIconIndex
+F	0x0800F6CC	PartDetail_GetCurrentSelectionNormalizedIndex
 F	0x0800F6E4	PartDetail_DrawCurrentSelectionPartName
 F	0x0800F77C	PartDetail_DrawCurrentSelectionAttributeName
 F	0x0800F7D0	PartDetail_DrawCurrentSelectionSpecialityBadge
@@ -732,6 +732,7 @@ F	0x080173B4	Fight_UpdateBotInfoPanel
 F	0x080175FC	Fight_UpdatePartKindSelectorB
 F	0x0801767C	Fight_InitKindObjectsForStateB
 F	0x08017734	Fight_DrawBotInfoPanel
+F	0x080178CC	Fight_AnimateSideLabelBandIfPart
 F	0x08017914	Fight_FillSideLabelBandForBot
 F	0x08017948	Fight_DrawCounterFieldPair12B
 F	0x08017994	Fight_DrawBotSlotSprite
@@ -782,6 +783,7 @@ F	0x08019108	Fight_TickSelectedPartCue
 F	0x08019184	Fight_AddBotMeterCapped255
 F	0x080191A4	Fight_SubBotMeterClampZero
 F	0x080191C0	Fight_CueIfBotFlagA1Clear
+F	0x080191E4	Fight_AddBotMeterFromTable
 F	0x0801922C	Fight_TickPendingEffectMeterGain
 F	0x08019264	Fight_SubBotMeterByByte5Div10
 F	0x0801928C	Fight_SubBotMeterByByteA2Div20
@@ -1791,6 +1793,7 @@ F	0x08035234	Fight_QueueBrokenBotForResolution
 F	0x0803526C	Fight_StepSlotCoordUpInRange
 F	0x080352EC	Fight_StepSlotCoordDownInRange
 F	0x0803536C	Fight_SetFacingSlotX
+F	0x080353AC	Ui_SetHalfwordModeFromBit1
 F	0x080353CC	Fight_StepSlotAnimOffsetTable
 F	0x08035410	Slot_BlinkRepeatStep
 F	0x08035478	Fight_SelectOpponentBotByExtremeValue
@@ -1826,7 +1829,9 @@ F	0x08035B4C	Fight_TargetHasGravAffinity
 F	0x08035B9C	Fight_AddStrengthenDamageBonus
 F	0x08035BD4	Fight_AddRandomBonusUpTo3
 F	0x08035BFC	Fight_ScaleDamageByPartScalar
+F	0x08035C3C	Obj_SetWordFromBit0OfF8
 F	0x08035C70	FightPreview_InitializeSideSprites
+F	0x08035DD4	Util_IsOffsetAbove0xA8
 F	0x08035DE8	FightPreview_UpdateSingleLayerSideSprites
 F	0x08035F20	FightPreview_UpdateDualLayerSideSprites
 F	0x08036120	FightPreview_LoadDisplayedPartIdsForSide
@@ -2013,6 +2018,7 @@ F	0x0803CECC	Fight_StepPaletteFadeToColor
 F	0x0803CF7C	Fight_SlotStepAdvanceTileOffset
 F	0x0803CFC8	Fight_SlotStepStartScriptAfterDelay
 F	0x0803D0BC	Fight_SlotStepSlideYByDelta
+F	0x0803D15C	Anim_StepSlotScriptAndPosition
 F	0x0803D2A8	FightPreview_StepSideLoad
 F	0x0803D3C0	Anim_TickSlotOffsetAndReload
 F	0x0803D424	ObjectScript_ReadWord
@@ -2555,7 +2561,7 @@ L	0x0804D584	Event_Op81_CallReadArgs8
 L	0x0804D59C	Event_Op81_SelectSavedArgRecord
 F	0x0804D5DC	Event_Op82_Execute_Batched_Object_Command_Block
 F	0x0804D5F0	Event_Op83_Set_Object_Render_Mode
-F	0x0804D758	Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up
+F	0x0804D758	Event_Op84_Set_Scene_Variant_Flag
 F	0x0804D778	Event_Op85_Begin_Event_Object_Facing_Cycle_Block
 F	0x0804D7AC	Event_Op86_Queue_Event_Object_Facing_Cycle
 F	0x0804D7E4	Event_Op87_Execute_Event_Object_Facing_Cycle_Block
@@ -3982,7 +3988,6 @@ C	0x0803440C
 C	0x08034428
 C	0x08034444
 C	0x08034460
-C	0x0803D15C
 C	0x0803D5E0
 C	0x0803D608
 C	0x0803D6AC
