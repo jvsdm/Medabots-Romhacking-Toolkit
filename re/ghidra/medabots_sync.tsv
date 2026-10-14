@@ -380,6 +380,32 @@ F	0x0800E654	PartDetail_ResetCursorSpriteStep
 F	0x0800E690	PartDetail_AnimSlotDispatchStep
 F	0x0800E6C8	PartDetail_HandleCursorMoveInput
 F	0x0800E78C	PartDetail_DispatchSubstate
+L	0x0800E7D0	PartDetail_SubJT_Mode0
+L	0x0800E7EC	PartDetail_Mode0_Sub0_SpecialDesc
+L	0x0800E804	PartDetail_Mode0_Sub1_MedalDesc
+L	0x0800E81C	PartDetail_Mode0_Sub2_ClassText
+L	0x0800E83C	PartDetail_Mode0_Sub3_StatRow0
+L	0x0800E848	PartDetail_Mode0_Sub4_StatRow1
+L	0x0800E854	PartDetail_Mode0_Sub5_StatRow2
+L	0x0800E860	PartDetail_Mode0_Sub6_StatRow3
+L	0x0800E884	PartDetail_SubJT_Mode12
+L	0x0800E8A4	PartDetail_Mode12_Sub0_SpecialDesc
+L	0x0800E8BC	PartDetail_Mode12_Sub1_MedalDesc
+L	0x0800E8D4	PartDetail_Mode12_Sub2_ClassText
+L	0x0800E8F4	PartDetail_Mode12_Sub3_StatRow0
+L	0x0800E900	PartDetail_Mode12_Sub4_StatRow1
+L	0x0800E90C	PartDetail_Mode12_Sub5_StatRow2
+L	0x0800E918	PartDetail_Mode12_Sub6_StatRow4
+L	0x0800E924	PartDetail_Mode12_Sub7_StatRow5
+L	0x0800E948	PartDetail_SubJT_Mode3
+L	0x0800E968	PartDetail_Mode3_Sub0_MedalDesc
+L	0x0800E980	PartDetail_Mode3_Sub1_TextIdx13
+L	0x0800E98C	PartDetail_Mode3_Sub2_StatRow0
+L	0x0800E998	PartDetail_Mode3_Sub3_StatRow6
+L	0x0800E9A4	PartDetail_Mode3_Sub4_StatRow7
+L	0x0800E9B0	PartDetail_Mode3_Sub5_StatRow8
+L	0x0800E9BC	PartDetail_Mode3_Sub6_StatRow9
+L	0x0800E9C8	PartDetail_Mode3_Sub7_StatRow10
 F	0x0800E9F0	PartDetail_SetupCursorAndState
 F	0x0800EA2C	PartDetail_SceneStep
 F	0x0800EA98	PartDetail_HandleAttributeCursorInput
@@ -1681,6 +1707,10 @@ L	0x080340F8	ActionScript_Op1B_LoadPaletteAndSetTechniqueId_080340F8
 L	0x080341DE	ActionScript_Op1E_CallSubstateH
 F	0x0803447C	ActionScript_Op30_CallSubstateZ
 F	0x08034498	ActionScript_Op31_CallSubstateAA
+F	0x080344B4	ActionScript_Op32_CallSubstateAB
+F	0x080344D0	ActionScript_Op33_CallSubstateAC
+F	0x080344EC	ActionScript_Op34_CallSubstateAD
+F	0x08034508	ActionScript_Op35_CallSubstateAE
 F	0x08034524	ActionScript_Op36_CallAF
 F	0x08034540	ActionScript_Op37_CallAG
 F	0x0803455C	ActionScript_Op38_CallAH
@@ -3557,6 +3587,7 @@ L	0x083AC568	BattleStepTable_Unknown
 L	0x083AC614	debug_mdlpic_model_ptrs
 L	0x083AC86C	gPartsGridStateTable
 L	0x083AC880	table_partsgrid_states
+L	0x083AC9F8	table_partsgrid_row1_9F8
 L	0x083ACA4C	debug_menu_more_idk
 L	0x083ACA5C	debug_menu_subroutines
 L	0x083ACA80	debug_menu_option_table
@@ -3914,10 +3945,6 @@ C	0x0803440C
 C	0x08034428
 C	0x08034444
 C	0x08034460
-C	0x080344B4
-C	0x080344D0
-C	0x080344EC
-C	0x08034508
 C	0x0803D15C
 C	0x0803D5E0
 C	0x0803D608

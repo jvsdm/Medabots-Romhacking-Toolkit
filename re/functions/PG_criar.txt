@@ -1,0 +1,13 @@
+# Codigo sem funcao no Ghidra (alvos da jump table de 0x08008CA0). Criar com create_function (Thumb).
+# Tabela A (ctx+0x42==0, indice ctx+0x44 0..4) em 0x08008CE0; tabela B (ctx+0x42==1, indice 0..5) em 0x08008D78.
+0x08008CF4 PartsGrid_SubStateA0_DispatchCtx18
+0x08008D00 PartsGrid_SubStateA1_DispatchCtx1C
+0x08008D0C PartsGrid_SubStateA2_CellLookup
+0x08008D30 PartsGrid_SubStateA3_CellLookupB
+0x08008D54 PartsGrid_SubStateA4_DispatchCtx20
+0x08008D90 PartsGrid_SubStateB0_CellOrTable
+0x08008E08 PartsGrid_SubStateB1_CellOrTable
+0x08008E80 PartsGrid_SubStateB2_CellOrTable
+0x08008EF8 PartsGrid_SubStateB3_DispatchCtx24
+0x08008F04 PartsGrid_SubStateB4_DispatchCtx28
+0x08008F10 PartsGrid_SubStateB5_SwitchOn46
