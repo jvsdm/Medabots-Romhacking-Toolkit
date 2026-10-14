@@ -1,0 +1,72 @@
+addr,nome,kind,comentario
+0x0300065F,battle_bot0_protect_mask_CF,data,confirmado: mascara de protecao por parte lida em Fight_IsPartStatusProtected (bot+0xCF)
+0x03000666,gFightBot0Flags_D6,data,provavel (antes: battle_robot_1_form): bot0+0xD6 bit0 testado em Fight_IsOpticClassAction; nome antigo errado
+0x0300066D,gFightBot0ChosenPartSlot_DD,data,confirmado (antes: battle_bot0_chosen_part_DD): slot 1-3 escolhido, lido em Fight_SelectBotActivePart
+0x0300066E,gFightBot0ActivePartSlot_DE,data,confirmado (antes: battle_bot0_part_icon_DE): copia de DD; indice 1-based da parte ativa, usado em Fight_DrawPartStatusIcon
+0x0300066F,battle_bot0_part_icon_type_DF,data,confirmado: tipo da parte ativa (fight_information+0x49), escolhe script do icone
+0x03000BE0,gMedalRecords_RAM,data,confirmado: base de registros de 0x40 indexados por (Slot_FindByIdPlus1-1)*0x40 em Fight_AwardPartExperience
+0x03000BE1,gMedalRecord_Id,data,confirmado (antes: first_medal_Id): campo +1 do registro; "first" era errado
+0x03000BE4,gMedalRecord_Attribute,data,provavel (antes: first_medal_attribute): campo +4
+0x03000BE5,gMedalRecord_Level,data,confirmado (antes: first_medal_level): campo +5 comparado com 10/30/60 em Fight_AwardPartExperience
+0x03000BE6,gMedalRecord_Aim,data,provavel (antes: first_medal_aim): campo +6
+0x03000BE7,gMedalRecord_Compatibility,data,provavel (antes: first_medal_compatibility): campo +7
+0x03001780,gFrameCount,data,confirmado: escrito em AgbMain, lido em randbyte
+0x03001798,keys_held,data,provavel: escrito em get_player_inputs; conceito parecido com gKeysHeld 0x03002B64 (checar duplicata)
+0x03001802,amount_of_enemy_bots,data,confirmado: contador de loop em Fight_CreateBotPartEntrySprites (fight_information+2)
+0x03001804,gFightBot0PartIds,data,confirmado (antes: bot_one_in_fight_information): 4 bytes de ids de parte, bloco de 0xC por bot
+0x03001806,gFightBot0PartId_Slot2,data,provavel (antes: bot_1_head): byte +2 do bloco do bot 0; "head" nao confirmado
+0x03001828,fight_scout_bonus_table_0x28,data,provavel: lido em Fight_ComputeTotalRos (unico xref)
+0x0300182B,team_1_trap,data,chute: lido em varios dispatchers de falha/slot; sem efeito visto
+0x0300182C,team_1_trap_value,data,chute: par de team_1_trap
+0x03001851,gTeamPickCounter,data,provavel (antes: gFight_EffectMode): escrito em TeamPick_ResetCounterStep e Overlay_ResetFieldsAtState18; nao e da batalha
+0x03001860,gFight_OpponentSideBase,data,provavel: passado como ponteiro (PARAM) em FightPreview_LoadDisplayedPartIdsForSide e Fight_CreateBotCompositeSprites
+0x03001864,team_preview_part_ids,data,confirmado: lido em FightPreview_LoadDisplayedPartIdsForSide
+0x03001882,DPAD_press,data,chute: lido em Fight_DrawSelectedActionStatusText e Fight_DrawKindIconAndLabel, nao em input
+0x03001887,gFight_ActiveBot,data,provavel: lido em Fight_PickBotActionStep e FightPreview
+0x03001888,gFight_TargetBot,data,provavel: lido em Fight_DispatchOnSubstateAA_U_0B_ClearTargetStatus
+0x03001889,fight_phase_index,data,confirmado: escrito em Fight_UpdatePhaseFromCounter
+
+0x03000890,gEnemyBattleSideState,data,chute: sem xref no Ghidra; literal 0x03000890 na ROM so em 0x08004C4C (fora de funcao, tabela de ponteiros)
+0x030018A1,gFight_TableAIndex,data,provavel: lido/escrito em Fight_RunSubstateDispatch
+0x030018A2,gFight_TableACode,data,provavel: escrito em Fight_RunSubstateDispatch, lido em Fight_UiActionStep
+0x030018A6,gFight_MessageCode,data,confirmado: escrito por Z_00/Z_0F/K_06 (QueueMessageCode)
+0x030018A8,fight_technique_script_id,data,confirmado: escrito em ActionScript_Op1B_LoadPaletteAndSetTechniqueId
+0x030018AA,gFight_StepSubstate,data,provavel: passo (+0xAA) lido/escrito pelo cursor do script de acao
+0x030018AB,fight_action_result,data,chute: escrito em ApplyPenaltyOrMsg e CheckFlagF6JumpTo2; sem efeito claro
+0x030018B5,gFight_HandlerDone,data,confirmado: escrito em Fight_DispatchOnSubstateAA_Shared_SetDone
+0x030018CA,leftover_damage,data,confirmado: escrito em Fight_SplitDamageByPartArmor
+0x030018CC,amount_of_damage_to_part,data,provavel: escrito em Fight_SplitDamageByPartArmor e FightPreview_SplitCountByCapacity
+0x030018D2,fight_slot_applied_flags,data,chute: lido em ApplyHeadDamageShowNumbers e CopyValueToNumbers
+0x030018D6,fight_slot_roll_halfword,data,chute: escrito em ApplyHeadDamageShowNumbers e CopyValueToNumbers
+0x030018EE,enemy_ROS_reduction,data,provavel: escrito em Fight_ResolveDefenderRosReductions e AccumDefenderLevelRosBase
+0x030018F2,ROS_after_defense_calc,data,provavel: escrito em Fight_ApplyDefenseReductionToRos e TryApplyCriticalRosOverride
+0x030018FD,gFight_CondFlag,data,provavel: escrito em ActionScript_Op1B e ObjScript_Op04_SetFlagIfB7Is1
+0x0300196F,gFightMedalStageUpFlag,data,provavel (antes: fi_stage_flag): usado em Fight_MedalStageUpSeqStep e CyclePartIndexSetGS58
+0x03001974,fi_medaforce_flag,data,provavel: lido em Fight_CyclePartFrameTableB
+0x03002430,SND_Driver,data,provavel: passado como ponteiro em AgbMain
+0x03002B64,gKeysHeld,data,confirmado: lido/escrito em get_player_inputs (duplica keys_held 0x03001798)
+0x03002B8C,gGameStateMenu,data,provavel: lido em MainState0 e MainState1_DispatchSubstate; nome amplo
+0x03002BA0,gItemInventory,data,provavel: passado em SaveLoad_LoadGame
+0x03002C30,gObjectSlots,data,confirmado: lido em BuildShadowOamFromObjectState
+0x030037F0,gPlayerObject,data,confirmado: escrito em Overworld_InitPlayerSprites
+0x03003810,dpad_input,data,provavel: lido em Overworld_InitFollowerFacingAndSfx57
+0x03003811,gPlayerFaceDirection,data,provavel (antes: dpad_input_2): escrito/lido por Event_Op0D_PlayerFaceDirection
+0x0300381A,gPlayerSpeedIndex,data,chute: escrito em Map_LoadSecondaryMarkerRecord, lido em Overworld_UpdateFollowerFacing
+0x0300534C,gOverworldAffineFlags,data,provavel: passado em EventScript_ClearGlobals
+0x03005350,gOverworldUiState,data,provavel: so em literal pools
+0x03005590,gEventScriptBasePtr,data,provavel: passado em EventScript_ClearGlobals
+0x030057A0,gMapTransitionState,data,provavel: so em literal pools
+0x030057D8,gEventFlagArrayBase,data,provavel: so em literal pools (confirma AGENTE)
+0x030057DC,gMapScratchBufferPtr,data,provavel: so em literal pools
+0x03005DBD,first_event_y,data,provavel: escrito em Map_LoadEntitySpawnsForCurrentMap, lido em Map_CheckWalkOverTrigger
+0x03005DBE,first_event_eventId,data,provavel: lido/escrito em Map_LoadEntitySpawnsForCurrentMap
+0x03005FDE,gCurrentMapId,data,provavel: lido em Map_GetEncounterRecordByte
+0x03005FE0,map_width,data,confirmado: escrito/lido em Map_LoadCurrentMapLayers
+0x03005FE2,map_height,data,confirmado: escrito/lido em Map_LoadCurrentMapLayers
+0x03005FF0,gMapCollisionOccupancyBuffer,data,provavel: passado em Map_LoadCurrentMapLayers
+0x030063F0,gMapPassTable,data,provavel: passado em Map_LoadSecondaryMarkerRecord e lido em Overworld_CheckMovementObjectBlocker
+0x030063F3,gMapPassTable_Value3,data,chute: escrito em Event_Op69_Set_Map_Scene_Variant e EventOpcode0F_PlayerHopInDirection
+0x03006400,gMapPassSaveScratch,data,chute: passado em Event_Op10_MovePlayer
+0x03006408,gMapBlockIndex,data,chute: lido em Map_LoadSecondaryMarkerRecord, escrito em Overworld_SetActorAnimFrameByTable
+0x03006409,gEncounterEnabledFlag,data,confirmado: escrito em Overworld_ResetEncounterStepState, lido em Overworld_ShouldTriggerRandomEncounter
+0x03001800,fight_information,data,confirmado: base do bloco de batalha; +2 = quantidade de bots (loop em Fight_CreateBotPartEntrySprites), +4 = blocos de 0xC por bot

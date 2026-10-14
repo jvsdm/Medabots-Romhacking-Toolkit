@@ -221,7 +221,7 @@ address,name,kind,count,comment
 0x03003479,gFight_E08_WaitCounterHi,label,,"[BI] BI: byte 0x03002C30+0x849, init 0x40 em SetupBotAndSprites; decrementado junto no E08. Provável."
 0x030037F0,gPlayerObject,data,,[OW] slot 0x2F de gObjectSlots (jogador) [RM2] confirmado: escrito em Overworld_InitPlayerSprites
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] [RM2] provavel: lido em Overworld_InitFollowerFacingAndSfx57"
-0x03003811,gPlayerFaceDirection,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: dpad_input_2)"
+0x03003811,gPlayerFaceDirection,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: dpad_input_2) [RM2] provavel (antes: dpad_input_2): escrito/lido por Event_Op0D_PlayerFaceDirection"
 0x0300381A,gPlayerSpeedIndex,data,,[VA] [VA] obj+0x2A do slot 0x2F; escrito por Map_LoadSecondaryMarkerRecord a partir de 0x083D2A88[walk state]
 0x03004C40,SAVE_PARTS_INV_RAM,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory (antes: gInventory) [SV] [SV] 960 B: 4 tipos x 240 (120 bots x 2 B qty/eq); save guarda cada byte como u16 (confirmado layout; campos provavel)
 0x03005010,gLinkStateBlock,label,,[MN] [MN] bloco de estado do link (bitfield de slots conectados em +0; contadores +0x18..+0x1B; flags +0x1D/+0x1E); provavel
@@ -4148,24 +4148,24 @@ address,name,kind,count,comment
 0x083B7E54,MedaforceDescriptorTable,data,,[MF] [MF] 6 B por medaforca (52 ids); byte0 = id/nome; bytes 1..5 nao identificados (antes: medaforce_descriptor_table) [TA3] descritor de 6 B por medaforca: byte0 = id (B+0xA8); bytes 1..5 sem leitor confirmado
 0x083B7F8C,MedaforceMedalTable,label,,Simon/Rokusho em 0x083B7FAC (antes: medal_medaforce_list)
 0x083B80C0,gTextMedaforceDesc1,ptr,5,tabela de texto: Descrições das Medaforças1; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B82F0,gTextSpecialAttackDesc,ptr,8,tabela de texto: Descrições de ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B; Simon: gRomPartRecordTable
+0x083B82F0,gTextSpecialAttackDesc,ptr,8,tabela de texto: Descrições de ataques; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] confirmado: 8 x 4 B (ponteiros; JT8 'texto por especialidade')
+0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B; Simon: gRomPartRecordTable [RD5] confirmado: 480 x 16 B = 7680 (mtbe); campo armadura max em +4 (DF2)
 0x083BA658,gPartRecordPtrTable,ptr,120,"nomes dos bots; Simon: gPartNamePointerTable (antes: gBotNames) [EN] GH-EN: ponteiros para registro de peca (0x0E B copiados para o bot em Fight_InitializeBotFromTemplate), indice = id da peca. Provavel."
-0x083BBB4C,gPartNames,ptr,480,nomes das pecas (bot*4 + kind)
-0x083BCFEC,gTextPartCodeNames,ptr,480,tabela de texto: Códigos das peças; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083BDA04,gTextStatDescriptions,ptr,11,tabela de texto: Descrições de estatísticas; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083BBB4C,gPartNames,ptr,480,"nomes das pecas (bot*4 + kind) [RD5] confirmado: 480 x 4 B, indice bot*4+kind (R2b, GetPartName)"
+0x083BCFEC,gTextPartCodeNames,ptr,480,tabela de texto: Códigos das peças; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] provavel: 480 x 4 B (run de ponteiros = mtbe); nomes de codigo das pecas; indexador nao lido
+0x083BDA04,gTextStatDescriptions,ptr,11,tabela de texto: Descrições de estatísticas; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] provavel: 11 x 4 B (run de ponteiros = mtbe). CONFLITO: JT8 diz indice 0x13 usado; ponteiro 11 nao e ponteiro
 0x083BE868,gTechniqueNames,ptr,60,nomes das tecnicas
-0x083BEAFC,gTextLegTypes,ptr,7,tabela de texto: Tipos de perna; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083BEB68,gTextBattlefieldNames,ptr,11,tabela de texto: Campos de batalha; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083BEB94,gPaletteFamily,data,122,familia de paleta = banco OBJ do mini sprite; Simon: sCompositeBattleSpritePaletteFamilyTable
-0x083BEC10,gMapEncounters,data,1536,encontros por mapa: 192 x 8 B; Simon: map_has_enemies_list
-0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B; Simon: gMapEncounterBattleTable; Simon: map_encounters
-0x083C1B80,gEncounterTemplatePtrs,ptr,246,batalhas; Simon: list_of_all_fights (antes: gBattlePointerTable)
+0x083BEAFC,gTextLegTypes,ptr,7,tabela de texto: Tipos de perna; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] provavel: 7 x 4 B (run = mtbe); tipos de perna
+0x083BEB68,gTextBattlefieldNames,ptr,11,tabela de texto: Campos de batalha; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] provavel: 11 x 4 B (run 11 + zeros ate 0x083BEB94; mtbe 11); campos de batalha
+0x083BEB94,gPaletteFamily,data,122,familia de paleta = banco OBJ do mini sprite; Simon: sCompositeBattleSpritePaletteFamilyTable [RD5] confirmado: 122 x 1 B (DT; lido por CreateCompositeBattleSpriteObjects)
+0x083BEC10,gMapEncounters,data,1536,"encontros por mapa: 192 x 8 B; Simon: map_has_enemies_list [RD5] confirmado: 192 x 8 B = 1536 (DT, mtbe)"
+0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B; Simon: gMapEncounterBattleTable; Simon: map_encounters [RD5] confirmado: 192 x 4 B = 768 (EN)
+0x083C1B80,gEncounterTemplatePtrs,ptr,246,batalhas; Simon: list_of_all_fights (antes: gBattlePointerTable) [RD5] confirmado: 246 x 4 B (EN; indice = id de template 0..245)
 0x083C2D3C,gTextPreBattleMessage,ptr,96,tabela de texto: Diálogos antes das batalhas; fonte: dump_text_clean_v2.py (traducao PT-BR) [DT2] GH-DT2: 96 ponteiros u32 para strings ROM antes da tabela (0x083C1F58..0x083C2D3B); seguida de gTextPostBattle strings em 0x083C2EBC; leitor provavel Fight_InitBotPartSelectScreen 0x0801058C (corpo confirmado); segundo leitor em aberto (0x0803D9A6)
 0x083C3B04,gTextPostBattleMessage,ptr,96,tabela de texto: Diálogos após as batalhas; fonte: dump_text_clean_v2.py (traducao PT-BR) [DT2] GH-DT2: 96 ponteiros u32 para strings ROM 0x083C2EBC..0x083C3AE9; leitores (literal 0x08010C14 em 0x08010BDA e literal 0x0803DB84 em 0x0803DB52): funcao que contem nao confirmada
-0x083C40B8,gTextCharacterNames,ptr,97,tabela de texto: Nomes dos personagens; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083C47EC,gTextMenuLabels,ptr,6,tabela de texto: Rótulos do menu; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083C4B90,gTextStatusStrings,ptr,128,tabela de texto: Textos de status; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083C40B8,gTextCharacterNames,ptr,97,"tabela de texto: Nomes dos personagens; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] provavel: 97 x 4 B (run = mtbe); nomes de personagem (TX, FI)"
+0x083C47EC,gTextMenuLabels,ptr,6,tabela de texto: Rótulos do menu; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] provavel: 6 x 4 B (run = mtbe); rotulos de menu
+0x083C4B90,gTextStatusStrings,ptr,128,tabela de texto: Textos de status; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] provavel: 128 x 4 B (run = mtbe); textos de status
 0x083C6744,gTextGameMessages,ptr,176,tabela de texto: Mensagens do jogo; fonte: dump_text_clean_v2.py (traducao PT-BR) [MG3] tabela de mensagens; 0x05 peca-fonte quebrada; 0x0C peca-alvo quebrada; 0x16 X protegido; 0x17 X acao Y; confirmado pelo texto
 0x083C6A04,gTechniqueScriptStream_Generic,label,,[TQ] inicio de roteiro compartilhado por 20 tecnicas (0..9 13..20 34 35); conflito em TQ.md sec 5
 0x083C6A57,gActionScript_GrapTrap,data,,"[TQ2] roteiro de action-script da tecnica 10 (GH-TQ2); fluxo linear, entrada em 0x083C6A57"
@@ -4211,11 +4211,11 @@ address,name,kind,count,comment
 0x083C6CA8,gTechniqueActionScriptPtrTable,table,,[TQ] ponteiro de roteiro por indice F+0xA8 (tecnica 0..59; medaforca 0x50+id); lido por FUN_08034e94 (GH-TQ)
 0x083C6EB8,gActionScriptArgLenTable,data,,"[MF2] 1 B por opcode: LEN[2]=1, LEN[3]=4, demais 0 na faixa 0x00..0x6B; base do LEN (confirmado pelo decompile)"
 0x083CAD78,gMoveStyle,data,122,"estilo de deslocamento em batalha (0-6) por bot das pernas [AN] GH-AN confirmado: 1 byte por bot, estilo 0..6 (bot 43 = 0)"
-0x083CE164,FightPreview_SceneRowPointerTable,data,,A5: 132 ponteiros para linhas de halfwords (indexadas por sequence_cursor). Linha = sel de +0xF9. Dump: pc/research/A5_preview_rows.tsv
+0x083CE164,FightPreview_SceneRowPointerTable,data,,A5: 132 ponteiros para linhas de halfwords (indexadas por sequence_cursor). Linha = sel de +0xF9. Dump: pc/research/A5_preview_rows.tsv [RD5] confirmado: 132 x 4 B (A5; ponteiros para linhas de halfwords)
 0x083CE374,ObjectScript_ArgCountTable,data,,A5: blocos (byte count + ...) apontados por Row[cursor] (signed halfword). Count = numero de halfwords copiadas por 0x0803D450. (antes: FightPreview_EntryCountBlocks) [HO1] confirmado: u8 argc por opcode; cursor += 1+argc; 0x80+ = rotulos (argc 0)
-0x083CEDF4,Fight_AnimSlot_TableA,data,,"[JT2] [GH-JT2] dados (nao codigo) indexados por slot+0x2B em 0x0803C7DC; passada a 0x0801BD58; 8 entradas lidas, fim nao achado"
-0x083CF530,gTextSystemMessages,ptr,32,tabela de texto: Mensagens do sistema; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083D1D78,PartPreviewType_KindVector,ptr,50,"registros 0x18 B: +0 artes, +0x0F/+0x10 filhos, +0x11 paleta, +0x12/+0x13 tamanho, +0x15 forma OBJ; 1-2 raizes, 3-6 juntas RAM (cabeca/bracos/pernas); 64 posicoes funcionam com espelho+movimento estendidos; moldes de preview: registros de 0x18 B; Simon: sCompositePreviewDescriptorPointerTable; Simon: sLargePartDisplayDescriptorPointerTable (antes: gMoldTable)"
+0x083CEDF4,Fight_AnimSlot_TableA,data,,"[JT2] [GH-JT2] dados (nao codigo) indexados por slot+0x2B em 0x0803C7DC; passada a 0x0801BD58; 8 entradas lidas, fim nao achado [RD5] provavel: 8 x 4 B (JT2 + mtbe 8 entradas); ponteiros de dados indexados por slot+0x2B; nome mantido"
+0x083CF530,gTextSystemMessages,ptr,32,tabela de texto: Mensagens do sistema; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD5] confirmado: 32 x 4 B (ponteiros 0..31; words 32..33 = 0)
+0x083D1D78,PartPreviewType_KindVector,ptr,50,"registros 0x18 B: +0 artes, +0x0F/+0x10 filhos, +0x11 paleta, +0x12/+0x13 tamanho, +0x15 forma OBJ; 1-2 raizes, 3-6 juntas RAM (cabeca/bracos/pernas); 64 posicoes funcionam com espelho+movimento estendidos; moldes de preview: registros de 0x18 B; Simon: sCompositePreviewDescriptorPointerTable; Simon: sLargePartDisplayDescriptorPointerTable (antes: gMoldTable) [RD5] chute: tamanho nao fechado; nome provavel (vetor kind->struct, IC2). CONFLITO: DT3 chama gMoldTable; word0=0, misto ROM/RAM"
 0x083D1E40,gMotionAngleTable,ptr,59,roteiro -> s16 angulo [molde 1..49][N quadros-chave] (1/65536 volta); o tocador le 63 moldes; provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
 0x083D1F2C,gMotionOffsetTable,ptr,59,"roteiro -> (s8 x, s8 y) [molde 1..49][N] [AN] GH-AN confirmado: u32 por roteiro -> pares s8 (x,y)[molde][N]"
 0x083D2018,gMotionDurTable,ptr,59,"roteiro -> duracao (quadros) de cada quadro-chave, fim 0; N = tamanho (antes: gMotionDurationTable) [AN] GH-AN confirmado: u32 por roteiro -> u8 dur[N], terminada em 0"
@@ -4228,12 +4228,12 @@ address,name,kind,count,comment
 0x083D2A98,gMapPassBlockTable,data,,"[VA] [VA] blocos de 8 B da variante; idx 0..9 lidos; idx 2 e 9 = 01 01 00 00 01 01 01 01, demais = 00 01 00 01 01 01 01 01"
 0x083D2B18,Event_Cont11_ArgWalkStateTable,data,,[VA2] [VA2] indice = arg0 do opcode 0x11; valores 00 03 04 05 06 07 08 02 09 01 0A 0E 0F 0B 00 70 71 ... (tamanho nao medido); destino = E+0xC5C/C69/C28 (antes: gCostumeToWalkStateTable) [VA3] 14 entradas (provavel); indice = arg0 do opcode 0x11; valor vai para E+0xC5C/C69/C28. confirmado
 0x083D2B26,Table_DmaSource_Provavel,data,,[VA3] fonte DMA lida por 5 funcoes (provavel)
-0x083D2B6B,gMapArea,data,192,area/regiao por mapa
-0x083D2C5D,gObjectField0BByPoseTable,data,,[CS2] tabela de bytes indexada por pose (+0x30); os 32 primeiros sao zero
-0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU)"
-0x083D5FF4,Overworld_ChoiceSubstateTable,table,,[FM] [FM] tabela de sub-estados do menu de escolha (base do despachante 0x0805716C): 0=Overworld_InitChoiceMenuScreen 0x0805718D; 1=0x08057441; 2=0x080574D5
-0x083D6298,unknown_ChapterLiteralPool,data,,[PR] literal 0x03005FDF sem leitor de funcao conhecido; perto de CBC/CBD (0x083D6274/78); pendente
-0x083D6A2C,gArcHeightTable,data,,"[CU] 16 linhas de 0x10 B; valor (short) de cada linha = altura do arco em 1/16 px (Map_ObjectArcStep, GH-CU)"
+0x083D2B6B,gMapArea,data,192,area/regiao por mapa [RD5] confirmado: 192 x 1 B (DT3; gMapArea[mapa])
+0x083D2C5D,gObjectField0BByPoseTable,data,,[CS2] tabela de bytes indexada por pose (+0x30); os 32 primeiros sao zero [RD5] provavel: indexada por pose (+0x30); 32 primeiros = 0; tamanho aberto (CS2)
+0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU) [RD5] provavel: indexada por pose (+0x30); !=0 cria sombra (CU); tamanho aberto"
+0x083D5FF4,Overworld_ChoiceSubstateTable,table,,[FM] [FM] tabela de sub-estados do menu de escolha (base do despachante 0x0805716C): 0=Overworld_InitChoiceMenuScreen 0x0805718D; 1=0x08057441; 2=0x080574D5 [RD5] confirmado: 6 x 4 B (FM3; sub-estados 0..5 do menu de escolha)
+0x083D6298,unknown_ChapterLiteralPool,data,,"[PR] literal 0x03005FDF sem leitor de funcao conhecido; perto de CBC/CBD (0x083D6274/78); pendente [RD5] chute: pool de literais RAM (0x03005FDF, 0x03006413, 0x030057B1); sem leitor conhecido (PR); nome mantido"
+0x083D6A2C,gArcHeightTable,data,,"[CU] 16 linhas de 0x10 B; valor (short) de cada linha = altura do arco em 1/16 px (Map_ObjectArcStep, GH-CU) [RD5] confirmado: 16 x 16 B = 256 (CU; altura do arco, forma simetrica no byte de cada linha)"
 0x083F7B80,gObjectAnimScriptPtrTable,data,,[CS] ponteiros de roteiro por anim = facing+4*grupo (CONFIRMADO dump: 12 primeiros)
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
 0x083F7E80,gMapSpritePtrTable,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites) (antes: gGfx_Overworld_PonteirosSprite)
