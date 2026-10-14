@@ -3550,20 +3550,20 @@ address,name,kind,count,comment
 0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
-0x083F7E80,gGfx_Overworld_PonteirosSprite,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites)
+0x083F7E80,gMapSpritePtrTable,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites) (antes: gGfx_Overworld_PonteirosSprite)
 0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B; Simon: sMapDimensionsInMetaTilesTable
-0x083F8A80,gGfx_Overworld_PonteirosTileB,ptr,192,graficos do tileset (LZ77); Simon: sMapTilesetGraphicsPointerTable (antes: gMapTilesetGfx)
-0x083F8D80,gMapColorAttr,ptr,192,atributos de cor; Simon: sMapColorAttributePointerTable
-0x083F9080,gGfx_Overworld_PonteirosTileA,ptr,576,camadas: 192 x 3 ponteiros LZ77; Simon: sMapLayerTilemapPointerTable (antes: gMapLayers)
-0x083F9980,gMapTilesetPal,ptr,192,paletas do tileset (0x200 B); Simon: sMapTilesetPaletteDataPointerTable
-0x08404334,gGfx_Overworld_PonteirosCamada,ptr,192,colisao (1 B por metatile 16x16); Simon: collision_table (antes: gMapCollision)
+0x083F8A80,gMapTilesetPtrTable,ptr,192,graficos do tileset (LZ77); Simon: sMapTilesetGraphicsPointerTable (antes: gMapTilesetGfx) (antes: gGfx_Overworld_PonteirosTileB)
+0x083F8D80,gMapTilesetExtraPtrTable,ptr,192,atributos de cor; Simon: sMapColorAttributePointerTable (antes: gMapColorAttr)
+0x083F9080,gMapLayerPtrTable,ptr,576,camadas: 192 x 3 ponteiros LZ77; Simon: sMapLayerTilemapPointerTable (antes: gMapLayers) (antes: gGfx_Overworld_PonteirosTileA)
+0x083F9980,gMapPalettePtrTable,ptr,192,paletas do tileset (0x200 B); Simon: sMapTilesetPaletteDataPointerTable (antes: gMapTilesetPal)
+0x08404334,gMapCollisionPtrTable,ptr,192,colisao (1 B por metatile 16x16); Simon: collision_table (antes: gMapCollision) (antes: gGfx_Overworld_PonteirosCamada)
 0x08409480,gMapBlockA,ptr,192,bloco por mapa A; Simon: sMapBackgroundAnimationPointerTable
 0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B)
 0x08411AE0,gTextDialogue_08411AE0,ptr,202,tabela de texto: Diálogo de NPCs (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08411E08,gWarpList_Map0,data,,"[OW2] 8 B por entrada: +0 X origem, +1 Y, +2 mapa destino, +3 nibble alto som/tipo, nibble baixo facing, +6 X dest, +7 Y dest"
 0x08411FE7,gWarpList_Map23,data,,"[OW2] lab de New Game; entrada (18,14) -> mapa 0 (18,5) (confirmado vs pesquisa)"
 0x08412E60,gWarpTablePtrs,ptr,192,warps (8 B cada; fim 0xFF); Simon: sMapWarpRecordPointerTable (antes: gMapWarps)
-0x08413160,gMapSprites,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable
+0x08413160,gMapSpriteIndexByMap,ptr,192,sprites usados no mapa (fim 0xFF); Simon: sMapEntitySpawnPointerTable (antes: gMapSprites)
 0x084144B4,gTextDialogue_084144B4,ptr,248,tabela de texto: Diálogo de NPCs (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x084798F4,gTextDialogue_084798F4,ptr,389,tabela de texto: Diálogo de história (1); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08479F0C,gTextDialogue_08479F0C,ptr,237,tabela de texto: Diálogo de história (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
@@ -3584,7 +3584,7 @@ address,name,kind,count,comment
 0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto
 0x0847E388,get_item_text,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4]
 0x0847E644,gMapMusic,data,192,musica por mapa
-0x08483234,gMapEntityPtrTable,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople)
+0x08483234,gMapPeoplePtrTable,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople) (antes: gMapEntityPtrTable)
 0x08483594,gMainState2MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel
 0x084835A4,KeyItemBag_MenuTable4,data,,[IN2] [IN2] tabela de quadros (ponteiros); entrada 0 = Dispatch_StateTableFrameCount 0x0805CB50; nao ha xref direto (antes: ScreenFrameTable_Entry0)
 0x0848360C,gTitleMenuSubStateTable,data,,[TL] tabela de ponteiros do menu do título (GS 0..11)
