@@ -40,7 +40,7 @@ F	0x08001380	CopyPaletteBuffersToHardware
 F	0x080013A8	PaletteBlendToColor
 F	0x08001454	Init_CopyStartupGraphicsToVram
 F	0x08001520	BuildShadowOamFromObjectState
-L	0x08001A00	gMapState_base
+L	0x08001A00	Obj_Mid_08001A00_InFunc08001520
 F	0x08001CAC	SetObjectAffineMatrixFromAngleAndScale
 F	0x08001EA8	SetObjectScaleVectorFromMode
 F	0x08001FF8	RotateObjectOffsetByAffineAngle
@@ -659,7 +659,7 @@ L	0x080156C4	Fight_MedaforceMedalTableLiteral
 L	0x080156C8	Fight_MedaforceScratchLiteral
 L	0x080156CC	Fight_MedaforceDescriptorLiteral
 F	0x080156D0	Fight_RandomizePriorityListSlot
-L	0x080156F0	gFightPriorityRowTable
+L	0x080156F0	Fight_FallbackPriorityRowsPtr
 L	0x080156F4	gFightPriorityListDst
 F	0x080156F8	Fight_IsPartActionBlocked
 F	0x08015738	Fight_LoadHudTileset

@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x0804EE00,EventOpcode3B_LoseMoney,func_thumb,confirmado - subtrai dinheiro (Save_GetMoney; SubClampedCounter; formata); nome mantido
+0x0804EE8C,EventOpcode3C_GetMedal,func_thumb,confirmado - checa slot de medalha; spawna Medabot do registro; depois cena; nome mantido
+0x0804EF5C,EventOpcode3D_GetTinpet,func_thumb,confirmado - cria registro de Tinpet se pool nao cheia; nome mantido
+0x0804EFFC,EventOpcode40_RunPulsedScreenTransitionLoop,func_thumb,confirmado - loop de transicao de tela com contador decrescente; nome mantido
+0x0804F0A4,Event_Op41_Cont_FlickerAllActors,func_thumb,confirmado - loop nos 4 slots de ator rastreado chamando Map_TickObjectFlicker; nome mantido
+0x0804F110,EventOpcode42_MovePlayerOneStep,func_thumb,provavel - inicia passo de objeto 0x2f (Obj_StartStepNoAnim) e segue camera por direcao; nome mantido (tail jump nao recuperado)
+0x0804F3F8,EventOpcode43_ShakeCamera,func_thumb,confirmado - tremor de camera por contador; ajusta scroll X ou Y; nome mantido
+0x0804F5C8,Event_Op51_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F5CC,Event_Op52_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F5D0,Event_Op53_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F5D4,Event_Op54_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F5D8,Event_Op55_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F5DC,Event_Op56_Cont_LoadEntities,func_thumb,provavel - zera buffers; reconstroi slots; copia mapa; Map_LoadEntitySpawnsForCurrentMap; nome mantido (faz mais que carregar entidades)
+0x0804F674,Event_Op57_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F678,Event_Op58_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F67C,Event_Op59_Cont_Run_Scene_Command_03,func_thumb,confirmado - reseta passo e roda Event_RunSceneCommandSequence(3); nome antigo OpenShop nao aparece no decompile (antes: Event_Op59_Cont_OpenShop)
+0x0804F6C4,Event_Op5A_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F6C8,Event_Op5B_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F6CC,Event_Op5C_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F6D0,Event_Op5D_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F6D4,Event_Op5E_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F6D8,Event_Op5F_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F6DC,Event_Op62_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804F6E0,Event_Op63_Cont_PlayerStepThenResyncCamera,func_thumb,provavel - passo de objeto 0x2f; depois camera por direcao; resync de tile/facing e UI; nao e efeito visual (antes: Event_Op63_Cont_ShowEffect)
+0x0804F83C,Event_Op66_Cont_Animate_Tracked_Object_Transition,func_thumb,confirmado - chama Map_ObjectMoveStateStep ate terminar; nome mantido
+0x0804F860,Event_Op6A_Cont_NoOp,func_thumb,confirmado - corpo vazio (so return); nome mantido
+0x0804FA1C,Event_Op70_Cont_Run_Scene_Command_13,func_thumb,confirmado - reseta passo e roda Event_RunSceneCommandSequence(0x13); nome mantido
+0x0804FB1C,Event_Op76_Cont_Start_Flow4_Then_Scene_Command_05,func_thumb,confirmado - GameState_StartFlowByCommand(4); reset; depois Event_RunSceneCommandSequence(5); nome mantido
+0x0804FB8C,EventOpcode78_RunSceneCommand10,func_thumb,confirmado - reseta passo; roda seq 0x10; marca flag em +0x39; nome mantido
+0x0804FBDC,EventOpcode79_RunSceneCommand12,func_thumb,confirmado - reseta passo; roda seq 0x12; nome mantido
+0x0804FC6C,Event_Op7E_Cont_Move_All_Tracked_Actors_C,func_thumb,provavel - chama Event_RunAllTrackedActorsStepSequence(0;0) e retorna; sufixo _C nao verificado; nome mantido
+0x0804FD10,EventOpcode82_ExecuteBatchedObjectCommandBlock,func_thumb,confirmado - percorre bloco de comandos de objeto (param/frame; remove; start/tick step) e limpa bloco ao fim; nome mantido
+0x0804FE6C,EventOpcode84_SetMapSceneVariant_Continuation,func_thumb,provavel - quando timer zera copia byte de +0x98 para +0x38 e fecha opcode; 'FacesUp' sem evidencia no decompile (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation)
+0x080500BC,Map_StartObjectStep,func_thumb,confirmado - grava nibbles de facing/anim; param +0x2A; timer +0x28 via Map_GetScaledStepDelta; nome mantido
+0x08050124,Obj_StartStepNoAnim,func_thumb,confirmado - como StartObjectStep mas sem Map_SetObjectAnimationVariant; nome mantido
+0x08050168,Map_TickObjectAnimationTimes,func_thumb,confirmado - repete Map_TickObjectAnimation N vezes (step delta); nome mantido
+0x0805018C,Map_TickObjectStep,func_thumb,confirmado - avanca posicao por modo; decrementa timer; toca SFX e rearma timer; retorna 1 ao terminar; nome mantido
+0x08050290,Event_EndOpcode,func_thumb,confirmado - zera dois bytes de controle de evento (flags do opcode); nome mantido
+0x080502B0,Util_HighNibble,func_thumb,confirmado - retorna (x&0xFF)>>4; nome mantido
+0x080502B8,Util_Low2Bits,func_thumb,confirmado - retorna x&3; nome mantido
+0x08050300,Overworld_GetObjectAnimationIndexForFacing,func_thumb,confirmado - facing + campo +0x2B*4 do objeto; nome mantido
+0x08050358,Map_SpawnTrackedObjectAtTile,func_thumb,confirmado - toca SFX de warp se houver trigger; acha slot livre; InitObjectSprite e +5 em campo se bit 0x40; nome mantido
+0x080503FC,Map_InitObjectSprite,func_thumb,confirmado - reseta render slot e inicializa sprite/pose/campos do objeto (+0x2B/+0x20/+0x30); segundo slot se flag; nome mantido
+0x08050554,Map_RemoveTrackedObjectByPackedId,func_thumb,confirmado - SFX se warp no tile; reseta dois render slots e limpa slot rastreado; nome mantido
+0x080505FC,Overworld_BuildEncounterNpcSnapshot,func_thumb,provavel - zera 0x20 e copia tile X/Y; nibbles e flag de ate 6 objetos ativos; 'encounter' sem prova direta; nome mantido
+0x080506BC,Overworld_RebuildActiveObjectRenderSlots,func_thumb,confirmado - para 6 entradas ativas chama Map_InitObjectSprite; nome mantido
+0x08050710,Map_FindFreeTrackedObjectSlot,func_thumb,confirmado - procura slot rastreado livre (bit 0x4000 / byte zero); retorna indice ou 5; nome mantido
+0x0805076C,Map_SetObjectParamAndFrame,func_thumb,confirmado - grava param em +0x20 e indice de tabela (Obj_ComputeActorTableIndex) em +6 do slot rastreado; nome mantido
+0x080507BC,Map_SetObjectSlotField0B,func_thumb,confirmado - grava byte +0x0B do slot direto; nome mantido
+0x080507CC,Map_SetTrackedObjectField0B,func_thumb,confirmado - resolve slot rastreado e grava +0x0B; nome mantido
+0x080507EC,Map_SetObjectAttrBits10,func_thumb,confirmado - mascara e grava valor em bits 10+ do atributo do objeto (+0 e +0x32); nome mantido
+0x0805080C,Map_SetTrackedObjectTileAttr,func_thumb,confirmado - resolve slot rastreado e chama Map_SetObjectAttrBits10; nome mantido
+0x0805082C,Map_TickObjectFlicker,func_thumb,confirmado - alterna visibilidade do objeto por timer (atributo +0 / +0x32); retorna 1 ao acabar; nome mantido
+0x080508B4,Map_ObjectAnimStep,func_thumb,confirmado - seta variante de animacao uma vez e tica animacao ate contador zerar; nome mantido
+0x08050918,Map_ObjectArcStep,func_thumb,confirmado - movimento em arco (tabela de Y; passos de 0x10) com reset ao fim; nome mantido
+0x080509EC,Map_ObjectMoveStateStep,func_thumb,confirmado - maquina de estados de deslocamento (SFX 0x70; anim; avanco por passo ate distancia); nome mantido
+0x08050B9C,Map_ResetObjectStateBlocks,func_thumb,confirmado - zera tres blocos de 4 bytes de estado; nome mantido
+0x08050BC8,Map_ModeDispatch,func_thumb,confirmado - despacha handler de cena e; no estado 4; pula por tabela de 0x17 modos; nome mantido
+0x08050C94,Overworld_ResetUiRenderState,func_thumb,provavel - zera buffer 0xA00; reseta affine e recalcula 32 entradas; 'Ui' nao confirmado; nome mantido
+0x08050CC0,Event_ResetSceneCommandStep,func_thumb,confirmado - zera byte +0xB do bloco de comando de cena; nome mantido

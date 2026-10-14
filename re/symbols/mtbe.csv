@@ -344,50 +344,50 @@ address,name,kind,count,comment
 0x0400001C,REG_BG3HOFS,label,,
 0x0400001E,REG_BG3VOFS,label,,
 0x04000040,REG_WIN0H,label,,
-0x04000042,REG_WIN1H,label,,
-0x04000044,REG_WIN0V,label,,
-0x04000046,REG_WIN1V,label,,
-0x04000048,REG_WININ,label,,
-0x0400004A,REG_WINOUT,label,,
-0x0400004C,REG_MOSAIC,label,,
-0x04000050,REG_BLDCNT,label,,
-0x04000052,REG_BLDALPHA,label,,
-0x04000054,REG_BLDY,label,,
-0x04000080,REG_SOUNDCNT_L,label,,
-0x04000082,REG_SOUNDCNT_H,label,,
-0x04000084,REG_SOUNDCNT_X,label,,
-0x04000088,REG_SOUNDBIAS,label,,
-0x040000A0,REG_FIFO_A,label,,
-0x040000A4,REG_FIFO_B,label,,
-0x040000B0,REG_DMA0SAD,label,,
-0x040000B4,REG_DMA0DAD,label,,
-0x040000B8,REG_DMA0CNT,label,,
-0x040000BC,REG_DMA1SAD,label,,
-0x040000C0,REG_DMA1DAD,label,,
-0x040000C4,REG_DMA1CNT,label,,
-0x040000C8,REG_DMA2SAD,label,,
-0x040000CC,REG_DMA2DAD,label,,
-0x040000D0,REG_DMA2CNT,label,,
-0x040000D4,REG_DMA3SAD,label,,
-0x040000D8,REG_DMA3DAD,label,,
-0x040000DC,REG_DMA3CNT,label,,
-0x04000100,REG_TM0CNT,label,,
-0x04000104,REG_TM1CNT,label,,
-0x04000108,REG_TM2CNT,label,,
-0x0400010C,REG_TM3CNT,label,,
-0x04000120,REG_SIOMULTI0,label,,
-0x04000122,REG_SIOMULTI1,label,,
-0x04000124,REG_SIOMULTI2,label,,
-0x04000126,REG_SIOMULTI3,label,,
-0x04000128,REG_SIOCNT,label,,
-0x0400012A,REG_SIOMLT_SEND,label,,
-0x04000130,REG_KEYINPUT,label,,
-0x04000132,REG_KEYCNT,label,,
+0x04000042,REG_WIN1H,label,,[RM4] confirmado: registrador de janela (GBA IO); gravado em Screen_InitRingSpritesSong5 (sem troca)
+0x04000044,REG_WIN0V,label,,[RM4] confirmado: IO janela; gravado em Screen_InitLoadBgAndObjTimer/Screen_InitClearAndStartSong (sem troca)
+0x04000046,REG_WIN1V,label,,[RM4] confirmado: IO janela; gravado em Screen_InitRingSpritesSong5 (sem troca)
+0x04000048,REG_WININ,label,,[RM4] provavel: IO janela; so literal em 0x0800218C e xref de PARAM em InitializeLinkTransferState (ruido) (sem troca)
+0x0400004A,REG_WINOUT,label,,[RM4] provavel: IO janela; gravado em Screen_InitClearAndStartSong/Screen_InitRingSpritesSong5 (sem troca)
+0x0400004C,REG_MOSAIC,label,,[RM4] provavel: IO mosaico; gravado em fx de tela (Fight_SceneStep65_TimedSequence
+0x04000050,REG_BLDCNT,label,,[RM4] confirmado: IO blend; gravado em fx_screen_setup_*
+0x04000052,REG_BLDALPHA,label,,[RM4] confirmado: IO blend alpha; gravado em GpuBlend/FxBlend_Apply* (sem troca)
+0x04000054,REG_BLDY,label,,[RM4] confirmado: IO blend brilho; gravado em Fx_StepFadeLatch/fade_step_bld (sem troca)
+0x04000080,REG_SOUNDCNT_L,label,,[RM4] confirmado: IO som; gravado em snd_master_ctrl_write (sem troca)
+0x04000082,REG_SOUNDCNT_H,label,,[RM4] confirmado: IO som; lido/gravado em snd_channel_ctrl_word/snd_channel_release (sem troca)
+0x04000084,REG_SOUNDCNT_X,label,,[RM4] provavel: IO som master enable; gravado em snd_hw_init e IntrMain (sem troca)
+0x04000088,REG_SOUNDBIAS,label,,[RM4] chute: nome de hardware GBA; sem xref nem literal na ROM (sem troca)
+0x040000A0,REG_FIFO_A,label,,[RM4] provavel: FIFO de audio DMA; so literal 0x08486E54 (dados) (sem troca)
+0x040000A4,REG_FIFO_B,label,,[RM4] provavel: FIFO de audio DMA; so literal 0x08486E58 (dados) (sem troca)
+0x040000B0,REG_DMA0SAD,label,,[RM4] provavel: DMA0 fonte; lido/gravado em Tile_UnpackAndBlitBlock e Gfx_QueueTileUploadOrCpuSet (sem troca)
+0x040000B4,REG_DMA0DAD,label,,[RM4] chute: nome de hardware GBA; sem xref nem literal na ROM (sem troca)
+0x040000B8,REG_DMA0CNT,label,,[RM4] chute: nome de hardware GBA; sem xref nem literal na ROM (sem troca)
+0x040000BC,REG_DMA1SAD,label,,[RM4] chute: nome de hardware GBA; sem xref nem literal na ROM (sem troca)
+0x040000C0,REG_DMA1DAD,label,,[RM4] provavel: DMA1 destino; so literais em pontos de codigo proximos (sem troca)
+0x040000C4,REG_DMA1CNT,label,,[RM4] provavel: DMA1 controle; gravado em Asset_UnpackOrCopyBlock/sprite_part_emit (sem troca)
+0x040000C8,REG_DMA2SAD,label,,[RM4] provavel: DMA2 fonte; so literal 0x085E459D (dados) (sem troca)
+0x040000CC,REG_DMA2DAD,label,,[RM4] provavel: DMA2 destino; so literal 0x08052C15 (dados) (sem troca)
+0x040000D0,REG_DMA2CNT,label,,[RM4] chute: nome de hardware GBA; sem literal na ROM (sem troca)
+0x040000D4,REG_DMA3SAD,label,,[RM4] confirmado: DMA3 fonte; lido/gravado em lib_dma3_copy (sem troca)
+0x040000D8,REG_DMA3DAD,label,,[RM4] confirmado: DMA3 destino; gravado em lib_dma3_copy (sem troca)
+0x040000DC,REG_DMA3CNT,label,,[RM4] confirmado: DMA3 controle; gravado em lib_dma3_copy (sem troca)
+0x04000100,REG_TM0CNT,label,,[RM4] provavel: timer 0; muitos literais
+0x04000104,REG_TM1CNT,label,,[RM4] provavel: timer 1; literais em varias rotinas (sem troca)
+0x04000108,REG_TM2CNT,label,,[RM4] provavel: timer 2; literais esparsos (sem troca)
+0x0400010C,REG_TM3CNT,label,,[RM4] provavel: timer 3; literais esparsos (sem troca)
+0x04000120,REG_SIOMULTI0,label,,[RM4] provavel: SIO multiplayer; literal 0x08002518 em area de link (sem troca)
+0x04000122,REG_SIOMULTI1,label,,[RM4] provavel: SIO multiplayer; literais em dados de texto (sem troca)
+0x04000124,REG_SIOMULTI2,label,,[RM4] chute: nome de hardware GBA; sem literal na ROM (sem troca)
+0x04000126,REG_SIOMULTI3,label,,[RM4] provavel: SIO multiplayer; literal unico em dados (sem troca)
+0x04000128,REG_SIOCNT,label,,[RM4] confirmado: SIO controle; lido/gravado em Link_SerialIrqTransferStep e InitializeLinkTransferState (sem troca)
+0x0400012A,REG_SIOMLT_SEND,label,,[RM4] chute: nome de hardware GBA; sem literal na ROM (sem troca)
+0x04000130,REG_KEYINPUT,label,,[RM4] confirmado: teclas; lido em get_player_inputs (sem troca)
+0x04000132,REG_KEYCNT,label,,[RM4] provavel: controle de teclas; literal unico em dados (sem troca)
 0x04000134,REG_RCNT,label,,"[LK] [GH-LK] zerado no init do link (modo SIO, nao GPIO); confirmado"
-0x04000200,REG_IE,label,,
-0x04000202,REG_IF,label,,
-0x04000204,REG_WAITCNT,label,,
-0x04000208,REG_IME,label,,
+0x04000200,REG_IE,label,,[RM4] confirmado: enable de interrupcao; gravado em IntrMain/Link_RearmSioMultiplayer (sem troca)
+0x04000202,REG_IF,label,,[RM4] confirmado: flags de interrupcao; lido/gravado em IntrMain e VBlankIrqHandler (sem troca)
+0x04000204,REG_WAITCNT,label,,[RM4] confirmado: wait states; gravado em SoftResetSequence/ResetHardwareAndMemory (sem troca)
+0x04000208,REG_IME,label,,[RM4] confirmado: master enable de interrupcao; gravado em IntrMain/InitializeInterruptsAndDefaultHandlers (sem troca)
 0x08000000,entry,label,,Simon/Rokusho [RV1] provavel: entrada da ROM (cabecalho que desvia para crt0); sem funcao no Ghidra
 0x080000A0,header_title,label,,MEDABOTSMTBV
 0x080000AC,header_gamecode,label,,A8BP
@@ -424,7 +424,7 @@ address,name,kind,count,comment
 0x080013A8,PaletteBlendToColor,func_thumb,,[R0] mistura paleta com cor no peso 0..32 (provavel)
 0x08001454,Init_CopyStartupGraphicsToVram,func_thumb,,[confirmado] 2x CpuFastSet da ROM para paleta 0x05000000
 0x08001520,BuildShadowOamFromObjectState,func_thumb,,"Simon/Rokusho: Build shadow OAM from the engine's object state table. Scans active object entries, transforms them according to object mode/affine/visibility flags, emits OAM entries, and clears the unused tail of shadow OAM. [RV1] confirmado: varre 0x80 objetos ativos (flag 0x8000)"
-0x08001A00,gMapState_base,data,,[OW] base 0x030057E0 da RAM do mapa (ver OW.md secao 1)
+0x08001A00,Obj_Mid_08001A00_InFunc08001520,data,,[OW] base 0x030057E0 da RAM do mapa (ver OW.md secao 1) (antes: gMapState_base)
 0x08001CAC,SetObjectAffineMatrixFromAngleAndScale,func_thumb,,Simon/Rokusho: Compute and write an object's affine matrix entries from angle and scale inputs. Handles both fixed default-scale and externally supplied scale sources. [RV1] confirmado: calcula ds/dy/dx/dy da matriz afim por seno/cosseno (tabela de 0x100 entradas) e escala; divarm por escala
 0x08001EA8,SetObjectScaleVectorFromMode,func_thumb,,Simon/Rokusho: Set one object's scale vector entries according to the current object transform mode and scale source. Writes the two scale components used by affine OAM objects. [R0] escala de afim por modo (provavel)
 0x08001FF8,RotateObjectOffsetByAffineAngle,func_thumb,,"Simon/Rokusho: Rotate an (x,y) object offset vector using the affine angle stored in the object state record. [R0] gira offset pelo angulo (confirmado)"
@@ -493,7 +493,7 @@ address,name,kind,count,comment
 0x080045DC,PartEditor_BlendOutStep,func_thumb,,"[FS1] [confirmado] SetGpuBlendMode(6,0x3F,0x20); sub++"
 0x08004610,PartEditor_WaitBlendStep,func_thumb,,[FS1] [confirmado] espera GpuBlend_TickStep; sub++
 0x08004644,PartEditor_DispatchSubmodeStep,func_thumb,,[FS1] [confirmado] jump table por byte +0x5A (<5); tabela em DAT_08004678 nao recuperada
-0x0800467C,PartEditor_SubmodeJumpTable,data,,[JT7] tabela real de 5 ponteiros (indice = byte ctx+0x5A
+0x0800467C,PartEditor_SubmodeJumpTable,data,,[JT7] tabela real de 5 ponteiros (indice = byte ctx+0x5A [RD1] confirmado 5 x 4: ponteiros 0x08004690 0x080046C4 0x080046E8 0x08004708 0x08004728; xref de PartEditor_DispatchSubmodeStep
 0x08004690,PartEditor_SubmodeCase0_CountParts,label,,[JT7] caso 0 da tabela 0x0800467C: Mem_FillBytes + Parts_CountInventoryMatches; grava 4/8 nos estados; JT7
 0x080046C4,PartEditor_SubmodeCase1_Init,label,,[JT7] caso 1 da tabela 0x0800467C: init do sub-bloco com ctx+0x5C; r4[2]=0; cauda comum; JT7
 0x080046E8,PartEditor_SubmodeCase2_Init,label,,[JT7] caso 2 da tabela 0x0800467C: init do sub-bloco com ctx+0x5D; r4[2]=1; cauda comum; JT7
@@ -772,7 +772,7 @@ address,name,kind,count,comment
 0x0800E690,PartDetail_AnimSlotDispatchStep,func_thumb,,[FS3] FS3 provavel: Anim_RunSlotScript(6) e StateMachine_DispatchStep
 0x0800E6C8,PartDetail_HandleCursorMoveInput,func_thumb,,"[FS3] FS3 provavel: movimento do cursor, sfx 2/4/5"
 0x0800E78C,PartDetail_DispatchSubstate,func_thumb,,[FS3] FS3 provavel: despachante por tabela indexada por obj+0x44; jump table nao recuperada (abre JT)
-0x0800E7D0,PartDetail_SubJT_Mode0,table,,"[JT8] JT8 tabela A do modo 0 de PartDetail_DispatchSubstate (7 ponteiros, idx = [ctx+0x44]); renomeado no Ghidra (nao salvo)"
+0x0800E7D0,PartDetail_SubJT_Mode0,table,,"[JT8] JT8 tabela A do modo 0 de PartDetail_DispatchSubstate (7 ponteiros, idx = [ctx+0x44]); renomeado no Ghidra (nao salvo) [RD1] confirmado 7 x 4: ponteiros 0x0800E7EC..0x0800E860; xref de PartDetail_DispatchSubstate"
 0x0800E7EC,PartDetail_Mode0_Sub0_SpecialDesc,label,,[JT8] JT8 modo 0 sub 0: StateMachine_DispatchStep(B82F0[F0]) - descricao da especialidade; provavel
 0x0800E804,PartDetail_Mode0_Sub1_MedalDesc,label,,[JT8] JT8 modo 0 sub 1: payload B6FA4[EE] - descricao de medalha/compat; provavel
 0x0800E81C,PartDetail_Mode0_Sub2_ClassText,label,,[JT8] JT8 modo 0 sub 2: payload B5578[Speciality_IsRemotenessClass(F0)+0x11]; provavel
@@ -780,7 +780,7 @@ address,name,kind,count,comment
 0x0800E848,PartDetail_Mode0_Sub4_StatRow1,label,,[JT8] JT8 modo 0 sub 4: DA04[1]; provavel
 0x0800E854,PartDetail_Mode0_Sub5_StatRow2,label,,[JT8] JT8 modo 0 sub 5: DA04[2]; provavel
 0x0800E860,PartDetail_Mode0_Sub6_StatRow3,label,,[JT8] JT8 modo 0 sub 6: DA04[3]; provavel
-0x0800E884,PartDetail_SubJT_Mode12,table,,[JT8] JT8 tabela B dos modos 1 e 2 (8 ponteiros); renomeado no Ghidra (nao salvo)
+0x0800E884,PartDetail_SubJT_Mode12,table,,[JT8] JT8 tabela B dos modos 1 e 2 (8 ponteiros); renomeado no Ghidra (nao salvo) [RD1] confirmado 8 x 4: ponteiros 0x0800E8A4..0x0800E924; modos 1 e 2; xref de PartDetail_DispatchSubstate
 0x0800E8A4,PartDetail_Mode12_Sub0_SpecialDesc,label,,[JT8] JT8 modos 1/2 sub 0: B82F0[F0]; provavel
 0x0800E8BC,PartDetail_Mode12_Sub1_MedalDesc,label,,[JT8] JT8 modos 1/2 sub 1: B6FA4[EE]; provavel
 0x0800E8D4,PartDetail_Mode12_Sub2_ClassText,label,,[JT8] JT8 modos 1/2 sub 2: B5578[class+0x11]; provavel
@@ -789,7 +789,7 @@ address,name,kind,count,comment
 0x0800E90C,PartDetail_Mode12_Sub5_StatRow2,label,,[JT8] JT8 modos 1/2 sub 5: DA04[2]; provavel
 0x0800E918,PartDetail_Mode12_Sub6_StatRow4,label,,[JT8] JT8 modos 1/2 sub 6: DA04[4]; provavel
 0x0800E924,PartDetail_Mode12_Sub7_StatRow5,label,,[JT8] JT8 modos 1/2 sub 7: DA04[5]; provavel
-0x0800E948,PartDetail_SubJT_Mode3,table,,[JT8] JT8 tabela C do modo 3 (8 ponteiros); renomeado no Ghidra (nao salvo)
+0x0800E948,PartDetail_SubJT_Mode3,table,,[JT8] JT8 tabela C do modo 3 (8 ponteiros); renomeado no Ghidra (nao salvo) [RD1] confirmado 8 x 4: ponteiros 0x0800E968..0x0800E9C8; modo 3; xref de PartDetail_DispatchSubstate
 0x0800E968,PartDetail_Mode3_Sub0_MedalDesc,label,,[JT8] JT8 modo 3 sub 0: B6FA4[EE]; provavel
 0x0800E980,PartDetail_Mode3_Sub1_TextIdx13,label,,[JT8] JT8 modo 3 sub 1: DA04[0x13] (fora do rotulo de 11); provavel
 0x0800E98C,PartDetail_Mode3_Sub2_StatRow0,label,,[JT8] JT8 modo 3 sub 2: DA04[0]; provavel
@@ -1043,7 +1043,7 @@ address,name,kind,count,comment
 0x080156C8,Fight_MedaforceScratchLiteral,data,,[TA3] literal 0x0300052E (buffer de 3 B por slot de medaforca)
 0x080156CC,Fight_MedaforceDescriptorLiteral,data,,[TA3] literal 0x083B7E54 (descritor de medaforca 6 B por id)
 0x080156D0,Fight_RandomizePriorityListSlot,func_thumb,,"[R0a] sorteia slot da lista de prioridade (chute; nome sugerido, sem rename)"
-0x080156F0,gFightPriorityRowTable,data,,[AI] [GH-AI] ponteiro (literal) para ROM 0x083AD470: 32 linhas de 4 B usadas como lista de fallback; conteudo nao fechado
+0x080156F0,Fight_FallbackPriorityRowsPtr,data,,[AI] [GH-AI] ponteiro (literal) para ROM 0x083AD470: 32 linhas de 4 B usadas como lista de fallback; conteudo nao fechado (antes: gFightPriorityRowTable)
 0x080156F4,gFightPriorityListDst,data,,"[AI2] [AI2] literal = 0x03001864 (fi+0x64, lista de 4 bytes do fallback; mesma RAM dos ids da previa de PS). Confirmado"
 0x080156F8,Fight_IsPartActionBlocked,func_thumb,,"Simon/Rokusho: Return nonzero when a requested part action slot is blocked (0 = available). This first honors the pending effect that locks a specific part slot, then rejects broken/unusable parts, then runs the shared part-action validation path. [AI] [GH-AI] confirmado: bloqueia por efeito pendente '+' na peca, cabeca sem +0x58, peca zerada (+0x59), Fight_BeginPartActionValidation"
 0x08015738,Fight_LoadHudTileset,func_thumb,,[R0b] Carrega 0x200 bytes de tiles (bloco 3) da ROM [RV3] provavel: LoadTilesWithMalias(bloco 0x0E
@@ -1405,7 +1405,7 @@ address,name,kind,count,comment
 0x0801FA68,Fight_DispatchOnSubstateAA_J_00_PreviewAdvanceSideSequences,func_thumb,,[HA3] despachante J[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_J_Substate00)
 0x0801FADC,Fight_DispatchOnSubstateAA_J_01_PreviewSideStepSprites,func_thumb,,[HA3] despachante J[0x01] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_J_Substate01)
 0x0801FBC4,Fight_DispatchOnSubstateAA_J_02_SubDispatchByStep,func_thumb,,[HA3] despachante J[0x02] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_J_Substate02)
-0x0801FBEC,Fight_J02_StepTable,data,,5 ponteiros (thumb sem bit) para os cases 0..4 de J_02; ponteiro em 0x0801FBE8; indexado pelo byte 0x03000579; salto em 0x0801FBDE
+0x0801FBEC,Fight_J02_StepTable,data,,5 ponteiros (thumb sem bit) para os cases 0..4 de J_02; ponteiro em 0x0801FBE8; indexado pelo byte 0x03000579; salto em 0x0801FBDE [RD1] confirmado 5 x 4: ponteiros 0x0801FC00 0x0801FC78 0x0801FCC4 0x0801FD10 0x0801FD3C (cases 0..4 de J_02); xref de J_02_SubDispatchByStep
 0x0801FC00,Fight_J02_Step0_SetupDisplayAndAdvance,label,,case 0 de J_02 (tabela 0x0801FBEC); bl 0x0801A788(1); avança seletor 0x03000579
 0x0801FC78,Fight_J02_Step1_SetupFromBotTable,label,,case 1 de J_02; lê fi+0x38 -> tabela 0x083B2628 (nao decodificada); avança seletor
 0x0801FCC4,Fight_J02_Step2_CopyBgTiles,label,,case 2 de J_02; 3x CpuFastSet 0x200 -> VRAM 0x0600C800/0x0600D000/0x0600D800; avança seletor
@@ -1731,7 +1731,7 @@ address,name,kind,count,comment
 0x0802842C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,func_thumb,,[HN2] HN2 AV(op 0x54) 0x00: +0x51 = 0..4 para tec 0x0C/0E/10/12/28; confirmado
 0x0802843C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,label,,[TA2] inicio real 0x0802842C; fight+0x51 = 0/1/2/3/4 para tec 12/14/16/18/40; outras so +0xAA++
 0x0802844C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_Jump,label,,[JT5] mov pc: tabela real 29 entradas em 0x0802845C (tecnica 12..40); JT5
-0x0802845C,Fight_SelectVariantByTechnique_JumpTable,data,,[JT5] tabela real 29 ponteiros (tecnica 12..40); JT5
+0x0802845C,Fight_SelectVariantByTechnique_JumpTable,data,,[JT5] tabela real 29 ponteiros (tecnica 12..40); JT5 [RD1] confirmado 29 x 4 (tecnica 12..40): todos ponteiros 0x080284xx; xref de Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique
 0x08028504,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,func_thumb,,[HN2] HN2 AV 0x01: gfx por tecnica e slot 0x21; provavel
 0x08028512,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,label,,[TA] B+0xA8-0x0C >0x1C -> efeito padrao; senao jump table de 29 variantes
 0x08028526,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_Jump,label,,[JT5] mov pc: tabela real 29 entradas em 0x08028534 (idx +0xA8-0xC); JT5
@@ -3112,7 +3112,7 @@ address,name,kind,count,comment
 0x08050F38,SceneCommandStep3_Advance,label,,[SC] [SC] passo 3 (sem funcao): so avanca o passo
 0x08050F40,SceneCommandStep4_WaitTransitionEnd,label,,[SC] [SC] passo 4 (sem funcao): cmd 8 termina; outros esperam 0x08049E08 terminar e devolvem 1
 0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions. [RV18] provavel: se estado>4 atualiza marcadores/sprites; senao despacha por tabela em +1"
-0x08050F80,Overworld_MapSubstateTable,table,,"[FM] [FM] tabela de 5 sub-estados do mapa (byte 0x03005311); entradas 0x08050F94, 0x08051078, 0x080510C0, 0x0805134C, 0x08051368; handlers sem funcao no Ghidra"
+0x08050F80,Overworld_MapSubstateTable,table,,"[FM] [FM] tabela de 5 sub-estados do mapa (byte 0x03005311); entradas 0x08050F94, 0x08051078, 0x080510C0, 0x0805134C, 0x08051368; handlers sem funcao no Ghidra [RD2] confirmado: 5 x 4 B ponteiros (0x08050F94, 08051078, 080510C0, 0805134C, 08051368); termina em 0x08050F94; xref DATA em Overworld_UpdateMapSceneStateMachine"
 0x08050F94,Overworld_MapSub0_TileArrive_Label,label,,[FM2] [FM2] sub 0 do mapa: chegada ao tile; gatilho -> sub 1; senao sub 2 (confirmado no disasm) (antes: Overworld_MapSub0_TileArrive)
 0x08051078,Overworld_MapSub1_WaitObject_Label,label,,[FM2] [FM2] sub 1 do mapa: espera objeto e avanca para sub 2 (confirmado) (antes: Overworld_MapSub1_WaitObject)
 0x080510C0,Overworld_MapSub2_IdleInput_Label,label,,"[FM2] [FM2] sub 2 do mapa: controle normal (A, B, R, andar); B novo com E+0xC33 abre ramo de menu (confirmado; nome provavel) (antes: Overworld_MapSub2_IdleInput)"
@@ -3120,7 +3120,7 @@ address,name,kind,count,comment
 0x08051368,Overworld_UpdateMapSceneStateMachine_AltEntry_8051368,label,,[OW2] maquina de cena do mapa; chama Overworld_ApplyWarpAtCurrentTile em um dos estados (confirmado) (antes: Overworld_UpdateMapSceneStateMachine)
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic. [RV18] confirmado: varre registros de spawn (terminador 0xFF) filtrando por flag de evento e capitulo; preenche tabela de 0x20 entradas e InitializeObjectRenderSlot"
 0x08051416,Map_LoadEntitySpawnsForCurrentMap,label,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234) (antes: Map_LoadEntitySpawnsForCurrentMap) (antes: Map_LoadEntitySpawns_GroupLoop)
-0x08051484,MapSpawn_ChapterFilterLiteral,data,,[PR] literal de 0x03005FDF dentro de Map_LoadEntitySpawnsForCurrentMap; filtro (mascara u16 +6 >> capitulo)&1 (EX.md)
+0x08051484,MapSpawn_ChapterFilterLiteral,data,,[PR] literal de 0x03005FDF dentro de Map_LoadEntitySpawnsForCurrentMap; filtro (mascara u16 +6 >> capitulo)&1 (EX.md) [RD2] confirmado: pool de 2 words (0x03005FDF = byte do capitulo; 0x00000FFF = mascara); xref READ em Map_LoadEntitySpawnsForCurrentMap; nome mantido
 0x080517F0,Overworld_InitPlayerSprites,func_thumb,,"Simon/Rokusho: Initialize the player's map marker / cursor UI after a map load. Converts the player's world position to tile coordinates, loads the marker graphics, seeds the marker sprite state, and sets the initial on-screen position relative to the current camera. (antes: Map_InitPlayerMapMarker)"
 0x08051940,Map_GetScaledStepDelta,func_thumb,,"[R3] revisto CH3: provável - devolve produto de dois bytes de DAT_08051960 (um indexado pelo byte +0x2A do slot idx, outro por DAT_08051968+2); passo de movimento escalado"
 0x0805196C,Overworld_ClearFollowerQueuedMove,func_thumb,,"Simon/Rokusho: Clear the follower's queued movement/facing state, then reset the follower animation queue helper used when the player changes facing without taking a full step. [R3] revisto CH3: provável - grava 0xFF em DAT_08051980+DAT_08051984 (slot de movimento enfileirado do seguidor) e chama Overworld_ClearPendingStepIfFlag; nome já no Ghidra"
@@ -3173,22 +3173,22 @@ address,name,kind,count,comment
 0x0805309C,Overworld_SyncFollowerPositionAfterWarp,func_thumb,,"Simon/Rokusho: After a successful warp, copy the player's new pixel position into the follower/secondary marker position cache and refresh its facing/animation state. [RV18] confirmado: se seguidor ativo copia posicao do lider"
 0x08053108,Map_UpdateSecondaryMarkerScreenPosition,func_thumb,,Simon/Rokusho: Recompute the secondary marker / overlay screen position from its world coordinates and the current camera scroll. [RV18] confirmado: posicao em tela do marcador secundario = mundo - scroll (ajuste -5 em Y)
 0x08053168,EventFlag_ClearIndexedFlagByPackedId,func_thumb,,Simon/Rokusho: Clear one indexed event-flag bit from the event flag list using a packed 16-bit id. The low bit selects which bit family is targeted; the remaining bits select the byte index. [RV18] confirmado: limpa bit da flag (par: bit7 / impar: bit3) no array de flags
-0x08053184,lit_EventFlagArrayBase_EvenClear,data,,[EF] [EF] literal de pool de EventFlag_ClearIndexedFlagByPackedId (par) -> 0x030057D8
-0x0805319C,lit_EventFlagArrayBase_OddClear,data,,[EF] [EF] literal de pool de EventFlag_ClearIndexedFlagByPackedId (impar) -> 0x030057D8
+0x08053184,lit_EventFlagArrayBase_EvenClear,data,,[EF] [EF] literal de pool de EventFlag_ClearIndexedFlagByPackedId (par) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (gEventFlagArrayBase); xref READ em EventFlag_ClearIndexedFlagByPackedId; nome mantido
+0x0805319C,lit_EventFlagArrayBase_OddClear,data,,[EF] [EF] literal de pool de EventFlag_ClearIndexedFlagByPackedId (impar) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x080531A0,EventFlag_SetIndexedFlagByPackedId,func_thumb,,Simon/Rokusho: Set one indexed event-flag bit in the event flag list using a packed 16-bit id. The low bit selects which bit family is targeted; the remaining bits select the byte index. [RV18] confirmado: seta bit da flag (par: bit7 / impar: bit3)
-0x080531C0,lit_EventFlagArrayBase_EvenSet,data,,[EF] [EF] literal de pool de EventFlag_SetIndexedFlagByPackedId (par) -> 0x030057D8
-0x080531DC,lit_EventFlagArrayBase_OddSet,data,,[EF] [EF] literal de pool de EventFlag_SetIndexedFlagByPackedId (impar) -> 0x030057D8
+0x080531C0,lit_EventFlagArrayBase_EvenSet,data,,[EF] [EF] literal de pool de EventFlag_SetIndexedFlagByPackedId (par) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
+0x080531DC,lit_EventFlagArrayBase_OddSet,data,,[EF] [EF] literal de pool de EventFlag_SetIndexedFlagByPackedId (impar) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x080531E0,EventFlag_IsSetByPackedId,func_thumb,,Simon/Rokusho: Return whether the event flag identified by a packed flag id is set. Used by map spawn loading to suppress entity records whose activation flag is already active. [RV18] confirmado: le bit da flag (par: bit7 / impar: bit3) e devolve 0/1
-0x08053200,lit_EventFlagArrayBase_OddIsSet,data,,[EF] [EF] literal de pool de EventFlag_IsSetByPackedId (impar) -> 0x030057D8
-0x08053218,lit_EventFlagArrayBase_EvenIsSet,data,,[EF] [EF] literal de pool de EventFlag_IsSetByPackedId (par) -> 0x030057D8
+0x08053200,lit_EventFlagArrayBase_OddIsSet,data,,[EF] [EF] literal de pool de EventFlag_IsSetByPackedId (impar) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
+0x08053218,lit_EventFlagArrayBase_EvenIsSet,data,,[EF] [EF] literal de pool de EventFlag_IsSetByPackedId (par) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x0805321C,EventFlag_SetOrClearByPackedId,func_thumb,,[R3] (mtbe) liga (on!=0) ou limpa flag por id empacotado [RV18] confirmado: chama Set ou Clear conforme o segundo argumento
 0x08053238,EventField3Bit_SetByPackedId,func_thumb,,Simon/Rokusho: Write a small 3-bit field into the event flag list using a packed 16-bit id. The low bit selects which nibble/bitfield family is targeted; the remaining bits select the byte index. (antes: EventFlag_SetIndexedFieldByPackedId) [RV18] confirmado: grava campo de 3 bits (par: bits 4-6 / impar: bits 0-2) no array de eventos
-0x08053260,lit_EventFlagArrayBase_EvenSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (par) -> 0x030057D8
-0x0805327C,lit_EventFlagArrayBase_OddSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (impar) -> 0x030057D8
+0x08053260,lit_EventFlagArrayBase_EvenSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (par) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
+0x0805327C,lit_EventFlagArrayBase_OddSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (impar) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x08053280,EventField3Bit_IncrementByPackedId,func_thumb,,Simon/Rokusho: Increment a small indexed field in the event flag list using a packed 16-bit id. The low bit selects which field family is targeted; the remaining bits select the byte index. (antes: EventFlag_IncrementIndexedFieldByPackedId) [RV18] confirmado: incrementa campo de 3 bits (par: mascara 0x70 / impar: 0x07) do id empacotado
 0x080532D4,EventField3Bit_GetByPackedId,func_thumb,,[R3] (mtbe) le campo de 3 bits por id [RV18] confirmado: le campo de 3 bits (par: bits 6..4 / impar: bits 2..0)
-0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8
-0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8
+0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
+0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
 0x08053360,Unk_08053360,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute
 0x08053380,Unk_08053380,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL + literal 1.0f; precisa re-disassemble; chute
@@ -3212,7 +3212,7 @@ address,name,kind,count,comment
 0x0805424C,Scene_DispatchStateHandler,func_thumb,,"Simon/Rokusho: Dispatch one step of the current overworld UI/scene-state machine using gOverworldUiState.{state,substate}. (antes: Overworld_DispatchUiSceneState) [VA3] tail-call: devolve o r0 do handler escolhido (tabela 0x080542B0). confirmado (retorno)"
 0x08054280,Scene_DispatchStateHandlerTail,label,,[R3] (mtbe) entrada alternativa do despacho
 0x080542A2,Scene_DispatchStateHandlerTail_Jump,label,,[JT5] mov pc: tabela real 0x8C ptrs em 0x080542B0 (literal 0x080542AC); JT5
-0x080542B0,Scene_DispatchStateHandler_CodeTable,data,,[JT5] tabela real 0x8C ptrs (codigo 0..0x8B); JT5
+0x080542B0,Scene_DispatchStateHandler_CodeTable,data,,[JT5] tabela real 0x8C ptrs (codigo 0..0x8B); JT5 [RD2] confirmado: 140 x 4 B ponteiros de codigo (0x8C); tabela termina em 0x080544E0; xref DATA em Scene_DispatchStateHandlerTail
 0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador
 0x080569E4,Viewport_ScaleStep,func_thumb,,[FS8] [FS8] chute: float mul/div/add/trunc; chama 0x080533A4 0x08053360 0x08053380; literal 0x3B800000
 0x08056F24,Viewport_CompareAndClampFloat,func_thumb,,[FS8] [FS8] chute: compara floats com constantes da ROM 0x08056F70 0x080AE8F4
@@ -3221,7 +3221,7 @@ address,name,kind,count,comment
 0x08057244,Overworld_InitChoiceMenuScreen,label,,[OW2] monta menu de 4 linhas; CheckStepAllowed(k) == 1 desenha linha ativa (confirmado)
 0x08057440,Map_TickChoiceListOpen,func_thumb,,"[provavel] abre lista de escolha em 0x10 passos (FUN_080492A8 + Map_CreateChoiceSprites); ao fim, GameState_AdvanceSubroutine"
 0x080574D4,FieldMenu_ChoiceSub2_SelectRow,func_thumb,,"[FM2] [FM2] sub 2 do menu de escolha 0x083D5FF4 (Thumb, sem funcao no Ghidra); linha ativa via Overworld_CheckStepAllowed; switch 0..5 pela tabela 0x08057534 [RV18] provavel: menu de escolha: move cursor (wrap 4 linhas); A checa passo permitido via Overworld_CheckStepAllowed; B fecha"
-0x08057534,FieldMenu_RowActionTable,table,,"[FM2] [FM2] tabela do switch de linha: idx0=0x080575D4, idx1=0x0805754C (sub 0x0B), idx2=0x08057564 (sub 0x0D), idx3..5=0x08057570 (sub 0x0F)"
+0x08057534,FieldMenu_RowActionTable,table,,"[FM2] [FM2] tabela do switch de linha: idx0=0x080575D4, idx1=0x0805754C (sub 0x0B), idx2=0x08057564 (sub 0x0D), idx3..5=0x08057570 (sub 0x0F) [RD2] confirmado: 6 x 4 B ponteiros (0x080575D4, 0x0805754C, 0x08057564, 0x08057570 x3); termina em 0x0805754C; xref DATA em FieldMenu_ChoiceSub2_SelectRow"
 0x0805754C,FieldMenu_RowAction1_Sub0B,label,,[FM2] [FM2] idx 1 do switch: gamestate_subroutine=0x0B (lido); mapeamento de opcao pendente
 0x08057564,FieldMenu_RowAction2_Sub0D,label,,[FM2] [FM2] idx 2 do switch: gamestate_subroutine=0x0D (lido); mapeamento pendente
 0x08057570,FieldMenu_RowAction3_Sub0F,label,,[FM2] [FM2] idx 3..5 do switch: gamestate_subroutine=0x0F (lido); mapeamento pendente
@@ -3487,8 +3487,8 @@ address,name,kind,count,comment
 0x0806445C,Anim_ScrollCountdownSlide,func_thumb,,[N2] [N2] copia 0x080AFC18 idx 7: Anim_ScrollTileRows e contador obj+0x3C; move sprite do slot 0x03002C30 (provavel no papel do sprite)
 0x080644D8,Anim_ScrollThenLoadSlotAndSfx,func_thumb,,"[N2] [N2] copia 0x080AFC18 idx 8: quando obj+0x3A==0, Obj_InitSlotAndLoad(1,0,1), SFX 5/14, ++0x0300137C (confirmado)"
 0x08064524,Flow_StepSfxCommit,func_thumb,,passo de maquina de estados com som 0xD e avanco condicional (provavel)
-0x080645A0,Obj_StepThenTimerOnMatch,func_thumb,,[JT3] alvo de 0x0806463C idx 10 (ja existe)
-0x08064610,Anim_WaitCounterThenAdvance,func_thumb,,[JT3] alvo de 0x0806463C idx 11 (ja existe)
+0x080645A0,Obj_StepThenTimerOnMatch,func_thumb,,"[JT3] alvo de 0x0806463C idx 10 (ja existe) [RV19] confirmado: despacha passo do objeto; se terminou e contadores batem, incrementa e chama Obj_InitTimerRecord"
+0x08064610,Anim_WaitCounterThenAdvance,func_thumb,,[JT3] alvo de 0x0806463C idx 11 (ja existe) [RV19] confirmado: espera Anim_StepRecordCounter(+0x50) terminar e grava estado 0x14
 0x0806463C,Dispatch_StateTableWithCopy,func_thumb,,copia tabela para pilha e despacha por índice; provável
 0x080646C4,Screen_InitLoadBgAndObjTimer,func_thumb,,"[FS9] provavel: BG2/BG3CNT, tiles/mapas, Obj_InitTimerRecord 0x10; tabela 0x080AFC48"
 0x08064880,Anim_StepOscillatingSprite,func_thumb,,[provavel] posicao = ctx+0x3A*0x10+0x1B8 com mascara; bit 0x100 pelo bit 0x20
@@ -3830,10 +3830,10 @@ address,name,kind,count,comment
 0x08072B74,snd_cmd_E9,func_thumb,,"SND12: E9 xx -> track+0x6B = min(xx,0x30). GUESS: volume/expressao"
 0x08072B90,snd_cmd_EA_set_track_6f,func_thumb,,[SN] EA xx: track+0x6F=xx; flag 0x40 (renomeado nesta rodada)
 0x08072BAC,snd_cmd_EB,func_thumb,,SND12: EB -> track+0x4C += 1. GUESS: contador
-0x08072BB8,snd_cmd_loop_start,func_thumb,,SND12: F0 n -> track+0x52 = n; track+0x18 = cursor (inicio de laco 1)
-0x08072BCC,snd_cmd_loop_end,func_thumb,,SND12: F1 -> --track+0x52; se != 0 cursor = track+0x18 (fim de laco 1)
-0x08072BE4,snd_cmd_loop2_start,func_thumb,,SND12: F2 n -> track+0x53 = n; track+0x1C = cursor (laco 2)
-0x08072BF8,snd_cmd_loop2_end,func_thumb,,SND12: F3 -> --track+0x53; se != 0 cursor = track+0x1C
+0x08072BB8,snd_cmd_loop_start,func_thumb,,SND12: F0 n -> track+0x52 = n; track+0x18 = cursor (inicio de laco 1) [RV20] confirmado: le contagem para +0x52 e grava ponteiro de inicio de loop em +0x18
+0x08072BCC,snd_cmd_loop_end,func_thumb,,SND12: F1 -> --track+0x52; se != 0 cursor = track+0x18 (fim de laco 1) [RV20] confirmado: decrementa contagem +0x52 e volta ao inicio enquanto nao zero
+0x08072BE4,snd_cmd_loop2_start,func_thumb,,SND12: F2 n -> track+0x53 = n; track+0x1C = cursor (laco 2) [RV20] confirmado: como loop_start mas contagem +0x53 e inicio em +0x1c
+0x08072BF8,snd_cmd_loop2_end,func_thumb,,SND12: F3 -> --track+0x53; se != 0 cursor = track+0x1C [RV20] confirmado: como loop_end para o segundo loop
 0x08072C10,snd_cmd_jump,func_thumb,,SND12: F4 a32 -> cursor = a (JMP). Usado para repetir a trilha: JMP a inicio a cada ~1920 ticks em T0..T5
 0x08072C20,snd_cmd_call,func_thumb,,SND12: F5 a32 -> track+0x20 = retorno; cursor = a (CALL)
 0x08072C34,snd_cmd_return,func_thumb,,SND12: F6 -> cursor = track+0x20 (RET)
@@ -3917,7 +3917,7 @@ address,name,kind,count,comment
 0x080746E0,Snd_UpdateChannelIfIdle,func_thumb,,provável: atualiza canal de som se ctx+0x258 == 0
 0x08074704,Snd_TickChannelWhenIdle,func_thumb,,[FL10] se +0x2CC==0 chama snd_channel_update_3 (provável)
 0x08074728,Snd_UpdateChannelIfIdle,func_thumb,,atualiza canal de som se +0x340==0; provavel
-0x0807474C,Snd_TrackUpdateFlagged,func_thumb,,[FR1] snd_channel_update_1 + set 0x5F flags on track +0x50 if flag2 is clear
+0x0807474C,Snd_TrackUpdateFlagged,func_thumb,,[FR1] snd_channel_update_1 + set 0x5F flags on track +0x50 if flag2 is clear [RV20] provavel: atualiza canal +0x1d0 e
 0x08074780,snd_update_channel2_if_track_flag,func_thumb,,"[FS10] FS10 snd_channel_update_2(driver+0x244) + snd_track_test_flag2; ptr 0x083ABD9C; confianca provavel (bytes a mao, fim nao decodificado)"
 0x080747B8,snd_update_channel3_if_track_flag,func_thumb,,[FS10] FS10 snd_channel_update_3(driver+0x2B8) + snd_track_test_flag2; ptr 0x083ABDA8; confianca provavel
 0x080747F4,snd_update_channel4_if_track_flag,func_thumb,,[FS10] FS10 snd_channel_update_4(driver+0x32C) + snd_track_test_flag2; ptr 0x083ABDB4; confianca provavel
@@ -3938,7 +3938,7 @@ address,name,kind,count,comment
 0x08074BCC,Snd_StartSongWithCounter,func_thumb,,inicia musica e ajusta contador +0x730; provavel
 0x08074C0C,snd_track_set_flag40,func_thumb,,[R4] R4: marca bit 0x40 e grava campo +0x70 da trilha; chute
 0x08074C30,snd_track_apply_all_0c,func_thumb,,[R4] R4: aplica snd_track_set_flag40 em 7 trilhas; chute
-0x08074CA0,Snd_ApplyAllTracksCounted,func_thumb,,[FR1] voice counter +0x730 up/down around snd_track_apply_all_0c
+0x08074CA0,Snd_ApplyAllTracksCounted,func_thumb,,[FR1] voice counter +0x730 up/down around snd_track_apply_all_0c [RV20] confirmado: incrementa contador busy +0x730 (com teto)
 0x08074CE0,snd_song_current,func_thumb,,[R4] R4: devolve id da musica atual ou -1; provavel
 0x08074D3C,snd_store_global_word,func_thumb,,[R4] R4: grava campo global do driver de som; chute
 0x08074D50,snd_sfx_start,func_thumb,,[R4] R4: inicia efeito sonoro nas trilhas (prioridade); provavel
