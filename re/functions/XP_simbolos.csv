@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x080127DC,Fight_AwardPartExperience,function,XP da batalha: pool fi+0x16C vai para o registro de medalha de cada bot ativo; nivel+1 se pool>=R+2; teto 100 (guarda 'd')
+0x0801277C,Battle_SumPartBytesToCtx16C,function,soma u16 de B+0x52/+0x6A/+0x82/+0x9A (campo +6 power_or_evasion das pecas inimigas ativas) em fi+0x16C
+0x0804206C,Level_ComputeReferenceFromSlots,function,nivel de referencia = ponto medio entre 1o e 4o maior nivel das medalhas 0x03000BE0
+0x080420C4,Stage_FromLevelThresholds,function,estagio 0..4 pelos limiares gMedals+3..+6 (0 = sem limite)
+0x08041D70,Medabot_SpawnFromRecord,function,recrutamento: copia medalha, nivel de referencia, XP=(nivel+1)*100, especialidades +0x20..+0x27
+0x08011490,Fight_MedalStageUpSeqStep,function,provavel: le flag de estagio fi+0x16F+8*cnt (cnt=fi+0x186); grava 0x4E em 0x0300137C; cnt==3 -> 0x5B (nome provisorio)
+0x03000BE0,gMedalRecords_RAM,data,registros de medalha da equipe 0x40 B (n=0..29): +1 id, +2 XP restante u16, +5 nivel, +7 +N, +8 estagio, +0x20 especialidades
+0x03001800,fight_information,data,contexto da luta: +0x16C pool de XP; +0x16F/+0x170..+0x175 eventos de estagio e medaforca (stride 8 por bot)
+0x0300196C,fi_XP_pool,data,pool u16 de XP da batalha (fi+0x16C)
+0x03001974,fi_medaforce_flag,data,flag de medaforca 10/30/60 por bot (fi+0x174+8i); leitor nao achado
+0x0300196F,fi_stage_flag,data,flag de estagio-up por bot (fi+0x16F+8i); lido por Fight_MedalStageUpSeqStep

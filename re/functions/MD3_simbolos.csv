@@ -1,0 +1,8 @@
+# address,name,kind,comment
+0x08031704,Fight_DispatchOnSubstateAA_BR_45_SetupMedaforceSlots,func_thumb,"confirmado (decompile): fi+0x51 = B[fi+0x87]+0xAA (leitor de bot+0xAA, b2 do descritor); sem renomear"
+0x0802B810,Fight_DispatchOnSubstateAA_BF_SelectAlliesAndStat,func_thumb,"confirmado: le B[active]+0xA8 (id medaforca 0x21/0x1F/0x23/0x25) -> fi+0x51 0..3; fi+0xAA++ (NAO bot+0xAA)"
+0x0802793C,Fight_DispatchOnSubstateAA_AS,func_thumb,"confirmado: stub, CallViaR0(table[fi+0xAA]); le fi+0xAA, nao bot+0xAA"
+0x0802A0E8,Fight_DispatchOnSubstateAA_BA,func_thumb,"confirmado: stub, CallViaR0(table[fi+0xAA]); le fi+0xAA, nao bot+0xAA"
+0x08030A24,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,func_thumb,"confirmado: acao normal; fi+0xA8 = B[fi+0x87]+(B+0xDD-1)*0x18+0x49; B+0xA7 = B+0xDD-1; nao grava bot+0xA8..0xAD"
+0x08015668,Fight_SelectMedaforceActionSource,func_thumb,"confirmado (MD2): copia desc6 inteiro para bot+0xA8..0xAD (Mem_CopyBytes_Dup); unico escritor de A8..AD"
+0x03000590,battle_bot_blocks,label,"base do bloco de bot; B+0xAA sem literal 0x0300063A na ROM; B+0xAD sem literal 0x0300063D"

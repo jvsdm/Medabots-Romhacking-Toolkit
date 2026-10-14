@@ -232,3 +232,4 @@
 0x0805C574  título GS 5 (OPTIONS?): não lido
 0x0805C2DC..0x0805CC3C  entradas 10..11 do menu do título: não lidas
 0x0805EFD4, 0x0805EFFC, 0x0805F144, 0x0805F19C  sub-passos da tela de nome (tabela 0x084836E8): não lidos
+0x08004A2A	PB: miolo/funcao que chama Fight_RefreshBotPartRecords
