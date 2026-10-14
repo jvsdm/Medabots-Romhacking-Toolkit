@@ -103,7 +103,7 @@ address,name,kind,comment
 0x0803E7C0,Overlay_LayoutFixedTextBlock,func,revisto CH2: provável; uma chamada a Text_LayoutGlyphSpritesOffset com constantes; chamada em FUN_0803D74C
 0x0803E7F0,Overlay_CopyBufferAndLayoutText,func,revisto CH2: provável; copia 0xB bytes para buffer indexado por +0x38 e chama Text_LayoutGlyphSprites; não desenha ícone; chamada em FUN_0803D74C
 0x0803E83C,Overlay_DrawThreeTileBlocks,func,revisto CH2: confirmado; três chamadas de DrawPartIconTileBlock em loop lido no código; chamada em FUN_0803D74C
-0x0803E870,Overlay_CopyEightBytesForIndex,func,revisto CH2: confirmado; Mem_CopyBytes de 8 bytes para tabela indexada por +0x38*8; chamada em FUN_0803D74C
+0x0803E870,Overlay_CopyEightBytesForIndex,func,revisto CH2: confirmado; copia 8 bytes da tabela indexada por ctx+0x38*8 para ctx+0x39 (DC4); chamada em FUN_0803D74C
 0x0803E894,Counter_IncIfFlagBit0,func,"revisto CH2: confirmado; se bit0 do byte de flag, incrementa dois shorts consecutivos; chamada de 0x0803DE72 e 0x0803DE92"
 0x0803E8B8,Overlay_CopySixBytesFromRandomTable,func,revisto CH2: confirmado; randbyte & 0xF indexa tabela de 6 bytes que é copiada; chamada em Overlay_InitScreenGraphics
 0x0803E8EC,Overlay_DrawSixDigitRow,func,revisto CH2: provável; 6 chamadas de FillBgTilemapRectSequential nas linhas 2..12 com valor por byte de tabela; 'digit row' é suposição

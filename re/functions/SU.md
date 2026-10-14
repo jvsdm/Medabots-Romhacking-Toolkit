@@ -169,7 +169,7 @@ Gancho do despachante: 0x03001800 +0xAA = passo; +0xB5 = handler concluído (zer
 | Y 0x0C | 0x08022E14 | Fight_DispatchOnSubstateAA_Y_0C_SpawnRingSpritesOnTarget | igual a X_0C com SFX 0x4B. +1. | +1 |
 | Y 0x0D | 0x08022B40 | Fight_DispatchOnSubstateAA_X_0D_ExpandRingAndClear (compartilhado: X,Y) | gira o anel (+4/quadro), após 0x5A quadros encolhe os 5 sprites; quando a escala chega a 4 limpa 0x21..0x25, +1. | +1 |
 | Y 0x0E | 0x08022F50 | Fight_DispatchOnSubstateAA_Y_0E_ReviveTarget | efeito de Y: alvo +0x40 = 3, `Fight_ClampRepairToMissingArmor(alvo, cabeça, +0xEC)`, +0x59 = byte de +0xC8, +0xBA = 1; atualiza sprites das peças e re | **Pendente** |
-| Y 0x0F | 0x08022FB4 | Fight_DispatchOnSubstateAA_Y_0F_PlayEffectSetMessage28 | final de Y: `FUN_0803F63C(bot alvo, dado, 0x0E)` (mesmo efeito de M_05), +0xA6 = 0x28, +1. | +1 |
+| Y 0x0F | 0x08022FB4 | Fight_DispatchOnSubstateAA_Y_0F_PlayEffectSetMessage28 | final de Y: `FUN_0803F63C(bot alvo, dado, 0x0E)` (copia bot alvo -> dado; M_05 faz o inverso, tabela -> dado; DC4), +0xA6 = 0x28, +1. | +1 |
 
 ## Despachante AC
 - Resumo (3 linhas; opcode 0x33, parcial):

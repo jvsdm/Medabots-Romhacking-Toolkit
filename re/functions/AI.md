@@ -150,8 +150,7 @@ Efeito de confusão (`+0xC9 == ','`): `Fight_AssignBotTargetSlot` 0x0801B69C tro
 | 0x03000590 / 0x03001800 | blocos de bot / fight_information | — | RAM |
 
 Para o Lua, a tabela de 32 linhas (0x083AD470) é o ponto que mais precisa de confirmação antes de portar a
-prioridade de fallback. Hipótese (não confirmada): as linhas não são de ids de peça e a leitura da origem
-(`Mem_CopyBytes_Dup` com src/dst) pode estar invertida; confirmar lendo a escrita em fi+0x64 no emulador.
+prioridade de fallback. Hipótese (não confirmada): as linhas não são de ids de peça. O sentido da cópia está confirmado (DC4, decompile 0x080156D0: `Mem_CopyBytes_Dup(tabela ROM + (rand&0x1F)*4, fi+0x64, 4)`, origem = tabela); falta só confirmar o conteúdo no emulador.
 
 ## 7. Medaforça pela CPU (resumo)
 

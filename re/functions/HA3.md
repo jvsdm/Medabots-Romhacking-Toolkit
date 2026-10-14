@@ -353,10 +353,10 @@ Seções "resumo": a leitura veio de lista de constantes e chamadas, não do cor
 
 ## 0x08020004 Fight_DispatchOnSubstateAA_K_06_QueueMessageCode14 (K:0x06)
 - Assinatura: `void K_06(void)`.
-- O que faz: chama `FUN_0803F63C(0x03001800 + cat*0x100 + 0x..., DAT_0802003C, 0xE)` (entrada de tabela por lado, cat =
+- O que faz: chama `FUN_0803F63C(DAT_08020038 + cat*0x100, DAT_0802003C, 0xE)` (copia 0xE bytes do bloco do bot do lado cat (DC4) =
   +0x51) e grava +0xA6 = 0x14 (código de passo/mensagem, ver HANDOFF: +0xA6 = step/message code). +0xAA += 1.
 - Chama: FUN_0803F63C. Chamada por: tabela K (0x06).
-- Memória: 0x03001800 (+0x51, +0xA6, +0xAA); tabela por lado (cat*0x100 + DAT_08020038, não resolvido).
+- Memória: struct de fight `DAT_08020034` (+0x51, +0xA6, +0xAA; endereço do literal não resolvido); bloco do bot por lado (`DAT_08020038 + cat*0x100`, base não resolvida).
 - Para o Lua: porta (disparo de mensagem).
 - Confiança: confirmado (corpo lido). Passo "dispara a mensagem de código 0x14": provável.
   Correção: a versão antiga dizia que lê 0x0300059A e 0x030004DE; isso não aparece no corpo.

@@ -77,7 +77,7 @@ Demais pendentes (V e AB/AC/AD compartilhados):
 - **V (0x2C), buff visual sem efeito confirmado**: ROS; 4 orbes giram em volta do ator e depois U06 alterna o flag +0x58 do bloco (msg 0x72/0x73). Sem dano, status ou revive escritos no que foi lido.
 - **W (0x2D), buff de carga no ator**: ROS (variante pela técnica da peça +0x49); bot+0xBD |= 8, +0xDF = técnica da peça, +0xD8 = +0xEC (acumula até 0xFF). Efeito no próximo golpe não lido (fora do SU).
 - **X (0x2E), status no alvo**: ROS; passo 0x0E grava status 0x1F no alvo (+0xC4) com +0xC6/+0xC7 = valores clampados de +0xE8/+0xEC. Bloqueio (0x39) se o alvo tem peça com técnica 0x16 (passo 0x00 = fluxo de bloqueio).
-- **Y (0x2F), revive**: ROS; só age se a cabeça do alvo tem armadura 0 (+0x59). Passo 0x0E: alvo +0x40 = 3, cabeça +0x59 recebe ctx+0xC8, +0xBA = 1 e reposiciona os bots; 0x0F reaplica o efeito do M_05 (FUN_0803F63C, id 0x0E) e msg 0x28.
+- **Y (0x2F), revive**: ROS; só age se a cabeça do alvo tem armadura 0 (+0x59). Passo 0x0E: alvo +0x40 = 3, cabeça +0x59 recebe ctx+0xC8, +0xBA = 1 e reposiciona os bots; 0x0F copia 0xE bytes do bot alvo para o buffer (FUN_0803F63C(bot alvo, dado, 0xE); M_05 copia o sentido inverso, tabela -> buffer; DC4) e grava msg 0x28.
 - **AC (0x33), flag do bot**: AC 0x00 faz ROS sem custo de status; AC 0x0E escreve 1 no byte +0xBF do bot indicado por fi+0x88 (flag "carga ultra rápida"); AC 0x0F grava código 0x2B em +0xA6. Dano não escrito no que foi lido.
 - **AD (0x34), status compartilhado e absorção**: AD 0x00 bloqueia (msg 0x39) se a técnica 16 aparece no alvo ou no próprio; AD 0x15 (ver SU.md) escreve 0x29 em +0xC9..+0xCC e zera +0xC4..+0xC7 dos dois bots; AD 0x16 grava código 0x2D ("absorveu tempo do inimigo").
 

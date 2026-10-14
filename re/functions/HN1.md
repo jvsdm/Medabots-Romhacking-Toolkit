@@ -148,7 +148,7 @@ Padrões:
 - Confiança: confirmado (código); "revive" provável.
 
 ## 0x08022FB4 Y 0x0F -> Fight_DispatchOnSubstateAA_Y_0F_PlayEffectSetMessage28
-- Passo: final de Y: `FUN_0803F63C(bot alvo, dado, 0x0E)` (mesmo efeito de M_05), +0xA6 = 0x28, +1.
+- Passo: final de Y: `FUN_0803F63C(bot alvo, dado, 0x0E)` (copia bot alvo -> dado; M_05 faz o inverso, tabela -> dado; DC4), +0xA6 = 0x28, +1.
 - Confiança: confirmado.
 
 ## 0x08023018 Z 0x00 -> Fight_DispatchOnSubstateAA_Z_00_CheckRos
