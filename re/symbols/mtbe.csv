@@ -32,8 +32,9 @@ address,name,kind,count,comment
 0x03000477,gDebugRowValue2,label,,[DB] GH-DB confirmado: valor da linha 2 (ctx+0x37)
 0x03000479,gCtx_DebugBotIndex,label,,[DB] GH-DB confirmado: bot 0..121 do visualizador Motion (ctx+0x39) (antes: gDebugBotIndex)
 0x0300047D,gPartsGridCursorIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: currently_selected_medal) [RM1] confirmado (antes: currently_selected_medal): ctx+0x3D = indice 0..35 do cursor da grade; PartsGrid_SplitRowCol faz /6 e %6 (decompile)"
+0x0300047E,gScreenCtx_DetailMode,label,,"[PD2] confirmado: ctx+0x3E lido por PartDetail_DispatchSubstate 0x0800E78C (modo 0..3); escrito por PartDetail_InitWithMode (loja/pre-batalha), Fight_InitPartStateSetGS10 (batalha), PartsGrid_TickRouteSelection (=0). Mesmo byte usado como flag 0x80 da grade. (proposto, nao renomeado)"
 0x0300047F,gPartsGridCursorRow,label,,"[FI2] ctx+0x3F estado da tela de time (PS) conflito com PS2 (slot) aberto (antes: gCtx_TeamScreenState) [RM1] confirmado (antes: gCtx_TeamScreenState): ctx+0x3F = linha (index/6), gravado por PartsGrid_SplitRowCol (decompile). Conflita com nota FI2 (PS=estado); ver RM1.md"
-0x03000484,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
+0x03000484,gScreenCtx_DetailRow,label,,[FI] contador animacao provavel CONFLITO com fi+0x84 (antes: gCtx_CounterAnim)
 0x03000486,gCtx_Byte46,label,,[FI] timer de espera u16 conf (antes: gCtx_WaitTimer) [RM5] ctx+0x46 (ctx 0x03000440) PG.md le 0/1/2 provavel (antes: gCtx_WaitTimer; o timer e +0x86 = 0x030004C6)
 0x03000489,gCtx_FreeFlag,label,,[FI] flag ctx livre provavel
 0x03000491,gCtx_PartGaugePhaseSideA,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: selected_tinpet_in_menu) [RM5] ctx+0x51 fase 0..3 do lado A BT.md/FL6.md/FI.md provavel (antes: selected_tinpet_in_menu)"
@@ -650,7 +651,7 @@ address,name,kind,count,comment
 0x08009274,PartsGrid_TickFadeOutStep,func_thumb,,[FS3] FS3 provavel: quadro de transicao da grade; estado em obj+0x4A
 0x080092D4,PartsGrid_TickRouteSelection,func_thumb,,[FS3] FS3 provavel: roteia proxima tela apos selecao (bit 0x40)
 0x08009374,PartsGrid_TickDispatchSubstate,func_thumb,,[FS3] FS3 provavel: StateMachine_DispatchStep sobre obj+0x84
-0x080093AC,Shop_SnapshotQuantitiesTable,func_thumb,,copia 0x40 bytes de gShopQuantities; provavel
+0x080093AC,PartsGrid_SnapshotScratchToCellStep,func_thumb,,copia 0x40 bytes de gShopQuantities; provavel (antes: Shop_SnapshotQuantitiesTable)
 0x080093E0,PartsGrid_ResetAndSetMode1,func_thumb,,"[FS3] FS3 provavel: limpa OAM/slots, Dispatch_Sub4Mode(1)"
 0x080093F8,Timer_IncPairIfFlag,func_thumb,,[R0] incrementa par de contadores 16 bits se flag bit0 (provavel)
 0x0800941C,PartsGrid_SplitRowCol,func_thumb,,[R0] indice da grade 6 colunas em linha/coluna (provavel)
@@ -894,6 +895,7 @@ address,name,kind,count,comment
 0x080115E8,Fight_FadeRowsUpStep,func_thumb,,[FS4] [FS4] fade A/B cor 0xFFFF ate 9 com draw; GS+1; tabela 0x083ACFA8; provavel (antes sem funcao no FS.md)
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
 0x080116C4,Fight_InitPartStateSetGS10,func_thumb,,"[FS4] [FS4] clear slots/objetos, fight+0x3C 0x14B, cena 0x03002B8C=5, GS=0x10; tabela 0x083ACFB0; provavel"
+0x08011720,Fight_InitPartStateSetGS10,func_thumb,,"[PD2] confirmado: grava ctx+0x3E = byte [struct+0x168] (struct em DAT_08011700, nao resolvido), ctx+0x3C=2, ctx+0x3D=tabela; sem xref direto (tabela de estados); provavel batalha"
 0x08011764,Fight_InitBotPartPanel,func_thumb,,provável: monta painel de peças do bot na luta
 0x08011A58,Fight_FadeRowsDownStep,func_thumb,,"[FS4] [FS4] fade inverso linhas 0x20-4*cnt, cor 0xFFFF; GS+1; tabela 0x083ACFBC; provavel"
 0x08011ABC,Fight_DrawOscSetGS3D,func_thumb,,[FS4] [FS4] draw+osc; GS=0x3D; tabela 0x083ACFC0; provavel
@@ -2419,7 +2421,7 @@ address,name,kind,count,comment
 0x0803D6AC,Link_ResetFieldsAndSetGs50,func_thumb,,"[FN4] confirmado no decompile: zera byte +0x84 do ator, campos +0x51..+0x54, +0x1A6..+0x1AC e +0x1B0=1, +0x86=0 e grava 0x50 no GS; ptr 083AFC8C (antes: FUN_0803d6ac)"
 0x0803D71C,Link_RollTableEntryAndAdvance,func_thumb,,"[FN4] confirmado no decompile: randbyte() & 0x1F indexa tabela e grava em +0x38, incrementa contador; ptr 083AFC90 (antes: FUN_0803d71c)"
 0x0803D74C,Screen_InitOverlayAndLoadAssets,func_thumb,,[FN2] provavel: Init de tela: limpa; CpuFastSet; DISPCNT; 4x decompress_and_store; layout overlay; snd_song_request(8)
-0x0803D928,Link_StepPaletteFadeDown,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 8; sentido do fade e chute
+0x0803D928,Link_StepPaletteFadeDown,func_thumb,,"[FS6] [FS6] provavel; tabela menu 10 idx 8; sentido do fade e chute [CH7] provavel; revisto CH; fade de linhas de paleta (0x20-4*n) ate estado 9, depois contador; prefixo Link_ duvidoso; ptr 083AFC98/083AFD00"
 0x0803D980,Link_StepLoadObjAndAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 9
 0x0803D9A0,Fight_ShowPreBattleTextIndex1,func_thumb,,"[TX] GH-TX: StateMachine_DispatchStep(gTextPreBattleMessage[1]) (indice fixo, ldr [r0,#4]). Confirmado pelo corpo 0x0803D9A0..0x0803D9BD (sem funcao no Ghidra)"
 0x0803D9C8,Link_StepCopyPaletteAndAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 11 e 42
@@ -2457,7 +2459,7 @@ address,name,kind,count,comment
 0x0803E2AC,Anim_DrawFadeSfx8Step,func_thumb,,[FS7] [FS7] desenha segmento; snd_fade_request(8); provavel
 0x0803E2DC,Anim_DrawFlushPaletteThenReset,func_thumb,,[FS7] [FS7] desenha segmento; CopyPaletteBuffersToHardware; provavel
 0x0803E314,Anim_DrawFadeRowsStep,func_thumb,,[FS7] [FS7] desenha segmento; fade de linhas de paleta A e B em 9 passos; provavel
-0x0803E374,Anim_PickSlotActivateEntryCopy,func_thumb,,[FS7] [FS7] sorteia slot; inventario ou Tinpet_ActivateMatchingEntry; copia 15 bytes; provavel (escolha chute)
+0x0803E374,Anim_PickSlotActivateEntryCopy,func_thumb,,"[FS7] [FS7] sorteia slot; inventario ou Tinpet_ActivateMatchingEntry; copia 15 bytes; provavel (escolha chute) [CH7] provavel; revisto CH; gauge + contador, sorteia slot (Overlay_PickRandomSlotAndDrawCursor), Inv_AddCountClamp99 ou Tinpet_ActivateMatchingEntry, copia 15 bytes; prefixo Anim_ fraco; ptr 083AFD98"
 0x0803E434,Anim_DrawSegmentThenDispatchLoadAlt,func_thumb,,[FS7] [FS7] variante de Anim_DrawSegmentThenDispatchLoad com campos +0x18/+0x1C; provavel
 0x0803E48C,Anim_DrawSetValue3E,func_thumb,,[FS7] [FS7] desenha segmento; grava 0x3E em ponteiro fixo; provavel
 0x0803E4B4,PeerLost_MenuStep16,func_thumb,,[LK2] [GH-LK2] passo 0x10 do menu 10: entrada do peer sumiu (MS2 seta sub 0x10); provavel
@@ -2657,6 +2659,7 @@ address,name,kind,count,comment
 0x08044B34,Roster_ResolveIdIfZero,func_thumb,,[R2a] R2a: id 0 vira byte da tabela de roster atual; senao devolve o id [RV12] confirmado: se id==0 busca id na tabela de roster; senao devolve o id; mantem nome
 0x08044B58,Bot_InitStarterRecord,label,,rotina do bot inicial (antes: site_StarterBot)
 0x08044BA8,FightPreview_InitSideState,func_thumb,,[R2a] R2a: zera estado de um lado da previa; grava modo e lado [RV12] confirmado: limpa slots/atributos e estado do lado da preview; grava modo e parametro; mantem nome
+0x08044BF0,PartDetail_InitWithMode,func_thumb,,"[PD2] confirmado: grava ctx+0x3E=param (0..3, 0 forca 0) e ctx+0x3C=3; chamada por Gfx_FadeThenPreviewInit 0x080627A0 (loja, byte struct+0x19) e Fight_PreviewFadeThenInit. (antes: FightPreview_InitSideState) RENOMEADO no Ghidra"
 0x08044C38,FightPreview_SetSceneMode,func_thumb,,[R2a] R2a: configura tipos e contadores da cena de previa conforme modo 0..3 [LK2] [GH-LK2] grava gMainState e gamestate_menu; chamado pelo handler de comando 6; confirmado (nome do Ghidra)
 0x08044CDC,Dispatch_Sub4Mode,func_thumb,,[R2a] R2a: despacha modo 0..3 para FUN_08064BEC/0C/2C/4C [RV12] confirmado: despacha para Battle_SetDefaultsA..D conforme modo 0..3; mantem nome
 0x08044D0C,Asset_UnpackOrCopyBlock,func_thumb,,[R2a] R2a: tipo 1 = LZ77 para WRAM; senao bios_cpuset com registro em DAT_08044D60 [RV12] confirmado: LZ77 para WRAM se nibble=1
@@ -2732,7 +2735,7 @@ address,name,kind,count,comment
 0x08047F50,PartSet_FindCompleteEntryIndex,func_thumb,,[R3] indice (0..8) do registro com +3..+6 iguais a v; -1 se nenhum [RV13] [RV13] confirmado: indice da 1a entrada status 3 com 4 campos iguais ao parametro; -1 se nenhuma
 0x08047F9C,Team_CountSlotsWithStatus3,func_thumb,,Simon/Rokusho: Count entries in gPartSetTable whose state byte is 3 (complete set). (antes: PartSet_CountCompleteEntries) [RV13] [RV13] confirmado: conta 9 slots com status 3
 0x08047FBC,PartSet_HasCompleteMonochromeEntry,func_thumb,,Simon/Rokusho: Return whether gPartSetTable contains a complete set entry whose four part ids (head/right/left/legs) all match the supplied monochrome part id. [HE3] confirmado Ghidra (GH-HE3-redo); 0x030017A0 byte0==3 e +3..+6 == part
-0x08048000,Fx_SetupLayersAndInitRecord8,func_thumb,,[FS7] [FS7] grava 0x500 e 0x1F60 em registradores de display; Fx_InitRecord8; provavel (nome chute)
+0x08048000,Fx_SetupLayersAndInitRecord8,func_thumb,,"[FS7] [FS7] grava 0x500 e 0x1F60 em registradores de display; Fx_InitRecord8; provavel (nome chute) [CH7] provavel; revisto CH; grava 0x500/0x1F60 em regs de display, Fx_InitRecord8(arg,0x16,7), zera +100; sem ptr de tabela"
 0x08048038,Fx_StateMachine_Dispatch3,func_thumb,,"[FN4] provavel (hint FN2 aceito): maquina de 3 estados no byte +0x64 do ator: 0/1 espera StateMachine_DispatchSubB, 2 chama StateTable_DispatchByIndex; chamadores 0804E816/0804E88A (antes: FUN_08048038)"
 0x08048088,Map_GetEncounterRecordByte,func_thumb,,[VA3] arg0 -> ROM[gMapEncounters + map*8 + 2]; arg1 -> +3; outro -> 0. provavel
 0x080480D4,Table_GetWordByIndex_080480e0,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x080480E0 [arg]
@@ -3423,7 +3426,7 @@ address,name,kind,count,comment
 0x0806096C,Screen_EnableBgLayersInit,func_thumb,,[FS8] [FS8] confirmado (decompile): REG_DISPCNT |= BG1..BG3 e OBJ; marca estado 8. Entrada 0x0848383C
 0x080609D4,Anim_CountdownAndSpawnObject,func_thumb,,"[provavel] contagem regressiva em byte; ao zerar Obj_InitSlotAndLoad(1,2,0)"
 0x08060A1C,Anim_UpdateStepAndSprites,func_thumb,,passo de state machine por ctx+0x17 e atualizacao de sprites; provavel
-0x08060A54,Menu_CursorStepSfxAdvance,func_thumb,,[FS8] [FS8] provavel: Shop_MoveCursorByDpad (nome do callee e chute em R3) + SFX 4/5 + estado. Entrada 0x08483848
+0x08060A54,Menu_CursorStepSfxAdvance,func_thumb,,[FS8] [FS8] provavel: Shop_MoveCursorByDpad (nome do callee e chute em R3) + SFX 4/5 + estado. Entrada 0x08483848 [CH7] provavel; revisto CH; Shop_MoveCursorByDpad; sem input: SFX 4/5 + flag +0x48 + estado+1; senao reset e estado 4; entrada 08483848
 0x08060AF4,Screen_TickStateMachineFrame,func_thumb,,[FS9] provavel: tick de quadro + StateMachine_DispatchSub; tabela 0x0848384C
 0x08060B28,Screen_FadeOutAndTransition,func_thumb,,[FS9] provavel: fade 9 passos + transicao de modo 6/5; tabela 0x08483850
 0x08060BE4,Screen_HighlightOption4,func_thumb,,[R3] destaque de 4 opções no tilemap (provavel)
@@ -3440,6 +3443,7 @@ address,name,kind,count,comment
 0x080614DC,Gfx_WipeTransitionStep,func_thumb,,"passo de transicao wipe/blend, limite 0x11 (provavel)"
 0x08061594,Text_RunMessageStep,func_thumb,,[provavel] copies 0xFF-terminated text and runs state machine on it
 0x080615D4,Menu_OptionCursorStep,func_thumb,,"menu de 4 opcoes com cursor, A confirma, B cancela; provavel"
+0x080617E0,Fx_StepCounterResetAtZero,func_thumb,,"[CH7] provavel; revisto CH; (FS9 FUN_080617E0) contador 16 bits +step, rampa +0x208 ate 0x40, ao zerar byte baixo: Obj_ResetStateFields e estado 4; tabela 084838D0"
 0x08061860,Menu_HighlightOptionStep,func_thumb,,destaque de opção de menu com espera e avanço; provável
 0x080618B4,Screen_TickFadeOutAndReset,func_thumb,,[provavel] fade de 9 passos como Screen_TickFadeOutAndClear; limpa tilemap e variaveis
 0x08061998,Screen_ClearPairsAndAdvance,func_thumb,,[FS9] provavel (trivial): Clear4PairsHalfwords + contador; tabela 0x080AFBA4
@@ -3494,10 +3498,10 @@ address,name,kind,count,comment
 0x080648E0,Anim_UpdateBlinkFrameAndTimer,func_thumb,,contador de quadros com piscar por bit 0x20; inicia timer; provavel
 0x0806495C,Fx_TickBlinkFrameAndSetOam,func_thumb,,[provavel] frame +0x3A; Anim_StepRecordCounter(+0x50); OAM attr1=frame*0x10+0x1B8; bit 0x100 pelo bit 0x20
 0x080649BC,Dispatch_CallHandlerFromTable4,func_thumb,,confirmado: CallViaR0 de tabela de 4 handlers
-0x08064A08,Obj_BuildActiveSlotMaskAndReset,func_thumb,,[FN5] varre 29 entradas de 0x40 com bit7 montando mascara de bits; zera +0x48..+0x4B e grava +0x1C (chute no papel)
+0x08064A08,Obj_BuildActiveSlotMaskAndReset,func_thumb,,"[FN5] varre 29 entradas de 0x40 com bit7 montando mascara de bits; zera +0x48..+0x4B e grava +0x1C (chute no papel) [CH7] confirmado; revisto CH; varre 0x1D entradas de 0x40 com bit7 montando mascara, zera +0x48..4B, grava +0x1C, contador++; mesmo endereco de FS9 FUN_08064A08 (nome Ghidra ja Obj_*); ptr 080AFC58"
 0x08064A80,FightPreview_ProcessChoiceCodeWord,func_thumb,,[FL10] palavra de escolha 16 bits: mascaras 0xF4/0xFC; confirma via FightPreview_SetSceneMode(0) (provável)
 0x08064B90,Task_CallHandlerTableIndexedCopy,func_thumb,,[FN5] copia 2 words e CallViaR0 na tabela indexada (provavel)
-0x08064BBC,Obj_CheckReachedTargetSetState14,func_thumb,,"[FN5] grava +6 e, se campos +0xA/+0xE batem, seta 0x14 e zera byte (chute)"
+0x08064BBC,Obj_CheckReachedTargetSetState14,func_thumb,,"[FN5] grava +6 e, se campos +0xA/+0xE batem, seta 0x14 e zera byte (chute) [CH7] confirmado; revisto CH; grava +6 = alvo; se +0xA e +0xE == alvo: estado 0x14 e zera byte; ptr 084835FC"
 0x08064BEC,Battle_SetDefaultsA,func_thumb,,[R3] grava 3 valores de estado iniciais (chute)
 0x08064C0C,Battle_SetDefaultsB,func_thumb,,[R3] grava 3 valores de estado iniciais (chute)
 0x08064C2C,Battle_SetDefaultsC,func_thumb,,[R3] grava 3 valores de estado iniciais (chute)
@@ -3637,6 +3641,9 @@ address,name,kind,count,comment
 0x0806ADB0,Battle_UpdateCompositeBotMotion,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
 0x0806B01C,slots_move_group3,func_thumb,,"[R4] R4: move 3 slots grupo, limite -15 em y; provavel"
 0x0806B0D4,BotAnim_TickStageCallbacksAll,func_thumb,,[R4] R4: loop de 20 slots com frame e reinicio; provavel (antes: slots_update_anim)
+0x0806B134,BotAnim_StepMoveByPhase,func_thumb,,[CH7] provavel; revisto CH; (antes: FUN_0806b134) passo de posicao por fase do bot (+2/+4) + jump table nao recuperada; ptr 084857D0
+0x0806B1FC,BotAnim_StepOffsetByPhaseB,func_thumb,,"[CH7] provavel; revisto CH; (antes: FUN_0806b1fc) +4 +=2 se fase<0x10, -2 se fase 0xD2..0xE1, Obj_SetupSlotPtr se >0xE1; ptr 084857E0"
+0x0806B248,BotAnim_StepColorByPhase,func_thumb,,[CH7] provavel; revisto CH; (antes: FUN_0806b248) escreve registrador de cor por fase (0x1000 ou (0x20-x)*0x100); ptr 084857E4
 0x0806B2F4,Obj_UpdateSlotPosition,func_thumb,,[provavel] object slot velocity and screen position update
 0x0806B3D8,BotAnim_StageWalkStep,func_thumb,,"[FN6] confirmado (ponteiro) provavel (nome): callback de estagio, param=bot; tabela 0x084857D0 indice 9 (chamado via BotAnim_TickStageCallbacksAll 0x0806B0D4); anda X +-1 conforme flag"
 0x0806B4A4,scroll_tick_flag,func_thumb,,[R4] R4: contador de rolagem por bit 0; chute
@@ -3650,6 +3657,7 @@ address,name,kind,count,comment
 0x0806B8CE,TeamSlots_WriteFi41_Candidate,label,,[TP] [GH-TP provavel] grava r3 em fi+0x41; escritor da escolha de time? valor/origem aberto
 0x0806BB24,Scene_StepFxSongAdvance,func_thumb,,[FN6] provavel: se fx_step_table_a() != 0 toca musica 0x14 e incrementa contador; ponteiro 0x08485904
 0x0806BB44,Scene_DispatchState8Anim,func_thumb,,[FN6] provavel: se dispatch_state_8() != 0 incrementa contador; chama anim_dispatch_state; ponteiro 0x08485908
+0x0806BB64,Fx_StepRowCells3State,func_thumb,,"[CH7] provavel; revisto CH; (antes: FUN_0806bb64) automato de linha de 0xC celulas (valores 0..2), mod 3 na 1a, mod 7 nas demais; contador++; ptr 0848590C"
 0x0806BC48,Fight_TickBattleFrame,label,,[confirmado] despachante por quadro: counter_oscillate_x/battle_state_fire/select_entity_max ou battle_phase_spawn_move; depois battle_update_objects etc.; jump table nao recuperado
 0x0806BC94,Battle_EffectFallPhase1Step,func_thumb,,[FS9] provavel: fase 1 de efeito de queda (effect_anim_fall) -> estado 8; tabela 0x08485914
 0x0806BCC4,Battle_EffectPhase2Step,func_thumb,,[FS9] provavel: fase 2 do efeito (effect_anim_phase2) -> estado 8; tabela 0x08485918
@@ -3692,13 +3700,15 @@ address,name,kind,count,comment
 0x0806DCC0,Battle_InitScreenAndSlots,func_thumb,,"[FS9] provavel: init da tela de batalha (fx_screen_setup_a, 5 slots, DISPCNT |= 0x1300); tabela 0x0848598C"
 0x0806DE0C,battle_effects_5_slots_update,func_thumb,,[R4] R4: update de 5 efeitos com timer e liberacao via 0806B718; provavel
 0x0806DE9C,Battle_BuildBotSpriteOam,func_thumb,,[FS9] provavel: monta atributos de OAM do bot (contador +0x22 0..0x1E); tabela 0x08485994
+0x0806E038,BotAnim_SetTimerByFlagAndAdvance,func_thumb,,[CH7] provavel; revisto CH; (antes: FUN_0806e038) +4 = 0x73 ou 200 por bit0 de +0x22; +0x22++; jump; ptr 084859A4
+0x0806E074,BotAnim_StepWaitBlinkCycle,func_thumb,,"[CH7] provavel; revisto CH; (antes: FUN_0806e074) espera/piscar com rand_scaled; estado <8 avanca, senao +2=300 e reinicia; ptr 084859AC"
 0x0806E10C,battle_slot_init,func_thumb,,"[R4] R4: inicializa slot de batalha (tipo em +0x20, timer zero); confirmado"
 0x0806E130,Battle_DispatchPhaseTable,func_thumb,,[FN6] provavel: CallViaR0 com tabela indexada por *DAT_0806e14c; ponteiro 0x084856F4
 0x0806E150,Scene_StepLoadStateTriple,func_thumb,,[FN6] provavel: se fx_step_table_a() != 0 copia 3 halfwords da tabela para gMainState e vizinhos; 5 ponteiros em tabelas 0x08485960..0x08485B6C
 0x0806E184,Boot_SubState2_WaitFxStep,func_thumb,,[TL] boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
 0x0806E2A0,Screen_InitRowBufferAndFx,func_thumb,,"descomprime tiles, copia 20 linhas para buffer, liga BG1 e fx; provavel"
 0x0806E3C4,Fx_TickStepTableEntry,func_thumb,,[provavel] StateMachine_DispatchStep(tabela[+0xC]); ao terminar grava ctx+4=5 e estado global=2
-0x0806E3F8,Scene_SetSubstate2Wrapper,func_thumb,,"[FS10] FS10 chama FUN_08047850(2); ptr 0x084859D0; confianca confirmado (codigo), significado chute"
+0x0806E3F8,Scene_SetSubstate2Wrapper,func_thumb,,"[FS10] FS10 chama FUN_08047850(2); ptr 0x084859D0; confianca confirmado (codigo), significado chute [CH7] confirmado (wrapper); revisto CH; corpo so chama Sel_RequestIfIndexBelow4(2); significado chute; ptr 084859D0"
 0x0806E404,battle_timer_end_transition,func_thumb,,[R4] R4: timer de fim e saida de batalha por botao bit 3; provavel
 0x0806E460,Boot_DispatchSubState,func_thumb,,provável: CallViaR0 de tabela indexada e fim de transição (antes: Battle_DispatchThenEndTransition)
 0x0806E484,fade_step_bld,func_thumb,,[R4] R4: fade 0..16 por 4 quadros grava registro BLD; provavel
@@ -3744,8 +3754,8 @@ address,name,kind,count,comment
 0x0807028C,Screen_InitBg0Tilemap,func_thumb,,[R4] R4: copia tabela para VRAM/paleta e liga BG0; provavel (antes: init_tela_bg0)
 0x08070464,Screen_InitBg0TilemapAlt,func_thumb,,[R4] R4: variante de init_tela_bg0 com paleta 0xF80; provavel (antes: init_tela_bg0_v2)
 0x08070550,slots11_update,func_thumb,,[R4] R4: 11 slots de efeito com periodo por tipo e call_r1; provavel
-0x080705E0,ObjSlot_AdvanceFadeLevelA,func_thumb,,"[FS10] FS10 slot 0x03002C30+k*0x40: +8/+9 sobem ate 0x40, +0x21 += 1; ptr 0x08485B4C; confianca provavel (significado chute)"
-0x08070648,ObjSlot_AdvanceFadeLevelB,func_thumb,,[FS10] FS10 variante de ObjSlot_AdvanceFadeLevelA; ptr 0x08485B50; confianca provavel (significado chute)
+0x080705E0,ObjSlot_AdvanceFadeLevelA,func_thumb,,"[FS10] FS10 slot 0x03002C30+k*0x40: +8/+9 sobem ate 0x40, +0x21 += 1; ptr 0x08485B4C; confianca provavel (significado chute) [CH7] provavel; revisto CH; slot +8/+9 sobem 8 ate 0x40, +0x21++; ptr 08485B4C"
+0x08070648,ObjSlot_AdvanceFadeLevelB,func_thumb,,"[FS10] FS10 variante de ObjSlot_AdvanceFadeLevelA; ptr 0x08485B50; confianca provavel (significado chute) [CH7] provavel; revisto CH; variante: +8 primeiro, depois +9 ate 0x40; ptr 08485B50"
 0x080706A4,Obj_SetYBobFromTable,func_thumb,,[FS10] FS10 Y (+4) = +0x23 +/- tabela 0x080B00C8 indexada por +0x21; ptr 0x08485B54; confianca provavel
 0x08070734,Obj_ScrollYUpWrap,func_thumb,,[FS10] FS10 Y (+4) -= 4; se < -0x50 volta a 0xA0; ptr 0x08485B58; confianca provavel
 0x08070778,Obj_AdvanceCounterCap47,func_thumb,,"[FS10] FS10 +0x21 += 1 ate 0x47 (ramo else nao decodificado); sem codigo no Ghidra, bytes a mao; ptr 0x08485B5C; confianca provavel parcial"
@@ -4064,7 +4074,8 @@ address,name,kind,count,comment
 0x083AC614,debug_mdlpic_model_ptrs,data,,"[DB2] GH-DB2: 150 ponteiros para dados comprimidos de modelo, indice v0*5+v1 (v0 0..0x1D, v1 0..4); provavel"
 0x083AC86C,gPartsGridStateTable,table,,"[PG] [PG] 112 ponteiros Thumb u32 (stride 4), indice = word em 0x0300137C; dispatcher FUN_08007584 (PartsGrid_DispatchStateTable); substitui table_partsgrid_states 0x083AC880 stride 0xC (errado) [RD4] confirmado: 112 x 4 (FS2); despachante 0x08007584 indexado por 0x0300137C"
 0x083AC880,gPartsGridStateTable_Idx5,label,,"[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas) (PG: meio da tabela 0x083AC86C, stride 4; antes: table_partsgrid_states) (antes: gPartsGridStateTable_Entry5) (antes: table_partsgrid_states) (antes: gPartsGridStateTable_Entry5) [RD4] confirmado: idx 5 (+0x14) de gPartsGridStateTable; stride 4 pelos bytes, diverge do stride 0xC de PS.md (antes: gPartsGridStateTable_Entry5)"
-0x083AC9F8,table_partsgrid_row1_9F8,label,,[JT8] JT8 registro 1 (stride 0xC) de tabela de estados da grade; NAO cabecalho; inicio provavel 0x083AC9EC; ver JT8.md sec 2
+0x083AC9EC,gPartsGridStateTable_entries96_98,label,,[PD2] provavel: NAO e tabela separada; entradas 96..98 de gPartsGridStateTable 0x083AC86C (lidas por PartsGrid_DispatchStateTable 0x08007584 com gs). Sem xref direto. Corrige a leitura de stride 0xC do JT8
+0x083AC9F8,gPartsGridStateTable_entries99_101,label,,[JT8] JT8 registro 1 (stride 0xC) de tabela de estados da grade; NAO cabecalho; inicio provavel 0x083AC9EC; ver JT8.md sec 2 (antes: table_partsgrid_row1_9F8)
 0x083ACA4C,gObjStepTable_ACA4C,label,,"Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4] (antes: debug_menu_more_idk) [RD4] provavel: 63 x 4 ponteiros ate 0x083ACB48; idx0 = Obj_StepTableEntry_Flag4000AndCount (FN4). Divergencia: 0x083ACA80 (opcoes do debug, DB.md) cai no idx 13 (antes: debug_menu_more_idk)"
 0x083ACA5C,debug_menu_subroutines,label,,"Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4] [DB] GH-DB confirmado: 0 Init, 1 controls, 2 Exit, 3 RunOption, 4-5 NoOp; indice 0x0300137C"
 0x083ACA80,debug_menu_option_table,ptr,11,rotinas das 11 opcoes (debug_menu_subroutines a partir do indice 9) [DB] GH-DB confirmado: 11 opcoes (0..10) + entrada 11 NoOp; indice 0x03000472 (gDebugMenuOption)
@@ -4118,6 +4129,7 @@ address,name,kind,count,comment
 0x083AFC38,gSlotWaveTable_AFC38,data,,"[ST2] [ST2] 32 halfwords (0x40 B, fim em AFC78); Anim_SlotScriptTick soma AFC38[slot+0x23 & 0x1F] em slot+0x04; renomeado no Ghidra"
 0x083AFC78,gMenu10StepTable_AFC78,data,,"[ST2] [ST2] 96 ponteiros de passos do menu 10 (Link), lido por 0x0803D538 com 0x0300137C; renomeado no Ghidra"
 0x083AFCA0,gSceneStepTable_AFC78_A,data,,[ST] [ST] = bloco AFC78 + 0x28 (indice 10); entrada 0 = 0x0803D9A1 (PRE fixo); fim do bloco 0x083AFDF8 = 03020100; dono nao identificado
+0x083AFCB8,gMenu10StepTable_LinkAnim_Idx16_75,table,,[AN2] [AN2b] faixa de indices 16..75 de gMenu10StepTable_AFC78 (tela LINK pos-batalha); 21 entradas Anim_ em 18 funcoes; lida por Scene_GsDispatch_Menu10_Link 0x0803D538 (ldr literal 0x0803D59C); provavel
 0x083AFD08,gSceneStepTable_AFC78_B,data,,[ST] [ST] = bloco AFC78 + 0x90 (indice 36); entrada 0 = 0x0803DB4D (POST fixo); dono nao identificado
 0x083AFE88,gGfx_Portrait_PonteirosImagens,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images (antes: gPortraitImages) [RD4] provavel: mtbe 1584 entradas (176 x 9); GF3 diz 1 ponteiro por personagem. Conflito nao resolvido; ponteiros de 4 B
 0x083B1748,gGfx_Portrait_Paleta,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes (antes: gPortraitPalettes)
@@ -4290,6 +4302,9 @@ address,name,kind,count,comment
 0x084850CA,KeyItemBag_MsgScript,data,,[IN3] [IN3-2] bytecode do script de recusa (+0x20 de 0x0848521C). Nao decodificado: id de mensagem a descobrir
 0x0848521C,gTextShopDialogue,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextShopDialogue) [IN3] [IN3-2] objeto de estado (ROM) usado pelo sub 9 (Flow_StepCounterTickB): +0x20 = 0x084850CA (script). Recusa 2..4 cai aqui; id de mensagem NAO confirmado (antes: KeyItemBag_MsgStateObj)
 0x084856E8,gMainState3MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState3; [0]=boot (0x0806E460); [3..6] handlers; provavel
+0x08485708,FxStepHandlerTable,table,,[BA2] confirmado: base usada por fx_step_table_a (literal 0x080688BC); indice = byte de estado em RAM; entradas 0x08068920..0x080692ED; 0x08485700 e 0x08485704 nao sao handlers
+0x084857D0,BotAnim_StageTable,table,,[BA2] confirmado: 11 ptrs de estagio (0x0806B134..0x0806B130); literal 0x0806B104 em BotAnim_TickStageCallbacksAll
+0x08485988,BattleTimedTableB,table,,[BA2] provavel: 11 ptrs (0x0806DC7C..0x0806E074); sem literal de base na ROM; consumidor provavel 0x0806DE20 (nao confirmado)
 0x084859D8,gBootSubStateTable,data,,[TL] tabela de ponteiros do boot (GS 0..10)
 0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: 31 x 4 B ponteiros de texto (dump)
 0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: 12 x 4 B ponteiros de texto (dump)

@@ -1,0 +1,8 @@
+# Funcoes a criar no Ghidra (sem funcao definida; decompile falha)
+0x0806B1A8  estagio 2 da tabela 0x084857D0
+0x0806B1D0  estagio 3
+0x0806B1F8  estagio 4 (BotAnim_StageHold4; rename falhou)
+0x0806B2B8  estagio 7
+0x0806B484  estagio 10
+0x0806B130  estagio 11 (BotAnim_StageDone11; rename falhou)
+0x0806DE0C  provavel consumidor (push em DE0C; DE20 era meio) de 0x08485988 (E038/E074)

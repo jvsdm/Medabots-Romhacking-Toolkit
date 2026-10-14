@@ -267,7 +267,7 @@ F	0x08009248	PartsGrid_OptionHandlerStep
 F	0x08009274	PartsGrid_TickFadeOutStep
 F	0x080092D4	PartsGrid_TickRouteSelection
 F	0x08009374	PartsGrid_TickDispatchSubstate
-F	0x080093AC	Shop_SnapshotQuantitiesTable
+F	0x080093AC	PartsGrid_SnapshotScratchToCellStep
 F	0x080093E0	PartsGrid_ResetAndSetMode1
 F	0x080093F8	Timer_IncPairIfFlag
 F	0x0800941C	PartsGrid_SplitRowCol
@@ -511,6 +511,7 @@ F	0x080115B4	Fight_CommitPaletteOscStep
 F	0x080115E8	Fight_FadeRowsUpStep
 F	0x08011644	Fx_InitBlendTableAndTick
 F	0x080116C4	Fight_InitPartStateSetGS10
+F	0x08011720	Fight_InitPartStateSetGS10_08011720
 F	0x08011764	Fight_InitBotPartPanel
 F	0x08011A58	Fight_FadeRowsDownStep
 F	0x08011ABC	Fight_DrawOscSetGS3D
@@ -2273,6 +2274,7 @@ F	0x08044B28	Gfx_LoadDefaultAsset
 F	0x08044B34	Roster_ResolveIdIfZero
 L	0x08044B58	Bot_InitStarterRecord
 F	0x08044BA8	FightPreview_InitSideState
+F	0x08044BF0	PartDetail_InitWithMode
 F	0x08044C38	FightPreview_SetSceneMode
 F	0x08044CDC	Dispatch_Sub4Mode
 F	0x08044D0C	Asset_UnpackOrCopyBlock
@@ -3056,6 +3058,7 @@ F	0x08061468	Gfx_FadeOutStepAndDisableBg
 F	0x080614DC	Gfx_WipeTransitionStep
 F	0x08061594	Text_RunMessageStep
 F	0x080615D4	Menu_OptionCursorStep
+F	0x080617E0	Fx_StepCounterResetAtZero
 F	0x08061860	Menu_HighlightOptionStep
 F	0x080618B4	Screen_TickFadeOutAndReset
 F	0x08061998	Screen_ClearPairsAndAdvance
@@ -3253,6 +3256,9 @@ F	0x0806AAA4	Fight_TickSlotMotionPhases
 F	0x0806ADB0	Battle_UpdateCompositeBotMotion
 F	0x0806B01C	slots_move_group3
 F	0x0806B0D4	BotAnim_TickStageCallbacksAll
+F	0x0806B134	BotAnim_StepMoveByPhase
+F	0x0806B1FC	BotAnim_StepOffsetByPhaseB
+F	0x0806B248	BotAnim_StepColorByPhase
 F	0x0806B2F4	Obj_UpdateSlotPosition
 F	0x0806B3D8	BotAnim_StageWalkStep
 F	0x0806B4A4	scroll_tick_flag
@@ -3266,6 +3272,7 @@ L	0x0806B826	Screen_InitObjectSlotsLz77_AltEntry_806b826
 L	0x0806B8CE	TeamSlots_WriteFi41_Candidate
 F	0x0806BB24	Scene_StepFxSongAdvance
 F	0x0806BB44	Scene_DispatchState8Anim
+F	0x0806BB64	Fx_StepRowCells3State
 L	0x0806BC48	Fight_TickBattleFrame
 F	0x0806BC94	Battle_EffectFallPhase1Step
 F	0x0806BCC4	Battle_EffectPhase2Step
@@ -3308,6 +3315,8 @@ F	0x0806DC7C	Battle_TimedTransition41
 F	0x0806DCC0	Battle_InitScreenAndSlots
 F	0x0806DE0C	battle_effects_5_slots_update
 F	0x0806DE9C	Battle_BuildBotSpriteOam
+F	0x0806E038	BotAnim_SetTimerByFlagAndAdvance
+F	0x0806E074	BotAnim_StepWaitBlinkCycle
 F	0x0806E10C	battle_slot_init
 F	0x0806E130	Battle_DispatchPhaseTable
 F	0x0806E150	Scene_StepLoadStateTriple
@@ -3680,7 +3689,8 @@ L	0x083AC568	BattleStepTable_Unknown
 L	0x083AC614	debug_mdlpic_model_ptrs
 L	0x083AC86C	gPartsGridStateTable
 L	0x083AC880	gPartsGridStateTable_Idx5
-L	0x083AC9F8	table_partsgrid_row1_9F8
+L	0x083AC9EC	gPartsGridStateTable_entries96_98
+L	0x083AC9F8	gPartsGridStateTable_entries99_101
 L	0x083ACA4C	gObjStepTable_ACA4C
 L	0x083ACA5C	debug_menu_subroutines
 L	0x083ACA80	debug_menu_option_table
@@ -3734,6 +3744,7 @@ L	0x083AFC2C	gFightScrollSlotBytes_AFC2C
 L	0x083AFC38	gSlotWaveTable_AFC38
 L	0x083AFC78	gMenu10StepTable_AFC78
 L	0x083AFCA0	gSceneStepTable_AFC78_A
+L	0x083AFCB8	gMenu10StepTable_LinkAnim_Idx16_75
 L	0x083AFD08	gSceneStepTable_AFC78_B
 L	0x083AFE88	gGfx_Portrait_PonteirosImagens
 L	0x083B1748	gGfx_Portrait_Paleta
@@ -3906,6 +3917,9 @@ L	0x08483ED8	gTextKeyItems
 L	0x084850CA	KeyItemBag_MsgScript
 L	0x0848521C	gTextShopDialogue
 L	0x084856E8	gMainState3MenuTable
+L	0x08485708	FxStepHandlerTable
+L	0x084857D0	BotAnim_StageTable
+L	0x08485988	BattleTimedTableB
 L	0x084859D8	gBootSubStateTable
 L	0x08485F88	gTextTournamentMessages
 L	0x0848698C	gTextRaceMessages
@@ -4050,18 +4064,16 @@ C	0x0804ABA8
 C	0x0804ABC0
 C	0x0804AC14
 C	0x08060688
-C	0x080617E0
 C	0x08061958
 C	0x08063948
 C	0x08068924
 C	0x08068978
 C	0x080692EC
-C	0x0806B134
-C	0x0806B1FC
-C	0x0806B248
+C	0x0806B130
+C	0x0806B1A8
+C	0x0806B1D0
+C	0x0806B1F8
+C	0x0806B2B8
 C	0x0806B484
-C	0x0806BB64
-C	0x0806E038
-C	0x0806E074
 C	0x0806E9C0
 C	0x0807DD58
