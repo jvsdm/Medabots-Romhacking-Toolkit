@@ -97,7 +97,7 @@ address,name,kind,count,comment
 0x03000636,battle_robot_1_legs_remoteness,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000637,battle_robot_1_legs_part_cosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000638,bot0_active_technique,data,,[TA] B+0xA8 do bot 0 (bot base 0x03000590 + bot*0x100 + 0xA8); tecnica ativa do bot p/ efeitos; gravada por Op1B; bot k = 0x03000638 + k*0x100
-0x03000649,player_1_conceal_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000649,battle_bot_conceal_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: player_1_conceal_value)"
 0x0300064C,battle_bot0_flags_BC,label,,"[SS2] bot+0xBC: bits 01/02 (ator), 04 (bypass esquiva), 08 (bypass defesa), 10 (esquivou), 20 (defendeu), 40 (critico) (C, SS2)"
 0x0300064D,battle_bot0_flags_BD,label,,"[SS2] bot+0xBD: 08 = carga (W_07, E00, icone modo A); 10 = icone modo B (AM_0A) (C, SS2)"
 0x0300064F,battle_bot0_affinity_BF,label,,"[SS2] bot+0xBF: codigo de afinidade do ataque (2 optico, 3 bomba, 4 gravidade) (P, R2.md; nao reconfirmado)"
@@ -132,7 +132,7 @@ address,name,kind,count,comment
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001808,gFight_StepSceneIndex,label,,[FI] u32 indice de passo de cena (JT2) provavel
-0x03001828,fight_support_record_0x28,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: team_1_scout_score) (antes: gFight_TeamSupportRecord)"
+0x03001828,fight_scout_bonus_table_0x28,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: team_1_scout_score) (antes: gFight_TeamSupportRecord) (antes: fight_support_record_0x28)"
 0x0300182A,gFight_TargetDamageRecord,label,,[FI] registro 8B x N (+0x89) provavel
 0x0300182B,team_1_trap,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300182C,team_1_trap_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -1837,6 +1837,7 @@ address,name,kind,count,comment
 0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
 0x080340F6,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA2] LE B+0xA8 (paleta +0x50) e grava +0xF9/+0x69/+0xA9; NAO grava B+0xA8 (corrige TA.md)
 0x080340F8,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA] grava B+0xA8 (tecnica ativa do bot); funcao que contem o endereco
+0x08034498,ActionScript_Op31_CallSubstateAA,func_thumb,,[TR2] [TR2] opcode 0x31 do roteiro de Conceal (0x083C6AA4): chama Fight_DispatchOnSubstateAA_AA e avanca o roteiro (C)
 0x08034524,ActionScript_Op36_CallAF,func_thumb,,[AS2] GH-AS2: opcode 0x36 wrapper -> Fight_DispatchOnSubstateAA_AF + avanço se +0xB5; sem funcao no Ghidra
 0x08034540,ActionScript_Op37_CallAG,func_thumb,,[AS2] GH-AS2: opcode 0x37 wrapper -> ..._AG
 0x0803455C,ActionScript_Op38_CallAH,func_thumb,,[AS2] GH-AS2: opcode 0x38 wrapper -> ..._AH

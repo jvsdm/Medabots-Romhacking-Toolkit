@@ -1,0 +1,7 @@
+address,name,kind,comment
+0x03000649,battle_bot_conceal_value,label,"[TR2] bot+0xB9 (bot 0; bot k = 0x03000649 + k*0x100). Subtraido do ROS do atacante em Fight_ComputeTotalRos (C). Zerado em Fight_ResetBotPartState (derrota, C). Escritor de incremento A. Antes: player_1_conceal_value"
+0x03001828,fight_scout_bonus_table_0x28,label,"[TR2] base da tabela de 8 B fi+0x28 (registro = fi+0x28+8k, k=fi+0x89). Byte +0 = bonus de Scout somado ao ROS em Fight_ComputeTotalRos (C). Escritor A. Antes: fight_support_record_0x28"
+0x08038BC0,Fight_ComputeTotalRos,func_thumb,"[TR2] confirmado: soma Scout (fi+0x28+8k) e subtrai Conceal do defensor (bot+0xB9)"
+0x08036FA0,Fight_ResetBotPartState,func_thumb,"[TR2] zera bot+0xB9 (Conceal), +0xBC, +0xBA=2; limpeza na derrota (C)"
+0x08034498,ActionScript_Op31_CallSubstateAA,func_thumb,"[TR2] opcode 0x31 do roteiro de Conceal (0x083C6AA4): chama Fight_DispatchOnSubstateAA_AA e avanca o roteiro (C)"
+0x08023718,Fight_DispatchOnSubstateAA_AA_0B_SetStepCode1D,func_thumb,"[TR2] Conceal: grava so fi+0xA6=0x1D e fi+0xAA++; nao altera bot+0xB9 (C)"
