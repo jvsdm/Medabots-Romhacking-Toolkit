@@ -1,0 +1,41 @@
+# address,name,kind,comment
+0x08000824,FUN_08000824,chute,calls callback via CallViaR0 then sets state=2
+0x08000E40,Gfx_LoadTileAsset,provavel,decompress_and_store + CopyTileRowsToVram
+0x08002C34,Menu_RedrawFrameByState,provavel,BG map frame redraw by state byte ctx+0x8E
+0x08003EE0,Gfx_ResetTileState,provavel,CpuFastSet + Tile_ClearSlots reset
+0x0800B814,FUN_0800B814,chute,per-frame slide/fade step (ctx+0x1C8) calls Slot_ClearAttrMask
+0x0800CBC8,Menu_UpdateDetailPage,provavel,per-frame detail page: 2 text lines, cursor, two 6-digit numbers, portrait
+0x0800DA34,PartsGrid_InitScreen,provavel,parts grid screen init: decompress + tile loads + grid draw
+0x08010B24,FUN_08010B24,chute,zero 0x14-byte state block then set state bytes
+0x0801264C,Fight_AdjustAvgStatBonus,provavel,averages of bot byte +5 over two sides; adds bonus short at DAT_080126E8+0x16C
+0x0801303C,Fight_RunEntryAnimStep,provavel,fight entry frame: overlay, entry anim, sprite motion, tile clears
+0x08013FA8,Fight_SelectScreenFrame,provavel,medabot select/preview frame with GpuBlend fade, sets wait 0x3C
+0x0801C188,Gfx_LoadAssetAndAdvance,provavel,decompress_and_store + CpuFastSet + state++ at ctx+0x9C
+0x0801C4A4,Fight_RunEntryVisualStep,provavel,entry visual: entry frames + side effect sprites + name text + bot visual
+0x08038258,Anim_SlideSlotX16,provavel,per-slot 0x40-byte X slide by 16 and counter
+0x0803C33C,Fight_ScrollEntryPhase,provavel,entry scroll phase with thresholds 0x78/0x160/0x188
+0x0803CDCC,Anim_StepSlotScript,provavel,runs slot animation script from table DAT_0803CE08
+0x0803E634,FUN_0803E634,chute,calls StateMachine_DispatchStep and counts non-zero
+0x080418C0,BgMap_CopyRect8x6,provavel,copies 8x6 halfword tile rect into BG map
+0x0804B008,Map_FinishEnterTransition,provavel,map entry after transition: camera, player tile clamp, OAM clear
+0x0805C0D4,FUN_0805C0D4,chute,table dispatch then advance two x/y pairs
+0x0805CAF4,FUN_0805CAF4,chute,waits Anim_StepRecordCounter then sets state 3
+0x0805D580,FUN_0805D580,chute,state machine tick counter (same pattern as 0x0803E634)
+0x0805DB20,FUN_0805DB20,chute,state machine tick then Fx_InitRecord8(1 0x16 7)
+0x0805EFFC,Gfx_PaletteFadeStep,provavel,palette fade steps then VRAM clear and mode-based load
+0x0805FA18,Save_FinishFlashStep,provavel,state tick then stop audio and Save_InvokeFlashOp
+0x0806030C,Screen_InitLoadAssets,provavel,screen init: LZ77 tile blocks + palette clear + asset unpack
+0x08061594,Text_RunMessageStep,provavel,copies 0xFF-terminated text and runs state machine on it
+0x08062970,Shop_FadeInStep,provavel,shop palette fade-in then Shop_BlinkCursorAttr
+0x080636FC,Fight_PanelFadeStep,provavel,battle panel fade and per-frame slot text + tile scroll
+0x080645A0,FUN_080645A0,chute,state tick then Obj_InitTimerRecord on match
+0x08064EB4,Screen_InitLoadAssetsB,provavel,screen init variant with 2 sprite slots and number draw
+0x08066534,Save_WaitSfxThenFlash,provavel,waits record and SFX 4 then Save_InvokeFlashOp
+0x08067F64,PartsInfo_InitScreen,provavel,parts info screen init: asset decompress + 16-char text + two 2-digit numbers + BG layer enable
+0x0806B2F4,Obj_UpdateSlotPosition,provavel,object slot velocity and screen position update
+0x0806D8AC,Battle_SetupRenderSlots,provavel,battle render slot setup by state and REG_DISPCNT layers
+0x0806E7EC,Screen_InitLZ77ToVram,provavel,two LZ77 VRAM loads plus 20-row bank-offset table
+0x08071164,Anim_StageDispatch,provavel,animation stage dispatcher via jump table DAT_08071180
+0x08071F74,FUN_08071F74,chute,timed ramp then SFX 0x54 and stage advance
+0x08074E24,Snd_StartSfxCounted,provavel,snd_sfx_start with voice counter at ctx+0x730
+0x0807DB34,Math_Sf64CompareSafe,provavel,soft-float 64-bit compare with class check
