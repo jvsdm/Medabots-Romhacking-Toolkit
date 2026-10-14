@@ -56,7 +56,7 @@ address,name,kind,count,comment
 0x030004DB,selected_tinpet_legs,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004DC,gCtx_TeamWinner,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf
 0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
+0x0300052E,MedaforceScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1] (antes: gBattleScratchBuffer)"
 0x03000536,IWRAM_PlayerSpecialtyBase,func_thumb,,[DM] [aberto] 7 bytes 0x03000537..0x0300053D = 0x03000440+0xF7..0xFD; origem nao achada; usados por Medabot_SpawnFromRecord
 0x03000537,gCtx_PlayerSpecialty,label,,[FI2] ctx+0xF7 inicio de 7 bytes de especialidade do jogador (IWRAM_PlayerSpecialtyBase) aberto (DM)
 0x0300056F,gCtx_SlotIndex,label,,u8: slot de gObjectSlots em uso (antes: gCurrentObjectSlot)
@@ -223,7 +223,7 @@ address,name,kind,count,comment
 0x03005590,gEventScriptBasePtr,label,,base do banco de eventos em RAM; Simon: gEventScriptDataBasePtr (antes: gEventDbBase)
 0x030055A0,gTrackedActorHalfwords,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gEventObjectWorkArea)"
 0x030057A0,gMapTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo MapTransitionState[40]"
-0x030057D8,gEventFlagListPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x030057D8,gEventFlagArrayBase,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: gEventFlagListPtr)"
 0x030057DC,gMapScratchBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x030057E0,EVENT_STATE_E,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]; Simon: gEventFlagList (antes: event_flag_list)"
 0x03005815,gEventModeFlag,label,,[EV] byte = 1 no início (gatilhos) e no fim (End): modo de evento (provável; nome a confirmar)
@@ -231,6 +231,7 @@ address,name,kind,count,comment
 0x03005DBD,first_event_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005DBE,first_event_eventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005E0D,gBattleEncounterFlag,label,,"[MN] [MN] byte: 1 quando StartFlow 0x20 (encontro por evento), 0 quando 0x21 (encontro aleatorio); provavel"
+0x03005FD8,gEventFlagArrayEnd,data,,[PR] fim provavel do vetor (0x7FF bytes a partir de 0x030057D8); provavel
 0x03005FDE,gCurrentMapId,label,,ID do mapa atual (base 0x030057E0 + 0x7FE)
 0x03005FDF,gCurrentChapter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03005FE0,map_width,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
@@ -275,8 +276,8 @@ address,name,kind,count,comment
 0x03006494,gEvt_ActiveObjIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gCurrentEventActiveMapObjectIndex) (antes: gCurrentEventObjectIndex)"
 0x03006495,gEvt_YesNoOrder,label,,[FI2] E+0xCB5 flag Sim/Nao: 0 em Op31 e 1 em Op32 escrita confirmada (decompile Op31); leitor nao achado
 0x0300649A,gEvt_MapModeFlag,label,,[FI2] E+0xCBA modo do evento de mapa (0/1 iguais; 2 regrava bit 7) provavel (EX
-0x0300649C,gEvt_CounterA,label,,[FI2] E+0xCBC contador lido pelo Op50 (sel 0) leitura confirmada; escritor aberto
-0x0300649D,gEvt_CounterB,label,,[FI2] E+0xCBD contador lido pelo Op50 (sel 1) leitura confirmada; escritor aberto
+0x0300649C,gEventCounterA,label,,[FI2] E+0xCBC contador lido pelo Op50 (sel 0) leitura confirmada; escritor aberto (antes: gEvt_CounterA)
+0x0300649D,gEventCounterB,label,,[FI2] E+0xCBD contador lido pelo Op50 (sel 1) leitura confirmada; escritor aberto (antes: gEvt_CounterB)
 0x030064A0,gEventScriptRuntimeState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state"
 0x030064A1,gEventScriptRuntimeState_vm_substate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -729,13 +730,17 @@ address,name,kind,count,comment
 0x08014C30,Fight_SelectThreeActionSources,func_thumb,,"chama Fight_SelectActionSource para indices 3,4,5; provavel"
 0x08014CF0,Fight_SyncBotStatusFromPart,func_thumb,,[provavel] sincroniza byte de status do bot (bot+0xDD) com registro de display; bit 0x8000 chute
 0x08014D94,Fight_SelectActionSourceStep,func_thumb,,provável: chama Fight_SelectActionSource para bots > 2
+0x08014DA2,Fight_SelectActionSourceStep,func_thumb,,[TA3] chama Fight_SelectActionSource para a acao normal (TA3)
 0x08014DC8,Fight_SelectMedaforceSourceStep,func_thumb,,"[FL10] lado >2 e byte +0xDD>3 -> Fight_SelectMedaforceActionSource(side, v-4); contador E04 (provável)"
+0x08014DEC,Fight_SelectMedaforceSourceStep,func_thumb,,[TA3] chama Fight_SelectMedaforceActionSource com slot = bot+0xDD-4 (TA3)
 0x08014E20,Fight_OverlayTimerAdvance,func_thumb,,timer +0x86 e espera do overlay; provavel
 0x08014E7C,Fight_ClearBattleBuffer,func_thumb,,[R0a] zera 0x600 bytes de buffer de luta (chute; destino nao identificado)
 0x08014E94,Fight_UpdateBotActiveFlagCount,func_thumb,,[R0a] conta flags +0x41..+0x43 em +0x5A (provavel)
 0x08014EC8,Fight_RefreshBotPartRecords,func_thumb,,[R0a] agregador de atualizacao dos registros de peca (provavel)
 0x08014EE8,Fight_CopyBotSlotRecords,func_thumb,,[R0a] copia registros de slot 0x40 bytes para o bloco do bot (provavel)
+0x08014F1E,Fight_CopyBotSlotRecords,func_thumb,,[TA3] copia bloco de 0x40 B de cada bot para gObjectSlots; nao grava A8 (TA3)
 0x08014F44,Fight_CopyBotIdentityRecords,func_thumb,,"[R0a] copia 8 bytes de tabela por bot (chute; nome sugerido, sem rename)"
+0x08014F6E,Fight_CopyBotIdentityRecords,func_thumb,,[TA3] copia 8 B para bot+0; nao grava A8 (TA3)
 0x08014F90,Fight_InitializePartStates,func_thumb,,"Simon/Rokusho: Initialize the four live BattlePartState records for each bot. The first 0x0D bytes of each BattlePartState come from the ROM part_information subrecord for head/right/left/legs. Runtime fields are then populated, including current_durability and part_id. The head/right/left/legs part records live at BattleBotStateRecord.parts[0..3]."
 0x080150C0,Fight_InitializeEnemyBotStates,func_thumb,,[R0a] setup dos bots inimigos (indice base 3) (provavel)
 0x080150FC,Fight_InitializeBotFromTemplate,func_thumb,,"Simon/Rokusho: Initialize one enemy-side BattleBotStateRecord from the copied FightTemplate in fight_information. The function copies a RomMedalInfo record into gBattleScratchBuffer, transfers selected medal metadata into BattleBotHeader, copies the head-part ROM record into the live bot state, expands the 4 packed speciality seed bytes from the template into 8 raw speciality levels, then scales those 8 levels through the medal's speciality base table and medal level to produce the final live speciality levels."
@@ -754,8 +759,12 @@ address,name,kind,count,comment
 0x0801554C,Util_IsSlotIndexValid,func_thumb,,[confirmado] logica de faixa do indice (modo 0: <3; outro: <=2)
 0x08015564,Fight_SelectActionSource,func_thumb,,Simon/Rokusho: Select the current action source for the bot. Values 1..3 target BattlePartState_Clean entries (head/right/left) and copy BattlePartState_Clean.target_bot_id / target_part_id into the bot's selected target fields.
 0x080155A8,Fight_TrySelectMedaforceAction,func_thumb,,"Simon/Rokusho: Try to select a medaforce action source. This checks battle-state restrictions, medal level thresholds, and optional random medaforce slot choice before committing selection through Fight_SelectMedaforceActionSource."
-0x08015648,Fight_IsMedaforceSelectionBlockedByBattleState,func_thumb,,Simon/Rokusho
+0x08015648,Fight_IsMedaforceBlockedByChapter,func_thumb,,Simon/Rokusho (antes: Fight_IsMedaforceSelectionBlockedByBattleState)
 0x08015668,Fight_SelectMedaforceActionSource,func_thumb,,"Simon/Rokusho: Commit a medaforce action source selection. This caches the medal medaforce list, copies the selected medaforce descriptor into battle scratch, and selects action source values 4..6."
+0x080156C0,Fight_MedaforceBotBaseLiteral,data,,[TA3] literal 0x03000590 (base do bloco do bot) usado por Fight_SelectMedaforceActionSource
+0x080156C4,Fight_MedaforceMedalTableLiteral,data,,[TA3] literal 0x083B7F8C (tabela de medalha 3 B por linha)
+0x080156C8,Fight_MedaforceScratchLiteral,data,,[TA3] literal 0x0300052E (buffer de 3 B por slot de medaforca)
+0x080156CC,Fight_MedaforceDescriptorLiteral,data,,[TA3] literal 0x083B7E54 (descritor de medaforca 6 B por id)
 0x080156D0,Fight_RandomizePriorityListSlot,func_thumb,,"[R0a] sorteia slot da lista de prioridade (chute; nome sugerido, sem rename)"
 0x080156F0,gFightPriorityRowTable,data,,[AI] [GH-AI] ponteiro (literal) para ROM 0x083AD470: 32 linhas de 4 B usadas como lista de fallback; conteudo nao fechado
 0x080156F4,gFightPriorityListDst,data,,"[AI2] [AI2] literal = 0x03001864 (fi+0x64, lista de 4 bytes do fallback; mesma RAM dos ids da previa de PS). Confirmado"
@@ -1025,6 +1034,7 @@ address,name,kind,count,comment
 0x0801D544,Fight_DispatchOnSubstateAA_D_WaitAnimDone,func_thumb,,[HA1] D/03; confirmado; grava +0xB5=1
 0x0801D580,Fight_DispatchOnSubstateAA_E,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0801D5A8,Fight_FindAllyFollowupActionSource,func_thumb,,"Simon/Rokusho: Search the acting bot's allied side for a valid chained/follow-up action source. Records a 1-based source bot slot in fight_information[0xDE] and the source bot's pending action/effect kind in fight_information[0xDF], then either advances the action sequence or marks the step complete."
+0x0801D5E0,Fight_FindAllyFollowupActionSource,func_thumb,,[TA3] procura aliado para acao de seguimento; nao grava A8 (TA3)
 0x0801D6A4,Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx,label,,Simon/Rokusho (antes: ActionFamily_CancelGravHandler)
 0x0801D738,Fight_PrepareFollowupSourceDisplay,func_thumb,,"Simon/Rokusho: Prepare the chained/follow-up source bot for display. Copies the source bot's live battle state into a temporary display area, rebuilds its displayed part ids, and creates the temporary composite sprite used for the follow-up presentation."
 0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,label,,"Simon/Rokusho: Animate the follow-up source bot's temporary display sprite into view. When the intro completes, seeds the temporary bot state for the follow-up action and advances the action sequence. (antes: Fight_AnimateFollowupSourceIntro)"
@@ -1356,6 +1366,7 @@ address,name,kind,count,comment
 0x08026628,Fight_DispatchOnSubstateAA_AN_05_WaitFramesWithAnimations,func_thumb,,[HA8] Handler AN idx 0x05: espera timer +0x86 ate 0x5A rodando animacoes; avanca (antes: Fight_DispatchOnSubstateAA_AN_WaitFramesWithAnimations)
 0x08026678,Fight_DispatchOnSubstateAA_AN_06_ApplyRandomPartReplacementEffect,func_thumb,,"Simon/Rokusho: Apply the in-battle random part replacement effect to the currently selected bot/part. Saves the old BattlePartState into fight_information staging, selects a replacement part id via Fight_SelectReplacementPartIdByIconFamily, copies the replacement ROM part fields into the live part state, refreshes action metadata, and advances the outer action sequence. (antes: Fight_ApplyRandomPartReplacementEffect)"
 0x08026810,Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs,func_thumb,,Handler AN idx 0x07: limpa 2 slots; copia dois blocos de 15 bytes para tabela; msg 0x2F; avanca
+0x08026838,Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs,func_thumb,,[TA3] copia blobs de peca; nao grava A8 (TA3)
 0x08026884,Fight_DispatchOnSubstateAA_AO,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x080268AC,Fight_DispatchOnSubstateAA_AO_01_RollPartValueForBot,func_thumb,,Handler AO idx 0x01: Fight_RollPartValue e FUN_080376f4 no bot ativo; avanca
 0x080268D4,Fight_DispatchOnSubstateAA_AO_02_ClampPartCountsToLimit,func_thumb,,[HA8] Handler AO idx 0x02: clampa 4 contadores de peca pelo limite +0xEC; avanca (antes: Fight_DispatchOnSubstateAA_AO_ClampPartCountsToLimit)
@@ -1713,7 +1724,9 @@ address,name,kind,count,comment
 0x08031A24,Fight_SceneStep5D_FadeMusicGoto51,func_thumb,,"[HN10] passo 0x5D (BR 0x6D): snd_fade_request(8), sub=0x51 (confirmado; renomeado)"
 0x08031A3C,Fight_BuildPartActionMetadataForAllParts,func_thumb,,"Simon/Rokusho: For the acting bot, iterate head/right/left parts and run the per-technique setup/validation dispatch for each one. This populates per-part action metadata through Fight_SetPartActionMetadata."
 0x08031A70,Fight_DispatchPartPreparation,func_thumb,,[R1a] Limpa metadata da acao e chama handler por tecnica da peça (provavel)
+0x08031A84,Fight_DispatchPartPreparation,func_thumb,,[TA3] le tecnica da peca (+0x49) e chama setup 0x083AEEA0[tec]; nao grava A8 (TA3)
 0x08031ABC,Fight_DispatchPartExecution,func_thumb,,[R1a] Chama handler por tecnica da peça corrente (provavel)
+0x08031AC0,Fight_DispatchPartExecution,func_thumb,,[TA3] le tecnica da peca e chama validacao/execucao 0x083AEF90[tec]; nao grava A8 (TA3)
 0x08031AFC,Fight_SetupTargetSelectionBySpeciality,func_thumb,,Simon/Rokusho: Build target/action metadata for techniques that select an active enemy bot with at least one intact part matching the acting bot's primary speciality bucket.
 0x08031BCC,Fight_SetupTargetSelectionRequireStatus64,func_thumb,,Simon/Rokusho: Technique-setup family used by Anti-Air-style actions. Prefer targets whose bot byte at +0x91 is 0x64 before weaker fallbacks.
 0x08031D7C,Fight_SetupTargetSelectionRequireStatus6A,func_thumb,,Simon/Rokusho: Technique-setup family used by Anti-Sea-style actions. Prefer targets whose bot byte at +0x91 is 0x6A before weaker fallbacks.
@@ -1918,6 +1931,7 @@ address,name,kind,count,comment
 0x08036E54,Fight_ClampDisplayValue1To99,func_thumb,,Simon/Rokusho
 0x08036E64,Fight_ApplyPartStatus,func_thumb,,"Simon/Rokusho: Store a pending status/effect payload in the acting bot runtime. In the shared commit path, pending_effect_kind is just the originating technique id: Bug/Virus/Thunder/Freeze/Wave/Hold/Fire/Melt/Defense/Full_Block/Half_Block/Impair/Confusion/No_Escape/No_Defense. (antes: Fight_SetPendingActionEffect) (antes: FightPreview_SetPartStatsByType)"
 0x08036FA0,Fight_ResetBotPartState,func_thumb,,"Simon/Rokusho: Reset the transient per-bot action runtime state before or after resolving an action. Clears active/action flags, resets small dispatch state bytes, and zeroes the short scratch blocks near +0xC4 and +0xDC. (antes: Fight_ResetBotActionRuntimeState)"
+0x08036FB0,Fight_ResetBotPartState,func_thumb,,[TA3] zera flags do bot (+0x40
 0x08036FF8,Fight_SpawnInlineEffectTextObjects,func_thumb,,Simon/Rokusho: Spawn a short row of inline effect/status text objects at the given position. Used by battle actions to show compact effect labels or status result markers.
 0x080370AC,Fight_TickSlotScriptsUntilDone,func_thumb,,[R2] versao de TickSpriteTimers com N slots (antes: FightPreview_TickSpriteTimersCount)
 0x0803713C,Fight_CommitActionState,func_thumb,,"Simon/Rokusho: Begin a mirrored/counter-style action phase using the defender's last action kind. Seeds selected target bot/part from the acting bot, copies that target into fight_information, flips side/layout flags, resets action_result_flags, and recomputes attacker/defender affinity result codes from the mirrored action. (antes: Fight_StartMirroredCounterActionPhase)"
@@ -2338,8 +2352,10 @@ address,name,kind,count,comment
 0x080480D4,Table_GetWordByIndex_080480e0,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x080480E0 [arg]
 0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
 0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
+0x08048210,Map_ResolveSpriteId,func_thumb,,[CS] CONFIRMADO decompile: id 0 -> byte por 0x03006418/0x0300643C; >=0xD0 -> lista RAM 0x03006418+k; >=0xC0 -> (id-0xC0)*2+IWRAM[0x03006D3E]+0x28
 0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area."
 0x0804842C,SND_PolicyRequest,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling. (antes: Overworld_ApplyMapSceneModePolicy)
+0x08048684,Map_GetSpriteListEntry,func_thumb,,[CS] CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim
 0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,,Simon/Rokusho: Load the palette set used by event objects / overworld NPC sprites for the current map. Resolves the per-slot sprite palette ids for the current map and copies each palette block into the shared object palette staging area.
 0x080487C8,Map_ResetObjectField0B,func_thumb,,[HE4] objeto+0xB = 0xFF/0/0x40 pela tabela do tipo; usado pelo 0x83
 0x08048830,Overworld_ResetMapSceneBlendState,func_thumb,,Simon/Rokusho: Reset the map-scene blend registers and cached screen-transition blend coefficients before showing the rebuilt overworld scene.
@@ -2648,6 +2664,7 @@ address,name,kind,count,comment
 0x08050290,Event_EndOpcode,func_thumb,,"Simon/Rokusho: Shared normal-event helper used when the current opcode finishes. |  | It clears the opcode-local runtime bytes used by many normal event handlers. The actual next opcode fetch happens elsewhere in the VM flow, so this is an opcode-completion/reset helper, not a pure transition helper."
 0x080502B0,Util_HighNibble,func_thumb,,[R3] x >> 4
 0x080502B8,Util_Low2Bits,func_thumb,,[R3] x & 3
+0x080502C8,Obj_FrameBaseFromSprite,func_thumb,,[CS] CONFIRMADO decompile: retorna (sprite>>4)*12+(sprite&3)*3 = frame base (+0x06)
 0x08050300,Overworld_GetObjectAnimationIndexForFacing,func_thumb,,"Simon/Rokusho: Return the animation index for an overworld object slot given its current facing/direction variant. Used by follower, marker, and map-scene sprite refresh code."
 0x08050358,Map_SpawnTrackedObjectAtTile,func_thumb,,Simon/Rokusho
 0x080503FC,Map_InitObjectSprite,func_thumb,,"[R3] cria sprite do objeto idx+0x4F: paleta, posicao x*16/y*16, sombra opcional em idx+0x79"
@@ -2681,6 +2698,7 @@ address,name,kind,count,comment
 0x08051368,Overworld_UpdateMapSceneStateMachine,func_thumb,,[OW2] maquina de cena do mapa; chama Overworld_ApplyWarpAtCurrentTile em um dos estados (confirmado)
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
 0x08051416,Map_LoadEntitySpawns_GroupLoop,label,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234) (antes: Map_LoadEntitySpawnsForCurrentMap)
+0x08051484,MapSpawn_ChapterFilterLiteral,data,,[PR] literal de 0x03005FDF dentro de Map_LoadEntitySpawnsForCurrentMap; filtro (mascara u16 +6 >> capitulo)&1 (EX.md)
 0x080517F0,Overworld_InitPlayerSprites,func_thumb,,"Simon/Rokusho: Initialize the player's map marker / cursor UI after a map load. Converts the player's world position to tile coordinates, loads the marker graphics, seeds the marker sprite state, and sets the initial on-screen position relative to the current camera. (antes: Map_InitPlayerMapMarker)"
 0x08051940,Map_GetScaledStepDelta,func_thumb,,"[R3] revisto CH3: provável - devolve produto de dois bytes de DAT_08051960 (um indexado pelo byte +0x2A do slot idx, outro por DAT_08051968+2); passo de movimento escalado"
 0x0805196C,Overworld_ClearFollowerQueuedMove,func_thumb,,"Simon/Rokusho: Clear the follower's queued movement/facing state, then reset the follower animation queue helper used when the player changes facing without taking a full step."
@@ -3509,8 +3527,8 @@ address,name,kind,count,comment
 0x083B722C,gTextAttackTypeDesc,ptr,8,tabela de texto: Descrições dos ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B74B8,gTextMedaforceNames,ptr,50,tabela de texto: Nomes das Medaforças; 50 entradas (o script de traducao usava 52 e invadia MedaforceDesc); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B7580,gTextMedaforceDesc,ptr,53,tabela de texto: Descrições das Medaforças; fonte: dump_text_clean_v2.py (traducao PT-BR)
-0x083B7E54,medaforce_descriptor_table,data,,[MF] [MF] 6 B por medaforca (52 ids); byte0 = id/nome; bytes 1..5 nao identificados
-0x083B7F8C,medal_medaforce_list,label,,Simon/Rokusho em 0x083B7FAC
+0x083B7E54,MedaforceDescriptorTable,data,,[MF] [MF] 6 B por medaforca (52 ids); byte0 = id/nome; bytes 1..5 nao identificados (antes: medaforce_descriptor_table)
+0x083B7F8C,MedaforceMedalTable,label,,Simon/Rokusho em 0x083B7FAC (antes: medal_medaforce_list)
 0x083B80C0,gTextMedaforceDesc1,ptr,5,tabela de texto: Descrições das Medaforças1; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B82F0,gTextSpecialAttackDesc,ptr,8,tabela de texto: Descrições de ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B83FC,gPartStats,data,7680,stats das pecas: 480 x 16 B; Simon: gRomPartRecordTable
@@ -3591,7 +3609,9 @@ address,name,kind,count,comment
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU)"
 0x083D5FF4,Overworld_ChoiceSubstateTable,table,,[FM] [FM] tabela de sub-estados do menu de escolha (base do despachante 0x0805716C): 0=Overworld_InitChoiceMenuScreen 0x0805718D; 1=0x08057441; 2=0x080574D5
+0x083D6298,unknown_ChapterLiteralPool,data,,[PR] literal 0x03005FDF sem leitor de funcao conhecido; perto de CBC/CBD (0x083D6274/78); pendente
 0x083D6A2C,gArcHeightTable,data,,"[CU] 16 linhas de 0x10 B; valor (short) de cada linha = altura do arco em 1/16 px (Map_ObjectArcStep, GH-CU)"
+0x083F7B80,gObjectAnimScriptPtrTable,data,,[CS] ponteiros de roteiro por anim = facing+4*grupo (CONFIRMADO dump: 12 primeiros)
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
 0x083F7E80,gMapSpritePtrTable,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites) (antes: gGfx_Overworld_PonteirosSprite)
 0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B; Simon: sMapDimensionsInMetaTilesTable

@@ -1,0 +1,10 @@
+# address,name,kind,comment
+0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,CONFIRMADO disasm: para cada entrada da lista do mapa, LZ77 de 0x083F7E80[id] (id 0 -> entrada 1) para VRAM 0x06010000+i*0x900
+0x08048684,Map_GetSpriteListEntry,func_thumb,CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim
+0x08048210,Map_ResolveSpriteId,func_thumb,CONFIRMADO decompile: id 0 -> byte por 0x03006418/0x0300643C; >=0xD0 -> lista RAM 0x03006418+k; >=0xC0 -> (id-0xC0)*2+IWRAM[0x03006D3E]+0x28
+0x080502C8,Obj_FrameBaseFromSprite,func_thumb,CONFIRMADO decompile: retorna (sprite>>4)*12+(sprite&3)*3 = frame base (+0x06)
+0x08049440,Map_TickObjectAnimation,func_thumb,CONFIRMADO disasm: interpretador de roteiro de 8 bytes por registro (gObjectSlots+0x22 passo, +0x23 contador, +0x24 indice do roteiro)
+0x083F7B80,gObjectAnimScriptPtrTable,data,ponteiros de roteiro por anim = facing+4*grupo (CONFIRMADO dump: 12 primeiros)
+0x083F7E80,gMapSpriteBlockPtrTable,data,ponteiros LZ77 (0x900 B cada) indexados pelo id de sprite (CONFIRMADO)
+0x08413160,gMapSpriteListPtrTable,data,ponteiros por mapa para lista de ids de sprite terminada em 0xFF (indice = gCurrentMapId 0x03005FDE)
+0x08049484,(literal) Map_TickObjectAnimation op bias,data,literal 0xFFFF0006: op + este valor <=5 seleciona caso; ops 0xFFFA..0xFFFF = casos 0..5

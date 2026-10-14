@@ -364,13 +364,17 @@ F	0x08014B34	Fight_TickPartGaugePhases
 F	0x08014C30	Fight_SelectThreeActionSources
 F	0x08014CF0	Fight_SyncBotStatusFromPart
 F	0x08014D94	Fight_SelectActionSourceStep
+F	0x08014DA2	Fight_SelectActionSourceStep_08014DA2
 F	0x08014DC8	Fight_SelectMedaforceSourceStep
+F	0x08014DEC	Fight_SelectMedaforceSourceStep_08014DEC
 F	0x08014E20	Fight_OverlayTimerAdvance
 F	0x08014E7C	Fight_ClearBattleBuffer
 F	0x08014E94	Fight_UpdateBotActiveFlagCount
 F	0x08014EC8	Fight_RefreshBotPartRecords
 F	0x08014EE8	Fight_CopyBotSlotRecords
+F	0x08014F1E	Fight_CopyBotSlotRecords_08014F1E
 F	0x08014F44	Fight_CopyBotIdentityRecords
+F	0x08014F6E	Fight_CopyBotIdentityRecords_08014F6E
 F	0x08014F90	Fight_InitializePartStates
 F	0x080150C0	Fight_InitializeEnemyBotStates
 F	0x080150FC	Fight_InitializeBotFromTemplate
@@ -389,8 +393,12 @@ F	0x08015528	Fight_IsPartActionUnavailable
 F	0x0801554C	Util_IsSlotIndexValid
 F	0x08015564	Fight_SelectActionSource
 F	0x080155A8	Fight_TrySelectMedaforceAction
-F	0x08015648	Fight_IsMedaforceSelectionBlockedByBattleState
+F	0x08015648	Fight_IsMedaforceBlockedByChapter
 F	0x08015668	Fight_SelectMedaforceActionSource
+L	0x080156C0	Fight_MedaforceBotBaseLiteral
+L	0x080156C4	Fight_MedaforceMedalTableLiteral
+L	0x080156C8	Fight_MedaforceScratchLiteral
+L	0x080156CC	Fight_MedaforceDescriptorLiteral
 F	0x080156D0	Fight_RandomizePriorityListSlot
 L	0x080156F0	gFightPriorityRowTable
 L	0x080156F4	gFightPriorityListDst
@@ -660,6 +668,7 @@ F	0x0801D524	Fight_DispatchOnSubstateAA_D_02_WaitSlot9ReachTarget
 F	0x0801D544	Fight_DispatchOnSubstateAA_D_WaitAnimDone
 F	0x0801D580	Fight_DispatchOnSubstateAA_E
 F	0x0801D5A8	Fight_FindAllyFollowupActionSource
+F	0x0801D5E0	Fight_FindAllyFollowupActionSource_0801D5E0
 L	0x0801D6A4	Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx
 F	0x0801D738	Fight_PrepareFollowupSourceDisplay
 L	0x0801D878	Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry
@@ -991,6 +1000,7 @@ F	0x080264E4	Fight_DispatchOnSubstateAA_AN_04_SetupEffectSpritesAndSfx
 F	0x08026628	Fight_DispatchOnSubstateAA_AN_05_WaitFramesWithAnimations
 F	0x08026678	Fight_DispatchOnSubstateAA_AN_06_ApplyRandomPartReplacementEffect
 F	0x08026810	Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs
+F	0x08026838	Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs_08026838
 F	0x08026884	Fight_DispatchOnSubstateAA_AO
 F	0x080268AC	Fight_DispatchOnSubstateAA_AO_01_RollPartValueForBot
 F	0x080268D4	Fight_DispatchOnSubstateAA_AO_02_ClampPartCountsToLimit
@@ -1348,7 +1358,9 @@ F	0x08031A08	Fight_SceneStep5C_WaitTextBoxDone
 F	0x08031A24	Fight_SceneStep5D_FadeMusicGoto51
 F	0x08031A3C	Fight_BuildPartActionMetadataForAllParts
 F	0x08031A70	Fight_DispatchPartPreparation
+F	0x08031A84	Fight_DispatchPartPreparation_08031A84
 F	0x08031ABC	Fight_DispatchPartExecution
+F	0x08031AC0	Fight_DispatchPartExecution_08031AC0
 F	0x08031AFC	Fight_SetupTargetSelectionBySpeciality
 F	0x08031BCC	Fight_SetupTargetSelectionRequireStatus64
 F	0x08031D7C	Fight_SetupTargetSelectionRequireStatus6A
@@ -1552,6 +1564,7 @@ F	0x08036DE8	FightPreview_AdvanceSlotXDir
 F	0x08036E54	Fight_ClampDisplayValue1To99
 F	0x08036E64	Fight_ApplyPartStatus
 F	0x08036FA0	Fight_ResetBotPartState
+F	0x08036FB0	Fight_ResetBotPartState_08036FB0
 F	0x08036FF8	Fight_SpawnInlineEffectTextObjects
 F	0x080370AC	Fight_TickSlotScriptsUntilDone
 F	0x0803713C	Fight_CommitActionState
@@ -1972,8 +1985,10 @@ F	0x08047FBC	PartSet_HasCompleteMonochromeEntry
 F	0x080480D4	Table_GetWordByIndex_080480e0
 F	0x080480E4	Map_LoadCurrentMapAndEntities
 F	0x08048174	Map_UpdateBackgroundAnimations
+F	0x08048210	Map_ResolveSpriteId
 F	0x08048288	Map_LoadOverworldSpriteGraphicsForCurrentMap
 F	0x0804842C	SND_PolicyRequest
+F	0x08048684	Map_GetSpriteListEntry
 F	0x08048708	Map_LoadCurrentEventObjectPalettes
 F	0x080487C8	Map_ResetObjectField0B
 F	0x08048830	Overworld_ResetMapSceneBlendState
@@ -2282,6 +2297,7 @@ F	0x0805018C	Map_TickObjectStep
 F	0x08050290	Event_EndOpcode
 F	0x080502B0	Util_HighNibble
 F	0x080502B8	Util_Low2Bits
+F	0x080502C8	Obj_FrameBaseFromSprite
 F	0x08050300	Overworld_GetObjectAnimationIndexForFacing
 F	0x08050358	Map_SpawnTrackedObjectAtTile
 F	0x080503FC	Map_InitObjectSprite
@@ -2315,6 +2331,7 @@ L	0x08050F80	Overworld_MapSubstateTable
 F	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
 L	0x08051416	Map_LoadEntitySpawns_GroupLoop
+L	0x08051484	MapSpawn_ChapterFilterLiteral
 F	0x080517F0	Overworld_InitPlayerSprites
 F	0x08051940	Map_GetScaledStepDelta
 F	0x0805196C	Overworld_ClearFollowerQueuedMove
@@ -3143,8 +3160,8 @@ L	0x083B7048	gTextAttackTypeNames
 L	0x083B722C	gTextAttackTypeDesc
 L	0x083B74B8	gTextMedaforceNames
 L	0x083B7580	gTextMedaforceDesc
-L	0x083B7E54	medaforce_descriptor_table
-L	0x083B7F8C	medal_medaforce_list
+L	0x083B7E54	MedaforceDescriptorTable
+L	0x083B7F8C	MedaforceMedalTable
 L	0x083B80C0	gTextMedaforceDesc1
 L	0x083B82F0	gTextSpecialAttackDesc
 L	0x083B83FC	gPartStats
@@ -3225,7 +3242,9 @@ L	0x083D2A40	gWalkSpeedTable
 L	0x083D2B6B	gMapArea
 L	0x083D2D0D	gObjectShadowFlagTable
 L	0x083D5FF4	Overworld_ChoiceSubstateTable
+L	0x083D6298	unknown_ChapterLiteralPool
 L	0x083D6A2C	gArcHeightTable
+L	0x083F7B80	gObjectAnimScriptPtrTable
 L	0x083F7D80	sRandomAdvanceTable
 L	0x083F7E80	gMapSpritePtrTable
 L	0x083F8900	gMapDimensions
