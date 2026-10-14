@@ -1,0 +1,4 @@
+# Alvos de salto (GH-JT7) que seriam funcao por si (prologo push, chamados so pela tabela).
+# Nenhum: os 5 alvos de 0x0800467C (0x08004690, 0x080046C4, 0x080046E8, 0x08004708, 0x08004728) nao tem push no
+# inicio e ficam dentro do corpo de 0x08004644. Sao labels (ver JT7_simbolos.csv e JT7_lista.txt se houver).
+# Os itens de FS1 (0x08004CA4) e FS7 (0x0803E120) nao tem tabela: nao criar funcao por eles.

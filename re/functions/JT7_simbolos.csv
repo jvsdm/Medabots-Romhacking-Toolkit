@@ -1,0 +1,7 @@
+# address,name,kind,comment
+0x0800467C,PartEditor_SubmodeJumpTable,data,tabela real de 5 ponteiros (indice = byte ctx+0x5A, 0..4); hospedeira PartEditor_DispatchSubmodeStep 0x08004644; ponteiro via literal 0x08004678; JT7
+0x08004690,PartEditor_SubmodeCase0_CountParts,label,caso 0 da tabela 0x0800467C: Mem_FillBytes + Parts_CountInventoryMatches; grava 4/8 nos estados; JT7
+0x080046C4,PartEditor_SubmodeCase1_Init,label,caso 1 da tabela 0x0800467C: init do sub-bloco com ctx+0x5C; r4[2]=0; cauda comum; JT7
+0x080046E8,PartEditor_SubmodeCase2_Init,label,caso 2 da tabela 0x0800467C: init do sub-bloco com ctx+0x5D; r4[2]=1; cauda comum; JT7
+0x08004708,PartEditor_SubmodeCase3_Init,label,caso 3 da tabela 0x0800467C: init do sub-bloco com ctx+0x5E; r4[2]=2; cauda comum; JT7
+0x08004728,PartEditor_SubmodeCase4_Init,label,caso 4 da tabela 0x0800467C: init do sub-bloco com ctx+0x5F; r4[2]=3; cauda comum; JT7
