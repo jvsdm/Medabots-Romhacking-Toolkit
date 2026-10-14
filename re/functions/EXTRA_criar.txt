@@ -3,3 +3,5 @@
 0x08033CD0	DM: bl Fight_ResolveDefenderRosReductions + avanca cursor (action-script)
 0x08010264	BT2: menu_list[6], despachante por GS (tabela 0x083ACE24)
 0x0803D538	BT2: menu_list[10], despachante por GS-0x10 (tabela 0x083AFC78)
+0x0800C7E4	DB: opcao Item do menu de debug
+0x0800CE70	DB: opcao Mdlpic do menu de debug
