@@ -1,7 +1,7 @@
 address,name,kind,comment
 0x0800508C,Menu_DrawPartIconGrid,func_thumb,"Grade de 9 icones de peca no menu (provavel)"
 0x08017CE8,Ui_TickBlinkCounter,func_thumb,"Contador de piscar, bit 3 (provavel)"
-0x08042B80,FUN_08042b80,func_thumb,"Mapeia id 0..7 para 0/1; significado nao confirmado (chute)"
+0x08042B80,Speciality_IsRemotenessClass,func_thumb,mapeia id 0..7 para 0 ou 1 (0,1,4,5 -> 0; 2,3,6,7 -> 1; outros: devolve o proprio id) (revisto CH1: provável; nome de Ghidra e palpite)
 0x0804305C,Sprite_WriteComposite4Objects,func_thumb,"Escreve 4 objetos 2x2 na OAM; mesma assinatura de CreateCompositeBattleSpriteObjects (conferir duplicado 0x08042E58)"
 0x080432A0,Sprite_UpdateComposite4Motion,func_thumb,"Movimento em arco de grupo de 4 sprites (provavel)"
 0x0804361C,Slot_FindNextActiveWrap,func_thumb,"Proximo slot ativo com wrap (provavel)"
@@ -12,9 +12,9 @@ address,name,kind,comment
 0x0805B188,Shop_LoadPartIconFrame,func_thumb,"Descomprime frame do icone da peca para VRAM (provavel)"
 0x0805B22C,Shop_DrawPartListPage,func_thumb,"Desenha pagina de 4 pecas da loja/troca (provavel)"
 0x0805B5BC,Menu_UpdateSpritePriorityByRange,func_thumb,"Bit de prioridade 0x4000 do cursor por faixa (provavel)"
-0x0806A748,FUN_0806a748,func_thumb,"Ordena 3 entradas e emite sprites por rank (chute)"
-0x0806A860,FUN_0806a860,func_thumb,"Temporizadores de 3 bots, spawn no limite (chute)"
-0x0806AA10,FUN_0806aa10,func_thumb,"Contadores de 3 bots com limite de tabela (chute)"
-0x0806AAA4,FUN_0806aaa4,func_thumb,"Sequencia de acao de 3 bots com sfx 0x43/0x44 (chute, funcao grande)"
-0x0806ADB0,FUN_0806adb0,func_thumb,"Fases de sprite composto de 3 bots (chute)"
+0x0806A748,FUN_0806a748,func_thumb,para 3 entradas: se byte de estado < 3 calcula rank (5..8) comparando bytes e campo ushort +0x1a e emite sprite; senao emite sprite 5/6/7 conforme DAT_0806A784 (revisto CH1: provável)
+0x0806A860,FUN_0806a860,func_thumb,temporizadores de 3 bots: decrementa contador (minimo 4) e sobe +3 no campo +0x1a; slot_spawn ao atingir o limite; contador 0x20 dispara slot_spawn(10) (revisto CH1: provável)
+0x0806AA10,FUN_0806aa10,func_thumb,para 3 bots: incrementa contador de disparo; ao atingir o limite da tabela (indice*7 + base) soma 1 no campo +0x1a e zera o contador (revisto CH1: provável)
+0x0806AAA4,FUN_0806aaa4,func_thumb,sequencia de acao de 3 bots: se campo +0x1a passa do limite DAT_0806AB98 avanca estado (sfx 0x43 se spawna slot, 0x44 se nao); depois desenha celula e reposiciona (revisto CH1: provável; funcao grande, resumo)
+0x0806ADB0,FUN_0806adb0,func_thumb,para 3 bots com estado < 2: conforme flag +0x2a = 1 ou 2 atualiza movimento composto; ao contador chegar em 0x18 (flag 1) ou 0x2c (flag 2) cria objetos compostos e ajusta velocidade (revisto CH1: provável)
 0x0807334C,Snd_UpdateChannelFreqEnv,func_thumb,"Atualiza freq e envelope de canal de som (provavel)"

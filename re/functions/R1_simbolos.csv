@@ -52,7 +52,7 @@ address,name,kind,comment
 0x080182D0,AdvanceSelectedMedabotPreviewAnimationSlot,func_thumb,Avanca ciclo de animacao do slot da previa (+0x46); confirmado
 0x0801830C,Fight_DrawRowBotSlotsExceptSelected,func_thumb,Redesenha slots da linha de bots exceto o selecionado; provavel
 0x080183A4,HandleSelectedMedabotPreviewCursorInput,func_thumb,Cursor 3x3 da luta; redesenha paineis e previa; provavel (nome herdado descreve so a previa)
-0x080185A8,Fight_SlotConfirmStartSlide,func_thumb,Confirma slot e inicia transicao de lado; chute
+0x080185A8,Fight_SlotConfirmStartSlide,func_thumb,indice = byte+0x3C*3 + byte+0x3D; chama FUN_08017A7C(indice, par de bytes da tabela DAT_080185E0), Tile_ClearSlots(8,1) e FUN_08017C50(1) (revisto CH1: provável)
 0x080185E8,Fight_SlideSideTransitionStep,func_thumb,Passo de animacao de troca de lado da grade de bots (14 passos); provavel
 0x080187A8,Fight_ToggleActiveSideAndRedraw,func_thumb,Inverte lado ativo e redesenha slots; provavel
 0x080187D4,Fight_SlideSideBackStep,func_thumb,Passo reverso da troca de lado; redesenha paineis no fim; provavel
@@ -112,7 +112,7 @@ address,name,kind,comment
 0x0801A6EC,Fight_IsSlotFlag44Set,func_thumb,Testa bit do slot 0/1/2 em +0x44 (01/02/04); confirmado
 0x0801A744,Fight_ClearSlotFlag44,func_thumb,Limpa bit do slot 0/1/2 em +0x44; confirmado
 0x0801A788,Fight_RunStateDispatch,func_thumb,Despachante de 9 estados via byte +0x13A e tabela de salto (nao recuperada); confirmado
-0x0801ABF8,Fight_MaybeStartUiAction,func_thumb,Guarda (flag ou fase +0x89) e chama FUN_0803faa0(1,2,0); chute no efeito; confirmado guarda
+0x0801ABF8,Fight_MaybeStartUiAction,func_thumb,guarda: se DAT_0801AC1C = 0 ou byte +0x89 de DAT_0801AC20 = 1, chama Obj_InitSlotAndLoad(1,2,0); o efeito nao e acao de UI (revisto CH1: provável; guarda confirmada)
 0x0801AC24,Fight_TryUiActionByIndex,func_thumb,Mesma guarda; chama FUN_0803fb3c com item de tabela por indice; confirmado guarda
 0x0801AC6C,Fight_TryUiActionDefault,func_thumb,Mesma guarda; retorna FUN_08041ca4(); confirmado guarda
 0x0801AC98,Fight_LoadBotSideTiles,func_thumb,Carrega tiles dos bancos 0D/11 (lado 0-2) ou 12/14 (lado 3-5) via LoadTilesWithMalias; confirmado
@@ -136,7 +136,7 @@ address,name,kind,comment
 0x0801A910,Fight_RunStateDispatch_State4,state_handler,Carrega 3 graficos ROM->VRAM; provavel
 0x0801A950,Fight_RunStateDispatch_State5,state_handler,Sem graficos; so repassa 0x9D; confirmado
 0x0801A958,Fight_RunStateDispatch_State6,state_handler,Carrega 3 graficos ROM->VRAM; provavel
-0x0801A998,Fight_RunStateDispatch_State7,state_handler,Chama 0803EF8C (preenchimento); chute
+0x0801A998,Fight_RunStateDispatch,state_handler,despacha por jump table (byte +0x13A, guarda <= 8) para o handler do estado; o estado 7 e uma das entradas, nao confirmado (revisto CH1: confirmado para o despacho)
 0x0801A9C8,Fight_RunStateDispatch_State8,state_handler,Salta para 0801AADE; confirmado
 0x0801B3AC,Fight_CommitActiveBotPartFields,func_thumb,Copia campos da peca ativa para o bot e chama PlaceActiveBotObjects; provavel
 0x0801B4C8,Fight_CountBotsWithStatus2,func_thumb,Conta 3 bots com status +BA == 2; confirmado

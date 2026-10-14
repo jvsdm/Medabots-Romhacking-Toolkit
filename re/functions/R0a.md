@@ -12,12 +12,12 @@ foram renomeados se confirmados ou prováveis.
 - Para o Lua: sim (progressão de nível da peça após a luta).
 - Confiança: provável.
 
-## 0x08014E7C Fight_ClearBattleBuffer (chute)
+## 0x08014E7C Fight_ClearBattleBuffer (revisto CH1: provável)
 - Assinatura: `void Fight_ClearBattleBuffer(void)`
 - O que faz: zera 0x600 bytes em DAT_08014E90 com FUN_0803F624 (memset). Limpa um buffer de luta; o destino não foi identificado.
 - Chama: FUN_0803F624. Chamada por: não mapeado.
 - Para o Lua: "não precisa" se o buffer for só de cache; confirmar o destino.
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido: Mem_FillBytes(DAT_08014E90, 0x600, 0). O buffer alvo nao foi identificado; o nome 'BattleBuffer' e palpite.
 
 ## 0x08014E94 Fight_UpdateBotActiveFlagCount (provável)
 - Assinatura: `void Fight_UpdateBotActiveFlagCount(void)`
@@ -41,12 +41,12 @@ foram renomeados se confirmados ou prováveis.
 - Para o Lua: sim.
 - Confiança: provável.
 
-## 0x08014F44 FUN_08014F44 (chute, sem rename)
+## 0x08014F44 FUN_08014F44 (chute, sem rename) (revisto CH1: provável)
 - Assinatura: `void FUN_08014F44(void)` (nome sugerido: `Fight_CopyBotIdentityRecords`)
 - O que faz: para cada bot da contagem, copia 8 bytes de uma tabela indexada por (+0x41 & 0xF)*8 para o início do bloco do bot (stride 0x100).
 - Chama: FUN_0803F63C. Chamada por: Fight_RefreshBotPartRecords.
 - Para o Lua: sim se a tabela de 8 bytes for usada; confirmar o que é a tabela.
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido no decompile: laco com Mem_CopyBytes de 8 bytes e indice vindo do nibble do byte +0x41. Nome 'Identity' e palpite.
 
 ## 0x080150C0 Fight_InitializeEnemyBotStates (provável)
 - Assinatura: `void Fight_InitializeEnemyBotStates(void)`
@@ -69,12 +69,12 @@ foram renomeados se confirmados ou prováveis.
 - Para o Lua: sim (dados de estatística de peça na tela de status).
 - Confiança: provável.
 
-## 0x0801528C FUN_0801528C (chute, sem rename)
+## 0x0801528C FUN_0801528C (chute, sem rename) (revisto CH1: provável)
 - Assinatura: `void FUN_0801528C(void)` (nome sugerido: `Fight_RefreshBotPartSlotDisplays`)
 - O que faz: se o byte em DAT_080152C4+0x89 == 1 e o byte em DAT_080152C8 != 0, percorre os slots 3..5 (bloco +0x340) e 0..2 (bloco +0x40) e, onde há dado, chama FUN_08031A3C(slot). Senão, percorre os slots 0..5 (bloco +0x40) e faz o mesmo.
 - Chama: FUN_08031A3C (não documentada aqui). Chamada por: não mapeado.
 - Para o Lua: sim se a atualização de tela de peça for portada; FUN_08031A3C é o que de fato desenha.
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido no decompile: dois laços com Fight_BuildPartActionMetadataForAllParts(indice) condicionados a bytes de slot. Callee ja nomeado no Ghidra (antigo FUN_08031A3C).
 
 ## 0x0801531C Fight_SelectActionsForBotGroup (provável)
 - Assinatura: `void Fight_SelectActionsForBotGroup(int first_bot)`
@@ -160,9 +160,9 @@ foram renomeados se confirmados ou prováveis.
 - Para o Lua: sim.
 - Confiança: confirmado.
 
-## 0x080156D0 FUN_080156D0 (chute, sem rename)
+## 0x080156D0 FUN_080156D0 (chute, sem rename) (revisto CH1: confirmado)
 - Assinatura: `void FUN_080156D0(void)` (nome sugerido: `Fight_RandomizePriorityListSlot`)
 - O que faz: sorteia um byte (`randbyte`), usa `& 0x1F` como índice e copia 4 bytes de uma origem fixa para a tabela de 32 entradas de 4 bytes.
 - Chama: randbyte, memcpy. Chamada por: Fight_SelectFallbackActionFromPriorityList.
 - Para o Lua: sim se a lista de prioridade embaralhada for portada (`math.random`).
-- Confiança: chute.
+- Confiança: revisto CH1: confirmado. Comportamento lido no decompile: randbyte() & 0x1F, memcpy de 4 bytes para (indice*4 + DAT_080156F0). Origem do valor copiado nao fechada.

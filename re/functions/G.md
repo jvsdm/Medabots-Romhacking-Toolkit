@@ -18,12 +18,12 @@ Confiança segue o formato de R0.md. Nomes do mtbe.csv reaproveitados quando bat
 - Para o Lua: sim (piscar de cursor/indicador).
 - Confiança: provável.
 
-## 0x08042B80 FUN_08042b80 (sem nome)
+## 0x08042B80 Speciality_IsRemotenessClass (sem nome) (revisto CH1: provável)
 - Assinatura: `int f(int id)`
 - O que faz: mapeia o id 0..7 para 0 ou 1 (0,1,4,5 viram 0; 2,3,6,7 viram 1); fora disso devolve o próprio valor. Não se sabe o significado do agrupamento.
 - Chama: nada. Chamada por: não mapeado.
 - Para o Lua: sim se a tabela de agrupamento for usada.
-- Confiança: chute (sem nome).
+- Confiança: revisto CH1: provável. Lido no decompile: switch de 0..7 com saidas 0 e 1. O nome 'Speciality_IsRemotenessClass' veio do Ghidra e e palpite; significado nao fechado.
 
 ## 0x0804305C Sprite_WriteComposite4Objects
 - Assinatura: `void Sprite_WriteComposite4Objects(int ...)` (11 argumentos)
@@ -98,40 +98,40 @@ Confiança segue o formato de R0.md. Nomes do mtbe.csv reaproveitados quando bat
 - Para o Lua: sim se o cursor existir no port.
 - Confiança: provável.
 
-## 0x0806A748 FUN_0806a748 (sem nome)
+## 0x0806A748 FUN_0806a748 (sem nome) (revisto CH1: provável)
 - Assinatura: `void f(void)`
 - O que faz: para 3 entradas, compara a ordem entre elas (byte de ordem e halfword +0x1A) e emite partes de sprite (sprite_part_emit) com prioridade 5 a 7 conforme o rank; a outra metade do laço emite com ids 5, 6, 7 para os slots de tilemap.
 - Chama: sprite_part_emit. Chamada por: não mapeado.
 - Para o Lua: sim se houver ordenação de profundidade.
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido no decompile: comparacoes de rank e sprite_part_emit com 5, 6, 7 ou rank 5..8. Papel de ordenacao confirmado pela estrutura; nome segue FUN_.
 
-## 0x0806A860 FUN_0806a860 (sem nome)
+## 0x0806A860 FUN_0806a860 (sem nome) (revisto CH1: provável)
 - Assinatura: `void f(void)`
 - O que faz: avança temporizadores de 3 bots (byte +0x1A da entrada) e, no limite (0x20), chama slot_spawn e zera; também decrementa o contador em +0x1A e controla a animação de um texto (bytes +0x27/+0x2A com wrap). Usa a área de tilemap dos marcadores.
 - Chama: slot_spawn. Chamada por: não mapeado.
 - Para o Lua: sim (ações temporizadas da luta).
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido no decompile (grande, resumido): contadores, limite e slot_spawn. Papel de 'temporizador' pela estrutura; nome segue FUN_.
 
-## 0x0806AA10 FUN_0806aa10 (sem nome)
+## 0x0806AA10 FUN_0806aa10 (sem nome) (revisto CH1: provável)
 - Assinatura: `void f(void)`
 - O que faz: para 3 entradas, incrementa um contador a cada quadro; quando passa o limite vindo de uma tabela (indexada por byte do modo), incrementa +0x1A do bloco do bot.
 - Chama: nada. Chamada por: não mapeado.
 - Para o Lua: sim se o contador existir.
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido no decompile: laco de 3 entradas com comparacao contra byte da tabela e escrita em +0x1a. Papel de contador de bots pela estrutura.
 
-## 0x0806AAA4 FUN_0806aaa4 (sem nome)
+## 0x0806AAA4 FUN_0806aaa4 (sem nome) (revisto CH1: provável)
 - Assinatura: `void f(void)`
 - O que faz: sequência de ações de 3 bots: quando o contador passa do limite, chama FUN_08043240, marca +0x2A, avança a fase (+byte) e, ao 3º passo, dispara slot_spawn e efeitos (snd_sfx_request 0x43 ou 0x44; 0x43 quando o slot já está ativo, 0x44 no caso de falha). Também move sprites (FUN_080432a0 e CompositeSprite_ComputeOffsetWord) e atualiza +0x1A de um bloco de posição.
 - Chama: FUN_08043240, slot_spawn, snd_sfx_request, FUN_08048864, FUN_08069b38, FUN_080432a0. Chamada por: não mapeado.
 - Para o Lua: sim (sequência de ataque/efeito dos bots), mas o detalhe pede leitura com a fase.
-- Confiança: chute (função grande; só o esqueleto foi lido).
+- Confiança: revisto CH1: provável. Lido no decompile (grande): sfx 0x43 e 0x44 confirmados no codigo; o restante do fluxo e resumo, nao verificado linha a linha.
 
-## 0x0806ADB0 FUN_0806adb0 (sem nome)
+## 0x0806ADB0 FUN_0806adb0 (sem nome) (revisto CH1: provável)
 - Assinatura: `void f(void)`
 - O que faz: para 3 bots, quando a fase +0x2A é 1 ou 2, chama FUN_080432a0; ao chegar em 0x18 (fase 1) ou 0x2C (fase 2), monta objetos compostos com CreateCompositeBattleSpriteObjects (tiles de 4 peças) e chama FUN_08043240 com 8 ou 0xC.
 - Chama: FUN_080432a0, CreateCompositeBattleSpriteObjects, FUN_08043240. Chamada por: não mapeado.
 - Para o Lua: sim (efeito de aparecer/sumir o sprite composto).
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido no decompile: ramos por flag +0x2a, CreateCompositeBattleSpriteObjects e SetCompositeBattleSpriteAnimationSpeed com 8 ou 0xC. Papel de fases de sprite pela estrutura.
 
 ## 0x0807334C Snd_UpdateChannelFreqEnv
 - Assinatura: `void Snd_UpdateChannelFreqEnv(int ch, short *out)`

@@ -20,14 +20,14 @@ bot (base = 0x03000590 + bot*0x100) ou ao slot de objeto (stride 0x40).
 - Para o Lua: sim.
 - Confiança: confirmado.
 
-## 0x08034F44 Fight_SideHasPartCode15
+## 0x08034F44 Fight_SideHasPartCode15 (revisto CH1: confirmado)
 - Assinatura: `int f(int side)`
-- O que faz: varre 3 slots de parte do lado (base side*0x100 + 0x49, stride 0x18); retorna 1 se algum byte for 0x15.
+- O que faz: varre 3 entradas (passo 0x18) do lado informado; retorna 1 se alguma tem o codigo 0x15, senao 0.
   O significado do código 0x15 não foi confirmado.
 - Chama: não verificado. Chamada por: não verificado.
 - Memória: lê registro do bot (+0x49, +0x61, +0x79).
 - Para o Lua: sim, se a regra for portada (confirmar o significado de 0x15 antes).
-- Confiança: estrutura confirmada; significado chute.
+- Confiança: revisto CH1: confirmado. Lido no decompile: laco de 3 entradas com passo 0x18 e retorno 1 se byte == 0x15. O significado do codigo 0x15 segue em aberto.
 
 ## 0x08034F68 Fight_ApplyDamageToPart
 - Assinatura: `int f(int side, int part, int dmg)`
@@ -139,13 +139,13 @@ bot (base = 0x03000590 + bot*0x100) ou ao slot de objeto (stride 0x40).
 - Para o Lua: não precisa (sprite).
 - Confiança: provável.
 
-## 0x080353AC (mantido FUN_080353AC)
+## 0x080353AC (mantido FUN_080353AC) (revisto CH1: confirmado)
 - Assinatura: `void f(uint flags)`
 - O que faz: grava 0 ou 2 no campo +2 de um slot fixo (ponteiros DAT_080353c8 / DAT_080353bc) conforme bit 1 de flags.
   Não ficou claro qual slot é nem por que o deslocamento é 2.
 - Memória: escreve slot fixo +0x02.
 - Para o Lua: não precisa se for só apresentação.
-- Confiança: chute (nome mantido como FUN_).
+- Confiança: revisto CH1: confirmado. Lido no decompile: so duas escritas de halfword, condicionadas ao bit 1. O papel do slot escrito segue sem nome.
 
 ## 0x080353CC Fight_StepSlotAnimOffsetTable
 - Assinatura: `int f(int slot)`

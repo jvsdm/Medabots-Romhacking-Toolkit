@@ -11,12 +11,12 @@ address,name,kind,comment
 0x08015A90,Fight_LoadBattleBotTilesSet,func_thumb,"Quatro LoadTilesWithMalias da batalha"
 0x08015AFC,Fight_LoadBattleBotTilesSetExtra,func_thumb,"Dois LoadTilesWithMalias extras"
 0x08015B3C,Fight_LayoutBotNameText,func_thumb,"Texto do nome do bot (provavel)"
-0x08015BA8,Fight_FillSideLabelBandA,func_thumb,"Faixa de tilemap por lado (chute)"
-0x08015BF4,Fight_FillSideLabelBandB,func_thumb,"Faixa de tilemap por lado, outros tiles (chute)"
+0x08015BA8,Fight_FillSideLabelBandA,func_thumb,preenche faixa de tilemap: lado esquerdo (x=1) se param < 3, senao direito (x=0x15), 0x12 linhas (revisto CH1: provável)
+0x08015BF4,Fight_FillSideLabelBandB,func_thumb,mesma faixa de tilemap de Fight_FillSideLabelBandA com outros ponteiros de tiles (revisto CH1: provável)
 0x08015C40,Fight_DrawBotGaugeTilemap,func_thumb,"Barra de 8 celulas do bot (provavel)"
 0x08015DD0,Fight_ComputeGaugeFillFixed,func_thumb,"(a/b)*c em soft-float; alta=cheias baixa=resto (provavel)"
 0x08015E68,Fight_DrawBotNumericReadout,func_thumb,"Numero de 6 digitos do bot (provavel)"
-0x08015F24,Fight_DrawBotNameLabel,func_thumb,"Cabecalho de texto (chute)"
+0x08015F24,Fight_DrawBotNameLabel,func_thumb,limpa mascara de atributos (Slot_ClearAttrMask 0x1e,0xb), copia 12 bytes de texto para tabela indexada pelo byte +0x81 e monta glifos (revisto CH1: provável)
 0x08015F78,Fight_SetupAllIndicatorSlots,func_thumb,"Loop dos 6 slots de indicador"
 0x08015F90,Fight_SetupIndicatorSlot,func_thumb,"Registro de 0x40 bytes do indicador (provavel)"
 0x08016068,Fight_SetupAllIndicatorSlotsAlt,func_thumb,"Loop dos 6 slots (variante)"

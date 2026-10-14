@@ -1,7 +1,7 @@
 address,name,kind,comment
 0x08034EB8,Fight_ReadActionScriptInlineArgs,func_thumb,"confirmado: copia argumentos inline do opcode do script de acao"
 0x08034F08,Fight_AdvanceActionScriptCursor,func_thumb,"confirmado: avanca cursor do script e zera +0xAA"
-0x08034F44,Fight_SideHasPartCode15,func_thumb,"provavel na estrutura; significado do 0x15 chute"
+0x08034F44,Fight_SideHasPartCode15,func_thumb,varre 3 entradas (passo 0x18) do lado informado e retorna 1 se alguma tem codigo 0x15 (revisto CH1: confirmado; significado do 0x15 nao fechado)
 0x08034F68,Fight_ApplyDamageToPart,func_thumb,"provavel: aplica dano a armadura de uma parte e devolve excedente"
 0x08034FC8,Fight_SetBotSlotPosFromDirection,func_thumb,"provavel: move slot de objeto do bot por direcao"
 0x080350E0,Fight_PlaceBotMarkerSlotsAroundBase,func_thumb,"confirmado: 3 slots marcadores ao redor do slot-base"
@@ -15,7 +15,7 @@ address,name,kind,comment
 0x08035478,Fight_SelectLowestPriorityTargetBot,func_thumb,"provavel: escolhe bot alvo por menor/maior prioridade"
 0x08035528,Fight_SelectRandomTargetPartForSelectedBot,func_thumb,"provavel: sorteia parte alvo do bot escolhido"
 0x0803536C,Fight_SetFacingSlotX,func_thumb,"provavel: grava X de slot com deslocamento por direcao"
-0x080353AC,FUN_080353AC,func_thumb,"chute: grava 0 ou 2 em slot fixo conforme bit 1"
+0x080353AC,FUN_080353AC,func_thumb,se bit 1 do parametro = 0 grava 0 em DAT_080353C8+2; senao grava 2 em DAT_080353BC+2 (revisto CH1: confirmado no comportamento; papel nao nomeado)
 0x080353CC,Fight_StepSlotAnimOffsetTable,func_thumb,"provavel: avanca tabela de passos de animacao do slot"
 0x0803556C,Fight_RollStatusRowRandomEntry,func_thumb,"provavel: sorteia 0..7 numa linha da tabela"
 0x08035590,Fight_GetStatusRowIndex,func_thumb,"provavel: linha 0..9 pela soma de flags de status do bot"

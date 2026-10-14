@@ -90,19 +90,19 @@ Nomes que já estão no mtbe.csv são reaproveitados. Nomes do Ghidra (LoadTiles
 - Para o Lua: sim (texto do nome do bot).
 - Confiança: provável.
 
-## 0x08015BA8 Fight_FillSideLabelBandA
+## 0x08015BA8 Fight_FillSideLabelBandA (revisto CH1: provável)
 - Assinatura: `void Fight_FillSideLabelBandA(uint bot)`
 - O que faz: preenche uma faixa de tilemap (3,1) de 1 ou 0x15 de coluna, altura 0x12, conforme o lado do bot.
 - Chama: FillBgTilemapRectSequential. Chamada por: não mapeado.
 - Para o Lua: sim se a faixa existir no port.
-- Confiança: chute (só o formato geométrico foi lido).
+- Confiança: revisto CH1: provável. Lido no decompile: FillBgTilemapRectSequential com x=1 ou x=0x15 conforme param. Que lado e que tiles sao, nao confirmado.
 
-## 0x08015BF4 Fight_FillSideLabelBandB
+## 0x08015BF4 Fight_FillSideLabelBandB (revisto CH1: provável)
 - Assinatura: `void Fight_FillSideLabelBandB(uint bot)`
 - O que faz: mesma geometria de Fight_FillSideLabelBandA com outros dados de tile.
 - Chama: FillBgTilemapRectSequential. Chamada por: não mapeado.
 - Para o Lua: sim se a faixa existir no port.
-- Confiança: chute.
+- Confiança: revisto CH1: provável. Lido no decompile: mesma logica (x=1 ou x=0x15, 0x12) com DAT_08015C14/DAT_08015C38. Tiles nao identificados.
 
 ## 0x08015C40 Fight_DrawBotGaugeTilemap
 - Assinatura: `void Fight_DrawBotGaugeTilemap(uint bot)`
@@ -125,12 +125,12 @@ Nomes que já estão no mtbe.csv são reaproveitados. Nomes do Ghidra (LoadTiles
 - Para o Lua: sim (leitura numérica na tela da luta).
 - Confiança: provável.
 
-## 0x08015F24 Fight_DrawBotNameLabel
+## 0x08015F24 Fight_DrawBotNameLabel (revisto CH1: provável)
 - Assinatura: `void Fight_DrawBotNameLabel(void)`
 - O que faz: limpa atributos de slot, copia 12 bytes de uma constante da ROM para um buffer RAM indexado pelo id do bot (+0x81) e monta o texto com Text_LayoutGlyphSprites.
 - Chama: Slot_ClearAttrMask, memcpy, Text_LayoutGlyphSprites. Chamada por: não mapeado.
 - Para o Lua: sim se o cabeçalho existir no port.
-- Confiança: chute (o conteúdo dos 12 bytes não foi lido).
+- Confiança: revisto CH1: provável. Lido no decompile: Slot_ClearAttrMask, memcpy de 0xC bytes e Text_LayoutGlyphSprites. Nome de rotulo do bot coerente com o efeito.
 
 ## 0x08015F78 Fight_SetupAllIndicatorSlots
 - Assinatura: `void Fight_SetupAllIndicatorSlots(void)`
