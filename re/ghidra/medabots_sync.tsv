@@ -556,6 +556,7 @@ F	0x0801AE70	Fight_AnimateSideEffectSprites8
 F	0x0801AEB4	Fight_ResetBotVisualCounters
 F	0x0801AEF4	Fight_InitBattleSprites
 F	0x0801AF6C	Fight_StepBotVisualUp
+F	0x0801AF84	Fight_StepBotVisualUp_0801AF84
 F	0x0801AFB8	Fight_StepBotVisualDown
 F	0x0801B004	Fight_BuildBotPartObjects8
 F	0x0801B0E8	Fight_StepBotPartObjects8
@@ -1210,6 +1211,7 @@ F	0x0802E294	Fight_DispatchOnSubstateAA_BL_13_DrawTargetValueNumbers
 F	0x0802E358	Fight_DispatchOnSubstateAA_BL_14_AnimateNumbersUntilDone
 F	0x0802E424	Fight_DispatchOnSubstateAA_BM
 F	0x0802E44C	Fight_DispatchOnSubstateAA_BM_00_MarkOpponentsReadMedaforce
+F	0x0802E4A0	Fight_DispatchOnSubstateAA_BM_00_ReadEnemyGauge
 F	0x0802E4C8	Fight_DispatchOnSubstateAA_BM_01_SpawnOrbOnOpponents
 F	0x0802E5D4	Fight_DispatchOnSubstateAA_BM_02_GrowOrbScale
 F	0x0802E638	Fight_DispatchOnSubstateAA_BM_04_SpinOrbsUntilArrived
@@ -1321,6 +1323,7 @@ F	0x08031608	Fight_SceneStep66_GotoReturnToTurnScene
 F	0x08031614	Fight_DispatchOnSubstateAA_BR_40_CheckMedaforceRequirements
 F	0x08031704	Fight_DispatchOnSubstateAA_BR_45_SetupMedaforceSlots
 F	0x0803185C	Fight_DispatchOnSubstateAA_BR_46_WaitMedaforceAnim
+F	0x0803186A	Fight_DispatchOnSubstateAA_BR_46_WaitMedaforceAnim_0803186A
 F	0x080318CC	Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName
 F	0x080318DE	Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction
 F	0x08031918	Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction_08031918
@@ -1375,7 +1378,7 @@ F	0x080336DC	Fight_ValidateActionRequiresEnemyPartSpeciality
 F	0x08033754	Fight_ValidateEnemyHasPartWithSpeciality23
 F	0x080337CC	Fight_ValidateAllyHasTechnique4Part
 F	0x08033840	Fight_RunActionScriptLoop
-F	0x080338DC	ActionScript_Op01_EndSetsSceneAndGs
+F	0x080338DC	ActionScript_Op01_SetSceneExitState
 F	0x080338F4	Fight_WaitForActionScriptByteMatch
 F	0x08033974	Fight_WaitForActionScriptChoiceByteMatch
 F	0x080339F4	ActionScript_Op04_pendente
@@ -1511,6 +1514,7 @@ F	0x080361F6	FightPreview_AdvanceLeftSideSequenceStep_080361F6
 F	0x08036218	FightPreview_AdvanceRightSideSequenceStep
 F	0x08036270	Fight_IncrementActionUsageCounter_08036270
 F	0x0803628C	Fight_AddMedaforceChargeFromAction
+L	0x080362AC	Fight_AddMedaforceChargeFromAction_store
 F	0x080362C4	FightPreview_LoadSideTileSlots
 F	0x08036340	FightPreview_LoadSideTiles
 F	0x08036370	FightPreview_LoadPartIconRows
@@ -1985,7 +1989,7 @@ F	0x08049EC0	Palette_FadeRowsToColorA_Wrapper
 F	0x08049ED4	Palette_FadeRowsToColorB_Wrapper
 F	0x0804A210	GameState_AdvanceSubroutine
 F	0x0804A220	EventScript_RunCurrent
-F	0x0804A2F0	Menu_NewGame_Main
+F	0x0804A2F0	new_game_start
 L	0x0804A3B6	lit_EventDbBase0
 L	0x0804A584	lit_EventDbBase1
 F	0x0804A60C	Map_InitScreenAndTransition
@@ -2407,13 +2411,16 @@ F	0x0805BD44	Screen_SetRowPalette3
 F	0x0805BE0C	Screen_HighlightBitmaskGrid
 F	0x0805BF14	Palette_FadeTo16
 F	0x0805BFEC	Palette_FadeBlockUpload
-F	0x0805C128	Gfx_ScreenResetVram
+F	0x0805C0D4	Title_DispatchSubState
+F	0x0805C128	TitleMenu_SubState0
 F	0x0805C17C	Screen_SceneInit
 F	0x0805C2DC	Save_InitScreen
 F	0x0805C410	Screen_StepCounterAndDrawCell
 F	0x0805C454	Menu_TickCursorInputAndConfirm
 F	0x0805C574	Menu_ThreeRowCursorInput
 F	0x0805C7F8	Gfx_FadeTransitionStep
+F	0x0805C8EC	TitleMenu_SubState7_NameEntry
+F	0x0805C950	TitleMenu_SubState8_Continue
 F	0x0805CA3C	Fx_RunStateStepAndInit
 F	0x0805CABC	Flow_SubStepInitTimer
 F	0x0805CAF4	Anim_WaitRecordThenState3
@@ -2579,29 +2586,33 @@ F	0x08064EB4	Screen_InitLoadAssetsB
 F	0x08065198	Anim_PaletteFadeThenSpawn
 F	0x080656DC	Obj_InitTimerRecord
 F	0x08065710	Anim_StepRecordCounter
-F	0x08065790	LinkMenu15_Step0
+F	0x08065790	LinkMenu15Step0
 F	0x080657C4	Sm_StepSfxRepeat3
 F	0x08065A0C	Battle_TickTwoStageSequence
-F	0x08065A80	LinkMenu15_Step2
-F	0x08065A94	LinkMenu15_Step4
+F	0x08065A80	LinkMenu15Step2
+F	0x08065A94	Menu15_Sub4_WaitAThenAdvance
 F	0x08065B0C	Link_HandshakeFrameStep
-F	0x08065C98	LinkMenu15_Step6
-F	0x08065CFC	LinkMenu15_Step7
+F	0x08065C98	LinkMenu15Step6
+F	0x08065CFC	LinkMenu15Step7
 F	0x08065D10	Fight_CallHandlerWithArgCopy
-F	0x08065ED0	LinkCommand1_Handler
+F	0x08065D44	LinkMenu14Step0
+F	0x08065ED0	Screen_DispatchByState3A
 L	0x08065F04	Screen_DispatchByState3A_TableA
 L	0x08065F1C	Screen_DispatchByState3A_A0
 L	0x080660AC	Screen_DispatchByState3A_TableB
 L	0x080660C4	Screen_DispatchByState3A_B0
 F	0x08066240	Anim_CounterDoneInitObjectSlot
-F	0x08066280	Menu_SelectionFiveOptionsStep
+F	0x08066280	Link_SelectFiveOptionsStep
 F	0x08066460	Link_CommandExchangeStep
 F	0x08066534	Save_WaitSfxThenFlash
 F	0x08066574	Save_RunOptionsThenBlendFade
+F	0x080665B0	LinkMenu14Step6
 F	0x080665FC	Fx_InitStringStateMachine
+F	0x0806668C	LinkMenu14Step9
 F	0x080666C8	Fx_TickStateThenInitRecord8
+F	0x080666F4	LinkMenu14Step11
 F	0x08066714	Text_BuildMessageAndStep
-F	0x08066824	Fight_CallHandlerCopyArgs52
+F	0x08066824	Menu14_CallSubstateHandler
 F	0x08066870	Geom_SplitSegmentInThirds
 F	0x080668D4	Ring_BuildPointsFromRadius
 F	0x080669AC	Byte_EaseTowardTarget
@@ -2707,10 +2718,11 @@ F	0x0806D9A8	Battle_IntroSetupStep
 F	0x0806DAA4	Screen_IntroTimeline
 F	0x0806DE0C	battle_effects_5_slots_update
 F	0x0806E10C	battle_slot_init
+F	0x0806E184	Boot_SubState2_WaitFxStep
 F	0x0806E2A0	Screen_InitRowBufferAndFx
 F	0x0806E3C4	Fx_TickStepTableEntry
 F	0x0806E404	battle_timer_end_transition
-F	0x0806E460	Battle_DispatchThenEndTransition
+F	0x0806E460	Boot_DispatchSubState
 F	0x0806E484	fade_step_bld
 F	0x0806E504	Gfx_ResetVramPaletteOamAndStopSong
 F	0x0806E5E0	Gfx_LoadLz77ScreenAndEnableBg0
@@ -3004,7 +3016,7 @@ L	0x08081490	sCompositePreviewMirroredDescriptorMap
 L	0x080814C4	gMotionData
 L	0x080AFC18	StateTable_CopySrc_63C
 L	0x080AFC88	LinkMenu15StepTable
-L	0x080AFCC0	LinkCommandHandlerTable
+L	0x080AFCC0	LinkMenu14SubstateTable
 L	0x080B003C	StateTable_CopySrc_8400
 L	0x080B012C	SND_SongTable
 L	0x080B0204	SND_Song0Header
@@ -3055,7 +3067,7 @@ L	0x083AD190	Battle_StepFrameTable
 L	0x083AD380	gSpeciality8ByteTable
 L	0x083AD470	gFightFallbackPriorityRows
 L	0x083AD524	cursor_cell_xy_table
-L	0x083AECD8	gFightSceneSteps
+L	0x083AECD8	gFightSceneMainSubTable
 L	0x083AEEA0	gTechniqueActionSetupHandlerTable
 L	0x083AEF90	gTechniqueActionValidationHandlerTable
 L	0x083AF080	gFightSlotRandomTable16
@@ -3169,7 +3181,7 @@ L	0x083D1E40	gMotionAngleTable
 L	0x083D1F2C	gMotionOffsetTable
 L	0x083D2018	gMotionDurTable
 L	0x083D2104	gMainState1MenuTable
-L	0x083D212C	gSceneSubroutineTable
+L	0x083D212C	gMainState1_Menu10
 L	0x083D222C	gEventPrimaryOpcodeTable
 L	0x083D2630	gEventContinuationOpcodeTable
 L	0x083D2A40	gWalkSpeedTable
@@ -3212,11 +3224,13 @@ L	0x0847E644	gMapMusic
 L	0x08483234	gMapEntityPtrTable
 L	0x08483594	gMainState2MenuTable
 L	0x084835A4	KeyItemBag_MenuTable4
+L	0x0848360C	gTitleMenuSubStateTable
 L	0x08483614	SAVE_HANDLER_InitScreen
 L	0x08483634	KeyItemBag_SubStateTable
 L	0x08483688	SAVE_HANDLER_StepThenFlashOp
 L	0x084836B4	SAVE_SIGNATURE_ROM
 L	0x084836C5	SAVE_ERASE_HEADER_ROM
+L	0x084836E8	gNameEntrySubStateTable
 L	0x08483724	SAVE_HANDLER_FinishFlashStep
 L	0x08483770	SAVE_HANDLER_WriteEepromAndFinish
 L	0x08483774	gMapAreaB
@@ -3224,6 +3238,7 @@ L	0x084838E4	gShops
 L	0x08483ED8	gTextKeyItems
 L	0x0848521C	gTextShopDialogue
 L	0x084856E8	gMainState3MenuTable
+L	0x084859D8	gBootSubStateTable
 L	0x08485F88	gTextTournamentMessages
 L	0x0848698C	gTextRaceMessages
 L	0x08486E54	SND_LitFifoA
@@ -3450,9 +3465,6 @@ C	0x08050F2A
 C	0x08050F38
 C	0x08050F40
 C	0x0805716C
-C	0x0805C0D4
-C	0x0805C8EC
-C	0x0805C950
 C	0x0805C988
 C	0x0805E404
 C	0x0805FC58

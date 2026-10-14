@@ -1,0 +1,9 @@
+# Código sem função no Ghidra (criar função fica para MedabotsSync). Código Thumb válido (push no início), confirmado por disasm do ROM.
+0x08065D44 menu 0x14 passo 0 (tabela 0x080AFCC0)
+0x080665B0 menu 0x14 passo 6
+0x0806668C menu 0x14 passo 9
+0x080666F4 menu 0x14 passo 11
+0x08065790 menu 0x15 passo 0 (tabela 0x080AFC88)
+0x08065A80 menu 0x15 passo 2
+0x08065C98 menu 0x15 passo 6 (troca de comandos, LK2)
+0x08065CFC menu 0x15 passo 7

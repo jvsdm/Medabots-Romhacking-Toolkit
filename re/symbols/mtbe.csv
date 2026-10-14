@@ -918,6 +918,7 @@ address,name,kind,count,comment
 0x0801AEB4,Fight_ResetBotVisualCounters,func_thumb,,[R1] Zera 5 contadores de animacao do bot (+9C..A0); confirmado
 0x0801AEF4,Fight_InitBattleSprites,func_thumb,,[R1] Inicializa sprites de batalha (FUN_0803ef8c x4 e FUN_08040cd0 x3); provavel
 0x0801AF6C,Fight_StepBotVisualUp,func_thumb,,[R1] Rampa +0xC1 do bot ate 'P' com contador; retorna 1 ao concluir; confirmado
+0x0801AF84,Fight_StepBotVisualUp,func_thumb,,[MG3] B+0xC1 += 1 ate 0x50 ('P') enquanto fight+0x51 != 0; confirmado (decompile)
 0x0801AFB8,Fight_StepBotVisualDown,func_thumb,,[R1] Rampa -0xC1 do bot ate 0 com contador; retorna 1 ao concluir; confirmado
 0x0801B004,Fight_BuildBotPartObjects8,func_thumb,,[R1] Monta 8 objetos OAM de peca do bot (paleta +3C; posicao do bot); provavel
 0x0801B0E8,Fight_StepBotPartObjects8,func_thumb,,"[R1] Avanca 8 objetos de peca (X-8, tile, Y ao bot); retorna 1 se todos inativos; provavel"
@@ -1572,6 +1573,7 @@ address,name,kind,count,comment
 0x0802E358,Fight_DispatchOnSubstateAA_BL_14_AnimateNumbersUntilDone,func_thumb,,"[HN8] HN8 BL 14: `Fight_StepRowAnimation` em cada número; +0x84++ (pula para 0x78 se +0x89 == 0, botão bit 0 e > 0x32). Em 0x78: `Tile_ClearSlots(0x21 + (+0x60)..., 0xC)` e +0xAA += 1. (confirmado)"
 0x0802E424,Fight_DispatchOnSubstateAA_BM,func_thumb,,[R1a] Despachante por +AA (mesmo padrao); tabela 0x083AEB1C
 0x0802E44C,Fight_DispatchOnSubstateAA_BM_00_MarkOpponentsReadMedaforce,func_thumb,,[HN8] HN8 BM 00: `FightPreview_ClearPartCounters3`; +0x60 = lado inimigo do bot +0x87; para cada inimigo presente (+0x40) com cabeça inteira (+0x59 != 0) marca +0xD2+i = 1 e guarda +0xC1 (medaforce) em +0xD6+2i. +0xAA += 1. (confirmado (significado de +0xC1 = medaforce: R0a/R0b))
+0x0802E4A0,Fight_DispatchOnSubstateAA_BM_00_ReadEnemyGauge,func_thumb,,"[MG3] le B+0xC1 do inimigo (apenas leitura, provavel nome)"
 0x0802E4C8,Fight_DispatchOnSubstateAA_BM_01_SpawnOrbOnOpponents,func_thumb,,"[HN8] HN8 BM 01: LZ77 + CpuFastSet 0x10 (gráfico); para cada alvo monta o slot 10+i (escala 4, rotação 0, destino = posição do inimigo) e `Slot_SetupFromRecordList(rec+0x120)`. sfx 0x6A, +0xAA += 1. (confirmado)"
 0x0802E5D4,Fight_DispatchOnSubstateAA_BM_02_GrowOrbScale,func_thumb,,[HN8] HN8 BM 02: escala (+8/+9) dos slots marcados += 4 até 0x40; então timer +0x86 = 0x3C e +0xAA += 1. (confirmado)
 0x0802E638,Fight_DispatchOnSubstateAA_BM_04_SpinOrbsUntilArrived,func_thumb,,"[HN8] HN8 BM 04: gira cada orbe (+0x18 ±0x40 conforme +0xF8) e chama `Fight_StepSlotTowardTarget(10+i)`; quando todos chegam, sfx 0x51 para cada alvo com valor (+0xD6) != 0 e +0xAA += 1. (confirmado)"
@@ -1683,6 +1685,7 @@ address,name,kind,count,comment
 0x08031614,Fight_DispatchOnSubstateAA_BR_40_CheckMedaforceRequirements,func_thumb,,"[HN9] Cena 8 GS 0x30: checa F+0x58, nivel F+0xA7 vs bot+5 (10/30/60), bot+0xC1==0x50; A6=0x79/0x36/0x37 ou GS=0x34 (confirmado; sentido provavel; renomeado)"
 0x08031704,Fight_DispatchOnSubstateAA_BR_45_SetupMedaforceSlots,func_thumb,,[HN9] Cena 8 GS 0x35: slots 0x21/0x22 record list [0x083B6100+0x134/0x138]; F+0x51=bot+0xAA; GS++ (confirmado; renomeado)
 0x0803185C,Fight_DispatchOnSubstateAA_BR_46_WaitMedaforceAnim,func_thumb,,"[HN9] Cena 8 GS 0x36: anima slots 0x21/0x22 ate fim, limpa; GS++ (confirmado; renomeado)"
+0x0803186A,Fight_DispatchOnSubstateAA_BR_46_WaitMedaforceAnim,func_thumb,,[MG3] chama StepBotVisualDown por quadro durante a animacao de medaforca; confirmado (decompile)
 0x080318CC,Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName,func_thumb,,"[HN9] Cena 8 GS 0x37: FUN_0803F63C([0x083B74B8+bot+0xA8*4],0x030004DE,0x11); A6=0x38; GS++ (codigo confirmado; nome provavel; renomeado)"
 0x080318DE,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,func_thumb,,[TA] grava fight+0xA8 em 0x08031940 (medaforca)
 0x08031918,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,func_thumb,,"[HN9] Cena 8 GS 0x39: F+0xA8=bot+0xA8+0x50, zera alvos, GM=9 GS=0 (confirmado; renomeado)"
@@ -1737,7 +1740,7 @@ address,name,kind,count,comment
 0x08033754,Fight_ValidateEnemyHasPartWithSpeciality23,func_thumb,,Simon/Rokusho
 0x080337CC,Fight_ValidateAllyHasTechnique4Part,func_thumb,,Simon/Rokusho
 0x08033840,Fight_RunActionScriptLoop,func_thumb,,"Simon/Rokusho: Run the action-script interpreter loop. Repeatedly reads opcodes from the current action script, skips high-bit-prefixed control bytes, and dispatches via gActionScriptOpcodeHandlerTable until the current script marks completion."
-0x080338DC,ActionScript_Op01_EndSetsSceneAndGs,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos (antes: ActionScript_Op01_pendente)
+0x080338DC,ActionScript_Op01_SetSceneExitState,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos (antes: ActionScript_Op01_pendente) (antes: ActionScript_Op01_EndSetsSceneAndGs)
 0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,,Simon/Rokusho
 0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,,Simon/Rokusho
 0x080339F4,ActionScript_Op04_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
@@ -1874,6 +1877,7 @@ address,name,kind,count,comment
 0x08036218,FightPreview_AdvanceRightSideSequenceStep,func_thumb,,Simon/Rokusho
 0x08036270,Fight_IncrementActionUsageCounter,func_thumb,,Simon/Rokusho: Increment the action usage counter for the currently active action entry in fight_information. Used after a successful action base step. (antes: Fight_IncrementActionUsageCounter_08036270)
 0x0803628C,Fight_AddMedaforceChargeFromAction,func_thumb,,Simon/Rokusho: Add Medaforce charge/token progress for the acting bot after a successful action. Uses a larger gain when the relevant battle-status bit is set and clamps the total at 0x50.
+0x080362AC,Fight_AddMedaforceChargeFromAction_store,label,,[MG3] STRB do medidor dentro de Fight_AddMedaforceChargeFromAction 0x0803628C; confirmado
 0x080362C4,FightPreview_LoadSideTileSlots,func_thumb,,[R2] carrega 4 blocos de tiles do lado (prévia)
 0x08036340,FightPreview_LoadSideTiles,func_thumb,,[R2] LoadTilesWithMalias do lado (prévia)
 0x08036370,FightPreview_LoadPartIconRows,func_thumb,,[R2] 4 linhas de icones de peca do bot
@@ -2348,7 +2352,7 @@ address,name,kind,count,comment
 0x08049ED4,Palette_FadeRowsToColorB_Wrapper,func_thumb,,[FN2] confirmado: Wrapper que chama Palette_FadeRowsToColorB
 0x0804A210,GameState_AdvanceSubroutine,func_thumb,,Simon/Rokusho
 0x0804A220,EventScript_RunCurrent,func_thumb,,"Simon/Rokusho: Main overworld event VM tick. |  | State model: | - gCurrentEventPendingFlag == 0: run overworld startup/map-scene subroutine table | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte == 0: run one event-initialization opcode | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte != 0: dispatch the current normal event opcode |  | The VM is two-level: | - gCurrentEventOpcodeByte selects the current opcode handler | - gCurrentEventOpcodeSubstate is per-opcode local state used by multi-step normal opcode handlers |  | The event script stream is addressed through the installed event database, gCurrentEventId, and gCurrentEventScriptCursor."
-0x0804A2F0,Menu_NewGame_Main,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported. (antes: new_game_start)
+0x0804A2F0,new_game_start,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported. (antes: new_game_start) (antes: Menu_NewGame_Main)
 0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos
 0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
@@ -2770,13 +2774,16 @@ address,name,kind,count,comment
 0x0805BE0C,Screen_HighlightBitmaskGrid,func_thumb,,[R3] grade 3x3 com máscara de ROM e paleta de seleção (provavel)
 0x0805BF14,Palette_FadeTo16,func_thumb,,[R3] fade RGB de 16 cores (chute)
 0x0805BFEC,Palette_FadeBlockUpload,func_thumb,,[R3] fade de bloco de paleta e envio (provavel)
-0x0805C128,Gfx_ScreenResetVram,func_thumb,,zera VRAM via CpuFastSet e DISPCNT=0x60; confirmado
+0x0805C0D4,Title_DispatchSubState,func_thumb,,[TL] MainState2 menu 3 (título): CallViaR0 de 0x0848360C[GS 0x0300137C]
+0x0805C128,TitleMenu_SubState0,func_thumb,,zera VRAM via CpuFastSet e DISPCNT=0x60; confirmado (antes: Gfx_ScreenResetVram)
 0x0805C17C,Screen_SceneInit,func_thumb,,"init de cena: tiles LZ77, paleta, VRAM; provável"
 0x0805C2DC,Save_InitScreen,func_thumb,,"[provavel] init de tela de save: DISPCNT, Save_ClearAndRetryLoad, Palette_FadeBlockUpload, Screen_HighlightBitmaskGrid(3)"
 0x0805C410,Screen_StepCounterAndDrawCell,func_thumb,,contador por Anim_StepRecordCounter; redesenha celula e liga BG2; provavel
 0x0805C454,Menu_TickCursorInputAndConfirm,func_thumb,,"[provavel] cursor 3 posicoes, botoes 0x40/0x80 mudam com SFX 2; botao 1 SFX 4 confirma na posicao 2"
 0x0805C574,Menu_ThreeRowCursorInput,func_thumb,,provável: cursor de 3 linhas com A/B e direcionais
 0x0805C7F8,Gfx_FadeTransitionStep,func_thumb,,[FL10] fade de paleta 9 passos com 0x7FFF; upload de bloco; posta 7/8 (provável)
+0x0805C8EC,TitleMenu_SubState7_NameEntry,func_thumb,,[TL] GS 7 (NEW GAME); sem função no Ghidra; nome provável (tela de nome)
+0x0805C950,TitleMenu_SubState8_Continue,func_thumb,,[TL] GS 8 (CONTINUE); sem função no Ghidra; nome provável
 0x0805CA3C,Fx_RunStateStepAndInit,func_thumb,,copia registro 0x53 bytes e roda state machine; provavel
 0x0805CABC,Flow_SubStepInitTimer,func_thumb,,sub-estado: StateMachine_DispatchSub e timer de 0x50 (provavel)
 0x0805CAF4,Anim_WaitRecordThenState3,func_thumb,,[FR1] waits Anim_StepRecordCounter(obj+0x50) then state 3
@@ -2942,29 +2949,33 @@ address,name,kind,count,comment
 0x08065198,Anim_PaletteFadeThenSpawn,func_thumb,,[FR2] provável; fade de paleta A/B em 9 passos e depois cria objeto 1 (FUN_08065198)
 0x080656DC,Obj_InitTimerRecord,func_thumb,,[R3] inicia registro de temporizador (chute)
 0x08065710,Anim_StepRecordCounter,func_thumb,,"[R3] passo de contador de animação, devolve 1 ao fim (chute)"
-0x08065790,LinkMenu15_Step0,func_thumb,,[LK2] [GH-LK2] passo 0 do menu 0x15 (preparo); sem funcao no Ghidra; provavel
+0x08065790,LinkMenu15Step0,func_thumb,,[LK2] [GH-LK2] passo 0 do menu 0x15 (preparo); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step0)
 0x080657C4,Sm_StepSfxRepeat3,func_thumb,,repete passo com SFX até 3 vezes e depois avança; provável (jump table não recuperada)
 0x08065A0C,Battle_TickTwoStageSequence,func_thumb,,[provavel] StateMachine_DispatchStep(0x18 ou 0x1C); snd_sfx_request(0xD); 2 etapas
-0x08065A80,LinkMenu15_Step2,func_thumb,,[LK2] [GH-LK2] passo 2 do menu 0x15 (espera de texto); sem funcao no Ghidra; provavel
-0x08065A94,LinkMenu15_Step4,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 0x15; provavel
+0x08065A80,LinkMenu15Step2,func_thumb,,[LK2] [GH-LK2] passo 2 do menu 0x15 (espera de texto); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step2)
+0x08065A94,Menu15_Sub4_WaitAThenAdvance,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 0x15; provavel (antes: LinkMenu15_Step4)
 0x08065B0C,Link_HandshakeFrameStep,func_thumb,,[LK] [GH-LK] handshake por quadro sobre a grade de gLinkStateBlock (0xFF40/0xFF41); confirma peer e avanca gamestate_subroutine; confirmado (ex FUN_08065b0c)
-0x08065C98,LinkMenu15_Step6,func_thumb,,[LK2] [GH-LK2] passo 6 do menu 0x15: toca 0x03005010 e 0x03000B90 (troca de comandos); sem funcao no Ghidra; provavel
-0x08065CFC,LinkMenu15_Step7,func_thumb,,[LK2] [GH-LK2] passo 7 do menu 0x15 (fim da etapa); sem funcao no Ghidra; provavel
+0x08065C98,LinkMenu15Step6,func_thumb,,[LK2] [GH-LK2] passo 6 do menu 0x15: toca 0x03005010 e 0x03000B90 (troca de comandos); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step6)
+0x08065CFC,LinkMenu15Step7,func_thumb,,[LK2] [GH-LK2] passo 7 do menu 0x15 (fim da etapa); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step7)
 0x08065D10,Fight_CallHandlerWithArgCopy,func_thumb,,[confirmado] copia 32 bytes de DAT_08065D3C e CallViaR0(tabela[byte DAT_08065D40])
-0x08065ED0,LinkCommand1_Handler,func_thumb,,provável: despacho por estado ctx+0x3A (jump tables não recuperadas) (antes: Screen_DispatchByState3A)
+0x08065D44,LinkMenu14Step0,func_thumb,,[LK3] [GH-LK3] sub 0 do menu 0x14: sem funcao no Ghidra (code Thumb valido); pendente
+0x08065ED0,Screen_DispatchByState3A,func_thumb,,provável: despacho por estado ctx+0x3A (jump tables não recuperadas) (antes: Screen_DispatchByState3A) (antes: LinkCommand1_Handler)
 0x08065F04,Screen_DispatchByState3A_TableA,data,,"[JT3] tabela ramo A (6 ponteiros, idx = halfword 0x03006F74+0x3A)"
 0x08065F1C,Screen_DispatchByState3A_A0,label,,"[JT3] caso A0 (corpo de 0x08065ED0), ver JT3_lista.txt"
 0x080660AC,Screen_DispatchByState3A_TableB,data,,"[JT3] tabela ramo B (6 ponteiros, mesmo idx)"
 0x080660C4,Screen_DispatchByState3A_B0,label,,"[JT3] caso B0 (corpo de 0x08065ED0), ver JT3_lista.txt"
 0x08066240,Anim_CounterDoneInitObjectSlot,func_thumb,,"[FL10] ao fim de Anim_StepRecordCounter: estado++, Obj_InitSlotAndLoad(1,0,1), flag 0x4000 (provável)"
-0x08066280,Menu_SelectionFiveOptionsStep,func_thumb,,menu de 5 opcoes com cursor +5 e marca 0xEF00; provavel
+0x08066280,Link_SelectFiveOptionsStep,func_thumb,,menu de 5 opcoes com cursor +5 e marca 0xEF00; provavel (antes: Menu_SelectionFiveOptionsStep)
 0x08066460,Link_CommandExchangeStep,func_thumb,,"[LK2] [GH-LK2] comando 0xEF00|cmd: pai envia, filho guarda cmd em obj+5 e ecoa; timer 0xFE0F; confirmado (ex FUN_08066460)"
 0x08066534,Save_WaitSfxThenFlash,func_thumb,,[provavel] waits record and SFX 4 then Save_InvokeFlashOp
 0x08066574,Save_RunOptionsThenBlendFade,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
+0x080665B0,LinkMenu14Step6,func_thumb,,[LK3] [GH-LK3] sub 6 do menu 0x14: sem funcao no Ghidra; pendente
 0x080665FC,Fx_InitStringStateMachine,func_thumb,,copia sequência de bytes e roda máquina de estados de efeito; provável
+0x0806668C,LinkMenu14Step9,func_thumb,,[LK3] [GH-LK3] sub 9 do menu 0x14: sem funcao no Ghidra; pendente
 0x080666C8,Fx_TickStateThenInitRecord8,func_thumb,,"[confirmado] StateMachine_DispatchStep(ctx+0x48); Fx_InitRecord8(1,0x16,7)"
+0x080666F4,LinkMenu14Step11,func_thumb,,[LK3] [GH-LK3] sub 11 do menu 0x14: sem funcao no Ghidra; pendente
 0x08066714,Text_BuildMessageAndStep,func_thumb,,monta mensagem em ctx+0x270 (terminador 0xFF) e avanca state machine; provavel; codigos chute
-0x08066824,Fight_CallHandlerCopyArgs52,func_thumb,,[confirmado] copia 0x34 bytes de DAT_08066860 e CallViaR0(tabela[byte DAT_08066864]); contadores se bit 1
+0x08066824,Menu14_CallSubstateHandler,func_thumb,,[confirmado] copia 0x34 bytes de DAT_08066860 e CallViaR0(tabela[byte DAT_08066864]); contadores se bit 1 (antes: Fight_CallHandlerCopyArgs52)
 0x08066870,Geom_SplitSegmentInThirds,func_thumb,,[R3] pontos a 1/3 e 2/3 de um segmento (confirmado)
 0x080668D4,Ring_BuildPointsFromRadius,func_thumb,,"[R3] 18 pontos de um anel de raio r, gravados em registros de objeto (provavel)"
 0x080669AC,Byte_EaseTowardTarget,func_thumb,,"[R3] move byte a em direcao ao alvo por (alvo-valor)/div, passo minimo 1 (provavel)"
@@ -3070,10 +3081,11 @@ address,name,kind,count,comment
 0x0806DAA4,Screen_IntroTimeline,func_thumb,,linha do tempo de intro com curva de fade e jump table; provável
 0x0806DE0C,battle_effects_5_slots_update,func_thumb,,[R4] R4: update de 5 efeitos com timer e liberacao via 0806B718; provavel
 0x0806E10C,battle_slot_init,func_thumb,,"[R4] R4: inicializa slot de batalha (tipo em +0x20, timer zero); confirmado"
+0x0806E184,Boot_SubState2_WaitFxStep,func_thumb,,[TL] boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
 0x0806E2A0,Screen_InitRowBufferAndFx,func_thumb,,"descomprime tiles, copia 20 linhas para buffer, liga BG1 e fx; provavel"
 0x0806E3C4,Fx_TickStepTableEntry,func_thumb,,[provavel] StateMachine_DispatchStep(tabela[+0xC]); ao terminar grava ctx+4=5 e estado global=2
 0x0806E404,battle_timer_end_transition,func_thumb,,[R4] R4: timer de fim e saida de batalha por botao bit 3; provavel
-0x0806E460,Battle_DispatchThenEndTransition,func_thumb,,provável: CallViaR0 de tabela indexada e fim de transição
+0x0806E460,Boot_DispatchSubState,func_thumb,,provável: CallViaR0 de tabela indexada e fim de transição (antes: Battle_DispatchThenEndTransition)
 0x0806E484,fade_step_bld,func_thumb,,[R4] R4: fade 0..16 por 4 quadros grava registro BLD; provavel
 0x0806E504,Gfx_ResetVramPaletteOamAndStopSong,func_thumb,,"[FL10] lista de copias DMA3 (VRAM/paleta/OAM), REG_DISPCNT=0x60, musica 0, fx_screen_setup_a (provável)"
 0x0806E5E0,Gfx_LoadLz77ScreenAndEnableBg0,func_thumb,,descomprime LZ77 para VRAM e liga BG0; provavel
@@ -3367,7 +3379,7 @@ address,name,kind,count,comment
 0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
 0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C)
 0x080AFC88,LinkMenu15StepTable,data,,[LK2] [GH-LK2] tabela de 8 passos do menu 0x15 (sub 0..7); confirmado
-0x080AFCC0,LinkCommandHandlerTable,data,,"[LK2] [GH-LK2] 13 ponteiros de handler de comando de link (indice=comando, provavel); referenciada por 0x08066860"
+0x080AFCC0,LinkMenu14SubstateTable,data,,"[LK2] [GH-LK2] 13 ponteiros de handler de comando de link (indice=comando, provavel); referenciada por 0x08066860 (antes: LinkCommandHandlerTable)"
 0x080B003C,StateTable_CopySrc_8400,data,,[JT3] 7 ponteiros copiados para pilha por 0x08068400
 0x080B012C,SND_SongTable,data,,[SN] tabela de ponteiros de musica (4 B por id; ids 0..53; driver+0x688)
 0x080B0204,SND_Song0Header,data,,[SN] cabecalho da musica 0 (confirmado por leitura da tabela)
@@ -3418,7 +3430,7 @@ address,name,kind,count,comment
 0x083AD380,gSpeciality8ByteTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas (antes: gSpecialityWeightTable)
 0x083AD470,gFightFallbackPriorityRows,data,,[AI] [GH-AI] 32 x 4 B na ROM; sorteadas por Fight_RandomizePriorityListSlot; valores nao batem com ids de peca (provavel nome)
 0x083AD524,cursor_cell_xy_table,data,,"[PS] [PS] 9 celulas x 2 B (x,y) do cursor 3x3 do Medabot selecionado"
-0x083AECD8,gFightSceneSteps,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado)
+0x083AECD8,gFightSceneMainSubTable,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado) (antes: gFightSceneSteps)
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
 0x083AF080,gFightSlotRandomTable16,data,,[AI] [GH-AI] 16 B lidos; usada por Fight_RandomSlotFromTable16 (randbyte&0xF)
@@ -3532,7 +3544,7 @@ address,name,kind,count,comment
 0x083D1F2C,gMotionOffsetTable,ptr,59,"roteiro -> (s8 x, s8 y) [molde 1..49][N]"
 0x083D2018,gMotionDurTable,ptr,59,"roteiro -> duracao (quadros) de cada quadro-chave, fim 0; N = tamanho (antes: gMotionDurationTable)"
 0x083D2104,gMainState1MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState1; [1]=EventScript_RunCurrent (mapa); [2]=0x0805716C (provavel); provavel
-0x083D212C,gSceneSubroutineTable,label,,[EV] tabela indexada por 0x0300137C (gamestate_subroutine); usada sem evento e após despacho com E+0xC5F (confirmado no literal)
+0x083D212C,gMainState1_Menu10,label,,[EV] tabela indexada por 0x0300137C (gamestate_subroutine); usada sem evento e após despacho com E+0xC5F (confirmado no literal) (antes: gSceneSubroutineTable)
 0x083D222C,gEventPrimaryOpcodeTable,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable (antes: gEventOpcodeTableA)
 0x083D2630,gEventContinuationOpcodeTable,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable (antes: gEventOpcodeTableB)
 0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
@@ -3575,11 +3587,13 @@ address,name,kind,count,comment
 0x08483234,gMapEntityPtrTable,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople)
 0x08483594,gMainState2MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel
 0x084835A4,KeyItemBag_MenuTable4,data,,[IN2] [IN2] tabela de quadros (ponteiros); entrada 0 = Dispatch_StateTableFrameCount 0x0805CB50; nao ha xref direto (antes: ScreenFrameTable_Entry0)
+0x0848360C,gTitleMenuSubStateTable,data,,[TL] tabela de ponteiros do menu do título (GS 0..11)
 0x08483614,SAVE_HANDLER_InitScreen,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar -> Save_InitScreen (confirmado)
 0x08483634,KeyItemBag_SubStateTable,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C (antes: StateTable_CB50)"
 0x08483688,SAVE_HANDLER_StepThenFlashOp,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x084836B4,SAVE_SIGNATURE_ROM,data,,[SV] [SV] 16 B 'MEDAROT2 Ver.KBT' copiados p/ save +0 (confirmado)
 0x084836C5,SAVE_ERASE_HEADER_ROM,data,,[SV] [SV] 16 B copiados p/ save +0 pelo apagar (op 2); comeca com 'MEDAROT2' mas nao e a assinatura (confirmado)
+0x084836E8,gNameEntrySubStateTable,data,,[TL] tabela de sub-passos da tela de nome (entrada 0 = Menu_TextEntryInput)
 0x08483724,SAVE_HANDLER_FinishFlashStep,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x08483770,SAVE_HANDLER_WriteEepromAndFinish,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B)
@@ -3587,6 +3601,7 @@ address,name,kind,count,comment
 0x08483ED8,gTextKeyItems,ptr,64,tabela de texto: Key Items; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0848521C,gTextShopDialogue,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x084856E8,gMainState3MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState3; [0]=boot (0x0806E460); [3..6] handlers; provavel
+0x084859D8,gBootSubStateTable,data,,[TL] tabela de ponteiros do boot (GS 0..10)
 0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08486E54,SND_LitFifoA,data,,[SN] literal 0x040000A0 (FIFO A do DMA de PCM)
