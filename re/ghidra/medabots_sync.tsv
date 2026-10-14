@@ -1967,7 +1967,7 @@ F	0x08049EC0	Palette_FadeRowsToColorA_Wrapper
 F	0x08049ED4	Palette_FadeRowsToColorB_Wrapper
 F	0x0804A210	GameState_AdvanceSubroutine
 F	0x0804A220	EventScript_RunCurrent
-F	0x0804A2F0	new_game_start
+F	0x0804A2F0	Menu_NewGame_Main
 L	0x0804A3B6	lit_EventDbBase0
 L	0x0804A584	lit_EventDbBase1
 F	0x0804A60C	Map_InitScreenAndTransition
@@ -2491,6 +2491,7 @@ F	0x080609D4	Anim_CountdownAndSpawnObject
 F	0x08060A1C	Anim_UpdateStepAndSprites
 F	0x08060BE4	Screen_HighlightOption4
 F	0x08060D28	Text_CopyUntilFF
+F	0x08060D6C	Menu_Shop_Main
 F	0x08060F78	Screen_InitNumberDisplay
 F	0x080611E8	Menu_TickOptionFadeTransition
 F	0x080612E8	Text_CopyAndDispatchStep
@@ -3369,6 +3370,10 @@ C	0x080344D0
 C	0x080344EC
 C	0x08034508
 C	0x0803D538
+C	0x0803D5E0
+C	0x0803D608
+C	0x0803D6AC
+C	0x0803D71C
 C	0x080479A0
 C	0x08050CF4
 C	0x08050D08
@@ -3378,4 +3383,5 @@ C	0x08050E6C
 C	0x08050F2A
 C	0x08050F38
 C	0x08050F40
+C	0x08066860
 C	0x0807C92C

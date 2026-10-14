@@ -2310,7 +2310,7 @@ address,name,kind,count,comment
 0x08049ED4,Palette_FadeRowsToColorB_Wrapper,func_thumb,,[FN2] confirmado: Wrapper que chama Palette_FadeRowsToColorB
 0x0804A210,GameState_AdvanceSubroutine,func_thumb,,Simon/Rokusho
 0x0804A220,EventScript_RunCurrent,func_thumb,,"Simon/Rokusho: Main overworld event VM tick. |  | State model: | - gCurrentEventPendingFlag == 0: run overworld startup/map-scene subroutine table | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte == 0: run one event-initialization opcode | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte != 0: dispatch the current normal event opcode |  | The VM is two-level: | - gCurrentEventOpcodeByte selects the current opcode handler | - gCurrentEventOpcodeSubstate is per-opcode local state used by multi-step normal opcode handlers |  | The event script stream is addressed through the installed event database, gCurrentEventId, and gCurrentEventScriptCursor."
-0x0804A2F0,new_game_start,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported.
+0x0804A2F0,Menu_NewGame_Main,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported. (antes: new_game_start)
 0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos
 0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
@@ -2834,6 +2834,7 @@ address,name,kind,count,comment
 0x08060A1C,Anim_UpdateStepAndSprites,func_thumb,,passo de state machine por ctx+0x17 e atualizacao de sprites; provavel
 0x08060BE4,Screen_HighlightOption4,func_thumb,,[R3] destaque de 4 opções no tilemap (provavel)
 0x08060D28,Text_CopyUntilFF,func_thumb,,[R3] copia texto até 0xFF (provavel)
+0x08060D6C,Menu_Shop_Main,func_thumb,,"[MU] [MU] MS2[11], cmd 0x03 (loja). Sem funcao no Ghidra; provavel pelo SC.md"
 0x08060F78,Screen_InitNumberDisplay,func_thumb,,[provavel] 4 sprites + Num_FormatDecimalToGlyphs + Text_LayoutGlyphSprites
 0x080611E8,Menu_TickOptionFadeTransition,func_thumb,,"[provavel] fade de opcao: ate 9 passos de paleta A/B, depois Obj_InitSlotAndLoad e estado 9"
 0x080612E8,Text_CopyAndDispatchStep,func_thumb,,provável: copia texto até 0xFF e roda máquina de estados
