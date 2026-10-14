@@ -1,0 +1,34 @@
+# address,name,kind,comment
+0x0800058C,Scene_InitSoundAndStartSong0,func_thumb,provável: init de cena + tabela de sons + música 0
+0x08000824,FUN_08000824,func_thumb,chute: sugestão Callback_ThenSetState2
+0x08002190,FUN_08002190,func_thumb,chute: sugestão Flag_SetPendingIfActive
+0x080021A4,FUN_080021A4,func_thumb,chute: sugestão Init_ChannelStruct (som/timer?)
+0x08002328,FUN_08002328,func_thumb,chute: sugestão Grid_CopyRowsIfSumIsMinusOne
+0x08002438,FUN_08002438,func_thumb,chute: sugestão Input_PollKeyHistory (detector de sequência de teclas?)
+0x08002EC4,FUN_08002EC4,func_thumb,provável máquina de estados em ctx+0x8E; sugestão Scene_OnSubstate8E_Dispatch
+0x0800393C,FUN_0800393C,func_thumb,chute: sugestão Scene_LoadSpriteAndSlots (usa decompress_and_store)
+0x0800994C,FUN_0800994C,func_thumb,chute: sugestão Sprite_SetOrClearFlag4000_ByFlag8
+0x0800B79C,FUN_0800B79C,func_thumb,chute: sugestão Bot_SetFlag4000_OnState1E (duplicata de FUN_08010170; offset +0x1C0)
+0x0800D664,FUN_0800D664,func_thumb,provável dispatcher por byte +0x33; sugestão Dispatch_ByByte33
+0x08010170,FUN_08010170,func_thumb,chute: sugestão Bot_SetFlag4000_OnState1E_B (duplicata de FUN_0800B79C; offset +0x100)
+0x08010B24,FUN_08010B24,func_thumb,provável: zera 0x14 bytes e seta estados; sugestão Struct_Init20_State2
+0x08011490,FUN_08011490,func_thumb,chute: contador ctx+0x186; grava 0x5B/0x4E em ponteiros (ver comentário)
+0x0801275C,FUN_0801275C,func_thumb,chute: short += byte*5 (ctx+0x16C); sugestão Accum_Add5xByte
+0x080140B0,FUN_080140B0,func_thumb,provável máquina de estados de animação (ctx+0x84); CpuFastSet no fim
+0x0801630C,FUN_0801630C,func_thumb,chute: sugestão Slot_MarkActive_SetPosByFlag
+0x08016370,FUN_08016370,func_thumb,chute: sugestão Obj_SpawnGroup_FromTable4 (usa tabela DAT_08016424)
+0x080165D0,FUN_080165D0,func_thumb,chute: sugestão Slots6_TickFadeAndClear
+0x080166AC,Scene_LoadTwoTileSets,func_thumb,provável: carrega dois conjuntos de tiles (LoadTilesWithMalias)
+0x08016DCC,FUN_08016DCC,func_thumb,chute: sugestão Hud_DrawTwoDigitFractionPanel
+0x08017268,FUN_08017268,func_thumb,chute: sugestão Msgbox_UpdateByState
+0x080173B4,FUN_080173B4,func_thumb,chute: sugestão Msgbox_UpdateWithParam (chama FUN_08017734)
+0x080178CC,FUN_080178CC,func_thumb,provável: pisca de rótulo de lado (0xC1=='P'); sugestão Fight_UpdateSideLabelBlink
+0x08017914,Fight_FillSideLabelBandForBot,func_thumb,provável: wrapper que escolhe banda B se 0xC1=='P' senão A
+0x08017A7C,FUN_08017A7C,func_thumb,chute: sugestão Fight_WritePartPanelComposite
+0x08017B24,FUN_08017B24,func_thumb,chute: sugestão Fight_SetPartPanelPosFromTable
+0x08017734,FUN_08017734,func_thumb,chute: sugestão Fight_DrawBotInfoPanel (param 0 = painel; !=0 = readout numérico)
+0x08017C50,FUN_08017C50,func_thumb,chute: sugestão Fight_FillInfoRows_BySide
+0x08017D14,FUN_08017D14,func_thumb,chute: sugestão Tilemap_FillFiveBandRows
+0x08017D50,FUN_08017D50,func_thumb,chute: sugestão Fight_CopyPartTileset_CpuFastSet
+0x08017D90,FUN_08017D90,func_thumb,chute: sugestão Fight_ShowPartLabelText
+0x080191E4,FUN_080191E4,func_thumb,chute: sugestão Fight_AddBotMeterFromTable (chama Fight_AddBotMeterCapped255)
