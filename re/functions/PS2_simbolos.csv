@@ -1,0 +1,13 @@
+# address,name,kind,comment
+0x08007A04,PartsGrid_InitScreen_CellGraphics,func_thumb,"[PS2] init da grade de pecas com graficos de celula pequenos/medios (4 blobs); provavel; renomeada de PartsGrid_InitScreen"
+0x08007E38,PartsGrid_InitScreen_DetailRows,func_thumb,"[PS2] init da grade de pecas com linhas de detalhe e modo de detalhe (5 blobs); provavel; renomeada de PartsGrid_InitScreen"
+0x08008234,PartsGrid_InitScreen_StatusPreview,func_thumb,"[PS2] init da lista de pecas com barra de status, regiao e previa (7 blobs); provavel; renomeada de PartsGrid_InitScreen"
+0x0800DA34,MedabotGrid_InitScreen,func_thumb,"[PS2] init da tela 3x3 dos Medabots: numero do slot ctx+0x3F+1, cursor linha/coluna, 4 icones de peca; provavel; renomeada de PartsGrid_InitScreen"
+0x0800E020,PartDetailScreen_Init,func_thumb,"[PS2] init da tela de detalhe da peca: GetPartStats(ctx+0x3D,+0x3E,ctx+0xEE), nome/atributo/descricao/stats; ctx+0x42=1; confirmado"
+0x080421A0,Tinpet_InitIds,func_thumb,"[PS2] grava byte +7 de 9 registros de 8 B do time (0x030017A0) = 0..8; nao toca +0x40 do bloco 0x03000590; confirmado"
+0x0800DA06,(sem funcao),label,"[PS2] funcao anterior a MedabotGrid_InitScreen; le o registro 0x083ACCD4 (entrada de 0x0800DA34); nome pendente"
+0x083AC880,table_partsgrid_states,label,"[PS2] registros de 3 words (stride 0xC); InitScreen em 0x88C col0, 0x8CC col1, 0x90C col2, 0xCD4 col1; leitor desconhecido"
+0x083AD114,table_medabot_screen_entry9,label,"[PS2] entrada 9 de 0x083AD0F0 (stride 4) = UpdateSelectedMedabotPreviewScreen; nenhuma palavra da ROM vale 0x083AD0F0"
+0x083AD118,table_medabot_screen_entry10,label,"[PS2] entrada 10 de 0x083AD0F0 = Fight_SelectScreenFrame"
+0x03000440,ctx_team_screen,label,"[PS2] contexto da tela de Medabots/pecas: +0x3C modo (4=musica 7), +0x3D/+0x3E indice, +0x3F slot (+1 = numero), +0x42 dono/grande, +0x44/+0x46/+0x84 flags"
+0x030017A0,team_records_9x8,label,"[PS2] time: registros de 8 B; byte +7 = indice gravado por Tinpet_InitIds"
