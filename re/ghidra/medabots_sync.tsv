@@ -1610,6 +1610,7 @@ F	0x0803402C	ActionScript_Op19_DispatchOnSubstateAA_F
 F	0x08034048	ActionScript_Op1A_DispatchOnSubstateAA_G
 L	0x080340F6	ActionScript_Op1B_LoadPaletteAndSetTechniqueId
 L	0x080340F8	ActionScript_Op1B_LoadPaletteAndSetTechniqueId_080340F8
+F	0x0803447C	ActionScript_Op30_CallSubstateZ
 F	0x08034498	ActionScript_Op31_CallSubstateAA
 F	0x08034524	ActionScript_Op36_CallAF
 F	0x08034540	ActionScript_Op37_CallAG
@@ -3864,7 +3865,6 @@ C	0x0803440C
 C	0x08034428
 C	0x08034444
 C	0x08034460
-C	0x0803447C
 C	0x080344B4
 C	0x080344D0
 C	0x080344EC

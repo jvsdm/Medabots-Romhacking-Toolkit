@@ -1,0 +1,17 @@
+address,name,kind,comment
+0x083D2A88,VA_WalkStateSpeedTable,data,16 B; indice = E+0xC5C; escrita em 0x0300381A (velocidade). confirmado
+0x083D2A98,VA_SceneTileBlockTable,data,16 blocos x 8 B; indice = E+0xC28; copiado para E+0xC10 por Map_LoadSecondaryMarkerRecord. confirmado (16 blocos = provavel)
+0x083D2B18,Event_Cont11_ArgWalkStateTable,data,14 entradas (provavel); indice = arg0 do opcode 0x11; valor vai para E+0xC5C/C69/C28. confirmado
+0x083D2B26,Table_DmaSource_Provavel,data,fonte DMA lida por 5 funcoes (provavel)
+0x0804AA44,GameState_ToggleAndAdvance,func_thumb,C5C = C69 (ou 0 se igual; zera C69). confirmado
+0x0804AB60,Overworld_WalkStateToggleTo1,func_thumb,C5C = C69 se C5C==1; senao C69=C5C e C5C=1. confirmado
+0x0804ABCC,Overworld_WalkStateToggleTo2,func_thumb,C5C = C69 se C5C==2; senao C69=C5C e C5C=2. confirmado
+0x0804AD68,Overworld_TransitionDone_SetWalk0B,func_thumb,C5C = 0x0B quando a transicao termina. confirmado
+0x0804AE80,Overworld_SetWalk0C_UiScene,func_thumb,C5C = 0x0C antes de BeginUiSceneState(0x0E). confirmado
+0x0804ADB4,Overworld_UiDone_RestoreWalkFromC69_A,func_thumb,C5C = C69 quando a cena de UI termina. provavel
+0x0804AEC8,Overworld_UiDone_RestoreWalkFromC69_B,func_thumb,C5C = C69 quando a cena de UI termina (outro estado). provavel
+0x08048088,Map_GetEncounterRecordByte,func_thumb,arg0 -> ROM[gMapEncounters + map*8 + 2]; arg1 -> +3; outro -> 0. provavel
+0x0805424C,Scene_DispatchStateHandler,func_thumb,tail-call: devolve o r0 do handler escolhido (tabela 0x080542B0). confirmado (retorno)
+0x0805CFB4,Shop_ItemListInputStep,func_thumb,item usado -> E+0xC5C = 3/4/5/8/6/7/0x0D (ids 1,5,12,13,19,39,40). confirmado
+0x080525E6,Overworld_CheckMovementObjectBlocker,func_thumb,se C5C==2 e tile 0/2: C5C = C69. confirmado
+0x0804A4A2,new_game_start,func_thumb,grava E+0xC5C=0 e E+0xC5B=1. confirmado

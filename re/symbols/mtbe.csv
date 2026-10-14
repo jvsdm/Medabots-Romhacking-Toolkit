@@ -1994,6 +1994,7 @@ address,name,kind,count,comment
 0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
 0x080340F6,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA2] LE B+0xA8 (paleta +0x50) e grava +0xF9/+0x69/+0xA9; NAO grava B+0xA8 (corrige TA.md)
 0x080340F8,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA] grava B+0xA8 (tecnica ativa do bot); funcao que contem o endereco
+0x0803447C,ActionScript_Op30_CallSubstateZ,func_thumb,,[TR4] [TR4] opcode 0x30 do roteiro de Scout (0x083C6AA2) chama Fight_DispatchOnSubstateAA_Z
 0x08034498,ActionScript_Op31_CallSubstateAA,func_thumb,,[TR2] [TR2] opcode 0x31 do roteiro de Conceal (0x083C6AA4): chama Fight_DispatchOnSubstateAA_AA e avanca o roteiro (C)
 0x08034524,ActionScript_Op36_CallAF,func_thumb,,[AS2] GH-AS2: opcode 0x36 wrapper -> Fight_DispatchOnSubstateAA_AF + avanço se +0xB5; sem funcao no Ghidra
 0x08034540,ActionScript_Op37_CallAG,func_thumb,,[AS2] GH-AS2: opcode 0x37 wrapper -> ..._AG
