@@ -1,0 +1,9 @@
+address,name,kind,comment
+0x080138A8,Dispatch_ByteStateIndexTable_Table,data,"[GH-JT2] 6 ponteiros thumb (sem bit) para os cases 0..5 do despachante 0x0801387C; indice = byte 0x03000579 (0x03000440+0x139); gemeo do J_02 (JT.md)"
+0x083B2990,Dispatch_CallHandlerByByteAt1B_Table,data,"[GH-JT2] 23 ponteiros de handler (indices 0..22) chamados via CallViaR0 (0x0807CCF0) por 0x08040974; indice = byte 0x0300045B (0x03000440+0x1B); sem limite no codigo; 0x083B29EC nao e ponteiro"
+0x083CEDF4,Fight_AnimSlot_TableA,data,"[GH-JT2] dados (nao codigo) indexados por slot+0x2B em 0x0803C7DC; passada a 0x0801BD58; 8 entradas lidas, fim nao achado"
+0x083B4C60,Fight_AnimSlot_TableB,data,"[GH-JT2] dados (nao codigo) indexados por slot+0x2C em 0x0803C7DC; passada a 0x0803F15C; passo 0x80; 8 entradas lidas, fim nao achado"
+0x08485678,FUN_08065a94_PtrTable,data,"[GH-JT2] ponteiros de dados; entradas [4] 0x08485688 e [5] 0x0848568C escolhidas por *(0x03006F74)+8 em 0x08065A94; passadas a 0x0803FB3C"
+0x08071650,Dispatch_CallHandlerOrStartAnims_Table,data,"[GH-JT2] 8 labels thumb (passos 0..7) indexados por fi+0x08 (word 0x03001808); impares = espera por 0x0803FB3C"
+0x0804177C,BgMap_ClearCopyRowsStep,func_thumb,"[GH-JT2] renomeado de FUN_0804177c: zera 2 linhas e copia 2 padroes de 8 halfwords para o mapa BG; +0x29 += 1"
+0x08041818,BgMap_CopyTwoRowsStep,func_thumb,"[GH-JT2] renomeado de FUN_08041818: zera 1 linha e copia 2 linhas 8x8 da ROM para o mapa; +0x29 += 1"

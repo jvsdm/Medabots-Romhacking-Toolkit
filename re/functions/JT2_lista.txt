@@ -1,0 +1,16 @@
+0x080138C0	GH-JT2 0x0801387C idx0 (tabela 0x080138A8): espera 0x0801A788 e avanca seletor 0x03000579 (miolo de Dispatch_ByteStateIndexTable)
+0x0801393C	GH-JT2 0x0801387C idx1 (tabela 0x080138A8): fill de gObjectSlots e avanca seletor (miolo)
+0x08013968	GH-JT2 0x0801387C idx2 (tabela 0x080138A8): DISPCNT, gfx por fi+0x38 e avanca seletor (miolo)
+0x080139B4	GH-JT2 0x0801387C idx3 (tabela 0x080138A8): 2x CpuFastSet de tiles de fundo e avanca seletor (miolo)
+0x080139F0	GH-JT2 0x0801387C idx4 (tabela 0x080138A8): 2x CpuFastSet de tiles de fundo e avanca seletor (miolo)
+0x08013A2C	GH-JT2 0x0801387C idx5 (tabela 0x080138A8): CpuFastSet OBJ, callback 0x08044101 em 0x030017F0, zera seletor (miolo)
+0x08071670	GH-JT2 0x08071630 idx0 (tabela 0x08071650): acao de inicio, fi+0x08 += 1 (miolo de Dispatch_CallHandlerOrStartAnims)
+0x080716D8	GH-JT2 0x08071630 idx1/3/5/7 (tabela 0x08071650): espera por predicado 0x0803FB3C (miolo, bloco compartilhado)
+0x08071682	GH-JT2 0x08071630 idx2 (tabela 0x08071650): acao e avanco de fi+0x08 (miolo)
+0x08071696	GH-JT2 0x08071630 idx4 (tabela 0x08071650): acao e avanco de fi+0x08 (miolo)
+0x080716AA	GH-JT2 0x08071630 idx6 (tabela 0x08071650): acao e avanco de fi+0x08 (miolo)
+0x08040B50	GH-JT2 tabela 0x083B2990 (0x08040974), indices 0, 20 e 22: ponteiro thumb valido sem funcao no Ghidra; criar funcao e documentar
+0x08041BF4	GH-JT2 tabela 0x083B2990 (0x08040974), indice 13: ponteiro thumb valido sem funcao no Ghidra; logo apos Slot_CountdownAndClearTile
+0x08040A40	GH-JT2 tabela 0x083B2990 (0x08040974), indice 17: ponteiro thumb valido sem funcao no Ghidra; logo apos BgMap_TickFlashStep
+0x08040AF1	GH-JT2 tabela 0x083B2990 (0x08040974), indice 18: ponteiro thumb valido sem funcao no Ghidra
+0x08040B0D	GH-JT2 tabela 0x083B2990 (0x08040974), indice 19: ponteiro thumb valido sem funcao no Ghidra
