@@ -1,0 +1,16 @@
+# address,name,kind,comment
+0x0806F23C,Screen_TextCounterStep,provavel,text/counter screen step: two counters + jump tables + 6-digit format
+0x0806F5A0,Screen_TextCounterStepB,provavel,twin of Screen_TextCounterStep with other context and end state 9
+0x08071138,Anim_DisableAnim4IfIdle,provavel,if flag at DAT_0807115C+0x660 is 0: disable_anim4(0x19,0x4B) and count
+0x08071EFC,Anim_RampStepThenSfx54,provavel,timed ramp on +0x104/+0x11A then SFX 0x54 and indirect jump
+0x08071F74,Anim_RampStepThenSfx54B,provavel,twin of Anim_RampStepThenSfx54 (offsets 0x144/0x15A, slot 9, state 0x21)
+0x0807474C,Snd_TrackUpdateFlagged,provavel,snd_channel_update_1 + set 0x5F flags on track +0x50 if flag2 is clear
+0x08074CA0,Snd_ApplyAllTracksCounted,provavel,voice counter +0x730 up/down around snd_track_apply_all_0c
+0x0807DAE8,Math_Sf64CompareSafeAlt,duplicata,same body as Math_Sf64CompareSafe at 0x0807DB34 (confirmed by decompile)
+0x08057CB0,Flow_WaitObjectThenCount,provavel,waits FUN_08047C24 (object state machine) per table id then counts up to 6 steps
+0x0800B814,Gfx_SlideFadeStepThenClear,provavel,per-frame slide/fade of ctx+0x1C8 by -8, Slot_ClearAttrMask(7,1) at zero
+0x0803E634,Flow_StepCounterTickA,provavel,StateMachine_DispatchStep on object +0x30 then counter++ on done
+0x0805CAF4,Anim_WaitRecordThenState3,provavel,waits Anim_StepRecordCounter(obj+0x50) then state 3
+0x0805D580,Flow_StepCounterTickB,provavel,same pattern as Flow_StepCounterTickA with object +0x20
+0x0805DB20,Fx_StepThenInitRecord8,provavel,state machine on +0x48 then Fx_InitRecord8(1,0x16,7) on done
+0x080645A0,Obj_StepThenTimerOnMatch,provavel,state machine (offset 0x6C/0x68 by flag +0x7A) then Obj_InitTimerRecord 0xC0 on match
