@@ -98,9 +98,16 @@ address,name,kind,count,comment
 0x03000637,battle_robot_1_legs_part_cosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000638,bot0_active_technique,data,,[TA] B+0xA8 do bot 0 (bot base 0x03000590 + bot*0x100 + 0xA8); tecnica ativa do bot p/ efeitos; gravada por Op1B; bot k = 0x03000638 + k*0x100
 0x03000649,player_1_conceal_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300064C,battle_bot0_flags_BC,label,,"[SS2] bot+0xBC: bits 01/02 (ator), 04 (bypass esquiva), 08 (bypass defesa), 10 (esquivou), 20 (defendeu), 40 (critico) (C, SS2)"
+0x0300064D,battle_bot0_flags_BD,label,,"[SS2] bot+0xBD: 08 = carga (W_07, E00, icone modo A); 10 = icone modo B (AM_0A) (C, SS2)"
+0x0300064F,battle_bot0_affinity_BF,label,,"[SS2] bot+0xBF: codigo de afinidade do ataque (2 optico, 3 bomba, 4 gravidade) (P, R2.md; nao reconfirmado)"
 0x03000651,battle_robot_1_current_medaforce,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000659,battle_robot_1_status_effect,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000659,battle_bot0_status_C9,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_status_effect)"
+0x0300065F,battle_bot0_protect_mask_CF,label,,"[SS2] bot+0xCF mascara de protecao: 01 Bug/Virus, 08 Freeze, 02 Hold, 04 Fire (C, SS2 secao 1)"
 0x03000666,battle_robot_1_form,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300066D,battle_bot0_chosen_part_DD,label,,"[SS2] bot+0xDD peca escolhida 1..3 (DF.md, Fight_SelectActionSource) (C, SS2)"
+0x0300066E,battle_bot0_part_icon_DE,label,,"[SS2] bot+0xDE indice 1-based da peca do icone de status; escritor nao achado (A, SS2)"
+0x0300066F,battle_bot0_part_icon_type_DF,label,,"[SS2] bot+0xDF tipo de acao/tecnica do icone de peca (C, SS2)"
 0x03000890,gEnemyBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
 0x03000B90,gLinkLocalSlotIndex,label,,[MN] [MN] byte: indice do slot local usado no teste de reset por link (0 -> le halfword em +8 e +0xC conforme); provavel
 0x03000B94,SAVE_OPT_C,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b3-4 (validado <3; nome nao confirmado)
@@ -125,7 +132,7 @@ address,name,kind,count,comment
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001808,gFight_StepSceneIndex,label,,[FI] u32 indice de passo de cena (JT2) provavel
-0x03001828,gFight_TeamSupportRecord,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: team_1_scout_score)"
+0x03001828,fight_support_record_0x28,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: team_1_scout_score) (antes: gFight_TeamSupportRecord)"
 0x0300182A,gFight_TargetDamageRecord,label,,[FI] registro 8B x N (+0x89) provavel
 0x0300182B,team_1_trap,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300182C,team_1_trap_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -147,7 +154,7 @@ address,name,kind,count,comment
 0x03001882,DPAD_press,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001887,gFight_ActiveBot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: robot_doing_an_action)"
 0x03001888,gFight_TargetBot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: index_of_targetted_robot)"
-0x03001889,gFight_TargetSlotIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: attacking_team)"
+0x03001889,fight_phase_index,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: attacking_team) (antes: gFight_TargetSlotIndex)"
 0x0300188A,gFight_TeamRecordBranch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: defending_team)"
 0x0300188B,gFight_ChosenPart,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: targetted_bodypart)"
 0x0300189C,gFight_TableCIndex,label,,[FI] indice tabela C substates provavel
@@ -167,10 +174,10 @@ address,name,kind,count,comment
 0x030018CC,amount_of_damage_to_part,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030018D0,gFight_RepairPart,label,,[FI] peca do reparo provavel
 0x030018D1,gFight_PartBreakFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: part_gets_broken_from_damage)"
-0x030018D2,gFight_TargetPartFlags,label,,[FI] 3 bytes alvo+peca conf (decompile BP_08)
-0x030018D6,gFight_TargetDamage,label,,[FI] 3 u16 dano por alvo conf (decompile BP_08) CONFLITO AS2
-0x030018DE,gFight_FollowUpBot,label,,[FI] bot de follow-up provavel
-0x030018DF,gFight_FollowUpType,label,,[FI] tipo de follow-up provavel
+0x030018D2,fight_slot_applied_flags,label,,[FI] 3 bytes alvo+peca conf (decompile BP_08) (antes: gFight_TargetPartFlags)
+0x030018D6,fight_slot_roll_halfword,label,,[FI] 3 u16 dano por alvo conf (decompile BP_08) CONFLITO AS2 (antes: gFight_TargetDamage)
+0x030018DE,fight_followup_part_1based,label,,[FI] bot de follow-up provavel (antes: gFight_FollowUpBot)
+0x030018DF,fight_followup_type,label,,[FI] tipo de follow-up provavel (antes: gFight_FollowUpType)
 0x030018E0,fi_BrokenBotQueue,data,,[DF] [GH-DF confirmado] fila de 3 bytes id+1 de bots com cabeca quebrada (redesenho); consumida por K_00
 0x030018E8,gFight_RosTotal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: TotalROS)"
 0x030018EA,gFight_PreDamage,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: TotalROS_4)"
@@ -1115,6 +1122,7 @@ address,name,kind,count,comment
 0x0801F800,Fight_DispatchOnSubstateAA_I_04_PlaceTwoPartStateSprites,func_thumb,,[HA3] despachante I[0x04] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_I_Substate04)
 0x0801F9B0,Fight_DispatchOnSubstateAA_I_05_WaitSlotsThenTimer90,func_thumb,,[HA3] despachante I[0x05] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_I_Substate05)
 0x0801F9EC,Fight_DispatchOnSubstateAA_I_07_ApplyPartStateEffectAtXY,func_thumb,,"Simon/Rokusho: Commit the current action's pending-effect payload into the acting bot. The committed pending_effect_kind is the selected part's technique id, so shared status behavior can be mapped directly back to action families such as Bug, Virus, Thunder, Freeze, Fire, Melt, Impair, Confusion, No_Escape, and No_Defense. (antes: Fight_CommitPendingEffectFromCurrentAction)"
+0x0801FA24,Fight_DispatchOnSubstateAA_I_07_ApplyPartStateEffectAtXY,func_thumb,,"[SS2] unica rota de tecnica arbitraria: SetPending(fi+0x88, tecnica da peca k, fi+0xE8, fi+0xEC); rota de 0x2E/0x2F (C, SS2)"
 0x0801FA40,Fight_DispatchOnSubstateAA_J,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0801FA68,Fight_DispatchOnSubstateAA_J_00_PreviewAdvanceSideSequences,func_thumb,,[HA3] despachante J[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_J_Substate00)
 0x0801FADC,Fight_DispatchOnSubstateAA_J_01_PreviewSideStepSprites,func_thumb,,[HA3] despachante J[0x01] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_J_Substate01)
@@ -1448,6 +1456,11 @@ address,name,kind,count,comment
 0x080287C0,Fight_DispatchOnSubstateAA_AV_WaitEffectSlots,func_thumb,,[HN2] HN2 AV/AX/AY/AZ 0x02: espera FightPreview_DispatchEffectSlots; confirmado
 0x080287DC,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,func_thumb,,"[HN2] HN2 AV 0x03: Fight_SetPendingActionEffect nos adversarios (0x0D/10/12/13/2C), imunes c/ tec 0x16; confirmado"
 0x08028834,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,func_thumb,,[TA2] inicio real 0x080287DC; 3 slots adversarios; status 0D/10/12/13/2C para tec 12/14/16/18/40; tabela 0x08028854
+0x080288C8,Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked,func_thumb,,"[SS2] handler AV tipo 0x0D: se mascara 0x01 livre, fi+0xD2+k=1 e SetPending(alvo,0x0D) (C, SS2)"
+0x08028908,Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked,func_thumb,,"[SS2] handler AV tipo 0x10: mascara 0x08 (C, SS2)"
+0x08028944,Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked,func_thumb,,"[SS2] handler AV tipo 0x12: mascara 0x02 (C, SS2)"
+0x08028980,Fight_DispatchOnSubstateAA_AV_13_ApplyFireUnlessMasked,func_thumb,,"[SS2] handler AV tipo 0x13: mascara 0x04 (C, SS2)"
+0x080289BC,Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion,func_thumb,,"[SS2] handler AV tipo 0x2C (Confusion): aplica sem teste de mascara (C, SS2)"
 0x08028A00,Fight_DispatchOnSubstateAA_AV_04_BranchOnFlaggedTargets,func_thumb,,"[HN3] HN3 AV 04: se alguma flag +0xD2..+0xD4 está ligada, +0xAA += 2; senão +0xAA += 1. (confirmado)"
 0x08028A38,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots,func_thumb,,"[HN3] HN3 AV 06: LZ77 + cpufastset 8 (gráfico do efeito); para cada aliado marcado em +0xD2+i, monta o slot 0x21+i na posição do bot (+0x1742/+0x1744 do registro de ob (provável)"
 0x08028B58,Fight_DispatchOnSubstateAA_AV_07_WaitFlaggedSlotsArrived,func_thumb,,"[HN3] HN3 AV 07: para cada aliado marcado, `FightPreview_AdvanceSlotX(0x21+i, 0)`; quando algum termina, timer +0x86 = 0x3C, +0xAA += 1. (confirmado)"
@@ -1523,6 +1536,7 @@ address,name,kind,count,comment
 0x0802B3CC,Fight_DispatchOnSubstateAA_BE_LoadHitAnim,func_thumb,,[HN4] BE 0x09; anim nos alvos; confirmado
 0x0802B460,Fight_DispatchOnSubstateAA_BE_RunHitAnim,func_thumb,,[HN4] BE 0x0A; roda anim ate fim; confirmado
 0x0802B4D8,Fight_DispatchOnSubstateAA_BE_RollRandomStatus,func_thumb,,[HN4] BE 0x0B; sorteia 0..7 por alvo em +0xD6; provavel
+0x0802B550,Fight_DispatchOnSubstateAA_BE_RollRandomStatus,func_thumb,,"[SS2] BE: rand&7 em fi+0xD6+2k (0->0D 1->11 2->13 3->10); mascara do alvo bloqueia (grava 5) (C, SS2)"
 0x0802B5AC,Fight_DispatchOnSubstateAA_BE_ApplyRandomStatus,func_thumb,,[HN4] BE 0x0E; aplica status sorteado (bot +0xC9..+0xCC); provavel
 0x0802B7AC,Fight_DispatchOnSubstateAA_BE_SetResultMessage,func_thumb,,[HN4] BE 0x0F; +0xA6=0x4D/0x4E; confirmado
 0x0802B7BC,Fight_DispatchOnSubstateAA_BE_SetResultMessage,func_thumb,,"[TA2] fight+0xA6 = 0x4D se tec 30 (Recovery), senao 0x4E"
@@ -2766,12 +2780,22 @@ address,name,kind,count,comment
 0x0805309C,Overworld_SyncFollowerPositionAfterWarp,func_thumb,,"Simon/Rokusho: After a successful warp, copy the player's new pixel position into the follower/secondary marker position cache and refresh its facing/animation state."
 0x08053108,Map_UpdateSecondaryMarkerScreenPosition,func_thumb,,Simon/Rokusho: Recompute the secondary marker / overlay screen position from its world coordinates and the current camera scroll.
 0x08053168,EventFlag_ClearIndexedFlagByPackedId,func_thumb,,Simon/Rokusho: Clear one indexed event-flag bit from the event flag list using a packed 16-bit id. The low bit selects which bit family is targeted; the remaining bits select the byte index.
+0x08053184,lit_EventFlagArrayBase_EvenClear,data,,[EF] [EF] literal de pool de EventFlag_ClearIndexedFlagByPackedId (par) -> 0x030057D8
+0x0805319C,lit_EventFlagArrayBase_OddClear,data,,[EF] [EF] literal de pool de EventFlag_ClearIndexedFlagByPackedId (impar) -> 0x030057D8
 0x080531A0,EventFlag_SetIndexedFlagByPackedId,func_thumb,,Simon/Rokusho: Set one indexed event-flag bit in the event flag list using a packed 16-bit id. The low bit selects which bit family is targeted; the remaining bits select the byte index.
+0x080531C0,lit_EventFlagArrayBase_EvenSet,data,,[EF] [EF] literal de pool de EventFlag_SetIndexedFlagByPackedId (par) -> 0x030057D8
+0x080531DC,lit_EventFlagArrayBase_OddSet,data,,[EF] [EF] literal de pool de EventFlag_SetIndexedFlagByPackedId (impar) -> 0x030057D8
 0x080531E0,EventFlag_IsSetByPackedId,func_thumb,,Simon/Rokusho: Return whether the event flag identified by a packed flag id is set. Used by map spawn loading to suppress entity records whose activation flag is already active.
+0x08053200,lit_EventFlagArrayBase_OddIsSet,data,,[EF] [EF] literal de pool de EventFlag_IsSetByPackedId (impar) -> 0x030057D8
+0x08053218,lit_EventFlagArrayBase_EvenIsSet,data,,[EF] [EF] literal de pool de EventFlag_IsSetByPackedId (par) -> 0x030057D8
 0x0805321C,EventFlag_SetOrClearByPackedId,func_thumb,,[R3] (mtbe) liga (on!=0) ou limpa flag por id empacotado
 0x08053238,EventField3Bit_SetByPackedId,func_thumb,,Simon/Rokusho: Write a small 3-bit field into the event flag list using a packed 16-bit id. The low bit selects which nibble/bitfield family is targeted; the remaining bits select the byte index. (antes: EventFlag_SetIndexedFieldByPackedId)
+0x08053260,lit_EventFlagArrayBase_EvenSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (par) -> 0x030057D8
+0x0805327C,lit_EventFlagArrayBase_OddSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (impar) -> 0x030057D8
 0x08053280,EventField3Bit_IncrementByPackedId,func_thumb,,Simon/Rokusho: Increment a small indexed field in the event flag list using a packed 16-bit id. The low bit selects which field family is targeted; the remaining bits select the byte index. (antes: EventFlag_IncrementIndexedFieldByPackedId)
 0x080532D4,EventField3Bit_GetByPackedId,func_thumb,,[R3] (mtbe) le campo de 3 bits por id
+0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8
+0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
 0x080533E4,Overworld_BeginUiSceneState,func_thumb,,"Simon/Rokusho: Begin an overworld UI/scene-state sequence with the supplied state id, optional position parameters, and extra mode argument."
 0x0805424C,Scene_DispatchStateHandler,func_thumb,,"Simon/Rokusho: Dispatch one step of the current overworld UI/scene-state machine using gOverworldUiState.{state,substate}. (antes: Overworld_DispatchUiSceneState)"
