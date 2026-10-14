@@ -1,0 +1,27 @@
+# address,name,kind,comment
+0x080338DC,ActionScript_Op01_SetSceneExitState,func_thumb,GH-AS3a: escreve 8 em 0x03002B8C e 0x40 em 0x0300137C; sem +0xB5 e sem avanço; provável saída de cena
+0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,"GH-AS3a/AS1: opcode 0x02, LEN 1; espera byte casar; encerra passo"
+0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,"GH-AS3a/AS1: opcode 0x03, LEN 4; espera byte com índice +0xAB; encerra passo"
+0x080339F4,ActionScript_Op04_DispatchOnSubstateAA,func_thumb,GH-AS3a: opcode 0x04 wrapper -> Fight_DispatchOnSubstateAA; encerra se +0xB5; efeito pendente
+0x08033A10,ActionScript_Op05_DispatchOnSubstateAA_B,func_thumb,GH-AS3a: opcode 0x05 wrapper -> Fight_DispatchOnSubstateAA_B; encerra se +0xB5; efeito pendente
+0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,GH-AS3a: opcode 0x06; garante bot/peça alvo e copia p/ fight; avança sem encerrar
+0x08033A78,ActionScript_Op07_DispatchOnSubstateAA_C,func_thumb,GH-AS3a: opcode 0x07 wrapper -> _C; encerra se +0xB5; efeito pendente
+0x08033A94,ActionScript_Op08_DispatchOnSubstateAA_D,func_thumb,GH-AS3a: opcode 0x08 wrapper -> _D; encerra se +0xB5; efeito pendente
+0x08033AB0,ActionScript_Op09_DispatchOnSubstateAA_E,func_thumb,GH-AS3a: opcode 0x09 wrapper -> _E; encerra se +0xB5; efeito pendente
+0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,GH-AS3a: opcode 0x0A; copia gráficos do bot referenciado (+0xDE != 0); avança
+0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,GH-AS3a: opcode 0x0B; marca flags de especialidade em +0xBC do defensor; avança
+0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,GH-AS3a: opcode 0x0C; Fight_ComputeTotalRos; avança
+0x08033C10,ActionScript_Op0D_HandleDefenderFollowupFlags,func_thumb,GH-AS3a: opcode 0x0D; Fight_HandleDefenderFollowupFlags; avança
+0x08033C20,Fight_ApplyPendingEffectStatusFlags,func_thumb,GH-AS3a: opcode 0x0E; efeitos 0x2E/0x2F/0x0F/0x10 -> bits 4/8/C; avança
+0x08033CD0,Fight_ResolveDefenderRosPhase,func_thumb,GH-AS3a: opcode 0x0F; Fight_ResolveDefenderRosReductions; avança
+0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,GH-AS3a: opcode 0x10; atualiza seletor de argumento; avança
+0x08033CF0,ActionScript_Op11_SetAttackerAffinityResult,func_thumb,GH-AS3a: opcode 0x11; Fight_SetAttackerAffinityResultFromSelectedAction; avança
+0x08033D00,ActionScript_Op12_SetDefenderAffinityResult,func_thumb,GH-AS3a: opcode 0x12; Fight_SetDefenderAffinityResultFromSelectedAction; avança
+0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,GH-AS3a: opcode 0x13; fight+0xEA = fight+0xE8>>2; avança
+0x08033D30,Fight_AccumulateBaseDamage,func_thumb,GH-AS3a: opcode 0x14; monta dano base em fight+0xEC; avança
+0x08033F04,ActionScript_Op15_MarkStateFromDamageBelowThreshold,func_thumb,"GH-AS3a: opcode 0x15 (antigo ..._1D; 1D = valor de +0xDF); seta +0xB8=2, +0xBE=1; avança"
+0x08033F64,ActionScript_Op16_SetStateFromPartFlag1C,func_thumb,"GH-AS3a: opcode 0x16 (antigo ..._1C; 1C = valor de +0xDF); seta +0xB8=2, +0xBE=5; avança"
+0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,GH-AS3a: opcode 0x17; fight+0xB7=3 se dano > limiar do alvo; avança
+0x08034008,ActionScript_Op18_AddRandomBonusAndScaleByPart,func_thumb,GH-AS3a: opcode 0x18; Fight_AddRandomBonusUpTo3 + Fight_ScaleDamageByPartScalar; avança
+0x0803402C,ActionScript_Op19_DispatchOnSubstateAA_F,func_thumb,GH-AS3a: opcode 0x19 wrapper -> _F; encerra se +0xB5; efeito pendente
+0x08034048,FightPreview_SetupSceneFromPartTechnique,func_thumb,GH-AS3a: opcode 0x1A; grava 1 em DAT_0803406C+0x130 e chama _G; encerra se +0xB5

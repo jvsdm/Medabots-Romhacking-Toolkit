@@ -2959,10 +2959,10 @@ F	0x0807E7A4	lib_memcpy
 F	0x0807E804	lib_memset
 L	0x0807E8EC	gMoveScriptTable
 L	0x0807EE10	gPreviewJointTemplates
-L	0x0807EE70	gPreviewHead
-L	0x0807F610	gPreviewRightArm
-L	0x0807FDB0	gPreviewLeftArm
-L	0x08080550	gPreviewLegs
+L	0x0807EE70	gGfx_PartLarge_DescTable_Sz0
+L	0x0807F610	gGfx_PartLarge_DescTable_Sz1
+L	0x0807FDB0	gGfx_PartLarge_DescTable_Sz2
+L	0x08080550	gGfx_PartLarge_DescTable_Sz3
 L	0x08081490	sCompositePreviewMirroredDescriptorMap
 L	0x080814C4	gMotionData
 L	0x080AFC18	StateTable_CopySrc_63C
@@ -3159,11 +3159,13 @@ L	0x084C7E7C	gGfx_Overlay_Tiles_Bg2
 L	0x084C8034	gGfx_Obj_Malias_09C0
 L	0x084C8034	gObjTextFontGfx
 L	0x084C88B8	gGfx_PartsGrid_Tiles_Bg3
+L	0x084C92B0	gGfx_BotPartSelect_Tiles_Obj
 L	0x084E3698	gGfx_Overlay_Obj_Sprites
 L	0x084E43D8	gFontPalette
 L	0x084E43F8	sPartScreenObjPaletteBlockC
 L	0x084E6BF0	gGfx_BattleStatus_Char
 L	0x084E776C	gGfx_BattleScene_Tiles_Bg0
+L	0x084E823C	gGfx_BotPartSelect_Tiles_Bg0
 L	0x084E9650	gGfx_PartsGrid_Tiles_Bg0
 L	0x084EC1F8	gGfx_PartsGrid_CharEntrada
 L	0x084EE0DC	gGfx_PartDetail_Tiles_Bg0
@@ -3175,6 +3177,7 @@ L	0x084F0B44	gGfx_PartDetail_Map_Bg0
 L	0x084F0B7C	gGfx_FightScene_Map_Bg0
 L	0x084F0C08	gGfx_Overlay_Map_Bg0
 L	0x084F0F68	gGfx_BattleScene_Map_Bg1
+L	0x084F0FD4	gGfx_BotPartSelect_Map_Bg
 L	0x084F1180	gGfx_PartsGrid_Map_Bg1
 L	0x084F1514	gPartListTilemap
 L	0x084F1608	gGfx_PartDetail_Map_Bg1
@@ -3191,6 +3194,7 @@ L	0x084F3468	gGfx_PartDetail_Map_Bg3
 L	0x084F35FC	gGfx_FightScene_Map_Bg3
 L	0x084F3788	gGfx_Overlay_Map_Bg3
 L	0x084F4300	gGfx_PartsGrid_Palette_Banks
+L	0x084F4840	gGfx_PartsGrid_Palette_Bank2
 L	0x084F4BC0	gGfx_PartDetail_Palette_Bg
 L	0x084F4D80	gGfx_FightScene_Palette_Bg
 L	0x084F4F40	gGfx_Overlay_Palette_Bg
@@ -3205,8 +3209,19 @@ L	0x087852CF	gStarterData
 L	0x08785EC0	gGfx_BattlePanel_Char
 L	0x08785FB4	gGfx_Shop_PartSelect_Obj
 L	0x0878F7E8	gGfx_TitleMenu_Char
+L	0x0879DA90	gGfx_BattlePanel_Tiles
+L	0x0879EFC0	gGfx_BattlePanel_Map_Bg0
+L	0x0879F138	gGfx_BattlePanel_Map_Bg1
+L	0x0879F3D0	gGfx_BattlePanel_Map_Bg2
+L	0x0879F80C	gGfx_NumberReveal_Tiles
+L	0x087A0D04	gGfx_NumberReveal_Map_Bg1
+L	0x087A0FB4	gGfx_NumberReveal_Map_Bg0
+L	0x087A10F0	gGfx_NumberReveal_Map_Bg3
+L	0x087A1244	gGfx_NumberReveal_Map_Bg2
 L	0x087AEFD0	gGfx_Title_OBJ
 L	0x087B67B0	gGfx_Title_BG0
+L	0x087BB2A0	gGfx_Title_Map_Bg1
+L	0x087BB7E0	gGfx_Title_Map_Bg2_ANOMALIA
 L	0x087F314C	gGfx_Logo_Char
 L	0x087F5500	gTextDump
 C	0x0800C7E4

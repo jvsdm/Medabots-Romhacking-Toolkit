@@ -3301,10 +3301,10 @@ address,name,kind,count,comment
 0x0807E804,lib_memset,func_thumb,,"[R4] R4: libc (preenchimento de bytes, memset); confirmado"
 0x0807E8EC,gMoveScriptTable,label,,roteiros de deslocamento em batalha: [kind*7 + estilo]
 0x0807EE10,gPreviewJointTemplates,data,96,"provavel: 4 registros de 0x18 B (juntas sinteticas 3-6 do preview grande: cabeca, esq, dir, pernas); byte 0x10 = molde raiz da peca, 0x0D invertido (-2-x) no lado 1; ver re/reference/large_part_layout.md"
-0x0807EE70,gPreviewHead,data,1952,preview cabeca: 122 x 16 B
-0x0807F610,gPreviewRightArm,data,1952,preview braco direito: 122 x 16 B
-0x0807FDB0,gPreviewLeftArm,data,1952,preview braco esquerdo: 122 x 16 B
-0x08080550,gPreviewLegs,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable
+0x0807EE70,gGfx_PartLarge_DescTable_Sz0,data,1952,preview cabeca: 122 x 16 B (antes: gPreviewHead)
+0x0807F610,gGfx_PartLarge_DescTable_Sz1,data,1952,preview braco direito: 122 x 16 B (antes: gPreviewRightArm)
+0x0807FDB0,gGfx_PartLarge_DescTable_Sz2,data,1952,preview braco esquerdo: 122 x 16 B (antes: gPreviewLeftArm)
+0x08080550,gGfx_PartLarge_DescTable_Sz3,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable (antes: gPreviewLegs)
 0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
 0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
 0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C)
@@ -3501,11 +3501,13 @@ address,name,kind,count,comment
 0x084C8034,gGfx_Obj_Malias_09C0,label,,Simon/Rokusho em 0x084C8058 (antes: sShopPartScreenUiTileSheet)
 0x084C8034,gObjTextFontGfx,data,,fonte 8x8 dos rotulos em sprite (comprimida, 0x9C0 B = 78 tiles 4bpp), carregada em OBJ tile 0x3A0 (0x06017400)
 0x084C88B8,gGfx_PartsGrid_Tiles_Bg3,data,,[GF] Malias 0x01C0 -> VRAM 0x06017E00; PartsGrid_InitScreen (GF)
+0x084C92B0,gGfx_BotPartSelect_Tiles_Obj,data,,[GF4] Malias +2 0x0800 -> VRAM 0x06012800; Fight_InitBotPartSelectScreen; GF4
 0x084E3698,gGfx_Overlay_Obj_Sprites,data,,[GF2] Malias 0x2580 -> OBJ 0x06010000; Overlay_InitScreenGraphics (GF2)
 0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR)
 0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
 0x084E6BF0,gGfx_BattleStatus_Char,data,,[GF3] Char principal do status de batalha (Malias +2 0x1320 -> VRAM 0x06004000); GF3
 0x084E776C,gGfx_BattleScene_Tiles_Bg0,data,,[GF2] Malias 0x11A0 -> VRAM 0x06004000; InitializeBattleSceneScreen 0x080040BC (GF2)
+0x084E823C,gGfx_BotPartSelect_Tiles_Bg0,data,,[GF4] Malias +2 0x0AE0 -> VRAM 0x06004000; Fight_InitBotPartSelectScreen 0x0801058C; GF4
 0x084E9650,gGfx_PartsGrid_Tiles_Bg0,data,,[GF] Malias 0x1CA0 -> VRAM 0x06004000; PartsGrid_InitScreen 0x08007A04 (GF)
 0x084EC1F8,gGfx_PartsGrid_CharEntrada,data,,[GF3] Char principal da grade de pecas na entrada (Malias +2 0x2B00 -> VRAM 0x06004000); GF3
 0x084EE0DC,gGfx_PartDetail_Tiles_Bg0,data,,[GF2] Malias 0x0FE0 -> VRAM 0x06004000; PartDetailScreen_Init 0x0800E0BC (GF2)
@@ -3517,6 +3519,7 @@ address,name,kind,count,comment
 0x084F0B7C,gGfx_FightScene_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
 0x084F0C08,gGfx_Overlay_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
 0x084F0F68,gGfx_BattleScene_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
+0x084F0FD4,gGfx_BotPartSelect_Map_Bg,data,,[GF4] Malias mapa +2 0x0810; LoadTilesWithMalias via Fight_InitBotPartSelectScreen; GF4
 0x084F1180,gGfx_PartsGrid_Map_Bg1,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1801; PartsGrid_InitScreen (GF)
 0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
 0x084F1608,gGfx_PartDetail_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
@@ -3533,6 +3536,7 @@ address,name,kind,count,comment
 0x084F35FC,gGfx_FightScene_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
 0x084F3788,gGfx_Overlay_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
 0x084F4300,gGfx_PartsGrid_Palette_Banks,data,,[GF] cru 0x70 words -> 0x05000000; PartsGrid_InitScreen (GF)
+0x084F4840,gGfx_PartsGrid_Palette_Bank2,data,,[GF4] cru 0x70 words -> paleta BG 0x05000000; PartsGrid_EnterScreenInit 0x080087CC (0x0800886C); GF4
 0x084F4BC0,gGfx_PartDetail_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; PartDetailScreen_Init (GF2)
 0x084F4D80,gGfx_FightScene_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; Fight_BattleSceneInit (GF2)
 0x084F4F40,gGfx_Overlay_Palette_Bg,data,,[GF2] cru 0x60 words -> 0x05000000; Overlay_InitScreenGraphics (GF2)
@@ -3547,7 +3551,18 @@ address,name,kind,count,comment
 0x08785EC0,gGfx_BattlePanel_Char,data,,[GF3] Asset Malias +2 0x03E0 do painel de batalha; GF3
 0x08785FB4,gGfx_Shop_PartSelect_Obj,label,,Simon/Rokusho em 0x08785FD8 (antes: sSharedPartScreenTileSheet)
 0x0878F7E8,gGfx_TitleMenu_Char,data,,[GF3] Char do menu do titulo (LZ77 0x3880 -> VRAM 0x06004000); GF3
+0x0879DA90,gGfx_BattlePanel_Tiles,data,,[GF4] LZ77 0x10 size 0x2FE0 -> buffer 0x02030000 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock 0x08044D0C; GF4
+0x0879EFC0,gGfx_BattlePanel_Map_Bg0,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit 0x08062FB4; BGCNT nao fechado; GF4
+0x0879F138,gGfx_BattlePanel_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4
+0x0879F3D0,gGfx_BattlePanel_Map_Bg2,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit; BGCNT nao fechado; GF4
+0x0879F80C,gGfx_NumberReveal_Tiles,data,,[GF4] LZ77 0x10 size 0x2EC0 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock; Screen_InitNumberRevealLayout 0x080639C4; GF4
+0x087A0D04,gGfx_NumberReveal_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
+0x087A0FB4,gGfx_NumberReveal_Map_Bg0,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
+0x087A10F0,gGfx_NumberReveal_Map_Bg3,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
+0x087A1244,gGfx_NumberReveal_Map_Bg2,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_InitNumberRevealLayout; ordem BG nao confirmada; GF4
 0x087AEFD0,gGfx_Title_OBJ,data,,[GF3] Sprites OBJ do titulo (LZ77 0x5060 -> VRAM 0x06010000); GF3
 0x087B67B0,gGfx_Title_BG0,data,,[GF3] Char BG0 do titulo (LZ77 0x61C0 -> VRAM 0x06008000); GF3
+0x087BB2A0,gGfx_Title_Map_Bg1,data,,[GF4] LZ77 0x10 size 0x500 -> VRAM 0x06006D00 (trace IN1 linha 70); GF4
+0x087BB7E0,gGfx_Title_Map_Bg2_ANOMALIA,data,,[GF4] SEM cabecalho LZ77 em +0 (zeros); destino trace 0x06007500; nao confiar ate conferir no emulador; GF4
 0x087F314C,gGfx_Logo_Char,data,,[GF3] Char do logo NATSUME (LZ77 0x0DE0 -> VRAM 0x06000000); GF3
 0x087F5500,gTextDump,label,,inicio do texto
