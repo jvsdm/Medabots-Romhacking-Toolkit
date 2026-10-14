@@ -1,0 +1,7 @@
+address,name,kind,comment
+0x083D2B6B,gMapArea,data,192 B area por mapa (idx=id do mapa); 0x0A = passo negado; leitores FUN_08048960 0x08048960 e Overworld_CheckStepAllowed 0x08057E6A; indice byte RAM 0x03005FDE (provavel mapa atual)
+0x08483774,gMapAreaB,data,192 B copia de gMapArea (difere em 4 bytes); sem leitor confirmado
+0x083BA658,gBotNames,ptr,120 ponteiros u32 nomes dos bots (idx=bot); leitores GetBotName 0x08047BDC e Fight_InitializeBotFromTemplate 0x08015166; texto terminado em 0xFE
+0x083BE868,gTechniqueNames,ptr,60 ponteiros u32 nomes das tecnicas (idx=tecnica); leitor Fight_DrawSelectedActionIcon 0x08016D6C; indice = byte bot_block+(sel-1)*0x18+0x49 (provavel)
+0x083D1D78,gMoldTable,ptr,50 ponteiros u32 para moldes; 0=nulo; 1,2,7..49 apontam para registros de 0x18 B na ROM (0x083D1940 em diante); 3..6 sao RAM; registro: +0 ptr artes, +0x11 paleta, +0x12/+0x13 tamanho px
+0x083B62D8,gMedals,data,30 x 16 B medalhas (idx=id); +0 id (+1 repete id exceto 27..29); +2 classe; +3..+6 limiares de rank (FF=sem); +7 bonus compatibilidade; +8..+0F bases de especialidade (provavel)
