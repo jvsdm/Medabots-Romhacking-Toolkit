@@ -1,0 +1,13 @@
+addr,nome,kind,comentario
+0x0807C8B0,Lib_SetRegById,func_thumb,"provavel. (antes: bios_set_reg_by_id) Nao e chamada BIOS: switch em id (4 e 0x40 gravam um valor fixo; default grava outro e retorna 1)"
+0x0807C918,Lib_StoreSlotIndexAddr,func_thumb,"provavel. (antes: bios_store_idx) Valida idx<=3, grava idx em byte global, calcula base+idx*4 e devolve ponteiro em *param_2; retorna idx>3"
+0x0807C950,Lib_InitRingBuffer,func_thumb,"provavel. (antes: bios_init_ring) Zera globais e monta anel de 2 nos a partir de param_1[0..2]; seta flag de inicializado"
+0x0807C9D8,lib_timer_queue_clear,func_thumb,"provavel. Nome mantido. IME=0, zera cabeca/cauda da fila, limpa bit de IRQ do timer (8<<n) em IE, restaura IME"
+0x0807CCC0,bios_cpufastset,func_thumb,"confirmado. SWI 0x0C (CpuFastSet)"
+0x0807CCC4,bios_cpuset,func_thumb,"confirmado. SWI 0x0B (CpuSet)"
+0x0807CCC8,bios_div,func_thumb,"confirmado. SWI 0x06 (Div)"
+0x0807CCD0,bios_div_ret2,func_thumb,"provavel. SWI 0x06 (Div); devolve param_2 (segundo resultado/resto). Nome mantido"
+0x0807CCD8,bios_lz77_vram,func_thumb,"confirmado. SWI 0x12 (LZ77UnCompVram)"
+0x0807CCDC,bios_lz77_wram,func_thumb,"confirmado. SWI 0x11 (LZ77UnCompWram)"
+0x0807CCE0,bios_objaffineset,func_thumb,"confirmado. SWI 0x0F (ObjAffineSet)"
+0x0807CCF0,CallViaR0,func_thumb,"confirmado. Chama ponteiro em r0 (jumptable nao recuperada, e so bx r0)"

@@ -2869,7 +2869,7 @@ F	0x08058B90	Map_CycleSlotIndex
 F	0x08058C0C	Screen_RedrawAndDispatchStep
 L	0x08058C44	Screen_RedrawAndDispatchStep_Jump
 L	0x08058C54	Screen_RedrawAndDispatchStep_Table
-F	0x080593FA	Screen_NoopReturn
+F	0x080593FA	Screen_ReturnEpilogue
 F	0x08059434	Screen_PrepareNibbleRowsAndReset
 F	0x080594C8	Screen_HandleStateTransition
 F	0x08059560	Screen_ResetEntries40

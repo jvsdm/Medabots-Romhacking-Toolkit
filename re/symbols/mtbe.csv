@@ -837,7 +837,7 @@ address,name,kind,count,comment
 0x08010040,PartDetail_SetupAttributeCursorSprite,func_thumb,,[R0] cursor da lista de atributos linha 0..2 (provavel)
 0x080100BC,PartDetail_MoveAttributeCursor,func_thumb,,[R0] move cursor de atributo 0..2 (provavel)
 0x0801013C,PartDetail_DispatchModeHandler,func_thumb,,[R0] dispatch por modo; retorna modo==3 (chute)
-0x08010170,PartsBuild_SetOrClearSlotShapeAndAdvance,func_thumb,,[FS3] FS3 chute: marca bit 0x4000 em flags de bot; significado de negocio aberto (antes: PartsBuild_MarkSlotFlagStep)
+0x08010170,PartsBuild_SetOrClearSlotShapeAndAdvance,func_thumb,,[FS3] FS3 chute: marca bit 0x4000 em flags de bot; significado de negocio aberto (antes: PartsBuild_MarkSlotFlagStep) [RV2] provavel (antes: PartsBuild_MarkSlotFlagStep; liga/desliga 0x4000 em attr0 do slot conforme bit 4 do flag; caso especial 0x1E; incrementa estado)
 0x080101E8,Slot_CountdownStepAndClear,func_thumb,,"contagem regressiva de byte de contexto +0x108; limpa slot (4,1) ao zerar; provavel"
 0x0801022C,BgMap_FillRectTickCounter,func_thumb,,"[provavel] BgMap_FillRect16(12,8,18,5,tile) + contador de byte++"
 0x08010264,Scene_GsDispatch_Menu6_Encounter,func_thumb,,"[BT2] [GH-BT2] menu_list[6]; despachante por GS com tabela 0x083ACE24, DMA limpeza se 0x03000430==2; sem funcao no Ghidra; nao confirmado como volta ao mapa (antes: Scene_GsDispatch_Menu6)"
@@ -2753,7 +2753,7 @@ address,name,kind,count,comment
 0x08048888,Map_ResetObjectRenderSlot,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: zera 0x40 B do slot e chama FUN_08049344 (callee sem nome)
 0x080488AC,Map_CountDecimalDigits,func_thumb,,[R3] numero de digitos decimais de n [RV13] [RV13] confirmado: conta digitos decimais (max 10)
 0x080488E8,Map_FormatDecimalDigits,func_thumb,,[R3] extrai digitos decimais de n com zeros a esquerda [RV13] [RV13] confirmado: formata digito N (de cima) do numero como char
-0x08048960,Fight_ClassifyActionState,func_thumb,,"[KI] [KI] era FUN_08048960 (nao e batalha). Switch no id do key item. id 0: E+0xC5D bit 0x20 set -> 3, senao se gMapArea[mapa]==0x0A -> 2, senao 1. ids 1,5,C,D,13h,27h,28h: E+0xC5D bit0 set -> 3; senao E+0xC5C-1 > 1 -> 1 e senao 4. Outros: 0. Literais: E=0x030057E0, mapa=0x03005FDE (antes: KeyItem_CanUseHere)"
+0x08048960,Fight_ClassifyActionState,func_thumb,,"[KI] [KI] era FUN_08048960 (nao e batalha). Switch no id do key item. id 0: E+0xC5D bit 0x20 set -> 3, senao se gMapArea[mapa]==0x0A -> 2, senao 1. ids 1,5,C,D,13h,27h,28h: E+0xC5D bit0 set -> 3; senao E+0xC5C-1 > 1 -> 1 e senao 4. Outros: 0. Literais: E=0x030057E0, mapa=0x03005FDE (antes: KeyItem_CanUseHere) [RV13] [RV13] provavel (antes: KeyItem_CanUseHere): devolve classe 0-4 do estado de acao via switch e flags; nome antigo nao bate"
 0x08048B70,Fixed_Mul88,func_thumb,,[R3] (a*b)>>8 com arredondamento para zero (8.8) [RV13] [RV13] confirmado: multiplicacao 8.8 com arredondamento para zero
 0x08048BA0,Fixed_ReciprocalQ16,func_thumb,,[R3] 0x10000 / a [RV13] [RV13] confirmado: 0x10000 / x
 0x08048BB8,Map_ResetAffineScaleBlock,func_thumb,,[FR3] [FR3] zera bloco afim e escala 0x100 (identidade); chamada por Map_ResetRenderAffineState 0x08049318 (provavel)
@@ -2767,11 +2767,11 @@ address,name,kind,count,comment
 0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,,Simon/Rokusho: Recompute the affine/render coefficients for one map render entry from its angle/scale scratch values.
 0x08049420,Map_SetObjectAnimationVariant,func_thumb,,Simon/Rokusho: Set the active animation variant for one map/object render slot and reset its local frame timers. [CS2] CONFIRMADO decompile: grava +0x24 = anim e zera +0x22 e +0x23
 0x08049440,Map_TickObjectAnimation,func_thumb,,[R3] interpretador de animacao de objeto de mapa (codigos 0..5)
-0x08049714,Mem_SetZeros,func_thumb,,Simon/Rokusho (antes: set_zeros)
-0x08049728,Mem_FillBytes,func_thumb,,Simon/Rokusho: Fill param2 bytes with param3 at address param1 |  (antes: fill_memory)
+0x08049714,Mem_SetZeros,func_thumb,,Simon/Rokusho (antes: set_zeros) [RV13] [RV13] confirmado (antes: set_zeros): zera N bytes
+0x08049728,Mem_FillBytes,func_thumb,,Simon/Rokusho: Fill param2 bytes with param3 at address param1 |  (antes: fill_memory) [RV13] [RV13] confirmado (antes: fill_memory): preenche N bytes com valor
 0x08049740,Mem_CountDiffBytes,func_thumb,,confirmado: conta bytes diferentes entre dois buffers
 0x08049780,Random_NextScaled,func_thumb,,"Simon/Rokusho: Advance the byte-sized RNG index using sRandomAdvanceTable and the current overworld affine/frame counter, store the updated byte to gRandomIndex, then return the result reduced modulo the supplied bound. [RV13] [RV13] confirmado: avanca tabela de aleatorio e escala com bios_div_ret2"
-0x080497C0,Mem_CopyBytesLoop,func_thumb,,Simon/Rokusho (antes: mem_copy)
+0x080497C0,Mem_CopyBytesLoop,func_thumb,,"Simon/Rokusho (antes: mem_copy) [RV13] [RV13] confirmado (antes: mem_copy): copia N bytes byte a byte (src,dst,n)"
 0x080497E0,Overworld_SetTransitionStepAndDispatch,func_thumb,,[FS7] [FS7] grava bloco de transicao e despacha jump table em +1 (0..6); chamadores de Overworld e Map_EnterSceneSetup; provavel
 0x08049CC8,Obj_LoadPairFromRecord,func_thumb,,[FS7] [FS7] copia 6 bits de dois bytes do registro para dois destinos; provavel
 0x08049D0C,Overworld_ResetScreenTransitionResources,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: CopyPaletteBuffersToHardware
@@ -3032,7 +3032,7 @@ address,name,kind,count,comment
 0x0804F5DC,Event_Op56_Cont_LoadEntities,func_thumb,,"Simon/Rokusho: Continuation handler for event opcode 0x56. Rebuilds encounter NPC snapshot, clears object/render state, reloads the compact tile-byte grid, loads entity spawns for the current map, refreshes visible event-object sprites, and ends the opcode. (antes: EventOpcode56_LoadEntities) [RV17] provavel - zera buffers"
 0x0804F674,Event_Op57_Cont_NoOp,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub. (antes: NoOp_0804F674) [RV17] confirmado - corpo vazio (so return); nome mantido"
 0x0804F678,Event_Op58_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F678) [RV17] confirmado - corpo vazio (so return); nome mantido
-0x0804F67C,Event_Op59_Cont_Run_Scene_Command_03,func_thumb,,Simon/Rokusho (antes: EventOpcode59_OpenShop) (antes: Event_Op59_Cont_OpenShop)
+0x0804F67C,Event_Op59_Cont_Run_Scene_Command_03,func_thumb,,Simon/Rokusho (antes: EventOpcode59_OpenShop) (antes: Event_Op59_Cont_OpenShop) [RV17] confirmado - reseta passo e roda Event_RunSceneCommandSequence(3); nome antigo OpenShop nao aparece no decompile (antes: Event_Op59_Cont_OpenShop)
 0x0804F6C4,Event_Op5A_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F6C4) [RV17] confirmado - corpo vazio (so return); nome mantido
 0x0804F6C8,Event_Op5B_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F6C8) [RV17] confirmado - corpo vazio (so return); nome mantido
 0x0804F6CC,Event_Op5C_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F6CC) [RV17] confirmado - corpo vazio (so return); nome mantido
@@ -3040,7 +3040,7 @@ address,name,kind,count,comment
 0x0804F6D4,Event_Op5E_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F6D4) [RV17] confirmado - corpo vazio (so return); nome mantido
 0x0804F6D8,Event_Op5F_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F6D8) [RV17] confirmado - corpo vazio (so return); nome mantido
 0x0804F6DC,Event_Op62_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: NoOp_0804F6DC) [RV17] confirmado - corpo vazio (so return); nome mantido
-0x0804F6E0,Event_Op63_Cont_PlayerStepThenResyncCamera,func_thumb,,subpassos: aguarda UI 0xD/0x16; cria objeto 0x2F com (args0<<4)|args1; espera FUN_0804F188 e reajusta camera/colisao; termina (antes: Event_Op63_Cont_ShowEffect)
+0x0804F6E0,Event_Op63_Cont_PlayerStepThenResyncCamera,func_thumb,,subpassos: aguarda UI 0xD/0x16; cria objeto 0x2F com (args0<<4)|args1; espera FUN_0804F188 e reajusta camera/colisao; termina (antes: Event_Op63_Cont_ShowEffect) [RV17] provavel - passo de objeto 0x2f
 0x0804F83C,Event_Op66_Cont_Animate_Tracked_Object_Transition,func_thumb,,"Simon/Rokusho: Continuation handler for event opcode 0x66. Ticks the tracked-object transition/arc effect started by the setup half and ends the opcode once the transition completes. (antes: EventOpcode66_AnimateTrackedObjectTransition) [HC5] confirmado; continuacao do 0x66: chama Map_TickTrackedObjectTransition (0x080509EC) por quadro, Event_EndOpcode quando != 0"
 0x0804F850,Event_Op67_Cont_Skip_Two_Bytes_Wait,func_thumb,,confirmado; continuacao do 0x67: so Event_EndOpcode (espera 1 quadro)
 0x0804F860,Event_Op6A_Cont_NoOp,func_thumb,,"Simon/Rokusho (antes: NoOp_0804F860) [HC5] confirmado; bx lr; 0x6A nao liga pendente, continuacao nunca roda"
@@ -3124,7 +3124,7 @@ address,name,kind,count,comment
 0x08051EFC,Overworld_UpdateFollowerFacing,func_thumb,,Simon/Rokusho: Update the follower / companion facing and animation state so it turns toward its movement delta relative to the player. Also refreshes the follower sprite animation when the visible facing changes. (antes: Overworld_UpdateFollowerFacingAndAnimation) [RV18] confirmado: compara posicao do lider e do seguidor (obj 0x30)
 0x0805203C,Overworld_AdvanceWalkStep,func_thumb,,"Simon/Rokusho: Advance the follower / companion step in lockstep with the player's movement direction. Uses the follower object's current speed, updates world position, advances its walk animation, and refreshes follower tile coordinates when the follower step timer expires. (antes: Overworld_AdvanceFollowerStep) [RV18] provavel: avanca o passo do seguidor (obj 0x30) por direcao 0-3 e recalcula o tile dele"
 0x0805218C,Map_SetEventMarkerFacingVariant,func_thumb,,Simon/Rokusho: Set the displayed facing / animation variant for an ActiveMapObjectEntry. Updates the shared facing-dependent sprite selection and writes the chosen variant back to ActiveMapObjectEntry.marker_state. [RV18] confirmado: chama Map_SetObjectRenderSlotFacingVariant e grava o facing no registro (+5)
-0x080521A8,Overworld_RandomizeEventMarkerFacing,func_thumb,,Simon/Rokusho: Update idle facing-trigger animation markers. Periodically picks a random active facing event marker and changes its displayed facing/animation variant when the event entry is marked as animation-capable. (antes: Map_UpdateIdleFacingEventAnimation) (antes: Overworld_TickRandomObjectAnim)
+0x080521A8,Overworld_RandomizeEventMarkerFacing,func_thumb,,Simon/Rokusho: Update idle facing-trigger animation markers. Periodically picks a random active facing event marker and changes its displayed facing/animation variant when the event entry is marked as animation-capable. (antes: Map_UpdateIdleFacingEventAnimation) (antes: Overworld_TickRandomObjectAnim) [RV18] confirmado (antes: Overworld_TickRandomObjectAnim): a cada 4 frames sorteia um slot de objeto e
 0x08052204,Map_TickAllObjectAnimations,func_thumb,,"Simon/Rokusho: Refresh the animation for active objects whose record kind is 6, using the current event/object state to decide whether their type-6 marker animation should advance. (antes: Map_RefreshType6MarkerAnimations) [RV18] confirmado: percorre 64 slots e chama Map_TickObjectAnimation nos de kind 6"
 0x08052284,Map_CheckFacingEventTriggerAhead,func_thumb,,Simon/Rokusho: Check for a facing-triggered map event or facing-sensitive marker immediately in front of the player. ActiveMapObjectEntry.record_kind_and_event_id high nibble selects whether the record arms an event or only updates marker facing. [RV18] confirmado: calcula tile a frente pelo facing do jogador (+0xBE0)
 0x08052330,Map_CheckFacingEventTriggerAhead,label,,"[EV] gatilho de frente (kind 0/4/6 na casa à frente); Pendente=1, id em E+0xC8E, StateByte=0, cursor=0, índice em E+0xCB4 (confirmado)"
@@ -3254,7 +3254,7 @@ address,name,kind,count,comment
 0x08058C0C,Screen_RedrawAndDispatchStep,func_thumb,,[R3] redesenha e despacha passo por tabela (chute no nome)
 0x08058C44,Screen_RedrawAndDispatchStep_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058C54 (step 0..7); JT5
 0x08058C54,Screen_RedrawAndDispatchStep_Table,data,,[JT5] tabela 8 ptrs; JT5
-0x080593FA,Screen_NoopReturn,func_thumb,,[R3] retorno sem efeito
+0x080593FA,Screen_ReturnEpilogue,func_thumb,,[R3] retorno sem efeito (antes: Screen_NoopReturn)
 0x08059434,Screen_PrepareNibbleRowsAndReset,func_thumb,,[FS8] [FS8] provavel: chama Screen_DrawPackedNibbleRows (0x08059734) e Map_ResetObjectRenderSlot; RAM 0x030057A0
 0x080594C8,Screen_HandleStateTransition,func_thumb,,"Simon/Rokusho: Consume the MapTransitionState written by warp/event transition logic. transition_phase gates the reload flow, scene_mode_id selects special post-transition sprite reload cases, and queued_map_id is used by earlier map-switch setup. (antes: Overworld_RunPostTransitionMapSpriteReload) [R3] transicao de estado 3/4 | revisto CH3: provável - estado 3 chama Scene_DispatchStateHandler; se devolver 4, zera byte de estado e, para mapas 0x0E/0x12, recarrega sprites e registro secundário de marcador, depois Overworld_ResetUiRenderState"
 0x08059560,Screen_ResetEntries40,func_thumb,,[R3] laco 0..0x27 chamando FUN_08048888 [RV19] confirmado: laco de Map_ResetObjectRenderSlot 0..0x27 (40 slots)
