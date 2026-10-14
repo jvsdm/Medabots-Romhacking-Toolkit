@@ -1,0 +1,216 @@
+criada 08000000
+nome 08000000 crt0 -> entry
+miolo 08006f44 dentro de Parts_DispatchSlotAction (PartSet_UpdateFromCurrentLoadoutMaybe)
+miolo 08006fa0 dentro de Parts_DispatchSlotAction (PartSet_EquipCurrentLoadoutMaybe)
+nome 08007e38 PartsGrid_InitScreen -> PartsGrid_InitScreen_08007E38
+nome 08008234 PartsGrid_InitScreen -> PartsGrid_InitScreen_08008234
+criada 0800b890
+nome 0800b890 FUN_0800b890 -> DebugMenu_Dispatch
+criada 0800ba74
+nome 0800ba74 FUN_0800ba74 -> DebugMenu_Exit
+nome 0800c29c Dispatch_CallHandlerByByte33 -> Dispatch_CallHandlerByByte33_0800C29C
+nome 0800da34 PartsGrid_InitScreen -> PartsGrid_InitScreen_0800DA34
+criada 08010c50
+nome 08010c50 FUN_08010c50 -> Fight_HandleRewardGrantOrSkipByPostBattleFlags
+rotulo 080138a8 Dispatch_ByteStateIndexTable_Table
+nome 08018a54 Fight_PlayBattleResultMusicByPostBattleMode -> Fight_PlayResultCueByState
+miolo 0801a7d8 dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State0)
+miolo 0801a818 dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State1)
+miolo 0801a85c dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State2)
+miolo 0801a8bc dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State3)
+miolo 0801a910 dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State4)
+miolo 0801a950 dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State5)
+miolo 0801a958 dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State6)
+miolo 0801a998 dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_0801A998)
+miolo 0801a9c8 dentro de Fight_RunStateDispatch (Fight_RunStateDispatch_State8)
+criada 0801c0f8
+nome 0801c0f8 FUN_0801c0f8 -> Fight_SubstateA_0_StartUiActionAndAdvance
+criada 0801c138
+nome 0801c138 FUN_0801c138 -> Fight_SubstateA_2_TryUiActionDefaultAndAdvance
+criada 0801c32c
+nome 0801c32c FUN_0801c32c -> Fight_SubstateC_0_CpuCopyThenBotStep
+criada 0801c3f8
+nome 0801c3f8 FUN_0801c3f8 -> Fight_SubstateC_4_AnimateEntryFramesOnly
+nome 0801c40c Fight_RunEntryAnimStep -> Fight_RunEntryAnimStep_0801C40C
+rotulo 0801dade Fight_DispatchOnSubstateAA_E_05_ReturnTail
+rotulo 0801e08c Fight_DispatchOnSubstateAA_G_02_ReturnTail
+rotulo 0801e3c0 Fight_DispatchOnSubstateAA_H_01_ChooseActionPath
+rotulo 0801e43c Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40
+rotulo 0801e578 Fight_DispatchOnSubstateAA_H_06_CheckHitOrSkip
+rotulo 0801f28a Fight_DispatchOnSubstateAA_H_3E_ReturnTail
+rotulo 0801fbec Fight_J02_StepTable
+rotulo 0801fc00 Fight_J02_Step0_SetupDisplayAndAdvance
+rotulo 0801fc78 Fight_J02_Step1_SetupFromBotTable
+rotulo 0801fcc4 Fight_J02_Step2_CopyBgTiles
+rotulo 0801fd10 Fight_J02_Step3_CopyObjSlots
+rotulo 0801fd3c Fight_J02_Step4_FinishSetCallbackAndAdvance
+rotulo 0801fd70 Fight_J02_ReturnCommon
+rotulo 0802040c Fight_DispatchOnSubstateAA_L_0B_ReturnTail
+criada 08030860
+nome 08030860 FUN_08030860 -> Fight_SceneMain
+criada 08033840
+nome 08033840 FUN_08033840 -> Fight_RunActionScriptLoop
+criada 08033c00
+nome 08033c00 FUN_08033c00 -> Fight_ComputeTotalRosPhase
+criada 08033c20
+nome 08033c20 FUN_08033c20 -> Fight_ApplyPendingEffectStatusFlags
+criada 08033ce0
+nome 08033ce0 FUN_08033ce0 -> Fight_UpdateActionArgSelectorPhase
+criada 08033d10
+nome 08033d10 FUN_08033d10 -> Fight_SeedPreDamageFromTotalRos
+nome 08035740 Fight_AddByteClampToMax -> safe_add
+nome 08035754 Fight_SubClampZero -> safe_subtract
+nome 08035814 Fight_ApplyStatusCostIfFlag -> Fight_ApplyVirusBugRosPenalty
+nome 08035880 Fight_CheckPairCondition -> Fight_IsAntiAirAgainstAirTarget
+nome 08036ccc Fight_ClampRepairToMissingArmor -> FightPreview_SplitCountByCapacity
+nome 08036e64 Fight_SetPendingActionEffect -> FightPreview_SetPartStatsByType
+nome 08036fa0 Fight_ResetBotActionRuntimeState -> Fight_ResetBotPartState
+nome 08037830 Fight_FindLiveSlotMatchingField91 -> Fight_FindActiveBotInSideWithGroup
+nome 0803ab9c ObjScript_Op28_SaveObjPalsToBuffer -> ObjScript_Op28_CopyFourBlocks
+nome 08040914 Dispatch_CallHandlerByByte1B -> Dispatch_CallHandlerByByte1B_08040914
+nome 08040cd0 Tile_ClearSlots -> ClearObjectAttributeEntries
+nome 08041d04 memcpy -> Mem_CopyBytes_Dup
+criada 08045858
+nome 08045858 FUN_08045858 -> EmitCompositePreviewTemplateEntriesSortedByY
+criada 0804589c
+nome 0804589c FUN_0804589c -> InitCompositePreviewTemplatePointerList
+criada 080458a4
+nome 080458a4 FUN_080458a4 -> AppendCompositePreviewTemplatePointer
+criada 080459a4
+nome 080459a4 FUN_080459a4 -> OffsetCompositePreviewTemplateEntry
+criada 08045a40
+nome 08045a40 FUN_08045a40 -> IsCompositePreviewPointOnScreen
+criada 08045aec
+nome 08045aec FUN_08045aec -> QueueVisibleCompositePreviewTemplateEntry
+criada 08045b68
+nome 08045b68 FUN_08045b68 -> QueueVisibleCompositePreviewTemplateEntryWithBounds
+criada 08045c30
+nome 08045c30 FUN_08045c30 -> QueueVisibleCompositePreviewTemplateEntryWithAffineBounds
+nome 0804a2f0 site_NewGameClear -> new_game_start
+miolo 0804cad8 dentro de Event_Op4C_Jump_If_Missing_Part (EventOpcode4B_JumpIfItemCountBelowAmount)
+miolo 0804cb04 dentro de Event_Op4D_Jump_If_Not_Has_Medal (EventOpcode4C_JumpIfMissingPart)
+nome 0804d490 Event_Op7D_Set_Field_C32 -> Event_Op7D
+miolo 0804d584 dentro de Event_Op81_Queue_Batched_Object_Command (EventOpcode02_RunEmbeddedInitOpcodeWithSavedArgs)
+miolo 0804d59c dentro de Event_Op81_Queue_Batched_Object_Command (Event_RunEmbeddedInitOpcode)
+nome 0804d83c site_GetEventScript -> EventScript_ReadNextByte
+nome 0805effc Gfx_PaletteFadeStep -> Gfx_PaletteFadeStep_0805EFFC
+rotulo 08065f04 Screen_DispatchByState3A_TableA
+rotulo 08065f1c Screen_DispatchByState3A_A0
+rotulo 080660ac Screen_DispatchByState3A_TableB
+rotulo 080660c4 Screen_DispatchByState3A_B0
+rotulo 08071650 Dispatch_CallHandlerOrStartAnims_Table
+nome 08074728 Snd_UpdateChannelIfIdle -> Snd_UpdateChannelIfIdle_08074728
+rotulo 08075c50 gObjTextGlyphFrameRecords
+rotulo 08075ff8 gObjTextGlyphFrames
+rotulo 0807ee10 gPreviewJointTemplates
+rotulo 08081490 sCompositePreviewMirroredDescriptorMap
+rotulo 080814c4 gMotionData
+rotulo 080afc18 StateTable_CopySrc_63C
+rotulo 080b003c StateTable_CopySrc_8400
+rotulo 083abfb0 gSpriteSetTable0
+rotulo 083ac2c8 menu_list
+rotulo 083aca4c debug_menu_more_idk
+rotulo 083aca5c debug_menu_subroutines
+rotulo 083aca80 debug_menu_option_table
+rotulo 083acac0 StateHandlerTable_BAD8
+rotulo 083acb48 gTextProcessStrings
+rotulo 083acba0 debug_menu_text
+rotulo 083acbcc gTextProcessStrings3
+rotulo 083aecd8 gFightSceneSteps
+rotulo 083aeea0 gTechniqueActionSetupHandlerTable
+rotulo 083aef90 gTechniqueActionValidationHandlerTable
+rotulo 083afe88 gPortraitImages
+rotulo 083b1748 gPortraitPalettes
+rotulo 083b2990 Dispatch_CallHandlerByByteAt1B_Table
+rotulo 083b29ec gRandomLUT
+rotulo 083b4c60 Fight_AnimSlot_TableB
+rotulo 083b4e08 gFontWidths
+rotulo 083b5008 gItalicFontWidths
+rotulo 083b5578 gTextDialogue_083B5578
+rotulo 083b6100 SlotScriptPtrTable
+rotulo 083b6590 gTextMedalNames
+rotulo 083b66ec gPartAttributeNamePointerTable
+rotulo 083b6b48 gTextMedalAbilityDesc1
+rotulo 083b6fa4 gTextMedalAbilityDesc2
+rotulo 083b7048 gTextAttackTypeNames
+rotulo 083b722c gTextAttackTypeDesc
+rotulo 083b74b8 gTextMedaforceNames
+rotulo 083b7580 gTextMedaforceDesc
+rotulo 083b7f8c medal_medaforce_list
+rotulo 083b80c0 gTextMedaforceDesc1
+rotulo 083b82f0 gTextSpecialAttackDesc
+rotulo 083bcfec gTextPartCodeNames
+rotulo 083bda04 gTextStatDescriptions
+rotulo 083beafc gTextLegTypes
+rotulo 083beb68 gTextBattlefieldNames
+rotulo 083c2d3c gTextPreBattleMessage
+rotulo 083c3b04 gTextPostBattleMessage
+rotulo 083c40b8 gTextCharacterNames
+rotulo 083c47ec gTextMenuLabels
+rotulo 083c4b90 gTextStatusStrings
+rotulo 083c6744 gTextGameMessages
+rotulo 083ce164 FightPreview_SceneRowPointerTable
+rotulo 083ce374 ObjectScript_ArgCountTable
+rotulo 083cedf4 Fight_AnimSlot_TableA
+rotulo 083cf530 gTextSystemMessages
+rotulo 083d1e40 gMotionAngleTable
+rotulo 083d1f2c gMotionOffsetTable
+rotulo 083d2018 gMotionDurationTable
+rotulo 083f7d80 sRandomAdvanceTable
+rotulo 083f7e80 Overworld_Sprites
+rotulo 08411ae0 gTextDialogue_08411AE0
+rotulo 084144b4 gTextDialogue_084144B4
+rotulo 084798f4 gTextDialogue_084798F4
+rotulo 08479f0c gTextDialogue_08479F0C
+rotulo 0847a2c4 gTextDialogue_0847A2C4
+rotulo 0847a784 gTextDialogue_0847A784
+rotulo 0847ac94 gTextDialogue_0847AC94
+rotulo 0847b110 gTextDialogue_0847B110
+rotulo 0847b5b0 gTextDialogue_0847B5B0
+rotulo 0847b9c0 gTextDialogue_0847B9C0
+rotulo 0847bde0 gTextDialogue_0847BDE0
+rotulo 0847c248 gTextDialogue_0847C248
+rotulo 0847c64c gTextDialogue_0847C64C
+rotulo 0847caa8 gTextDialogue_0847CAA8
+rotulo 0847cd7c gTextDialogue_0847CD7C
+rotulo 0847d124 gTextDialogue_0847D124
+rotulo 0847d5c0 gTextDialogue_0847D5C0
+rotulo 0847dad0 gTextDialogue_0847DAD0
+rotulo 0847e388 get_item_text
+rotulo 08483634 StateTable_CB50
+rotulo 08483ed8 gTextKeyItems
+rotulo 0848521c gTextShopDialogue
+rotulo 08485f88 gTextTournamentMessages
+rotulo 0848698c gTextRaceMessages
+rotulo 084bfc6c gFont
+rotulo 084c4bdc sPartDetailTileSheetA
+rotulo 084c8034 sShopPartScreenUiTileSheet
+rotulo 084c8034 gObjTextFontGfx
+rotulo 084e43d8 gFontPalette
+rotulo 084e43f8 sPartScreenObjPaletteBlockC
+rotulo 0850f2f8 sCompositeBattleSpritePaletteSet
+rotulo 0850f318 sPartScreenObjPaletteBlockA
+rotulo 0850f378 sPartScreenObjPaletteBlockB
+rotulo 08765ec4 event_operation_list
+rotulo 08785fb4 sSharedPartScreenTileSheet
+criada 0800d684
+criada 08040a40
+criada 08040af0
+criada 08040b0c
+criada 08040b50
+criada 08041bf4
+criada 0805d4e0
+criada 0805d5d0
+criada 0805d658
+criada 0805dad4
+criada 0805db4c
+criada 0805dc88
+criada 0805dcb0
+criada 080639c4
+criada 080640dc
+criada 0806445c
+criada 080644d8
+criada 08068238
+criada 08068298
+criada 08068328
+criadas 42, renomeadas 45, ja certas 2648, rotulos 113, miolo de outra funcao 15, falharam 0

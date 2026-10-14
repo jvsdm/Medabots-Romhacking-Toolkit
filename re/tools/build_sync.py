@@ -26,7 +26,8 @@ TIERS = [
     r"H|HA\d+|HN\d+|HE\d+|HO\d+|HC\d*",
     r"FH|JT|DT|FL\d*",
     r"FR\d+|JT\d+|SD|A6|DT\d+",
-    r"CF",
+    r"N\d+|QA\d+|CH\d+|MS|TX|FN\d+|MD|AS\d+",
+    r"CF|NM",
 ]
 # MERGE_NOTAS: aqui o nome do mtbe é o correto.
 KEEP_MTBE = {"0x08035754", "0x08035814", "0x08035880", "0x08035740"}
