@@ -1,0 +1,20 @@
+addr,nome,kind,comentario
+0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,confirmado: copia cabecalho do mapa (coords/ptrs) carrega paleta camadas animacoes spawns e sprites; nome mantido
+0x08048174,Map_UpdateBackgroundAnimations,func_thumb,confirmado: avanca frame de animacao de tile e grava descritor de copia (bit 31) para VRAM; nome mantido
+0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,confirmado: laco por grupo de pose descompacta LZ77 para VRAM com passo 0x900; nome mantido
+0x0804830C,Map_LoadMapPaletteToShadowBuffer,func_thumb,chute: escreve registros de 3 palavras (entrada da tabela ou 14 pares default); nao ha copia de paleta visivel; nome mantido por falta de prova melhor (ver RV23.md)
+0x0804842C,SND_PolicyRequest,func_thumb,provavel: switch por codigo de evento de som roteando pedido de musica/fade com estado por canal; nome mantido
+0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,provavel: laco por grupo de pose monta registros (src dst ctrl) com passo 0x20 (16 cores); nome mantido
+0x08048CF0,Map_CopyTilemapToBgScreenblocks,func_thumb,confirmado: copia retangulo de tilemap para screenblocks 32x32 somando offset de tile; nome mantido
+0x08048E24,Map_ExpandMetaTilemapToBgScreenblocks,func_thumb,confirmado: expande meta-tilemap 2x2 em entradas de BG com flips via BgMap_WriteTileEntry; nome mantido
+0x08049110,BgMap_WriteTileEntry,func_thumb,confirmado: monta e grava uma entrada de tilemap (tile paleta flips); nome mantido
+0x08049318,Map_ResetRenderAffineState,func_thumb,confirmado: zera 2 campos e grava 32 entradas afins identidade (0x100 0x100 0); nome mantido
+0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,provavel: recalcula 4 coeficientes afins por recíprocos Q16 da entrada; nome mantido
+0x08049420,Map_SetObjectAnimationVariant,func_thumb,provavel: grava variante de animacao (+0x24) e zera contadores +0x22 +0x23 do slot 0x40; nome mantido
+0x08049440,Map_TickObjectAnimation,func_thumb,confirmado: interpretador de bytecode de animacao por objeto (avanca quadro sfx carga LZ77 reset); nome mantido
+0x08049E08,Overworld_RunScreenTransitionStep,func_thumb,confirmado: passo de fade de paleta (duas cores) decrementa valor e retorna 1 ao fim; nome mantido
+0x0804A2F0,Overworld_StartNewGame,func_thumb,confirmado: limpa RAM inteira inicializa ids ctx e marcadores dispara transicao e GameState_AdvanceSubroutine (antes: new_game_start)
+0x0804A764,Overworld_InitMapScene,func_thumb,confirmado: limpa buffers carrega mapa atual reseta encontro pede som e inicia transicao; nome mantido
+0x0804A944,Overworld_ReloadMapSceneAfterReset,func_thumb,confirmado: recarrega cena apos reset (renderiza slots ativos pede som outro e transicao); nome mantido
+0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,confirmado: recarrega mapa atual sem reinicializar slots (limpa OAM pede som transicao); nome mantido
+0x08049344,Slot_ClearIndexedBuffers,func_thumb,confirmado (FN4): zera 4 B e 0x40 B em blocos indexados por slot; chamado por Map_ResetObjectRenderSlot 0x08048888; nome ja existia mantido

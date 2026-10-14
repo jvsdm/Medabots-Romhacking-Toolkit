@@ -1,0 +1,30 @@
+addr,nome,kind,comentario
+0x08058334,Screen_UpdateByStep_TableStep,table,confirmado: 8 x 4 (ptrs Thumb) lidos na ROM; JT5
+0x08058C54,Screen_RedrawAndDispatchStep_Table,table,confirmado: 8 x 4 (ptrs Thumb) lidos na ROM; JT5
+0x0805BC54,gFrameTableBasePtr,data,(antes: Unnamed_ShopTableBaseRef) confirmado: literal = 0x08483594 (base da tabela de quadros; +0x10 = 0x084835A4); dono nao localizado
+0x0805D2C8,KeyItemBag_DispatchTable,table,confirmado: 41 x 4 (ids 0..0x28, guarda cmp #0x28); IN3 corrige 40 para 41; alvo 0 = 0x0805D36C
+0x0805D36C,KeyItemBag_Case_Id0,label,(antes: ItemListSwitch_Table) confirmado: e codigo (Thumb), nao tabela; alvo do id 0 (IN3)
+0x080631C0,gBattlePanel_CharSrcPtr,data,(antes: gBattlePanel_Literal_Char_Src) confirmado: literal = 0x08785EC0 (fonte de caracteres)
+0x08065870,Sm_StepSfxRepeat3_JumpTable,table,confirmado: 6 x 4 (ptrs Thumb); JT4
+0x08065F04,Screen_DispatchByState3A_TableA,table,confirmado: 6 x 4 (ptrs Thumb); ramo A; JT3
+0x080660AC,Screen_DispatchByState3A_TableB,table,confirmado: 6 x 4 (ptrs Thumb); ramo B; JT3
+0x0806A134,dispatch_scene_state_Table,table,confirmado: 23 x 4 (ptrs Thumb); JT5
+0x0806BD98,dispatch_state_8_Table,table,confirmado: 8 x 4 (ptrs Thumb); JT5
+0x0806CB6C,anim_dispatch_state_Table,table,confirmado: 7 x 4 (ptrs Thumb); JT5
+0x08071328,Screen_TableStepTimedSetup_JumpTable,table,confirmado: 26 x 4 (ptrs Thumb; cmp #0x19); JT4
+0x08071650,Dispatch_CallHandlerOrStartAnims_Table,table,confirmado: 8 x 4 (ptrs Thumb); JT2
+0x08075C50,gObjTextGlyphFrameRecords,data,confirmado: 78 x 12 (936 B; fecha exatamente em 0x08075FF8)
+0x08075FF8,gObjTextGlyphFrames,table,(antes kind ptr) confirmado: 78 x 4 (ptrs p/ records de 12 B; valores 0x08075C50 +12 cada)
+0x0807EE70,gGfx_PartLarge_DescTable_Sz0,table,provavel: 122 x 0x10 (ocupa ate a proxima tabela; 0x7A0 B); IC
+0x0807F610,gGfx_PartLarge_DescTable_Sz1,table,provavel: 122 x 0x10 (0x7A0 B); IC
+0x0807FDB0,gGfx_PartLarge_DescTable_Sz2,table,provavel: 122 x 0x10 (0x7A0 B); IC
+0x08080550,gGfx_PartLarge_DescTable_Sz3,table,provavel: 122 x 0x20 (0xF40 B; ate 0x08081490); IC
+0x08081490,sCompositePreviewMirroredDescriptorMap,data,confirmado: 50 x 1 (bytes, permutacao de espelho); pad ate 0x080814C4
+0x080814C4,gMotionData,data,(antes kind label) provavel: dados dos roteiros de movimento ate 0x080ABE00 (tamanho nao fechado); roteiro 0 vazio aponta aqui
+0x080A89F2,Data_080A89F2,data,chute: dado sem conteudo identificado (nao e codigo; BFxx=IT); nome automatico mantido; SN3
+0x080AEB74,gLZ77RecordTable,table,confirmado: registros de 16 B (src +4, dst +8); indices usados 0..59 com buracos; N nao fechado; CS2
+0x080AFC18,StateTable_CopySrc_63C,table,provavel: blocos de 12 ptrs (0x30 B) copiados por 0x0806463C com idx 0x0300137C; N nao contado; N2/JT3
+0x080B003C,StateTable_CopySrc_8400,table,provavel: blocos de 7 ptrs (0x1C B) copiados por 0x08068400 com idx 0x0300137C; N nao contado; JT3
+0x080B012C,SND_SongTable,table,confirmado: 54 x 4 (ptrs de musica, ids 0..53); SN
+0x080B16E4,SND_SampleTable,table,confirmado: 128 x 4 (ptrs de amostra PCM); SN
+0x083ABB50,SND_PsgFreqTable,table,confirmado: 74 x 2 (halfwords; Hz=131072/(2048-v)); SN
