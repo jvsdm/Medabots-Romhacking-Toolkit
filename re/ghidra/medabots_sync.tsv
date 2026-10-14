@@ -95,6 +95,7 @@ F	0x080058A4	Parts_HandleSlotSwapInput
 F	0x08005948	Parts_CheckSpriteIdsSetSpeed
 F	0x0800598C	Parts_CheckSpriteIdsUpdateMotion
 F	0x080059D0	Parts_PrepareFourPartSlots
+F	0x08005A60	Parts_PrepareFourPartSlots_08005A60
 F	0x08005AD0	PartSlot_DrawNameGlyphs
 F	0x08005B44	PartSlot_LoadIconPalette
 F	0x08005BB4	PartSlot_DrawNumber3
@@ -138,6 +139,7 @@ L	0x08006F44	Parts_DispatchSlotAction_ReadActionIndex
 L	0x08006F56	Parts_DispatchSlotAction_Jump
 L	0x08006FA0	Parts_DispatchSlotAction_CheckByte9B
 F	0x08006FB0	Parts_BuildEquipTable
+F	0x08007034	Parts_BuildEquipTable_08007034
 F	0x080070F0	Parts_CountInventoryMatches
 F	0x0800712C	Parts_BuildSlotIcons
 F	0x0800725C	Parts_HandleConfirmInput

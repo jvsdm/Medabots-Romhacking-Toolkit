@@ -479,6 +479,7 @@ address,name,kind,count,comment
 0x08005948,Parts_CheckSpriteIdsSetSpeed,func_thumb,,Simon/Rokusho: Refresh the currently selected battle part preview sprite. Validates the selected part-id set and enables animation on the corresponding composite sprite if the ids are valid. (antes: RefreshBattlePartPreviewSprite) (antes: checa_parte_sinal)
 0x0800598C,Parts_CheckSpriteIdsUpdateMotion,func_thumb,,[R0] variante de checa_parte_sinal com FUN_080432A0 (chute) (antes: checa_parte_sinal_b)
 0x080059D0,Parts_PrepareFourPartSlots,func_thumb,,[R0] copia 4 bytes de parte e chama FUN_08043560 (provavel) (antes: prepara_4_partes)
+0x08005A60,Parts_PrepareFourPartSlots,func_thumb,,[IV] ao desmontar: equipadas (campo 1) -= 1 para cada slot com bot < 0x78 (IV)
 0x08005AD0,PartSlot_DrawNameGlyphs,func_thumb,,[R0] limpa 10x10 e desenha icone de parte (provavel) (antes: desenha_icone_c)
 0x08005B44,PartSlot_LoadIconPalette,func_thumb,,[R0] copia paleta 0x20 B e FUN_08042698 (provavel) (antes: carrega_paleta_icone_b)
 0x08005BB4,PartSlot_DrawNumber3,func_thumb,,[R0] texto/rotulo de parte via FUN_080426F0 (provavel) (antes: desenha_texto_parte_a)
@@ -522,6 +523,7 @@ address,name,kind,count,comment
 0x08006F56,Parts_DispatchSlotAction_Jump,label,,[JT5] mov pc: tabela real 5 entradas em 0x08006F64 (idx +0x5A <=4); JT5
 0x08006FA0,Parts_DispatchSlotAction_CheckByte9B,label,,Simon/Rokusho (antes: PartSet_EquipCurrentLoadoutMaybe)
 0x08006FB0,Parts_BuildEquipTable,func_thumb,,[R0] monta tabela de partes equipadas (provavel)
+0x08007034,Parts_BuildEquipTable,func_thumb,,[IV] ao montar: equipadas (campo 1) += 1 para cada slot com bot < 0x78 (IV)
 0x080070F0,Parts_CountInventoryMatches,func_thumb,,[R0] conta partes disponiveis no inventario (provavel)
 0x0800712C,Parts_BuildSlotIcons,func_thumb,,[R0] monta sprites pequenos dos componentes (provavel)
 0x0800725C,Parts_HandleConfirmInput,func_thumb,,[R0] confirmacao na tela de slots de parte (provavel)
