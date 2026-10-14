@@ -1,0 +1,12 @@
+address,name,kind,comment
+0x080344B4,ActionScript_Op32_CallSubstateAB,func_thumb_wrapper,"GH-TR5 confirmado: Fight_DispatchOnSubstateAA_AB + avanço se +0xB5 (ja nomeado no Ghidra)"
+0x080344D0,ActionScript_Op33_CallSubstateAC,func_thumb_wrapper,"GH-TR5 confirmado: Fight_DispatchOnSubstateAA_AC + avanço se +0xB5 (ja nomeado no Ghidra)"
+0x080344EC,ActionScript_Op34_CallSubstateAD,func_thumb_wrapper,"GH-TR5 confirmado: Fight_DispatchOnSubstateAA_AD + avanço se +0xB5 (ja nomeado no Ghidra)"
+0x08034508,ActionScript_Op35_CallSubstateAE,func_thumb_wrapper,"GH-TR5 confirmado: Fight_DispatchOnSubstateAA_AE + avanço se +0xB5 (ja nomeado no Ghidra)"
+0x08023A48,Fight_DispatchOnSubstateAA_AB_CopyDisplayValues,passo,"GH-TR5 confirmado: grava bot+0xC4..C7 (display); nao grava +0xB9"
+0x08023C50,Fight_DispatchOnSubstateAA_AC_0E_SetBotFlagBF,passo,"GH-TR5 confirmado: bot+0xBF=1 e fi+0xAA++; nao grava +0xB9"
+0x08023FB8,Fight_DispatchOnSubstateAA_AD_WriteBotDisplayRows,passo,"GH-TR5 confirmado: bot+0xC4..CC (duas linhas, bot e +0x87); nao grava +0xB9"
+0x0802463C,Fight_DispatchOnSubstateAA_AE_ApplyDamageShowNumbers,passo,"GH-TR5 confirmado: dano em peça + numeros; nao grava +0xB9"
+0x08024790,Fight_DispatchOnSubstateAA_AE_BranchOnBotFlag04,passo,"GH-TR5 confirmado: le bot+0xBD bit 0x04 e desvia; nao grava +0xB9"
+0x080247C8,Fight_DispatchOnSubstateAA_AE_SetBotFlag01,passo,"GH-TR5 confirmado: bot+0xBD |= 1 e fi+0xAA++; nao grava +0xB9"
+0x08024D18,Fight_DispatchOnSubstateAA_AF_11_SetSlotParams,passo,"GH-TR5 confirmado: bot+0xC9..CC (status/display); nao grava +0xB9"

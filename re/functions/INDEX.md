@@ -213,3 +213,5 @@ Ordem por impacto no entendimento. "E" = pede emulador (mGBA/replay); "A" = aná
 15. ObjectScript: 19 de 29 opcodes (0x1E..0x3A) sem leitura completa: HO2.md "Em aberto" (A/E).
 
 Observação: SN.md (timer PCM e DMA) e MN/TL (GS 0x0805C8EC, 0x0805C950) ficaram de fora da lista de 15 por serem mais de infraestrutura; estão em SN.md "Pendente" e TL.md §8.
+
+- (2026-10-14) Emulador: watch de escrita em 0x03000649 (Conceal, bot 0) durante a técnica 37 e em 0x03001828 (Scout) durante a 36; TR2..TR5 esgotaram a análise estática.

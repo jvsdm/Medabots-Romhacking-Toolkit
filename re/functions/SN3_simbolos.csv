@@ -1,0 +1,6 @@
+# address,name,kind,comment
+0x08073E1C,snd_channel_set_state3,func_thumb,confirmado (SN3): grava 3 em [arg+0x3E]; folha 4 instrucoes; distinta de snd_block_tick 0x08073E24
+0x08071058,PTR_gMainSubStateCounter,data,literal 0x0300137C (gMainSubStateCounter/GS); lido por Scene_StartSong4AndSlots 0x08071030 (GS++); confirmado (SN3)
+0x08071BD0,ObjSeq_CompareTable12,data,12 bytes 14 01 0B 08 30 2C 03 00 0E 05 00 00; copiados por Obj_RunSpriteSequenceTable12 0x08071B64; significado provavel (SN3)
+0x080A89F2,Data_080A89F2,data,NAO e codigo (BFF4=IT, inexistente no ARMv4T); origem BL 0x081B43FC e dado: falso positivo (SN3)
+0x080EC9EE,Data_080EC9EE,data,provavel dado (LDMIA base-na-lista, bytes seguintes de tabela); origem BL 0x080FC3F6 e dado: falso positivo (SN3)

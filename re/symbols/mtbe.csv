@@ -322,6 +322,7 @@ address,name,kind,count,comment
 0x03006D3E,gObjectPoseBaseByte,data,,[CU2] CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado
 0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006F74,gKeyItemBagCursorPtr,label,,"[IN3] [IN3] ponteiro para struct do cursor da bolsa; +0x0C = indice (gShopItems/lista), +0x10 = 0 libera recusa 'cancelar'. Antes: nome Shop-like nao usado"
 0x03007014,SND_DriverPtr,data,,[SN] ponteiro para o driver de som
 0x03007F00,sp_usr,label,,stack do modo System
 0x03007FA0,sp_irq,label,,stack do modo IRQ
@@ -3040,6 +3041,7 @@ address,name,kind,count,comment
 0x080502B8,Util_Low2Bits,func_thumb,,[R3] x & 3
 0x080502C8,Obj_FrameBaseFromSprite,func_thumb,,[CS] CONFIRMADO decompile: retorna (sprite>>4)*12+(sprite&3)*3 = frame base (+0x06)
 0x08050300,Overworld_GetObjectAnimationIndexForFacing,func_thumb,,"Simon/Rokusho: Return the animation index for an overworld object slot given its current facing/direction variant. Used by follower, marker, and map-scene sprite refresh code."
+0x08050320,Obj_ComputeActorTableIndex,func_thumb,,[FN5] formula de indice de ator (confirmado formula; provavel nome; era FN2)
 0x08050358,Map_SpawnTrackedObjectAtTile,func_thumb,,Simon/Rokusho
 0x080503FC,Map_InitObjectSprite,func_thumb,,"[R3] cria sprite do objeto idx+0x4F: paleta, posicao x*16/y*16, sombra opcional em idx+0x79"
 0x08050554,Map_RemoveTrackedObjectByPackedId,func_thumb,,Simon/Rokusho
@@ -3188,13 +3190,16 @@ address,name,kind,count,comment
 0x08057688,Screen_StartFlowCmd40,func_thumb,,[FS8] [FS8] confirmado (decompile): GameState_StartFlowByCommand(0x40 0). Nome provavel. Tabela 0x083D6004
 0x08057698,Screen_TransitionEnterAndAdvance,func_thumb,,[FS8] [FS8] provavel: Overworld_ResetAndStartScreenTransitionEffect(32.0 8.0) + GameState_AdvanceSubroutine. Tabela 0x083D6008
 0x080576BC,Screen_TransitionRunAndAdvance,func_thumb,,[FS8] [FS8] provavel: Overworld_RunScreenTransitionStep + GameState_AdvanceSubroutine. Tabela 0x083D600C
+0x080576D0,GameState_StartFlowCommand6,func_thumb,,"[FN5] wrapper GameState_StartFlowByCommand(6,0) (confirmado corpo; nome provavel)"
 0x080576E0,Screen_LoadTilesAndMapEntities,func_thumb,,[FS8] [FS8] provavel: corpo longo (0x37A); Map_LoadCurrentMapAndEntities + decompress_and_store + LZ77 VRAM + DMA3. RAM 0x03002C30 0x030057E0 0x03006D14
 0x08057AD0,Overworld_FinishTransitionInitCursor,func_thumb,,[FL10] fim da transição: sprite do cursor do mapa (slot 0x7F); estado=2 (provável)
 0x08057B0C,Map_ExitStateDispatchFlow,func_thumb,,saida de tela de mapa: escolhe fluxo 0x41/0x42/0x43 pelo estado +0x65; provavel
 0x08057B6C,FieldMenu_Sub0B_RowMachine,func_thumb,,[FM3] [FM3] sub 0x0B da tabela 0x083D5FF4: sub-maquina por linha (ctx+0x65) e passo ctx+0x70; SEM funcao no Ghidra; codigo 2 cai aqui
 0x08057CB0,Flow_WaitObjectThenCount,func_thumb,,[FR1] waits FUN_08047C24 (object state machine) per table id then counts up to 6 steps
 0x08057D04,FieldMenu_Sub0D_Close,func_thumb,,[FM3] [FM3] sub 0x0D: BL 0x08047C00; BL 0x0804A210 (fim de lista); retorna. Saida do menu (codigo 3). SEM funcao no Ghidra
+0x08057D14,Obj_TwoStageInitSetState2_A,func_thumb,,"[FN5] Obj_TwoStageInitThenDispatch(1,1,0,[+0x204]); ==2 no estado (provavel)"
 0x08057D40,FieldMenu_Sub0F_Close,func_thumb,,[FM3] [FM3] sub 0x0F: corpo igual ao 0x0D (BL 0x08047C00; BL 0x0804A210). Saida do menu (codigos 4..6). SEM funcao no Ghidra
+0x08057D50,Obj_TwoStageInitSetState2_B,func_thumb,,[FN5] igual a _A com campo +0x200 (provavel)
 0x08057D80,Overworld_CheckStepAllowed,func_thumb,,"[R3] (mtbe) decide passo por direcao; 0 livre, 1..6 bloqueio; dir 3 usa colisao 3 e parte 0x6B"
 0x08057F1C,Menu_StepCursorWrap,func_thumb,,[R3] (mtbe) move cursor de menu com volta (botoes 0x40/0x80)
 0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23
@@ -3235,14 +3240,14 @@ address,name,kind,count,comment
 0x0805A444,Screen_DrawTwoDigitValue,func_thumb,,[R3] valor % 100 em 2 digitos (provavel)
 0x0805AC8C,Screen_ClearBgVramRegions,func_thumb,,[FS8] [FS8] provavel: bios_cpufastset sobre 0x0202FC00 0x0202FE00 0x05000200
 0x0805AE4C,Shop_BuildItemList64,func_thumb,,[R3] monta gShopItems a partir de 64 pares (provavel)
-0x0805AED0,Shop_DrawItemListPage,func_thumb,,[R3] desenha 5 linhas de itens de gShopItems (provavel)
+0x0805AED0,KeyItemBag_DrawListPage,func_thumb,,[R3] desenha 5 linhas de itens de gShopItems (provavel) (antes: Shop_DrawItemListPage)
 0x0805B0B0,Map_SetSlotScreenPosition,func_thumb,,[R3] posicao X da entrada (chute)
 0x0805B0D8,Shop_BuildAvailablePartList,func_thumb,,"Simon/Rokusho: Build the sellable-part list for the current player inventory. Each entry stores the part id, available count, a category/gender byte from RomPartRecord, and the sell price computed as RomPartRecord.price_hundreds * 100. (antes: Shop_BuildSellablePartList)"
 0x0805B188,Shop_LoadPartIconFrame,func_thumb,,[G] Descomprime frame do icone da peca para VRAM (provavel)
 0x0805B22C,Shop_DrawPartListPage,func_thumb,,[G] Desenha pagina de 4 pecas da loja/troca (provavel)
 0x0805B530,Screen_ClearTileRowHalfwords,func_thumb,,[R3] zera halfwords de linha de tilemap
 0x0805B558,Shop_DrawPageNumbers,func_thumb,,[R3] numeros de pagina da loja (provavel)
-0x0805B594,Shop_DrawSelectedNameText,func_thumb,,[R3] nome do item selecionado (provavel)
+0x0805B594,KeyItemBag_DrawSelectedNameText,func_thumb,,[R3] nome do item selecionado (provavel) (antes: Shop_DrawSelectedNameText)
 0x0805B5BC,Menu_UpdateSpritePriorityByRange,func_thumb,,[G] Bit de prioridade 0x4000 do cursor por faixa (provavel)
 0x0805B5FC,Shop_IsEntryMarked,func_thumb,,[R3] flag==1 da entrada (chute)
 0x0805B8EC,Shop_MoveCursorByDpad,func_thumb,,[R3] cursor em grade com D-pad + SFX (provavel)
@@ -3268,6 +3273,7 @@ address,name,kind,count,comment
 0x0805C7F8,Gfx_FadeTransitionStep,func_thumb,,[FL10] fade de paleta 9 passos com 0x7FFF; upload de bloco; posta 7/8 (provável)
 0x0805C8EC,TitleMenu_SubState7_NameEntry,func_thumb,,[TL] GS 7 (NEW GAME); sem função no Ghidra; nome provável (tela de nome)
 0x0805C950,TitleMenu_SubState8_Continue,func_thumb,,[TL] GS 8 (CONTINUE); sem função no Ghidra; nome provável
+0x0805C988,Text_StepCharIncrement,func_thumb,,[FN5] incrementa caractere ate ' ' (chute)
 0x0805C9C4,Screen_InitLoadTilesAndShow,func_thumb,,[FS8] [FS8] confirmado (decompile): limpa VRAM/OAM REG_DISPCNT=0x60 decompress_and_store Obj_InitSlotAndLoad liga OBJ
 0x0805CA3C,Fx_RunStateStepAndInit,func_thumb,,copia registro 0x53 bytes e roda state machine; provavel
 0x0805CA74,Screen_DispatchStateTable,func_thumb,,[FS8] [FS8] provavel: StateTable_DispatchByIndex; le 0x03000440 0x0300137C
@@ -3281,8 +3287,10 @@ address,name,kind,count,comment
 0x0805CC3C,Screen_InitSpritesAndLoadTiles,func_thumb,,carrega tiles LZ77 e preenche tabela de sprites de tela; provavel
 0x0805CDAC,KeyItemBag_InitListScreen,func_thumb,,"[provavel] zera estado, Shop_BuildItemList64 + Shop_DrawItemListPage; 5 por pagina; liga DISPCNT 0x200-0x1000 (antes: Shop_InitItemListScreen)"
 0x0805CED0,Screen_FadeStepThenLoadObj,func_thumb,,provável: fade de 9 passos e carga de objeto no fim
-0x0805CF58,Shop_UpdateSlotAndDispatchState,func_thumb,,"[FL10] loja: destaque do slot, id de gShopItems ou 0x3F, StateMachine_DispatchStep (provável)"
+0x0805CF58,KeyItemBag_UpdateSlotAndDispatchState,func_thumb,,"[FL10] loja: destaque do slot, id de gShopItems ou 0x3F, StateMachine_DispatchStep (provável) (antes: Shop_UpdateSlotAndDispatchState)"
 0x0805CFB4,Shop_ItemListInputStep,func_thumb,,"entrada da lista de itens da loja (paginas de 5, gShopItems); provavel"
+0x0805D262,KeyItemBag_Result2to4_Message,label,,"[IN3] [IN3] retornos 2..4: SFX 6, limpa bit 0x4000 de 0x03004070 e 0x030040B0 (provavel), GS=9. Id da mensagem NAO confirmado (r0 nao vai para 0x0803FB0C)"
+0x0805D2A0,KeyItemBag_UseItem,label,,"[IN3] [IN3] retorno 1: SFX 4, depois le id de 0x02040000+idx*4 e cmp #0x28"
 0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,,[JT5] mov pc: tabela real 41 ptrs em 0x0805D2C8 (halfword EWRAM 0x02040000+id*4); JT5
 0x0805D2C8,KeyItemBag_DispatchTable,data,,"[IN2] [IN2] 0x28 entradas de alvo por id de key item (<=0x28); alvos especiais 0,1,5,12,13,19,39; resto 0x0805D410"
 0x0805D36C,ItemListSwitch_Table,label,,[IN] [IN] ponto de tabela 0x28 entradas de despacho (pendente)
@@ -3295,6 +3303,7 @@ address,name,kind,count,comment
 0x0805D3FC,KeyItemBag_Case_Id40,label,,[KI] [KI] id 40 (0x28): E+0xC5C=0x0D -> 0x0805D418
 0x0805D410,KeyItemBag_Case_Default,label,,[IN2] [IN2] alvo padrao das demais entradas 0..0x28 da tabela 0x0805D2C8
 0x0805D418,KeyItemBag_CommonTail,label,,[KI] [KI] ctx 0x030004C4 = 0 ; GS(0x0300137C)=0x0D
+0x0805D430,KeyItemBag_Result0_SfxOnly,label,,"[IN3] [IN3] retorno 0 de CanUseHere: so SFX 6, sem troca de estado"
 0x0805D4A0,Slot_ActivateCursor,func_thumb,,[R3] ativa cursor de slot (provavel)
 0x0805D4E0,StateTable_WaitSubThenAdvance,func_thumb,,"[N2] [N2] tabela 0x08483634 idx 7: se StateMachine_DispatchSub != 0, ++0x0300137C (confirmado)"
 0x0805D4FC,Gfx_FadeOutThenClear,func_thumb,,"fade de saida das paletas, limpa REG_DISPCNT e tiles (provavel)"
@@ -3331,11 +3340,13 @@ address,name,kind,count,comment
 0x0805E248,Save_WriteBlocksEeprom,func_thumb,,"[R3] regrava blocos da EEPROM, diferencial ou total (confirmado)"
 0x0805E2D8,Obj_SetFieldFromTable4,func_thumb,,[R3] campo de objeto por tabela de 4 (chute)
 0x0805E300,Table_SumIdsUntilEnd,func_thumb,,[R3] soma valores de tabela por lista de ids (chute)
+0x0805E404,Task_CallHandlerTableThenCount,func_thumb,,[FN5] CallViaR0 tabela + contadores por flag bit0 (provavel)
 0x0805E450,Screen_ClearOamAndAdvance,func_thumb,,[FS8] [FS8] confirmado (decompile): ClearObjectAttributeEntries + REG_DISPCNT=0x60 + estado++. Entrada 0x084836D8
 0x0805E478,Screen_InitFullLayoutLZ77,func_thumb,,provável: layout completo de tela com LZ77 e 2 objetos
 0x0805E718,Menu_InitSelectionListByMode,func_thumb,,[FL10] setup de lista; modo 0/1/2 em DAT_0805E790 escolhe tabela de ids; 10 sprites (provável)
 0x0805E9E0,Gfx_FadeStepAndResetFields,func_thumb,,fade em 9 passos e zera campos ao fim; provavel
 0x0805EA44,Menu_TextEntryInput,func_thumb,,"teclado de entrada de texto: cursor, grade 3x26, ate 10 chars (provavel)"
+0x0805EFD4,Sfx_WaitChannel7ThenAdvance,func_thumb,,[FN5] espera snd_sfx_query_playing(7)==0 (provavel)
 0x0805EFFC,Gfx_PaletteFadeStep,func_thumb,,[provavel] palette fade steps then VRAM clear and mode-based load
 0x0805F104,Dispatch_StateStepCounter,func_thumb,,chama table[idx] e conta 2 halfwords quando flag; confirmado (tabela desconhecida)
 0x0805F144,Screen_ResetClearVramFade,func_thumb,,"reset de cena com música 0, VRAM limpa e fade; provável"
@@ -3353,12 +3364,15 @@ address,name,kind,count,comment
 0x0805FADC,Sm_StepWithTimeout,func_thumb,,passo de máquina de estados com timeout de 60 frames; provável
 0x0805FB14,StateMachine_TickTimeoutToState8,func_thumb,,[provavel] StateMachine_DispatchStep(ctx+0x18); conta > 60 quadros e grava estado 8
 0x0805FB4C,Screen_ScrollTileBand,func_thumb,,[R3] faixa de tiles deslocada (provavel)
+0x0805FC58,Task_CallHandlerThenCountIfFlag,func_thumb,,[FN5] CallViaR0 + contador se bit0 (provavel)
 0x0805FC94,Screen_InitClearAndStartSong,func_thumb,,"limpa VRAM e tabelas, pede musica 0x12, estado 0x10; provavel"
 0x0805FD10,Screen_InitMenuLayoutAndAssets,func_thumb,,"[provavel] layout e assets de tela de menu: 3 LZ77 tile blocks, Asset_UnpackOrCopyBlock, 3 registros de objeto; timer +0x15=0x3C"
 0x0805FEC8,Anim_CountdownThenHideLayer,func_thumb,,provável: contador que halveia valor e oculta camada ao zerar
 0x0805FF1C,Gfx_SlideInLayerStep,func_thumb,,[FL10] entrada deslizante de camada: contador +0x5A ate 0x78; liga BG0 (confirmado)
+0x0805FFF8,Screen_IntroFlashScrollStep,func_thumb,,"[FN5] timer de intro: DISPCNT 0x200, SFX 0x17, rolagem (chute no detalhe)"
 0x080601D4,Fx_ScrollTileBandStep,func_thumb,,efeito de rolagem de faixa com tabela de 8 entradas; provavel
 0x08060248,Anim_CycleTileFrame64,func_thumb,,[R3] ciclo de frame de 64 (provavel)
+0x08060280,Task_CallHandlerThenDecrementIfFlag,func_thumb,,[FN5] CallViaR0 + decremento se bit0 (provavel)
 0x080602BC,Gfx_ClearVramAndBlend,func_thumb,,"reset: zera VRAM 0x06000000, DISPCNT, BLDCNT/BLDY (provavel)"
 0x0806030C,Screen_InitLoadAssets,func_thumb,,[provavel] screen init: LZ77 tile blocks + palette clear + asset unpack
 0x0806048C,Anim_TileFrame64StepSfx,func_thumb,,[FS8] [FS8] provavel: Anim_CycleTileFrame64 + snd_sfx_request. Entrada 0x08483768
