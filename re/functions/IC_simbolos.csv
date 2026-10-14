@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x08045D34,BuildCompositePreviewOamTemplate,func_thumb,"[GH-IC] monta entrada OAM de um tipo do sprite grande: x/y em +0C/+0D, paleta +11, tamanho +12/+13 (divisores +14), flags +15; tile = param_4&0x3FF"
+0x08045E6C,PartPreviewPiece,func_thumb,"[GH-IC] renderiza uma peca: laco de palavras u32 (kind bits0-5, indice bits6-12, 0x4000 flag, bit15 soma lado); recursivo nos filhos +0F/+10"
+0x08046034,CopyCompositePreviewDescriptorGraphics,func_thumb,"[GH-IC] copia gráfico de um descritor (tamanhos 1 e 2) via Asset_UnpackOrCopyBlock + CpuSet de paleta"
+0x080435B0,DrawPartIconTileBlock,func_thumb,"[GH-IC] bloco 2x2 de tilemap BG: entrada = base + idx*4 (+0x1000 se idx>=4); idx 0xFF = placeholder (base + 0x101C)"
+0x0800508C,Menu_DrawPartIconGrid,func_thumb,"[GH-IC] 9 celulas da grade de bots; idx do icone = gPartStats[bot][kind 3].+1 - 100; bot = byte+6 do registro, >=0x78 = vazio"
+0x08042B58,GetPartStats,func_thumb,"[GH-IC] copia 16 B de gPartStats 0x083B83FC + bot*0x40 + kind*0x10"
+0x08785EC0,gGfx_BattlePanel_Char,data,"[GH-IC] Malias 0x03E0 (31 tiles) decomprimido para VRAM 0x06004000 + tamanho(bloco 0x0879DA90); destino provavel 0x06006FE0 (confirmar no emulador)"
+0x080631C0,gBattlePanel_Literal_Char_Src,data,"[GH-IC] literal do pool usado por BattlePanel_SceneInit 0x08062FB4: fonte 0x08785EC0"
+0x084C29D8,gGfx_BotIconTable_Base,data,"[GH-IC] tabela de blocos de 128 B (icones); bloco k=9 (0x084C2E58) = icone de medalha do Kuwagata (MB7), igual byte a byte; indice 'bot+1' em Fight_LoadActiveBotIconTiles"
+0x084C2E58,gGfx_MedalIcon_Kuwagata,data,"[GH-IC] 128 B = bloco 9 de 0x084C29D8 (medalha 0 Kuwagata, hipotese); destino VRAM tiles 960..963 na tela BUILD"
+0x0800F6CC,PartDetail_GetCurrentSelectionLegIconIndex,func_thumb,"[GH-IC] hipotese: indice do icone de perna = gPartStats[bot][3].+1 - 100 (tipo 100..106); NAO decompilado nesta passada"

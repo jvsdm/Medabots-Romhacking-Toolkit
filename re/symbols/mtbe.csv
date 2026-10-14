@@ -1363,6 +1363,7 @@ address,name,kind,count,comment
 0x08026FC0,Fight_DispatchOnSubstateAA_AQ_13_JumpToStep04,func_thumb,,[HN1] Handler AQ idx 0x13; ver HN1.md
 0x08026FD0,Fight_DispatchOnSubstateAA_AR,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026FF8,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam,func_thumb,,[HN1] Handler AR idx 0x00; ver HN1.md
+0x08027044,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam,func_thumb,,[MD2] op 0x50: dano em pecas com F+0xEC; F+0xAA++; nao le B+0xA9..AD
 0x080270BC,Fight_DispatchOnSubstateAA_AR_LoadGfxAndTwoSprites,func_thumb,,"[HN2] HN2 AR(op 0x50) 0x01: gfx 0x084DCD28, slots 0x21/0x22 escala 0x80; confirmado"
 0x080271C4,Fight_DispatchOnSubstateAA_AR_ShrinkTwoSprites,func_thumb,,"[HN2] HN2 AR 0x02: escala -8 ate 0x40, sfx 0x30, timer 0x3C; confirmado"
 0x0802724C,Fight_DispatchOnSubstateAA_AR_SetupEffectSlot,func_thumb,,[HN2] HN2 AR 0x04: slot 0x21 OBJ 0xC624 + record list 0x083B6100+0x168; confirmado
