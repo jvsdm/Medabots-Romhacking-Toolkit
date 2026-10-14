@@ -1,0 +1,2 @@
+# GH-DF2: funcoes sem nome no Ghidra tocadas nesta rodada
+# (nenhuma: todos os enderecos citados em DF2.md tem funcao no Ghidra)

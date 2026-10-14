@@ -1,0 +1,13 @@
+# address,name,kind,comment
+0x08036FA0,Fight_ResetBotPartState,func_thumb,"[GH-DF2 confirmado] bot idx: +0x40<-0, +0x59<-0 (cabeca), +0xB9<-0, +0xBA<-2 (DERROTADO), +0xBC<-0, +0xBD&=0xE4, zera +0xC4(0x0C) e +0xDC(8). Unico chamador: K_00 0x0801FE3C"
+0x0801FE14,Fight_DispatchOnSubstateAA_K_00_ConsumePendingBotRefresh,func_thumb,"[GH-DF2 confirmado] consome fi+0xE0..E2: fi+0x51<-id-1, refresh sprites, Fight_ResetBotPartState(fi+0x51) = DERROTA; AA<-2; sem fila AA+=1"
+0x08035234,Fight_QueueHeadBrokenBotForResolution,func_thumb,"[GH-DF2 confirmado] se bot+0x59 == 0 (cabeca quebrada) enfileira (idx+1) no 1o byte livre de fi+0xE0 (3 slots); se cheio perde o registro"
+0x080150C0,Fight_InitializeEnemyBotStates,func_thumb,"[GH-DF2 confirmado] para i<fi+0x5B: InitializeBotFromTemplate(i); depois Fight_BuildBotPartDisplayStats; Fight_InitializePartStates(3,n)"
+0x0801520C,Fight_BuildBotPartDisplayStats,func_thumb,"[GH-DF2 confirmado] inimigos k: B+0x40<-3 (presenca), B+0x41<-genero (GetPartStats), B+0x42<-B+0x01 (medalha), B+0x43..+0x46<-template fi+4+0xC*k +4..+7 (ids de peca)"
+0x08014F90,Fight_InitializePartStates,func_thumb,"[GH-DF2 confirmado] para cada bot e k=0..3: GetPartStats(B+0x43+k,k) -> Mem_CopyBytes 13 B em B+0x48+0x18k; +0x4C+0x18k=max(stat+4); +0x59+0x18k<-max; +0x5F+0x18k<-id"
+0x08014EC8,Fight_RefreshBotPartRecords,func_thumb,"[GH-DF2 confirmado] CopyBotSlotRecords; CopyBotIdentityRecords; Fight_InitializePartStates(0,n) (jogador)"
+0x08030E78,Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated,func_thumb,"[GH-DF2 confirmado] T+0x9C<-0; bot0+0x40==0 -> T+0x9C=2 (perdeu); senao bot3+0x40==0 -> 1; senao GS 0x48; usa +0x40 (nao +0xBA); GS++ nos dois casos de lider"
+0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,"[GH-DF2 confirmado] so le nibble baixo de gPostBattleModeFlags: 0 -> TryAssignBotPartByRoll + Inv_AddCountClamp99, GS++; !=0 -> GS=0x3E. NAO le T+0x9C nem +0xBA"
+0x0300640E,gPostBattleModeFlags,label,"[GH-DF2] lido por Fight_HandleRewardGrantOrSkipByPostBattleFlags (nibble baixo) e Fight_PlayResultCueByState; quem grava nao achado"
+0x030018E0,fi_BrokenBotQueue,data,"[GH-DF2 confirmado] fila de 3 bytes (idx+1) de bots com cabeca quebrada; gravada por Fight_QueueHeadBrokenBotForResolution; consumida por K_00 que derruba (ResetBotPartState)"
+0x080150FC,Fight_InitializeBotFromTemplate,func_thumb,"[GH-DF2 confirmado] escreve cabecalho +0x00..0x09, cabeca +0x0A..0x17, especialidade +0x18..0x27; NAO escreve +0x40 nem +0x43..+0x5F"
