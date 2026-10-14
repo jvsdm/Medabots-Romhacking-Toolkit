@@ -1,0 +1,17 @@
+address,name,kind,comment
+0x083B83FC,gPartStats,data,480 x 16 B estatisticas das pecas; idx = bot*0x40 + kind*0x10; leitor GetPartStats 0x08042B58; +0 medalha +1 tecnica +2 espec +3 genero +4 armadura +5 sucesso +6 poder +7 carga +8 usos +0x0B preco (confirmado bot0 vs parts.lua)
+0x083B62D8,gMedals,data,30 x 16 B medalhas; +0 id (+1 repete id); +4..+6 limiares provaveis (1E/3C/64/FF); leitor PartDetail_* 0x08005D1C/0x08006154
+0x083AEEA0,gTechniqueActionSetupHandlerTable,data,60 u32 ponteiros thumb (provavel); 0x08000841 = vazio; leitor Fight_DispatchPartPreparation 0x08031A70
+0x083AEF90,gTechniqueActionValidationHandlerTable,data,60 u32 ponteiros thumb (provavel); 0x08000841 = vazio; leitor Fight_DispatchPartExecution 0x08031ABC
+0x083B74B8,gTextMedaforceNames,data,50 u32 ponteiros para texto (nomes das Medaforcas); indice = id Medaforca
+0x083B7580,gTextMedaforceDesc,data,53 u32 ponteiros para texto (descricoes das Medaforcas)
+0x083C6744,gTextGameMessages,data,176 u32 ponteiros para texto (mensagens do jogo; 107 peca obtida 109 XP 110 derrota = BT2)
+0x083AECD8,gFightSceneSteps,data,ponteiros thumb de passos da cena 8; indice = 0x0300137C; 0x08000841 = vazio; tamanho nao medido
+0x0847E644,gMapMusic,data,192 B musica por mapa (idx=id do mapa); 0x16..0x34 = song ids 22..52; mapa 23 = 0x1A (26, SND11); leitor Map_LoadOverworldSpriteGraphicsForCurrentMap 0x08048288
+0x083F8900,gMapDimensions,data,192 x 2 B (largura, altura em tiles); mapa 10 = 24x22; regra W3; leitor Map_GetMapSizeHalfTileByAxis 0x080529AC
+0x083BEC10,gMapEncounters,data,192 x 8 B (usa +0..+3); +0 flag tem encontro (provavel); +1 0..10 (provavel area); leitores Fight_CopyEncounterTemplateEntry 0x08011DE4 e reset_step_and_get_encounter_flag 0x0804387C
+0x083BF210,gMapEncountersExtra,data,192 x 4 B; 128 mapas zerados; +0..+3 ids 0..245 (provavel bots/templates do encontro); leitor Fight_SelectTemplateForCurrentEncounter 0x08011E20
+0x084838E4,gShops,data,15 lojas x 4 slots (1 B, id de bot 0..119, 0xFF vazio); indice = id da loja (evento 0x59); leitor Shop_InitPartSelectionScreen 0x080619B0
+0x083CAD78,gMoveStyle,data,122 B estilo de deslocamento das pernas 0..6 por bot; leitor MotionPlayStep 0x08044A3C
+0x083BEB94,gPaletteFamily,data,122 B banco de OBJ da paleta do sprite composto (0..2) por bot; leitores CreateCompositeBattleSpriteObjects 0x08042E58 e Shop_LoadPartIconFrame 0x0805B188
+0x083B29EC,gRandomLUT,data,256 B tabela do randbyte (idx u8); leitor randbyte 0x080424B8 quando flag != 0
