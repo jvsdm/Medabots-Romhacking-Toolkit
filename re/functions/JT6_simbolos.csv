@@ -1,0 +1,2 @@
+# address,name,kind,comment
+0x0806B0D4,BotAnim_TickStageCallbacksAll,funcao,hospedeiro: loop 20 bots; call_r1 em tabela 0x084857D0[bot+0x20-1]; confirmado no corpo
