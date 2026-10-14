@@ -59,8 +59,22 @@ were a normal return; only J:0x02 has a real table, 0x0801FBEC), HA2-resto, DT (
      the args).
    - Fix the old notes: HA1/HA2/HA3 still say "tail-call not recovered" for E05/G02/H:0x3E/L:0x0B (it's a normal
      return; see JT.md). HE4 0x76/0x7A/0x7F (see HC5.md). HE2 0x32 (see HC3.md).
-2. **FL: 409 FUN_ candidates left** (FL_lista.txt, ordered by refs). Split into lists of ~40 and give one agent per
-   list. Run step 0 first so work isn't redone. 0x08000840 has 1190 literal refs (table/data? look into it).
+2. **FL1..FL10 done (2026-10-13):** about 385 of the 409 candidates documented and renamed in Ghidra.
+   - Leftovers by file (see the "Pendente" line in each FLn.md):
+     - FL2: 6
+     - FL3: 1 (0x0806F5A0, 4.9 KB)
+     - FL4: 17
+     - FL5: 5
+     - FL6: 1
+     - FL8: 5
+   - Not renamed (guesses): about 30, listed in the CSVs with an FUN_ name and the proposed name in the comment.
+   - Uncovered callees: FUN_08066D8C (text typewriter), FUN_08047850, FUN_08037830, FUN_08003300, FUN_08003904,
+     FUN_08048BB8.
+   - Byte-indexed dispatch tables not recovered (ctx+0x33 / +0x1B, CallViaR0): 0x0801387C, 0x08040974,
+     0x0803C7DC, 0x08065A94, 0x08071630, 0x080575DC, 0x08065ED0, 0x08068BC4, DAT_0800BAF0, DAT_0803C6EC,
+     DAT_0805CB80. Same approach as JT.md.
+   - **FLn_lista.txt sizes are wrong** (up to the next FUN_); use the Body from get_function_by_address.
+   - 0x08302DF8 is data, not code.
 3. **+0xA6 code -> message/script map:** the reader is 0x080305E0 -> Fight_RunSubstateDispatch 0x0801C0BC
    (table 0x083AD580, 9 entries) -> FUN_0801AC24 -> StateMachine_DispatchStep(table 0x083C6744 = scripts at
    0x083C4E24+). Decode that script format.
