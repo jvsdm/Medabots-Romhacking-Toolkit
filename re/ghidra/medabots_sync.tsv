@@ -2333,6 +2333,10 @@ L	0x08050F38	SceneCommandStep3_Advance
 L	0x08050F40	SceneCommandStep4_WaitTransitionEnd
 F	0x08050F5C	Overworld_UpdateMapSceneStateMachine
 L	0x08050F80	Overworld_MapSubstateTable
+F	0x08050F94	Overworld_MapSub0_TileArrive
+F	0x08051078	Overworld_MapSub1_WaitObject
+F	0x080510C0	Overworld_MapSub2_IdleInput
+F	0x0805134C	Overworld_MapSub3_WaitScene
 F	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
 L	0x08051416	Map_LoadEntitySpawnsForCurrentMap_08051416
@@ -2403,6 +2407,11 @@ F	0x0805716C	FieldMenu_DispatchSubstate
 F	0x0805718C	Overworld_InitChoiceMenuScreen
 F	0x08057244	Overworld_InitChoiceMenuScreen_08057244
 F	0x08057440	Map_TickChoiceListOpen
+F	0x080574D4	FieldMenu_ChoiceSub2_SelectRow
+L	0x08057534	FieldMenu_RowActionTable
+L	0x0805754C	FieldMenu_RowAction1_Sub0B
+L	0x08057564	FieldMenu_RowAction2_Sub0D
+L	0x08057570	FieldMenu_RowAction3_Sub0F
 F	0x080575DC	Menu_ChoiceCountdownStep
 F	0x08057AD0	Overworld_FinishTransitionInitCursor
 F	0x08057B0C	Map_ExitStateDispatchFlow
@@ -3540,11 +3549,7 @@ C	0x08050E6C
 C	0x08050F2A
 C	0x08050F38
 C	0x08050F40
-C	0x08050F94
-C	0x08051078
-C	0x080510C0
-C	0x0805134C
-C	0x080574D4
+C	0x08057534
 C	0x0805C988
 C	0x0805E404
 C	0x0805EFD4

@@ -247,3 +247,11 @@
 0x080441B8  prologo de 0x080441EE (zera fi+0x41..43)
 0x0806B826  prologo provavel de 0x0806B8CE (grava r3 em fi+0x41)
 0x0806C694  prologo provavel de 0x0806C7E4 (grava r2 em fi+0x41)
+0x0805716C  despachante do menu de escolha (sem função no Ghidra)
+0x080574D4  sub 2 do menu de escolha 0x083D5FF4 (Ghidra: "No function found")
+0x08050F94  sub 0 do mapa (tabela 0x08050F80)
+0x08051078  sub 1 do mapa
+0x080510C0  sub 2 do mapa (controle normal, B em 0x08051204)
+0x0805134C  sub 3 do mapa
+0x08051368  sub 4 do mapa
+0x08057534  tabela do switch de linha do sub 2 do menu

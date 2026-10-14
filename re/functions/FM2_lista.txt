@@ -1,0 +1,9 @@
+Código sem função no Ghidra (GH-FM2, 2026-10-14). Entrada = endereço Thumb.
+0x0805716C  despachante do menu de escolha (sem função no Ghidra)
+0x080574D4  sub 2 do menu de escolha 0x083D5FF4 (Ghidra: "No function found")
+0x08050F94  sub 0 do mapa (tabela 0x08050F80)
+0x08051078  sub 1 do mapa
+0x080510C0  sub 2 do mapa (controle normal, B em 0x08051204)
+0x0805134C  sub 3 do mapa
+0x08051368  sub 4 do mapa
+0x08057534  tabela do switch de linha do sub 2 do menu

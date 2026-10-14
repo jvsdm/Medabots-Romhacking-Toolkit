@@ -284,7 +284,7 @@ address,name,kind,count,comment
 0x0300649A,gEvt_MapModeFlag,label,,[FI2] E+0xCBA modo do evento de mapa (0/1 iguais; 2 regrava bit 7) provavel (EX
 0x0300649C,gEventCounterA,label,,[FI2] E+0xCBC contador lido pelo Op50 (sel 0) leitura confirmada; escritor aberto (antes: gEvt_CounterA)
 0x0300649D,gEventCounterB,label,,[FI2] E+0xCBD contador lido pelo Op50 (sel 1) leitura confirmada; escritor aberto (antes: gEvt_CounterB)
-0x030064A0,gEventScriptRuntimeState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state"
+0x030064A0,FieldMenu_ChoiceState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state (antes: gEventScriptRuntimeState)"
 0x030064A1,gEventScriptRuntimeState_vm_substate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030064AA,gEventScriptRuntimeState_queued_action_phases,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -2707,6 +2707,10 @@ address,name,kind,count,comment
 0x08050F40,SceneCommandStep4_WaitTransitionEnd,label,,[SC] [SC] passo 4 (sem funcao): cmd 8 termina; outros esperam 0x08049E08 terminar e devolvem 1
 0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions."
 0x08050F80,Overworld_MapSubstateTable,table,,"[FM] [FM] tabela de 5 sub-estados do mapa (byte 0x03005311); entradas 0x08050F94, 0x08051078, 0x080510C0, 0x0805134C, 0x08051368; handlers sem funcao no Ghidra"
+0x08050F94,Overworld_MapSub0_TileArrive,func_thumb,,[FM2] [FM2] sub 0 do mapa: chegada ao tile; gatilho -> sub 1; senao sub 2 (confirmado no disasm)
+0x08051078,Overworld_MapSub1_WaitObject,func_thumb,,[FM2] [FM2] sub 1 do mapa: espera objeto e avanca para sub 2 (confirmado)
+0x080510C0,Overworld_MapSub2_IdleInput,func_thumb,,"[FM2] [FM2] sub 2 do mapa: controle normal (A, B, R, andar); B novo com E+0xC33 abre ramo de menu (confirmado; nome provavel)"
+0x0805134C,Overworld_MapSub3_WaitScene,func_thumb,,[FM2] [FM2] sub 3 do mapa: espera 0x08049E08(0x7FFF) e vai para sub 4 (confirmado)
 0x08051368,Overworld_UpdateMapSceneStateMachine,func_thumb,,[OW2] maquina de cena do mapa; chama Overworld_ApplyWarpAtCurrentTile em um dos estados (confirmado)
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
 0x08051416,Map_LoadEntitySpawnsForCurrentMap,label,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234) (antes: Map_LoadEntitySpawnsForCurrentMap) (antes: Map_LoadEntitySpawns_GroupLoop)
@@ -2777,6 +2781,11 @@ address,name,kind,count,comment
 0x0805718C,Overworld_InitChoiceMenuScreen,func_thumb,,inicia tela de escolha do overworld; Overworld_CheckStepAllowed por linha; provavel
 0x08057244,Overworld_InitChoiceMenuScreen,func_thumb,,[OW2] monta menu de 4 linhas; CheckStepAllowed(k) == 1 desenha linha ativa (confirmado)
 0x08057440,Map_TickChoiceListOpen,func_thumb,,"[provavel] abre lista de escolha em 0x10 passos (FUN_080492A8 + Map_CreateChoiceSprites); ao fim, GameState_AdvanceSubroutine"
+0x080574D4,FieldMenu_ChoiceSub2_SelectRow,func_thumb,,"[FM2] [FM2] sub 2 do menu de escolha 0x083D5FF4 (Thumb, sem funcao no Ghidra); linha ativa via Overworld_CheckStepAllowed; switch 0..5 pela tabela 0x08057534"
+0x08057534,FieldMenu_RowActionTable,table,,"[FM2] [FM2] tabela do switch de linha: idx0=0x080575D4, idx1=0x0805754C (sub 0x0B), idx2=0x08057564 (sub 0x0D), idx3..5=0x08057570 (sub 0x0F)"
+0x0805754C,FieldMenu_RowAction1_Sub0B,label,,[FM2] [FM2] idx 1 do switch: gamestate_subroutine=0x0B (lido); mapeamento de opcao pendente
+0x08057564,FieldMenu_RowAction2_Sub0D,label,,[FM2] [FM2] idx 2 do switch: gamestate_subroutine=0x0D (lido); mapeamento pendente
+0x08057570,FieldMenu_RowAction3_Sub0F,label,,[FM2] [FM2] idx 3..5 do switch: gamestate_subroutine=0x0F (lido); mapeamento pendente
 0x080575DC,Menu_ChoiceCountdownStep,func_thumb,,provável: contagem regressiva que abre janelas de escolha; jump table final não recuperada
 0x08057AD0,Overworld_FinishTransitionInitCursor,func_thumb,,[FL10] fim da transição: sprite do cursor do mapa (slot 0x7F); estado=2 (provável)
 0x08057B0C,Map_ExitStateDispatchFlow,func_thumb,,saida de tela de mapa: escolhe fluxo 0x41/0x42/0x43 pelo estado +0x65; provavel
