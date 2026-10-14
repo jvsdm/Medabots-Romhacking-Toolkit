@@ -75,6 +75,23 @@ ST/ST2 (scene step blocks), HD (HUD), DB (debug menu), LK (link cable).
    with operand; EC-EF note; FE 1), extract_save.py (parts inventory u16 in the original layout; SV.md),
    extract_events.py (filter chapter/flag; EX.md), C# IsVisibleInChapter (chapter>=16).
 
+
+## Session limit (2026-10-15, overnight run)
+The overnight run stopped on the session limit. Agents that were cut off (relaunch them with the same prompt;
+partial work already committed when there was any):
+- CS2 (overworld sprites: 0x900 block, palettes, +0x2F) - CS2.md partial
+- JT5 (remaining indirect jumps, list in JT4.md "Pendente") - JT5.md partial
+- SV2 (exact save layout; 0x030057D8 conflict) - SV2.md partial
+- DC4 (copy direction: DF_simbolos/R2_simbolos/AI/HA3/SU/HN1/R2 per DC3 "Em aberto")
+- DC5 (flag base 0x030057D8 in HE2/ST2 + save gap for ids 0..15)
+- FM3 (field menu: B opens MainState0 menu1?; table 0x083D5FF4; 4 lines; who writes menu=4)
+- FS (scan the ROM for function starts Ghidra lacks -> FS_lista.txt)
+- VA (scene variants: Op69, block 0x030063F0, E+0xC10)
+- MF3 (final table per Medaforce id; fix MF2 §6)
+- TR (traps/Scout/Conceal/charges)
+- TP (team pick: writer of fi+0x41..43; selection screen)
+The last MedabotsSync from the user: 101 created, 84 renamed, 23 "miolo" (see medabots_sync_log.txt), 0 failed.
+
 ## Key facts (don't rediscover)
 - New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
   0x03000440+0x86. Bot part flag at bot+0x59+0x18*i (i=0..3). gObjectSlots 0x03002C30. Effect mode fi+0x51 (0..3)
