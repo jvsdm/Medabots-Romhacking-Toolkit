@@ -1,0 +1,12 @@
+0x0807C8B0	bios_set_reg_by_id	chute
+0x0807C918	bios_store_idx	chute
+0x0807C950	bios_init_ring	chute
+0x0807C9D8	lib_timer_queue_clear	chute
+0x0807CCC0	bios_cpufastset	semtag
+0x0807CCC4	bios_cpuset	semtag
+0x0807CCC8	bios_div	semtag
+0x0807CCD0	bios_div_ret2	semtag
+0x0807CCD8	bios_lz77_vram	semtag
+0x0807CCDC	bios_lz77_wram	semtag
+0x0807CCE0	bios_objaffineset	semtag
+0x0807CCF0	CallViaR0	semtag
