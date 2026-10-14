@@ -76,21 +76,16 @@ ST/ST2 (scene step blocks), HD (HUD), DB (debug menu), LK (link cable).
    extract_events.py (filter chapter/flag; EX.md), C# IsVisibleInChapter (chapter>=16).
 
 
-## Session limit (2026-10-15, overnight run)
-The overnight run stopped on the session limit. Agents that were cut off (relaunch them with the same prompt;
-partial work already committed when there was any):
-- CS2 (overworld sprites: 0x900 block, palettes, +0x2F) - CS2.md partial
-- JT5 (remaining indirect jumps, list in JT4.md "Pendente") - JT5.md partial
-- SV2 (exact save layout; 0x030057D8 conflict) - SV2.md partial
-- DC4 (copy direction: DF_simbolos/R2_simbolos/AI/HA3/SU/HN1/R2 per DC3 "Em aberto")
-- DC5 (flag base 0x030057D8 in HE2/ST2 + save gap for ids 0..15)
-- FM3 (field menu: B opens MainState0 menu1?; table 0x083D5FF4; 4 lines; who writes menu=4)
-- FS (scan the ROM for function starts Ghidra lacks -> FS_lista.txt)
-- VA (scene variants: Op69, block 0x030063F0, E+0xC10)
-- MF3 (final table per Medaforce id; fix MF2 §6)
-- TR (traps/Scout/Conceal/charges)
-- TP (team pick: writer of fi+0x41..43; selection screen)
-The last MedabotsSync from the user: 101 created, 84 renamed, 23 "miolo" (see medabots_sync_log.txt), 0 failed.
+## State on 2026-10-15 (after relaunching the cut-off agents)
+All of them finished: CS2, JT5, SV2, DC4, DC5, FM3, FS, VA, MF3, TR, TP2 (+ MF4, IV).
+- **PENDING ON THE USER:** run MedabotsSync (creates ~540 functions: FS_lista with 376 starts found by a ROM scan +
+  EXTRA/TL/FM/TP lists) and delete the function at 0x08000000 by hand.
+- **Next round (after the sync):** document the ~400 new functions from FS_lista.txt (split into lists of ~40, one
+  Haiku agent per list, like FL1..FL10). Then: field-menu screen on B (FM3), 4 lines k -> option, team pick (TP2:
+  needs the emulator), Scout/Conceal (TR), writer of E+0xC28 (VA).
+- **PC bugs found (do not fix during discovery):** extract_save.py inventory (IV.md §3), extract_music.py (SN2),
+  extract_events.py 0x7D=2 bytes (E2F), save does not cover event flags 0..15 (SV2, possible game bug).
+- Validation in the emulator: list in INDEX.md "Abertos importantes".
 
 ## Key facts (don't rediscover)
 - New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
