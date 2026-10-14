@@ -455,7 +455,7 @@ address,name,kind,count,comment
 0x08003018,Menu_TickSlideInPanelFade,func_thumb,,"[provavel] fade de paleta A/B + copia de retangulo do mapa com offset; timer +0x88, passo +0x84, estado +0x8E"
 0x08003104,Menu_AnimateRevealRows,func_thumb,,provável: revela linhas em passos e monta números/texto da tela
 0x08003300,Screen_LoadSpriteRowA,func_thumb,,"[FR3] [FR3] decompress_and_store + 2 registros OBJ em x=0x88, y=8+0x10*byte[0x8E] + Slot_SetupFromRecordList (provavel)"
-0x08003374,MainState0_Menu2_Dispatch,func_thumb,,[FM4] [FM4] despachante do menu 2 de MainState0 (MEDAWATCH): CallViaR0 de 0x083AC454[gamestate_subroutine]; sem nome no Ghidra antes
+0x08003374,PartScreen_DispatchSubstate,func_thumb,,[FM4] [FM4] despachante do menu 2 de MainState0 (MEDAWATCH): CallViaR0 de 0x083AC454[gamestate_subroutine]; sem nome no Ghidra antes (antes: MainState0_Menu2_Dispatch)
 0x08003394,MainState0_Menu2_Sub0_InitBg,func_thumb,,"[FL10] entrada de tela: limpa pares, REG_DISPCNT, 3 camadas BG, liga display 0x1F60 (antes: Gfx_InitBgLayersAndEnableDisplay)"
 0x080034A4,PartScreen_FadeInPalettesStep,func_thumb,,[FS1] [confirmado código / tabela provável] fade 9 passos A/B; ao fim FUN_0800393C; tabela 0x083AC458
 0x08003504,PartScreen_HandleCursorInputStep,func_thumb,,[FS1] [provável] navega indice +0x8F 0..2 com SFX; botoes avancam sub-estado; mapa de bits provável
@@ -805,17 +805,53 @@ address,name,kind,count,comment
 0x08010A20,Tile_ResetBlendAndClearSlots,func_thumb,,"[provavel] SetGpuBlendMode(0,0,0), 2x FillRect16, Tile_ClearSlots"
 0x08010A7C,Overworld_ReloadMapSceneAndAdvanceGameState,func_thumb,,"Simon/Rokusho: Reload the current map scene for a scripted/game-state transition, refresh map rendering, create the player object sprite, clear the transition latch, and advance the owning game-state subroutine."
 0x08010AC8,Gfx_PaletteFadeStep,func_thumb,,fade de paleta por contador ctx+0x84 (provavel)
+0x08010B24,Fight_ResetPartStateBlock,func_thumb,,"[FS4] [FS4] zera bloco 0x03000490, cena 0x03002B8C=3, GS=0; tabela 0x083ACEB0; provavel (sentido do reset nao)"
 0x08010B54,Battle_GaugeTickStep,func_thumb,,barra que conta ate alvo + musica 0xE/0xF; provavel
+0x08010BA0,Fight_BranchFlagAdvanceGS,func_thumb,,[FS4] [FS4] fight+0x9C==1 -> GS+1 senao GS=0x70; tabela 0x083ACEF4; provavel
 0x08010BD0,Fight_ShowPostBattleTextForCharacter,func_thumb,,"[TX] GH-TX: mesmo padrao do PRE, com gTextPostBattleMessage[character_id] e StateMachine_DispatchStep 0x0803FB3C. Sem funcao no Ghidra; nome provavel"
+0x08010C28,Fight_WaitSubBThenAdvanceGS,func_thumb,,[FS4] [FS4] DispatchSubB; ao terminar GS+1; tabela 0x083ACEFC; confirmado fluxo
 0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,,Simon/Rokusho: Post-battle reward handler keyed by gPostBattleModeFlags low nibble. Low nibble 0 runs the normal reward grant path; nonzero clears the mode byte and jumps directly to subroutine 0x3E.
 0x08010CCA,Fight_RewardAddsPartToInventory_Call,label,,[IN] [IN] chamada Inv_AddCountClamp99 no fim da recompensa de batalha
+0x08010CE8,Fight_CopyPartGfxPtrsThenAdvanceGS,func_thumb,,[FS4] [FS4] copia 14B/15B de tabelas ROM por ctx+0x168/169; tabelas 0x083ACF04 e 0x083AD004; provavel
+0x08010D58,Fight_RunSubStep1ACTimer,func_thumb,,[FS4] [FS4] DispatchStep ROM 0x083C6744+0x1AC; ctx+0x16A==0 -> GS=0x3C senao GS+1; tabela 0x083ACF08; provavel
+0x08010DAC,Fight_InitPartSpriteEntry,func_thumb,,"[FS4] [FS4] decompress 0x084D923C->VRAM 0x06012400, DMA3 pal 0x05000340, init 0x03002C30, sfx 0x2A; tabela 0x083ACF0C; provavel"
+0x08010E50,Fight_AdvanceSlotYWaveStep,func_thumb,,"[FS4] [FS4] Fight_AdvanceSlotYByWaveTable(1,0); ao terminar GS+1; tabela 0x083ACF10; confirmado fluxo"
+0x08010E7C,Fight_InitIndicatorSpriteEntry,func_thumb,,"[FS4] [FS4] decompress 0x084D9350->VRAM 0x06016C00, DMA3 0x05000360, init 0x03002C30+0x80; tabela 0x083ACF14; provavel"
+0x08010F08,Fight_WaitAorBOrStartInput,func_thumb,,[FS4] [FS4] byte 0x0300058C &3 -> GS+1 (SFX 0xD); &8 -> GS=0x60; tabela 0x083ACF18; provavel (mapa de teclas nao testado)
+0x08010F6C,Fight_WaitCtxFlagOrJumpGS40,func_thumb,,[FS4] [FS4] ctx+0x01==0 -> GS=0x40 senao reset+GS+1; tabela 0x083ACF1C; provavel
+0x08010FA4,Fight_RunSubStep1D8AddCounter,func_thumb,,"[FS4] [FS4] DispatchStep ROM+0x1D8; Map64_AddCountClamp99(0x32,1); GS+1; tabela 0x083ACF20; provavel"
+0x08010FDC,Fight_RefreshDisplayFormatNumStep,func_thumb,,[FS4] [FS4] RefreshBotDisplayState + formata ctx+0x16C em 6 glifos (buffer 0x030004DE); GS+1; tabela 0x083ACF24; provavel
+0x08011018,Fight_RunSubStep1B4ThenAdvance,func_thumb,,[FS4] [FS4] DispatchStep ROM+0x1B4; GS+1; tabela 0x083ACF28; provavel
+0x08011048,Fight_AwardPartExpThenAdvance,func_thumb,,[FS4] [FS4] Fight_AwardPartExperience; ctx+0x186=0; GS+1; tabela 0x083ACF2C; confirmado fluxo
+0x08011078,Fight_CyclePartFrameTableA,func_thumb,,[FS4] [FS4] indice ctx+0x186 (0..3) sobre tabela 8B em ctx+0x16E; snd_song 0x10; tabela 0x083ACF30; provavel
+0x080110FC,Fight_RunSubStep1DCThenAdvance,func_thumb,,[FS4] [FS4] DispatchStep ROM+0x1DC; GS+1; tabela 0x083ACF34; provavel
+0x0801112C,Fight_IncPartIndexSetGS43,func_thumb,,[FS4] [FS4] ctx+0x186+=1; GS=0x43; tabela 0x083ACF38; confirmado escritas
+0x08011158,Fight_CyclePartFrameTableB,func_thumb,,[FS4] [FS4] como 0x08011078 com tabela em ctx+0x174; idx==3 -> GS=0x4B; tabela 0x083ACF40; provavel
+0x0801120C,Fight_RunSubStep1E0ThenAdvance,func_thumb,,[FS4] [FS4] DispatchStep ROM+0x1E0; GS+1; tabela 0x083ACF44; provavel
+0x0801123C,Fight_IncPartIndexSetGS47,func_thumb,,[FS4] [FS4] ctx+0x186+=1; GS=0x47; tabela 0x083ACF48; confirmado escritas
+0x08011268,Fight_CyclePartIndexSetGS58,func_thumb,,[FS4] [FS4] idx ctx+0x186==3 -> GS=0x58; senao tabela ctx+0x16F; tabela 0x083ACF50; provavel
+0x080112C4,Fight_CommitPaletteClearFlag,func_thumb,,[FS4] [FS4] CopyPaletteBuffersToHardware; fight+0x84=0; GS+1; tabela 0x083ACF54; confirmado fluxo
+0x080112F0,Fight_FadeRowsToColorStepA,func_thumb,,"[FS4] [FS4] fade A/B cor 0xFFFF, fight+0x84 ate 9; GS+1; tabela 0x083ACF58; provavel"
 0x08011344,Scene_InitBgAndLoadRecord,func_thumb,,reset de BG e cópia de registro de 4 bytes; provável (registro não identificado)
 0x08011490,Fight_MedalStageUpSeqStep,func_thumb,,[XP] provavel: le flag de estagio fi+0x16F+8*cnt (cnt=fi+0x186); grava 0x4E em 0x0300137C; cnt==3 -> 0x5B (nome provisorio)
+0x080114E0,Fight_FadeOutSoundStep,func_thumb,,[FS4] [FS4] snd_fade_request(8); GS+1; tabela 0x083ACF84; provavel
 0x08011500,Gfx_ResetBgLayersAndSong,func_thumb,,"pede musica 1, limpa tiles/slots e mapas BG0-BG3; provavel"
+0x080115B4,Fight_CommitPaletteOscStep,func_thumb,,[FS4] [FS4] draw+osc+CopyPalette; fight+0x84=0; GS+1; tabela 0x083ACFA4; confirmado fluxo
+0x080115E8,Fight_FadeRowsUpStep,func_thumb,,[FS4] [FS4] fade A/B cor 0xFFFF ate 9 com draw; GS+1; tabela 0x083ACFA8; provavel (antes sem funcao no FS.md)
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
+0x080116C4,Fight_InitPartStateSetGS10,func_thumb,,"[FS4] [FS4] clear slots/objetos, fight+0x3C 0x14B, cena 0x03002B8C=5, GS=0x10; tabela 0x083ACFB0; provavel"
 0x08011764,Fight_InitBotPartPanel,func_thumb,,provável: monta painel de peças do bot na luta
+0x08011A58,Fight_FadeRowsDownStep,func_thumb,,"[FS4] [FS4] fade inverso linhas 0x20-4*cnt, cor 0xFFFF; GS+1; tabela 0x083ACFBC; provavel"
+0x08011ABC,Fight_DrawOscSetGS3D,func_thumb,,[FS4] [FS4] draw+osc; GS=0x3D; tabela 0x083ACFC0; provavel
+0x08011ADC,Fight_RunSubStep1B8ThenAdvance,func_thumb,,[FS4] [FS4] DispatchStep ROM+0x1B8; fight+0x1B=0; GS+1; tabela 0x083ACFE4; provavel
+0x08011B18,Fight_WaitSubBFlagOrJumpGS77,func_thumb,,[FS4] [FS4] DispatchSubB; byte 0x030057E0+0xC2F==0 -> GS=0x77 senao GS+1; tabela 0x083ACFE8; provavel
+0x08011B5C,Fight_FadeRowsToWhiteStep,func_thumb,,"[FS4] [FS4] fade A/B com 0x7FFF/0xFFFF, fight+0x84 ate 9; GS+1; tabela 0x083ACFF4; provavel (0x7FFF=branco e inferencia)"
 0x08011BB8,Gfx_ResetScreenBgAndBlend,func_thumb,,"[FL10] reset de tela: limpa slots, 4 mapas BG, SetGpuBlendMode(3,0x3F,0x20)"
 0x08011C44,Gfx_ResetScreenBgAndBlend,label,,"[BT2] [GH-BT2] grava gamestate_menu=8 (literal 0x08011C80) e 2 em 0x08011C7C; escritor provavel de menu=8, chamador nao achado"
+0x08011C88,Fight_AssignRandomPartSlotStep,func_thumb,,"[FS4] [FS4] se byte 0x030057E0+0xC2E&0xF==0: slot aleatorio + Tinpet_ActivateMatchingEntry, GS+1; senao GS=0x40; tabela 0x083AD000; provavel"
+0x08011CFC,Fight_RunSubStep1B0ThenAdvance,func_thumb,,"[FS4] [FS4] DispatchStep ROM+0x1B0; (0x0300058C&3) -> zera 0x03000430, sfx 0xD, GS+1; tabela 0x083AD008; provavel"
+0x08011D50,Fight_CheckPartTableEmptyStep,func_thumb,,[FS4] [FS4] Count_Entries3InTable9==0 -> reset+GS+1 senao GS=0x40; tabela 0x083AD00C; provavel
+0x08011D80,Fight_RunSubStep1BCSetGS72,func_thumb,,[FS4] [FS4] DispatchStep ROM+0x1BC; GS=0x72; tabela 0x083AD010; provavel
 0x08011DB0,Fight_BeginEncounterTemplateSelection,func_thumb,,[R0] prepara escolha de template do encontro (provavel)
 0x08011DE4,Fight_CopyEncounterTemplateEntry,func_thumb,,[R0] copia 2 bytes para entrada de template (provavel)
 0x08011E20,Fight_SelectTemplateForCurrentEncounter,func_thumb,,"Simon/Rokusho: Selects the active FightTemplate for the current encounter, copies it into fight_information.template, and if template_flags == 0 rerolls each bot's head/right/left/legs part ids. The bot loop indexes the copied template as raw bytes because the code memcpy's the 0x28-byte template into RAM first; offsets +4..+7 within each 0x0C bot record are the four part ids, not stat_nibbles_packed."
@@ -851,6 +887,8 @@ address,name,kind,count,comment
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
 0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos"
 0x08012B94,Battle_CpuActionSelectStep,func_thumb,,[AI2] [AI2] entrada 3 da tabela de cena 0x083AD080 (GS=0x0300137C). Corpo: bl 0x080196C0; se byte 0x030004C9==1 pula; senao Fight_SelectActionsForBotGroup(3); GS++. Sem funcao no Ghidra ainda: ver AI2_lista.txt
+0x08012BC0,Fight_DrawBotsOverlayStep,func_thumb,,[FS4] [FS4] Fight_DrawActiveBotsOverlay + FUN_08016370(ctx+0x80); GS+1; tabela 0x083AD090; provavel
+0x08012BE4,Fight_AnimSpriteGroupStep,func_thumb,,[FS4] [FS4] overlay + Fight_UpdateSpriteGroupMoveAnim(ctx+0x80); retorno!=0 -> GS+1; tabela 0x083AD094; provavel
 0x08012C0C,Fight_SetupEntryScreenStep,func_thumb,,[FS5] [FS5] entrada i=6 da tabela GS 0x083AD080; setup da tela de entrada do bot; provavel
 0x08012C64,Fight_BotSelectMenuFrame,func_thumb,,frame do menu de selecao de bot; cursor +0x80; provavel
 0x08012D98,Fight_EntryMotionWaitStep,func_thumb,,[FS5] [FS5] i=8; anima entrada ate contador 0x14; provavel
@@ -2523,6 +2561,7 @@ address,name,kind,count,comment
 0x08043E78,Obj_StepAccumMoveB,func_thumb,,[R2] revisto CH2: provável; mesma lógica da A para o objeto B (campos +0x74..+0x7B); renomeado de FUN_08043e78
 0x08043F9C,FxBlend_ApplyFromObjB,func_thumb,,[R2a] R2a: igual a FxBlend_ApplyFromObjA para o objeto B (+0x77..+0x79)
 0x08044094,Anim_SetDefaultTimers,func_thumb,,"[R2a] R2a: grava 1,1,7 em tres bytes globais de animacao"
+0x08044098,Anim_SetDefaultTimers,func_thumb,,[FM5] gMainState=1 menu=1 sub=7; chamado no fim do sub 3 da tela de B (confirmado)
 0x080440B4,Count_Entries3InTable9,func_thumb,,[R2a] R2a: conta entradas com byte 3 em 9 registros de 8 bytes
 0x080440D4,Check_PairsAllEqual,func_thumb,,[R2a] R2a: 1 se todos os pares de bytes consecutivos sao iguais
 0x08044100,Obj_StepAccumMoveBThenSync,func_thumb,,[FS7] [FS7] Obj_StepAccumMoveB (0x08043E78) e FUN_08043FEC com byte +0x38; provavel
@@ -3214,7 +3253,7 @@ address,name,kind,count,comment
 0x0805D674,Screen_TickFadeOutAndClear,func_thumb,,"[provavel] fade de paleta em 9 passos (ctx+0x84), limpa VRAM 0x06000000, FUN_080476E8(4)"
 0x0805D6E4,Obj_SetAttrFromTable,func_thumb,,[R3] atributo de objeto por tabela de 4 (provavel)
 0x0805D704,MainState2_Menu5_Dispatch,func_thumb,,"chama handler por estado, avanca posicao, Obj_SetAttrFromTable; provavel (antes: Obj_UpdateFrameAndSetAttr)"
-0x0805D750,MainState2_Menu5_Sub0_ClearBuffer,func_thumb,,[provavel] cpufastset zero + Clear4PairsHalfwords; REG_DISPCNT=0x160; contador++ (antes: Screen_ClearBufferAndResetDispcnt)
+0x0805D750,Screen_ClearBufferAndResetDispcnt,func_thumb,,[provavel] cpufastset zero + Clear4PairsHalfwords; REG_DISPCNT=0x160; contador++ (antes: Screen_ClearBufferAndResetDispcnt) (antes: MainState2_Menu5_Sub0_ClearBuffer)
 0x0805D790,Screen_InitLZ77TileBlocks,func_thumb,,provável: inicializa tela com blocos LZ77 e asset
 0x0805D860,Stats_DrawSummaryScreen,func_thumb,,"[FL10] tela de resumo: conta peças (bit 0x80), inventário, tempo (h/min via /0xE10 e /0x3C) (provável)"
 0x0805DA14,Gfx_FadeInStepAndEnableBg,func_thumb,,fade de entrada em 9 passos e liga BG em REG_DISPCNT; provavel
@@ -3474,7 +3513,7 @@ address,name,kind,count,comment
 0x0806AA10,Battle_AdvanceBotPartTimerByTable,func_thumb,,[FS9] provavel: avanca +0x1A do bot por tabela; chamado pelo BL de 0x08069212 (FN3 tinha o mesmo nome)
 0x0806ADB0,Battle_UpdateCompositeBotMotion,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
 0x0806B01C,slots_move_group3,func_thumb,,"[R4] R4: move 3 slots grupo, limite -15 em y; provavel"
-0x0806B0D4,slots_update_anim,func_thumb,,[R4] R4: loop de 20 slots com frame e reinicio; provavel
+0x0806B0D4,BotAnim_TickStageCallbacksAll,func_thumb,,[R4] R4: loop de 20 slots com frame e reinicio; provavel (antes: slots_update_anim)
 0x0806B2F4,Obj_UpdateSlotPosition,func_thumb,,[provavel] object slot velocity and screen position update
 0x0806B4A4,scroll_tick_flag,func_thumb,,[R4] R4: contador de rolagem por bit 0; chute
 0x0806B4C8,slots_advance_anim,func_thumb,,"[R4] R4: animacao de slot por tabela (duracao,proximo,frame); provavel"

@@ -72,7 +72,7 @@ F	0x08002F70	Map_EnterSceneSetup
 F	0x08003018	Menu_TickSlideInPanelFade
 F	0x08003104	Menu_AnimateRevealRows
 F	0x08003300	Screen_LoadSpriteRowA
-F	0x08003374	MainState0_Menu2_Dispatch
+F	0x08003374	PartScreen_DispatchSubstate
 F	0x08003394	MainState0_Menu2_Sub0_InitBg
 F	0x080034A4	PartScreen_FadeInPalettesStep
 F	0x08003504	PartScreen_HandleCursorInputStep
@@ -422,17 +422,53 @@ F	0x080109CC	Fight_BotPartSelect_FadeRowsStep
 F	0x08010A20	Tile_ResetBlendAndClearSlots
 F	0x08010A7C	Overworld_ReloadMapSceneAndAdvanceGameState
 F	0x08010AC8	Gfx_PaletteFadeStep
+F	0x08010B24	Fight_ResetPartStateBlock
 F	0x08010B54	Battle_GaugeTickStep
+F	0x08010BA0	Fight_BranchFlagAdvanceGS
 F	0x08010BD0	Fight_ShowPostBattleTextForCharacter
+F	0x08010C28	Fight_WaitSubBThenAdvanceGS
 F	0x08010C50	Fight_HandleRewardGrantOrSkipByPostBattleFlags
 L	0x08010CCA	Fight_RewardAddsPartToInventory_Call
+F	0x08010CE8	Fight_CopyPartGfxPtrsThenAdvanceGS
+F	0x08010D58	Fight_RunSubStep1ACTimer
+F	0x08010DAC	Fight_InitPartSpriteEntry
+F	0x08010E50	Fight_AdvanceSlotYWaveStep
+F	0x08010E7C	Fight_InitIndicatorSpriteEntry
+F	0x08010F08	Fight_WaitAorBOrStartInput
+F	0x08010F6C	Fight_WaitCtxFlagOrJumpGS40
+F	0x08010FA4	Fight_RunSubStep1D8AddCounter
+F	0x08010FDC	Fight_RefreshDisplayFormatNumStep
+F	0x08011018	Fight_RunSubStep1B4ThenAdvance
+F	0x08011048	Fight_AwardPartExpThenAdvance
+F	0x08011078	Fight_CyclePartFrameTableA
+F	0x080110FC	Fight_RunSubStep1DCThenAdvance
+F	0x0801112C	Fight_IncPartIndexSetGS43
+F	0x08011158	Fight_CyclePartFrameTableB
+F	0x0801120C	Fight_RunSubStep1E0ThenAdvance
+F	0x0801123C	Fight_IncPartIndexSetGS47
+F	0x08011268	Fight_CyclePartIndexSetGS58
+F	0x080112C4	Fight_CommitPaletteClearFlag
+F	0x080112F0	Fight_FadeRowsToColorStepA
 F	0x08011344	Scene_InitBgAndLoadRecord
 F	0x08011490	Fight_MedalStageUpSeqStep
+F	0x080114E0	Fight_FadeOutSoundStep
 F	0x08011500	Gfx_ResetBgLayersAndSong
+F	0x080115B4	Fight_CommitPaletteOscStep
+F	0x080115E8	Fight_FadeRowsUpStep
 F	0x08011644	Fx_InitBlendTableAndTick
+F	0x080116C4	Fight_InitPartStateSetGS10
 F	0x08011764	Fight_InitBotPartPanel
+F	0x08011A58	Fight_FadeRowsDownStep
+F	0x08011ABC	Fight_DrawOscSetGS3D
+F	0x08011ADC	Fight_RunSubStep1B8ThenAdvance
+F	0x08011B18	Fight_WaitSubBFlagOrJumpGS77
+F	0x08011B5C	Fight_FadeRowsToWhiteStep
 F	0x08011BB8	Gfx_ResetScreenBgAndBlend
 L	0x08011C44	Gfx_ResetScreenBgAndBlend_08011C44
+F	0x08011C88	Fight_AssignRandomPartSlotStep
+F	0x08011CFC	Fight_RunSubStep1B0ThenAdvance
+F	0x08011D50	Fight_CheckPartTableEmptyStep
+F	0x08011D80	Fight_RunSubStep1BCSetGS72
 F	0x08011DB0	Fight_BeginEncounterTemplateSelection
 F	0x08011DE4	Fight_CopyEncounterTemplateEntry
 F	0x08011E20	Fight_SelectTemplateForCurrentEncounter
@@ -468,6 +504,8 @@ L	0x080129F2	Fight_SetupBattleBotStates_080129F2
 F	0x08012A20	Fight_PartPanelStep
 F	0x08012B40	Gfx_FadeStepPaletteRows
 F	0x08012B94	Battle_CpuActionSelectStep
+F	0x08012BC0	Fight_DrawBotsOverlayStep
+F	0x08012BE4	Fight_AnimSpriteGroupStep
 F	0x08012C0C	Fight_SetupEntryScreenStep
 F	0x08012C64	Fight_BotSelectMenuFrame
 F	0x08012D98	Fight_EntryMotionWaitStep
@@ -2139,6 +2177,7 @@ F	0x08043E54	Obj_CopySlot8Bytes
 F	0x08043E78	Obj_StepAccumMoveB
 F	0x08043F9C	FxBlend_ApplyFromObjB
 F	0x08044094	Anim_SetDefaultTimers
+F	0x08044098	Anim_SetDefaultTimers_08044098
 F	0x080440B4	Count_Entries3InTable9
 F	0x080440D4	Check_PairsAllEqual
 F	0x08044100	Obj_StepAccumMoveBThenSync
@@ -2830,7 +2869,7 @@ F	0x0805D658	StateTable_WaitSubThenAdvance_B
 F	0x0805D674	Screen_TickFadeOutAndClear
 F	0x0805D6E4	Obj_SetAttrFromTable
 F	0x0805D704	MainState2_Menu5_Dispatch
-F	0x0805D750	MainState2_Menu5_Sub0_ClearBuffer
+F	0x0805D750	Screen_ClearBufferAndResetDispcnt
 F	0x0805D790	Screen_InitLZ77TileBlocks
 F	0x0805D860	Stats_DrawSummaryScreen
 F	0x0805DA14	Gfx_FadeInStepAndEnableBg
@@ -3090,7 +3129,7 @@ F	0x0806A748	Battle_EmitBotSpritesInDepthOrder
 F	0x0806AA10	Battle_AdvanceBotPartTimerByTable
 F	0x0806ADB0	Battle_UpdateCompositeBotMotion
 F	0x0806B01C	slots_move_group3
-F	0x0806B0D4	slots_update_anim
+F	0x0806B0D4	BotAnim_TickStageCallbacksAll
 F	0x0806B2F4	Obj_UpdateSlotPosition
 F	0x0806B4A4	scroll_tick_flag
 F	0x0806B4C8	slots_advance_anim
@@ -3829,44 +3868,6 @@ C	0x08004A78
 C	0x08007584
 C	0x08007998
 C	0x08007DDC
-C	0x08010B24
-C	0x08010BA0
-C	0x08010C28
-C	0x08010CE8
-C	0x08010D58
-C	0x08010DAC
-C	0x08010E50
-C	0x08010E7C
-C	0x08010F08
-C	0x08010F6C
-C	0x08010FA4
-C	0x08010FDC
-C	0x08011018
-C	0x08011048
-C	0x08011078
-C	0x080110FC
-C	0x0801112C
-C	0x08011158
-C	0x0801120C
-C	0x0801123C
-C	0x08011268
-C	0x080112C4
-C	0x080112F0
-C	0x080114E0
-C	0x080115B4
-C	0x080115E8
-C	0x080116C4
-C	0x08011A58
-C	0x08011ABC
-C	0x08011ADC
-C	0x08011B18
-C	0x08011B5C
-C	0x08011C88
-C	0x08011CFC
-C	0x08011D50
-C	0x08011D80
-C	0x08012BC0
-C	0x08012BE4
 C	0x080140B0
 C	0x08033C10
 C	0x08033CF0
@@ -3960,6 +3961,7 @@ C	0x0806B134
 C	0x0806B1FC
 C	0x0806B248
 C	0x0806B3D8
+C	0x0806B484
 C	0x0806BB24
 C	0x0806BB44
 C	0x0806BB64
