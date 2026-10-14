@@ -110,6 +110,7 @@ address,name,kind,count,comment
 0x03001968,won_bodypart_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03001969,won_bodypart_id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03002420,current_shop,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03002430,SND_Driver,data,,[SN] estado do driver de som (apontado por [0x03007014]); trilhas em +k*0x74
 0x03002B64,gKeysHeld,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: held_buttons)"
 0x03002B70,SAVE_HEADER_RAM,data,,"[SV] [SV] 28 B: money u32, nome 16 B em +4, total u16, vitorias u16, tempo u32 quadros (confirmado por literal; nomes provaveis)"
 0x03002B74,SAVE_PLAYER_NAME,data,,"[SV] [SV] nome 16 B, 0xFE = fim/vazio (confirmado pelo ReadVerify e ClearAndRetryLoad)"
@@ -196,6 +197,7 @@ address,name,kind,count,comment
 0x03006D3A,gWalkSpeedMul,data,,[OW] RAM byte: multiplicador do passo (provavel corrida)
 0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03007014,SND_DriverPtr,data,,[SN] ponteiro para o driver de som
 0x03007F00,sp_usr,label,,stack do modo System
 0x03007FA0,sp_irq,label,,stack do modo IRQ
 0x03007FFC,INTR_VECTOR,label,,endereco do IntrMain
@@ -350,14 +352,14 @@ address,name,kind,count,comment
 0x08005B44,PartSlot_LoadIconPalette,func_thumb,,[R0] copia paleta 0x20 B e FUN_08042698 (provavel) (antes: carrega_paleta_icone_b)
 0x08005BB4,PartSlot_DrawNumber3,func_thumb,,[R0] texto/rotulo de parte via FUN_080426F0 (provavel) (antes: desenha_texto_parte_a)
 0x08005C10,PartSlot_DrawNameLabel,func_thumb,,[R0] icone de parte 0x14x10 (provavel) (antes: desenha_icone_d)
-0x08005C9C,desenha_icone_e,func_thumb,,[R0] indicador de parte +0x98 (provavel)
+0x08005C9C,PartSlot_DrawNameLabelKind0,func_thumb,,[R0] indicador de parte +0x98 (provavel) (antes: desenha_icone_e)
 0x08005D1C,Parts_DrawStatsPanel,func_thumb,,Simon/Rokusho: Update the head-part UI marker based on whether the selected head part's RomPartRecord.attribute_id matches the currently selected medal's required/compatible attribute. (antes: PartDetail_UpdateHeadAttributeMatchMarker) (antes: desenha_stats_parte)
-0x08005E00,desenha_icone_f,func_thumb,,[R0] icone de parte por byte +0x99 (provavel)
-0x08005E84,desenha_stats_parte_b,func_thumb,,[R0] stats da peca id +0x99 modo 1 via GetPartStats (provavel)
-0x08005F68,desenha_icone_g,func_thumb,,[R0] icone de parte por +0x9A (provavel)
-0x08005FEC,desenha_stats_parte_c,func_thumb,,[R0] stats da peca id +0x9A modo 2 via GetPartStats (provavel)
-0x080060D0,desenha_icone_h,func_thumb,,[R0] icone de parte por +0x9B (provavel)
-0x08006154,desenha_stats_parte_d,func_thumb,,Simon/Rokusho: Update the legs-part UI marker based on whether the selected legs part's RomPartRecord.attribute_id matches the currently selected medal's required/compatible attribute. (antes: PartDetail_UpdateLegsAttributeMatchMarker)
+0x08005E00,PartSlot_DrawNameLabelKind1,func_thumb,,[R0] icone de parte por byte +0x99 (provavel) (antes: desenha_icone_f)
+0x08005E84,PartSlot_DrawStatsPanelKind1,func_thumb,,[R0] stats da peca id +0x99 modo 1 via GetPartStats (provavel) (antes: desenha_stats_parte_b)
+0x08005F68,PartSlot_DrawNameLabelKind2,func_thumb,,[R0] icone de parte por +0x9A (provavel) (antes: desenha_icone_g)
+0x08005FEC,PartSlot_DrawStatsPanelKind2,func_thumb,,[R0] stats da peca id +0x9A modo 2 via GetPartStats (provavel) (antes: desenha_stats_parte_c)
+0x080060D0,PartSlot_DrawNameLabelKind3,func_thumb,,[R0] icone de parte por +0x9B (provavel) (antes: desenha_icone_h)
+0x08006154,PartSlot_DrawStatsPanelKind3,func_thumb,,Simon/Rokusho: Update the legs-part UI marker based on whether the selected legs part's RomPartRecord.attribute_id matches the currently selected medal's required/compatible attribute. (antes: PartDetail_UpdateLegsAttributeMatchMarker) (antes: desenha_stats_parte_d)
 0x08006238,estilo_linha_stats_9,func_thumb,,[R0] cor da linha de stats camada 9 (provavel)
 0x08006284,estilo_linha_stats_B,func_thumb,,[R0] cor da linha de stats camada B (provavel)
 0x080062D0,estilo_linha_stats_D,func_thumb,,[R0] cor da linha de stats camada D (provavel)
@@ -591,6 +593,7 @@ address,name,kind,count,comment
 0x08013824,Fight_InitActionSlotSelect,func_thumb,,provável: inicializa bloco de seleção de ação do bot
 0x0801387C,Dispatch_ByteStateIndexTable,func_thumb,,"[FL10] despachante por byte de estado (<=5), tabela de 6 ponteiros; subsistema não confirmado (provável)"
 0x080138A8,Dispatch_ByteStateIndexTable_Table,data,,[JT2] [GH-JT2] 6 ponteiros thumb (sem bit) para os cases 0..5 do despachante 0x0801387C; indice = byte 0x03000579 (0x03000440+0x139); gemeo do J_02 (JT.md)
+0x08013904,Dispatch_ByteStateIndexTable,func_thumb,,"[BT] indice = byte 0x03000579 (cena 0..5), tabela 0x080138A8; confirmado (decompile, JT2)"
 0x08013AE4,Fight_MarkSelectedOptionFrame,func_thumb,,menu de 3 opcoes: OR de bit no +0x44 pelo cursor; provavel
 0x08013B8C,Fight_BattleSceneInit,func_thumb,,inicializa a cena de luta e desenha a UI (provavel)
 0x08013E30,UpdateSelectedMedabotPreviewScreen,func_thumb,,"Simon/Rokusho: Selected-Medabot/Medawatch full preview update loop. Refreshes the preview renderer, responds to button state, updates displayed part ids, and redraws both the small and large selected-bot previews for the current cursor position."
@@ -2149,7 +2152,7 @@ address,name,kind,count,comment
 0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
 0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
 0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area."
-0x0804842C,Overworld_ApplyMapSceneModePolicy,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling.
+0x0804842C,SND_PolicyRequest,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling. (antes: Overworld_ApplyMapSceneModePolicy)
 0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,,Simon/Rokusho: Load the palette set used by event objects / overworld NPC sprites for the current map. Resolves the per-slot sprite palette ids for the current map and copies each palette block into the shared object palette staging area.
 0x080487C8,Map_ResetObjectField0B,func_thumb,,[HE4] objeto+0xB = 0xFF/0/0x40 pela tabela do tipo; usado pelo 0x83
 0x08048830,Overworld_ResetMapSceneBlendState,func_thumb,,Simon/Rokusho: Reset the map-scene blend registers and cached screen-transition blend coefficients before showing the rebuilt overworld scene.
@@ -2964,10 +2967,13 @@ address,name,kind,count,comment
 0x08072910,snd_cmd_note,func_thumb,,SND12: nota = byte (MIDI; 0x24=C2). Le duracao no byte seguinte (dur = b+1 + FA<<8 ticks; 1 tick = 1 quadro). key = nota + transpose(track+0x6A) - 0x24; freq = snd_freq_lookup(key). Modo track+0x63==0 (FE) e o normal
 0x08072AC0,snd_cmd_rest,func_thumb,,SND12: pausa de (byte+1) ticks; track+0x28 = contador; flags |= 0x52
 0x08072AFC,snd_cmd_volume,func_thumb,,"SND12: Dn -> track+0x65 e +0x66 = n (0..15). Confirmado: f3500 k0=D4 -> 65=04, k1=D9 -> 09, k2=DB -> 0B, k8/k9=DF -> 0F"
+0x08072B18,snd_cmd_E1_set_track_2c,func_thumb,,[SN] E1 xx: track+0x2C=xx (renomeado nesta rodada)
+0x08072B20,snd_cmd_E2_set_track_69,func_thumb,,[SN] E2 xx: track+0x69=xx; flags 0x51 (renomeado nesta rodada)
 0x08072B34,snd_cmd_voice,func_thumb,,SND12: E3 xx -> track+0x67 = xx (flag 0x20). Em k8/k9 (PCM) xx=3A/45 bate com indice de amostra (SND10). GUESS: voz/amostra
 0x08072B50,snd_set_voice,func_thumb,,[R4] R4: grava voz/amostra do canal em +0x67 e marca flag 4; provavel
 0x08072B64,snd_cmd_transpose,func_thumb,,"SND12: E8 xx -> track+0x6A (signed), somado a nota antes do freq (key = n + xx - 0x24). Confirmado no codigo"
 0x08072B74,snd_cmd_E9,func_thumb,,"SND12: E9 xx -> track+0x6B = min(xx,0x30). GUESS: volume/expressao"
+0x08072B90,snd_cmd_EA_set_track_6f,func_thumb,,[SN] EA xx: track+0x6F=xx; flag 0x40 (renomeado nesta rodada)
 0x08072BAC,snd_cmd_EB,func_thumb,,SND12: EB -> track+0x4C += 1. GUESS: contador
 0x08072BB8,snd_cmd_loop_start,func_thumb,,SND12: F0 n -> track+0x52 = n; track+0x18 = cursor (inicio de laco 1)
 0x08072BCC,snd_cmd_loop_end,func_thumb,,SND12: F1 -> --track+0x52; se != 0 cursor = track+0x18 (fim de laco 1)
@@ -3157,6 +3163,10 @@ address,name,kind,count,comment
 0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
 0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C)
 0x080B003C,StateTable_CopySrc_8400,data,,[JT3] 7 ponteiros copiados para pilha por 0x08068400
+0x080B012C,SND_SongTable,data,,[SN] tabela de ponteiros de musica (4 B por id; ids 0..53; driver+0x688)
+0x080B0204,SND_Song0Header,data,,[SN] cabecalho da musica 0 (confirmado por leitura da tabela)
+0x080B16E4,SND_SampleTable,data,,[SN] tabela de ponteiros de amostra PCM (128 entradas; cabecalho {u32 tam
+0x083ABB50,SND_PsgFreqTable,data,,[SN] 74 halfwords de frequencia PSG (Hz=131072/(2048-v))
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
 0x083AC2C8,menu_list,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
@@ -3167,6 +3177,9 @@ address,name,kind,count,comment
 0x083ACB48,gTextProcessStrings,ptr,11,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]"
 0x083ACBCC,gTextProcessStrings3,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083AD080,Battle_FrameDispatchTable,data,,"[BT] tabela de 4+ ponteiros indexada por GS (usada por Battle_FrameDispatchOrExit); conteudo lido: 0x08012A20.., confirmado (ponteiros)"
+0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA
+0x083AD190,Battle_StepFrameTable,data,,"[BT] tabela de modos; entrada 0 = Fight_StepBattleFrame, 8 = 0x08014548; quem indexa: LACUNA"
 0x083AECD8,gFightSceneSteps,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado)
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
@@ -3276,6 +3289,8 @@ address,name,kind,count,comment
 0x0848521C,gTextShopDialogue,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x08486E54,SND_LitFifoA,data,,[SN] literal 0x040000A0 (FIFO A do DMA de PCM)
+0x08486E58,SND_LitFifoB,data,,[SN] literal 0x040000A4 (FIFO B do DMA de PCM)
 0x084881E0,gGfx_Battle_BotTiles_B,data,,[GF] Malias +2=0x0038; LoadTilesWithMalias bloco 0x11; Fight_LoadBattleBotTilesSet (GF)
 0x08488240,gGfx_Battle_BotTiles_C,data,,[GF] Malias +2=0x004C; LoadTilesWithMalias bloco 0x0F; Fight_LoadBattleBotTilesSet (GF)
 0x08488290,gGfx_Battle_BotTiles_D,data,,[GF] Malias +2=0x0060; LoadTilesWithMalias bloco 0x10; Fight_LoadBattleBotTilesSet (GF)
