@@ -43,36 +43,36 @@ Updated 2026-10-13. **Current focus: discovery and documentation of ROM function
   - HC.md: the event continuation table 0x083D2630 (137 ops, 85 unique targets, 30 are already functions).
 - Confidence across the CSVs: about 723 entries "provável" and 178 "chute"; the rest "confirmado".
 
-## Next discovery tasks (updated 2026-10-13, after the 3rd round: 15 agents)
-Done in the 3rd round: MG (2nd merge into mtbe.csv, +498 / 81 swapped; MERGE_RELATORIO2.md), CF (conflicts decided
-and applied), FIX (old notes fixed), FR1..FR3 (FL leftovers; nothing left), JT2/JT3 (dispatch tables), A6
-(+0xA6 code = direct index into gTextGameMessages 0x083C6744), SD (substate tables A 9 / C 10), DT2/DT3 (tables),
-CH1 (38 guesses), CH2 (39 guesses), CH3 (16 of 38 from R3).
+## Next discovery tasks (updated 2026-10-14, after the 4th round)
+Single flow: agent writes `XX_simbolos.csv` (and `*_criar.txt`/`*_lista.txt` for addresses that must become
+functions) -> Opus runs `python -I re/tools/build_sync.py` -> commit -> the user runs `re/ghidra/MedabotsSync.java`
+and Ctrl+S. Any 2-3 letter prefix is merged in automatically. Lists that become functions: H_lista, HC_lista,
+JT_criar, AS_criar, MS_lista, TX_lista, EXTRA_criar (append new addresses there).
 
-0. **Single sync with Ghidra (2026-10-14):** the only source of truth is `re/symbols/mtbe.csv`.
-   - `python -I re/tools/build_sync.py` merges every `functions/*_simbolos.csv` into mtbe.csv (newer layers win;
-     the old name goes in the comment) and generates `re/ghidra/medabots_sync.tsv`.
-   - The user runs **`re/ghidra/MedabotsSync.java`** (no prompts). It creates the missing functions (H_lista,
-     HC_lista, JT_criar), applies the names and labels, and writes `re/ghidra/medabots_sync_log.txt`. Then Ctrl+S.
-   - The old CreateHandlerFunctions/ApplyMtbeNamesToFUN scripts are gone. **Never** use MedabotsSetup.java (it
-     destroys functions).
-   - Agent workflow from now on: agent writes `XX_simbolos.csv` -> Opus runs build_sync.py -> commit -> user
-     runs MedabotsSync.
-1. **After the sync:** read medabots_sync_log.txt (lines "miolo" = targets inside another function; "erro").
-   Document the 24 new functions from JT_criar (JT2.md / JT3.md / SD.md).
-   The 3rd merge is already done by build_sync.py (291 names swapped, 72 new).
-2. **CH3 leftovers:** 22 guesses in R3 (list in CH3.md) + ~30 in R4 (not started).
-3. **Bad names to fix** (CH1): Fight_DrawBotPartEntrySprites/Icons/Tiles, Fight_FormatBotLabelText (suggestions
-   in the CH1 report: Fight_LoadBotPartEntryTiles, Fight_CreateBotPartEntrySprites,
-   Fight_UpdateBotPartEntryMotion, Fight_CopyBotLabelRecord).
-   - FL10.md: 0x08066D8C is NOT the text typewriter (it's a ring of 72 points; FR3).
-4. **Message script (A6):** the order of states 0..6 of gMessageStateHandlerTable 0x083B291C (only 0 and 5
-   confirmed); the meaning of `FA 50` and of the END argument (0/2/3/4); codes 0x7A..0xAF are debug placeholders.
-   - Pre/post-battle texts (DT2): the 4 loaders have no function in Ghidra.
-5. **Remaining FUN_:** run list_functions again and count; ~30 stayed FUN_ on purpose (guesses) in FL*/FR*.
-   0x08016370, 0x08035C3C, 0x08047850, 0x0807DD08, 0x08066460 (link?) are open.
-6. **Validate in the emulator** (later): ROS/damage formulas (FH), message 0x02, 0x29/0x2A, 0x41, the medal fields
-   (DT3: +3..+6 thresholds do not match R0a's 10/29/59).
+4th round (done, see the .md files): QA1/QA2 (fake functions and internal labels), N1/N2, FN1-3 (the FUN_ left in
+Ghidra), CH4/CH5 (no guesses left in R0-R4), NM/NM2 (Portuguese names translated), MS (message engine), TX,
+MD/DM (full damage formula), AS1/AS2 (action-script, partial), SV (save<->RAM), EV/EX (event VM and extractor),
+BT/BT2 (Robattle flow), OW/OW2 (overworld, speed, camera, warps), GF/GF2/GF3 (graphics catalog), SN/SN2 (sound
+engine + 4 bugs in extract_music.py), PS/PS2 (parts screens), MN (main loop), AI/AI2 (CPU decision), IN/IN2
+(key items, parts shop), EN (246 enemy templates), RW (reward, medal XP), MF (Medaforce), TQ (60 techniques),
+ST/ST2 (scene step blocks), HD (HUD), DB (debug menu), LK (link cable).
+
+0. **PENDING ON THE USER:** run MedabotsSync (it creates ~82 functions: action-script handlers 0x08034524..0x08034E78,
+   message states, menus 5/6/10, CPU driver 0x08012B94, debug options, technique validation 0x080332EC, PCM DMA).
+   Remove the function at 0x08000000 by hand (it's the ARM ROM header; QA1).
+1. **After the sync (blocked until then):**
+   - AS3: action-script opcodes 0x01..0x35 and the ones left at 0x36..0x6A (AS1/AS2 pending).
+   - MF2: effect of each Medaforce (script 0x50+id; tables 0x083B7F8C/0x083B7E54).
+   - TQ conflict: 20 techniques share the script 0x083C6A04 (Sword and Missile the same?): read the script.
+   - Document the new functions from EXTRA_criar (menus 5/6/10, CPU driver, debug Item/Mdlpic, PCM DMA).
+2. **Without the sync:** GF4 (graphics left: 0x0805BA34, 0x08044D0C, debug/number screens); key item effect
+   (table 0x0805D2C8); loss in battle (fi+0x9C vs reward); who fills bot block +0x4C; enemy armor bar
+   animation (HUD); trading over link (menu 0x15).
+3. **Validate in the emulator** (later, debug ROM): FH/MD/DM formulas, medal fields, message 0x02,
+   group/mask/flag of the spawns (EX), FE 1 in songs, speed 0x03006D3A, part detail screen (menu 5 step 66).
+4. **PC bugs found (do not fix now, focus is discovery):** extract_music.py (0x90/A0/B0/C0 = 1 byte; 0x81-0x8F rest
+   with operand; EC-EF note; FE 1), extract_save.py (parts inventory u16 in the original layout; SV.md),
+   extract_events.py (filter chapter/flag; EX.md), C# IsVisibleInChapter (chapter>=16).
 
 ## Key facts (don't rediscover)
 - New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
