@@ -20,6 +20,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 FUNC_DIR = os.path.join(ROOT, "functions")
 MTBE = os.path.join(ROOT, "symbols", "mtbe.csv")
 SYNC = os.path.join(ROOT, "ghidra", "medabots_sync.tsv")
+ROM = os.path.join(ROOT, "..", "..", "..", "Medabots - Metabee (Europe).gba")  # só leitura; opcional
 
 # Camadas, da mais antiga para a mais nova (a última ganha).
 TIERS = [
@@ -120,8 +121,9 @@ def main():
 
     # Enderecos que o ultimo MedabotsSync achou no miolo de outra funcao viram rotulo.
     log = os.path.join(ROOT, "ghidra", "medabots_sync_log.txt")
+    inside_set = set()
     if os.path.exists(log):
-        inside = set()
+        inside = inside_set
         for line in open(log, encoding="utf-8", errors="replace"):
             m = re.match(r"miolo ([0-9a-fA-F]{8}) ", line)
             if m:
@@ -136,6 +138,27 @@ def main():
         for r in body:
             if len(r) > 2 and r[2].startswith("func") and norm(r[0], True) in inside:
                 r[2] = "label"
+    # Agente marcou como dado um alvo das listas de criação só porque o Ghidra mostrava "halt_baddata" (bytes não
+    # desmontados). Se a ROM tem push {..., lr} ali ou o comentário cita halt_baddata, é função: o sync repara.
+    rom = open(ROM, "rb").read() if os.path.exists(ROM) else b""
+    wanted = set()
+    for fn in CREATE_LISTS + SPLIT_LISTS:
+        p = os.path.join(FUNC_DIR, fn)
+        if os.path.exists(p):
+            for line in open(p, encoding="utf-8"):
+                tok = re.split(r"[ 	,]+", line.strip())[0]
+                if re.fullmatch(r"0[xX][0-9A-Fa-f]+", tok):
+                    wanted.add(int(tok, 16) & ~1)
+    for r in body:
+        if len(r) < 3 or r[2].startswith("func") or r[2] == "table":
+            continue
+        a = int(r[0], 16) & ~1
+        if a not in wanted or "0x%08X" % a in inside_set:
+            continue
+        o = a - 0x08000000
+        push = 0 <= o < len(rom) - 1 and rom[o + 1] == 0xB5
+        if push or "halt_baddata" in (r[4] if len(r) > 4 else ""):
+            r[2] = "func_thumb"
     body.sort(key=lambda r: int(r[0], 16))
     out = io.StringIO()
     csv.writer(out, lineterminator=nl).writerows([header] + body)

@@ -1,0 +1,39 @@
+addr,nome,kind,comentario
+0x0803E03C,Anim_RunSlotScriptThenSfx54,func_thumb,[FS7] passo por quadro; roda script de slot; SFX 0x54 ao fim; provavel
+0x0803E098,Anim_TweenUntilDoneThenReset,func_thumb,[FS7] tween ate alvo; som de barra cheia; reseta direcao; provavel
+0x0803E0C0,Anim_TweenClampThenSfx2A,func_thumb,[FS7] tween com fixacao no alvo; SFX 0x2A; provavel
+0x0803E0F0,Anim_DrawSegmentUntil120,func_thumb,[FS7] desenha segmento e conta ate 0x78; provavel
+0x0803E120,Anim_DrawSegmentThenJumpPtr,func_thumb,[FS7] desenha segmento; salto por ponteiro nao recuperado (jt em 0x0803E168); chute no salto
+0x0803E170,Anim_DrawSegmentThenLoadSlot,func_thumb,[FS7] desenha segmento; carrega slot 1; provavel
+0x0803E1A4,Anim_DrawSegmentThenDispatchLoad,func_thumb,[FS7] desenha segmento; StateMachine_DispatchStep; carrega slot 1; provavel
+0x0803E1FC,Anim_DrawSegmentThenDispatchStep,func_thumb,[FS7] desenha segmento; despacha maquina de estados em +4; provavel
+0x0803E234,Anim_DrawSegmentUntilOverlayReached,func_thumb,[FS7] desenha segmento; move alvo do overlay ate chegar; provavel
+0x0803E270,Anim_DrawCycleStateZeroToFour,func_thumb,[FS7] desenha segmento; byte +0x84 cicla 0..4; provavel
+0x0803E2AC,Anim_DrawFadeSfx8Step,func_thumb,[FS7] desenha segmento; snd_fade_request(8); provavel
+0x0803E2DC,Anim_DrawFlushPaletteThenReset,func_thumb,[FS7] desenha segmento; CopyPaletteBuffersToHardware; provavel
+0x0803E314,Anim_DrawFadeRowsStep,func_thumb,[FS7] desenha segmento; fade de linhas de paleta A e B em 9 passos; provavel
+0x0803E374,Anim_PickSlotActivateEntryCopy,func_thumb,[FS7] sorteia slot; inventario ou Tinpet_ActivateMatchingEntry; copia 15 bytes; provavel (escolha chute)
+0x0803E434,Anim_DrawSegmentThenDispatchLoadAlt,func_thumb,[FS7] variante de Anim_DrawSegmentThenDispatchLoad com campos +0x18/+0x1C; provavel
+0x0803E48C,Anim_DrawSetValue3E,func_thumb,[FS7] desenha segmento; grava 0x3E em ponteiro fixo; provavel
+0x0803E4D8,Anim_GpuBlendTickThenCount,func_thumb,[FS7] avanca GpuBlend_TickStep e conta; provavel
+0x0803E618,Anim_InitSlotAndLoadCount,func_thumb,[FS7] Obj_InitSlotAndLoad(1,0,0) e conta; provavel
+0x0803E674,Boot_ResetSystemWrapper,func_thumb,[FS7] wrapper de Boot_ResetSystemAndState (0x0803EF20); confirmado
+0x08040B5C,Gfx_CpuSetCopy52Blocks,func_thumb,[FS7] 52 blocos bios_cpuset de 0x20 palavras; byte +0x1B; handler da gMessageDispatch12Table (0x083B2988); provavel
+0x08042238,Tinpet_CreateRecord,func_thumb,[FS7] acha registro livre (9 x 8 bytes) e grava estado 1 e campos; confirmado; mtbe.csv marca como label (divergencia)
+0x08043AE0,Unk_08043AE0,label,[FS7] Ghidra halt_baddata; bytes = prologo Thumb (push r4 lr); precisa re-disassemble; ponteiro na struct 0x08043AD8; chute
+0x08043B58,Unk_08043B58,label,[FS7] Ghidra halt_baddata; bytes = push lr + BL; precisa re-disassemble; chute
+0x08043E48,Obj_StepAccumMoveAWrapper,func_thumb,[FS7] wrapper de Obj_StepAccumMoveA (0x08043CD4); confirmado
+0x08044100,Obj_StepAccumMoveBThenSync,func_thumb,[FS7] Obj_StepAccumMoveB (0x08043E78) e FUN_08043FEC com byte +0x38; provavel
+0x08045E6C,PartPreviewPiece,func_thumb,[FS7] monta prévia de peça (seletor ((e>>6)+v)&0x7F; tiles; OAM; recursivo +0x0F/+0x10); confirmado; mtbe.csv marca como label (divergencia)
+0x08047C00,FieldMenu_ClearTwoSlotPairs,func_thumb,[FS7] chama Overworld_NoOpStateHandler e zera dois pares u16; provavel (antes FieldMenu_CloseChoice_Provavel)
+0x08047C24,Obj_TwoStageInitThenDispatch,func_thumb,[FS7] maquina de 2 estados: init do slot, depois StateMachine_DispatchStep; provavel
+0x08048000,Fx_SetupLayersAndInitRecord8,func_thumb,[FS7] grava 0x500 e 0x1F60 em registradores de display; Fx_InitRecord8; provavel (nome chute)
+0x08049CC8,Obj_LoadPairFromRecord,func_thumb,[FS7] copia 6 bits de dois bytes do registro para dois destinos; provavel
+0x080497E0,Overworld_SetTransitionStepAndDispatch,func_thumb,[FS7] grava bloco de transicao e despacha jump table em +1 (0..6); chamadores de Overworld e Map_EnterSceneSetup; provavel
+0x08053360,Unk_08053360,label,[FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute
+0x08053380,Unk_08053380,label,[FS7] Ghidra halt_baddata; bytes = push lr + BL + literal 1.0f; precisa re-disassemble; chute
+0x080533A4,Unk_080533A4,label,[FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute
+0x080534C4,Unk_080534C4,label,[FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute
+0x080535C8,Unk_080535C8,label,[FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute
+0x080537BC,Unk_080537BC,label,[FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute
+0x080537D8,Unk_080537D8,label,[FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute

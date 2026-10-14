@@ -23,6 +23,8 @@ F	0x08000840	NoOpActionHandler
 F	0x08000844	get_player_inputs
 F	0x080008C0	SoftResetSequence
 F	0x08000964	is_input_soft_reset
+F	0x0800099C	Sound_TickTrackAStub
+F	0x080009A8	Sound_TickTrackBStub
 F	0x080009BC	decompress_and_store
 F	0x08000A0C	Malias_DecodeLZ
 F	0x08000B14	Malias_DecodeLZ_Halfword
@@ -72,17 +74,54 @@ F	0x08003104	Menu_AnimateRevealRows
 F	0x08003300	Screen_LoadSpriteRowA
 F	0x08003374	MainState0_Menu2_Dispatch
 F	0x08003394	MainState0_Menu2_Sub0_InitBg
+F	0x080034A4	PartScreen_FadeInPalettesStep
+F	0x08003504	PartScreen_HandleCursorInputStep
+F	0x08003620	PartScreen_ClearAndFadeOutStep
+F	0x08003654	PartScreen_FadeToColorStep
+F	0x080036A8	PartScreen_StartSongStep
+F	0x080036C8	PartScreen_WaitBlendAnimStep
 F	0x080036F4	Menu_ResetSubstateByMode
 F	0x08003784	Gfx_SceneInit
+F	0x080038CC	PartScreen_WaitBlendThenResetStep
+F	0x080038F0	PartScreen_SetNextStateStep
 F	0x08003904	Screen_DecompressRowImageByIndex
 F	0x080039BC	Pair_TickDownCounterIfFlag
 F	0x08003A38	InitializeBattleStatusScreen
+F	0x08003D4C	PartSlots_UpdateAndFadeStep
+F	0x08003DE0	PartSlots_HandleInputStep
+F	0x08003E54	PartSlots_EnterBlendStep
+F	0x08003EA0	PartSlots_WaitBlendStep
 F	0x08003EE0	Gfx_ResetTileState
+F	0x08003F28	PartSlots_CommitPalettesStep
+F	0x08003F74	PartSlots_FadeInThenTimerStep
+F	0x08003FE8	PartSlots_LoadSlotObjectStep
+F	0x08004028	PartSlots_DispatchSubStateStep
 F	0x0800406C	InitializeBattleSceneScreen
+F	0x080043A8	PartEditor_FadeInStep
+F	0x0800442C	PartEditor_HandleInputStep
+F	0x080044F8	PartEditor_FinishPaletteStep
+F	0x0800454C	PartEditor_FadeOutStep
+F	0x080045C4	PartEditor_BuildEquipTableStep
+F	0x080045DC	PartEditor_BlendOutStep
+F	0x08004610	PartEditor_WaitBlendStep
+F	0x08004644	PartEditor_DispatchSubmodeStep
+F	0x08004764	BattlePreview_InitSlotSpritesStep
+F	0x08004798	BattlePreview_WaitTimerStep
+F	0x080047EC	BattlePreview_FadeOutStep
+F	0x08004840	BattlePreview_ClearStateStep
+F	0x08004874	BattlePreview_FadeSoundStep
+F	0x080048B0	BattlePreview_WaitBlendStep
 F	0x080048D8	FightPreview_CachePlayerLoadoutForScene
+F	0x080049C8	TeamPick_LoadSlotObjectStep
+F	0x080049EC	TeamPick_DispatchSubStateStep
 F	0x08004A18	BattleStep_PreRefreshBots
 L	0x08004A2A	Fight_RefreshCaller_Unresolved
+F	0x08004AF8	TeamPick_FillBotSlotsStep
+F	0x08004C58	TeamPick_ResetCounterStep
+F	0x08004CA4	TeamPick_CompareSelectionStep
 F	0x08004DB4	Battle_SlotDrawStep
+F	0x08004DF0	BattlePreview_FadeRowsStep
+F	0x08004E40	BattlePreview_ResetOamAndState
 F	0x08004E74	Pair_TickUpCounterIfFlag
 F	0x08004E98	ObjectSlots_Init4
 F	0x08004EF8	ObjectSlot_UpdatePosition
@@ -158,14 +197,52 @@ F	0x08007480	Parts_UpdateSlotSprites
 F	0x0800750C	Parts_DrawModeHeader
 F	0x08007540	Parts_CountFilledSlots
 F	0x080075AC	PartsGrid_SceneInit
+F	0x08007834	PartsGrid_SlideInStep
+F	0x08007868	PartsGrid_InputStep
+F	0x08007964	PartsGrid_BlendInStep
+F	0x080079CC	PartsGrid_ResetOamAndDispatch
 F	0x08007A04	PartsGrid_InitScreen_CellGraphics
+F	0x08007BD8	PartsGrid_BlendTickStep
+F	0x08007BFC	PartsGrid_LoadSlotStep
+F	0x08007C20	PartsGrid_DispatchSubStep
+F	0x08007C4C	PartsGrid_CursorInputStep
+F	0x08007D04	PartsGrid_BlendStartStep
 L	0x08007D28	Tile_ClearSlotsAndDispatchState_JumpTable
 L	0x08007D46	Tile_ClearSlotsAndDispatchState_Jump
 F	0x08007E38	PartsGrid_InitScreen
+F	0x0800801C	PartsGrid_SlideDetailStep
+F	0x08008050	PartsGrid_SlideLoadStep
+F	0x08008084	PartsGrid_DetailDispatchStep
+F	0x080080C8	PartsGrid_DetailInputStep
+F	0x080081BC	PartsGrid_DetailDispatchStepRev
+F	0x08008200	PartsGrid_BlendSlideStep
 F	0x08008234	PartsGrid_InitScreen_StatusPreview
+F	0x08008430	PartsGrid_BlendTickStepB
+F	0x08008454	PartsGrid_LoadSlotStepB
+F	0x08008478	PartsGrid_DispatchStepB
+F	0x080084A4	PartsGrid_CellInputStep
+F	0x08008590	PartsGrid_BlendStartStepB
+F	0x080085B4	PartsGrid_SetupDetailSprites
+F	0x080085E8	PartsGrid_DispatchByCellStep
+F	0x08008650	PartsGrid_CellMainInputStep
 F	0x080087CC	PartsGrid_EnterScreenInit
+F	0x08008980	PartsGrid_IconStripStep
+F	0x080089A8	PartsGrid_IconStripInputStep
+F	0x08008A34	PartsGrid_IconStripBlendStep
+F	0x08008A5C	PartsGrid_IconAnimStep
+F	0x08008B80	PartsGrid_ClearAndInitStep
+F	0x08008BB8	PartsGrid_DispatchStepC
+F	0x08008BE0	PartsGrid_SlotScriptInputStep
+F	0x08008CA0	PartsGrid_SubStateSwitchStep
+F	0x080090D0	PartsGrid_SpritePairStep
 F	0x08009174	PartsGrid_ReloadRowTilesAndSetup
+F	0x080091E0	PartsGrid_OptionRowStep
+F	0x08009248	PartsGrid_OptionHandlerStep
+F	0x08009274	PartsGrid_TickFadeOutStep
+F	0x080092D4	PartsGrid_TickRouteSelection
+F	0x08009374	PartsGrid_TickDispatchSubstate
 F	0x080093AC	Shop_SnapshotQuantitiesTable
+F	0x080093E0	PartsGrid_ResetAndSetMode1
 F	0x080093F8	Timer_IncPairIfFlag
 F	0x0800941C	PartsGrid_SplitRowCol
 F	0x0800944C	PartsGrid_CountFlagged30
@@ -243,11 +320,11 @@ F	0x0800C29C	Dispatch_CallHandlerByByte33_0800C29C
 F	0x0800C2BC	Debug_ItemCountGrantScreen
 F	0x0800C6D8	Dispatch_CallHandlerByMode_A
 F	0x0800C6F8	PartsBuild_UpdateStatusPanel
-L	0x0800C7E4	debug_option4_item_entry
+F	0x0800C7E4	debug_option4_item_entry
 F	0x0800C804	Shop_HandleItemListAndCounts
 F	0x0800CBA8	Gfx_DispatchStateHandler
 F	0x0800CBC8	Debug_FaceScreen
-L	0x0800CE70	debug_option6_mdlpic_entry
+F	0x0800CE70	debug_option6_mdlpic_entry
 F	0x0800CE90	Debug_MdlpicScreen
 F	0x0800D168	Dispatch_StateHandlerTable_B
 F	0x0800D188	Debug_RndTkScreen
@@ -262,10 +339,33 @@ F	0x0800D710	DebugMotion_Main
 F	0x0800D90C	DebugMotion_PlayKind
 F	0x0800D9DC	Menu5_Dispatch_PartsScreens
 F	0x0800DA34	MedabotGrid_InitScreen
+F	0x0800DD00	PartDetail_SlideInFadeStep
+F	0x0800DD88	PartDetail_SlideInLoadStep
+F	0x0800DDC0	PartDetail_SlideInDispatchStep
+F	0x0800DE00	PartsGrid_HandleSelectionInput
+F	0x0800DEC8	PartDetail_SlideInClearStep
+F	0x0800DF14	PartDetail_SlideInBlendStep
+F	0x0800DF4C	PartDetail_InitStateRegisters
+F	0x0800DF78	PartDetail_SlideInPaletteCommitStep
+F	0x0800DFB8	PartDetail_SlideInFadeOutStep
 F	0x0800E020	PartDetailScreen_Init
+F	0x0800E2B0	PartDetail_FadeCursorStep
+F	0x0800E328	PartDetail_CursorLoadStep
+F	0x0800E350	PartDetail_DispatchLegIconStep
+F	0x0800E3A0	PartDetail_HandleSelectionConfirm
+F	0x0800E43C	PartDetail_PaletteCommitStep
+F	0x0800E488	PartDetail_FadeRowsStep
 F	0x0800E4F8	Menu_PartsDetailDispatch
+F	0x0800E654	PartDetail_ResetCursorSpriteStep
+F	0x0800E690	PartDetail_AnimSlotDispatchStep
+F	0x0800E6C8	PartDetail_HandleCursorMoveInput
+F	0x0800E78C	PartDetail_DispatchSubstate
+F	0x0800E9F0	PartDetail_SetupCursorAndState
 F	0x0800EA2C	PartDetail_SceneStep
+F	0x0800EA98	PartDetail_HandleAttributeCursorInput
 F	0x0800EB34	SceneStep_Caller_ACE14
+F	0x0800EB60	PartDetail_TickFadeAndRoute
+F	0x0800EBE4	PartsGrid_ResetAndSetMode2
 F	0x0800EBFC	Sprite_IncrementXYIfFlag
 F	0x0800EC20	PartsGrid_SplitCursorIndexRowCol
 F	0x0800EC44	PartsGrid_DrawFourEntryText
@@ -299,15 +399,26 @@ F	0x0800FFF4	PartDetail_UpdateSelectionCursorPosition
 F	0x08010040	PartDetail_SetupAttributeCursorSprite
 F	0x080100BC	PartDetail_MoveAttributeCursor
 F	0x0801013C	PartDetail_DispatchModeHandler
+F	0x08010170	PartsBuild_MarkSlotFlagStep
 F	0x080101E8	Slot_CountdownStepAndClear
 F	0x0801022C	BgMap_FillRectTickCounter
-L	0x08010264	Scene_GsDispatch_Menu6_Encounter
+F	0x08010264	Scene_GsDispatch_Menu6_Encounter
 F	0x080102C0	Scr_HideSpritesPlaySong8
+F	0x080103F4	PartsBuild_InitScreenLoadGfx
 F	0x08010478	Screen_ScrollRevealRowsStep
 F	0x0801053C	Fight_ResetTemplateAndPalette
 L	0x08010540	Fight_ResetTemplateAndPalette_08010540
 F	0x0801058C	Fight_InitBotPartSelectScreen
+F	0x08010794	Fight_BotPartSelect_FadeInStep
+F	0x080107F0	Fight_BotPartSelect_InitSlotStep
 F	0x08010814	Fight_ShowPreBattleTextForCharacter
+F	0x08010860	Fight_BotPartSelect_WaitInputStep
+F	0x080108D0	Fight_BotPartSelect_DispatchStep
+F	0x080108FC	Fight_BotPartSelect_FxStep
+F	0x08010930	Fight_BotPartSelect_TableDispatchStep
+F	0x08010968	Fight_BotPartSelect_FadeOutStep
+F	0x080109A0	Fight_BotPartSelect_ClearPaletteStep
+F	0x080109CC	Fight_BotPartSelect_FadeRowsStep
 F	0x08010A20	Tile_ResetBlendAndClearSlots
 F	0x08010A7C	Overworld_ReloadMapSceneAndAdvanceGameState
 F	0x08010AC8	Gfx_PaletteFadeStep
@@ -726,54 +837,54 @@ F	0x0801D544	Fight_DispatchOnSubstateAA_D_WaitAnimDone
 F	0x0801D580	Fight_DispatchOnSubstateAA_E
 F	0x0801D5A8	Fight_FindAllyFollowupActionSource
 L	0x0801D5E0	Fight_FindAllyFollowupActionSource_0801D5E0
-L	0x0801D6A4	Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx
+F	0x0801D6A4	Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx
 F	0x0801D738	Fight_PrepareFollowupSourceDisplay
-L	0x0801D878	Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry
-L	0x0801D95C	Fight_DispatchOnSubstateAA_E_04_StepBotSlot
-L	0x0801D9DC	Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace
+F	0x0801D878	Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry
+F	0x0801D95C	Fight_DispatchOnSubstateAA_E_04_StepBotSlot
+F	0x0801D9DC	Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace
 L	0x0801DADE	Fight_DispatchOnSubstateAA_E_05_ReturnTail
-L	0x0801DAEC	Fight_DispatchOnSubstateAA_E_06_ShowPartsHud
-L	0x0801DC74	Fight_DispatchOnSubstateAA_E_07_SpawnSlot21
-L	0x0801DD30	Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30
-L	0x0801DD74	Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim
-L	0x0801DDDC	Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget
+F	0x0801DAEC	Fight_DispatchOnSubstateAA_E_06_ShowPartsHud
+F	0x0801DC74	Fight_DispatchOnSubstateAA_E_07_SpawnSlot21
+F	0x0801DD30	Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30
+F	0x0801DD74	Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim
+F	0x0801DDDC	Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget
 F	0x0801DE1C	Fight_DispatchOnSubstateAA_F
-L	0x0801DE44	Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair
+F	0x0801DE44	Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair
 L	0x0801DED4	Fight_DispatchOnSubstateAA_F_02_HoldFlag
 F	0x0801DEE4	Fight_DispatchOnSubstateAA_G
-L	0x0801DF0C	Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles
-L	0x0801DF60	Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen
-L	0x0801DFE0	Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged
+F	0x0801DF0C	Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles
+F	0x0801DF60	Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen
+F	0x0801DFE0	Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged
 L	0x0801E08C	Fight_DispatchOnSubstateAA_G_02_ReturnTail
-L	0x0801E09C	Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground
+F	0x0801E09C	Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground
 L	0x0801E1B4	Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground_0801E1B4
-L	0x0801E200	Fight_DispatchOnSubstateAA_G_04_ResetSideSprites
-L	0x0801E248	Fight_DispatchOnSubstateAA_G_05_SlideSideSpritesIn
-L	0x0801E2B8	Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold
+F	0x0801E200	Fight_DispatchOnSubstateAA_G_04_ResetSideSprites
+F	0x0801E248	Fight_DispatchOnSubstateAA_G_05_SlideSideSpritesIn
+F	0x0801E2B8	Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold
 F	0x0801E2D8	Fight_DispatchOnSubstateAA_H
-L	0x0801E300	Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles
-L	0x0801E3C0	Fight_DispatchOnSubstateAA_H_01_ChooseActionPath
+F	0x0801E300	Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles
+F	0x0801E3C0	Fight_DispatchOnSubstateAA_H_01_ChooseActionPath
 L	0x0801E43C	Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40
-L	0x0801E474	Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj
-L	0x0801E54C	Fight_DispatchOnSubstateAA_H_04_WaitSlotOffset10
+F	0x0801E474	Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj
+F	0x0801E54C	Fight_DispatchOnSubstateAA_H_04_WaitSlotOffset10
 L	0x0801E578	Fight_DispatchOnSubstateAA_H_06_CheckHitOrSkip
-L	0x0801E5DC	Fight_DispatchOnSubstateAA_H_07_LoadStageGfx
-L	0x0801E830	Fight_DispatchOnSubstateAA_H_08_AdvanceSlotOffsetByStage
-L	0x0801E864	Fight_DispatchOnSubstateAA_H_0A_SetupFourSprites
-L	0x0801E8DC	Fight_DispatchOnSubstateAA_H_0B_TickSpriteTimers
-L	0x0801E918	Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow
-L	0x0801E9B0	Fight_DispatchOnSubstateAA_H_0E_WaitSpriteStep10
-L	0x0801E9E0	Fight_DispatchOnSubstateAA_H_10_SfxStep2F
-L	0x0801E9FC	Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows
-L	0x0801EA5C	Fight_DispatchOnSubstateAA_H_13_BackupStatsOrSkip
-L	0x0801EA94	Fight_DispatchOnSubstateAA_H_14_StepByOrientation
+F	0x0801E5DC	Fight_DispatchOnSubstateAA_H_07_LoadStageGfx
+F	0x0801E830	Fight_DispatchOnSubstateAA_H_08_AdvanceSlotOffsetByStage
+F	0x0801E864	Fight_DispatchOnSubstateAA_H_0A_SetupFourSprites
+F	0x0801E8DC	Fight_DispatchOnSubstateAA_H_0B_TickSpriteTimers
+F	0x0801E918	Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow
+F	0x0801E9B0	Fight_DispatchOnSubstateAA_H_0E_WaitSpriteStep10
+F	0x0801E9E0	Fight_DispatchOnSubstateAA_H_10_SfxStep2F
+F	0x0801E9FC	Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows
+F	0x0801EA5C	Fight_DispatchOnSubstateAA_H_13_BackupStatsOrSkip
+F	0x0801EA94	Fight_DispatchOnSubstateAA_H_14_StepByOrientation
 L	0x0801EAC4	Fight_DispatchOnSubstateAA_H_15_HoldFlag
-L	0x0801EAD4	Fight_DispatchOnSubstateAA_H_16_SetupPartSpritesAt
-L	0x0801EB5C	Fight_DispatchOnSubstateAA_H_17_RunSlot10Anim
+F	0x0801EAD4	Fight_DispatchOnSubstateAA_H_16_SetupPartSpritesAt
+F	0x0801EB5C	Fight_DispatchOnSubstateAA_H_17_RunSlot10Anim
 L	0x0801EBB8	Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance
-L	0x0801EBD4	Fight_DispatchOnSubstateAA_AO_0E_UpdateSpritesWait60
-L	0x0801EBF8	Fight_DispatchOnSubstateAA_H_1A_QueueBrokenBotOrSkip
-L	0x0801EC3C	Fight_DispatchOnSubstateAA_H_1D_WaitOrAdvance
+F	0x0801EBD4	Fight_DispatchOnSubstateAA_AO_0E_UpdateSpritesWait60
+F	0x0801EBF8	Fight_DispatchOnSubstateAA_H_1A_QueueBrokenBotOrSkip
+F	0x0801EC3C	Fight_DispatchOnSubstateAA_H_1D_WaitOrAdvance
 F	0x0801ECC0	Fight_DispatchOnSubstateAA_H_20_ApplyPartDamage
 F	0x0801ED50	Fight_DispatchOnSubstateAA_H_21_LoadBotSpriteAndPlace
 F	0x0801EED4	Fight_DispatchOnSubstateAA_H_24_JumpToStep0A
@@ -852,7 +963,7 @@ F	0x080209D8	Fight_DispatchOnSubstateAA_Q_00_PenaltyIfFlagClearOrMsg
 F	0x08020A68	Fight_DispatchOnSubstateAA_R
 F	0x08020A90	Fight_DispatchOnSubstateAA_R_01_ClearTilesSplitCount
 F	0x08020AD0	Fight_DispatchOnSubstateAA_R_0C_SplitCountOrSkip
-L	0x08020B4C	Fight_DispatchOnSubstateAA_R_08
+F	0x08020B4C	Fight_DispatchOnSubstateAA_R_08
 F	0x08020CEC	Fight_DispatchOnSubstateAA_R_12_JumpTo02
 F	0x08020CFC	Fight_DispatchOnSubstateAA_S
 F	0x08020D24	Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart
@@ -1023,7 +1134,7 @@ F	0x080256EC	Fight_DispatchOnSubstateAA_AH_WaitRowAnim
 F	0x08025790	Fight_DispatchOnSubstateAA_AH_FormatCounterDigits
 F	0x080257C0	Fight_DispatchOnSubstateAA_AI
 F	0x080257E8	Fight_DispatchOnSubstateAA_AI_00_AccumPartCheckCost
-L	0x08025858	Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics
+F	0x08025858	Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics
 F	0x08025974	Fight_DispatchOnSubstateAA_AI_0B_SetupTargetSpriteSfx
 F	0x08025A18	Fight_DispatchOnSubstateAA_AI_SetActionResultCodes
 F	0x08025AAC	Fight_DispatchOnSubstateAA_AI_12_SelectMessageByTechnique
@@ -1071,7 +1182,7 @@ F	0x08026CBC	Fight_DispatchOnSubstateAA_AO_10_QueueHeadBreakIfDefenderHeadZero
 F	0x08026CF4	Fight_DispatchOnSubstateAA_AP
 F	0x08026D1C	Fight_DispatchOnSubstateAA_AP_01_WaitUnlessFlagB8Bit1
 F	0x08026D44	Fight_DispatchOnSubstateAA_AP_ApplyDamageToRandomTargetPart
-L	0x08026D98	Fight_DispatchOnSubstateAA_AP_0x18
+F	0x08026D98	Fight_DispatchOnSubstateAA_AP_0x18
 F	0x08026EC0	Fight_DispatchOnSubstateAA_AP_1B_LoopToStep02
 F	0x08026ED0	Fight_DispatchOnSubstateAA_AQ
 F	0x08026EF8	Fight_DispatchOnSubstateAA_AQ_00_PickActorPartToRepair
@@ -1784,7 +1895,7 @@ F	0x0803D450	FightPreview_UnpackSequenceEntry
 F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4EC	Fight_ScrollEntryCoords
-L	0x0803D538	Scene_GsDispatch_Menu10_Link
+F	0x0803D538	Scene_GsDispatch_Menu10_Link
 F	0x0803D5A0	Fight_ResetStateFlagsAndCounter
 F	0x0803D634	LinkTick_MenuStep3
 F	0x0803D674	LinkTick_MenuStep4
@@ -1944,7 +2055,7 @@ F	0x08042170	Inv_SubCountClampZero
 F	0x080421A0	Tinpet_InitIds
 F	0x080421B4	Tinpet_ActivateMatchingEntry
 F	0x08042218	Tinpet_IsPoolFull
-L	0x08042238	Tinpet_CreateRecord
+F	0x08042238	Tinpet_CreateRecord
 F	0x08042278	Map64_GetValue
 F	0x080422B8	Map64_AddCountClamp99
 F	0x08042318	Map64_SubRemoveIfZero
@@ -1977,15 +2088,15 @@ L	0x08043820	AreBattleSpritePartIdsValid_08043820
 F	0x0804384C	Lookup_FindPartIndexById
 F	0x0804387C	reset_step_and_get_encounter_flag
 F	0x080438C4	Overworld_ShouldTriggerRandomEncounter
-L	0x08043AE0	Unk_08043AE0
-L	0x08043B58	Unk_08043B58
+F	0x08043AE0	Unk_08043AE0
+F	0x08043B58	Unk_08043B58
 F	0x08043B7C	GfxBankA_LoadTilesAndPalette
 F	0x08043C08	GfxBankB_LoadTilesAndPalette
 F	0x08043C94	Encounter_RollPercent0To99
 F	0x08043CA8	Slots_ClearFourPairs
 F	0x08043CD4	Obj_StepAccumMoveA
 F	0x08043DF8	FxBlend_ApplyFromObjA
-L	0x08043E48	Obj_StepAccumMoveAWrapper
+F	0x08043E48	Obj_StepAccumMoveAWrapper
 F	0x08043E54	Obj_CopySlot8Bytes
 F	0x08043E78	Obj_StepAccumMoveB
 F	0x08043F9C	FxBlend_ApplyFromObjB
@@ -2037,7 +2148,7 @@ F	0x08045AEC	QueueVisibleCompositePreviewTemplateEntry
 F	0x08045B68	QueueVisibleCompositePreviewTemplateEntryWithBounds
 F	0x08045C30	QueueVisibleCompositePreviewTemplateEntryWithAffineBounds
 F	0x08045D34	BuildCompositePreviewOamTemplate
-L	0x08045E6C	PartPreviewPiece
+F	0x08045E6C	PartPreviewPiece
 F	0x08046034	CopyCompositePreviewDescriptorGraphics
 F	0x080465B8	RenderCompositePreviewDescriptorRecursive
 F	0x08046A60	LoadPartLargeDisplaySpriteFromAppearanceTable
@@ -2514,14 +2625,14 @@ F	0x080532D4	EventField3Bit_GetByPackedId
 L	0x080532F0	lit_EventFlagArrayBase_OddGet
 L	0x08053308	lit_EventFlagArrayBase_EvenGet
 F	0x0805330C	Map_LoadSecondaryMarkerRecord
-L	0x08053360	Unk_08053360
-L	0x08053380	Unk_08053380
-L	0x080533A4	Unk_080533A4
+F	0x08053360	Unk_08053360
+F	0x08053380	Unk_08053380
+F	0x080533A4	Unk_080533A4
 F	0x080533E4	Overworld_BeginUiSceneState
-L	0x080534C4	Unk_080534C4
-L	0x080535C8	Unk_080535C8
-L	0x080537BC	Unk_080537BC
-L	0x080537D8	Unk_080537D8
+F	0x080534C4	Unk_080534C4
+F	0x080535C8	Unk_080535C8
+F	0x080537BC	Unk_080537BC
+F	0x080537D8	Unk_080537D8
 F	0x080537E4	Viewport_SetFloatBounds
 F	0x08053858	Viewport_ComputeRectEdgeA
 F	0x0805390C	Viewport_ComputeRectEdgeB
@@ -2690,8 +2801,8 @@ F	0x0805DD88	Screen_InitBlendFade
 F	0x0805DDEC	Site_RunSaveLoadOption
 F	0x0805DEB0	Save_InvokeFlashOp
 F	0x0805DEC8	Save_ClearAndRetryLoad
-L	0x0805DF18	SaveLoad_LoadGame
-L	0x0805E010	SaveLoad_SaveGame
+F	0x0805DF18	SaveLoad_LoadGame
+F	0x0805E010	SaveLoad_SaveGame
 F	0x0805E138	Save_ReadVerify
 F	0x0805E248	Save_WriteBlocksEeprom
 F	0x0805E2D8	Obj_SetFieldFromTable4
@@ -2985,6 +3096,7 @@ F	0x0806E10C	battle_slot_init
 F	0x0806E184	Boot_SubState2_WaitFxStep
 F	0x0806E2A0	Screen_InitRowBufferAndFx
 F	0x0806E3C4	Fx_TickStepTableEntry
+F	0x0806E3F8	Scene_SetSubstate2Wrapper
 F	0x0806E404	battle_timer_end_transition
 F	0x0806E460	Boot_DispatchSubState
 F	0x0806E484	fade_step_bld
@@ -2995,6 +3107,8 @@ F	0x0806E7EC	Screen_InitLZ77ToVram
 F	0x0806E96C	Screen_LayerHideTimedStep
 F	0x0806E9E0	menu_state2_setup
 F	0x0806EA54	battle_exit_button
+F	0x0806EAC0	Fade_ApplyPaletteTargetsWhenDone
+F	0x0806EAF4	Fade_ApplyBlendTargetsWhenDone
 F	0x0806EB28	Fx_StepFadeLatch
 F	0x0806EBA4	Hud_TickDecimal6AndStep
 F	0x0806EC30	Screen_InitDmaAndDispcnt
@@ -3002,8 +3116,13 @@ F	0x0806ED08	Scene_InitLz77GraphicsAndTilemaps
 F	0x0806EEA8	Screen_InitObjectSlotsLZ77Vram
 F	0x0806F0E0	Gfx_LoadTwoLz77BlocksToVram
 F	0x0806F114	FightPreview_SetupCompositeScreen
+F	0x0806F1C0	Screen_InitMenuLayoutState
+F	0x0806F21C	Screen_ArmBg2TimerStep0C
 F	0x0806F23C	Screen_TextCounterStep
+F	0x0806F578	Screen_ResetTextArmBg2Step0E
 F	0x0806F5A0	Screen_TextCounterStepB
+F	0x0806F914	Screen_ArmBg2TimerStep11
+F	0x0806F934	Screen_WaitFramesThenStep12
 F	0x0806F9D8	fade_palette_16
 F	0x0806FB5C	fade_step_bld_2
 F	0x0806FBB8	blit_rect_tilemap
@@ -3019,6 +3138,11 @@ F	0x080701F8	timer_enable_bg2
 F	0x0807028C	Screen_InitBg0Tilemap
 F	0x08070464	Screen_InitBg0TilemapAlt
 F	0x08070550	slots11_update
+F	0x080705E0	ObjSlot_AdvanceFadeLevelA
+F	0x08070648	ObjSlot_AdvanceFadeLevelB
+F	0x080706A4	Obj_SetYBobFromTable
+F	0x08070734	Obj_ScrollYUpWrap
+F	0x08070778	Obj_AdvanceCounterCap47
 F	0x080707BC	slot_start
 F	0x08070804	timer_if_flag
 F	0x08070824	anim_6_frames_2_counters
@@ -3027,6 +3151,7 @@ F	0x08070914	Scene_ClearVramAndStartSong0
 F	0x080709D4	Screen_InitLetterGridObjects
 F	0x08070C0C	Screen_InitMenuTilesAndFx
 F	0x08070D74	Scene_InitNineRenderSlotsAndFx
+F	0x08071030	Scene_StartSong4AndSlots
 F	0x0807105C	Anim_StartPairOnce
 F	0x080710AC	Anim_StartSequenceAnim4Slots
 F	0x080710F4	Anim_StartSlotsIfNotDone
@@ -3045,6 +3170,7 @@ F	0x08071460	Scene_InitObjectRenderSlots
 F	0x08071630	Dispatch_CallHandlerOrStartAnims
 L	0x08071650	Dispatch_CallHandlerOrStartAnims_Table
 F	0x08071744	Snd_FadeOutThenSetState
+F	0x08071778	Scene_SongRequest0AndSetState3
 F	0x0807178C	slots26_update
 F	0x08071804	anim_4_slots
 F	0x08071898	enable_anim4
@@ -3052,9 +3178,13 @@ F	0x080718D4	disable_anim4
 F	0x0807190C	Fight_TickSlotScriptStep
 F	0x080719B8	Anim_StepSlotTimerReturnStatus
 F	0x08071A64	Anim_StepSlotKeyframeSpawn
+F	0x08071B64	Obj_RunSpriteSequenceTable12
+F	0x08071C68	Obj_StepXRightWithShadow
+F	0x08071CBC	Obj_StepXLeftWithShadow
 F	0x08071DB8	slot_start_v2
 F	0x08071DDC	dispatch_table_r0
 F	0x08071E0C	Fx_RampCounterStepDone
+F	0x08071E8C	Obj_SlideSlot3AndPlaySfx54
 F	0x08071EFC	Anim_RampStepThenSfx54
 F	0x08071F74	Anim_RampStepThenSfx54B
 F	0x08071FF8	Anim_FrameCycleStep
@@ -3115,6 +3245,9 @@ L	0x08072E14	Snd_OpE1_Entry
 L	0x08072F04	Snd_DispatchBelowE0
 L	0x08072F2E	Snd_OpE0_Rest
 F	0x08072F7C	snd_track_cmd_ext
+F	0x08072FF4	Bar_TickWithSoundModulation
+F	0x08073010	Obj_TickWaitCountdown
+F	0x08073044	snd_tick_vibrato_and_pitch_slide
 F	0x08073058	snd_track_update
 F	0x08073094	snd_update_frame
 F	0x08073274	snd_frame_tick
@@ -3169,10 +3302,19 @@ F	0x0807424C	snd_ring_write
 F	0x08074540	snd_track_test_flag2
 F	0x0807455C	snd_track_init
 F	0x0807462C	snd_track_request_update
+F	0x080746C0	snd_update_channel1_if_idle
 F	0x080746E0	Snd_UpdateChannelIfIdle
 F	0x08074704	Snd_TickChannelWhenIdle
 F	0x08074728	Snd_UpdateChannelIfIdle_08074728
 F	0x0807474C	Snd_TrackUpdateFlagged
+F	0x08074780	snd_update_channel2_if_track_flag
+F	0x080747B8	snd_update_channel3_if_track_flag
+F	0x080747F4	snd_update_channel4_if_track_flag
+F	0x08074834	snd_set_state3_group_a_if_clear_49c
+F	0x0807485C	snd_set_state3_if_clear_510
+F	0x08074890	snd_reset_group_a_690
+F	0x080748B8	snd_reset_group_b_6d8
+F	0x080748E8	snd_update_channel4_if_idle_340
 F	0x0807490C	snd_track_reset_state
 F	0x0807495C	snd_track_stop_callback
 L	0x08074968	Snd_StopCallback_ResetCall
@@ -3629,126 +3771,15 @@ L	0x087BB2A0	gGfx_Title_Map_Bg1
 L	0x087BB7E0	gGfx_Title_Map_Bg2_ANOMALIA
 L	0x087F314C	gGfx_Logo_Char
 L	0x087F5500	gTextDump
-C	0x0800099C
-C	0x080009A8
 C	0x08001278
 C	0x08002574
 C	0x0800275C
-C	0x080034A4
-C	0x08003504
-C	0x08003620
-C	0x08003654
-C	0x080036A8
-C	0x080036C8
-C	0x080038CC
-C	0x080038F0
 C	0x080039E0
-C	0x08003D4C
-C	0x08003DE0
-C	0x08003E54
-C	0x08003EA0
-C	0x08003F28
-C	0x08003F74
-C	0x08003FE8
-C	0x08004028
-C	0x080043A8
-C	0x0800442C
-C	0x080044F8
-C	0x0800454C
-C	0x080045C4
-C	0x080045DC
-C	0x08004610
-C	0x08004644
-C	0x08004764
-C	0x08004798
-C	0x080047EC
-C	0x08004840
-C	0x08004874
-C	0x080048B0
-C	0x080049C8
-C	0x080049EC
 C	0x08004A40
 C	0x08004A78
-C	0x08004AF8
-C	0x08004C58
-C	0x08004CA4
-C	0x08004DF0
-C	0x08004E40
 C	0x08007584
-C	0x08007834
-C	0x08007868
-C	0x08007964
 C	0x08007998
-C	0x080079CC
-C	0x08007BD8
-C	0x08007BFC
-C	0x08007C20
-C	0x08007C4C
-C	0x08007D04
 C	0x08007DDC
-C	0x0800801C
-C	0x08008050
-C	0x08008084
-C	0x080080C8
-C	0x080081BC
-C	0x08008200
-C	0x08008430
-C	0x08008454
-C	0x08008478
-C	0x080084A4
-C	0x08008590
-C	0x080085B4
-C	0x080085E8
-C	0x08008650
-C	0x08008980
-C	0x080089A8
-C	0x08008A34
-C	0x08008A5C
-C	0x08008B80
-C	0x08008BB8
-C	0x08008BE0
-C	0x08008CA0
-C	0x080090D0
-C	0x080091E0
-C	0x08009248
-C	0x08009274
-C	0x080092D4
-C	0x08009374
-C	0x080093E0
-C	0x0800DD00
-C	0x0800DD88
-C	0x0800DDC0
-C	0x0800DE00
-C	0x0800DEC8
-C	0x0800DF14
-C	0x0800DF4C
-C	0x0800DF78
-C	0x0800DFB8
-C	0x0800E2B0
-C	0x0800E328
-C	0x0800E350
-C	0x0800E3A0
-C	0x0800E43C
-C	0x0800E488
-C	0x0800E654
-C	0x0800E690
-C	0x0800E6C8
-C	0x0800E78C
-C	0x0800E9F0
-C	0x0800EA98
-C	0x0800EB60
-C	0x0800EBE4
-C	0x08010170
-C	0x080103F4
-C	0x08010794
-C	0x080107F0
-C	0x08010860
-C	0x080108D0
-C	0x080108FC
-C	0x08010930
-C	0x08010968
-C	0x080109A0
-C	0x080109CC
 C	0x08010B24
 C	0x08010BA0
 C	0x08010C28
@@ -3935,42 +3966,11 @@ C	0x0806E038
 C	0x0806E074
 C	0x0806E130
 C	0x0806E150
-C	0x0806E3F8
 C	0x0806E4CC
 C	0x0806E90C
 C	0x0806E93C
 C	0x0806E9C0
 C	0x0806EA98
-C	0x0806EAC0
-C	0x0806EAF4
-C	0x0806F1C0
-C	0x0806F21C
-C	0x0806F578
-C	0x0806F914
-C	0x0806F934
-C	0x080705E0
-C	0x08070648
-C	0x080706A4
-C	0x08070734
-C	0x08070778
-C	0x08071030
-C	0x08071778
-C	0x08071B64
-C	0x08071C68
-C	0x08071CBC
-C	0x08071E8C
-C	0x08072FF4
-C	0x08073010
-C	0x08073044
-C	0x080746C0
-C	0x08074780
-C	0x080747B8
-C	0x080747F4
-C	0x08074834
-C	0x0807485C
-C	0x08074890
-C	0x080748B8
-C	0x080748E8
 C	0x0807DD58
 C	0x080A89F2
 C	0x080EC9EE

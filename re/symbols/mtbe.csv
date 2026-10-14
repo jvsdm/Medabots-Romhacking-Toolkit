@@ -406,6 +406,8 @@ address,name,kind,count,comment
 0x08000844,get_player_inputs,func_thumb,,Simon/Rokusho
 0x080008C0,SoftResetSequence,func_thumb,,[R0] reinicio de hardware (provavel)
 0x08000964,is_input_soft_reset,func_thumb,,Simon/Rokusho
+0x0800099C,Sound_TickTrackAStub,func_thumb,,[FS1] [confirmado] trampolim para snd_track_tick_a (0x08074090); ponteiro em 0x0807E874
+0x080009A8,Sound_TickTrackBStub,func_thumb,,[FS1] [confirmado] trampolim para snd_track_tick_b (0x080740D4); ponteiro em 0x0807E878
 0x080009BC,decompress_and_store,func_thumb,,Simon/Rokusho
 0x08000A0C,Malias_DecodeLZ,func_thumb,,[R0] LZ de bytes (provavel)
 0x08000B14,Malias_DecodeLZ_Halfword,func_thumb,,[R0] LZ para halfword (provavel)
@@ -455,17 +457,54 @@ address,name,kind,count,comment
 0x08003300,Screen_LoadSpriteRowA,func_thumb,,"[FR3] [FR3] decompress_and_store + 2 registros OBJ em x=0x88, y=8+0x10*byte[0x8E] + Slot_SetupFromRecordList (provavel)"
 0x08003374,MainState0_Menu2_Dispatch,func_thumb,,[FM4] [FM4] despachante do menu 2 de MainState0 (MEDAWATCH): CallViaR0 de 0x083AC454[gamestate_subroutine]; sem nome no Ghidra antes
 0x08003394,MainState0_Menu2_Sub0_InitBg,func_thumb,,"[FL10] entrada de tela: limpa pares, REG_DISPCNT, 3 camadas BG, liga display 0x1F60 (antes: Gfx_InitBgLayersAndEnableDisplay)"
+0x080034A4,PartScreen_FadeInPalettesStep,func_thumb,,[FS1] [confirmado código / tabela provável] fade 9 passos A/B; ao fim FUN_0800393C; tabela 0x083AC458
+0x08003504,PartScreen_HandleCursorInputStep,func_thumb,,[FS1] [provável] navega indice +0x8F 0..2 com SFX; botoes avancam sub-estado; mapa de bits provável
+0x08003620,PartScreen_ClearAndFadeOutStep,func_thumb,,"[FS1] [confirmado] ClearObjectAttributeEntries, paletas, fade snd 8, sub++"
+0x08003654,PartScreen_FadeToColorStep,func_thumb,,"[FS1] [confirmado] 9 passos de fade A/B, sub++"
+0x080036A8,PartScreen_StartSongStep,func_thumb,,"[FS1] [confirmado] snd_song_request(6), flag=1, timer 0x10"
+0x080036C8,PartScreen_WaitBlendAnimStep,func_thumb,,[FS1] [confirmado] Anim_RunSlotScript + GpuBlend_TickStep; sub++
 0x080036F4,Menu_ResetSubstateByMode,func_thumb,,modo obj+0x8F 0/1/2; provavel
 0x08003784,Gfx_SceneInit,func_thumb,,"setup de cena BG: DISPCNT, tiles, mapa, blend (provavel)"
+0x080038CC,PartScreen_WaitBlendThenResetStep,func_thumb,,[FS1] [confirmado] GpuBlend_TickStep; FUN_0800393C; sub++
+0x080038F0,PartScreen_SetNextStateStep,func_thumb,,[FS1] [confirmado] grava 2 no estado
 0x08003904,Screen_DecompressRowImageByIndex,func_thumb,,[FR3] [FR3] escolhe imagem A/B/C pelo byte +0x8F (0/1/2+) e decompress_and_store (provavel)
 0x080039BC,Pair_TickDownCounterIfFlag,func_thumb,,[R0] decrementa contador e incrementa seguinte se bit0 de flag (provavel) (antes: tick_par_contador)
 0x08003A38,InitializeBattleStatusScreen,func_thumb,,"Simon/Rokusho: Initialize the battle status/details screen state machine. Sets up BG layers, decompresses status-screen graphics/tilemaps, loads palettes, initializes the relevant screen widgets, and advances the current game subroutine state."
+0x08003D4C,PartSlots_UpdateAndFadeStep,func_thumb,,"[FS1] [confirmado] 4 slots ObjectSlot_UpdatePosition, camada 5, mascara, fade/blend; FS.md dizia sem funcao"
+0x08003DE0,PartSlots_HandleInputStep,func_thumb,,"[FS1] [confirmado chamadas / provável mapa de bits] bit 0x02 confirma, 0x01 encaixa, 0x08 remove slot"
+0x08003E54,PartSlots_EnterBlendStep,func_thumb,,"[FS1] [confirmado] SetGpuBlendMode(6,0x3F,0x20); +0x84=0; sub++"
+0x08003EA0,PartSlots_WaitBlendStep,func_thumb,,[FS1] [confirmado] espera GpuBlend_TickStep; sub++
 0x08003EE0,Gfx_ResetTileState,func_thumb,,[provavel] CpuFastSet + Tile_ClearSlots reset
+0x08003F28,PartSlots_CommitPalettesStep,func_thumb,,[FS1] [confirmado] CopyPaletteBuffersToHardware; sub++
+0x08003F74,PartSlots_FadeInThenTimerStep,func_thumb,,[FS1] [confirmado] fade 9 passos; ao fim timer 0x10
+0x08003FE8,PartSlots_LoadSlotObjectStep,func_thumb,,"[FS1] [confirmado] Obj_InitSlotAndLoad(1,2,0); sub++"
+0x08004028,PartSlots_DispatchSubStateStep,func_thumb,,[FS1] [confirmado] StateMachine_DispatchStep(ctx+0x58); != 0 -> estado 2
 0x0800406C,InitializeBattleSceneScreen,func_thumb,,"Simon/Rokusho: Initialize the main battle scene screen. Configures BG layers, decompresses battle scene graphics/tilemaps, loads composite battle sprite resources, builds the sprite objects, initializes supporting scene widgets, and advances the current game subroutine state."
+0x080043A8,PartEditor_FadeInStep,func_thumb,,[FS1] [confirmado] flag +0x56; fade; Parts_* helpers
+0x0800442C,PartEditor_HandleInputStep,func_thumb,,"[FS1] [provável] tratador principal do editor de peças: ciclos de slot, SFX, equipar/erro"
+0x080044F8,PartEditor_FinishPaletteStep,func_thumb,,[FS1] [confirmado] +0x50==0 copia paletas; senao blend; sub++
+0x0800454C,PartEditor_FadeOutStep,func_thumb,,[FS1] [confirmado] fade 9 passos ou blend; sub++
+0x080045C4,PartEditor_BuildEquipTableStep,func_thumb,,[FS1] [confirmado] Parts_CreateIconSprite; Parts_BuildEquipTable; zera estado
+0x080045DC,PartEditor_BlendOutStep,func_thumb,,"[FS1] [confirmado] SetGpuBlendMode(6,0x3F,0x20); sub++"
+0x08004610,PartEditor_WaitBlendStep,func_thumb,,[FS1] [confirmado] espera GpuBlend_TickStep; sub++
+0x08004644,PartEditor_DispatchSubmodeStep,func_thumb,,[FS1] [confirmado] jump table por byte +0x5A (<5); tabela em DAT_08004678 nao recuperada
+0x08004764,BattlePreview_InitSlotSpritesStep,func_thumb,,"[FS1] [confirmado] CreateSlotSprites9, camada 5, Slot_ClearAttrMask(0,4); tabelas 0x083AC520/0x083AC540"
+0x08004798,BattlePreview_WaitTimerStep,func_thumb,,[FS1] [confirmado] timer > 0x3C -> sub 0x30 ou paleta; sem BL na ROM (FS1_lista dizia BL de 0x08003D6E: errado)
+0x080047EC,BattlePreview_FadeOutStep,func_thumb,,[FS1] [confirmado] fade 0x21 passos A/B
+0x08004840,BattlePreview_ClearStateStep,func_thumb,,[FS1] [confirmado] limpa OAM; grava estado 7
+0x08004874,BattlePreview_FadeSoundStep,func_thumb,,[FS1] [confirmado] timer > 0x3C; snd_fade 8; blend 8; sub++
+0x080048B0,BattlePreview_WaitBlendStep,func_thumb,,[FS1] [confirmado] espera GpuBlend_TickStep; sub++
 0x080048D8,FightPreview_CachePlayerLoadoutForScene,func_thumb,,"Simon/Rokusho: Cache the current player-side preview loadout into fight_information.preview_loadout_cache. For each of the three player preview bots, store the leg icon index plus the four part ids used later by the preview/battle-intro scene."
+0x080049C8,TeamPick_LoadSlotObjectStep,func_thumb,,"[FS1] [provável] Obj_InitSlotAndLoad(1,0,0); tabela 0x083AC560 (TP2: escolha de bots)"
+0x080049EC,TeamPick_DispatchSubStateStep,func_thumb,,[FS1] [provável] StateMachine_DispatchStep(ctx+0x2C); tabela 0x083AC560
 0x08004A18,BattleStep_PreRefreshBots,func_thumb,,"[TP] [GH-TP confirmado por bytes] passo GS (tabela 0x083AC568 idx0): BL 0x08004E74, 0x080054C0, Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords; GS++. Sem funcao no Ghidra"
 0x08004A2A,Fight_RefreshCaller_Unresolved,label,,[PB] [GH-PB] BL para Fight_RefreshBotPartRecords sem funcao no Ghidra (miolo nao detectado). Pendente
+0x08004AF8,TeamPick_FillBotSlotsStep,func_thumb,,[FS1] [provável] grava bytes de bot a cada 4 quadros; ao fim estado 0x3A; RAM por literal nao resolvido
+0x08004C58,TeamPick_ResetCounterStep,func_thumb,,"[FS1] [confirmado código / tabela provável] ao contador 0x10 zera bytes +0x51..+0x54, avanca"
+0x08004CA4,TeamPick_CompareSelectionStep,func_thumb,,[FS1] [provável] compara selecao; decide por jump table nao recuperada (DAT_08004DAC); tabela 0x083AC560
 0x08004DB4,Battle_SlotDrawStep,func_thumb,,passo de desenho dos slots de batalha por frame; provavel
+0x08004DF0,BattlePreview_FadeRowsStep,func_thumb,,[FS2] provavel: passo de fade das linhas de paleta do preview; entrada 177 de 0x083AC2C8 (MainState0); renomeado
+0x08004E40,BattlePreview_ResetOamAndState,func_thumb,,[FS2] provavel: limpa OAM 0..0x80 e zera estado do preview; entrada 178 de 0x083AC2C8; renomeado
 0x08004E74,Pair_TickUpCounterIfFlag,func_thumb,,[R0] incrementa contador e seguinte se bit0 de flag (provavel) (antes: tick_par_contador_b)
 0x08004E98,ObjectSlots_Init4,func_thumb,,[R0] inicializa 4 slots de objeto (provavel) (antes: init_4_slots)
 0x08004EF8,ObjectSlot_UpdatePosition,func_thumb,,[R0] calcula posicao/tile de slot e avanca contador (provavel) (antes: atualiza_slot)
@@ -541,14 +580,52 @@ address,name,kind,count,comment
 0x0800750C,Parts_DrawModeHeader,func_thumb,,[R0] cabecalho do modo de slots (provavel)
 0x08007540,Parts_CountFilledSlots,func_thumb,,[R0] conta slots preenchidos (provavel)
 0x080075AC,PartsGrid_SceneInit,func_thumb,,"init da tela da grade de peças (gráficos, tiles, sprites, música 7); provável"
+0x08007834,PartsGrid_SlideInStep,func_thumb,,[FS2] provavel: passo de movimento do slot (Slot_SetPosStepByMode 0x18) + GpuBlend; sentido 'entrada' chute; entrada 1 de 0x083AC86C; renomeado
+0x08007868,PartsGrid_InputStep,func_thumb,,"[FS2] confirmado: entrada da grade (cursor, A/B, SFX); indice da celula = row*6+col; entrada 2 de 0x083AC86C; renomeado"
+0x08007964,PartsGrid_BlendInStep,func_thumb,,[FS2] provavel: blend + passo de posicao; entradas 3 e 104 de 0x083AC86C; renomeado
+0x080079CC,PartsGrid_ResetOamAndDispatch,func_thumb,,"[FS2] provavel: limpa OAM; se obj+0x3C==4 chama Dispatch_Sub4Mode(0), senao seta dois contadores; entrada 5 de 0x083AC86C; renomeado"
 0x08007A04,PartsGrid_InitScreen_CellGraphics,func_thumb,,"[provavel] init da tela de pecas: DISPCNT 0x1F60, decompress x4, LoadTilesWithMalias x4, PartsGrid_Draw* (antes: PartsGrid_InitScreen)"
+0x08007BD8,PartsGrid_BlendTickStep,func_thumb,,"[FS2] provavel: Sprite_ToggleFlag4000PairC + GpuBlend_TickStep + contador; entradas 9, 14, 21 de 0x083AC86C; renomeado"
+0x08007BFC,PartsGrid_LoadSlotStep,func_thumb,,"[FS2] provavel: Obj_InitSlotAndLoad(1,2,0) + contador; entrada 10 de 0x083AC86C; renomeado"
+0x08007C20,PartsGrid_DispatchSubStep,func_thumb,,[FS2] provavel: StateMachine_DispatchStep(obj+0x10) + contador ao terminar; entrada 11 de 0x083AC86C; renomeado
+0x08007C4C,PartsGrid_CursorInputStep,func_thumb,,"[FS2] provavel: navegacao do cursor (+0x42 & 3, sfx 2/4/5) e troca de estado; entrada 12 de 0x083AC86C; renomeado"
+0x08007D04,PartsGrid_BlendStartStep,func_thumb,,"[FS2] provavel: SetGpuBlendMode(6,0x3F,0x20) + contador; entradas 13 e 20 de 0x083AC86C; renomeado"
 0x08007D28,Tile_ClearSlotsAndDispatchState_JumpTable,data,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5) (antes: Tile_ClearSlotsAndDispatchState)"
 0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,,[JT5] mov pc
 0x08007E38,PartsGrid_InitScreen,func_thumb,,"monta tela de grade de pecas (decompress, tiles, PartsGrid_Draw*); provavel"
+0x0800801C,PartsGrid_SlideDetailStep,func_thumb,,"[FS2] provavel: passo de posicao do painel de detalhe (modo 8) + blend; entradas 25, 31, 37 de 0x083AC86C; renomeado"
+0x08008050,PartsGrid_SlideLoadStep,func_thumb,,[FS2] provavel: passo de posicao (modo 8) + Obj_InitSlotAndLoad; entrada 26 de 0x083AC86C; renomeado
+0x08008084,PartsGrid_DetailDispatchStep,func_thumb,,[FS2] provavel: passo de posicao + StateMachine_DispatchStep por indice de detalhe; entrada 27 de 0x083AC86C; renomeado
+0x080080C8,PartsGrid_DetailInputStep,func_thumb,,"[FS2] provavel: troca modo de detalhe (CycleDetailMode), redesenha e le entrada (SFX 2/4/5, estados 0x1E/0x24/0x48); entrada 28 de 0x083AC86C; renomeado"
+0x080081BC,PartsGrid_DetailDispatchStepRev,func_thumb,,[FS2] provavel: como DetailDispatchStep mas decrementa o contador; entrada 29 de 0x083AC86C; renomeado
+0x08008200,PartsGrid_BlendSlideStep,func_thumb,,[FS2] provavel: blend + passo de posicao + contador; entradas 30 e 36 de 0x083AC86C; renomeado
 0x08008234,PartsGrid_InitScreen_StatusPreview,func_thumb,,"[provavel] setup da tela de grade de pecas: DISPCNT, decompress x7, tiles x4, cpufastset paleta, PartsGrid_Draw* (antes: PartsGrid_InitScreen)"
+0x08008430,PartsGrid_BlendTickStepB,func_thumb,,"[FS2] provavel: GpuBlend_TickStep + contador; entradas 41, 46, 53 de 0x083AC86C; renomeado"
+0x08008454,PartsGrid_LoadSlotStepB,func_thumb,,"[FS2] provavel: Obj_InitSlotAndLoad(1,2,0) + contador; entrada 42 de 0x083AC86C; renomeado"
+0x08008478,PartsGrid_DispatchStepB,func_thumb,,[FS2] provavel: StateMachine_DispatchStep(obj+0x30) + contador; entrada 43 de 0x083AC86C; renomeado
+0x080084A4,PartsGrid_CellInputStep,func_thumb,,"[FS2] provavel: entrada da celula (SFX 4/2/5, limpa bits de slot ao confirmar); entrada 44 de 0x083AC86C; renomeado"
+0x08008590,PartsGrid_BlendStartStepB,func_thumb,,"[FS2] provavel: SetGpuBlendMode(6,0x3F,0x20) + contador; entradas 45 e 52 de 0x083AC86C; renomeado"
+0x080085B4,PartsGrid_SetupDetailSprites,func_thumb,,[FS2] provavel: monta sprites de detalhe ou contagem do slot + ResetStateFields; entrada 48 de 0x083AC86C; renomeado
+0x080085E8,PartsGrid_DispatchByCellStep,func_thumb,,"[FS2] provavel: StateMachine_DispatchStep com estado tirado de tabela por celula (+0x3D, +0x46); entrada 49 de 0x083AC86C; renomeado"
+0x08008650,PartsGrid_CellMainInputStep,func_thumb,,"[FS2] provavel: entrada principal da celula (ciclos de tile/detalhe/slot, SFX 4/5); entrada 50 de 0x083AC86C; renomeado"
 0x080087CC,PartsGrid_EnterScreenInit,func_thumb,,provável: setup da tela de grade de peças (VRAM/tiles/PartsGrid_*)
+0x08008980,PartsGrid_IconStripStep,func_thumb,,"[FS2] provavel: AnimateIconStrip + GpuBlend + contador; entradas 57, 60, 69 de 0x083AC86C; renomeado"
+0x080089A8,PartsGrid_IconStripInputStep,func_thumb,,"[FS2] provavel: navegacao da faixa de icones (+0x42 & 3, SFX 2/5); entrada 58 de 0x083AC86C; renomeado"
+0x08008A34,PartsGrid_IconStripBlendStep,func_thumb,,[FS2] provavel: SetGpuBlendMode + AnimateIconStrip + contador; entradas 59 e 68 de 0x083AC86C; renomeado
+0x08008A5C,PartsGrid_IconAnimStep,func_thumb,,[FS2] provavel: anima contador de frame +0x48 (0..7) com bits 0x40/0x80 de +0x46; entrada 64 de 0x083AC86C; renomeado
+0x08008B80,PartsGrid_ClearAndInitStep,func_thumb,,"[FS2] provavel: Slot_ClearAttrMask(1,5) + bios_cpufastset (limpa) + init de sprite; entrada 72 de 0x083AC86C; renomeado"
+0x08008BB8,PartsGrid_DispatchStepC,func_thumb,,[FS2] provavel: StateMachine_DispatchStep(obj+0x14) + contador; entrada 73 de 0x083AC86C; renomeado
+0x08008BE0,PartsGrid_SlotScriptInputStep,func_thumb,,"[FS2] provavel: Anim_RunSlotScript(...,6) + leitura de entrada (SFX 4/5, estados 0x4E e 0x40+); entrada 74 de 0x083AC86C; renomeado"
+0x08008CA0,PartsGrid_SubStateSwitchStep,func_thumb,,[FS2] provavel: switch por +0x42 (0..2) e +0x44 com jump table nao recuperada pelo Ghidra; entrada 75 de 0x083AC86C; renomeado
+0x080090D0,PartsGrid_SpritePairStep,func_thumb,,[FS2] provavel: CpuFastSet + init de sprite pair e tamanho conforme +0x42 (0/1/2); entrada 78 de 0x083AC86C; renomeado
 0x08009174,PartsGrid_ReloadRowTilesAndSetup,func_thumb,,"[FL10] tick da grade de peças: cursor, limpa bits +0x40/+0x80, recarrega tiles 0x12x0xC"
+0x080091E0,PartsGrid_OptionRowStep,func_thumb,,"[FS2] provavel: passo de posicao (modo 7, 0xA8) + ciclo da linha de opcoes (CycleOptionRow3) + SFX 4/5; entrada 97 de 0x083AC86C; renomeado"
+0x08009248,PartsGrid_OptionHandlerStep,func_thumb,,[FS2] provavel: chama PartsGrid_DispatchOptionHandler + contador; entrada 98 de 0x083AC86C; renomeado
+0x08009274,PartsGrid_TickFadeOutStep,func_thumb,,[FS3] FS3 provavel: quadro de transicao da grade; estado em obj+0x4A
+0x080092D4,PartsGrid_TickRouteSelection,func_thumb,,[FS3] FS3 provavel: roteia proxima tela apos selecao (bit 0x40)
+0x08009374,PartsGrid_TickDispatchSubstate,func_thumb,,[FS3] FS3 provavel: StateMachine_DispatchStep sobre obj+0x84
 0x080093AC,Shop_SnapshotQuantitiesTable,func_thumb,,copia 0x40 bytes de gShopQuantities; provavel
+0x080093E0,PartsGrid_ResetAndSetMode1,func_thumb,,"[FS3] FS3 provavel: limpa OAM/slots, Dispatch_Sub4Mode(1)"
 0x080093F8,Timer_IncPairIfFlag,func_thumb,,[R0] incrementa par de contadores 16 bits se flag bit0 (provavel)
 0x0800941C,PartsGrid_SplitRowCol,func_thumb,,[R0] indice da grade 6 colunas em linha/coluna (provavel)
 0x0800944C,PartsGrid_CountFlagged30,func_thumb,,[R0] conta celulas ocupadas de 30 (provavel)
@@ -626,11 +703,11 @@ address,name,kind,count,comment
 0x0800C2BC,Debug_ItemCountGrantScreen,func_thumb,,[provavel] quadro do menu de contador: input bits 0x40/0x80 mudam indice 0..2; Inv_Add/SubCount; modo 2 concede itens (cheat? confirmar) (antes: Menu_TickCountEditorAndGrant)
 0x0800C6D8,Dispatch_CallHandlerByMode_A,func_thumb,,wrapper: CallViaR0(tabela[ctx+0x33])
 0x0800C6F8,PartsBuild_UpdateStatusPanel,func_thumb,,"[FL10] painel de status da montagem: número 6 dígitos, cria Medabot se pool não cheio (provável)"
-0x0800C7E4,debug_option4_item_entry,label,,[DB] GH-DB pendente: opcao Item (tabela 0x083ACA80 idx 4); nao e funcao no Ghidra
+0x0800C7E4,debug_option4_item_entry,func_thumb,,[DB] GH-DB pendente: opcao Item (tabela 0x083ACA80 idx 4); nao e funcao no Ghidra
 0x0800C804,Shop_HandleItemListAndCounts,func_thumb,,tela de loja: cursor 0..2 e contagens; provavel
 0x0800CBA8,Gfx_DispatchStateHandler,func_thumb,,trampolim: tabela indexada por ctx+0x33 (provavel)
 0x0800CBC8,Debug_FaceScreen,func_thumb,,"[provavel] per-frame detail page: 2 text lines, cursor, two 6-digit numbers, portrait (antes: Menu_UpdateDetailPage)"
-0x0800CE70,debug_option6_mdlpic_entry,label,,[DB] GH-DB pendente: opcao Mdlpic (tabela 0x083ACA80 idx 6); nao e funcao no Ghidra
+0x0800CE70,debug_option6_mdlpic_entry,func_thumb,,[DB] GH-DB pendente: opcao Mdlpic (tabela 0x083ACA80 idx 6); nao e funcao no Ghidra
 0x0800CE90,Debug_MdlpicScreen,func_thumb,,tela de selecao com painel e 2 numeros de 6 digitos; provavel (antes: Menu_InfoPanelStep)
 0x0800D168,Dispatch_StateHandlerTable_B,func_thumb,,despacho por byte +0x33 via CallViaR0 (2a tabela); provável
 0x0800D188,Debug_RndTkScreen,func_thumb,,[provavel] rotulo de 8 chars + numero de 6 digitos (Num_FormatDecimal6Glyphs); toggle de byte com mascara 0x30 (antes: Hud_DrawLabelAndDecimal6)
@@ -645,10 +722,33 @@ address,name,kind,count,comment
 0x0800D90C,DebugMotion_PlayKind,func_thumb,,toca MotionPlayStep(lado, gDebugMotionKinds[gDebugMotionCursor]) nos dois bots
 0x0800D9DC,Menu5_Dispatch_PartsScreens,func_thumb,,"[ST2] [ST2] menu_list[5] (0x083AC2C8+5); Battle_CheckExitShortcut, DMA se 0x03000430==2, CallViaR0(0x083ACCD4[0x0300137C]); sem funcao no Ghidra; nome provavel"
 0x0800DA34,MedabotGrid_InitScreen,func_thumb,,[provavel] parts grid screen init: decompress + tile loads + grid draw (antes: PartsGrid_InitScreen)
+0x0800DD00,PartDetail_SlideInFadeStep,func_thumb,,[FS3] FS3 provavel: quadro de entrada com fade de paleta
+0x0800DD88,PartDetail_SlideInLoadStep,func_thumb,,"[FS3] FS3 provavel: entrada e Obj_InitSlotAndLoad(1,2,0)"
+0x0800DDC0,PartDetail_SlideInDispatchStep,func_thumb,,[FS3] FS3 provavel: entrada e StateMachine_DispatchStep
+0x0800DE00,PartsGrid_HandleSelectionInput,func_thumb,,"[FS3] FS3 provavel: entrada A/B da grade, sfx 4/5/6"
+0x0800DEC8,PartDetail_SlideInClearStep,func_thumb,,[FS3] FS3 provavel: entrada com CpuFastSet e blend
+0x0800DF14,PartDetail_SlideInBlendStep,func_thumb,,[FS3] FS3 provavel: entrada ate GpuBlend_TickStep
+0x0800DF4C,PartDetail_InitStateRegisters,func_thumb,,[FS3] FS3 chute: limpa OAM e grava 0/2/0x10 em 3 campos
+0x0800DF78,PartDetail_SlideInPaletteCommitStep,func_thumb,,[FS3] FS3 provavel: entrada que copia paleta ao hardware
+0x0800DFB8,PartDetail_SlideInFadeOutStep,func_thumb,,"[FS3] FS3 provavel: entrada com fade ate passo 9, grava 0x10"
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
+0x0800E2B0,PartDetail_FadeCursorStep,func_thumb,,[FS3] FS3 provavel: fade do cursor da tela de detalhe
+0x0800E328,PartDetail_CursorLoadStep,func_thumb,,[FS3] FS3 provavel: troca forma do cursor e Obj_InitSlotAndLoad
+0x0800E350,PartDetail_DispatchLegIconStep,func_thumb,,[FS3] FS3 provavel: StateMachine sobre indice do icone de perna
+0x0800E3A0,PartDetail_HandleSelectionConfirm,func_thumb,,"[FS3] FS3 provavel: troca de selecao, B sfx5, A sfx4 grava 3/4/5"
+0x0800E43C,PartDetail_PaletteCommitStep,func_thumb,,[FS3] FS3 provavel: copia paleta ao hardware ou blend
+0x0800E488,PartDetail_FadeRowsStep,func_thumb,,[FS3] FS3 provavel: fade de linhas de paleta
 0x0800E4F8,Menu_PartsDetailDispatch,func_thumb,,dispatcher de 5 estados (+0x3C) da tela de pecas; provavel
+0x0800E654,PartDetail_ResetCursorSpriteStep,func_thumb,,"[FS3] FS3 provavel: limpa atributo, CpuFastSet e cursor"
+0x0800E690,PartDetail_AnimSlotDispatchStep,func_thumb,,[FS3] FS3 provavel: Anim_RunSlotScript(6) e StateMachine_DispatchStep
+0x0800E6C8,PartDetail_HandleCursorMoveInput,func_thumb,,"[FS3] FS3 provavel: movimento do cursor, sfx 2/4/5"
+0x0800E78C,PartDetail_DispatchSubstate,func_thumb,,[FS3] FS3 provavel: despachante por tabela indexada por obj+0x44; jump table nao recuperada (abre JT)
+0x0800E9F0,PartDetail_SetupCursorAndState,func_thumb,,"[FS3] FS3 provavel: limpa atributo, cursor e grava estado 0x13"
 0x0800EA2C,PartDetail_SceneStep,func_thumb,,passo por frame da tela de detalhe da peça; provável
+0x0800EA98,PartDetail_HandleAttributeCursorInput,func_thumb,,"[FS3] FS3 provavel: cursor de atributo, A sfx4/6, B sfx5"
 0x0800EB34,SceneStep_Caller_ACE14,func_thumb,,"[ST] [ST] chama 0x0800EBFD, 0x0800F441, 0x0801013D; corpo nao lido em detalhe; provavel"
+0x0800EB60,PartDetail_TickFadeAndRoute,func_thumb,,[FS3] FS3 provavel: roteia por byte de estado obj+0x4A
+0x0800EBE4,PartsGrid_ResetAndSetMode2,func_thumb,,[FS3] FS3 provavel: igual ResetAndSetMode1 com Dispatch_Sub4Mode(2)
 0x0800EBFC,Sprite_IncrementXYIfFlag,func_thumb,,[R0] soma 1 em X e Y se bit da flag (provavel)
 0x0800EC20,PartsGrid_SplitCursorIndexRowCol,func_thumb,,[R0] separa indice em linha (>>2) e coluna (&3) (provavel)
 0x0800EC44,PartsGrid_DrawFourEntryText,func_thumb,,[R0] desenha 4 entradas de texto da celula (provavel)
@@ -682,15 +782,26 @@ address,name,kind,count,comment
 0x08010040,PartDetail_SetupAttributeCursorSprite,func_thumb,,[R0] cursor da lista de atributos linha 0..2 (provavel)
 0x080100BC,PartDetail_MoveAttributeCursor,func_thumb,,[R0] move cursor de atributo 0..2 (provavel)
 0x0801013C,PartDetail_DispatchModeHandler,func_thumb,,[R0] dispatch por modo; retorna modo==3 (chute)
+0x08010170,PartsBuild_MarkSlotFlagStep,func_thumb,,[FS3] FS3 chute: marca bit 0x4000 em flags de bot; significado de negocio aberto
 0x080101E8,Slot_CountdownStepAndClear,func_thumb,,"contagem regressiva de byte de contexto +0x108; limpa slot (4,1) ao zerar; provavel"
 0x0801022C,BgMap_FillRectTickCounter,func_thumb,,"[provavel] BgMap_FillRect16(12,8,18,5,tile) + contador de byte++"
-0x08010264,Scene_GsDispatch_Menu6_Encounter,label,,"[BT2] [GH-BT2] menu_list[6]; despachante por GS com tabela 0x083ACE24, DMA limpeza se 0x03000430==2; sem funcao no Ghidra; nao confirmado como volta ao mapa (antes: Scene_GsDispatch_Menu6)"
+0x08010264,Scene_GsDispatch_Menu6_Encounter,func_thumb,,"[BT2] [GH-BT2] menu_list[6]; despachante por GS com tabela 0x083ACE24, DMA limpeza se 0x03000430==2; sem funcao no Ghidra; nao confirmado como volta ao mapa (antes: Scene_GsDispatch_Menu6)"
 0x080102C0,Scr_HideSpritesPlaySong8,func_thumb,,provável: oculta 4 sprites e pede música 8
+0x080103F4,PartsBuild_InitScreenLoadGfx,func_thumb,,"[FS3] FS3 provavel: liga BG0, decompress_and_store, zera campos"
 0x08010478,Screen_ScrollRevealRowsStep,func_thumb,,[FL10] revelação por linhas no mapa de fundo; contador +0x48; subsistema não confirmado
 0x0801053C,Fight_ResetTemplateAndPalette,func_thumb,,"zera estado +0x132, paleta e area; provavel"
 0x08010540,Fight_ResetTemplateAndPalette,label,,[EN] GH-EN: chama Fight_BeginEncounterTemplateSelection; zera +0x132; limpa VRAM/paleta com bios_cpufastset. Confirmado.
 0x0801058C,Fight_InitBotPartSelectScreen,func_thumb,,"[provavel] tela de selecao de pecas do bot: decompress x5, desenha Fight_Draw*"
+0x08010794,Fight_BotPartSelect_FadeInStep,func_thumb,,[FS3] FS3 provavel: quadro de entrada da selecao de peca na batalha
+0x080107F0,Fight_BotPartSelect_InitSlotStep,func_thumb,,"[FS3] FS3 provavel: Obj_InitSlotAndLoad(1,0,0)"
 0x08010814,Fight_ShowPreBattleTextForCharacter,func_thumb,,[TX] GH-TX: r0 = StateMachine_DispatchStep(gTextPreBattleMessage[byte 0x03001800 = FightTemplate.character_id]); se !=0 chama Fight_UpdateBotPartEntryMotion 0x08012098 e incrementa 0x0300137C. Sem funcao no Ghidra; nome provavel
+0x08010860,Fight_BotPartSelect_WaitInputStep,func_thumb,,"[FS3] FS3 provavel: espera entrada, usa flag de mapa 0x32"
+0x080108D0,Fight_BotPartSelect_DispatchStep,func_thumb,,[FS3] FS3 provavel: StateMachine_DispatchSub
+0x080108FC,Fight_BotPartSelect_FxStep,func_thumb,,"[FS3] FS3 provavel: StateMachine e Fx_InitRecord8(1,0x16,7)"
+0x08010930,Fight_BotPartSelect_TableDispatchStep,func_thumb,,[FS3] FS3 provavel: StateTable_DispatchByIndex
+0x08010968,Fight_BotPartSelect_FadeOutStep,func_thumb,,"[FS3] FS3 provavel: StateMachine, snd_fade_request(8), Map64_SubRemoveIfZero(0x32,1)"
+0x080109A0,Fight_BotPartSelect_ClearPaletteStep,func_thumb,,[FS3] FS3 provavel: copia paleta ao hardware e zera estado
+0x080109CC,Fight_BotPartSelect_FadeRowsStep,func_thumb,,[FS3] FS3 provavel: fade de linhas de paleta (A e B)
 0x08010A20,Tile_ResetBlendAndClearSlots,func_thumb,,"[provavel] SetGpuBlendMode(0,0,0), 2x FillRect16, Tile_ClearSlots"
 0x08010A7C,Overworld_ReloadMapSceneAndAdvanceGameState,func_thumb,,"Simon/Rokusho: Reload the current map scene for a scripted/game-state transition, refresh map rendering, create the player object sprite, clear the transition latch, and advance the owning game-state subroutine."
 0x08010AC8,Gfx_PaletteFadeStep,func_thumb,,fade de paleta por contador ctx+0x84 (provavel)
@@ -1109,54 +1220,54 @@ address,name,kind,count,comment
 0x0801D580,Fight_DispatchOnSubstateAA_E,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0801D5A8,Fight_FindAllyFollowupActionSource,func_thumb,,"Simon/Rokusho: Search the acting bot's allied side for a valid chained/follow-up action source. Records a 1-based source bot slot in fight_information[0xDE] and the source bot's pending action/effect kind in fight_information[0xDF], then either advances the action sequence or marks the step complete."
 0x0801D5E0,Fight_FindAllyFollowupActionSource,label,,[TA3] procura aliado para acao de seguimento; nao grava A8 (TA3)
-0x0801D6A4,Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx,label,,Simon/Rokusho (antes: ActionFamily_CancelGravHandler)
+0x0801D6A4,Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx,func_thumb,,Simon/Rokusho (antes: ActionFamily_CancelGravHandler)
 0x0801D738,Fight_PrepareFollowupSourceDisplay,func_thumb,,"Simon/Rokusho: Prepare the chained/follow-up source bot for display. Copies the source bot's live battle state into a temporary display area, rebuilds its displayed part ids, and creates the temporary composite sprite used for the follow-up presentation."
-0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,label,,"Simon/Rokusho: Animate the follow-up source bot's temporary display sprite into view. When the intro completes, seeds the temporary bot state for the follow-up action and advances the action sequence. (antes: Fight_AnimateFollowupSourceIntro)"
-0x0801D95C,Fight_DispatchOnSubstateAA_E_04_StepBotSlot,label,,Simon/Rokusho: Advance the temporary follow-up source display toward its next staged position while animating its composite sprite. (antes: Fight_AdvanceFollowupSourceApproach)
-0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,label,,"Simon/Rokusho: Action-family entry for Recovery. Drives a temporary source/target movement or presentation step, then advances into the later follow-up/repair-state pipeline once the animated approach reaches its threshold. (antes: ActionFamily_Recovery_Handler; decisao CF)"
+0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,func_thumb,,"Simon/Rokusho: Animate the follow-up source bot's temporary display sprite into view. When the intro completes, seeds the temporary bot state for the follow-up action and advances the action sequence. (antes: Fight_AnimateFollowupSourceIntro)"
+0x0801D95C,Fight_DispatchOnSubstateAA_E_04_StepBotSlot,func_thumb,,Simon/Rokusho: Advance the temporary follow-up source display toward its next staged position while animating its composite sprite. (antes: Fight_AdvanceFollowupSourceApproach)
+0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,func_thumb,,"Simon/Rokusho: Action-family entry for Recovery. Drives a temporary source/target movement or presentation step, then advances into the later follow-up/repair-state pipeline once the animated approach reaches its threshold. (antes: ActionFamily_Recovery_Handler; decisao CF)"
 0x0801DADE,Fight_DispatchOnSubstateAA_E_05_ReturnTail,label,,"bx r0 = retorno normal (pop r0), nao tabela; ao chegar fi+0xAA += 1 (E05 -> E06)"
-0x0801DAEC,Fight_DispatchOnSubstateAA_E_06_ShowPartsHud,label,,"Simon/Rokusho: Finalize the follow-up source presentation, refresh the displayed parts, reset temporary motion fields, and advance after the source sprite reaches its commit position. (antes: ActionFamily_AutoRecover_Handler)"
-0x0801DC74,Fight_DispatchOnSubstateAA_E_07_SpawnSlot21,label,,"Simon/Rokusho: Action-family entry for Repair. Waits on a timer-like presentation counter, then creates the temporary repair indicator object and advances into the repair-family resolution pipeline. (antes: ActionFamily_Repair_Handler)"
-0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,label,,Simon/Rokusho (antes: ActionFamily_Reactivate_Handler; decisao CF)
-0x0801DD74,Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim,label,,"Simon/Rokusho: Show the follow-up source part label/text for the currently selected chained-action source, then advance once the text object setup is ready. (antes: ActionFamily_AntiAir_Handler)"
-0x0801DDDC,Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget,label,,Simon/Rokusho: Commit the chained/follow-up action source into active battle state. Transfers the selected source relationship into the main acting bot state and marks the outer action-sequence step complete. (antes: ActionFamily_Scout_Handler)
+0x0801DAEC,Fight_DispatchOnSubstateAA_E_06_ShowPartsHud,func_thumb,,"Simon/Rokusho: Finalize the follow-up source presentation, refresh the displayed parts, reset temporary motion fields, and advance after the source sprite reaches its commit position. (antes: ActionFamily_AutoRecover_Handler)"
+0x0801DC74,Fight_DispatchOnSubstateAA_E_07_SpawnSlot21,func_thumb,,"Simon/Rokusho: Action-family entry for Repair. Waits on a timer-like presentation counter, then creates the temporary repair indicator object and advances into the repair-family resolution pipeline. (antes: ActionFamily_Repair_Handler)"
+0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,func_thumb,,Simon/Rokusho (antes: ActionFamily_Reactivate_Handler; decisao CF)
+0x0801DD74,Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim,func_thumb,,"Simon/Rokusho: Show the follow-up source part label/text for the currently selected chained-action source, then advance once the text object setup is ready. (antes: ActionFamily_AntiAir_Handler)"
+0x0801DDDC,Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget,func_thumb,,Simon/Rokusho: Commit the chained/follow-up action source into active battle state. Transfers the selected source relationship into the main acting bot state and marks the outer action-sequence step complete. (antes: ActionFamily_Scout_Handler)
 0x0801DE1C,Fight_DispatchOnSubstateAA_F,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x0801DE44,Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair,label,,Simon/Rokusho: Queue text for the selected part action by copying both action-description text keyed by BattlePartState_Clean.speciality and technique text keyed by BattlePartState_Clean.technique_or_leg_type. (antes: ActionFamily_DrainCharge_Handler)
+0x0801DE44,Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair,func_thumb,,Simon/Rokusho: Queue text for the selected part action by copying both action-description text keyed by BattlePartState_Clean.speciality and technique text keyed by BattlePartState_Clean.technique_or_leg_type. (antes: ActionFamily_DrainCharge_Handler)
 0x0801DED4,Fight_DispatchOnSubstateAA_F_02_HoldFlag,label,,Simon/Rokusho (antes: ActionFamily_Impair_Handler)
 0x0801DEE4,Fight_DispatchOnSubstateAA_G,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,label,,Simon/Rokusho (antes: ActionFamily_Sacrifice_Handler)
-0x0801DF60,Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen,label,,[HA2] G idx01; escreve 0x04000008 (BGxCNT); +1; provavel (antes: Fight_DispatchOnSubstateAA_G_SetBgControl)
-0x0801DFE0,Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged,label,,3 etapas por frame; +1 na etapa 2; tail-call nao recuperado; confirmado
+0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,func_thumb,,Simon/Rokusho (antes: ActionFamily_Sacrifice_Handler)
+0x0801DF60,Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen,func_thumb,,[HA2] G idx01; escreve 0x04000008 (BGxCNT); +1; provavel (antes: Fight_DispatchOnSubstateAA_G_SetBgControl)
+0x0801DFE0,Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged,func_thumb,,3 etapas por frame; +1 na etapa 2; tail-call nao recuperado; confirmado
 0x0801E08C,Fight_DispatchOnSubstateAA_G_02_ReturnTail,label,,"bx r0 = retorno normal (pop r0), nao tabela; etapa 2 faz fi+0xAA += 1 (G02 -> G03)"
-0x0801E09C,Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground,label,,Simon/Rokusho (antes: ActionFamily_TeamAttack_Handler)
+0x0801E09C,Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground,func_thumb,,Simon/Rokusho (antes: ActionFamily_TeamAttack_Handler)
 0x0801E1B4,Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground,label,,[TA2] gfx: cor da peca (B+0xDD<4) ou B+0xA8+0x50 (medaforca)
-0x0801E200,Fight_DispatchOnSubstateAA_G_04_ResetSideSprites,label,,Simon/Rokusho (antes: ActionFamily_Strengthen_Handler)
-0x0801E248,Fight_DispatchOnSubstateAA_G_05_SlideSideSpritesIn,label,,10 frames; +1 em c==9; confirmado
-0x0801E2B8,Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold,label,,Simon/Rokusho: Action-family entry for Confusion in the later sequence table. Advances the preview/side sprite sequence and then marks the current handler step complete. (antes: ActionFamily_Confusion_Handler)
+0x0801E200,Fight_DispatchOnSubstateAA_G_04_ResetSideSprites,func_thumb,,Simon/Rokusho (antes: ActionFamily_Strengthen_Handler)
+0x0801E248,Fight_DispatchOnSubstateAA_G_05_SlideSideSpritesIn,func_thumb,,10 frames; +1 em c==9; confirmado
+0x0801E2B8,Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold,func_thumb,,Simon/Rokusho: Action-family entry for Confusion in the later sequence table. Advances the preview/side sprite sequence and then marks the current handler step complete. (antes: ActionFamily_Confusion_Handler)
 0x0801E2D8,Fight_DispatchOnSubstateAA_H,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x0801E300,Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles,label,,"Simon/Rokusho: Action-family entry for Counterattack in the later sequence table. Loads the dedicated presentation assets, initializes the mirrored side-preview objects and per-side object state, then advances the action state. (antes: ActionFamily_Counterattack_Handler)"
-0x0801E3C0,Fight_DispatchOnSubstateAA_H_01_ChooseActionPath,label,,Simon/Rokusho: Advance the outer action-sequence state machine based on defender_followup_flags and action_result_flow_flags. Successful normal resolution increments action usage and Medaforce charge; affinity-result and follow-up cases branch into dedicated sequence states. (antes: Fight_AdvanceSequenceFromResultFlags)
+0x0801E300,Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles,func_thumb,,"Simon/Rokusho: Action-family entry for Counterattack in the later sequence table. Loads the dedicated presentation assets, initializes the mirrored side-preview objects and per-side object state, then advances the action state. (antes: ActionFamily_Counterattack_Handler)"
+0x0801E3C0,Fight_DispatchOnSubstateAA_H_01_ChooseActionPath,func_thumb,,Simon/Rokusho: Advance the outer action-sequence state machine based on defender_followup_flags and action_result_flow_flags. Successful normal resolution increments action usage and Medaforce charge; affinity-result and follow-up cases branch into dedicated sequence states. (antes: Fight_AdvanceSequenceFromResultFlags)
 0x0801E43C,Fight_DispatchOnSubstateAA_H_02_CheckBotFlag40,label,,Simon/Rokusho (antes: ActionFamily_InterruptChange_Handler)
-0x0801E474,Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj,label,,Simon/Rokusho: Action-family entry for Attack Change. Builds a temporary indicator object and seeds its position from the current preview anchors before advancing the action state. (antes: ActionFamily_AttackChange_Handler)
-0x0801E54C,Fight_DispatchOnSubstateAA_H_04_WaitSlotOffset10,label,,"Simon/Rokusho: Action-family entry for Defense Change. Waits for a helper-driven condition, then seeds a short delay counter and advances the action state. (antes: ActionFamily_DefenseChange_Handler)"
+0x0801E474,Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj,func_thumb,,Simon/Rokusho: Action-family entry for Attack Change. Builds a temporary indicator object and seeds its position from the current preview anchors before advancing the action state. (antes: ActionFamily_AttackChange_Handler)
+0x0801E54C,Fight_DispatchOnSubstateAA_H_04_WaitSlotOffset10,func_thumb,,"Simon/Rokusho: Action-family entry for Defense Change. Waits for a helper-driven condition, then seeds a short delay counter and advances the action state. (antes: ActionFamily_DefenseChange_Handler)"
 0x0801E578,Fight_DispatchOnSubstateAA_H_06_CheckHitOrSkip,label,,"+1, 0x0A ou +1 conforme byte +0x49 e bit 0x20; confirmado"
-0x0801E5DC,Fight_DispatchOnSubstateAA_H_07_LoadStageGfx,label,,gfx por etapa +0x8B; +1; confirmado
-0x0801E830,Fight_DispatchOnSubstateAA_H_08_AdvanceSlotOffsetByStage,label,,timer 0x3C; +1 ao terminar; confirmado
-0x0801E864,Fight_DispatchOnSubstateAA_H_0A_SetupFourSprites,label,,gfx + 4 sprites; +1; confirmado
-0x0801E8DC,Fight_DispatchOnSubstateAA_H_0B_TickSpriteTimers,label,,timer 10; +1 ao terminar; confirmado
-0x0801E918,Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow,label,,H idx0D; gfx VRAM 0x06010000; digitos de numero e linha de sprites; som 0x5B; +1; confirmado (significado: provavel)
-0x0801E9B0,Fight_DispatchOnSubstateAA_H_0E_WaitSpriteStep10,label,,timer 0x3C; +1; confirmado
-0x0801E9E0,Fight_DispatchOnSubstateAA_H_10_SfxStep2F,label,,Simon/Rokusho (antes: ActionFamily_InterruptChange_Handler_V2)
-0x0801E9FC,Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows,label,,Simon/Rokusho (antes: ActionFamily_AttackChange_Handler_V2)
-0x0801EA5C,Fight_DispatchOnSubstateAA_H_13_BackupStatsOrSkip,label,,+1 ou +3 (pula ate H16) conforme +D1; confirmado
-0x0801EA94,Fight_DispatchOnSubstateAA_H_14_StepByOrientation,label,,+1; confirmado
+0x0801E5DC,Fight_DispatchOnSubstateAA_H_07_LoadStageGfx,func_thumb,,gfx por etapa +0x8B; +1; confirmado
+0x0801E830,Fight_DispatchOnSubstateAA_H_08_AdvanceSlotOffsetByStage,func_thumb,,timer 0x3C; +1 ao terminar; confirmado
+0x0801E864,Fight_DispatchOnSubstateAA_H_0A_SetupFourSprites,func_thumb,,gfx + 4 sprites; +1; confirmado
+0x0801E8DC,Fight_DispatchOnSubstateAA_H_0B_TickSpriteTimers,func_thumb,,timer 10; +1 ao terminar; confirmado
+0x0801E918,Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow,func_thumb,,H idx0D; gfx VRAM 0x06010000; digitos de numero e linha de sprites; som 0x5B; +1; confirmado (significado: provavel)
+0x0801E9B0,Fight_DispatchOnSubstateAA_H_0E_WaitSpriteStep10,func_thumb,,timer 0x3C; +1; confirmado
+0x0801E9E0,Fight_DispatchOnSubstateAA_H_10_SfxStep2F,func_thumb,,Simon/Rokusho (antes: ActionFamily_InterruptChange_Handler_V2)
+0x0801E9FC,Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows,func_thumb,,Simon/Rokusho (antes: ActionFamily_AttackChange_Handler_V2)
+0x0801EA5C,Fight_DispatchOnSubstateAA_H_13_BackupStatsOrSkip,func_thumb,,+1 ou +3 (pula ate H16) conforme +D1; confirmado
+0x0801EA94,Fight_DispatchOnSubstateAA_H_14_StepByOrientation,func_thumb,,+1; confirmado
 0x0801EAC4,Fight_DispatchOnSubstateAA_H_15_HoldFlag,label,,H idx15; so +B5=1; hold; confirmado
-0x0801EAD4,Fight_DispatchOnSubstateAA_H_16_SetupPartSpritesAt,label,,gfx + sprites de parte; timer 0x1E delegado; +1; confirmado
-0x0801EB5C,Fight_DispatchOnSubstateAA_H_17_RunSlot10Anim,label,,anim slot 10 ate -1; +1; confirmado
+0x0801EAD4,Fight_DispatchOnSubstateAA_H_16_SetupPartSpritesAt,func_thumb,,gfx + sprites de parte; timer 0x1E delegado; +1; confirmado
+0x0801EB5C,Fight_DispatchOnSubstateAA_H_17_RunSlot10Anim,func_thumb,,anim slot 10 ate -1; +1; confirmado
 0x0801EBB8,Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance,label,,H idx18; timer 0x3C em 0x030004C6 (0x03000440+0x86); +1; confirmado; quem consome o timer: chute
-0x0801EBD4,Fight_DispatchOnSubstateAA_AO_0E_UpdateSpritesWait60,label,,sprites duas camadas; timer 0x3C; +1; confirmado
-0x0801EBF8,Fight_DispatchOnSubstateAA_H_1A_QueueBrokenBotOrSkip,label,,"Simon/Rokusho: If the current defender's head armor is zero, queue that bot in fight_information.part_resolution_scratch.head_break_bot_queue for later head-break consequence handling. Otherwise skip directly to the later post-action state. (antes: Fight_QueueDefenderHeadBreakIfHeadZero)"
-0x0801EC3C,Fight_DispatchOnSubstateAA_H_1D_WaitOrAdvance,label,,0x20 (espera) ou +1 conforme contador/flags; confirmado (valores)
+0x0801EBD4,Fight_DispatchOnSubstateAA_AO_0E_UpdateSpritesWait60,func_thumb,,sprites duas camadas; timer 0x3C; +1; confirmado
+0x0801EBF8,Fight_DispatchOnSubstateAA_H_1A_QueueBrokenBotOrSkip,func_thumb,,"Simon/Rokusho: If the current defender's head armor is zero, queue that bot in fight_information.part_resolution_scratch.head_break_bot_queue for later head-break consequence handling. Otherwise skip directly to the later post-action state. (antes: Fight_QueueDefenderHeadBreakIfHeadZero)"
+0x0801EC3C,Fight_DispatchOnSubstateAA_H_1D_WaitOrAdvance,func_thumb,,0x20 (espera) ou +1 conforme contador/flags; confirmado (valores)
 0x0801ECC0,Fight_DispatchOnSubstateAA_H_20_ApplyPartDamage,func_thumb,,[HA3] despachante H[0x20] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_H_Substate20)
 0x0801ED50,Fight_DispatchOnSubstateAA_H_21_LoadBotSpriteAndPlace,func_thumb,,"[HA3] despachante H[0x21] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado tambem: Fight_DispatchOnSubstateAA_H, Fight_DispatchOnSubstateAA_P, Fight_DispatchOnSubstateAA_R (antes: Fight_DispatchOnSubstateAA_H_Substate21)"
 0x0801EED4,Fight_DispatchOnSubstateAA_H_24_JumpToStep0A,func_thumb,,[HA3] despachante H[0x24] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_H_Substate24)
@@ -1235,7 +1346,7 @@ address,name,kind,count,comment
 0x08020A68,Fight_DispatchOnSubstateAA_R,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08020A90,Fight_DispatchOnSubstateAA_R_01_ClearTilesSplitCount,func_thumb,,Despachante R idx 0x01; limpa tiles e divide contagem pela peca; proximo 0x02; confirmado
 0x08020AD0,Fight_DispatchOnSubstateAA_R_0C_SplitCountOrSkip,func_thumb,,"Simon/Rokusho: Choose a broken-or-missing target part to receive overflow damage. Restores the defender's effective leg-derived stats first, then either picks a broken target and clamps the overflow damage to that part's current armor or skips ahead if no valid target exists. (antes: Fight_SelectBrokenPartDamageTarget)"
-0x08020B4C,Fight_DispatchOnSubstateAA_R_08,label,,Simon/Rokusho: Advance one repair tick and spawn the accompanying repair effects/particles. Uses different display/effect paths depending on side orientation before advancing the action sequence. (antes: Fight_AdvanceRepairTickWithEffects) (antes: Fight_DispatchOnSubstateAA_R_08_LoadPartIconsAndJump)
+0x08020B4C,Fight_DispatchOnSubstateAA_R_08,func_thumb,,Simon/Rokusho: Advance one repair tick and spawn the accompanying repair effects/particles. Uses different display/effect paths depending on side orientation before advancing the action sequence. (antes: Fight_AdvanceRepairTickWithEffects) (antes: Fight_DispatchOnSubstateAA_R_08_LoadPartIconsAndJump)
 0x08020CEC,Fight_DispatchOnSubstateAA_R_12_JumpTo02,func_thumb,,Despachante R idx 0x12; escreve 2 em +0xAA; confirmado
 0x08020CFC,Fight_DispatchOnSubstateAA_S,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08020D24,Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart,func_thumb,,Despachante S idx 0x00; penalidade + modo fi+0x51 pelo byte +0x49 da peca; proximo 0x04; confirmado (antes: Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart) (antes: Fight_DispatchOnSubstateAA_S_00_00_PenaltyComputeModeCopyPart)
@@ -1406,7 +1517,7 @@ address,name,kind,count,comment
 0x08025790,Fight_DispatchOnSubstateAA_AH_FormatCounterDigits,func_thumb,,[HA8] Handler AH idx 0x12: formata +0x51 em 6 glifos; avanca subestado
 0x080257C0,Fight_DispatchOnSubstateAA_AI,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x080257E8,Fight_DispatchOnSubstateAA_AI_00_AccumPartCheckCost,func_thumb,,Handler AI idx 0x00: acumula peca do bot ativo; custo de status; checa tecnica 16 do alvo; avanca
-0x08025858,Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics,label,,[HA8] Handler AI idx 0x08: escolhe gfx por tecnica ('.'); salto final por tabela nao recuperada
+0x08025858,Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics,func_thumb,,[HA8] Handler AI idx 0x08: escolhe gfx por tecnica ('.'); salto final por tabela nao recuperada
 0x08025974,Fight_DispatchOnSubstateAA_AI_0B_SetupTargetSpriteSfx,func_thumb,,Handler AI idx 0x0B: monta sprite na posicao do alvo; SFX 0x6A; avanca
 0x08025A18,Fight_DispatchOnSubstateAA_AI_SetActionResultCodes,func_thumb,,[HA8] Handler AI idx 0x11: grava +0xC9..+0xCC do bot; avanca subestado
 0x08025AAC,Fight_DispatchOnSubstateAA_AI_12_SelectMessageByTechnique,func_thumb,,Handler AI idx 0x12: grava codigo 0x31/0x32 conforme byte de tecnica '.'; avanca
@@ -1454,7 +1565,7 @@ address,name,kind,count,comment
 0x08026CF4,Fight_DispatchOnSubstateAA_AP,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026D1C,Fight_DispatchOnSubstateAA_AP_01_WaitUnlessFlagB8Bit1,func_thumb,,"Handler AP idx 0x01: avanca, ou vai para 0x20 se +0xB8 bit 1 aceso"
 0x08026D44,Fight_DispatchOnSubstateAA_AP_ApplyDamageToRandomTargetPart,func_thumb,,[HA8] Handler AP idx 0x15: dano em peca sorteada do alvo; avanca +3; salto por tabela nao recuperada
-0x08026D98,Fight_DispatchOnSubstateAA_AP_0x18,label,,[HN1] Handler AP idx 0x18; ver HN1.md (antes: Fight_DispatchOnSubstateAA_AP_18_LoadGfxPlaceOnPart)
+0x08026D98,Fight_DispatchOnSubstateAA_AP_0x18,func_thumb,,[HN1] Handler AP idx 0x18; ver HN1.md (antes: Fight_DispatchOnSubstateAA_AP_18_LoadGfxPlaceOnPart)
 0x08026EC0,Fight_DispatchOnSubstateAA_AP_1B_LoopToStep02,func_thumb,,[HN1] Handler AP idx 0x1B; ver HN1.md
 0x08026ED0,Fight_DispatchOnSubstateAA_AQ,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026EF8,Fight_DispatchOnSubstateAA_AQ_00_PickActorPartToRepair,func_thumb,,[HN1] Handler AQ idx 0x00; ver HN1.md
@@ -2168,7 +2279,7 @@ address,name,kind,count,comment
 0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,"Simon/Rokusho: Advance the preview sequence cursor to the next table entry, skipping the current entry header plus its variable-length payload. Used by the side-preview scene step handlers after consuming sequence_arg_0..sequence_arg_6."
 0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,A6 (rec_2): cursor(+0x100 = 0x03001900) += 1 + byte(0x083CE374 + s16(Row[cursor])); escrita pc 0x0803D4DC; chamada pelos handlers 8-12 do roteiro de objeto
 0x0803D4EC,Fight_ScrollEntryCoords,func_thumb,,[R2] soma/subtrai delta em 20 entradas com mascara (chute)
-0x0803D538,Scene_GsDispatch_Menu10_Link,label,,"[BT2] [GH-BT2] menu_list[10]; despachante por GS-0x10 com tabela 0x083AFC78 e guarda 0x0803EED8; sem funcao no Ghidra; nome sugerido, nao confirmado"
+0x0803D538,Scene_GsDispatch_Menu10_Link,func_thumb,,"[BT2] [GH-BT2] menu_list[10]; despachante por GS-0x10 com tabela 0x083AFC78 e guarda 0x0803EED8; sem funcao no Ghidra; nome sugerido, nao confirmado"
 0x0803D5A0,Fight_ResetStateFlagsAndCounter,func_thumb,,"zera ctx+0x84/+0x86 e incrementa contador; lista diz 428 bytes, corpo real 48; provavel"
 0x0803D634,LinkTick_MenuStep3,func_thumb,,[LK2] [GH-LK2] passo 3 do menu 10: se slot local==0 escreve 0x8000|byte em 0x03005016 e conta gFrameCount; confirmado
 0x0803D674,LinkTick_MenuStep4,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 10: tick de link semelhante ao passo 3; provavel
@@ -2328,7 +2439,7 @@ address,name,kind,count,comment
 0x080421A0,Tinpet_InitIds,func_thumb,,[R2] grava id 0..8 em 9 entradas de 8 bytes em 0x030017A0 (confirmado)
 0x080421B4,Tinpet_ActivateMatchingEntry,func_thumb,,[R2] ativa entrada por id e consome 1 do contador de peca (confirmado; semantica chute)
 0x08042218,Tinpet_IsPoolFull,func_thumb,,[R2] 1 se as 9 entradas estao ocupadas (confirmado)
-0x08042238,Tinpet_CreateRecord,label,,criacao do Medabot pelado; imediato do TinpetId (antes: site_TinpetCreate)
+0x08042238,Tinpet_CreateRecord,func_thumb,,criacao do Medabot pelado; imediato do TinpetId (antes: site_TinpetCreate)
 0x08042278,Map64_GetValue,func_thumb,,[R2] valor do mapa de 64 pares em 0x03002BA0 (confirmado)
 0x080422B8,Map64_AddCountClamp99,func_thumb,,[R2] soma ao valor do mapa limitado a 99 (confirmado)
 0x08042318,Map64_SubRemoveIfZero,func_thumb,,[R2] subtrai do mapa; remove e desloca se zerar (confirmado)
@@ -2361,15 +2472,15 @@ address,name,kind,count,comment
 0x0804384C,Lookup_FindPartIndexById,func_thumb,,[G] Indice na tabela de 9 registros pelo id; 0xFF se nao acha (provavel)
 0x0804387C,reset_step_and_get_encounter_flag,func_thumb,,Simon/Rokusho
 0x080438C4,Overworld_ShouldTriggerRandomEncounter,func_thumb,,"Simon/Rokusho: Return whether the current landing tile should trigger a random encounter. Random encounters are blocked when gRandomEncounterModeFlags bit 0 is set, when encounter disable bytes are nonzero, or when the map's encounter enable byte is zero."
-0x08043AE0,Unk_08043AE0,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = prologo Thumb (push r4 lr); precisa re-disassemble; ponteiro na struct 0x08043AD8; chute
-0x08043B58,Unk_08043B58,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL; precisa re-disassemble; chute
+0x08043AE0,Unk_08043AE0,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = prologo Thumb (push r4 lr); precisa re-disassemble; ponteiro na struct 0x08043AD8; chute
+0x08043B58,Unk_08043B58,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL; precisa re-disassemble; chute
 0x08043B7C,GfxBankA_LoadTilesAndPalette,func_thumb,,"[R2a] R2a: descomprime banco A, carrega 2 conjuntos de tiles e paleta (0x05000000 ou buffer)"
 0x08043C08,GfxBankB_LoadTilesAndPalette,func_thumb,,"[R2a] R2a: igual ao banco A, registros de 0x14 bytes, tiles nos slots 3 e 4"
 0x08043C94,Encounter_RollPercent0To99,func_thumb,,"Simon/Rokusho: Returns a 0..99-style roll by scaling generate_random__() through signed division by 0xFF. Used by encounter and fight template selection threshold logic (<0x28, <0x46, <0x5A, else last entry)."
 0x08043CA8,Slots_ClearFourPairs,func_thumb,,[R2a] R2a: zera 4 pares de halfwords de slots globais
 0x08043CD4,Obj_StepAccumMoveA,func_thumb,,[R2] revisto CH2: provável; acumula delta +0x3B em +0x3F; parte >>2 vai para +0x40 e aplica nos eixos por máscara de +0x3A; renomeado de FUN_08043cd4
 0x08043DF8,FxBlend_ApplyFromObjA,func_thumb,,[R2a] R2a: aplica blend (registro de GPU) a partir do objeto A; desliga se +0x3C=0
-0x08043E48,Obj_StepAccumMoveAWrapper,label,,[BI] BI: alvo Thumb 0x08043E49 gravado por G03. Conteúdo não decompilado (chute). (antes: Fight_G03_VBlankCallback_ptr)
+0x08043E48,Obj_StepAccumMoveAWrapper,func_thumb,,[BI] BI: alvo Thumb 0x08043E49 gravado por G03. Conteúdo não decompilado (chute). (antes: Fight_G03_VBlankCallback_ptr)
 0x08043E54,Obj_CopySlot8Bytes,func_thumb,,[R2a] R2a: copia 8 bytes de +0x74 para tabela indexada por +0x38
 0x08043E78,Obj_StepAccumMoveB,func_thumb,,[R2] revisto CH2: provável; mesma lógica da A para o objeto B (campos +0x74..+0x7B); renomeado de FUN_08043e78
 0x08043F9C,FxBlend_ApplyFromObjB,func_thumb,,[R2a] R2a: igual a FxBlend_ApplyFromObjA para o objeto B (+0x77..+0x79)
@@ -2421,7 +2532,7 @@ address,name,kind,count,comment
 0x08045B68,QueueVisibleCompositePreviewTemplateEntryWithBounds,func_thumb,,Simon/Rokusho
 0x08045C30,QueueVisibleCompositePreviewTemplateEntryWithAffineBounds,func_thumb,,Simon/Rokusho
 0x08045D34,BuildCompositePreviewOamTemplate,func_thumb,,"Simon/Rokusho: Builds the per-descriptor OAM template record used by the composite-preview renderer. It converts descriptor size/divisor bits into GBA OBJ shape/size fields, writes tile base / palette-bank data, and stores the template that later drives final sprite placement in FUN_080465b8."
-0x08045E6C,PartPreviewPiece,label,,calcula seletor de imagem: ((entrada>>6)+variante)&0x7F; patch de 8 bits em 0x45ECC; Simon: LoadCompositePreviewDescriptorRecursive
+0x08045E6C,PartPreviewPiece,func_thumb,,calcula seletor de imagem: ((entrada>>6)+variante)&0x7F; patch de 8 bits em 0x45ECC; Simon: LoadCompositePreviewDescriptorRecursive
 0x08046034,CopyCompositePreviewDescriptorGraphics,func_thumb,,Simon/Rokusho
 0x080465B8,RenderCompositePreviewDescriptorRecursive,func_thumb,,"Simon/Rokusho: Side-1 centered (appearance bit 0x4000) descriptors do not use the non-centered mirrored X formula. The centered branch recomputes placement through the affine path after adjusting the first expanded OAM halfword at entry+0x0C, so mirrored side arms should keep logical appearance source ids but use centered-side placement distinct from plain width-rawX mirroring."
 0x08046A60,LoadPartLargeDisplaySpriteFromAppearanceTable,func_thumb,,"Simon/Rokusho: Part large-display loader: for side!=0, right/left arm rows are copied across opposite appearance tables before recursive rendering. Matching entries with appearance bit 0x4000 go through the centered/affine branch in RenderCompositePreviewDescriptorRecursive, so mirrored-side fallback should treat the per-entry 0x4000 bit as the mirror policy rather than special-casing only the arm root descriptor."
@@ -2898,14 +3009,14 @@ address,name,kind,count,comment
 0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8
 0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
-0x08053360,Unk_08053360,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute
-0x08053380,Unk_08053380,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL + literal 1.0f; precisa re-disassemble; chute
-0x080533A4,Unk_080533A4,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute
+0x08053360,Unk_08053360,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute
+0x08053380,Unk_08053380,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL + literal 1.0f; precisa re-disassemble; chute
+0x080533A4,Unk_080533A4,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute
 0x080533E4,Overworld_BeginUiSceneState,func_thumb,,"Simon/Rokusho: Begin an overworld UI/scene-state sequence with the supplied state id, optional position parameters, and extra mode argument."
-0x080534C4,Unk_080534C4,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute
-0x080535C8,Unk_080535C8,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute
-0x080537BC,Unk_080537BC,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute
-0x080537D8,Unk_080537D8,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute
+0x080534C4,Unk_080534C4,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute
+0x080535C8,Unk_080535C8,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute
+0x080537BC,Unk_080537BC,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute
+0x080537D8,Unk_080537D8,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute
 0x080537E4,Viewport_SetFloatBounds,func_thumb,,[FS8] [FS8] provavel: monta 0x03005350 com floats +-120.5/+-80.5 e chama 0x08053858/0x0805390C; corpo bad no Ghidra (bytes lidos da ROM)
 0x08053858,Viewport_ComputeRectEdgeA,func_thumb,,[FS8] [FS8] chute: helper float sobre 0x03005350; corpo bad no Ghidra
 0x0805390C,Viewport_ComputeRectEdgeB,func_thumb,,[FS8] [FS8] chute: como 0x08053858 + trunc para tabelas 0x083D6F2C/0x083D732C; corpo bad
@@ -3074,8 +3185,8 @@ address,name,kind,count,comment
 0x0805DDEC,Site_RunSaveLoadOption,func_thumb,,[R3] opções salvar/carregar do site (chute)
 0x0805DEB0,Save_InvokeFlashOp,func_thumb,,[R3] chama FUN_0807c918 (chute)
 0x0805DEC8,Save_ClearAndRetryLoad,func_thumb,,[R3] para som e tenta carregar save 4x (provavel)
-0x0805DF18,SaveLoad_LoadGame,label,,load do save (inventario como halfword no original) (antes: site_LoadGame)
-0x0805E010,SaveLoad_SaveGame,label,,save (inventario como halfword no original) (antes: site_SaveGame)
+0x0805DF18,SaveLoad_LoadGame,func_thumb,,load do save (inventario como halfword no original) (antes: site_LoadGame)
+0x0805E010,SaveLoad_SaveGame,func_thumb,,save (inventario como halfword no original) (antes: site_SaveGame)
 0x0805E138,Save_ReadVerify,func_thumb,,[R3] lê 0x398 blocos da EEPROM e valida save (provavel)
 0x0805E248,Save_WriteBlocksEeprom,func_thumb,,"[R3] regrava blocos da EEPROM, diferencial ou total (confirmado)"
 0x0805E2D8,Obj_SetFieldFromTable4,func_thumb,,[R3] campo de objeto por tabela de 4 (chute)
@@ -3369,6 +3480,7 @@ address,name,kind,count,comment
 0x0806E184,Boot_SubState2_WaitFxStep,func_thumb,,[TL] boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
 0x0806E2A0,Screen_InitRowBufferAndFx,func_thumb,,"descomprime tiles, copia 20 linhas para buffer, liga BG1 e fx; provavel"
 0x0806E3C4,Fx_TickStepTableEntry,func_thumb,,[provavel] StateMachine_DispatchStep(tabela[+0xC]); ao terminar grava ctx+4=5 e estado global=2
+0x0806E3F8,Scene_SetSubstate2Wrapper,func_thumb,,"[FS10] FS10 chama FUN_08047850(2); ptr 0x084859D0; confianca confirmado (codigo), significado chute"
 0x0806E404,battle_timer_end_transition,func_thumb,,[R4] R4: timer de fim e saida de batalha por botao bit 3; provavel
 0x0806E460,Boot_DispatchSubState,func_thumb,,provável: CallViaR0 de tabela indexada e fim de transição (antes: Battle_DispatchThenEndTransition)
 0x0806E484,fade_step_bld,func_thumb,,[R4] R4: fade 0..16 por 4 quadros grava registro BLD; provavel
@@ -3379,6 +3491,8 @@ address,name,kind,count,comment
 0x0806E96C,Screen_LayerHideTimedStep,func_thumb,,[FR2] provável; apaga camadas de REG_DISPCNT por 60 quadros; salto final não recuperado (FUN_0806e96c)
 0x0806E9E0,menu_state2_setup,func_thumb,,[R4] R4: configuracao de menu no estado 2 (080446B4); chute
 0x0806EA54,battle_exit_button,func_thumb,,[R4] R4: saida do estado por botao bit 3; confirmado
+0x0806EAC0,Fade_ApplyPaletteTargetsWhenDone,func_thumb,,[FS10] FS10 fim de fade de paleta: 3 halfwords para destinos via ponteiro; ptr 0x08485A14; confianca provavel
+0x0806EAF4,Fade_ApplyBlendTargetsWhenDone,func_thumb,,[FS10] FS10 fim de fade de blend; ptr 0x08485A18; confianca provavel
 0x0806EB28,Fx_StepFadeLatch,func_thumb,,rampa de brilho e latch de parâmetros; provável
 0x0806EBA4,Hud_TickDecimal6AndStep,func_thumb,,[provavel] format_6_digits + slots11_update + fx_step_table_b; atualiza REG_DISPCNT
 0x0806EC30,Screen_InitDmaAndDispcnt,func_thumb,,configura quatro DMA e DISPCNT=0x60; provavel
@@ -3386,8 +3500,13 @@ address,name,kind,count,comment
 0x0806EEA8,Screen_InitObjectSlotsLZ77Vram,func_thumb,,provável: tela de batalha com 7 blocos LZ77 na VRAM e slots de objeto
 0x0806F0E0,Gfx_LoadTwoLz77BlocksToVram,func_thumb,,[FL10] 2x bios_lz77_vram para VRAM; estado=6 (confirmado)
 0x0806F114,FightPreview_SetupCompositeScreen,func_thumb,,monta camada de preview composta e liga OBJ; provavel
+0x0806F1C0,Screen_InitMenuLayoutState,func_thumb,,[FS10] FS10 Screen_InitBg0Tilemap + escrita de estado de tela; ptr 0x08485A30; confianca provavel
+0x0806F21C,Screen_ArmBg2TimerStep0C,func_thumb,,"[FS10] FS10 timer_enable_bg2, passo 7 -> 0x0C; ptr 0x08485A34; confianca provavel"
 0x0806F23C,Screen_TextCounterStep,func_thumb,,[FR1] text/counter screen step: two counters + jump tables + 6-digit format
+0x0806F578,Screen_ResetTextArmBg2Step0E,func_thumb,,[FS10] FS10 clear_text_buffer + ListRing_InitFour + passo 7 -> 0x0E; ptr 0x08485A3C; confianca provavel
 0x0806F5A0,Screen_TextCounterStepB,func_thumb,,[FR1] twin of Screen_TextCounterStep with other context and end state 9
+0x0806F914,Screen_ArmBg2TimerStep11,func_thumb,,"[FS10] FS10 timer_enable_bg2, passo 0x0A -> 0x11; ptr 0x08485A48; confianca provavel"
+0x0806F934,Screen_WaitFramesThenStep12,func_thumb,,[FS10] FS10 contador fi+8 (0x03001800) ate 0x3C; depois passo 0x12; ptr 0x08485A4C; confianca provavel
 0x0806F9D8,fade_palette_16,func_thumb,,[R4] R4: fade de paleta BGR555 de 16 cores com fator linear; provavel
 0x0806FB5C,fade_step_bld_2,func_thumb,,[R4] R4: fade decrescente de 16 passos em registros BLD; provavel
 0x0806FBB8,blit_rect_tilemap,func_thumb,,[R4] R4: copia retangulo de tiles com paleta para mapa e agenda DMA; provavel
@@ -3403,6 +3522,11 @@ address,name,kind,count,comment
 0x0807028C,Screen_InitBg0Tilemap,func_thumb,,[R4] R4: copia tabela para VRAM/paleta e liga BG0; provavel (antes: init_tela_bg0)
 0x08070464,Screen_InitBg0TilemapAlt,func_thumb,,[R4] R4: variante de init_tela_bg0 com paleta 0xF80; provavel (antes: init_tela_bg0_v2)
 0x08070550,slots11_update,func_thumb,,[R4] R4: 11 slots de efeito com periodo por tipo e call_r1; provavel
+0x080705E0,ObjSlot_AdvanceFadeLevelA,func_thumb,,"[FS10] FS10 slot 0x03002C30+k*0x40: +8/+9 sobem ate 0x40, +0x21 += 1; ptr 0x08485B4C; confianca provavel (significado chute)"
+0x08070648,ObjSlot_AdvanceFadeLevelB,func_thumb,,[FS10] FS10 variante de ObjSlot_AdvanceFadeLevelA; ptr 0x08485B50; confianca provavel (significado chute)
+0x080706A4,Obj_SetYBobFromTable,func_thumb,,[FS10] FS10 Y (+4) = +0x23 +/- tabela 0x080B00C8 indexada por +0x21; ptr 0x08485B54; confianca provavel
+0x08070734,Obj_ScrollYUpWrap,func_thumb,,[FS10] FS10 Y (+4) -= 4; se < -0x50 volta a 0xA0; ptr 0x08485B58; confianca provavel
+0x08070778,Obj_AdvanceCounterCap47,func_thumb,,"[FS10] FS10 +0x21 += 1 ate 0x47 (ramo else nao decodificado); sem codigo no Ghidra, bytes a mao; ptr 0x08485B5C; confianca provavel parcial"
 0x080707BC,slot_start,func_thumb,,"[R4] R4: cria slot de efeito (kind, sorteio); confirmado"
 0x08070804,timer_if_flag,func_thumb,,[R4] R4: incrementa contador se flag bit0; confirmado
 0x08070824,anim_6_frames_2_counters,func_thumb,,[R4] R4: animacao de 6 quadros a cada 4 quadros com 2 contadores; provavel
@@ -3411,6 +3535,7 @@ address,name,kind,count,comment
 0x080709D4,Screen_InitLetterGridObjects,func_thumb,,[provavel] 9 LZ77 para VRAM; 22 objetos de letra em grade (x=0x78 +- 8n)
 0x08070C0C,Screen_InitMenuTilesAndFx,func_thumb,,"descomprime 5 blocos LZ77, DMA struct, fx_screen_setup_a(4,2,0), DISPCNT |= 0x1E00; provavel"
 0x08070D74,Scene_InitNineRenderSlotsAndFx,func_thumb,,"[FR3] [FR3] 9 slots de render (ids 6,7,8,9,2,1,3,4,5), fx_screen_setup_a(4,2,0), REG_DISPCNT|=0x1E00 (provavel)"
+0x08071030,Scene_StartSong4AndSlots,func_thumb,,"[FS10] FS10 snd_song_request(4) + slot_start_v2(1,0,0) e (2,0xB,0); ptr 0x08485B80; confianca provavel"
 0x0807105C,Anim_StartPairOnce,func_thumb,,provável: inicia 2 animações e 2 slots uma vez
 0x080710AC,Anim_StartSequenceAnim4Slots,func_thumb,,"[FL10] desliga anims 0x16/0x17, liga 0x18 (8), slot_start_v2(7,0x18,0x60) (provável)"
 0x080710F4,Anim_StartSlotsIfNotDone,func_thumb,,inicia 2 animacoes e slot uma vez por flag +0x620; provavel
@@ -3429,6 +3554,7 @@ address,name,kind,count,comment
 0x08071630,Dispatch_CallHandlerOrStartAnims,func_thumb,,[provavel] jumptable tabela DAT_0807164C se idx<8; senao enable_anim4 x3 e slot_start_v2 x2; tabela nao recuperada
 0x08071650,Dispatch_CallHandlerOrStartAnims_Table,data,,[JT2] [GH-JT2] 8 labels thumb (passos 0..7) indexados por fi+0x08 (word 0x03001808); impares = espera por 0x0803FB3C
 0x08071744,Snd_FadeOutThenSetState,func_thumb,,pede fade de som 0x20 e define estado 2 se flag zerada; provavel
+0x08071778,Scene_SongRequest0AndSetState3,func_thumb,,"[FS10] FS10 snd_song_request(0) + FUN_08047850(3); ptr 0x08485BAC; confianca confirmado (codigo), nome provavel"
 0x0807178C,slots26_update,func_thumb,,"[R4] R4: 26 slots de efeito, despacho por call_r1 a cada quadro; confirmado"
 0x08071804,anim_4_slots,func_thumb,,[R4] R4: animacao de 4 quadros nos slots 0x16-0x19 por bit de flag; provavel
 0x08071898,enable_anim4,func_thumb,,[R4] R4: liga bit de flag e periodo do slot 0x16-0x19; confirmado
@@ -3436,9 +3562,13 @@ address,name,kind,count,comment
 0x0807190C,Fight_TickSlotScriptStep,func_thumb,,"[provavel] passo de script de slot (0x40 bytes): compara halfword +0x1A com tabela, +2++, slot_start_v2 se +0x21==4"
 0x080719B8,Anim_StepSlotTimerReturnStatus,func_thumb,,provável: timer do slot; devolve 0xFF se timer < 0x19
 0x08071A64,Anim_StepSlotKeyframeSpawn,func_thumb,,[FL10] slot com 12 quadros; no quadro 8 cria objeto de render e anim 3 (provável)
+0x08071B64,Obj_RunSpriteSequenceTable12,func_thumb,,[FS10] FS10 tabela de 12 bytes vs +0x21; cria slot filho 0x0C ou k+1 em contador 8; BL de 0x08072E66; confianca provavel
+0x08071C68,Obj_StepXRightWithShadow,func_thumb,,[FS10] FS10 +2 += 1 espelhado no slot k+4; recalcula +6/+0x30; ptr 0x08485BC8; confianca provavel
+0x08071CBC,Obj_StepXLeftWithShadow,func_thumb,,[FS10] FS10 igual a Obj_StepXRightWithShadow com -1; ptr 0x08485BCC; confianca provavel
 0x08071DB8,slot_start_v2,func_thumb,,[R4] R4: cria slot com extra em +0x34; confirmado
 0x08071DDC,dispatch_table_r0,func_thumb,,[R4] R4: chama funcao da tabela pelo byte +0x10 via bx r0; confirmado no mecanismo
 0x08071E0C,Fx_RampCounterStepDone,func_thumb,,rampa em 3 fases e espera contador +0x9A; devolve 1 ao terminar; provavel
+0x08071E8C,Obj_SlideSlot3AndPlaySfx54,func_thumb,,[FS10] FS10 slot 3: Y e +0x1A e X ate o fim; SFX 0x54; fi+0x10 += 1; ptr 0x08485BDC; confianca provavel
 0x08071EFC,Anim_RampStepThenSfx54,func_thumb,,[FR1] timed ramp on +0x104/+0x11A then SFX 0x54 and indirect jump
 0x08071F74,Anim_RampStepThenSfx54B,func_thumb,,[FR1] twin of Anim_RampStepThenSfx54 (offsets 0x144/0x15A
 0x08071FF8,Anim_FrameCycleStep,func_thumb,,[FR2] provável; ciclo de 4 quadros com SFX 0x59 e DMA3 ao final (FUN_08071ff8)
@@ -3499,6 +3629,9 @@ address,name,kind,count,comment
 0x08072F04,Snd_DispatchBelowE0,label,,[SN2] despacho de 00..DF por op&0xF0: 80-8F rest; 90/A0/B0/C0 NOP 1 byte; D0 volume; resto nota (confirmado)
 0x08072F2E,Snd_OpE0_Rest,label,,[SN2] E0 = pausa igual 0x80 (confirmado)
 0x08072F7C,snd_track_cmd_ext,func_thumb,,"[R4] R4: decodificador alternativo de comandos (Dn volume, E1/E2 gravam +2C/+69, FF zera); provavel"
+0x08072FF4,Bar_TickWithSoundModulation,func_thumb,,"[FS10] FS10 snd_vibrato_tick + Bar_TickByState + snd_pitch_slide_tick; ptr 0x083ABD64; confianca confirmado (codigo), nome provavel"
+0x08073010,Obj_TickWaitCountdown,func_thumb,,"[FS10] FS10 decrementa +0x30 se +0x24 != 0; sem codigo no Ghidra, bytes a mao; ptr 0x083ABD88; confianca provavel parcial"
+0x08073044,snd_tick_vibrato_and_pitch_slide,func_thumb,,[FS10] FS10 chama snd_vibrato_tick e snd_pitch_slide_tick (bytes confirmados); ptr 0x083ABDC4; confianca confirmado (bytes)
 0x08073058,snd_track_update,func_thumb,,[R4] R4: avanca cursor da trilha enquanto a espera +0x28 for zero; provavel
 0x08073094,snd_update_frame,func_thumb,,[R4] R4: percorre trilhas e subgrupos do driver por quadro; provavel
 0x08073274,snd_frame_tick,func_thumb,,[R4] R4: tick do contador +0x730 e chamada de snd_update_frame; provavel
@@ -3553,10 +3686,19 @@ address,name,kind,count,comment
 0x08074540,snd_track_test_flag2,func_thumb,,[R4] R4: testa bit 1 de estado global (trilha); chute
 0x0807455C,snd_track_init,func_thumb,,"[R4] R4: inicializa trilha de som (volume 0x1000, insere na lista); provavel"
 0x0807462C,snd_track_request_update,func_thumb,,[R4] R4: pede atualizacao de canal para a trilha; provavel
+0x080746C0,snd_update_channel1_if_idle,func_thumb,,[FS10] FS10 se [driver+0x1E4]==0 chama snd_channel_update_1(driver); driver [0x03007014]=0x03002430; ptr 0x083ABD60; confianca confirmado (decompile)
 0x080746E0,Snd_UpdateChannelIfIdle,func_thumb,,provável: atualiza canal de som se ctx+0x258 == 0
 0x08074704,Snd_TickChannelWhenIdle,func_thumb,,[FL10] se +0x2CC==0 chama snd_channel_update_3 (provável)
 0x08074728,Snd_UpdateChannelIfIdle,func_thumb,,atualiza canal de som se +0x340==0; provavel
 0x0807474C,Snd_TrackUpdateFlagged,func_thumb,,[FR1] snd_channel_update_1 + set 0x5F flags on track +0x50 if flag2 is clear
+0x08074780,snd_update_channel2_if_track_flag,func_thumb,,"[FS10] FS10 snd_channel_update_2(driver+0x244) + snd_track_test_flag2; ptr 0x083ABD9C; confianca provavel (bytes a mao, fim nao decodificado)"
+0x080747B8,snd_update_channel3_if_track_flag,func_thumb,,[FS10] FS10 snd_channel_update_3(driver+0x2B8) + snd_track_test_flag2; ptr 0x083ABDA8; confianca provavel
+0x080747F4,snd_update_channel4_if_track_flag,func_thumb,,[FS10] FS10 snd_channel_update_4(driver+0x32C) + snd_track_test_flag2; ptr 0x083ABDB4; confianca provavel
+0x08074834,snd_set_state3_group_a_if_clear_49c,func_thumb,,[FS10] FS10 se [driver+0x49C]==0 chama snd_channel_set_state3(driver+0x690); ptr 0x083ABDC0; confianca provavel; corpo Ghidra invalido
+0x0807485C,snd_set_state3_if_clear_510,func_thumb,,[FS10] FS10 se [driver+0x510]==0 chama snd_channel_set_state3(driver+0x5B8); ptr 0x083ABDCC; confianca provavel
+0x08074890,snd_reset_group_a_690,func_thumb,,[FS10] FS10 snd_channel_set_state3(driver+0x690) + zera driver+0x4D8; ptr 0x083ABDD8; confianca provavel
+0x080748B8,snd_reset_group_b_6d8,func_thumb,,[FS10] FS10 snd_channel_set_state3(driver+0x6D8) + zera driver+0x54C; ptr 0x083ABDE4; confianca provavel
+0x080748E8,snd_update_channel4_if_idle_340,func_thumb,,[FS10] FS10 se [driver+0x340]==0 chama snd_channel_update_4(driver+0x570); ptr 0x083ABDF0; confianca provavel
 0x0807490C,snd_track_reset_state,func_thumb,,[R4] R4: zera estado da trilha; provavel
 0x0807495C,snd_track_stop_callback,func_thumb,,[R4] R4: reinicia trilha e chama callback de fim; provavel
 0x08074968,Snd_StopCallback_ResetCall,label,,[SN2] SN2: unico chamador de snd_track_reset_state (confirmado)
