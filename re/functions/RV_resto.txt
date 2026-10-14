@@ -16,3 +16,4 @@
 0x0804A764	Overworld_InitMapScene	semtag
 0x0804A944	Overworld_ReloadMapSceneAfterReset	semtag
 0x0804AA74	Overworld_ReloadCurrentMapScene	semtag
+0x080340A4	FightPreview_CursorReset	code_pc

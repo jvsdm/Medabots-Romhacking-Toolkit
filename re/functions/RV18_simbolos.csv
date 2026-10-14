@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x08050CCC,Event_RunSceneCommandSequence,func_thumb,provavel: despacha por jump table indexada pelo byte +0xB (0..4) da struct de cena; nome vago
+0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,provavel: se estado>4 atualiza marcadores/sprites; senao despacha por tabela em +1
+0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,confirmado: varre registros de spawn (terminador 0xFF) filtrando por flag de evento e capitulo; preenche tabela de 0x20 entradas e InitializeObjectRenderSlot
+0x080517F0,Overworld_InitPlayerSprites,func_thumb,confirmado: zera flags; carrega marcador secundario; converte posicao px->tile; InitializeObjectRenderSlot slots 0x2F (jogador) e 0x59 (seguidor); LZ77 para VRAM
+0x0805196C,Overworld_ClearFollowerQueuedMove,func_thumb,provavel: grava 0xFF no byte de movimento enfileirado do seguidor e chama Overworld_ClearPendingStepIfFlag
+0x08051988,Overworld_WalkStepByDirection,func_thumb,provavel: tick de passo por direcao (0-3): move jogador e rola camera; ao fim do tile checa trigger de andar, warp e encontro aleatorio
+0x08051C64,Map_RemapInputDirectionByConveyorTile,func_thumb,confirmado: le tipo de tile de esteira na posicao e, se 1..4, troca a direcao de entrada pela tabela
+0x08051CB8,Overworld_ProcessDirectionInput,func_thumb,confirmado: converte bits de input em direcao 0-3 (com remap de esteira), atualiza facing, checa colisao/bloqueio, chama WalkStepByDirection e SFX 0x57
+0x08051E38,Overworld_SetActorAnimFrameByTable,func_thumb,provavel: carrega graficos de sprite do mapa e aplica frame de animacao vindo de tabela (jogador ou outro ator); depois LoadSecondaryMarkerRecord
+0x08051ED8,Overworld_ClearPendingStepIfFlag,func_thumb,confirmado: se flag != 0 grava 0xFF no passo pendente
+0x08051EFC,Overworld_UpdateFollowerFacing,func_thumb,confirmado: compara posicao do lider e do seguidor (obj 0x30), define facing do seguidor e troca variante de animacao
+0x0805203C,Overworld_AdvanceWalkStep,func_thumb,provavel: avanca o passo do seguidor (obj 0x30) por direcao 0-3 e recalcula o tile dele
+0x0805218C,Map_SetEventMarkerFacingVariant,func_thumb,confirmado: chama Map_SetObjectRenderSlotFacingVariant e grava o facing no registro (+5)
+0x080521A8,Overworld_RandomizeEventMarkerFacing,func_thumb,confirmado (antes: Overworld_TickRandomObjectAnim): a cada 4 frames sorteia um slot de objeto e, se kind 0 com flag 0x80, troca o facing para direcao aleatoria 0-3
+0x08052204,Map_TickAllObjectAnimations,func_thumb,confirmado: percorre 64 slots e chama Map_TickObjectAnimation nos de kind 6
+0x08052284,Map_CheckFacingEventTriggerAhead,func_thumb,confirmado: calcula tile a frente pelo facing do jogador (+0xBE0), procura spawn de evento (kind 0/4/6) e ativa estado
+0x08052400,Map_CheckWalkOverTrigger,func_thumb,confirmado: procura trigger de andar-sobre (kind 8) no tile atual, ativa slot e devolve o byte de estado
+0x080524C8,Map_GetAdjacentCollisionTileByDirection,func_thumb,confirmado: devolve byte de colisao do tile vizinho na direcao 0-3
+0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,provavel: se estado pendente==2 e vizinho livre, reseta e troca anim; devolve byte de bloqueio de objeto do vizinho
+0x08052624,Map_FindDirectionalTriggerAtAdjacentTile,func_thumb,confirmado: calcula tile vizinho pelo facing, procura trigger direcional na tabela do mapa com bit de direcao; devolve valor ou -1
+0x0805273C,Map_PixelXToTileX,func_thumb,confirmado: converte X em pixel para tile (subtrai origem, /16 com ajuste de sinal)
+0x08052760,Map_PixelYToTileY,func_thumb,confirmado: converte Y em pixel para tile (subtrai origem, /16 com ajuste de sinal)
+0x08052784,Map_UpdateVisibleEventObjectSprites,func_thumb,confirmado: percorre slots 0x31..0x54; dentro da janela da camera atualiza posicao/sprite, fora zera os registros
+0x080528F8,Map_CenterCameraForSmallMaps,func_thumb,confirmado: centraliza scroll nos eixos em que o mapa e menor que a tela (15 x 10 tiles); tambem faz LZ77 para VRAM (efeito colateral)
+0x080529AC,Map_GetMapSizeHalfTileByAxis,func_thumb,confirmado: devolve dimensao do mapa em meio-tile (eixo 0=X, 1=Y) a partir de tabela
+0x080529DC,Map_GetInitialScrollTileOrigin,func_thumb,provavel: devolve par u16 (origem de scroll inicial) de tabela do mapa conforme eixo 0/1; eixo 0 le de um registro e 1 de outro
+0x08052A10,Map_SetCameraScrollX,func_thumb,confirmado: grava o mesmo X de scroll em 3 copias
+0x08052A30,Map_SetCameraScrollY,func_thumb,confirmado: grava o mesmo Y de scroll em 3 copias
+0x08052A50,Map_GetCameraScrollX,func_thumb,confirmado: le o scroll X da camera
+0x08052A64,Map_GetCameraScrollY,func_thumb,confirmado: le o scroll Y da camera
+0x08052A78,Map_AddCameraScrollX,func_thumb,confirmado: soma delta ao scroll X nas 3 copias
+0x08052AA4,Map_ClampCameraToLoadedMap,func_thumb,confirmado: limita scroll X/Y aos limites do mapa (centraliza quando o mapa e pequeno) e grava via SetCameraScroll
+0x08052B44,Map_AddCameraScrollY,func_thumb,confirmado: soma delta ao scroll Y nas 3 copias
+0x08052B70,Map_UpdatePlayerMarkerScreenPosition,func_thumb,confirmado: posicao em tela do marcador do jogador = mundo - scroll (com ajuste -5 em Y)
+0x08052BEC,Map_ApplySceneVariantScrollPreset,func_thumb,provavel: flag 0 zera dois campos de scroll; flag !=0 grava valores predefinidos da variante de cena
+0x08052C68,Map_FindWarpTriggerAtTile,func_thumb,confirmado: varre tabela de warp do mapa; se tile bate grava destino (nibble alto) no estado e devolve 1
+0x08052CC0,Overworld_CheckMovementCollision,func_thumb,provavel: checa se o jogador chegou ao limite do passo/borda na direcao; se sim, ajusta facing e devolve 1
+0x08052D90,Map_SetObjectRenderSlotFacingVariant,func_thumb,confirmado: grava facing nos bytes +0x20/+0x21 do slot e recalcula o frame (grupo*12 + facing*3)
+0x08052E0C,Overworld_SetPlayerFacingAndRefreshFollower,func_thumb,confirmado: grava facing do jogador, atualiza slot 0x2F e chama Overworld_UpdateFollowerFacing
+0x08052E34,Map_SetSecondaryMarkerFacing,func_thumb,confirmado: grava facing do marcador secundario e atualiza slot 0x30
+0x08052E58,Map_SetCollisionTile,func_thumb,confirmado (antes: set_collision): grava byte de colisao do tile (x,y) no mapa carregado
+0x08052E88,Overworld_ApplyWarpAtCurrentTile,func_thumb,confirmado: procura warp no tile atual; se achar troca de mapa, centraliza camera, ajusta facing e posicao, clampa camera e sincroniza seguidor
+0x08052F64,Map_InitSecondaryMarkerOverlay,func_thumb,provavel: se ativo, inicia slots 0x30 (marcador secundario) e 0x5A com facing, tile e posicao em pixel
+0x0805309C,Overworld_SyncFollowerPositionAfterWarp,func_thumb,confirmado: se seguidor ativo copia posicao do lider, recalcula tiles e aplica facing do marcador
+0x08053108,Map_UpdateSecondaryMarkerScreenPosition,func_thumb,confirmado: posicao em tela do marcador secundario = mundo - scroll (ajuste -5 em Y)
+0x08053168,EventFlag_ClearIndexedFlagByPackedId,func_thumb,confirmado: limpa bit da flag (par: bit7 / impar: bit3) no array de flags
+0x080531A0,EventFlag_SetIndexedFlagByPackedId,func_thumb,confirmado: seta bit da flag (par: bit7 / impar: bit3)
+0x080531E0,EventFlag_IsSetByPackedId,func_thumb,confirmado: le bit da flag (par: bit7 / impar: bit3) e devolve 0/1
+0x0805321C,EventFlag_SetOrClearByPackedId,func_thumb,confirmado: chama Set ou Clear conforme o segundo argumento
+0x08053238,EventField3Bit_SetByPackedId,func_thumb,confirmado: grava campo de 3 bits (par: bits 4-6 / impar: bits 0-2) no array de eventos
+0x08053280,EventField3Bit_IncrementByPackedId,func_thumb,confirmado: incrementa campo de 3 bits (par: mascara 0x70 / impar: 0x07) do id empacotado
+0x080532D4,EventField3Bit_GetByPackedId,func_thumb,confirmado: le campo de 3 bits (par: bits 6..4 / impar: bits 2..0)
+0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,confirmado: copia registro de 8 bytes do marcador secundario (tabela do mapa) para 0xC10 e grava um byte derivado
+0x080574D4,FieldMenu_ChoiceSub2_SelectRow,func_thumb,provavel: menu de escolha: move cursor (wrap 4 linhas); A checa passo permitido via Overworld_CheckStepAllowed; B fecha
+0x08057B6C,FieldMenu_Sub0B_RowMachine,func_thumb,provavel: maquina de linhas do submenu 0x0B: despacha por modo (0/2/3) e indice de linha (<6) para tabela de handlers
+0x08057CB0,Flow_WaitObjectThenCount,func_thumb,provavel: espera Obj_TwoStageInitThenDispatch terminar, incrementa contador em +0x70 e atualiza estado seguinte (6 passos)
+0x08057D04,FieldMenu_Sub0D_Close,func_thumb,confirmado: limpa pares de slots do menu e avanca subestado
+0x08057D40,FieldMenu_Sub0F_Close,func_thumb,confirmado: limpa pares de slots do menu e avanca subestado
+0x08057D80,Overworld_CheckStepAllowed,func_thumb,confirmado: gate de passo por direcao 0-3: consulta itens do inventario, PartSet, encontro e tile vizinho; devolve codigo 0 (liberado) ou 1-6 (motivo de bloqueio)
+0x08057F1C,Menu_StepCursorWrap,func_thumb,confirmado: move cursor para cima/baixo com wrap em N linhas (bits 0x40/0x80), toca SFX 2 e atualiza sprite do cursor
