@@ -1,0 +1,18 @@
+# address,name,kind,comment
+0x080126EC,Battle_SumBotPartLossScore,function,provável; soma perdas de partes dos 3 bots para o campo 0x16C da luta (FUN_080126ec)
+0x08013164,Fight_PartSelectStep,function,provável; passo do menu de escolha de parte (A confirma SFX4, B cancela SFX5)
+0x080140B0,FUN_080140B0,function,chute; máquina de 4 fases com temporizador 0x3C; sugestão Battle_PanelEntryStep
+0x080629DC,Dispatch_CallHandlerByByteIndex4,function,provável; despacho por byte para 4 ponteiros via CallViaR0 (FUN_080629dc)
+0x0806379C,BattlePanel_DrawSlotsStep,function,provável; texto de 2 slots do painel de batalha + objeto (FUN_0806379c)
+0x08064610,Anim_WaitCounterThenAdvance,function,provável; espera contador +0x50 e seta fase 0x14 (FUN_08064610)
+0x08065198,Anim_PaletteFadeThenSpawn,function,provável; fade de paleta A/B em 9 passos e depois cria objeto 1 (FUN_08065198)
+0x08066574,FUN_08066574,function,chute; roda Site_RunSaveLoadOption até 4 vezes e inicia fade; sugestão Menu_RunSaveLoadOptionsThenFade
+0x08068374,Fx_BlendAndStateStep,function,provável; blend de partículas + StateMachine_DispatchStep + timer no fim (FUN_08068374)
+0x0806B744,Dispatch_CallHandlerByWordIndex,function,provável; trampolim CallViaR0 com índice de byte*4 (FUN_0806b744)
+0x0806D9A8,Battle_IntroSetupStep,function,provável; música 0 + objetos e slots 3/4/7/8 da entrada da batalha (FUN_0806d9a8)
+0x0806E96C,Screen_LayerHideTimedStep,function,provável; apaga camadas de REG_DISPCNT por 60 quadros; salto final não recuperado (FUN_0806e96c)
+0x080708D8,Fx_FrameTickAndDispatch,function,provável; timer_if_flag e anim_6_frames_2_counters por flag + despacho por tabela (FUN_080708d8)
+0x08071304,Screen_TableStepTimedSetup,function,provável; passo de tabela com limite 0x19 e fx_screen_setup_b(4,2,0); salto não recuperado (FUN_08071304)
+0x08071FF8,Anim_FrameCycleStep,function,provável; ciclo de 4 quadros com SFX 0x59 e DMA3 ao final (FUN_08071ff8)
+0x08074F0C,Sound_TrackSfxTickCounter,function,provável; incrementa contador +0x730 e chama snd_track_apply_sfx_all (FUN_08074f0c)
+0x0807DB80,Math_SoftFloat64Compare,function,provável; comparação de float 64 com sf_unpack e caso especial (FUN_0807db80)
