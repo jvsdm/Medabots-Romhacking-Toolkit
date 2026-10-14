@@ -1,0 +1,10 @@
+# address,name,kind,comment
+0x083B7E54,MedaforceDescTable6,data,desc6: 6 B por id de medaforca (b0=id -> B+0xA8; b1=especialidade -> B+0xA9; b2 -> B+0xAA pendente; b3=base da rolagem -> B+0xAB; b4=bonus de efeito -> B+0xAC; b5 -> B+0xAD pendente)
+0x08015668,Fight_SelectMedaforceActionSource,function,copia desc6[id] (6 B) para B+0xA8..+0xAD; depois Fight_SelectActionSource(bot slot+4)
+0x0803769C,Fight_RollPartValue,function,F+0xE8 = B[+0xAB] + compat + (rand&7) + B[0x20+B[+0xA9]] (confirmado)
+0x080376F4,Fight_ComputeEffectValueFromRos,function,F+0xEC = (F+0xE8>>3) + B[+0xAC]; se 0 grava 1 (confirmado)
+0x08034708,ActionScript_Op42_RollPartValueAndEffect,function,op 0x42 do roteiro: RollPart + ComputeEffect + avanca cursor
+0x080268AC,Fight_DispatchOnSubstateAA_AO_01_RollPartValueForBot,function,despachante AO_01: RollPart + ComputeEffect + F+0xAA++
+0x08031918,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,function,F+0xA8 = B[+0xA8]+0x50 (script da medaforca); zera B+0xE0/E1; nao toca C1
+0x08027044,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam,function,op 0x50: dano em pecas com F+0xEC; F+0xAA++; nao le B+0xA9..AD
+0x08015564,Fight_SelectActionSource,function,grava B+0xDD (fonte) e B+0xE0/E1 (alvo); nao toca B+0xA8..AD
