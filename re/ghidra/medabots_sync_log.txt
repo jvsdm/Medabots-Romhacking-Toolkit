@@ -1,376 +1,833 @@
-rotulo 080007fc Snd_VBlankCallSite
-rotulo 08001a00 gMapState_base
-rotulo 0800256c gMenuList0SubTablePtr
-nome 080058a4 Team_HandleSwapSelectInput -> Parts_HandleSlotSwapInput
-rotulo 08006f44 Parts_DispatchSlotAction_ReadActionIndex
-rotulo 08006fa0 Parts_DispatchSlotAction_CheckByte9B
-nome 08007e38 PartsGrid_InitScreen_DetailRows -> PartsGrid_InitScreen
+criada 08000000
+criada 080027bc
+nome 080027bc FUN_080027bc -> MainState0_Menu1_DispatchSub
+criada 080027dc
+nome 080027dc FUN_080027dc -> MainState0_Menu1_Sub0_InitScreen
+criada 08004a18
+nome 08004a18 FUN_08004a18 -> BattleStep_PreRefreshBots
+miolo 08004a2a dentro de BattleStep_PreRefreshBots (Fight_RefreshCaller_Unresolved)
+miolo 08005a60 dentro de Parts_PrepareFourPartSlots (Parts_PrepareFourPartSlots_08005A60)
+rotulo 08006844 Parts_DispatchSlotHandler_JumpA
+rotulo 080068a2 Parts_DispatchSlotHandler_JumpB
+rotulo 08006f56 Parts_DispatchSlotAction_Jump
+miolo 08007034 dentro de Parts_BuildEquipTable (Parts_BuildEquipTable_08007034)
+rotulo 08007d28 Tile_ClearSlotsAndDispatchState_JumpTable
+rotulo 08007d46 Tile_ClearSlotsAndDispatchState_Jump
+nome 0800c6d8 Debug_TinpetDispatch -> Dispatch_CallHandlerByMode_A
+nome 0800c6f8 Debug_TinpetScreen -> PartsBuild_UpdateStatusPanel
 rotulo 0800c7e4 debug_option4_item_entry
-nome 0800c804 Debug_KeyItemCountEditorStep -> Shop_HandleItemListAndCounts
+nome 0800c804 Debug_ItemInventoryScreen -> Shop_HandleItemListAndCounts
+nome 0800cba8 Debug_FaceDispatch -> Gfx_DispatchStateHandler
 rotulo 0800ce70 debug_option6_mdlpic_entry
-criada 0800d9dc
-nome 0800d9dc FUN_0800d9dc -> Menu5_Dispatch_PartsScreens
-criada 0800eb34
-nome 0800eb34 FUN_0800eb34 -> SceneStep_Caller_ACE14
-rotulo 08010264 Scene_GsDispatch_Menu6_Encounter
-miolo 08010540 dentro de Fight_ResetTemplateAndPalette (Fight_ResetTemplateAndPalette_08010540)
-criada 08010814
-nome 08010814 FUN_08010814 -> Fight_ShowPreBattleTextForCharacter
-criada 08010bd0
-nome 08010bd0 FUN_08010bd0 -> Fight_ShowPostBattleTextForCharacter
-rotulo 08010cca Fight_RewardAddsPartToInventory_Call
-miolo 08011c44 dentro de Gfx_ResetScreenBgAndBlend (Gfx_ResetScreenBgAndBlend_08011C44)
-nome 080121a8 Fight_CopyBotLabelRecord -> Fight_FormatBotLabelText
-miolo 080122a4 dentro de Fight_PickRandomAvailableBotPart (Fight_PickRandomAvailableBotPart_080122A4)
-miolo 08012344 dentro de Fight_AssignRandomBotPartSlot (Fight_AssignRandomBotPartSlot_08012344)
-rotulo 08012968 medaforce_list_ptr_literal
-miolo 080129f2 dentro de Fight_SetupBattleBotStates (Fight_SetupBattleBotStates_080129F2)
-criada 08012b94
-nome 08012b94 FUN_08012b94 -> Battle_CpuActionSelectStep
-miolo 08013904 dentro de Dispatch_ByteStateIndexTable (Dispatch_ByteStateIndexTable_08013904)
-rotulo 080151e8 gSpecialityTablePtr
-miolo 08015488 dentro de Fight_SelectFallbackActionFromPriorityList (Fight_SelectFallbackActionFromPriorityList_08015488)
-nome 08015648 Fight_IsMedaforceBlockedByChapter -> Fight_IsMedaforceSelectionBlockedByBattleState
-rotulo 080156f0 gFightPriorityRowTable
-rotulo 080156f4 gFightPriorityListDst
-miolo 080196c0 dentro de Fight_DrawSecondaryEffectIcon (Battle_CpuActionSelectPrep)
-rotulo 0801a7d8 Fight_RunStateDispatch_State0
-rotulo 0801a818 Fight_RunStateDispatch_State1
-rotulo 0801a85c Fight_RunStateDispatch_State2
-rotulo 0801a8bc Fight_RunStateDispatch_State3
-rotulo 0801a910 Fight_RunStateDispatch_State4
-rotulo 0801a950 Fight_RunStateDispatch_State5
-rotulo 0801a958 Fight_RunStateDispatch_State6
-rotulo 0801a998 Fight_RunStateDispatch_0801A998
-rotulo 0801a9c8 Fight_RunStateDispatch_State8
-rotulo 080332ec Fight_ValidatePart_ClearPartByte0F
-criada 080338dc
-nome 080338dc FUN_080338dc -> ActionScript_Op01_pendente
-criada 080339f4
-nome 080339f4 FUN_080339f4 -> ActionScript_Op04_pendente
-criada 08033a10
-nome 08033a10 FUN_08033a10 -> ActionScript_Op05_pendente
-criada 08033cd0
-nome 08033cd0 FUN_08033cd0 -> Fight_ResolveDefenderRosPhase
-criada 08034524
-nome 08034524 FUN_08034524 -> ActionScript_Op36_CallAF
-criada 08034540
-nome 08034540 FUN_08034540 -> ActionScript_Op37_CallAG
-criada 0803455c
-nome 0803455c FUN_0803455c -> ActionScript_Op38_CallAH
-criada 08034578
-nome 08034578 FUN_08034578 -> ActionScript_Op39_CallAI
-criada 08034594
-nome 08034594 FUN_08034594 -> ActionScript_Op3A_CallAJ
-criada 080345b0
-nome 080345b0 FUN_080345b0 -> ActionScript_Op3B_CallAK
-criada 080345cc
-nome 080345cc FUN_080345cc -> ActionScript_Op3C_CallAL
-nome 080345e8 Fight_ClearMirroredSupportSummary -> ActionScript_Op3D_ClearSupportRecord
-criada 08034628
-nome 08034628 FUN_08034628 -> ActionScript_Op3E_CallAM
-criada 08034644
-nome 08034644 FUN_08034644 -> ActionScript_Op3F_CallAN_SceneExit
-criada 08034684
-nome 08034684 FUN_08034684 -> ActionScript_Op40_SideSpritesAO
-nome 080346c4 Fight_ChooseRandomOpponentTarget -> ActionScript_Op41_PickRandomOpponentTargetPart
-nome 08034708 Fight_RollPartAndAdvanceScript -> ActionScript_Op42_RollPartValueAndEffect
-criada 08034728
-nome 08034728 FUN_08034728 -> ActionScript_Op43_SumSideField4
-criada 0803476c
-nome 0803476c FUN_0803476c -> ActionScript_Op44_SideSpritesAP
-criada 080347ac
-nome 080347ac FUN_080347ac -> ActionScript_Op45_IncrementUsageCounter
-criada 080347bc
-nome 080347bc FUN_080347bc -> ActionScript_Op46_SumPartDamageOfTargetBot
-criada 080347f8
-nome 080347f8 FUN_080347f8 -> ActionScript_Op47_SideSpritesCopyTarget
-criada 080348d0
-nome 080348d0 FUN_080348d0 -> ActionScript_Op48_SideSpritesAQ
-criada 08034910
-nome 08034910 FUN_08034910 -> ActionScript_Op49_HalfArmorOfActiveBot
-nome 0803496c Fight_AccumulatePartBonusForSide -> ActionScript_Op4A_AllySideLoop
-nome 080349d8 Fight_SelectReactionTargetFromOpponentState -> ActionScript_Op4B_FindBotWithPartAndPickPart
-nome 08034a68 Fight_CopyBotPartWordAndAdvance -> ActionScript_Op4C_CopyPartArmorToEC
-criada 08034aa0
-nome 08034aa0 FUN_08034aa0 -> Fight_RollDamageFromTwoDice
-nome 08034af4 Fight_PickOpponentTargetStep -> ActionScript_Op4E_FindActiveBotWithGroupAndPickPart
-nome 08034b68 Fight_SetOpponentBaseAndAdvanceScript -> ActionScript_Op4F_FindActiveBotWithGroup
-criada 08034ba0
-nome 08034ba0 FUN_08034ba0 -> ActionScript_Op50_CallAR
-criada 08034bbc
-nome 08034bbc FUN_08034bbc -> ActionScript_Op51_CallAS
-criada 08034bd8
-nome 08034bd8 FUN_08034bd8 -> ActionScript_Op52_CallAT
-criada 08034bf4
-nome 08034bf4 FUN_08034bf4 -> ActionScript_Op53_CallAU
-criada 08034c10
-nome 08034c10 FUN_08034c10 -> ActionScript_Op54_CallAV
-criada 08034c2c
-nome 08034c2c FUN_08034c2c -> ActionScript_Op55_CallAW
-criada 08034c48
-nome 08034c48 FUN_08034c48 -> ActionScript_Op56_CallAX
-criada 08034c64
-nome 08034c64 FUN_08034c64 -> ActionScript_Op57_CallAY
-criada 08034c80
-nome 08034c80 FUN_08034c80 -> ActionScript_Op58_CallAZ
-criada 08034c9c
-nome 08034c9c FUN_08034c9c -> ActionScript_Op59_CallBA
-criada 08034cb8
-nome 08034cb8 FUN_08034cb8 -> ActionScript_Op5A_CallBB
-criada 08034cd4
-nome 08034cd4 FUN_08034cd4 -> ActionScript_Op5B_CallBC
-criada 08034cf0
-nome 08034cf0 FUN_08034cf0 -> ActionScript_Op5C_CallBD
-criada 08034d0c
-nome 08034d0c FUN_08034d0c -> ActionScript_Op5D_CallBE
-criada 08034d28
-nome 08034d28 FUN_08034d28 -> ActionScript_Op5E_CallBF
-criada 08034d44
-nome 08034d44 FUN_08034d44 -> ActionScript_Op5F_CallBG
-criada 08034d60
-nome 08034d60 FUN_08034d60 -> ActionScript_Op60_CallBH
-criada 08034d7c
-nome 08034d7c FUN_08034d7c -> ActionScript_Op61_CallBI
-criada 08034d98
-nome 08034d98 FUN_08034d98 -> ActionScript_Op62_CallBJ
-criada 08034db4
-nome 08034db4 FUN_08034db4 -> ActionScript_Op63_CallBK
-criada 08034dd0
-nome 08034dd0 FUN_08034dd0 -> ActionScript_Op64_CallBL
-criada 08034dec
-nome 08034dec FUN_08034dec -> ActionScript_Op65_CallBM
-criada 08034e08
-nome 08034e08 FUN_08034e08 -> ActionScript_Op66_CallBN
-criada 08034e24
-nome 08034e24 FUN_08034e24 -> ActionScript_Op67_CallBO
-criada 08034e40
-nome 08034e40 FUN_08034e40 -> ActionScript_Op68_CallBP
-criada 08034e5c
-nome 08034e5c FUN_08034e5c -> ActionScript_Op69_CallBQ
-criada 08034e78
-nome 08034e78 FUN_08034e78 -> ActionScript_Op6A_CallBR
-nome 08036270 Fight_IncrementActionUsageCounter -> Fight_IncrementActionUsageCounter_08036270
-nome 08037830 Fight_FindActiveBotInSideWithGroup -> Fight_FindLiveSlotMatchingField91
-criada 0803c0cc
-nome 0803c0cc FUN_0803c0cc -> Fight_ScrollSlotPhase_C0CC
-rotulo 0803d538 Scene_GsDispatch_Menu10_Link
-criada 0803d9a0
-nome 0803d9a0 FUN_0803d9a0 -> Fight_ShowPreBattleTextIndex1
-criada 0803db4c
-nome 0803db4c FUN_0803db4c -> Fight_ShowPostBattleTextIndex1
-criada 0803fb94
-nome 0803fb94 FUN_0803fb94 -> MsgState_FadeToneStep
-criada 0803fbdc
-nome 0803fbdc FUN_0803fbdc -> MsgState_BG0OnThenDispatch
-criada 0803fcc8
-nome 0803fcc8 FUN_0803fcc8 -> MsgState_ClearBoxAndRunScript
-rotulo 0803fe86 MsgScriptVM_TextCallSite
-rotulo 08040884 MsgFF_SubcommandTable
-miolo 08040898 dentro de Script_OpSubcommandOrNextState (MsgFF_SfxAdvanceCtx)
-miolo 080408bc dentro de Script_OpSubcommandOrNextState (MsgFF_AdvanceOtherObj)
-criada 080408d0
-nome 080408d0 FUN_080408d0 -> MsgState_DispatchByScriptByte
-nome 08040974 Dispatch_CallHandlerByByteAt1B -> MsgState13_CtxB1BDispatch
-rotulo 08043820 AreBattleSpritePartIdsValid_08043820
-miolo 080479a0 dentro de GameState_StartFlowByCommand (GameState_StartFlowByCommand_080479A0)
-miolo 08047b98 dentro de GameState_StartFlowByCommand (GameState_StartFlowByCommand_store_tail)
-nome 0804842c Overworld_ApplyMapSceneModePolicy -> SND_PolicyRequest
-miolo 0804a7a0 dentro de Overworld_InitMapScene (Overworld_InitMapScene_0804A7A0)
-miolo 0804b036 dentro de Map_FinishEnterTransition (Map_FinishEnterTransition_0804B036)
-miolo 0804b9f4 dentro de Script_ReadStateBlock (Script_ReadStateBlock_0804B9F4)
-rotulo 0804cad8 Event_Op4C_TakeJumpIfPartMissing
-rotulo 0804cb04 Event_Op4D_CallHasMedalCheck
-rotulo 0804d584 Event_Op81_CallReadArgs8
-rotulo 0804d59c Event_Op81_SelectSavedArgRecord
-miolo 0804edc6 dentro de EventOpcode3A_GetMoney (EventOpcode3A_GetMoney_0804EDC6)
-miolo 08051368 dentro de Overworld_UpdateMapSceneStateMachine (Overworld_UpdateMapSceneStateMachine_08051368)
-rotulo 08051416 Map_LoadEntitySpawns_GroupLoop
-miolo 08052330 dentro de Map_CheckFacingEventTriggerAhead (Map_CheckFacingEventTriggerAhead_08052330)
-miolo 08057244 dentro de Overworld_InitChoiceMenuScreen (Overworld_InitChoiceMenuScreen_08057244)
-miolo 08058080 dentro de Map_CreateChoiceSprites (Map_CreateChoiceSprites_08058080)
-nome 0805ae4c KeyItemBag_BuildOwnedList -> Shop_BuildItemList64
-rotulo 0805bc54 Unnamed_ShopTableBaseRef
-nome 0805cfb4 KeyItemBag_ListInputStep -> Shop_ItemListInputStep
-rotulo 0805d2c8 KeyItemBag_DispatchTable
-rotulo 0805d36c ItemListSwitch_Table
-rotulo 0805d384 KeyItemBag_Case_Id1
-rotulo 0805d398 KeyItemBag_Case_Id5
-rotulo 0805d3ac KeyItemBag_Case_Id12
-rotulo 0805d3c0 KeyItemBag_Case_Id13
-rotulo 0805d3d4 KeyItemBag_Case_Id19
-rotulo 0805d3e8 KeyItemBag_Case_Id39
-rotulo 0805d410 KeyItemBag_Case_Default
-nome 0805ddec SaveLoad_RunOption -> Site_RunSaveLoadOption
-nome 0805effc Gfx_PaletteFadeStep -> Gfx_PaletteFadeStep_0805EFFC
-nome 080678d4 Text_TypewriterRowStep -> Menu_RingPanelColumnStep
-rotulo 08072d90 Snd_OpcodeTablePtr
-rotulo 08072d94 Snd_OpcodeTable_E0_FF
-rotulo 08072e14 Snd_OpE1_Entry
-miolo 08072f04 dentro de Snd_TrackStepInterpreter (Snd_DispatchBelowE0)
-miolo 08072f2e dentro de Snd_TrackStepInterpreter (Snd_OpE0_Rest)
-nome 08073ab8 FUN_08073ab8 -> snd_dma_channel_setup
-rotulo 08074968 Snd_StopCallback_ResetCall
-rotulo 0807c92c Snd_TM0CNT_Candidate
-rotulo 080b012c SND_SongTable
-rotulo 080b0204 SND_Song0Header
-rotulo 080b16e4 SND_SampleTable
-rotulo 083abb50 SND_PsgFreqTable
-rotulo 083ac880 table_partsgrid_states
-rotulo 083acae0 table_partsbuild_states
-rotulo 083acb38 debug_motion_table_base
-rotulo 083acc08 debug_parts_spawn_names
-rotulo 083acc2c debug_item_grant_names
-rotulo 083ace24 gSceneStepSub_ACE24
-rotulo 083ace54 gSceneStepTable_ACE14_PreBattle
-rotulo 083acef8 gSceneStepTable_ACE14_PostBattle
-rotulo 083acf00 gRewardStateTable
-rotulo 083ad070 gBattlePartSlotPickTable
-rotulo 083ad080 Battle_FrameDispatchTable
-rotulo 083ad0f0 table_medabot_screen_states
-rotulo 083ad10c Battle_SceneInitTable
-rotulo 083ad114 table_medabot_screen_entry9
-rotulo 083ad118 table_medabot_screen_entry10
-rotulo 083ad190 Battle_StepFrameTable
-rotulo 083ad380 gSpeciality8ByteTable
-rotulo 083ad470 gFightFallbackPriorityRows
-rotulo 083ad524 cursor_cell_xy_table
-rotulo 083af080 gFightSlotRandomTable16
-rotulo 083af090 gPartActionHandlerTable
-rotulo 083af380 gRollDieFaceTable
-rotulo 083afc2c gFightScrollSlotBytes_AFC2C
-rotulo 083afc38 gSlotWaveTable_AFC38
-rotulo 083afca0 gSceneStepTable_AFC78_A
-rotulo 083afd08 gSceneStepTable_AFC78_B
-rotulo 083b2940 MsgState6_DispatchTable
-rotulo 083b6590 debug_parts_record_table
-rotulo 083b7e54 medaforce_descriptor_table
-rotulo 083ba658 gPartRecordPtrTable
-rotulo 083c1b80 gEncounterTemplatePtrs
-rotulo 083c6a04 gTechniqueScriptStream_Generic
-rotulo 083d2104 gMainState1MenuTable
-rotulo 083d212c gSceneSubroutineTable
-rotulo 083d222c gEventPrimaryOpcodeTable
-rotulo 083d2630 gEventContinuationOpcodeTable
-rotulo 083d2a40 gWalkSpeedTable
-rotulo 08411e08 gWarpList_Map0
-rotulo 08411fe7 gWarpList_Map23
-rotulo 08412e60 gWarpTablePtrs
-rotulo 08483234 gMapEntityPtrTable
-rotulo 08483594 gMainState2MenuTable
-rotulo 084835a4 ScreenFrameTable_Entry0
-rotulo 08483614 SAVE_HANDLER_InitScreen
-rotulo 08483688 SAVE_HANDLER_StepThenFlashOp
-rotulo 084836b4 SAVE_SIGNATURE_ROM
-rotulo 084836c5 SAVE_ERASE_HEADER_ROM
-rotulo 08483724 SAVE_HANDLER_FinishFlashStep
-rotulo 08483770 SAVE_HANDLER_WriteEepromAndFinish
-rotulo 084856e8 gMainState3MenuTable
-rotulo 08486e54 SND_LitFifoA
-rotulo 08486e58 SND_LitFifoB
-rotulo 08486e6c gGfx_Dialog_Moldura
-rotulo 084881e0 gGfx_Battle_BotTiles_B
-rotulo 08488240 gGfx_Battle_BotTiles_C
-rotulo 08488290 gGfx_Battle_BotTiles_D
-rotulo 084882cc gGfx_Battle_BotTiles_A
-rotulo 08488520 gGfx_Dialog_PaletaOrnamento
-rotulo 084c39d8 gGfx_Dialog_Tiles2
-rotulo 084c3a24 gGfx_PartsGrid_Tiles_Bg1
-rotulo 084c3bf8 gGfx_PartsGrid_Tiles_Bg2
-rotulo 084c3e64 gGfx_PartDetail_Tiles_Bg6
-rotulo 084c3f0c gGfx_FightScene_Tiles_Bg2
-rotulo 084c4b4c gGfx_PartDetail_Tiles_Bg3
-rotulo 084c4bdc gGfx_PartDetail_Tiles_Bg1
-rotulo 084c4fbc gGfx_PartDetail_Tiles_Bg2
-rotulo 084c4ffc gGfx_PartDetail_Tiles_Bg4
-rotulo 084c50d0 gGfx_BattleScene_Tiles_Bg1a
-rotulo 084c5250 gGfx_BattleScene_Tiles_Bg1b
-rotulo 084c53c8 gGfx_PartDetail_Tiles_Bg5
-rotulo 084c55cc gGfx_BattleScene_Tiles_Bg3
-rotulo 084c58d8 gGfx_FightScene_Tiles_Bg3
-rotulo 084c58f4 gGfx_FightScene_Tiles_Bg1
-rotulo 084c7c54 gGfx_Overlay_Tiles_Bg1
-rotulo 084c7e7c gGfx_Overlay_Tiles_Bg2
+nome 0800d168 Debug_RndTkDispatch -> Dispatch_StateHandlerTable_B
+nome 0800d25c Debug_BattleDispatch -> Dispatch_CallHandlerByByte33_b
+nome 0800d27c Debug_BattleScreen -> Menu_TickSingleCountSelector
+nome 0800d3c4 Debug_SoundDispatch -> Dispatch_CallHandlerByMode_B
+nome 0800d3e4 Debug_SoundScreen -> PartsBuild_UpdateEditPanel
+rotulo 08010540 Fight_ResetTemplateAndPalette_08010540
+rotulo 08011c44 Gfx_ResetScreenBgAndBlend_08011C44
+rotulo 080122a4 Fight_PickRandomAvailableBotPart_080122A4
+rotulo 08012344 Fight_AssignRandomBotPartSlot_08012344
+rotulo 080129f2 Fight_SetupBattleBotStates_080129F2
+rotulo 08013904 Dispatch_ByteStateIndexTable_08013904
+miolo 08013e84 dentro de UpdateSelectedMedabotPreviewScreen (UpdateSelectedMedabotPreviewScreen_08013E84)
+miolo 08014da2 dentro de Fight_SelectActionSourceStep (Fight_SelectActionSourceStep_08014DA2)
+miolo 08014dec dentro de Fight_SelectMedaforceSourceStep (Fight_SelectMedaforceSourceStep_08014DEC)
+miolo 08014f1e dentro de Fight_CopyBotSlotRecords (Fight_CopyBotSlotRecords_08014F1E)
+miolo 08014f6e dentro de Fight_CopyBotIdentityRecords (Fight_CopyBotIdentityRecords_08014F6E)
+rotulo 08015488 Fight_SelectFallbackActionFromPriorityList_08015488
+nome 08015648 Fight_IsMedaforceSelectionBlockedByBattleState -> Fight_IsMedaforceBlockedByChapter
+rotulo 080156c0 Fight_MedaforceBotBaseLiteral
+rotulo 080156c4 Fight_MedaforceMedalTableLiteral
+rotulo 080156c8 Fight_MedaforceScratchLiteral
+rotulo 080156cc Fight_MedaforceDescriptorLiteral
+rotulo 080196c0 Battle_CpuActionSelectPrep
+miolo 0801af84 dentro de Fight_StepBotVisualUp (Fight_StepBotVisualUp_0801AF84)
+miolo 0801b37c dentro de Fight_SelectBotActivePart (Fight_SelectBotActivePart_0801B37C)
+miolo 0801b60c dentro de Fight_ResetBotPartFlags (Fight_ResetBotPartFlags_0801B60C)
+miolo 0801d2ba dentro de Fight_DispatchOnSubstateAA_A_2D_EndResult0 (Fight_DispatchOnSubstateAA_A_2D_EndResult0_0801D2BA)
+miolo 0801d2d0 dentro de Fight_DispatchOnSubstateAA_A_2E_EndResult1 (Fight_DispatchOnSubstateAA_A_2E_EndResult1_0801D2D0)
+miolo 0801d2e6 dentro de Fight_DispatchOnSubstateAA_A_2F_EndResult2 (Fight_DispatchOnSubstateAA_A_2F_EndResult2_0801D2E6)
+miolo 0801d378 dentro de Fight_DispatchOnSubstateAA_B_03_EndResult1 (Fight_DispatchOnSubstateAA_B_03_EndResult1_0801D378)
+miolo 0801d404 dentro de Fight_DispatchOnSubstateAA_C_03_EndResult1 (Fight_DispatchOnSubstateAA_C_03_EndResult1_0801D404)
+miolo 0801d5e0 dentro de Fight_FindAllyFollowupActionSource (Fight_FindAllyFollowupActionSource_0801D5E0)
+miolo 0801e1b4 dentro de Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground (Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground_0801E1B4)
+miolo 0801fa24 dentro de Fight_DispatchOnSubstateAA_I_07_ApplyPartStateEffectAtXY (Fight_DispatchOnSubstateAA_I_07_ApplyPartStateEffectAtXY_0801FA24)
+rotulo 08020b4c Fight_DispatchOnSubstateAA_R_08
+miolo 08026838 dentro de Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs (Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs_08026838)
+rotulo 08026d98 Fight_DispatchOnSubstateAA_AP_0x18
+miolo 08027044 dentro de Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam (Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam_08027044)
+miolo 08027974 dentro de Fight_DispatchOnSubstateAA_AS_SelectVariantByTechnique (Fight_DispatchOnSubstateAA_AS_SelectVariantByTechnique_08027974)
+miolo 08027a04 dentro de Fight_DispatchOnSubstateAA_AS_LoadIconAtActor (Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_08027A04)
+rotulo 08027a16 Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_Jump
+miolo 08027e30 dentro de Fight_DispatchOnSubstateAA_AS_SetStatusFlagByTechnique (Fight_DispatchOnSubstateAA_AS_SetStatusFlagByTechnique_08027E30)
+miolo 08027eec dentro de Fight_DispatchOnSubstateAA_AS_SetStepCodeByTechnique (Fight_DispatchOnSubstateAA_AS_SetStepCodeByTechnique_08027EEC)
+miolo 0802843c dentro de Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique (Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_0802843C)
+rotulo 0802844c Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_Jump
+rotulo 0802845c Fight_SelectVariantByTechnique_JumpTable
+miolo 08028512 dentro de Fight_DispatchOnSubstateAA_AV_LoadEffectGfx (Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_08028512)
+rotulo 08028526 Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_Jump
+nome 080287dc Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion -> Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents
+miolo 08028834 dentro de Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents (Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents_08028834)
+miolo 080288c8 dentro de Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents (Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked)
+miolo 08028908 dentro de Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents (Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked)
+miolo 08028944 dentro de Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents (Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked)
+miolo 08028980 dentro de Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents (Fight_DispatchOnSubstateAA_AV_13_ApplyFireUnlessMasked)
+miolo 080289bc dentro de Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents (Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion)
+rotulo 08028ab4 Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump
+miolo 08028c78 dentro de Fight_DispatchOnSubstateAA_AW_00_SelectStatusTypeFromTechnique (Fight_DispatchOnSubstateAA_AW_00_SelectStatusTypeFromTechnique_08028C78)
+miolo 0802b0fc dentro de Fight_DispatchOnSubstateAA_BE_LoadEffectGfx (Fight_DispatchOnSubstateAA_BE_LoadEffectGfx_0802B0FC)
+miolo 0802b1da dentro de Fight_DispatchOnSubstateAA_BE_SelectTargets (Fight_DispatchOnSubstateAA_BE_SelectTargets_0802B1DA)
+miolo 0802b550 dentro de Fight_DispatchOnSubstateAA_BE_RollRandomStatus (Fight_DispatchOnSubstateAA_BE_RollRandomStatus_0802B550)
+miolo 0802b7bc dentro de Fight_DispatchOnSubstateAA_BE_SetResultMessage (Fight_DispatchOnSubstateAA_BE_SetResultMessage_0802B7BC)
+miolo 0802b868 dentro de Fight_DispatchOnSubstateAA_BF_SelectAlliesAndStat (Fight_DispatchOnSubstateAA_BF_SelectAlliesAndStat_0802B868)
+nome 0802e44c Fight_DispatchOnSubstateAA_BM_00_MarkOpponentsReadMedaforce -> Fight_DispatchOnSubstateAA_BM_00
+miolo 0802e4a0 dentro de Fight_DispatchOnSubstateAA_BM_00 (Fight_DispatchOnSubstateAA_BM_00_ReadEnemyGauge)
+miolo 080308bc dentro de Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx (Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx_080308BC)
+miolo 08030c64 dentro de Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart (Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart_08030C64)
+miolo 08030e8c dentro de Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated (Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated_08030E8C)
+miolo 0803186a dentro de Fight_DispatchOnSubstateAA_BR_46_WaitMedaforceAnim (Fight_DispatchOnSubstateAA_BR_46_WaitMedaforceAnim_0803186A)
+miolo 080318de dentro de Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName (Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction)
+miolo 080318e0 dentro de Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName (Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName_080318E0)
+nome 08031918 Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction -> Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction_08031918
+miolo 08031938 dentro de Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction_08031918 (Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction_08031938)
+miolo 08031a84 dentro de Fight_DispatchPartPreparation (Fight_DispatchPartPreparation_08031A84)
+miolo 08031ac0 dentro de Fight_DispatchPartExecution (Fight_DispatchPartExecution_08031AC0)
+nome 080339f4 ActionScript_Op04_DispatchOnSubstateAA -> ActionScript_Op04_pendente
+nome 08033a10 ActionScript_Op05_DispatchOnSubstateAA_B -> ActionScript_Op05_pendente
+nome 08034048 FightPreview_SetupSceneFromPartTechnique -> ActionScript_Op1A_DispatchOnSubstateAA_G
+miolo 080340f6 dentro de ActionScript_Op1B_LoadPaletteAndSetTechniqueId (ActionScript_Op1B_LoadPaletteAndSetTechniqueId)
+miolo 080340f8 dentro de ActionScript_Op1B_LoadPaletteAndSetTechniqueId (ActionScript_Op1B_LoadPaletteAndSetTechniqueId_080340F8)
+nome 08034910 ActionScript_Op49_HalfArmorOfActiveBot -> ActionScript_Op49_HalfArmorSelfBot
+nome 08034a68 ActionScript_Op4C_CopyPartArmorToEC -> ActionScript_Op4C_ArmorOfTargetPart
+nome 08034aa0 ActionScript_Op4D_RollDamageFromTwoDice -> Fight_RollDamageFromTwoDice
+nome 08034bbc ActionScript_Op51_CallAS -> ActionScript_Op51_StateByTechniqueSelf
+nome 08034bd8 ActionScript_Op52_CallAT -> ActionScript_Op52_TeamSupportBonus
+nome 08034bf4 ActionScript_Op53_CallAU -> ActionScript_Op53_ReactionMarkSelf
+nome 08034c10 ActionScript_Op54_CallAV -> ActionScript_Op54_StateAllOpponents
+nome 08034c2c ActionScript_Op55_CallAW -> ActionScript_Op55_TeamProtectStatus
+nome 08034c48 ActionScript_Op56_CallAX -> ActionScript_Op56_TeamHeal
+nome 08034c64 ActionScript_Op57_CallAY -> ActionScript_Op57_TeamRepairArmor
+nome 08034c80 ActionScript_Op58_CallAZ -> ActionScript_Op58_TeamRestoreParts
+nome 08034c9c ActionScript_Op59_CallBA -> ActionScript_Op59_TeamGauge
+nome 08034cb8 ActionScript_Op5A_CallBB -> ActionScript_Op5A_TechniqueNoDamage
+nome 08034cd4 ActionScript_Op5B_CallBC -> ActionScript_Op5B_pendente
+nome 08034cf0 ActionScript_Op5C_CallBD -> ActionScript_Op5C_pendente
+nome 08034d0c ActionScript_Op5D_CallBE -> ActionScript_Op5D_pendente
+nome 08034d28 ActionScript_Op5E_CallBF -> ActionScript_Op5E_pendente
+nome 08034d44 ActionScript_Op5F_CallBG -> ActionScript_Op5F_pendente
+nome 08034d60 ActionScript_Op60_CallBH -> ActionScript_Op60_pendente
+nome 08034d7c ActionScript_Op61_CallBI -> ActionScript_Op61_pendente
+nome 08034d98 ActionScript_Op62_CallBJ -> ActionScript_Op62_pendente
+nome 08034db4 ActionScript_Op63_CallBK -> ActionScript_Op63_pendente
+nome 08034dd0 ActionScript_Op64_CallBL -> ActionScript_Op64_pendente
+nome 08034dec ActionScript_Op65_CallBM -> ActionScript_Op65_pendente
+nome 08034e08 ActionScript_Op66_CallBN -> ActionScript_Op66_pendente
+nome 08034e24 ActionScript_Op67_CallBO -> ActionScript_Op67_pendente
+nome 08034e40 ActionScript_Op68_CallBP -> ActionScript_Op68_pendente
+nome 08034e5c ActionScript_Op69_CallBQ -> ActionScript_Op69_pendente
+nome 08034e78 ActionScript_Op6A_CallBR -> ActionScript_Op6A_BR
+miolo 080361f6 dentro de FightPreview_AdvanceLeftSideSequenceStep (FightPreview_AdvanceLeftSideSequenceStep_080361F6)
+rotulo 080362ac Fight_AddMedaforceChargeFromAction_store
+nome 08036e64 Fight_SetPendingPartStatus -> Fight_ApplyPartStatus
+miolo 08036fb0 dentro de Fight_ResetBotPartState (Fight_ResetBotPartState_08036FB0)
+miolo 080398ec dentro de ObjScript_Op0D_SpawnEffectSlot4PartPal (ObjScript_Op0D_SpawnEffectSlot4PartPal_080398EC)
+miolo 0803a4ba dentro de ObjScript_Op1E_SpawnEffectSlot23PartPal (ObjScript_Op1E_SpawnEffectSlot23PartPal_0803A4BA)
+miolo 0803a60c dentro de ObjScript_Op1F_SpawnEffectSlot4State12 (ObjScript_Op1F_SpawnEffectSlot4State12_0803A60C)
+miolo 0803ae3c dentro de ObjScript_Op2C_SpawnEffectSlot4State13 (ObjScript_Op2C_SpawnEffectSlot4State13_0803AE3C)
+miolo 0803b3b4 dentro de ObjScript_Op32_LoadGfxList (ObjScript_Op32_LoadGfxList_0803B3B4)
+miolo 0803b794 dentro de ObjScript_Op39_SpawnEffectSlot4NoPrioShift (ObjScript_Op39_SpawnEffectSlot4NoPrioShift_0803B794)
+criada 0803d634
+nome 0803d634 FUN_0803d634 -> LinkTick_MenuStep3
+criada 0803d674
+nome 0803d674 FUN_0803d674 -> LinkTick_MenuStep4
+miolo 0803ddc6 dentro de Overlay_InitScreenGraphics (Overlay_InitScreenGraphics_0803DDC6)
+criada 0803def0
+nome 0803def0 FUN_0803def0 -> LinkSync_MenuStep52
+criada 0803df98
+nome 0803df98 FUN_0803df98 -> LinkSync_MenuStep53
+criada 0803e4b4
+nome 0803e4b4 FUN_0803e4b4 -> PeerLost_MenuStep16
+criada 0803e680
+nome 0803e680 FUN_0803e680 -> LinkSync_MenuStep80
+rotulo 08040898 MsgFF_SfxAdvanceCtx
+rotulo 080408bc MsgFF_AdvanceOtherObj
+miolo 080441ee dentro de Screen_ResetGfxAndState (TeamSlots_ClearIndices_Candidate)
+rotulo 080479a0 GameState_StartFlowByCommand_CaseNote
+rotulo 08047b98 GameState_StartFlowByCommand_store_tail
+nome 08047c00 FUN_08047c00 -> FieldMenu_CloseChoice_Provavel
+miolo 080481d8 dentro de Map_UpdateBackgroundAnimations (Map_UpdateBackgroundAnimations_080481D8)
+nome 08048960 FUN_08048960 -> KeyItem_CanUseHere
+rotulo 0804a7a0 Overworld_InitMapScene_0804A7A0
+rotulo 0804b036 Map_FinishEnterTransition_0804B036
+rotulo 0804b9f4 Script_ReadStateBlock_0804B9F4
+miolo 0804d17c dentro de Event_Op69_Set_Map_Scene_Variant (Event_Op69_Set_Map_Scene_Variant_0804D17C)
+rotulo 0804edc6 EventOpcode3A_GetMoney_0804EDC6
+rotulo 08050cea Event_RunSceneCommandSequence_Jump
+rotulo 08050cf4 SceneCommandStepTable
+rotulo 08050d08 SceneCommandStep0_ResetTransition
+rotulo 08050d40 SceneCommandStep1_WaitAndStartFlow
+rotulo 08050d72 SceneCommandStep2_LoadScene
+rotulo 08050e4e Event_RunSceneCommandSequence_JumpCmd
+rotulo 08050e6c SceneCommandCodeTable
+rotulo 08050f38 SceneCommandStep3_Advance
+rotulo 08050f40 SceneCommandStep4_WaitTransitionEnd
+rotulo 08050f80 Overworld_MapSubstateTable
+miolo 08050f94 dentro de Overworld_UpdateMapSceneStateMachine (Overworld_MapSub0_TileArrive)
+miolo 08051078 dentro de Overworld_UpdateMapSceneStateMachine (Overworld_MapSub1_WaitObject)
+miolo 080510c0 dentro de Overworld_UpdateMapSceneStateMachine (Overworld_MapSub2_IdleInput)
+miolo 0805134c dentro de Overworld_UpdateMapSceneStateMachine (Overworld_MapSub3_WaitScene)
+rotulo 08051368 Overworld_UpdateMapSceneStateMachine_08051368
+rotulo 08051416 Map_LoadEntitySpawnsForCurrentMap_08051416
+rotulo 08051484 MapSpawn_ChapterFilterLiteral
+miolo 08051bc8 dentro de Overworld_WalkStepByDirection (Overworld_WalkStepByDirection_08051BC8)
+miolo 08051ddc dentro de Overworld_ProcessDirectionInput (Overworld_ProcessDirectionInput_08051DDC)
+rotulo 08052330 Map_CheckFacingEventTriggerAhead_08052330
+miolo 080525d0 dentro de Overworld_CheckMovementObjectBlocker (Overworld_CheckMovementObjectBlocker_080525D0)
+miolo 0805290c dentro de Map_CenterCameraForSmallMaps (Map_CenterCameraForSmallMaps_0805290C)
+miolo 08052ea0 dentro de Overworld_ApplyWarpAtCurrentTile (Overworld_ApplyWarpAtCurrentTile_08052EA0)
+rotulo 08053184 lit_EventFlagArrayBase_EvenClear
+rotulo 0805319c lit_EventFlagArrayBase_OddClear
+rotulo 080531c0 lit_EventFlagArrayBase_EvenSet
+rotulo 080531dc lit_EventFlagArrayBase_OddSet
+rotulo 08053200 lit_EventFlagArrayBase_OddIsSet
+rotulo 08053218 lit_EventFlagArrayBase_EvenIsSet
+rotulo 08053260 lit_EventFlagArrayBase_EvenSetField
+rotulo 0805327c lit_EventFlagArrayBase_OddSetField
+rotulo 080532f0 lit_EventFlagArrayBase_OddGet
+rotulo 08053308 lit_EventFlagArrayBase_EvenGet
+rotulo 080542a2 Scene_DispatchStateHandlerTail_Jump
+rotulo 080542b0 Scene_DispatchStateHandler_CodeTable
+criada 0805716c
+nome 0805716c FUN_0805716c -> FieldMenu_DispatchSubstate
+rotulo 08057244 Overworld_InitChoiceMenuScreen_08057244
+criada 080574d4
+nome 080574d4 FUN_080574d4 -> FieldMenu_ChoiceSub2_SelectRow
+rotulo 08057534 FieldMenu_RowActionTable
+rotulo 0805754c FieldMenu_RowAction1_Sub0B
+rotulo 08057564 FieldMenu_RowAction2_Sub0D
+rotulo 08057570 FieldMenu_RowAction3_Sub0F
+criada 08057b6c
+nome 08057b6c FUN_08057b6c -> FieldMenu_Sub0B_RowMachine
+criada 08057d04
+nome 08057d04 FUN_08057d04 -> FieldMenu_Sub0D_Close
+criada 08057d40
+nome 08057d40 FUN_08057d40 -> FieldMenu_Sub0F_Close
+rotulo 08058080 Map_CreateChoiceSprites_08058080
+rotulo 08058328 Screen_UpdateByStep_JumpStep
+rotulo 08058334 Screen_UpdateByStep_TableStep
+rotulo 08058378 Screen_UpdateByStep_JumpState6
+rotulo 08058572 Screen_UpdateByStep_JumpState5
+rotulo 08058716 Screen_UpdateByStep_JumpState4
+rotulo 08058858 Screen_UpdateByStep_JumpState7
+rotulo 08058c44 Screen_RedrawAndDispatchStep_Jump
+rotulo 08058c54 Screen_RedrawAndDispatchStep_Table
+nome 0805bb0c Link_ReadSioPlayerId -> Screen_ReadTwoBitField
+nome 0805c128 Gfx_ScreenResetVram -> TitleMenu_SubState0
+criada 0805c8ec
+nome 0805c8ec FUN_0805c8ec -> TitleMenu_SubState7_NameEntry
+criada 0805c950
+nome 0805c950 FUN_0805c950 -> TitleMenu_SubState8_Continue
+rotulo 0805d2c2 KeyItemBag_ListInputStep_Jump
+rotulo 0805d3fc KeyItemBag_Case_Id40
+rotulo 0805d418 KeyItemBag_CommonTail
+criada 08060d6c
+nome 08060d6c FUN_08060d6c -> Menu_Shop_Main
+rotulo 080631c0 gBattlePanel_Literal_Char_Src
+criada 08065790
+nome 08065790 FUN_08065790 -> LinkMenu15Step0
+rotulo 08065870 Sm_StepSfxRepeat3_JumpTable
+rotulo 08065888 Sm_StepSfxRepeat3_Case0
+rotulo 080658dc Sm_StepSfxRepeat3_Case1to3
+rotulo 08065970 Sm_StepSfxRepeat3_Case4
+rotulo 080659b0 Sm_StepSfxRepeat3_Case5
+criada 08065a80
+nome 08065a80 FUN_08065a80 -> LinkMenu15Step2
+criada 08065c98
+nome 08065c98 FUN_08065c98 -> LinkMenu15Step6
+criada 08065cfc
+nome 08065cfc FUN_08065cfc -> LinkMenu15Step7
+criada 08065d44
+nome 08065d44 FUN_08065d44 -> LinkMenu14Step0
+criada 080665b0
+nome 080665b0 FUN_080665b0 -> LinkMenu14Step6
+criada 0806668c
+nome 0806668c FUN_0806668c -> LinkMenu14Step9
+criada 080666f4
+nome 080666f4 FUN_080666f4 -> LinkMenu14Step11
+miolo 08067030 dentro de PointRing_StepFrame (PointRing_StepFrame_08067030)
+rotulo 0806a12a dispatch_scene_state_Jump
+rotulo 0806a134 dispatch_scene_state_Table
+miolo 0806b8ce dentro de Screen_InitObjectSlotsLz77 (TeamSlots_WriteFi41_Candidate)
+rotulo 0806bd8c dispatch_state_8_Jump
+rotulo 0806bd98 dispatch_state_8_Table
+miolo 0806c7e4 dentro de battle_phase_spawn_move (TeamSlots_WriteFi41_Candidate2)
+rotulo 0806cb58 anim_dispatch_state_Jump
+rotulo 0806cb6c anim_dispatch_state_Table
+nome 0806e184 FUN_0806e184 -> Boot_SubState2_WaitFxStep
+rotulo 08071328 Screen_TableStepTimedSetup_JumpTable
+rotulo 08071390 Screen_TableStepTimedSetup_Case0
+rotulo 0807139c Screen_TableStepTimedSetup_CaseAdvance
+rotulo 080713a2 Screen_TableStepTimedSetup_CaseWaitData
+rotulo 080713cc Screen_TableStepTimedSetup_Case25
+rotulo 080713e2 Screen_TableStepTimedSetup_CaseTimer
+rotulo 080713f0 Screen_TableStepTimedSetup_Case22
+rotulo 08071424 Screen_TableStepTimedSetup_CaseCall
+rotulo 08072f04 Snd_DispatchBelowE0
+rotulo 08072f2e Snd_OpE0_Rest
+nome 08073ab8 Sound_DmaFifo_SetupChannel -> snd_dma_channel_setup
+nome 0807c918 Sound_TimerSlot_Select -> bios_store_idx
+rotulo 0807ee70 gGfx_PartLarge_DescTable_Sz0
+rotulo 0807f610 gGfx_PartLarge_DescTable_Sz1
+rotulo 0807fdb0 gGfx_PartLarge_DescTable_Sz2
+rotulo 08080550 gGfx_PartLarge_DescTable_Sz3
+rotulo 080aeb74 gLZ77RecordTable
+rotulo 080af8ca Opt_SongTable
+rotulo 080afc88 LinkMenu15StepTable
+rotulo 080afcc0 LinkMenu14SubstateTable
+rotulo 083ac2c8 gMainStateTable_083AC2C8
+rotulo 083ac404 MainState0_Menu1_SubTable
+rotulo 083ac560 BattleStepTable_Base_Unresolved
+rotulo 083ac568 BattleStepTable_Unknown
+rotulo 083ac614 debug_mdlpic_model_ptrs
+rotulo 083acae4 debug_tinpet_table_base
+rotulo 083acaf0 debug_item_table_base
+rotulo 083acafc debug_face_table_base
+rotulo 083acb08 debug_mdlpic_table_base
+rotulo 083acb14 debug_rndtk_table_base
+rotulo 083acb20 debug_battle_table_base
+rotulo 083acb2c debug_sound_table_base
+rotulo 083acc40 debug_tinpet_name
+rotulo 083acc5c debug_item_label_table
+rotulo 083acc78 debug_face_label_table
+rotulo 083acca0 debug_rndtk_name_ptr
+rotulo 083accac debug_battle_name_ptr
+rotulo 083accc0 debug_sound_label_table
+rotulo 083aecd8 gFightSceneMainSubTable
+rotulo 083af620 gFightRowWaveTable
+rotulo 083b2954 gMessageDispatch9Table
+rotulo 083b296c gMessageDispatch10Table
+rotulo 083b2984 gMessageDispatch11Table
+rotulo 083b2988 gMessageDispatch12Table
+rotulo 083b7e54 MedaforceDescriptorTable
+rotulo 083b7f8c MedaforceMedalTable
+rotulo 083c6a57 gActionScript_GrapTrap
+rotulo 083c6a59 gActionScript_ShotTrap
+rotulo 083c6a5b gActionScript_AttackClr
+rotulo 083c6a65 gActionScript_BreakForm
+rotulo 083c6a67 gActionScript_Stability
+rotulo 083c6a6b gActionScript_ForceBind
+rotulo 083c6a6d gActionScript_CancelOptic
+rotulo 083c6a6e gActionScript_CancelBomb
+rotulo 083c6a6f gActionScript_CancelGrav
+rotulo 083c6a70 gActionScript_Defence
+rotulo 083c6a72 gActionScript_FullBlock
+rotulo 083c6a74 gActionScript_HalfBlock
+rotulo 083c6a76 gActionScript_Recovery
+rotulo 083c6a87 gActionScript_AutoRecover
+rotulo 083c6a8b gActionScript_Repair
+rotulo 083c6a9c gActionScript_Reactivate
+rotulo 083c6aa2 gActionScript_Scout
+rotulo 083c6aa4 gActionScript_Conceal
+rotulo 083c6aa6 gActionScript_BoostChrg
+rotulo 083c6aaa gActionScript_RapidChrg
+rotulo 083c6aae gActionScript_AccelChrg
+rotulo 083c6aaf gActionScript_DrainChrg
+rotulo 083c6ab3 gActionScript_Pushover
+rotulo 083c6ab8 gActionScript_Impair
+rotulo 083c6abc gActionScript_Confusion
+rotulo 083c6ac0 gActionScript_UseDrain
+rotulo 083c6ac4 gActionScript_NoEscape
+rotulo 083c6ac8 gActionScript_NoDefense
+rotulo 083c6acc gActionScript_Destroy
+rotulo 083c6aff gActionScript_Sacrifice
+rotulo 083c6b2c gActionScript_Forcedrain
+rotulo 083c6b30 gActionScript_TeamForm
+rotulo 083c6b32 gActionScript_TeamAttack
+rotulo 083c6b85 gActionScript_Strengthen
+rotulo 083c6b86 gActionScript_CntrAttk
+rotulo 083c6b88 gActionScript_Change
+rotulo 083c6b8a gActionScript_ItrpChange
+rotulo 083c6b8c gActionScript_AttkChange
+rotulo 083c6b8e gActionScript_DEFChange
+rotulo 083c6b90 gActionScript_HealChange
+rotulo 083c6eb8 gActionScriptArgLenTable
+rotulo 083d1d78 PartPreviewType_KindVector
+rotulo 083d212c gMainState1_Menu10
+rotulo 083d2a88 gPlayerSpeedByWalkState
+rotulo 083d2a98 gMapPassBlockTable
+rotulo 083d2c5d gObjectField0BByPoseTable
+rotulo 083d2d0d gObjectShadowFlagTable
+rotulo 083d5ff4 Overworld_ChoiceSubstateTable
+rotulo 083d6298 unknown_ChapterLiteralPool
+rotulo 083d6a2c gArcHeightTable
+rotulo 083f7e80 gMapSpritePtrTable
+rotulo 083f83c0 gMapSpritePaletteTablePtr
+rotulo 083f8a80 gMapTilesetPtrTable
+rotulo 083f8d80 gMapTilesetExtraPtrTable
+rotulo 083f9080 gMapLayerPtrTable
+rotulo 083f9980 gMapPalettePtrTable
+rotulo 08404334 gMapCollisionPtrTable
+rotulo 08409480 gMapAnimDescTable
+rotulo 08413160 gMapSpriteIndexByMap
+rotulo 08413ee0 gPoseIdNestedTablePtrs
+rotulo 08483234 gMapPeoplePtrTable
+rotulo 084835a4 KeyItemBag_MenuTable4
+rotulo 0848360c gTitleMenuSubStateTable
+rotulo 08483634 KeyItemBag_SubStateTable
+rotulo 084836e8 gNameEntrySubStateTable
+rotulo 084859d8 gBootSubStateTable
+rotulo 084c29d8 gGfx_BotIconTable_Base
+rotulo 084c2e58 gGfx_MedalIcon_Kuwagata
+rotulo 084c38d8 gGfx_BotIcon_Default30
 rotulo 084c8034 gGfx_Obj_Malias_09C0
 rotulo 084c8034 gObjTextFontGfx
-rotulo 084c88b8 gGfx_PartsGrid_Tiles_Bg3
-rotulo 084e3698 gGfx_Overlay_Obj_Sprites
-rotulo 084e6bf0 gGfx_BattleStatus_Char
-rotulo 084e776c gGfx_BattleScene_Tiles_Bg0
-rotulo 084e9650 gGfx_PartsGrid_Tiles_Bg0
-rotulo 084ec1f8 gGfx_PartsGrid_CharEntrada
-rotulo 084ee0dc gGfx_PartDetail_Tiles_Bg0
-rotulo 084eea64 gGfx_FightScene_Tiles_Bg0
-rotulo 084ef490 gGfx_Overlay_Tiles_Bg0
-rotulo 084f08b0 gGfx_BattleScene_Map_Bg0
-rotulo 084f0920 gGfx_PartsGrid_Map_Bg0
-rotulo 084f0b44 gGfx_PartDetail_Map_Bg0
-rotulo 084f0b7c gGfx_FightScene_Map_Bg0
-rotulo 084f0c08 gGfx_Overlay_Map_Bg0
-rotulo 084f0f68 gGfx_BattleScene_Map_Bg1
-rotulo 084f1180 gGfx_PartsGrid_Map_Bg1
-rotulo 084f1608 gGfx_PartDetail_Map_Bg1
-rotulo 084f16c8 gGfx_FightScene_Map_Bg1
-rotulo 084f1734 gGfx_Overlay_Map_Bg1
-rotulo 084f198c gGfx_BattleScene_Map_Bg2
-rotulo 084f1c28 gGfx_PartsGrid_Map_Bg2
-rotulo 084f2244 gGfx_PartDetail_Map_Bg2
-rotulo 084f22c4 gGfx_FightScene_Map_Bg2
-rotulo 084f233c gGfx_Overlay_Map_Bg2
-rotulo 084f2960 gGfx_BattleScene_Map_Bg3
-rotulo 084f2c88 gGfx_PartsGrid_Map_Bg3
-rotulo 084f3468 gGfx_PartDetail_Map_Bg3
-rotulo 084f35fc gGfx_FightScene_Map_Bg3
-rotulo 084f3788 gGfx_Overlay_Map_Bg3
-rotulo 084f4300 gGfx_PartsGrid_Palette_Banks
-rotulo 084f4bc0 gGfx_PartDetail_Palette_Bg
-rotulo 084f4d80 gGfx_FightScene_Palette_Bg
-rotulo 084f4f40 gGfx_Overlay_Palette_Bg
-rotulo 08785ec0 gGfx_BattlePanel_Char
-rotulo 08785fb4 gGfx_Shop_PartSelect_Obj
-rotulo 0878f7e8 gGfx_TitleMenu_Char
-rotulo 087aefd0 gGfx_Title_OBJ
-rotulo 087b67b0 gGfx_Title_BG0
-rotulo 087f314c gGfx_Logo_Char
-criada 0800c7e4
-criada 0800ce70
-criada 08010264
-criada 080332ec
-criada 08033a78
-criada 08033a94
-criada 08033ab0
-criada 08033c10
-criada 08033cf0
-criada 08033d00
-criada 08034008
-criada 0803402c
-criada 08034074
-criada 08034120
-criada 08034170
-criada 080341c0
-criada 08034200
-criada 08034240
-criada 0803426c
-criada 08034288
-criada 080342c8
-criada 080342e4
-criada 08034300
-criada 0803431c
-criada 0803435c
-criada 08034378
-criada 080343b8
-criada 080343d4
-criada 080343f0
-criada 0803440c
-criada 08034428
-criada 08034444
-criada 08034460
-criada 0803447c
-criada 08034498
-criada 080344b4
-criada 080344d0
-criada 080344ec
-criada 08034508
-criada 0803d538
+rotulo 084c92b0 gGfx_BotPartSelect_Tiles_Obj
+rotulo 084e823c gGfx_BotPartSelect_Tiles_Bg0
+rotulo 084f0fd4 gGfx_BotPartSelect_Map_Bg
+rotulo 084f4840 gGfx_PartsGrid_Palette_Bank2
+rotulo 0879da90 gGfx_BattlePanel_Tiles
+rotulo 0879efc0 gGfx_BattlePanel_Map_Bg0
+rotulo 0879f138 gGfx_BattlePanel_Map_Bg1
+rotulo 0879f3d0 gGfx_BattlePanel_Map_Bg2
+rotulo 0879f80c gGfx_NumberReveal_Tiles
+rotulo 087a0d04 gGfx_NumberReveal_Map_Bg1
+rotulo 087a0fb4 gGfx_NumberReveal_Map_Bg0
+rotulo 087a10f0 gGfx_NumberReveal_Map_Bg3
+rotulo 087a1244 gGfx_NumberReveal_Map_Bg2
+rotulo 087bb2a0 gGfx_Title_Map_Bg1
+rotulo 087bb7e0 gGfx_Title_Map_Bg2_ANOMALIA
+criada 0800099c
+criada 080009a8
+criada 08001278
+criada 08002574
+criada 0800275c
+criada 08003374
+criada 080034a4
+criada 08003504
+criada 08003620
+criada 08003654
+criada 080036a8
+criada 080036c8
+criada 080038cc
+criada 080038f0
+criada 080039e0
+criada 08003d4c
+criada 08003de0
+criada 08003e54
+criada 08003ea0
+criada 08003f28
+criada 08003f74
+criada 08003fe8
+criada 08004028
+criada 080043a8
+criada 0800442c
+criada 080044f8
+criada 0800454c
+criada 080045c4
+criada 080045dc
+criada 08004610
+criada 08004644
+criada 08004764
+criada 08004798
+criada 080047ec
+criada 08004840
+criada 08004874
+criada 080048b0
+criada 080049c8
+criada 080049ec
+criada 08004a40
+criada 08004a78
+criada 08004af8
+criada 08004c58
+criada 08004ca4
+criada 08004df0
+criada 08004e40
+criada 08007584
+criada 08007834
+criada 08007868
+criada 08007964
+criada 08007998
+criada 080079cc
+criada 08007bd8
+criada 08007bfc
+criada 08007c20
+criada 08007c4c
+criada 08007d04
+criada 08007ddc
+criada 0800801c
+criada 08008050
+criada 08008084
+criada 080080c8
+criada 080081bc
+criada 08008200
+criada 08008430
+criada 08008454
+criada 08008478
+criada 080084a4
+criada 08008590
+criada 080085b4
+criada 080085e8
+criada 08008650
+criada 08008980
+criada 080089a8
+criada 08008a34
+criada 08008a5c
+criada 08008b80
+criada 08008bb8
+criada 08008be0
+criada 08008ca0
+criada 080090d0
+criada 080091e0
+criada 08009248
+criada 08009274
+criada 080092d4
+criada 08009374
+criada 080093e0
+criada 0800dd00
+criada 0800dd88
+criada 0800ddc0
+criada 0800de00
+criada 0800dec8
+criada 0800df14
+criada 0800df4c
+criada 0800df78
+criada 0800dfb8
+criada 0800e2b0
+criada 0800e328
+criada 0800e350
+criada 0800e3a0
+criada 0800e43c
+criada 0800e488
+criada 0800e654
+criada 0800e690
+criada 0800e6c8
+criada 0800e78c
+criada 0800e9f0
+criada 0800ea98
+criada 0800eb60
+criada 0800ebe4
+criada 080103f4
+criada 08010794
+criada 080107f0
+criada 08010860
+criada 080108d0
+criada 080108fc
+criada 08010930
+criada 08010968
+criada 080109a0
+criada 080109cc
+criada 08010ba0
+criada 08010c28
+criada 08010ce8
+criada 08010d58
+criada 08010dac
+criada 08010e50
+criada 08010e7c
+criada 08010f08
+criada 08010f6c
+criada 08010fa4
+criada 08010fdc
+criada 08011018
+criada 08011048
+criada 08011078
+criada 080110fc
+criada 0801112c
+criada 08011158
+criada 0801120c
+criada 0801123c
+criada 08011268
+criada 080112c4
+criada 080112f0
+criada 080114e0
+criada 080115b4
+criada 080115e8
+criada 080116c4
+criada 08011a58
+criada 08011abc
+criada 08011adc
+criada 08011b18
+criada 08011b5c
+criada 08011c88
+criada 08011cfc
+criada 08011d50
+criada 08011d80
+criada 08012bc0
+criada 08012be4
+criada 08012c0c
+criada 08012d98
+criada 08012df4
+criada 08012ea8
+criada 08012f00
+criada 08012ff8
+criada 080130d8
+criada 08013228
+criada 080133b8
+criada 08013508
+criada 08013614
+criada 08013650
+criada 080136b0
+criada 080136e8
+criada 0801372c
+criada 08013a74
+criada 08013de4
+criada 08014050
+criada 0801425c
+criada 08014314
+criada 080143a0
+criada 08014404
+criada 08014548
+criada 080145bc
+criada 08014634
+criada 080146dc
+criada 08014754
+criada 080147fc
+criada 08014870
+criada 08014920
+criada 08014994
+criada 08014a44
+criada 08014a84
+criada 08014adc
+criada 08014c84
+criada 08014cc8
+criada 08015438
+miolo 080196c0 dentro de Fight_DrawSecondaryEffectIcon
+criada 08037c50
+criada 0803809c
+criada 080380f0
+criada 080381e0
+criada 08038ac0
+criada 0803b9a4
+criada 0803c044
+criada 0803cbd0
+criada 0803cecc
+criada 0803cf7c
+criada 0803cfc8
+criada 0803d0bc
+criada 0803d15c
+criada 0803d5e0
+criada 0803d608
+criada 0803d6ac
+criada 0803d71c
+criada 0803d928
+criada 0803d980
+criada 0803d9c8
+criada 0803d9f0
+criada 0803da40
+criada 0803db94
+criada 0803dbb8
+criada 0803dbe0
+criada 0803dc0c
+criada 0803dc3c
+criada 0803dc58
+criada 0803de70
+criada 0803de90
+criada 0803deb0
+criada 0803e018
+criada 0803e03c
+criada 0803e098
+criada 0803e0c0
+criada 0803e0f0
+criada 0803e120
+criada 0803e170
+criada 0803e1a4
+criada 0803e1fc
+criada 0803e234
+criada 0803e270
+criada 0803e2ac
+criada 0803e2dc
+criada 0803e314
+criada 0803e374
+criada 0803e434
+criada 0803e48c
+criada 0803e4d8
+criada 0803e618
+criada 0803e674
+miolo 08040898 dentro de Script_OpSubcommandOrNextState
+miolo 080408bc dentro de Script_OpSubcommandOrNextState
+criada 08040b5c
+criada 08043ae0
+criada 08043b58
+criada 08043e48
+criada 08044100
+miolo 080479a0 dentro de GameState_StartFlowByCommand
+criada 0804a6a0
+criada 0804a6bc
+criada 0804a6c8
+criada 0804a6e0
+criada 0804a6ec
+criada 0804a6f8
+criada 0804a724
+criada 0804a734
+criada 0804aa04
+criada 0804ab04
+criada 0804ab18
+criada 0804ab24
+criada 0804ab3c
+criada 0804ab60
+criada 0804aba8
+criada 0804abc0
+criada 0804abcc
+criada 0804ac14
+criada 0804acc8
+criada 0804acd4
+criada 0804ad68
+criada 0804adb4
+criada 0804ae80
+criada 0804aec8
+criada 0804af98
+criada 0804afcc
+criada 0804afe0
+criada 0804b15c
+falhou criar 08050cf4
+miolo 08050d08 dentro de Event_RunSceneCommandSequence
+miolo 08050d40 dentro de Event_RunSceneCommandSequence
+miolo 08050d72 dentro de Event_RunSceneCommandSequence
+falhou criar 08050e6c
+miolo 08050f2a dentro de Event_RunSceneCommandSequence
+miolo 08050f38 dentro de Event_RunSceneCommandSequence
+miolo 08050f40 dentro de Event_RunSceneCommandSequence
+miolo 08051368 dentro de Overworld_UpdateMapSceneStateMachine
+criada 08053360
+criada 08053380
+criada 080533a4
+criada 080534c4
+criada 080535c8
+criada 080537bc
+criada 080537d8
+criada 080537e4
+criada 08053858
+criada 0805390c
+criada 08053b04
+criada 08053be0
+criada 08053c00
+criada 08053c14
+criada 08053c7c
+criada 08053d78
+criada 08053de0
+criada 08054014
+criada 080569e4
+criada 08056f24
+falhou criar 08057534
+criada 08057688
+criada 08057698
+criada 080576bc
+criada 080576d0
+criada 080576e0
+criada 08057d14
+criada 08057d50
+criada 08059434
+criada 0805ac8c
+criada 0805c988
+criada 0805c9c4
+criada 0805ca74
+criada 0805caa8
+criada 0805e404
+criada 0805e450
+criada 0805efd4
+criada 0805f984
+criada 0805fa00
+criada 0805fc58
+criada 0805fff8
+criada 08060280
+criada 0806048c
+criada 080604c4
+criada 08060688
+criada 0806096c
+criada 08060a54
+criada 08060af4
+criada 08060b28
+criada 08060dd4
+criada 0806113c
+criada 08061440
+criada 080617e0
+criada 08061958
+criada 08061998
+criada 08062754
+criada 0806280c
+criada 08063948
+criada 080646c4
+criada 08064a08
+criada 08064bbc
+criada 08064db4
+criada 08065074
+criada 08065208
+criada 080654c0
+criada 0806552c
+criada 08065590
+criada 080655fc
+falhou criar 08066860
+criada 08067870
+criada 08067974
+criada 08067a70
+criada 08067acc
+criada 08067b28
+criada 08068920
+criada 08068e00
+criada 08068e88
+criada 08068f08
+criada 08069168
+criada 08069194
+criada 080691e0
+criada 0806920c
+criada 08069258
+criada 080692a8
+criada 080692ec
+criada 0806b134
+criada 0806b1fc
+criada 0806b248
+criada 0806b3d8
+miolo 0806b826 dentro de Screen_InitObjectSlotsLz77
+criada 0806bb24
+criada 0806bb44
+criada 0806bc94
+criada 0806bcc4
+criada 0806d588
+criada 0806dc7c
+criada 0806dcc0
+criada 0806de9c
+criada 0806e038
+criada 0806e074
+criada 0806e130
+criada 0806e150
+criada 0806e3f8
+criada 0806e4cc
+criada 0806e90c
+criada 0806e93c
+criada 0806e9c0
+criada 0806ea98
+criada 0806eac0
+criada 0806eaf4
+criada 0806f1c0
+criada 0806f21c
+criada 0806f578
+criada 0806f914
+criada 0806f934
+criada 080705e0
+criada 08070648
+criada 080706a4
+criada 08070734
+criada 08070778
+criada 08071030
+criada 08071778
+criada 08071b64
+criada 08071c68
+criada 08071cbc
+criada 08071e8c
+criada 08072ff4
+criada 08073010
+criada 08073044
+criada 080746c0
+criada 08074780
+criada 080747b8
+criada 080747f4
+criada 08074834
+criada 0807485c
+criada 08074890
+criada 080748b8
+criada 080748e8
 miolo 0807c92c dentro de bios_store_idx
-criadas 101, renomeadas 84, ja certas 2722, rotulos 167, miolo de outra funcao 23, falharam 0
+criada 0807dd58
+criada 080a89f2
+criada 080ec9ee
+criadas 442, renomeadas 78, ja certas 2766, rotulos 220, miolo de outra funcao 88, falharam 4
