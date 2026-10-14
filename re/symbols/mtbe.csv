@@ -255,6 +255,7 @@ address,name,kind,count,comment
 0x08000458,InitializeInterruptsAndDefaultHandlers,func_thumb,,"Simon/Rokusho: Initialize interrupt vectors, default handler pointers, DISPSTAT/IME, and a small amount of global interrupt state. This is the common low-level startup/interrupt init path."
 0x080004E0,ResetHardwareAndMemory,func_thumb,,Simon/Rokusho: Reset GBA hardware-facing memory regions and initialize default video/palette state. Clears VRAM/IWRAM-facing state and prepares the system for the main loop.
 0x08000540,ClearOamAndVramShadow,func_thumb,,Simon/Rokusho: Clear OAM and the engine's VRAM shadow buffers to a default empty state. Used during low-level video reset/init.
+0x0800058C,Scene_InitSoundAndStartSong0,func_thumb,,[FN1] provável: init de cena + tabela de sons + música 0
 0x080005D0,Gfx_VBlankIrq,func_thumb,,"VBlank IRQ handler: ack IF, swap buffers, frame counter (confirmado)"
 0x0800065C,VBlankIrqHandler,func_thumb,,"[R0] handler de VBlank: scroll, OAM, callbacks (G8)"
 0x08000840,NoOpActionHandler,func_thumb,,"Simon/Rokusho: First-stage action-family placeholder. In the ActionId dispatch table, many actions map here, meaning this specific phase does nothing for them and their real behavior is implemented in later shared state machines, generic attack resolution, or other action-sequence tables."
@@ -1571,8 +1572,11 @@ address,name,kind,count,comment
 0x08033754,Fight_ValidateEnemyHasPartWithSpeciality23,func_thumb,,Simon/Rokusho
 0x080337CC,Fight_ValidateAllyHasTechnique4Part,func_thumb,,Simon/Rokusho
 0x08033840,Fight_RunActionScriptLoop,func_thumb,,"Simon/Rokusho: Run the action-script interpreter loop. Repeatedly reads opcodes from the current action script, skips high-bit-prefixed control bytes, and dispatches via gActionScriptOpcodeHandlerTable until the current script marks completion."
+0x080338DC,ActionScript_Op01_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos
 0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,,Simon/Rokusho
 0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,,Simon/Rokusho
+0x080339F4,ActionScript_Op04_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
+0x08033A10,ActionScript_Op05_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
 0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,,"Simon/Rokusho: Ensure the acting bot has selected target metadata. If selected_target_bot_id or selected_target_part_id is zero, populate them through helper routines before continuing the action flow."
 0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,,"Simon/Rokusho: When a referenced target bot id is stored in the acting bot's selected action state, copy that bot's graphics/state blocks into the UI/work area and refresh battle presentation."
 0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,,Simon/Rokusho: Apply battle-status / damage flags based on the selected part's SpecialityId. Proximity-class specialities set one flag family; remoteness-class specialities set another.
@@ -2643,6 +2647,7 @@ address,name,kind,count,comment
 0x08066240,Anim_CounterDoneInitObjectSlot,func_thumb,,"[FL10] ao fim de Anim_StepRecordCounter: estado++, Obj_InitSlotAndLoad(1,0,1), flag 0x4000 (provável)"
 0x08066280,Menu_SelectionFiveOptionsStep,func_thumb,,menu de 5 opcoes com cursor +5 e marca 0xEF00; provavel
 0x08066534,Save_WaitSfxThenFlash,func_thumb,,[provavel] waits record and SFX 4 then Save_InvokeFlashOp
+0x08066574,Save_RunOptionsThenBlendFade,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
 0x080665FC,Fx_InitStringStateMachine,func_thumb,,copia sequência de bytes e roda máquina de estados de efeito; provável
 0x080666C8,Fx_TickStateThenInitRecord8,func_thumb,,"[confirmado] StateMachine_DispatchStep(ctx+0x48); Fx_InitRecord8(1,0x16,7)"
 0x08066714,Text_BuildMessageAndStep,func_thumb,,monta mensagem em ctx+0x270 (terminador 0xFF) e avanca state machine; provavel; codigos chute

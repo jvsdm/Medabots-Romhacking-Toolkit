@@ -1,0 +1,8 @@
+# address,name,kind,comment
+0x083AF180,gActionScriptOpcodeHandlerTable,data,"AS1: 0x80 entradas; 0x01..0x6A com handler (DT2); 0x02/0x03 documentados; resto pendente"
+0x08033840,Fight_RunActionScriptLoop,function,"AS1 confirmado: laco le opcode (FUN_08034E94), pula >=0x80, despacha table[op], para quando flag +0xB5 = 1"
+0x080338F4,Fight_WaitForActionScriptByteMatch,function,"AS1 provavel: op 0x02; espera byte +0xAC casar com tabela[+0xA8][+0xBC]; grava flag +0xB5"
+0x08033974,Fight_WaitForActionScriptChoiceByteMatch,function,"AS1 provavel: op 0x03; espera byte +0xAC+[+0xAB] casar; grava flag +0xB5"
+0x080338DC,ActionScript_Op01_pendente,handler,"AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos"
+0x080339F4,ActionScript_Op04_pendente,handler,"AS1 pendente: sem funcao no Ghidra"
+0x08033A10,ActionScript_Op05_pendente,handler,"AS1 pendente: sem funcao no Ghidra"
