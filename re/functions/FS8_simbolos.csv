@@ -1,0 +1,39 @@
+address,name,kind,comment
+0x080537E4,Viewport_SetFloatBounds,func_thumb,[FS8] provavel: monta 0x03005350 com floats +-120.5/+-80.5 e chama 0x08053858/0x0805390C; corpo bad no Ghidra (bytes lidos da ROM)
+0x08053858,Viewport_ComputeRectEdgeA,func_thumb,[FS8] chute: helper float sobre 0x03005350; corpo bad no Ghidra
+0x0805390C,Viewport_ComputeRectEdgeB,func_thumb,[FS8] chute: como 0x08053858 + trunc para tabelas 0x083D6F2C/0x083D732C; corpo bad
+0x08053B04,Viewport_UpdateFromCamera,func_thumb,[FS8] chute: chama 6 helpers 0x08053BE0..0x08053DE0; le 0x03006D30 0x03005520 0x03005404 0x03002C30
+0x08053BE0,Viewport_ComputeOffsetA,func_thumb,[FS8] chute: helper float; le 0x03005404 0x03002C30
+0x08053C00,Viewport_ClampAxisA,func_thumb,[FS8] chute: teste NaN + int->float + div; corpo bad
+0x08053C14,Viewport_ClampAxisB,func_thumb,[FS8] chute: mesmo padrao de 0x08053C00; corpo bad
+0x08053C7C,Viewport_AxisHelperC,func_thumb,[FS8] chute: helper float (mul add neg sub div trunc); corpo bad
+0x08053D78,Viewport_AxisHelperD,func_thumb,[FS8] chute: trunc e laco recursivo pelos bytes; le 0x03005404 0x03002C30
+0x08053DE0,Viewport_AxisHelperE,func_thumb,[FS8] chute: usa mascara 0x1FF e 0x03006D30
+0x08054014,Viewport_UpdateEdgesAndStore,func_thumb,[FS8] chute: chama 0x08053858 0x0805390C 0x08053FBC; le 0x083D2F30 0x030053F0
+0x080569E4,Viewport_ScaleStep,func_thumb,[FS8] chute: float mul/div/add/trunc; chama 0x080533A4 0x08053360 0x08053380; literal 0x3B800000
+0x08056F24,Viewport_CompareAndClampFloat,func_thumb,[FS8] chute: compara floats com constantes da ROM 0x08056F70 0x080AE8F4
+0x08057688,Screen_StartFlowCmd40,func_thumb,[FS8] confirmado (decompile): GameState_StartFlowByCommand(0x40 0). Nome provavel. Tabela 0x083D6004
+0x08057698,Screen_TransitionEnterAndAdvance,func_thumb,[FS8] provavel: Overworld_ResetAndStartScreenTransitionEffect(32.0 8.0) + GameState_AdvanceSubroutine. Tabela 0x083D6008
+0x080576BC,Screen_TransitionRunAndAdvance,func_thumb,[FS8] provavel: Overworld_RunScreenTransitionStep + GameState_AdvanceSubroutine. Tabela 0x083D600C
+0x080576D0,FUN_080576D0,func_thumb,[FS8] chute: chama GameState_StartFlowByCommand (argumento nao lido). Tabela 0x083D6010
+0x080576E0,Screen_LoadTilesAndMapEntities,func_thumb,[FS8] provavel: corpo longo (0x37A); Map_LoadCurrentMapAndEntities + decompress_and_store + LZ77 VRAM + DMA3. RAM 0x03002C30 0x030057E0 0x03006D14
+0x08057B6C,FieldMenu_Sub0B_RowMachine,func_thumb,[FS8] nome ja existente (FM3); provavel
+0x08057D04,FieldMenu_Sub0D_Close,func_thumb,[FS8] nome ja existente (FM3); confirmado: saida do menu
+0x08057D14,FUN_08057D14,func_thumb,[FS8] chute: chama 0x08047C24 com 0x084144B4 e 0x0300137C; tabela 0x083D602C (sub 0x0E de FM3)
+0x08057D40,FieldMenu_Sub0F_Close,func_thumb,[FS8] nome ja existente (FM3); provavel: mesmo corpo do 0x0D
+0x08057D50,FUN_08057D50,func_thumb,[FS8] chute: mesmo padrao de 0x08057D14; tabela 0x083D6034
+0x08059434,Screen_PrepareNibbleRowsAndReset,func_thumb,[FS8] provavel: chama Screen_DrawPackedNibbleRows (0x08059734) e Map_ResetObjectRenderSlot; RAM 0x030057A0
+0x0805AC8C,Screen_ClearBgVramRegions,func_thumb,[FS8] provavel: bios_cpufastset sobre 0x0202FC00 0x0202FE00 0x05000200
+0x0805C9C4,Screen_InitLoadTilesAndShow,func_thumb,[FS8] confirmado (decompile): limpa VRAM/OAM REG_DISPCNT=0x60 decompress_and_store Obj_InitSlotAndLoad liga OBJ
+0x0805CA74,Screen_DispatchStateTable,func_thumb,[FS8] provavel: StateTable_DispatchByIndex; le 0x03000440 0x0300137C
+0x0805CAA8,Screen_DispatchSubOrRequestMode,func_thumb,[FS8] provavel: StateMachine_DispatchSub; senao MainState_RequestModeTransition
+0x0805DF18,SaveLoad_LoadGame,label,[FS8] nome ja existente (mtbe); sem alteracao
+0x0805E010,SaveLoad_SaveGame,label,[FS8] nome ja existente (mtbe); sem alteracao
+0x0805E450,Screen_ClearOamAndAdvance,func_thumb,[FS8] confirmado (decompile): ClearObjectAttributeEntries + REG_DISPCNT=0x60 + estado++. Entrada 0x084836D8
+0x0805F984,Screen_DispatchStepAndAdvance,func_thumb,[FS8] confirmado (decompile): StateTable_DispatchByIndex + Obj_ResetStateFields + proximo estado (9 ou +1). Entrada 0x0848371C
+0x0805FA00,Screen_DispatchSubByState,func_thumb,[FS8] provavel: StateMachine_DispatchSub com 0x0300137C. Entrada 0x08483734
+0x0805FFF8,FUN_0805FFF8,func_thumb,[FS8] chute: snd_sfx_request + aux_div_s32; le 0x03006F74 0x03002C30. Corpo 0x0805FFF8..0x08060167
+0x0806048C,Anim_TileFrame64StepSfx,func_thumb,[FS8] provavel: Anim_CycleTileFrame64 + snd_sfx_request. Entrada 0x08483768
+0x080604C4,Anim_TileFrame64Cycle,func_thumb,[FS8] provavel: Anim_CycleTileFrame64; escreve timer 0x04000054. Entrada 0x0848376C
+0x0806096C,Screen_EnableBgLayersInit,func_thumb,[FS8] confirmado (decompile): REG_DISPCNT |= BG1..BG3 e OBJ; marca estado 8. Entrada 0x0848383C
+0x08060A54,Menu_CursorStepSfxAdvance,func_thumb,[FS8] provavel: Shop_MoveCursorByDpad (nome do callee e chute em R3) + SFX 4/5 + estado. Entrada 0x08483848

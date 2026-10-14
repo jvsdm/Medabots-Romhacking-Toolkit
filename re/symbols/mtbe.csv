@@ -127,6 +127,7 @@ address,name,kind,count,comment
 0x03001790,keys_prev,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: pressed_buttons)"
 0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798)"
 0x030017A0,team_records_9x8,label,,"[PS] [PS] time: 9 registros de 8 B [estado, genero, medalha, cabeca, braco D, braco E, pernas, indice]; confirmado pela troca"
+0x030017F0,gCtx_VBlankCallback,label,,"[BI] BI: callback de um quadro, chamado no VBlank e reposto ao padrão. Escrito por G03 (0x08043E49), J02 (0x08044101), SceneStep53 (nop). Confirmado (leitura pelo VBlank)."
 0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information) (antes: fight_information_template) (antes: gFightInformation)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -216,6 +217,8 @@ address,name,kind,count,comment
 0x03002BA0,gItemInventory,label,,"[IN] [IN] 64 pares [0x80|id, qtd] (Map64)"
 0x03002C30,gObjectSlots,label,,slots de objeto (0x40 B): +0x2B anim, +0x2C tipo de movimento/contador, +0x2D recarga, +0x2E repeticoes, +0x30 espera (s16); indice atual em 0x0300056F
 0x03002D59,gPartDetailMode,label,,[ST2] [ST2] = gObjectSlots(0x03002C30)+0x129 = slot 4 +0x29; modo 0..3 do passo de detalhe; 3 = fim; provavel
+0x03003478,gFight_E08_WaitCounter,label,,[BI] BI: byte 0x03002C30+0x848. Init 8 em SetupBotAndSprites; E08 espera 0x40 (-4 por frame). Compartilhado. Provável.
+0x03003479,gFight_E08_WaitCounterHi,label,,"[BI] BI: byte 0x03002C30+0x849, init 0x40 em SetupBotAndSprites; decrementado junto no E08. Provável."
 0x030037F0,gPlayerObject,data,,[OW] slot 0x2F de gObjectSlots (jogador)
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -397,6 +400,7 @@ address,name,kind,count,comment
 0x0800058C,Scene_InitSoundAndStartSong0,func_thumb,,[FN1] provável: init de cena + tabela de sons + música 0
 0x080005D0,Gfx_VBlankIrq,func_thumb,,"VBlank IRQ handler: ack IF, swap buffers, frame counter (confirmado)"
 0x0800065C,VBlankIrqHandler,func_thumb,,"[R0] handler de VBlank: scroll, OAM, callbacks (G8)"
+0x080007E0,VBlankIrqHandler,func_thumb,,[BI] BI: no VBlank chama CallViaR0(*0x030017F0) e repõe 0x030017F0 com DAT_08000818. Provável.
 0x080007FC,Snd_VBlankCallSite,label,,[SN2] SN2: chamada de snd_frame_tick no VBlank (confirmado)
 0x08000840,NoOpActionHandler,func_thumb,,"Simon/Rokusho: First-stage action-family placeholder. In the ActionId dispatch table, many actions map here, meaning this specific phase does nothing for them and their real behavior is implemented in later shared state machines, generic attack resolution, or other action-sequence tables."
 0x08000844,get_player_inputs,func_thumb,,Simon/Rokusho
@@ -736,28 +740,64 @@ address,name,kind,count,comment
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
 0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos"
 0x08012B94,Battle_CpuActionSelectStep,func_thumb,,[AI2] [AI2] entrada 3 da tabela de cena 0x083AD080 (GS=0x0300137C). Corpo: bl 0x080196C0; se byte 0x030004C9==1 pula; senao Fight_SelectActionsForBotGroup(3); GS++. Sem funcao no Ghidra ainda: ver AI2_lista.txt
+0x08012C0C,Fight_SetupEntryScreenStep,func_thumb,,[FS5] [FS5] entrada i=6 da tabela GS 0x083AD080; setup da tela de entrada do bot; provavel
 0x08012C64,Fight_BotSelectMenuFrame,func_thumb,,frame do menu de selecao de bot; cursor +0x80; provavel
+0x08012D98,Fight_EntryMotionWaitStep,func_thumb,,[FS5] [FS5] i=8; anima entrada ate contador 0x14; provavel
+0x08012DF4,Fight_EntryFieldDrawStep,func_thumb,,[FS5] [FS5] i=9; campos por contador; provavel
 0x08012E40,Fight_EntryScreenStep,func_thumb,,passo de quadro da tela de entrada da luta (provavel)
+0x08012EA8,Fight_SlideCounterObjectsStep,func_thumb,,[FS5] [FS5] i=12; desliza 6 objetos; provavel
+0x08012F00,Fight_SelectBotActionStep,func_thumb,,[FS5] [FS5] i=13; escolhe acao/Medaforca do bot e proximo GS; provavel
+0x08012FF8,Fight_CountActionUsageStep,func_thumb,,[FS5] [FS5] i=14; incrementa uso da acao; provavel
 0x0801303C,Fight_RunEntryAnimStep,func_thumb,,"[provavel] fight entry frame: overlay, entry anim, sprite motion, tile clears"
+0x080130D8,Fight_ShowSelectedActionPanelStep,func_thumb,,[FS5] [FS5] i=17; mostra painel da acao escolhida; provavel
 0x08013164,Fight_PartSelectStep,func_thumb,,[FR2] provável; passo do menu de escolha de parte (A confirma SFX4
+0x08013228,Fight_CounterFieldPairStep,func_thumb,,[FS5] [FS5] i=19; pares de campo 4/12 + CpuFastSet; provavel
 0x08013288,Fight_EntryAnimStep,func_thumb,,passo por frame da entrada da batalha; provável
 0x08013330,Fight_DrawEntryScene,func_thumb,,"[provavel] desenha bots ativos, anima quadros de entrada, carrega 2 blocos graficos, copia retangulo do mapa"
+0x080133B8,Fight_ShowAltSelectedActionStep,func_thumb,,[FS5] [FS5] i=25; variante do painel (kind E/F/G); provavel
 0x08013438,Fight_UpdateKindSelectorFrame,func_thumb,,quadro do seletor de tipo de peca na batalha; le entrada e avanca substate; provavel
+0x08013508,Fight_CounterFieldPairAltStep,func_thumb,,[FS5] [FS5] i=27; pares 4/12B + CpuFastSet; provavel
 0x08013568,Fight_TickEntryAnimationHandler,func_thumb,,[provavel] handler de entrada da batalha; timer +0x86 ate 0x10 -> limpa BG e grava estado 0x0D
+0x08013614,Fight_LoadObjSlot2Step,func_thumb,,"[FS5] [FS5] i=40; Obj_InitSlotAndLoad(1,2,0); provavel"
+0x08013650,Fight_DispatchBotStateMachineStep,func_thumb,,[FS5] [FS5] i=41; StateMachine_DispatchStep por bot; provavel
+0x080136B0,Fight_DispatchSubStateMachineStep,func_thumb,,[FS5] [FS5] i=42; StateMachine_DispatchSub; provavel
+0x080136E8,Fight_CopyPaletteBuffersStep,func_thumb,,"[FS5] [FS5] i=32; CopyPaletteBuffersToHardware; confirmado na chamada, resto provavel"
+0x0801372C,Fight_FadeInPaletteStep,func_thumb,,[FS5] [FS5] i=33; fade de paleta para cor A/B em 9 passos; provavel
 0x08013798,Init_CopyTileSetsAndSetBlend,func_thumb,,"[provavel] 5x CpuFastSet de dados + SetGpuBlendMode(5,0x3F,0x20)"
 0x08013824,Fight_InitActionSlotSelect,func_thumb,,provável: inicializa bloco de seleção de ação do bot
 0x0801387C,Dispatch_ByteStateIndexTable,func_thumb,,"[FL10] despachante por byte de estado (<=5), tabela de 6 ponteiros; subsistema não confirmado (provável)"
 0x080138A8,Dispatch_ByteStateIndexTable_Table,data,,[JT2] [GH-JT2] 6 ponteiros thumb (sem bit) para os cases 0..5 do despachante 0x0801387C; indice = byte 0x03000579 (0x03000440+0x139); gemeo do J_02 (JT.md)
 0x08013904,Dispatch_ByteStateIndexTable,label,,"[BT] indice = byte 0x03000579 (cena 0..5), tabela 0x080138A8; confirmado (decompile, JT2)"
+0x08013A74,Fight_FadeOutPaletteStep,func_thumb,,[FS5] [FS5] i=61; fade inverso (0x20 -> 0); provavel
 0x08013AE4,Fight_MarkSelectedOptionFrame,func_thumb,,menu de 3 opcoes: OR de bit no +0x44 pelo cursor; provavel
 0x08013B8C,Fight_BattleSceneInit,func_thumb,,inicializa a cena de luta e desenha a UI (provavel)
+0x08013DE4,Fight_PreviewSelectedBotStep,func_thumb,,[FS5] [FS5] i=36; previa grande do Medabot selecionado; provavel (nao e 0x08013E30)
 0x08013E30,UpdateSelectedMedabotPreviewScreen,func_thumb,,"Simon/Rokusho: Selected-Medabot/Medawatch full preview update loop. Refreshes the preview renderer, responds to button state, updates displayed part ids, and redraws both the small and large selected-bot previews for the current cursor position."
 0x08013E84,UpdateSelectedMedabotPreviewScreen_AltEntry_8013e84,label,,[HD2] [HD2] Chamador unico de 0x080183A4 (confirmado por xref) (antes: UpdateSelectedMedabotPreviewScreen)
 0x08013FA8,Fight_SelectScreenFrame,func_thumb,,"[provavel] medabot select/preview frame with GpuBlend fade, sets wait 0x3C"
+0x08014050,Fight_LoadResultSceneStep,func_thumb,,"[FS5] [FS5] i=64; descompacta graficos, fade de som, SFX 0x6e; provavel (nome de resultado e suposicao)"
+0x0801425C,Fight_PlayResultCueStep,func_thumb,,[FS5] [FS5] i=66; toca sinal de resultado por estado; provavel
 0x0801427C,Fight_StepBattleFrame,func_thumb,,loop principal por frame da batalha (timers e bots); provável
+0x08014314,Fight_BotEventQueueStep,func_thumb,,[FS5] [FS5] i=69; fila de eventos do bot; provavel
+0x080143A0,Fight_ToggleBotFlagAdvanceStep,func_thumb,,[FS5] [FS5] i=70; inverte bit 4 de bot+0xBD; provavel
+0x08014404,Fight_PickBotActionStep,func_thumb,,[FS5] [FS5] i=71; escolhe acao por bot e proximo GS; provavel
+0x08014548,Fight_UpdateBotMeterMotionStep,func_thumb,,[FS5] [FS5] i=76; movimento do medidor dos 6 bots; provavel
+0x080145BC,Fight_HighlightBotOamAStep,func_thumb,,[FS5] [FS5] i=96; bit 1 de bot+0xCE -> OAM (base 0x1180) + SFX 0x37; provavel (par de 0x08014634)
+0x08014634,Fight_ClearBotHighlightOamAStep,func_thumb,,[FS5] [FS5] i=97; inverso de 0x080145BC; provavel
+0x080146DC,Fight_HighlightBotOamBStep,func_thumb,,[FS5] [FS5] i=104; bit 2 de bot+0xCE -> OAM (base 0x11C0) + SFX 0x37; provavel
+0x08014754,Fight_ClearBotHighlightOamBStep,func_thumb,,[FS5] [FS5] i=105; inverso de 0x080146DC; provavel
+0x080147FC,Fight_DrawBotNumberOamStep,func_thumb,,[FS5] [FS5] i=112; tiles de numero para bit 4 de bot+0xCE + SFX 0x5b; provavel
+0x08014870,Fight_StepBotNumberAnimStep,func_thumb,,[FS5] [FS5] i=113; anima numero (bit 4); limpa no contador 0x5A; provavel
+0x08014920,Fight_DrawBotNumberOamAltStep,func_thumb,,[FS5] [FS5] i=120; tiles de numero para bit 8 + SFX 0x5b; provavel
+0x08014994,Fight_StepBotNumberAnimAltStep,func_thumb,,[FS5] [FS5] i=121; anima numero (bit 8); provavel
+0x08014A44,Fight_LoadObjSlot0Step,func_thumb,,"[FS5] [FS5] i=144; Obj_InitSlotAndLoad(1,0,0); provavel"
 0x08014A60,StateMachine_TickStepCounter,func_thumb,,[provavel] chama StateMachine_DispatchStep; conta retorno != 0
+0x08014A84,Fight_WaitOverlayTargetStep,func_thumb,,[FS5] [FS5] i=146; espera overlay chegar ao alvo; provavel
+0x08014ADC,Fight_ResetBattleFieldsStep,func_thumb,,[FS5] [FS5] i=148; zera campos do contexto de batalha; provavel
 0x08014B34,Fight_TickPartGaugePhases,func_thumb,,"[provavel] fases 0..3 de ctx+0x51 e +0x53; copia halfword de struct do bot (passo 0x100, off 0xDD)"
 0x08014C30,Fight_SelectThreeActionSources,func_thumb,,"chama Fight_SelectActionSource para indices 3,4,5; provavel"
+0x08014C84,Fight_SelectEnemyMedaforceStep,func_thumb,,[FS5] [FS5] i=151; bots 3..5 escolhem Medaforca quando estado>3; provavel
+0x08014CC8,Fight_DispatchSubStateMachineAltStep,func_thumb,,[FS5] [FS5] i=152; StateMachine_DispatchSub; provavel
 0x08014CF0,Fight_SyncBotStatusFromPart,func_thumb,,[provavel] sincroniza byte de status do bot (bot+0xDD) com registro de display; bit 0x8000 chute
 0x08014D94,Fight_SelectActionSourceStep,func_thumb,,provável: chama Fight_SelectActionSource para bots > 2
 0x08014DA2,Fight_SelectActionSourceStep,label,,[TA3] chama Fight_SelectActionSource para a acao normal (TA3)
@@ -781,6 +821,7 @@ address,name,kind,count,comment
 0x08015358,Fight_SelectActionFromCycleOrPendingOverride,func_thumb,,"Simon/Rokusho: Select an action source from the current speciality cycle, unless pending effect kind 0x2C forces the fallback priority-list selector path immediately."
 0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,,"Simon/Rokusho: Resolve the current action entry from BattleBotStateRecord.speciality_action_table[current_speciality_cycle_index]. Values 1..3 try the part slots, value 4 clears the source and returns 0, and values 5..7 try medaforce slots."
 0x08015414,Fight_AdvanceSpecialityCycleIndex,func_thumb,,[R0a] avanca indice do ciclo de especialidade (+0x3F) (confirmado)
+0x08015438,Data_08015438_BadInstruction,label,,"[FS5] [FS5] kind=label: dado (bad instruction, halt_baddata), alvo de BL de 0x08012BF0; nao e funcao; confirmado"
 0x08015464,Fight_SelectFallbackActionFromPriorityList,func_thumb,,"Simon/Rokusho: Choose a fallback action source when the current speciality-cycle entry cannot be used directly. This scans the 4-byte priority list in fight_information and falls back to Fight_SelectActionSource(bot, 0) when no usable entry exists."
 0x08015488,Fight_SelectFallbackActionFromPriorityList,label,,"[MF] [MF] CPU com B+0xC1==0x50 sorteia Fight_TrySelectMedaforceAction(bot,0,1)"
 0x080154E0,Fight_IsPartActionLockedByPendingEffect,func_thumb,,Simon/Rokusho: Return nonzero when pending effect kind 0x2B targets the requested part slot. This is used by action availability and description UI to show an override/locked state for that slot.
@@ -1041,6 +1082,7 @@ address,name,kind,count,comment
 0x0801CF78,Fight_DispatchOnSubstateAA_A_20_DrainTargetValueStep,func_thumb,,A/20; provavel
 0x0801CFFC,Fight_DispatchOnSubstateAA_LoadSideTilesThenJump,func_thumb,,[HA1] A/21; provável
 0x0801D06C,Fight_DispatchOnSubstateAA_SetupBotAndSprites,func_thumb,,[HA1] A/22; provável
+0x0801D0A8,Fight_DispatchOnSubstateAA_SetupBotAndSprites,func_thumb,,"[BI] BI: grava 0x03003478=8 (contador do E08), 0x03003479=0x40, 0x0300347A=6, 0x0300347B=0xF0; +AA+=1. Chamador não identificado. Confirmado."
 0x0801D174,Fight_DispatchOnSubstateAA_ClearFlagsSfx,func_thumb,,[HA1] A/24; confirmado
 0x0801D1AC,Fight_DispatchOnSubstateAA_A_25_SlideSlotUntilAnimEnds,func_thumb,,A/25; provavel
 0x0801D244,Fight_DispatchOnSubstateAA_A_28_BranchBySideTwo,func_thumb,,A/28; confirmado (tabela guarda 0x0801D245)
@@ -1707,8 +1749,9 @@ address,name,kind,count,comment
 0x080305C8,Fight_DispatchOnSubstateAA_BR_08_SetStepCode6A,func_thumb,,[HN9] BR 0x08: F+0xA6 = 0x6A; +0xAA++ (confirmado; renomeado)
 0x080305E0,ActionFamily_StatusCheckFamily_Handler,func_thumb,,Simon/Rokusho
 0x08030608,ActionFamily_TrapFamily_Handler,func_thumb,,Simon/Rokusho
-0x08030624,ActionFamily_HealChange_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Heal Change. Waits on either a button press or a countdown, clears the temporary object slot when done, and advances the action state."
+0x08030624,Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10,func_thumb,,"Simon/Rokusho: Action-family entry for Heal Change. Waits on either a button press or a countdown, clears the temporary object slot when done, and advances the action state. (antes: ActionFamily_HealChange_Handler)"
 0x08030674,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[HN5] indice 0x0E de 19 despachantes: espera +86 ou avanco rapido (confirmado) (antes: Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip) (antes: Fight_DispatchOnSubstateAA_U_09_WaitTimerOrSkip)
+0x08030680,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[BI] BI: mesmo padrão de timer 0x030004C6; decrementa e +AA+=1 ao zerar. Confirmado (decompile).
 0x080306B8,ActionFamily_Change_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Change. Waits for either a confirm-button press or a countdown, then clears all active temporary object slots in the tracked range and advances the action state."
 0x08030780,Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer,func_thumb,,[HN6] AG 0x09: slot 0x21 +0x18 +-0x40/frame (&0x3FF); timer 0x03000440+0x86 (A pula); +0xAA++ (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_ScrollSlotWaitTimer)
 0x0803080C,Fight_DispatchOnSubstateAA_Shared_SetDone,func_thumb,,"[HN6] terminal compartilhado (48 tabelas, J 0x04, AG 0x03): +0xB5 = 1 (confirmado; renomeado no Ghidra)"
@@ -2304,6 +2347,7 @@ address,name,kind,count,comment
 0x08043CA8,Slots_ClearFourPairs,func_thumb,,[R2a] R2a: zera 4 pares de halfwords de slots globais
 0x08043CD4,Obj_StepAccumMoveA,func_thumb,,[R2] revisto CH2: provável; acumula delta +0x3B em +0x3F; parte >>2 vai para +0x40 e aplica nos eixos por máscara de +0x3A; renomeado de FUN_08043cd4
 0x08043DF8,FxBlend_ApplyFromObjA,func_thumb,,[R2a] R2a: aplica blend (registro de GPU) a partir do objeto A; desliga se +0x3C=0
+0x08043E48,Fight_G03_VBlankCallback_ptr,label,,[BI] BI: alvo Thumb 0x08043E49 gravado por G03. Conteúdo não decompilado (chute).
 0x08043E54,Obj_CopySlot8Bytes,func_thumb,,[R2a] R2a: copia 8 bytes de +0x74 para tabela indexada por +0x38
 0x08043E78,Obj_StepAccumMoveB,func_thumb,,[R2] revisto CH2: provável; mesma lógica da A para o objeto B (campos +0x74..+0x7B); renomeado de FUN_08043e78
 0x08043F9C,FxBlend_ApplyFromObjB,func_thumb,,[R2a] R2a: igual a FxBlend_ApplyFromObjA para o objeto B (+0x77..+0x79)

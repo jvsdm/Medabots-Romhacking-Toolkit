@@ -1,0 +1,9 @@
+addr,nome,func_thumb|label,comentário
+0x0801D0A8,Fight_DispatchOnSubstateAA_SetupBotAndSprites,func_thumb,"BI: grava 0x03003478=8 (contador do E08), 0x03003479=0x40, 0x0300347A=6, 0x0300347B=0xF0; +AA+=1. Chamador não identificado. Confirmado."
+0x08030624,Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10,func_thumb,"BI: H19. Espera timer 0x030004C6 (0x03000440+0x86) chegar a 0; ClearObjectAttributeEntries(10,1); +AA+=1. Antes ActionFamily_HealChange_Handler. Confirmado."
+0x08030680,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,"BI: mesmo padrão de timer 0x030004C6; decrementa e +AA+=1 ao zerar. Confirmado (decompile)."
+0x080007E0,VBlankIrqHandler,func_thumb,"BI: no VBlank chama CallViaR0(*0x030017F0) e repõe 0x030017F0 com DAT_08000818. Provável."
+0x03003478,gFight_E08_WaitCounter,label,"BI: byte 0x03002C30+0x848. Init 8 em SetupBotAndSprites; E08 espera 0x40 (-4 por frame). Compartilhado. Provável."
+0x03003479,gFight_E08_WaitCounterHi,label,"BI: byte 0x03002C30+0x849, init 0x40 em SetupBotAndSprites; decrementado junto no E08. Provável."
+0x030017F0,gCtx_VBlankCallback,label,"BI: callback de um quadro, chamado no VBlank e reposto ao padrão. Escrito por G03 (0x08043E49), J02 (0x08044101), SceneStep53 (nop). Confirmado (leitura pelo VBlank)."
+0x08043E48,Fight_G03_VBlankCallback_ptr,label,"BI: alvo Thumb 0x08043E49 gravado por G03. Conteúdo não decompilado (chute)."

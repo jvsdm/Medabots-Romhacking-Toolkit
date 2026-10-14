@@ -6,7 +6,11 @@
 // @menupath Tools.Medabots.Sync
 // @author medabots-re
 
+import ghidra.app.cmd.function.CreateFunctionCmd;
 import ghidra.app.script.GhidraScript;
+import ghidra.program.model.lang.Register;
+import ghidra.program.model.listing.Data;
+import java.math.BigInteger;
 import ghidra.program.model.address.Address;
 import ghidra.program.model.listing.Function;
 import ghidra.program.model.symbol.SourceType;
@@ -19,6 +23,23 @@ import java.util.List;
 
 public class MedabotsSync extends GhidraScript {
     private PrintWriter log;
+    private int repaired = 0;
+
+    // Função sem código na entrada (corpo de 1 byte, "halt_baddata"): os bytes estavam marcados como dado ou o
+    // modo ficou ARM. Tira o dado do ponto de entrada, marca Thumb, desmonta e recalcula o corpo.
+    private void ensureCode(Function fn) throws Exception {
+        Address a = fn.getEntryPoint();
+        if (getInstructionAt(a) != null && fn.getBody().getNumAddresses() > 2) return;
+        Data d = getDataContaining(a);
+        if (d != null) clearListing(d.getMinAddress(), d.getMaxAddress());
+        Register t = currentProgram.getRegister("TMode");
+        if (t != null && getInstructionAt(a) == null)
+            currentProgram.getProgramContext().setValue(t, a, a, BigInteger.ONE);
+        disassemble(a);
+        CreateFunctionCmd.fixupFunctionBody(currentProgram, fn, monitor);
+        if (getInstructionAt(a) != null) { repaired++; log.println("reparada " + a + " corpo " + fn.getBody().getNumAddresses()); }
+        else log.println("sem codigo " + a);
+    }
 
     @Override
     public void run() throws Exception {
@@ -51,7 +72,7 @@ public class MedabotsSync extends GhidraScript {
                     disassemble(a);
                     Function fn = createFunction(a, null);
                     if (fn == null) { failed++; log.println("falhou separar " + a); }
-                    else { created++; log.println("separada " + a + (hostName != null ? " de " + hostName : "")); }
+                    else { created++; ensureCode(fn); log.println("separada " + a + (hostName != null ? " de " + hostName : "")); }
                     if (hostEntry != null && getFunctionAt(hostEntry) == null) {
                         Function h = createFunction(hostEntry, null);
                         if (h == null) { failed++; log.println("falhou recriar " + hostEntry + " " + hostName); }
@@ -82,6 +103,7 @@ public class MedabotsSync extends GhidraScript {
                     created++;
                     log.println("criada " + a);
                 }
+                ensureCode(fn);
                 if (p[0].equals("F")) {
                     if (fn.getName().equals(p[2])) { same++; continue; }
                     log.println("nome " + a + " " + fn.getName() + " -> " + p[2]);
@@ -94,7 +116,7 @@ public class MedabotsSync extends GhidraScript {
             }
         }
         String sum = "criadas " + created + ", renomeadas " + renamed + ", ja certas " + same
-            + ", rotulos " + labels + ", miolo de outra funcao " + inside + ", falharam " + failed;
+            + ", rotulos " + labels + ", miolo de outra funcao " + inside + ", reparadas " + repaired + ", falharam " + failed;
         log.println(sum);
         log.close();
         println(sum);

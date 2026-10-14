@@ -17,6 +17,7 @@ F	0x08000540	ClearOamAndVramShadow
 F	0x0800058C	Scene_InitSoundAndStartSong0
 F	0x080005D0	Gfx_VBlankIrq
 F	0x0800065C	VBlankIrqHandler
+F	0x080007E0	VBlankIrqHandler_080007E0
 L	0x080007FC	Snd_VBlankCallSite
 F	0x08000840	NoOpActionHandler
 F	0x08000844	get_player_inputs
@@ -356,28 +357,64 @@ L	0x080129F2	Fight_SetupBattleBotStates_080129F2
 F	0x08012A20	Fight_PartPanelStep
 F	0x08012B40	Gfx_FadeStepPaletteRows
 F	0x08012B94	Battle_CpuActionSelectStep
+F	0x08012C0C	Fight_SetupEntryScreenStep
 F	0x08012C64	Fight_BotSelectMenuFrame
+F	0x08012D98	Fight_EntryMotionWaitStep
+F	0x08012DF4	Fight_EntryFieldDrawStep
 F	0x08012E40	Fight_EntryScreenStep
+F	0x08012EA8	Fight_SlideCounterObjectsStep
+F	0x08012F00	Fight_SelectBotActionStep
+F	0x08012FF8	Fight_CountActionUsageStep
 F	0x0801303C	Fight_RunEntryAnimStep
+F	0x080130D8	Fight_ShowSelectedActionPanelStep
 F	0x08013164	Fight_PartSelectStep
+F	0x08013228	Fight_CounterFieldPairStep
 F	0x08013288	Fight_EntryAnimStep
 F	0x08013330	Fight_DrawEntryScene
+F	0x080133B8	Fight_ShowAltSelectedActionStep
 F	0x08013438	Fight_UpdateKindSelectorFrame
+F	0x08013508	Fight_CounterFieldPairAltStep
 F	0x08013568	Fight_TickEntryAnimationHandler
+F	0x08013614	Fight_LoadObjSlot2Step
+F	0x08013650	Fight_DispatchBotStateMachineStep
+F	0x080136B0	Fight_DispatchSubStateMachineStep
+F	0x080136E8	Fight_CopyPaletteBuffersStep
+F	0x0801372C	Fight_FadeInPaletteStep
 F	0x08013798	Init_CopyTileSetsAndSetBlend
 F	0x08013824	Fight_InitActionSlotSelect
 F	0x0801387C	Dispatch_ByteStateIndexTable
 L	0x080138A8	Dispatch_ByteStateIndexTable_Table
 L	0x08013904	Dispatch_ByteStateIndexTable_08013904
+F	0x08013A74	Fight_FadeOutPaletteStep
 F	0x08013AE4	Fight_MarkSelectedOptionFrame
 F	0x08013B8C	Fight_BattleSceneInit
+F	0x08013DE4	Fight_PreviewSelectedBotStep
 F	0x08013E30	UpdateSelectedMedabotPreviewScreen
 L	0x08013E84	UpdateSelectedMedabotPreviewScreen_AltEntry_8013e84
 F	0x08013FA8	Fight_SelectScreenFrame
+F	0x08014050	Fight_LoadResultSceneStep
+F	0x0801425C	Fight_PlayResultCueStep
 F	0x0801427C	Fight_StepBattleFrame
+F	0x08014314	Fight_BotEventQueueStep
+F	0x080143A0	Fight_ToggleBotFlagAdvanceStep
+F	0x08014404	Fight_PickBotActionStep
+F	0x08014548	Fight_UpdateBotMeterMotionStep
+F	0x080145BC	Fight_HighlightBotOamAStep
+F	0x08014634	Fight_ClearBotHighlightOamAStep
+F	0x080146DC	Fight_HighlightBotOamBStep
+F	0x08014754	Fight_ClearBotHighlightOamBStep
+F	0x080147FC	Fight_DrawBotNumberOamStep
+F	0x08014870	Fight_StepBotNumberAnimStep
+F	0x08014920	Fight_DrawBotNumberOamAltStep
+F	0x08014994	Fight_StepBotNumberAnimAltStep
+F	0x08014A44	Fight_LoadObjSlot0Step
 F	0x08014A60	StateMachine_TickStepCounter
+F	0x08014A84	Fight_WaitOverlayTargetStep
+F	0x08014ADC	Fight_ResetBattleFieldsStep
 F	0x08014B34	Fight_TickPartGaugePhases
 F	0x08014C30	Fight_SelectThreeActionSources
+F	0x08014C84	Fight_SelectEnemyMedaforceStep
+F	0x08014CC8	Fight_DispatchSubStateMachineAltStep
 F	0x08014CF0	Fight_SyncBotStatusFromPart
 F	0x08014D94	Fight_SelectActionSourceStep
 L	0x08014DA2	Fight_SelectActionSourceStep_08014DA2
@@ -401,6 +438,7 @@ F	0x0801531C	Fight_SelectActionsForBotGroup
 F	0x08015358	Fight_SelectActionFromCycleOrPendingOverride
 F	0x08015390	Fight_TrySelectActionFromSpecialityCycle
 F	0x08015414	Fight_AdvanceSpecialityCycleIndex
+L	0x08015438	Data_08015438_BadInstruction
 F	0x08015464	Fight_SelectFallbackActionFromPriorityList
 L	0x08015488	Fight_SelectFallbackActionFromPriorityList_08015488
 F	0x080154E0	Fight_IsPartActionLockedByPendingEffect
@@ -661,6 +699,7 @@ F	0x0801CE94	Fight_DispatchOnSubstateAA_FinishAndLoadSideTiles
 F	0x0801CF78	Fight_DispatchOnSubstateAA_A_20_DrainTargetValueStep
 F	0x0801CFFC	Fight_DispatchOnSubstateAA_LoadSideTilesThenJump
 F	0x0801D06C	Fight_DispatchOnSubstateAA_SetupBotAndSprites
+F	0x0801D0A8	Fight_DispatchOnSubstateAA_SetupBotAndSprites_0801D0A8
 F	0x0801D174	Fight_DispatchOnSubstateAA_ClearFlagsSfx
 F	0x0801D1AC	Fight_DispatchOnSubstateAA_A_25_SlideSlotUntilAnimEnds
 F	0x0801D244	Fight_DispatchOnSubstateAA_A_28_BranchBySideTwo
@@ -1327,8 +1366,9 @@ F	0x0803059C	Fight_DispatchOnSubstateAA_BR_07_SetReactionFlagBit2
 F	0x080305C8	Fight_DispatchOnSubstateAA_BR_08_SetStepCode6A
 F	0x080305E0	ActionFamily_StatusCheckFamily_Handler
 F	0x08030608	ActionFamily_TrapFamily_Handler
-F	0x08030624	ActionFamily_HealChange_Handler
+F	0x08030624	Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10
 F	0x08030674	Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip
+F	0x08030680	Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip_08030680
 F	0x080306B8	ActionFamily_Change_Handler
 F	0x08030780	Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer
 F	0x0803080C	Fight_DispatchOnSubstateAA_Shared_SetDone
@@ -1923,6 +1963,7 @@ F	0x08043C94	Encounter_RollPercent0To99
 F	0x08043CA8	Slots_ClearFourPairs
 F	0x08043CD4	Obj_StepAccumMoveA
 F	0x08043DF8	FxBlend_ApplyFromObjA
+L	0x08043E48	Fight_G03_VBlankCallback_ptr
 F	0x08043E54	Obj_CopySlot8Bytes
 F	0x08043E78	Obj_StepAccumMoveB
 F	0x08043F9C	FxBlend_ApplyFromObjB
@@ -3712,44 +3753,7 @@ C	0x08011D50
 C	0x08011D80
 C	0x08012BC0
 C	0x08012BE4
-C	0x08012C0C
-C	0x08012D98
-C	0x08012DF4
-C	0x08012EA8
-C	0x08012F00
-C	0x08012FF8
-C	0x080130D8
-C	0x08013228
-C	0x080133B8
-C	0x08013508
-C	0x08013614
-C	0x08013650
-C	0x080136B0
-C	0x080136E8
-C	0x0801372C
-C	0x08013A74
-C	0x08013DE4
-C	0x08014050
 C	0x080140B0
-C	0x0801425C
-C	0x08014314
-C	0x080143A0
-C	0x08014404
-C	0x08014548
-C	0x080145BC
-C	0x08014634
-C	0x080146DC
-C	0x08014754
-C	0x080147FC
-C	0x08014870
-C	0x08014920
-C	0x08014994
-C	0x08014A44
-C	0x08014A84
-C	0x08014ADC
-C	0x08014C84
-C	0x08014CC8
-C	0x08015438
 C	0x0801630C
 C	0x08016370
 C	0x080165D0
@@ -3844,7 +3848,6 @@ C	0x0803E674
 C	0x08040B5C
 C	0x08043AE0
 C	0x08043B58
-C	0x08043E48
 C	0x08044100
 C	0x08047C24
 C	0x08048000
