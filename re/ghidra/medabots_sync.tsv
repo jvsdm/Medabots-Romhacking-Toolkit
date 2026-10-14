@@ -22,10 +22,10 @@ L	0x080007FC	Snd_VBlankCallSite
 F	0x08000840	NoOpActionHandler
 F	0x08000844	get_player_inputs
 F	0x080008C0	SoftResetSequence
-F	0x08000964	is_input_soft_reset
+F	0x08000964	SoftReset_CheckComboAndRun
 F	0x0800099C	Sound_TickTrackAStub
 F	0x080009A8	Sound_TickTrackBStub
-F	0x080009BC	decompress_and_store
+F	0x080009BC	Lz_DecodeIfMagic
 F	0x08000A0C	Malias_DecodeLZ
 F	0x08000B14	Malias_DecodeLZ_Halfword
 F	0x08000E04	LoadTilesWithMalias
@@ -1119,7 +1119,7 @@ F	0x08022938	Fight_DispatchOnSubstateAA_X_09_WaitAnimOrTimer
 F	0x08022990	Fight_DispatchOnSubstateAA_X_0A_StepSlotToTarget
 F	0x080229C0	Fight_DispatchOnSubstateAA_X_0B_SlideOutAndClearSlot
 F	0x08022A04	Fight_DispatchOnSubstateAA_X_0C_SpawnRingSpritesOnTarget
-F	0x08022B40	Fight_DispatchOnSubstateAA_X_0D_ExpandRingAndClear
+F	0x08022B40	Fight_DispatchOnSubstateAA_X_0D_OrbitRingShrinkAndClear
 F	0x08022C28	Fight_DispatchOnSubstateAA_X_0E_InflictStatus1F
 F	0x08022C90	Fight_DispatchOnSubstateAA_X_0F_SetMessage29
 F	0x08022CA8	Fight_DispatchOnSubstateAA_Y
@@ -1275,11 +1275,11 @@ F	0x08026CBC	Fight_DispatchOnSubstateAA_AO_10_QueueHeadBreakIfDefenderHeadZero
 F	0x08026CF4	Fight_DispatchOnSubstateAA_AP
 F	0x08026D1C	Fight_DispatchOnSubstateAA_AP_01_WaitUnlessFlagB8Bit1
 F	0x08026D44	Fight_DispatchOnSubstateAA_AP_ApplyDamageToRandomTargetPart
-F	0x08026D98	Fight_DispatchOnSubstateAA_AP_0x18
+F	0x08026D98	Fight_DispatchOnSubstateAA_AP_18_SetupHitEffectSprite
 F	0x08026EC0	Fight_DispatchOnSubstateAA_AP_1B_LoopToStep02
 F	0x08026ED0	Fight_DispatchOnSubstateAA_AQ
 F	0x08026EF8	Fight_DispatchOnSubstateAA_AQ_00_PickActorPartToRepair
-F	0x08026F34	Fight_DispatchOnSubstateAA_AQ_02_RepairActorPart
+F	0x08026F34	Fight_DispatchOnSubstateAA_AQ_02_SplitRepairAmountByCapacity
 F	0x08026F6C	Fight_DispatchOnSubstateAA_AQ_0D_RepairPartByAmountCA
 F	0x08026FC0	Fight_DispatchOnSubstateAA_AQ_13_JumpToStep04
 F	0x08026FD0	Fight_DispatchOnSubstateAA_AR
@@ -1663,8 +1663,8 @@ F	0x080330F4	Fight_PickRandomIntactPart
 F	0x08033154	Fight_SetPartActionMetadata
 F	0x08033184	Fight_PickMostDamagedRepairablePart1Based
 F	0x080331F8	Fight_HasNoTechnique16Part
-F	0x08033224	Fight_IsBotMedaforceInactive
-F	0x08033240	Fight_IsBotPendingActionClear
+F	0x08033224	Fight_IsBotAutoRecoverInactive
+F	0x08033240	Fight_IsBotPendingStatusClear
 F	0x0803325C	Fight_PickRandomBrokenOrMissingPart1Based
 F	0x080332B4	Fight_IsHeadActionUsable
 F	0x080332D0	Fight_IsBotMedaforceTokenActive
@@ -2214,7 +2214,7 @@ F	0x080437E0	Util_Are4ByteFieldsEqual
 F	0x08043814	AreBattleSpritePartIdsValid
 L	0x08043820	AreBattleSpritePartIdsValid_08043820
 F	0x0804384C	Lookup_FindPartIndexById
-F	0x0804387C	reset_step_and_get_encounter_flag
+F	0x0804387C	Overworld_ResetEncounterStepState
 F	0x080438C4	Overworld_ShouldTriggerRandomEncounter
 F	0x08043AE0	Unk_08043AE0
 F	0x08043B58	Unk_08043B58
@@ -2393,6 +2393,7 @@ F	0x0804AFB8	Screen_UpdateStepWrap
 F	0x0804B008	Map_FinishEnterTransition
 L	0x0804B036	Map_FinishEnterTransition_0804B036
 L	0x0804B124	lit_EventDbBase3
+F	0x0804B15C	Stub_ReturnNoop_0804B15C
 F	0x0804B1B0	Map_UpdateEventObjectDepthAndMarkerState
 F	0x0804B248	Map_ClearOamShadowViaDma
 F	0x0804B298	Map_ClearBgTilemapVram
@@ -3071,12 +3072,16 @@ F	0x08064880	Anim_StepOscillatingSprite
 F	0x080648E0	Anim_UpdateBlinkFrameAndTimer
 F	0x0806495C	Fx_TickBlinkFrameAndSetOam
 F	0x080649BC	Dispatch_CallHandlerFromTable4
+F	0x08064A08	Obj_BuildActiveSlotMaskAndReset
 F	0x08064A80	FightPreview_ProcessChoiceCodeWord
+F	0x08064B90	Task_CallHandlerTableIndexedCopy
+F	0x08064BBC	Obj_CheckReachedTargetSetState14
 F	0x08064BEC	Battle_SetDefaultsA
 F	0x08064C0C	Battle_SetDefaultsB
 F	0x08064C2C	Battle_SetDefaultsC
 F	0x08064C4C	Battle_SetDefaultsD
 F	0x08064C6C	Battle_DrawPartNameSprites
+F	0x08064DB4	Task_CallHandlerTableThenCountIfFlag_V2
 F	0x08064E18	Fight_BuildActiveSlotList
 F	0x08064EB4	Screen_InitLoadAssetsB
 F	0x08065074	PartGrid_InitSlotsAndDraw
@@ -3143,6 +3148,7 @@ F	0x08067974	Screen_ScrollTextRowsStep
 F	0x08067A70	Screen_ScrollRowsUpPhase
 F	0x08067ACC	Screen_ClearRowsAndFadeMusic
 F	0x08067B28	Screen_FadeAndWaitMusicToMode12
+F	0x08067B9C	Task_CallHandlerCopyThenDecrement
 F	0x08067BDC	set_state_timed
 F	0x08067C04	fx_particles_blend_step
 F	0x08067D00	Screen_LoadSceneWithSong
@@ -3158,6 +3164,7 @@ F	0x08068460	fx_screen_setup_a
 F	0x08068684	fx_screen_setup_b
 F	0x08068888	fx_step_table_a
 F	0x080688E0	fx_step_table_b
+F	0x08068920	Stub_ReturnTrue_08068920
 F	0x08068A84	Palette_CrossfadeStep
 F	0x08068BC4	Fx_PeriodicSineEmitStep
 F	0x08068CC8	fx_palette_fade_step
@@ -3990,17 +3997,10 @@ C	0x0804ACD4
 C	0x0804AF98
 C	0x0804AFCC
 C	0x0804AFE0
-C	0x0804B15C
 C	0x08060688
 C	0x080617E0
 C	0x08061958
 C	0x08063948
-C	0x08064A08
-C	0x08064B90
-C	0x08064BBC
-C	0x08064DB4
-C	0x08067B9C
-C	0x08068920
 C	0x08068924
 C	0x08068978
 C	0x08068B74

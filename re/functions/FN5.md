@@ -32,3 +32,27 @@ Nomes em ingles Subsistema_VerboObjeto. Confianca: confirmado (lido no decompile
 ## 0x08060280 Task_CallHandlerThenDecrementIfFlag
 - Como 0x0805FC58, mas decrementa o short +2 se bit0 do flag. Confianca: provavel.
 
+
+## 0x0804B15C Stub_ReturnNoop_0804B15C
+- Corpo vazio (so retorno). Sem xref direto; ponteiro addr|1 em 8 pontos da regiao 0x083D215C-0x083D21BC (tabela de callbacks). Confianca: confirmado (corpo) / provavel (papel de stub).
+
+## 0x08060688 / 0x080617E0 / 0x08061958 / 0x08063948
+- Ja tinham nome no Ghidra quando conferi (Dispatch_CallTableEntryByByte, Fx_StepCounterResetAtZero, Task_CallHandlerTableThenCount_B, Task_CopyCallTableEntryThenCount): pulados, nao sao mais FUN_. Nao registrados aqui.
+
+## 0x08064A08 Obj_BuildActiveSlotMaskAndReset
+- Varre 29 entradas de 0x40 bytes; onde byte +0 tem bit7, ORa 1<<byte[1] numa mascara. Zera +0x48..+0x4B e grava mascara ou 0 em +0x1C conforme +0x7A. Confianca: provavel no papel, chute no nome.
+
+## 0x08064B90 Task_CallHandlerTableIndexedCopy
+- Copia 2 words para pilha e chama CallViaR0 com indice de tabela. Confianca: provavel.
+
+## 0x08064BBC Obj_CheckReachedTargetSetState14
+- Grava +6 do objeto; se +0xA e +0xE iguais ao valor, grava 0x14 e zera um byte. Confianca: chute.
+
+## 0x08064DB4 Task_CallHandlerTableThenCountIfFlag_V2
+- Mesmo padrao de 0x0805E404 (CallViaR0 + contadores se bit0). Confianca: provavel.
+
+## 0x08067B9C Task_CallHandlerCopyThenDecrement
+- Copia 28 bytes de tabela para pilha, CallViaR0 indexado, decrementa short +2 de um objeto. Confianca: provavel.
+
+## 0x08068920 Stub_ReturnTrue_08068920
+- Corpo `return 1`. Confianca: confirmado.
