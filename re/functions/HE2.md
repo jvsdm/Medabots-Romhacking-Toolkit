@@ -101,6 +101,7 @@ Tamanho = bytes de argumento lidos pelo primário (sem contar o opcode). Marca P
 - O que faz: base = cursor após o opcode; `v = EventField3Bit_GetByPackedId(gCurrentEventId)` (campo de 3 bits do
   PRÓPRIO evento na lista de flags: id ímpar = bits 0-2, par = bits 4-6); lê o byte em base+v;
   cursor = base + byte. Tabela inline de saltos (até 8 bytes), sem fall-through. Imediato.
+- Leitura do campo (EF): o byte e `0x030057D8 + ((gCurrentEventId & 0xFFF) >> 1)` (id par = bits 4-6, impar = bits 0-2). A base NAO e E (0x030057E0).
 - Args: VARIÁVEL (tabela inline de v+1 bytes no mínimo). C# diz 2 bytes; ROM_SIZE_FIX do extract diz 2 no total;
   nenhum dos dois é o tamanho real (o extract não usa esse tamanho: trata 0x2F como multijump antes).
 - PC: implementado (extract `multijump` com contagem heurística de alvos; script.lua escolhe `to[sel+1]`).

@@ -5,7 +5,7 @@ Revisão GH-HE3-redo: os 35 handlers agora são funções no Ghidra; todos foram
 `Event_Op<XX>_<Nome>`. Os literais de pool (DAT_...) foram lidos direto da ROM.
 
 Convenções (confirmadas nos decompiles desta faixa):
-- Base RAM do evento = `0x030057E0` (event_flag_list). Offsets usados: +0xC89 = `gCurrentEventStateByte`
+- Base RAM do bloco de estado do evento = `0x030057E0`. O array de flags (`event_flag_list`) e `0x030057D8`, indice `(id&0xFFF)>>1` (EF). Offsets usados: +0xC89 = `gCurrentEventStateByte`
   (0x03006469; gravar 1 = opcode diferido, o handler de continuação roda nos quadros seguintes), +0xC8A =
   `gCurrentEventScriptCursor` (0x0300646A), +0xC8C = cópia do cursor antes de ler os args (0x0300646C),
   +0xC93 = `gCurrentEventOpcodeSubstate` (0x03006473), +0xC94.. = `gEventScriptArguments[]` (0x03006474..).

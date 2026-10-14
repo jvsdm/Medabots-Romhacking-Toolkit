@@ -50,8 +50,8 @@ Uma flag e um campo de 3 bits dividem o mesmo byte, por par de ids (confirmado n
 
 | id | byte | flag (1 bit) | campo de 3 bits (variável) |
 |---|---|---|---|
-| par (id & 1 = 0) | `base + id>>1` | bit 7 (0x80) | bits 4..6 (0x70) |
-| ímpar (id & 1 = 1) | `base + id>>1` | bit 3 (0x08) | bits 0..2 (0x07) |
+| par (id & 1 = 0) | `0x030057D8 + ((id&0xFFF)>>1)` (EF) | bit 7 (0x80) | bits 4..6 (0x70) |
+| ímpar (id & 1 = 1) | `0x030057D8 + ((id&0xFFF)>>1)` (EF) | bit 3 (0x08) | bits 0..2 (0x07) |
 
 - `base` = ponteiro lido de literal, que aponta para **0x030057D8** (todos os DAT_ usados nessas rotinas: 0x08053184,
   0x0805319C, 0x08053200, 0x08053218, 0x08053260, 0x0805327C, 0x080532F0, 0x08053308; literal 0x030057D8 confirmado).

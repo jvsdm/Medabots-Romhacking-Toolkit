@@ -4,7 +4,7 @@ Status: COMPLETO (redo GH-HE1). Os 35 handlers foram decompilados no Ghidra (fun
 e renomeados `Event_Op<XX>_<Nome>`. Literais do pool lidos na ROM EU (Medabots - Metabee (Europe).gba).
 
 ## Como o despachante funciona (confirmado)
-- Bloco de estado do evento: base **0x030057E0** (mesma base do `event_flag_list`). Offsets usados aqui:
+- Bloco de estado do evento: base **0x030057E0**. O array de flags de evento (`event_flag_list`) NAO usa esta base: e 0x030057D8, indice `(id&0xFFF)>>1` (EF). Offsets usados aqui:
   +0xC88 = 0x03006468 gCurrentEventPendingFlag, **+0xC89 = 0x03006469 gCurrentEventStateByte** (0 = fase primaria,
   1 = fase de continuacao), +0xC8A = 0x0300646A cursor do script (u16), +0xC8E = 0x0300646E gCurrentEventId,
   +0xC92 = 0x03006472 opcode atual, +0xC93 = 0x03006473 subestado do opcode, **+0xC94.. = 0x03006474 gEventScriptArguments**,

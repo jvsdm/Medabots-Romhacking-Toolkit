@@ -499,6 +499,8 @@ address,name,kind,count,comment
 0x0800667C,Battle_InitPartSpriteObj,func_thumb,,Simon/Rokusho (antes: RenderAlternateCompositePreviewFrame)
 0x08006764,Parts_CreateIconSprite,func_thumb,,Simon/Rokusho (antes: RenderAlternateCompositePreviewLargeFrame)
 0x08006824,Parts_DispatchSlotHandler,func_thumb,,[R0] dispatch por jump table do slot de parte (chute)
+0x08006844,Parts_DispatchSlotHandler_JumpA,label,,[JT5] mov pc (bit 8 ligado): tabela 0x08006854 (5 helpers 0x08006238/284/2D0/31C/368 com arg 0); JT5
+0x080068A2,Parts_DispatchSlotHandler_JumpB,label,,[JT5] mov pc (bit 8 desligado): tabela 0x080068AC (mesmos helpers com arg 1); JT5
 0x080068EC,Parts_HandleSlotInput,func_thumb,,[R0] navegacao entre slots de parte pelos botoes (provavel)
 0x08006980,Parts_CycleValueSlot,func_thumb,,[R0] ciclo de valor do slot 0 (provavel)
 0x08006A00,Parts_CycleSlot1,func_thumb,,[R0] ciclo de troca de parte no slot 1 (provavel)
@@ -511,6 +513,7 @@ address,name,kind,count,comment
 0x08006F14,Parts_RefreshPanelIfDirty,func_thumb,,[R0] atualiza painel se flag suja (provavel)
 0x08006F34,Parts_DispatchSlotAction,func_thumb,,[R0] dispatch por jump table de acao de slot (chute)
 0x08006F44,Parts_DispatchSlotAction_ReadActionIndex,label,,Simon/Rokusho (antes: PartSet_UpdateFromCurrentLoadoutMaybe)
+0x08006F56,Parts_DispatchSlotAction_Jump,label,,[JT5] mov pc: tabela real 5 entradas em 0x08006F64 (idx +0x5A <=4); JT5
 0x08006FA0,Parts_DispatchSlotAction_CheckByte9B,label,,Simon/Rokusho (antes: PartSet_EquipCurrentLoadoutMaybe)
 0x08006FB0,Parts_BuildEquipTable,func_thumb,,[R0] monta tabela de partes equipadas (provavel)
 0x080070F0,Parts_CountInventoryMatches,func_thumb,,[R0] conta partes disponiveis no inventario (provavel)
@@ -524,7 +527,8 @@ address,name,kind,count,comment
 0x08007540,Parts_CountFilledSlots,func_thumb,,[R0] conta slots preenchidos (provavel)
 0x080075AC,PartsGrid_SceneInit,func_thumb,,"init da tela da grade de peças (gráficos, tiles, sprites, música 7); provável"
 0x08007A04,PartsGrid_InitScreen_CellGraphics,func_thumb,,"[provavel] init da tela de pecas: DISPCNT 0x1F60, decompress x4, LoadTilesWithMalias x4, PartsGrid_Draw* (antes: PartsGrid_InitScreen)"
-0x08007D28,Tile_ClearSlotsAndDispatchState,func_thumb,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5)"
+0x08007D28,Tile_ClearSlotsAndDispatchState_JumpTable,data,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5) (antes: Tile_ClearSlotsAndDispatchState)"
+0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,,[JT5] mov pc
 0x08007E38,PartsGrid_InitScreen,func_thumb,,"monta tela de grade de pecas (decompress, tiles, PartsGrid_Draw*); provavel"
 0x08008234,PartsGrid_InitScreen_StatusPreview,func_thumb,,"[provavel] setup da tela de grade de pecas: DISPCNT, decompress x7, tiles x4, cpufastset paleta, PartsGrid_Draw* (antes: PartsGrid_InitScreen)"
 0x080087CC,PartsGrid_EnterScreenInit,func_thumb,,provável: setup da tela de grade de peças (VRAM/tiles/PartsGrid_*)
@@ -1176,7 +1180,7 @@ address,name,kind,count,comment
 0x08020A68,Fight_DispatchOnSubstateAA_R,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08020A90,Fight_DispatchOnSubstateAA_R_01_ClearTilesSplitCount,func_thumb,,Despachante R idx 0x01; limpa tiles e divide contagem pela peca; proximo 0x02; confirmado
 0x08020AD0,Fight_DispatchOnSubstateAA_R_0C_SplitCountOrSkip,func_thumb,,"Simon/Rokusho: Choose a broken-or-missing target part to receive overflow damage. Restores the defender's effective leg-derived stats first, then either picks a broken target and clamps the overflow damage to that part's current armor or skips ahead if no valid target exists. (antes: Fight_SelectBrokenPartDamageTarget)"
-0x08020B4C,Fight_DispatchOnSubstateAA_R_08_LoadPartIconsAndJump,func_thumb,,Simon/Rokusho: Advance one repair tick and spawn the accompanying repair effects/particles. Uses different display/effect paths depending on side orientation before advancing the action sequence. (antes: Fight_AdvanceRepairTickWithEffects)
+0x08020B4C,Fight_DispatchOnSubstateAA_R_08,label,,Simon/Rokusho: Advance one repair tick and spawn the accompanying repair effects/particles. Uses different display/effect paths depending on side orientation before advancing the action sequence. (antes: Fight_AdvanceRepairTickWithEffects) (antes: Fight_DispatchOnSubstateAA_R_08_LoadPartIconsAndJump)
 0x08020CEC,Fight_DispatchOnSubstateAA_R_12_JumpTo02,func_thumb,,Despachante R idx 0x12; escreve 2 em +0xAA; confirmado
 0x08020CFC,Fight_DispatchOnSubstateAA_S,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08020D24,Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart,func_thumb,,Despachante S idx 0x00; penalidade + modo fi+0x51 pelo byte +0x49 da peca; proximo 0x04; confirmado (antes: Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart) (antes: Fight_DispatchOnSubstateAA_S_00_00_PenaltyComputeModeCopyPart)
@@ -1347,7 +1351,7 @@ address,name,kind,count,comment
 0x08025790,Fight_DispatchOnSubstateAA_AH_FormatCounterDigits,func_thumb,,[HA8] Handler AH idx 0x12: formata +0x51 em 6 glifos; avanca subestado
 0x080257C0,Fight_DispatchOnSubstateAA_AI,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x080257E8,Fight_DispatchOnSubstateAA_AI_00_AccumPartCheckCost,func_thumb,,Handler AI idx 0x00: acumula peca do bot ativo; custo de status; checa tecnica 16 do alvo; avanca
-0x08025858,Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics,func_thumb,,[HA8] Handler AI idx 0x08: escolhe gfx por tecnica ('.'); salto final por tabela nao recuperada
+0x08025858,Fight_DispatchOnSubstateAA_AI_LoadTechniqueGraphics,label,,[HA8] Handler AI idx 0x08: escolhe gfx por tecnica ('.'); salto final por tabela nao recuperada
 0x08025974,Fight_DispatchOnSubstateAA_AI_0B_SetupTargetSpriteSfx,func_thumb,,Handler AI idx 0x0B: monta sprite na posicao do alvo; SFX 0x6A; avanca
 0x08025A18,Fight_DispatchOnSubstateAA_AI_SetActionResultCodes,func_thumb,,[HA8] Handler AI idx 0x11: grava +0xC9..+0xCC do bot; avanca subestado
 0x08025AAC,Fight_DispatchOnSubstateAA_AI_12_SelectMessageByTechnique,func_thumb,,Handler AI idx 0x12: grava codigo 0x31/0x32 conforme byte de tecnica '.'; avanca
@@ -1395,7 +1399,7 @@ address,name,kind,count,comment
 0x08026CF4,Fight_DispatchOnSubstateAA_AP,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026D1C,Fight_DispatchOnSubstateAA_AP_01_WaitUnlessFlagB8Bit1,func_thumb,,"Handler AP idx 0x01: avanca, ou vai para 0x20 se +0xB8 bit 1 aceso"
 0x08026D44,Fight_DispatchOnSubstateAA_AP_ApplyDamageToRandomTargetPart,func_thumb,,[HA8] Handler AP idx 0x15: dano em peca sorteada do alvo; avanca +3; salto por tabela nao recuperada
-0x08026D98,Fight_DispatchOnSubstateAA_AP_18_LoadGfxPlaceOnPart,func_thumb,,[HN1] Handler AP idx 0x18; ver HN1.md
+0x08026D98,Fight_DispatchOnSubstateAA_AP_0x18,label,,[HN1] Handler AP idx 0x18; ver HN1.md (antes: Fight_DispatchOnSubstateAA_AP_18_LoadGfxPlaceOnPart)
 0x08026EC0,Fight_DispatchOnSubstateAA_AP_1B_LoopToStep02,func_thumb,,[HN1] Handler AP idx 0x1B; ver HN1.md
 0x08026ED0,Fight_DispatchOnSubstateAA_AQ,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026EF8,Fight_DispatchOnSubstateAA_AQ_00_PickActorPartToRepair,func_thumb,,[HN1] Handler AQ idx 0x00; ver HN1.md
@@ -1426,6 +1430,7 @@ address,name,kind,count,comment
 0x08027974,Fight_DispatchOnSubstateAA_AS_SelectVariantByTechnique,func_thumb,,"[TA2] inicio real 0x08027964; fight+0x51 = tec-4 para 4..8, senao 5; fight+0xAA++"
 0x080279E4,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor,func_thumb,,"[HN2] HN2 AS 0x01: gfx por tecnica, icone sobre o bot, sfx 0x33; provavel"
 0x08027A04,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor,func_thumb,,[TA] B+0xA8-4 <5 -> jump table; senao sprite e som 0x33
+0x08027A16,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_Jump,label,,[JT5] mov pc: tabela real 5 entradas em 0x08027A34 (idx +0xA8-4); JT5
 0x08027BA0,Fight_DispatchOnSubstateAA_AS_SpinIcon,func_thumb,,[HN2] HN2 AS 0x02: gira slot 0x21 por 0x3C frames; confirmado
 0x08027BEC,Fight_DispatchOnSubstateAA_AS_SetupSecondSprite,func_thumb,,[HN2] HN2 AS 0x03: slot 0x22 escala 0x80 tile 0x6700; confirmado
 0x08027CB0,Fight_DispatchOnSubstateAA_AS_ShrinkSecondSprite,func_thumb,,"[HN2] HN2 AS 0x04: escala 0x22 ate 0x40, sfx 0x30; confirmado"
@@ -1451,8 +1456,11 @@ address,name,kind,count,comment
 0x08028404,Fight_DispatchOnSubstateAA_AV,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0802842C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,func_thumb,,[HN2] HN2 AV(op 0x54) 0x00: +0x51 = 0..4 para tec 0x0C/0E/10/12/28; confirmado
 0x0802843C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,func_thumb,,[TA2] inicio real 0x0802842C; fight+0x51 = 0/1/2/3/4 para tec 12/14/16/18/40; outras so +0xAA++
+0x0802844C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_Jump,label,,[JT5] mov pc: tabela real 29 entradas em 0x0802845C (tecnica 12..40); JT5
+0x0802845C,Fight_SelectVariantByTechnique_JumpTable,data,,[JT5] tabela real 29 ponteiros (tecnica 12..40); JT5
 0x08028504,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,func_thumb,,[HN2] HN2 AV 0x01: gfx por tecnica e slot 0x21; provavel
 0x08028512,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,func_thumb,,[TA] B+0xA8-0x0C >0x1C -> efeito padrao; senao jump table de 29 variantes
+0x08028526,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_Jump,label,,[JT5] mov pc: tabela real 29 entradas em 0x08028534 (idx +0xA8-0xC); JT5
 0x080287C0,Fight_DispatchOnSubstateAA_AV_WaitEffectSlots,func_thumb,,[HN2] HN2 AV/AX/AY/AZ 0x02: espera FightPreview_DispatchEffectSlots; confirmado
 0x080287DC,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,func_thumb,,"[HN2] HN2 AV 0x03: Fight_SetPendingActionEffect nos adversarios (0x0D/10/12/13/2C), imunes c/ tec 0x16; confirmado"
 0x08028834,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,func_thumb,,[TA2] inicio real 0x080287DC; 3 slots adversarios; status 0D/10/12/13/2C para tec 12/14/16/18/40; tabela 0x08028854
@@ -1463,6 +1471,7 @@ address,name,kind,count,comment
 0x080289BC,Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion,func_thumb,,"[SS2] handler AV tipo 0x2C (Confusion): aplica sem teste de mascara (C, SS2)"
 0x08028A00,Fight_DispatchOnSubstateAA_AV_04_BranchOnFlaggedTargets,func_thumb,,"[HN3] HN3 AV 04: se alguma flag +0xD2..+0xD4 está ligada, +0xAA += 2; senão +0xAA += 1. (confirmado)"
 0x08028A38,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots,func_thumb,,"[HN3] HN3 AV 06: LZ77 + cpufastset 8 (gráfico do efeito); para cada aliado marcado em +0xD2+i, monta o slot 0x21+i na posição do bot (+0x1742/+0x1744 do registro de ob (provável)"
+0x08028AB4,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump,label,,[JT5] mov pc em 0x08028AB4: tabela 6 ponteiros em 0x08028AD8 (idx +0x51 <=5); JT5
 0x08028B58,Fight_DispatchOnSubstateAA_AV_07_WaitFlaggedSlotsArrived,func_thumb,,"[HN3] HN3 AV 07: para cada aliado marcado, `FightPreview_AdvanceSlotX(0x21+i, 0)`; quando algum termina, timer +0x86 = 0x3C, +0xAA += 1. (confirmado)"
 0x08028BA8,Fight_DispatchOnSubstateAA_AV_09_ClearSlotsDispatchByType,func_thumb,,"[HN3] HN3 AV 09: `Tile_ClearSlots(0x21, 3)`; se +0x51 < 6, salta pela tabela de +0x51 (alvo não lido); senão +0xAA += 1. (provável)"
 0x08028C40,Fight_DispatchOnSubstateAA_AW,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
@@ -2712,10 +2721,12 @@ address,name,kind,count,comment
 0x08050C94,Overworld_ResetUiRenderState,func_thumb,,Simon/Rokusho
 0x08050CC0,Event_ResetSceneCommandStep,func_thumb,,Simon/Rokusho
 0x08050CCC,Event_RunSceneCommandSequence,func_thumb,,"Simon/Rokusho: Run a multi-step scene/event command sequence selected by a small command id. |  | This helper is not map-load-specific. Depending on the command id, it can: | - launch top-level game/menu flows through GameState_StartFlowByCommand | - run scene transitions | - trigger side-effect commands through 0x0804842C | - advance an internal step byte in gEventScriptArguments[0x0B] |  | Returns nonzero when the sequence has finished."
+0x08050CEA,Event_RunSceneCommandSequence_Jump,label,,[JT5] mov pc: tabela real 5 entradas em 0x08050CF4 (idx byte +0xB de 0x03006D20); JT5
 0x08050CF4,SceneCommandStepTable,data,,"[SC] [SC] 5 ponteiros de passo: 0x08050D08 (passo 0), 0x08050D40 (1), 0x08050D72 (2), 0x08050F38 (3), 0x08050F40 (4)"
 0x08050D08,SceneCommandStep0_ResetTransition,label,,"[SC] [SC] passo 0 (dentro de Event_RunSceneCommandSequence, sem funcao no Ghidra): cmd!=0x20 -> transicao 0x08049D90 modo 8 (0xFF se cmd 8)"
 0x08050D40,SceneCommandStep1_WaitAndStartFlow,label,,"[SC] [SC] passo 1 (sem funcao): cmd 0x20 -> snapshot 0x080505FC + GameState_StartFlowByCommand(0x20); outros: espera 0x08049E08 == 0, depois snapshot + GameState_StartFlowByCommand(cmd,arg)"
 0x08050D72,SceneCommandStep2_LoadScene,label,,"[SC] [SC] passo 2 (sem funcao): DMA clear OAM/paleta, carga de mapa 0x080480E4, camera 0x08052AA4, blend 0x08048830, cmd 0x13 espera 0x08050BC8, depois politica por cmd (0x08050E6C)"
+0x08050E4E,Event_RunSceneCommandSequence_JumpCmd,label,,[JT5] mov pc: tabela real 33 entradas em 0x08050E6C (comando 0..32); JT5
 0x08050E6C,SceneCommandCodeTable,data,,"[SC] [SC] switch por cmd 0x00..0x20 (33 entradas); destino = mov r0,#codigo -> SND_PolicyRequest; codigos: 00->10,01->11,02->12,03->14,05->1A,08->1B,10->15,11->16,12->19,13->13,14->0F,20->0D; demais = avanco sem politica"
 0x08050F38,SceneCommandStep3_Advance,label,,[SC] [SC] passo 3 (sem funcao): so avanca o passo
 0x08050F40,SceneCommandStep4_WaitTransitionEnd,label,,[SC] [SC] passo 4 (sem funcao): cmd 8 termina; outros esperam 0x08049E08 terminar e devolvem 1
@@ -3150,7 +3161,7 @@ address,name,kind,count,comment
 0x0806B764,Screen_InitFxSetup,func_thumb,,init de cena com música 0 e fx_screen_setup_a; provável
 0x0806B820,Screen_InitObjectSlotsLz77,func_thumb,,[provavel] 4 LZ77 para VRAM; ~13 Map_InitializeObjectRenderSlot; REG_DISPCNT |= 0x1E00
 0x0806B8CE,TeamSlots_WriteFi41_Candidate,func_thumb,,[TP] [GH-TP provavel] grava r3 em fi+0x41; escritor da escolha de time? valor/origem aberto
-0x0806BC48,Fight_TickBattleFrame,func_thumb,,[confirmado] despachante por quadro: counter_oscillate_x/battle_state_fire/select_entity_max ou battle_phase_spawn_move; depois battle_update_objects etc.; jump table nao recuperado
+0x0806BC48,Fight_TickBattleFrame,label,,[confirmado] despachante por quadro: counter_oscillate_x/battle_state_fire/select_entity_max ou battle_phase_spawn_move; depois battle_update_objects etc.; jump table nao recuperado
 0x0806BCFC,Fx_StepTableB_Check,func_thumb,,provável: checa fx_step_table_b e grava registro de efeito
 0x0806BD3C,Screen_ResetDisplayAndStopSong,func_thumb,,"[FL10] entrada de tela: DAT_0806BD68=0xFF/0x10, REG_DISPCNT mask, snd_song_request(0) (provável)"
 0x0806BD70,dispatch_state_8,func_thumb,,[R4] R4: despacho 8 estados (jumptable nao recuperada); provavel

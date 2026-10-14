@@ -43,7 +43,7 @@ Conclusão do handler:
 
 ### 1.2 Campo `v` 0x080532D4 (lido)
 
-- `v = (flag do id) & 7` se id é ímpar (byte em `0x03... + id>>1`, bits 0-2); `v = (byte & 0x70) >> 4` se id é par (bits 4-6). Faixa 0..7.
+- `v = (flag do id) & 7` se id é ímpar (byte em `0x030057D8 + ((id&0xFFF)>>1)`, bits 0-2; base corrigida) (EF); `v = (byte & 0x70) >> 4` se id é par (bits 4-6). Faixa 0..7.
 - Logo a tabela tem no máximo **8 entradas** (T[0]..T[7]); a tabela pode ser menor.
 
 ### 1.3 Regra de tamanho (N) - heurística
