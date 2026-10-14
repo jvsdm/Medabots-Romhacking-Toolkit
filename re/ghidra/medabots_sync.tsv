@@ -2525,6 +2525,7 @@ F	0x08062D60	Anim_ScrollTileRows
 F	0x08062DFC	Anim_ScrollTileColumnsAlt
 F	0x08062ED8	Anim_ScrollTileRowsAlt
 F	0x08062FB4	BattlePanel_SceneInit
+L	0x080631C0	gBattlePanel_Literal_Char_Src
 F	0x08063208	Battle_TickPanelTimerAndDraw
 F	0x08063254	BattlePanel_UpdateSelectionFrame
 F	0x08063354	Shop_TickItemTransferAnim
@@ -3206,7 +3207,8 @@ L	0x08488290	gGfx_Battle_BotTiles_D
 L	0x084882CC	gGfx_Battle_BotTiles_A
 L	0x08488520	gGfx_Dialog_PaletaOrnamento
 L	0x084BFC6C	gFont
-L	0x084C29D8	gMedalSprites
+L	0x084C29D8	gGfx_BotIconTable_Base
+L	0x084C2E58	gGfx_MedalIcon_Kuwagata
 L	0x084C39D8	gGfx_Dialog_Tiles2
 L	0x084C3A24	gGfx_PartsGrid_Tiles_Bg1
 L	0x084C3BF8	gGfx_PartsGrid_Tiles_Bg2

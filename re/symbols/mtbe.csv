@@ -2886,6 +2886,7 @@ address,name,kind,count,comment
 0x08062DFC,Anim_ScrollTileColumnsAlt,func_thumb,,[R3] variante de rolagem de colunas (provavel)
 0x08062ED8,Anim_ScrollTileRowsAlt,func_thumb,,[R3] variante de rolagem de linhas (provavel)
 0x08062FB4,BattlePanel_SceneInit,func_thumb,,"init do painel de batalha (música 0x18, tiles, texto, BGs); provável"
+0x080631C0,gBattlePanel_Literal_Char_Src,data,,[IC] [GH-IC] literal do pool usado por BattlePanel_SceneInit 0x08062FB4: fonte 0x08785EC0
 0x08063208,Battle_TickPanelTimerAndDraw,func_thumb,,[provavel] Anim_StepRecordCounter(ctx+0x50); grava 600 em ctx+0x3C; BattlePanel_DrawSlotText
 0x08063254,BattlePanel_UpdateSelectionFrame,func_thumb,,seleciona slot do painel de batalha e redesenha texto; provavel
 0x08063354,Shop_TickItemTransferAnim,func_thumb,,[provavel] anima troca de 1 item entre dois slots (Inv_SubCountClampZero + Inv_AddCountClamp99) ao zerar +0x3C; SFX 0x4B
@@ -3567,7 +3568,8 @@ address,name,kind,count,comment
 0x084882CC,gGfx_Battle_BotTiles_A,data,,[GF] Malias +2=0x0070; LoadTilesWithMalias bloco 0x0D; Fight_LoadBattleBotTilesSet 0x08015A90 (GF)
 0x08488520,gGfx_Dialog_PaletaOrnamento,data,,[GF3] Paleta banco 15 da caixa de dialogo (cru); GF3
 0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias)"
-0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
+0x084C29D8,gGfx_BotIconTable_Base,label,,sprites de medalha: 2x64 tiles 4bpp (antes: gMedalSprites)
+0x084C2E58,gGfx_MedalIcon_Kuwagata,data,,"[IC] [GH-IC] 128 B = bloco 9 de 0x084C29D8 (medalha 0 Kuwagata, hipotese); destino VRAM tiles 960..963 na tela BUILD"
 0x084C39D8,gGfx_Dialog_Tiles2,data,,[GF3] Tiles auxiliares da caixa de dialogo/escolha (Malias +2 0x0040); GF3
 0x084C3A24,gGfx_PartsGrid_Tiles_Bg1,data,,[GF] Malias 0x0340; grade 0x06006280; tambem Screen_LoadSceneWithSong 0x06000080 (GF)
 0x084C3BF8,gGfx_PartsGrid_Tiles_Bg2,data,,[GF] Malias 0x0580 -> VRAM 0x06006800; PartsGrid_InitScreen (GF)
