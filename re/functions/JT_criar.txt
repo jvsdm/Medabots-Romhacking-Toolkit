@@ -1,0 +1,21 @@
+# Alvos de tabelas de ponteiro (JT2/JT3) que devem virar funcao. Rodar CreateHandlerFunctions com este arquivo.
+0x08040B50	GH-JT2 tabela 0x083B2990 (0x08040974), indices 0, 20 e 22: ponteiro thumb valido sem funcao no Ghidra; criar funcao e documentar
+0x08041BF4	GH-JT2 tabela 0x083B2990 (0x08040974), indice 13: ponteiro thumb valido sem funcao no Ghidra; logo apos Slot_CountdownAndClearTile
+0x08040A40	GH-JT2 tabela 0x083B2990 (0x08040974), indice 17: ponteiro thumb valido sem funcao no Ghidra; logo apos BgMap_TickFlashStep
+0x08040AF1	GH-JT2 tabela 0x083B2990 (0x08040974), indice 18: ponteiro thumb valido sem funcao no Ghidra
+0x08040B0D	GH-JT2 tabela 0x083B2990 (0x08040974), indice 19: ponteiro thumb valido sem funcao no Ghidra
+0x0800D684	JT3 BAD8 idx 30 / BE6C idx 27 / D168 idx 9 (tabela 0x083ACAC0): sem funcao no Ghidra, descricao nao lida
+0x0805D4E0	JT3 CB50 idx 7 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805D5D0	JT3 CB50 idx 11 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805D658	JT3 CB50 idx 13 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DAD4	JT3 CB50 idx 20 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DC88	JT3 CB50 idx 24 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DCB0	JT3 CB50 idx 25 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DB4C	JT3 CB50 idx 29 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x080639C4	JT3 0x0806463C idx 0 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x080640DC	JT3 0x0806463C idx 4 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x0806445C	JT3 0x0806463C idx 7 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x080644D8	JT3 0x0806463C idx 8 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x08068238	JT3 0x08068400 idx 2 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
+0x08068298	JT3 0x08068400 idx 3 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
+0x08068328	JT3 0x08068400 idx 4 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida

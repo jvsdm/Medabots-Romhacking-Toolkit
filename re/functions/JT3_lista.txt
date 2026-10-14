@@ -1,0 +1,27 @@
+0x08065F1C	JT3 A0 (0x08065F04 idx 0) do 0x08065ED0: chama 0x080440B4, grava +0x7B, avanca passo
+0x08065F74	JT3 A1 (0x08065F04 idx 1) do 0x08065ED0: variante de A0 com sinal de +0xA/+0xE
+0x08065FB8	JT3 A2 (0x08065F04 idx 2) do 0x08065ED0: grava +6, avanca passo se +0xA bate
+0x08065FD4	JT3 A3 (0x08065F04 idx 3) do 0x08065ED0: chama 0x080440D4, grava +0x7C, avanca
+0x0806602C	JT3 A4 (0x08065F04 idx 4) do 0x08065ED0: variante de A3 com sinal de +0xA
+0x08066070	JT3 A5 (0x08065F04 idx 5) do 0x08065ED0: fim; se +0xA bate, contador 0x0806623C += 1
+0x080660C4	JT3 B0 (0x080660AC idx 0) do 0x08065ED0: byte +0x7B pelo sinal de +0xE; avanca se +0xE bate
+0x08066104	JT3 B1 (0x080660AC idx 1) do 0x08065ED0: chama 0x080440B4, grava +0x7B, avanca se +0xE bate
+0x08066134	JT3 B2 (0x080660AC idx 2) do 0x08065ED0: grava +6 e +0xE; avanca se +0xA e +0xE batem
+0x08066164	JT3 B3 (0x080660AC idx 3) do 0x08065ED0: byte +0x7C pelo sinal de +0xE; avanca se +0xE bate
+0x080661A4	JT3 B4 (0x080660AC idx 4) do 0x08065ED0: chama 0x080440D4, grava +0x7C, avanca se +0xE bate
+0x08066200	JT3 B5 (0x080660AC idx 5) do 0x08065ED0: fim; grava +6 se +0xA e +0xE batem; contador 0x0806623C += 1
+0x0800D684	JT3 BAD8 idx 30 / BE6C idx 27 / D168 idx 9 (tabela 0x083ACAC0): sem funcao no Ghidra, descricao nao lida
+0x0805D4E0	JT3 CB50 idx 7 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805D5D0	JT3 CB50 idx 11 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805D658	JT3 CB50 idx 13 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DAD4	JT3 CB50 idx 20 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DC88	JT3 CB50 idx 24 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DCB0	JT3 CB50 idx 25 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x0805DB4C	JT3 CB50 idx 29 (tabela 0x08483634): sem funcao no Ghidra, descricao nao lida
+0x080639C4	JT3 0x0806463C idx 0 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x080640DC	JT3 0x0806463C idx 4 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x0806445C	JT3 0x0806463C idx 7 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x080644D8	JT3 0x0806463C idx 8 (copia de 0x080AFC18): sem funcao no Ghidra, descricao nao lida
+0x08068238	JT3 0x08068400 idx 2 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
+0x08068298	JT3 0x08068400 idx 3 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
+0x08068328	JT3 0x08068400 idx 4 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
