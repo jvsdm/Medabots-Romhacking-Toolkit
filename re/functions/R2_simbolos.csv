@@ -14,7 +14,7 @@ address,name,kind,comment
 0x08035B9C,Fight_AddStrengthenDamageBonus,func,soma byte +5 das pecas kind '5' ao acumulador de dano
 0x08035BD4,Fight_AddRandomBonusUpTo3,func,proposto: se ctx+0xEC<3 soma rand&3
 0x08035BFC,Fight_ScaleDamageByPartScalar,func,ctx+0xEC = escala(ctx+0xEC; peca+0x54); min 1
-0x08035C3C,,func,chute: escreve 0x110 ou ctx+0xF8 em dois ponteiros
+0x08035C3C,,func,revisto CH2: chute; grava 0x110 ou bit0 de ctx+0xF8 em dois ponteiros de ROM; chamado em 0x0801E1C0; sem nome melhor
 0x08035C70,FightPreview_InitializeSideSprites,func,setup dos dois lados da previa (timers e sprites)
 0x08035DD4,,func,teste x+off > 0xA8 (sprite fora de faixa)
 0x08035DE8,FightPreview_UpdateSingleLayerSideSprites,func,atualiza sprites da previa (1 camada)
@@ -52,7 +52,7 @@ address,name,kind,comment
 0x080370AC,FightPreview_TickSpriteTimersCount,func,versao de TickSpriteTimers com N slots
 0x0803713C,Fight_CommitActionState,func,fecha passo de acao dos dois lados (contadores e flags)
 0x08037230,FightPreview_IsPartSlotEdge,func,retorna 1 se contagem atual 0 ou igual ao maximo
-0x0803725C,FUN_0803725C,func,chama 0x08035754 e testa short; chute
+0x0803725C,Fight_SpendRos20ReturnsExhausted,func,revisto CH2: provável; subtrai 0x20 com piso zero de um short e devolve se zerou; chamado em penalidades AA_O/Q/S
 0x08037280,Fight_ComputePartValue,func,valor = ctx>>2 + byte+0x4e passado a 0x0807cd2c
 0x080372D4,FightPreview_SplitCountByMax,func,divide valor pelo maximo do slot em dois campos
 0x08037330,FightPreview_SetGroupActive4,func,liga/desliga bit15 de 4 sprites do lado por mascara
@@ -62,13 +62,13 @@ address,name,kind,comment
 0x08037498,FightPreview_SplitCountByFree,func,divide valor pela capacidade livre +0x50-+0x58
 0x080374E0,FightPreview_SplitValueAgainstLimit,func,divide valor contra limite e seta flag +0xd1
 0x0803752C,FightPreview_SplitValueAgainstRange,func,divide valor contra faixa b-a e seta flag +0xd1
-0x08037578,FUN_08037578,func,lookup de tabela por lado/sel; chute
+0x08037578,Fight_SelectReplacementPartIdByIconFamily,func,revisto CH2: provável; tabela por lado (param1 0-3) e sel (param2 0-2) com máscara de +0x8C; chamado em Fight_ApplyRandomPartReplacementEffect
 0x0803769C,Fight_RollPartValue,func,soma de campos do bot com sorteio 0-7 (rolagem)
 0x080376F4,FUN_080376F4,func,valor = ctx>>3 + campo +0xac; 0 vira 1
 0x08037728,FightPreview_ClampPartCountToLimit,func,clamp de contagem com flag +0xd2
 0x08037798,Fight_FindTargetBotWithPart,func,busca bot vivo com peca (3 candidatos; direcao por rng)
-0x08037830,FUN_08037830,func,busca bot vivo com campo +0x91 igual ao do outro; chute
-0x080378A8,FUN_080378a8,func,ajusta +-4 em campo de sprite conforme bit1 de ctx+0xf8; chute
+0x08037830,Fight_FindLiveSlotMatchingField91,func,revisto CH2: provável; 3 passos a partir de slot aleatório; acha bot vivo (+0x40) com +0x91 igual ao do outro; chamado em Fight_PickOpponentTargetStep
+0x080378A8,Fight_TransitionNudgeCoordBy4,func,"revisto CH2: provável; soma ou subtrai 4 em halfword de coordenada conforme bit1 de ctx+0xF8, com máscara; chamado nas rotinas de transição AR (fade)"
 0x080378F0,FightPreview_SpawnEffectSprite,func,aloca sprite de efeito e despacha por tipo +0x51
 0x08037A94,FightPreview_SpawnEffectSpriteAlt,func,variante de SpawnEffectSprite com tiles 0x30/0x34
 0x08037B9C,FightPreview_DispatchEffectSlots,func,despacha 27 slots de efeito por tabela (+0x29)
@@ -97,33 +97,33 @@ address,name,kind,comment
 0x0803D424,ObjectScript_ReadWord,func,le palavra do fluxo de script
 0x0803D450,FightPreview_UnpackSequenceEntry,func,copia sequencia de shorts para buffer
 0x0803D4AC,FightPreview_AdvanceSequenceCursor,func,avanca cursor do fluxo pelo tamanho do registro
-0x0803D4EC,Fight_ScrollEntryCoords,func,soma/subtrai delta em 20 entradas com mascara (chute)
-0x0803E780,Overlay_ClearTimerIfFlag,func,zera timer se flag +0x89 == 1 (chute)
-0x0803E79C,Overlay_SetTargetAndCheckReached,func,grava alvo e testa se chegou (chute)
-0x0803E7C0,Overlay_DrawFixedBlock,func,chama desenho de bloco com parametros fixos (chute)
-0x0803E7F0,Overlay_DrawIconAndText,func,desenha icone e texto (chute)
-0x0803E83C,Overlay_DrawThreeTileBlocks,func,tres chamadas de DrawPartIconTileBlock (chute)
-0x0803E870,Overlay_CopyEightBytesForIndex,func,copia 8 bytes por indice (chute)
-0x0803E894,Counter_IncIfFlagBit0,func,incrementa dois shorts se bit0 de flag (chute)
-0x0803E8B8,Overlay_CopySixBytesFromRandomTable,func,sorteia byte e copia 6 bytes de tabela (chute)
-0x0803E8EC,Overlay_DrawSixDigitRow,func,6 chamadas de FillBgTilemapRectSequential (chute)
-0x0803E934,Overlay_InitOamSlot2,func,inicializa OAM slot 2 (chute)
-0x0803E978,Overlay_InitOamSlot3,func,inicializa OAM slot 3 (chute)
-0x0803E9BC,Overlay_InitOamSlot4,func,inicializa OAM slot 4 (chute)
-0x0803EA18,Gauge_AdvanceAnimStep,func,avanca passo de animacao da barra (0..0x60) (chute)
-0x0803EA38,Gauge_DrawBar12Tiles,func,desenha barra de 12 tiles com valor (chute)
-0x0803EAD8,Gauge_DrawEmpty12Tiles,func,desenha barra vazia de 12 tiles (chute)
-0x0803EB0C,Gauge_DrawByFlag4,func,escolhe barra cheia ou vazia pelo bit 4 de +0x86 (chute)
-0x0803EB30,Gauge_SetCounterFrom0x68,func,contador 0x68-valor com piso 0xc (chute)
-0x0803EB5C,Gauge_DispatchByStepIndex,func,despacha por (valor>>4) em tabela de 7 handlers (chute)
-0x0803EC04,Tween_SetSpeedAndPlayEntry,func,define velocidade e chama entrada de animacao (chute)
-0x0803EC50,Tween_StepPosition,func,passo de deslocamento de posicao com resto (chute)
-0x0803EC98,Tween_StepUntilTarget,func,anda ate alvo e acelera (chute)
-0x0803ECF0,Gauge_FullTriggersSound7,func,barra cheia dispara FUN_08074de0(7) (chute)
-0x0803ED10,Tween_ResetDirectionForward,func,zera velocidade e direcao (chute)
-0x0803ED28,Tween_StepClampOrAccelerate,func,passo com fixacao no alvo ou aceleracao (chute)
-0x0803ED6C,Gauge_DrawTwoTileSegment,func,desenha segmento de 2 tiles (chute)
-0x0803EE10,Overlay_PickRandomSlotAndDrawCursor,func,sorteia slot ativo e grava cursor (chute)
+0x0803D4EC,Fight_ScrollEntryCoords,func,"revisto CH2: provável; 20 entradas (flag em +0x40, coord em +0x20); soma/subtrai delta e aplica máscara; chamado de 0x0803C1B8/C27C/C2DE"
+0x0803E780,Overlay_ClearTimerIfFlag,func,revisto CH2: provável; zera halfword +6 se byte +0x89 == 1; chamado de 0x0803086A e 0x0803D56C
+0x0803E79C,Overlay_SetTargetAndCheckReached,func,revisto CH2: provável; grava alvo em +6 e devolve 1 se +0xA e +0xE batem com o alvo; chamado em Fight_OverlayTimerAdvance
+0x0803E7C0,Overlay_LayoutFixedTextBlock,func,revisto CH2: provável; uma chamada a Text_LayoutGlyphSpritesOffset com constantes; chamada em FUN_0803D74C
+0x0803E7F0,Overlay_CopyBufferAndLayoutText,func,revisto CH2: provável; copia 0xB bytes para buffer indexado por +0x38 e chama Text_LayoutGlyphSprites; não desenha ícone; chamada em FUN_0803D74C
+0x0803E83C,Overlay_DrawThreeTileBlocks,func,revisto CH2: confirmado; três chamadas de DrawPartIconTileBlock em loop lido no código; chamada em FUN_0803D74C
+0x0803E870,Overlay_CopyEightBytesForIndex,func,revisto CH2: confirmado; Mem_CopyBytes de 8 bytes para tabela indexada por +0x38*8; chamada em FUN_0803D74C
+0x0803E894,Counter_IncIfFlagBit0,func,"revisto CH2: confirmado; se bit0 do byte de flag, incrementa dois shorts consecutivos; chamada de 0x0803DE72 e 0x0803DE92"
+0x0803E8B8,Overlay_CopySixBytesFromRandomTable,func,revisto CH2: confirmado; randbyte & 0xF indexa tabela de 6 bytes que é copiada; chamada em Overlay_InitScreenGraphics
+0x0803E8EC,Overlay_DrawSixDigitRow,func,revisto CH2: provável; 6 chamadas de FillBgTilemapRectSequential nas linhas 2..12 com valor por byte de tabela; 'digit row' é suposição
+0x0803E934,Overlay_InitOamSlot2,func,"revisto CH2: confirmado; limpa slot 2 e grava atributos OAM fixos (0xC400, x 0x68, y 0x78); chamada em Overlay_InitScreenGraphics"
+0x0803E978,Overlay_InitOamSlot3,func,"revisto CH2: confirmado; Tile_ClearSlots(3) e atributos OAM fixos (0xC400, 0x78, 0x7C); chamada em Overlay_InitScreenGraphics"
+0x0803E9BC,Overlay_InitOamSlot4,func,"revisto CH2: confirmado; Tile_ClearSlots(4), atributos OAM fixos e Slot_SetupFromRecordList; chamada em Overlay_InitScreenGraphics"
+0x0803EA18,Gauge_AdvanceAnimStep,func,revisto CH2: confirmado; byte +0x1A0 de contexto soma 4 e volta a 0 ao chegar em 0x60; chamada em 0x0803DF02
+0x0803EA38,Gauge_DrawBar12Tiles,func,"revisto CH2: confirmado; barra de 12 tiles: valor>>3 tiles cheios, resto &7 como parcial, o restante vazio; chamada de Gauge_DrawByFlag4 e 0x0803DF06"
+0x0803EAD8,Gauge_DrawEmpty12Tiles,func,revisto CH2: confirmado; 12 chamadas de FillBgTilemapRectSequential com tile vazio; chamada de Gauge_DrawByFlag4
+0x0803EB0C,Gauge_DrawByFlag4,func,revisto CH2: confirmado; testa bit 0x04 (não 0x10) de +0x86; escolhe barra cheia ou vazia
+0x0803EB30,Gauge_SetCounterFrom0x68,func,revisto CH2: confirmado; grava 0x68 - valor(+0x1A0) com piso 0xC; chamada de 0x0803E01E
+0x0803EB5C,Gauge_DispatchByStepIndex,func,revisto CH2: confirmado; (+0x1A0)>>4 indexa tabela de 7 handlers; fora da faixa grava valor fixo; chamada de 0x0803E022
+0x0803EC04,Tween_SetSpeedAndPlayEntry,func,"revisto CH2: confirmado; grava velocidade (+0x1A0>>2)+4 em +0xA4, dir 0 em +0xA5 e chama Slot_SetupFromRecordList; chamada de 0x0803E026"
+0x0803EC50,Tween_StepPosition,func,revisto CH2: confirmado; acumula velocidade em +0xA0; parte inteira (>>2) soma ou subtrai em +0x84 conforme dir +0xA5
+0x0803EC98,Tween_StepUntilTarget,func,"revisto CH2: confirmado; chama StepPosition; ao passar do alvo fixa posição e devolve 1; a cada 4 passos reduz velocidade (+0xA4, mín. 1): desacelera, não acelera"
+0x0803ECF0,Gauge_FullTriggersSound7,func,revisto CH2: confirmado; se byte +0x1A0 == 0x60 dispara snd_sfx_request(7); chamada de 0x0803E0A6
+0x0803ED10,Tween_ResetDirectionForward,func,revisto CH2: confirmado; zera +0xA4 (velocidade) e põe +0xA5=1 (direção para frente); chamada de 0x0803E0AA
+0x0803ED28,Tween_StepClampOrAccelerate,func,"revisto CH2: confirmado; StepPosition; se passou do alvo fixa o alvo e devolve 1, senão +0xA4++ (acelera); chamada de 0x0803E0C6"
+0x0803ED6C,Gauge_DrawTwoTileSegment,func,revisto CH2: confirmado; desenha 2 tiles na linha 2*idx+2 com tile de tabela; duas variantes conforme bit 0x04 de +0x86
+0x0803EE10,Overlay_PickRandomSlotAndDrawCursor,func,"revisto CH2: provável; sorteia índice 0..15 pela tabela e varre até 3 slots (passo ±1, cíclico) até achar o de +0xBA != 0; grava cursor; chamada de 0x0803E38A"
 0x0803EED8,Battle_CheckExitShortcut,func,checa atalho de saida (bit em info+0x1c)
 0x0803EF20,Boot_ResetSystemAndState,func,sequencia de reset de hardware e estado
 0x0803EF8C,BgMap_FillRect16,func,preenche retangulo do mapa de fundo com um tile
@@ -136,13 +136,13 @@ address,name,kind,comment
 0x0803F65C,Mem_SwapBytes,func,troca n bytes entre dois buffers
 0x0803F684,Palette_FadeRowsToColorA,func,mistura linhas de paleta com cor (fade) e envia a BG
 0x0803F998,Palette_FadeRowsToColorB,func,igual ao anterior com outro destino (provavel)
-0x080393BC,ObjectScript_RunUntilFlagThenFlush,func,espera flag do script e descarrega (chute)
+0x080393BC,ObjectScript_RunUntilYield,func,"revisto CH2: provável; repete ObjectScript_OpcodeDispatch até flag +0x2A ligar, depois Dispatch39Slots e zera a flag (nome da Ghidra; 'Flush' era chute)"
 0x0803F41C,get_portrait,func,descomprime tiles de retrato e copia paleta (mtbe)
 0x0803F480,LoadPortraitToVram_Unk,func,liga BG0 e desenha retrato 8x8 (mtbe)
 0x0803F51C,Move_Character_Portraits,func,animacao de 9 quadros de retrato (mtbe)
 0x0803F63C,Mem_CopyBytes,func,copia n bytes em ordem crescente
 0x0803FAA0,Obj_InitSlotAndLoad,func,zera bloco 0x28 e inicializa slot (provavel)
-0x0803FB0C,Obj_ResetStateFields,func,reset de campos do bloco DAT_0803fb38 (chute)
+0x0803FB0C,Obj_ResetStateFields,func,"revisto CH2: confirmado; zera campos do bloco (byte +4 = 4; +0xC, +0x14..+0x1B, +0x24, +0x25, +0x27); chamada de Sm_StepSfxRepeat3 e Battle_TickTwoStageSequence"
 0x0803FB3C,StateMachine_DispatchStep,func,despacha handler pelo estado (byte +4); retorna estado>7 (provavel)
 0x0803FD28,ScriptVM_RunOpcodes,func,laco do interpretador de script; opcodes F7-FF sao controle (provavel)
 0x0803FEA8,Script_OpAdvanceStep,func,avanca pc do script em 1 (confirmado)
@@ -168,7 +168,7 @@ address,name,kind,comment
 0x08041370,Num_FormatDecimal6Glyphs,func,formata ate 6 digitos; estouro grava placeholder fixo (confirmado)
 0x08041490,Num_FormatDecimal6GlyphsBase,func,igual a Num_FormatDecimal6Glyphs com base de glifo parametrizada (confirmado)
 0x080415BC,Clear4PairsHalfwords,func,zera 4 pares de halfwords por ponteiros globais (confirmado)
-0x080415E8,Fx_InitRecord8,func,zera bloco de 8 bytes e grava a;0x7F;b;c (confirmado; papel chute)
+0x080415E8,Fx_InitRecord8,func,"revisto CH2: confirmado; zera 8 bytes e grava param1 em +2, 0x7F em +3, param2 em +4 e param3 em +5; chamada de Fx_RunStateStepAndInit e Sm_StepSfxRepeat3"
 0x08041674,StateTable_DispatchByIndex,func,despacha handler por indice +0x29 e retorna estado +0x28 (confirmado)
 0x08041C14,Slot_SetPosStepByMode,func,grava pos +2 do slot com passo +1/-1 conforme modo (confirmado)
 0x08041C5C,Slot_SetPosYStepByMode,func,igual a Slot_SetPosStepByMode no offset +4 (provavel eixo Y)
@@ -184,14 +184,14 @@ address,name,kind,comment
 0x08035754,Fight_SubClampZero,func,subtrai amount de s16 sem ir abaixo de 0 (confirmado)
 0x08035814,Fight_ApplyStatusCostIfFlag,func,se estado 0xD/0xE desconta custo do acumulador (confirmado)
 0x08035844,Fight_AccumRosBase,func,soma base e aleatorio 0..7 ao acumulador de ROS (provavel)
-0x08035880,Fight_CheckPairCondition,func,condicao 1/0 entre dois registros de bot (confirmado; significado chute)
+0x08035880,Fight_CheckPairCondition,func,revisto CH2: confirmado; retorna 1 se byte +0x49 do bot p2 == 0x22 e +0x91 do bot p3 == 0x64; chamada por Fight_ComputeTotalRos e Fight_TryApplyCriticalRosOverrideByActionKind; significado chute
 0x08041FE4,Slot_ReleaseById,func,zera slot ativo com id (byte+1) e mantem so indice (confirmado)
 0x08042028,Slot_CopyRecordIntoFree,func,copia 0x40 bytes para primeiro slot livre preservando indice (confirmado)
 0x08042114,Inv_ReadCounter16,func,le 2 bytes do contador 0x03004C40 (ordem alto/baixo suspeita) (confirmado)
 0x0804213C,Inv_AddCountClamp99,func,soma contador limitado a 99 (confirmado)
 0x08042170,Inv_SubCountClampZero,func,subtrai contador sem ir abaixo de 0 (confirmado)
 0x080421A0,Tinpet_InitIds,func,grava id 0..8 em 9 entradas de 8 bytes em 0x030017A0 (confirmado)
-0x080421B4,Tinpet_ActivateMatchingEntry,func,ativa entrada por id e consome 1 do contador de peca (confirmado; semantica chute)
+0x080421B4,Tinpet_ActivateMatchingEntry,func,"revisto CH2: confirmado; varre 9 entradas de 8 bytes por id (+7) e, achando, ativa e decrementa dois bytes de contador (não um); chamada de 0x08011CD6 e 0x0803E3E0; nome 'Tinpet' provável"
 0x08042218,Tinpet_IsPoolFull,func,1 se as 9 entradas estao ocupadas (confirmado)
 0x08042238,site_TinpetCreate,label,cria entrada Tinpet pelada com 4 pecas 0x78|sexo (confirmado; label Ghidra existente)
 0x08042278,Map64_GetValue,func,valor do mapa de 64 pares em 0x03002BA0 (confirmado)
@@ -222,6 +222,6 @@ address,name,kind,comment
 0x08044A3C,MotionPlayStep,func,avanca 1 passo do tipo de movimento do lado (contador 0x020260CC, progresso 0x020260CE); chama MotionInterpolateKeyframe
 0x08047428,MotionInterpolateKeyframe,func,interpola moldes (+0x18 x 8.8 / +0x1A y 8.8 / +0x1C angulo) ate o keyframe; caminho mais curto no circulo
 0x080465B8,RenderCompositePreviewDescriptorRecursive,func,renderer do preview composto; ramo afim com bios_objaffineset (SWI 0x0F); recursivo nos filhos
-0x08043CD4,FUN_08043cd4,func,(provisorio) passo acumulado de posicao do objeto A (campos +0x39..+0x40); papel chute
-0x08043E78,FUN_08043e78,func,(provisorio) mesma logica da 0x08043cd4 para o objeto B (+0x74..+0x7B); papel chute
+0x08043CD4,Obj_StepAccumMoveA,func,revisto CH2: provável; acumula delta +0x3B em +0x3F; parte >>2 vai para +0x40 e aplica nos eixos por máscara de +0x3A; renomeado de FUN_08043cd4
+0x08043E78,Obj_StepAccumMoveB,func,revisto CH2: provável; mesma lógica da A para o objeto B (campos +0x74..+0x7B); renomeado de FUN_08043e78
 0x08043FEC,FUN_08043fec,func,(provisorio) a cada 3 ticks avanca indice de animacao e copia bloco via CpuSet (SWI 0x0B); provavel

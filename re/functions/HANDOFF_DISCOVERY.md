@@ -43,52 +43,35 @@ Updated 2026-10-13. **Current focus: discovery and documentation of ROM function
   - HC.md: the event continuation table 0x083D2630 (137 ops, 85 unique targets, 30 are already functions).
 - Confidence across the CSVs: about 723 entries "provável" and 178 "chute"; the rest "confirmado".
 
-## Next discovery tasks (updated 2026-10-13, after the 10-agent round)
-Done this round: HC1..HC5 (all 55 event continuations), FH (battle helpers), JT (5 of the 6 "UNRECOVERED" jumps
-were a normal return; only J:0x02 has a real table, 0x0801FBEC), HA2-resto, DT (16 tables), FL (list of 940 FUN_).
+## Next discovery tasks (updated 2026-10-13, after the 3rd round: 15 agents)
+Done in the 3rd round: MG (2nd merge into mtbe.csv, +498 / 81 swapped; MERGE_RELATORIO2.md), CF (conflicts decided
+and applied), FIX (old notes fixed), FR1..FR3 (FL leftovers; nothing left), JT2/JT3 (dispatch tables), A6
+(+0xA6 code = direct index into gTextGameMessages 0x083C6744), SD (substate tables A 9 / C 10), DT2/DT3 (tables),
+CH1 (38 guesses), CH2 (39 guesses), CH3 (16 of 38 from R3).
 
-0. **User step in Ghidra:** run `re/ghidra/ApplyMtbeNamesToFUN.java` (pick `re/symbols/mtbe.csv`) and save.
-   402 of the 940 FUN_ already have a name in mtbe.csv. The script only renames FUN_* and touches nothing else.
-   **Never** use MedabotsSetup.java on this project (it removes functions and clears the listing).
-1. **Merge into mtbe.csv** all the *_simbolos.csv not merged yet: HA1..HA8, HC1..HC5, FH, JT, DT, FL (same
-   script as the previous merge; see MERGE_RELATORIO.md). Name divergences to decide:
-   - FH: 0x08037280 (mtbe Fight_ComputePartValue), 0x0803725C (FightPreview_ClearQueueFlag / HN1
-     Fight_CheckRosMeetsMinimumThreshold; real = Fight_SpendRos20ReturnsExhausted), 0x08040CD0
-     (ClearObjectAttributeEntries vs Tile_ClearSlots), 0x08036B84 (FightPreview_SetPartSpriteId, wrong).
-   - HA2: 0x0801D738, 0x0801DD30 have other names in mtbe. HC1: 0x0804B758 (mtbe "Skip3Bytes" is wrong; it stores
-     the args).
-   - Fix the old notes: HA1/HA2/HA3 still say "tail-call not recovered" for E05/G02/H:0x3E/L:0x0B (it's a normal
-     return; see JT.md). HE4 0x76/0x7A/0x7F (see HC5.md). HE2 0x32 (see HC3.md).
-2. **FL1..FL10 done (2026-10-13):** about 385 of the 409 candidates documented and renamed in Ghidra.
-   - Leftovers by file (see the "Pendente" line in each FLn.md):
-     - FL2: 6
-     - FL3: 1 (0x0806F5A0, 4.9 KB)
-     - FL4: 17
-     - FL5: 5
-     - FL6: 1
-     - FL8: 5
-   - Not renamed (guesses): about 30, listed in the CSVs with an FUN_ name and the proposed name in the comment.
-   - Uncovered callees: FUN_08066D8C (text typewriter), FUN_08047850, FUN_08037830, FUN_08003300, FUN_08003904,
-     FUN_08048BB8.
-   - Byte-indexed dispatch tables not recovered (ctx+0x33 / +0x1B, CallViaR0): 0x0801387C, 0x08040974,
-     0x0803C7DC, 0x08065A94, 0x08071630, 0x080575DC, 0x08065ED0, 0x08068BC4, DAT_0800BAF0, DAT_0803C6EC,
-     DAT_0805CB80. Same approach as JT.md.
-   - **FLn_lista.txt sizes are wrong** (up to the next FUN_); use the Body from get_function_by_address.
-   - 0x08302DF8 is data, not code.
-3. **+0xA6 code -> message/script map:** the reader is 0x080305E0 -> Fight_RunSubstateDispatch 0x0801C0BC
-   (table 0x083AD580, 9 entries) -> FUN_0801AC24 -> StateMachine_DispatchStep(table 0x083C6744 = scripts at
-   0x083C4E24+). Decode that script format.
-   - Table 0x083AD5A4 (Fight_RunSubstateDispatchC) is not decoded either.
-4. **DT, remaining tables:** handlers (0x083AF8C0, 0x083AF180, 0x083D222C/0x083D2630), gMapArea 0x083D2B6B,
-   gBotNames 0x083BA658, gTechniqueNames 0x083BE868, gMoldTable 0x083D1D78, pre/post-battle texts
-   0x083C2D3C / 0x083C3B04. Use rename_data in Ghidra.
-5. **Validate in the emulator** (later): 0x02 message B (where the box appears), 0x29/0x2A (ends at the first
-   actor?), 0x41 (does it hang with no slot?), damage/ROS (FH formulas), RNG.
-
-Damage/ROS formulas (FH, confirmed by decompile):
-- Fight_RollPartValue 0x0803769C: fi+0xE8 = bot+0xAB + medal bonus + (randbyte&7) + specialty[bot+0xA9].
-- 0x08037280: fi+0xEC = max(1, ((fi+0xE8>>2) + part.power) / part.scalar).
-- 0x0803725C: fi+0xE8 -= 0x20 (clamped at 0); returns 1 if it ran out.
+0. **User step in Ghidra:** run CreateHandlerFunctions with `JT_criar.txt` (24 addresses), then Ctrl+S.
+   Then document those 24 functions: the targets are in JT2.md / JT3.md / SD.md; the SD names go in
+   SD_simbolos.csv.
+1. **3rd merge into mtbe.csv** of the CSVs from this round that are not in it yet: FR1..FR3, JT2, JT3, A6, SD,
+   DT2, DT3, CH1 (R0/R0a/R0b/R1/R1b/G), CH2 (R2), CH3 (R3).
+   - Decide the 62 conflicts in MERGE_RELATORIO2.md: most are a generic "Substate" name -> new name. Suggestion:
+     swap them all.
+   - 0x08037830: FR3 = Fight_FindActiveBotInSideWithGroup, CH2 = Fight_FindLiveSlotMatchingField91 (the latter
+     is the one in Ghidra). Pick one.
+   - Remove/mark 0x08045A40 (data). Unify the soft-float duplicates (0x0807DA50/0x0807DAE8/0x0807DB34/0x0807DBCC;
+     0x0807D48C vs 0x0807D4BC).
+2. **CH3 leftovers:** 22 guesses in R3 (list in CH3.md) + ~30 in R4 (not started).
+3. **Bad names to fix** (CH1): Fight_DrawBotPartEntrySprites/Icons/Tiles, Fight_FormatBotLabelText (suggestions
+   in the CH1 report: Fight_LoadBotPartEntryTiles, Fight_CreateBotPartEntrySprites,
+   Fight_UpdateBotPartEntryMotion, Fight_CopyBotLabelRecord).
+   - FL10.md: 0x08066D8C is NOT the text typewriter (it's a ring of 72 points; FR3).
+4. **Message script (A6):** the order of states 0..6 of gMessageStateHandlerTable 0x083B291C (only 0 and 5
+   confirmed); the meaning of `FA 50` and of the END argument (0/2/3/4); codes 0x7A..0xAF are debug placeholders.
+   - Pre/post-battle texts (DT2): the 4 loaders have no function in Ghidra.
+5. **Remaining FUN_:** run list_functions again and count; ~30 stayed FUN_ on purpose (guesses) in FL*/FR*.
+   0x08016370, 0x08035C3C, 0x08047850, 0x0807DD08, 0x08066460 (link?) are open.
+6. **Validate in the emulator** (later): ROS/damage formulas (FH), message 0x02, 0x29/0x2A, 0x41, the medal fields
+   (DT3: +3..+6 thresholds do not match R0a's 10/29/59).
 
 ## Key facts (don't rediscover)
 - New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
