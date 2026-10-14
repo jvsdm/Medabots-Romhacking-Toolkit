@@ -293,6 +293,7 @@ address,name,kind,count,comment
 0x0800058C,Scene_InitSoundAndStartSong0,func_thumb,,[FN1] provável: init de cena + tabela de sons + música 0
 0x080005D0,Gfx_VBlankIrq,func_thumb,,"VBlank IRQ handler: ack IF, swap buffers, frame counter (confirmado)"
 0x0800065C,VBlankIrqHandler,func_thumb,,"[R0] handler de VBlank: scroll, OAM, callbacks (G8)"
+0x080007FC,Snd_VBlankCallSite,label,,[SN2] SN2: chamada de snd_frame_tick no VBlank (confirmado)
 0x08000840,NoOpActionHandler,func_thumb,,"Simon/Rokusho: First-stage action-family placeholder. In the ActionId dispatch table, many actions map here, meaning this specific phase does nothing for them and their real behavior is implemented in later shared state machines, generic attack resolution, or other action-sequence tables."
 0x08000844,get_player_inputs,func_thumb,,Simon/Rokusho
 0x080008C0,SoftResetSequence,func_thumb,,[R0] reinicio de hardware (provavel)
@@ -418,10 +419,10 @@ address,name,kind,count,comment
 0x0800750C,Parts_DrawModeHeader,func_thumb,,[R0] cabecalho do modo de slots (provavel)
 0x08007540,Parts_CountFilledSlots,func_thumb,,[R0] conta slots preenchidos (provavel)
 0x080075AC,PartsGrid_SceneInit,func_thumb,,"init da tela da grade de peças (gráficos, tiles, sprites, música 7); provável"
-0x08007A04,PartsGrid_InitScreen,func_thumb,,"[provavel] init da tela de pecas: DISPCNT 0x1F60, decompress x4, LoadTilesWithMalias x4, PartsGrid_Draw*"
+0x08007A04,PartsGrid_InitScreen_CellGraphics,func_thumb,,"[provavel] init da tela de pecas: DISPCNT 0x1F60, decompress x4, LoadTilesWithMalias x4, PartsGrid_Draw* (antes: PartsGrid_InitScreen)"
 0x08007D28,Tile_ClearSlotsAndDispatchState,func_thumb,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5)"
 0x08007E38,PartsGrid_InitScreen,func_thumb,,"monta tela de grade de pecas (decompress, tiles, PartsGrid_Draw*); provavel"
-0x08008234,PartsGrid_InitScreen,func_thumb,,"[provavel] setup da tela de grade de pecas: DISPCNT, decompress x7, tiles x4, cpufastset paleta, PartsGrid_Draw*"
+0x08008234,PartsGrid_InitScreen_StatusPreview,func_thumb,,"[provavel] setup da tela de grade de pecas: DISPCNT, decompress x7, tiles x4, cpufastset paleta, PartsGrid_Draw* (antes: PartsGrid_InitScreen)"
 0x080087CC,PartsGrid_EnterScreenInit,func_thumb,,provável: setup da tela de grade de peças (VRAM/tiles/PartsGrid_*)
 0x08009174,PartsGrid_ReloadRowTilesAndSetup,func_thumb,,"[FL10] tick da grade de peças: cursor, limpa bits +0x40/+0x80, recarrega tiles 0x12x0xC"
 0x080093AC,Shop_SnapshotQuantitiesTable,func_thumb,,copia 0x40 bytes de gShopQuantities; provavel
@@ -519,7 +520,7 @@ address,name,kind,count,comment
 0x0800D6A8,FightPreview_BuildLayers,func_thumb,,monta 2 camadas de sprite do preview de luta (provavel)
 0x0800D710,DebugMotion_Main,func_thumb,,"opcao Motion do debug: monta 2 bots (BuildCompositePreviewSpriteLayerWithOffset), START/SELECT trocam o bot (0-121), A avanca"
 0x0800D90C,DebugMotion_PlayKind,func_thumb,,toca MotionPlayStep(lado, gDebugMotionKinds[gDebugMotionCursor]) nos dois bots
-0x0800DA34,PartsGrid_InitScreen,func_thumb,,[provavel] parts grid screen init: decompress + tile loads + grid draw
+0x0800DA34,MedabotGrid_InitScreen,func_thumb,,[provavel] parts grid screen init: decompress + tile loads + grid draw (antes: PartsGrid_InitScreen)
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
 0x0800E4F8,Menu_PartsDetailDispatch,func_thumb,,dispatcher de 5 estados (+0x3C) da tela de pecas; provavel
 0x0800EA2C,PartDetail_SceneStep,func_thumb,,passo por frame da tela de detalhe da peça; provável
@@ -3036,6 +3037,11 @@ address,name,kind,count,comment
 0x08072D4C,snd_cmd_mode,func_thumb,,SND12: FE xx -> track+0x63 = xx (modo da nota: 0 normal; 1/2 nao decodificados)
 0x08072D5C,snd_cmd_end,func_thumb,,SND12: FF -> snd_cmd_end: zera cursor e chama o handler track+0x0C. Trilha com FF no inicio (T3) fica muda
 0x08072D68,Snd_TrackStepInterpreter,func_thumb,,"SND12 (EU, Ghidra FUN_08072d68): interpretador de trilha. Le 1 byte do cursor track+0x14, cursor++, despacha: 00-7F nota (snd_cmd_note), 80/E0 pausa (snd_cmd_rest), 90/A0/B0/C0 e EC-EF nada, D0-DF volume (snd_cmd_volume), E1-EB ver comandos, F0-FF fluxo/FB/F9/FA/FE/FF (antes: snd_track_step; decisao CF)"
+0x08072D90,Snd_OpcodeTablePtr,data,,[SN2] literal da tabela de 32 ponteiros E0..FF do interpretador (confirmado)
+0x08072D94,Snd_OpcodeTable_E0_FF,data,,[SN2] tabela de handlers de E0..FF (32 entradas u32; confirmado no disasm)
+0x08072E14,Snd_OpE1_Entry,label,,[SN2] SN2: entrada de E1 na tabela
+0x08072F04,Snd_DispatchBelowE0,func_thumb,,[SN2] despacho de 00..DF por op&0xF0: 80-8F rest; 90/A0/B0/C0 NOP 1 byte; D0 volume; resto nota (confirmado)
+0x08072F2E,Snd_OpE0_Rest,func_thumb,,[SN2] E0 = pausa igual 0x80 (confirmado)
 0x08072F7C,snd_track_cmd_ext,func_thumb,,"[R4] R4: decodificador alternativo de comandos (Dn volume, E1/E2 gravam +2C/+69, FF zera); provavel"
 0x08073058,snd_track_update,func_thumb,,[R4] R4: avanca cursor da trilha enquanto a espera +0x28 for zero; provavel
 0x08073094,snd_update_frame,func_thumb,,[R4] R4: percorre trilhas e subgrupos do driver por quadro; provavel
@@ -3057,6 +3063,7 @@ address,name,kind,count,comment
 0x080739F4,snd_master_ctrl_write,func_thumb,,[R4] R4: grava registrador mestre de som quando flag 1 setado; provavel
 0x08073A48,snd_hw_channel_reset,func_thumb,,[R4] R4: zera tabela de canal via CpuSet e alterna controle 0x80/0xC0; provavel
 0x08073A88,snd_hw_init,func_thumb,,[R4] R4: inicializa registradores de som e canal 0; provavel
+0x08073AB8,snd_dma_channel_setup,func_thumb,,"[SN2] SN2: provavel; grava 0x040000B0+12*(r0-1): SAD, DAD da tabela 0x08486E54, controle; sem nome no Ghidra antes (chamadores nao lidos)"
 0x08073AE4,snd_hw_channel_load,func_thumb,,[R4] R4: copia 8 palavras para registrador do canal; provavel
 0x08073B68,snd_semitone_factor,func_thumb,,[R4] R4: fator de ponto fixo 2^(n/12) por tabela de 12 entradas; provavel
 0x08073BC8,snd_semitone_scale,func_thumb,,[R4] R4: escala por fator de semitons; provavel
@@ -3096,6 +3103,7 @@ address,name,kind,count,comment
 0x0807474C,Snd_TrackUpdateFlagged,func_thumb,,[FR1] snd_channel_update_1 + set 0x5F flags on track +0x50 if flag2 is clear
 0x0807490C,snd_track_reset_state,func_thumb,,[R4] R4: zera estado da trilha; provavel
 0x0807495C,snd_track_stop_callback,func_thumb,,[R4] R4: reinicia trilha e chama callback de fim; provavel
+0x08074968,Snd_StopCallback_ResetCall,label,,[SN2] SN2: unico chamador de snd_track_reset_state (confirmado)
 0x08074978,snd_track_list_insert,func_thumb,,[R4] R4: insere trilha na lista circular de trilhas; provavel
 0x080749B8,List_RemoveNode,func_thumb,,[FL10] remove no de lista duplamente encadeada (confirmado; dono da lista nao confirmado)
 0x08074A04,snd_track_init_all,func_thumb,,[R4] R4: inicializa 13 trilhas a partir da tabela; provavel
@@ -3130,6 +3138,7 @@ address,name,kind,count,comment
 0x08075FF8,gObjTextGlyphFrames,ptr,78,set 0 de gSpriteSetTable0: quadro = char-1; so 78 (0x01-0x4E), acento le fora da tabela
 0x0807C8B0,bios_set_reg_by_id,func_thumb,,[R4] R4: escreve registrador de hardware por id (lib); chute
 0x0807C918,bios_store_idx,func_thumb,,[R4] R4: grava indice e endereco (lib); chute
+0x0807C92C,Snd_TM0CNT_Candidate,label,,[SN2] SN2: unico literal 0x04000100 achado; sem funcao no Ghidra; nao confirmado como som
 0x0807C950,bios_init_ring,func_thumb,,[R4] R4: configura fila/buffer de hardware (lib); chute
 0x0807C9D8,lib_timer_queue_clear,func_thumb,,[R4] R4: limpa fila de DMA/EEPROM em secao critica; chute (antes: lib_dma_queue_clear)
 0x0807CA1C,lib_dma3_copy,func_thumb,,[R4] R4: copia por DMA3 e espera fim; provavel
@@ -3232,6 +3241,8 @@ address,name,kind,count,comment
 0x083AD080,Battle_FrameDispatchTable,data,,"[BT] tabela de 4+ ponteiros indexada por GS (usada por Battle_FrameDispatchOrExit); conteudo lido: 0x08012A20.., confirmado (ponteiros)"
 0x083AD0F0,table_medabot_screen_states,label,,[PS] [PS] tabela de estados da tela do Medabot (stride 4); entrada 9 = UpdateSelectedMedabotPreviewScreen
 0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA
+0x083AD114,table_medabot_screen_entry9,label,,[PS2] [PS2] entrada 9 de 0x083AD0F0 (stride 4) = UpdateSelectedMedabotPreviewScreen; nenhuma palavra da ROM vale 0x083AD0F0
+0x083AD118,table_medabot_screen_entry10,label,,[PS2] [PS2] entrada 10 de 0x083AD0F0 = Fight_SelectScreenFrame
 0x083AD190,Battle_StepFrameTable,data,,"[BT] tabela de modos; entrada 0 = Fight_StepBattleFrame, 8 = 0x08014548; quem indexa: LACUNA"
 0x083AD380,gSpeciality8ByteTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas (antes: gSpecialityWeightTable)
 0x083AD470,gFightFallbackPriorityRows,data,,[AI] [GH-AI] 32 x 4 B na ROM; sorteadas por Fight_RandomizePriorityListSlot; valores nao batem com ids de peca (provavel nome)

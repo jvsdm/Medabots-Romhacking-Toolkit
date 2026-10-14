@@ -12,6 +12,7 @@ F	0x08000540	ClearOamAndVramShadow
 F	0x0800058C	Scene_InitSoundAndStartSong0
 F	0x080005D0	Gfx_VBlankIrq
 F	0x0800065C	VBlankIrqHandler
+L	0x080007FC	Snd_VBlankCallSite
 F	0x08000840	NoOpActionHandler
 F	0x08000844	get_player_inputs
 F	0x080008C0	SoftResetSequence
@@ -137,10 +138,10 @@ F	0x08007480	Parts_UpdateSlotSprites
 F	0x0800750C	Parts_DrawModeHeader
 F	0x08007540	Parts_CountFilledSlots
 F	0x080075AC	PartsGrid_SceneInit
-F	0x08007A04	PartsGrid_InitScreen
+F	0x08007A04	PartsGrid_InitScreen_CellGraphics
 F	0x08007D28	Tile_ClearSlotsAndDispatchState
-F	0x08007E38	PartsGrid_InitScreen_08007E38
-F	0x08008234	PartsGrid_InitScreen_08008234
+F	0x08007E38	PartsGrid_InitScreen
+F	0x08008234	PartsGrid_InitScreen_StatusPreview
 F	0x080087CC	PartsGrid_EnterScreenInit
 F	0x08009174	PartsGrid_ReloadRowTilesAndSetup
 F	0x080093AC	Shop_SnapshotQuantitiesTable
@@ -238,7 +239,7 @@ F	0x0800D684	Menu_ClearObjectAttrsAndAdvance
 F	0x0800D6A8	FightPreview_BuildLayers
 F	0x0800D710	DebugMotion_Main
 F	0x0800D90C	DebugMotion_PlayKind
-F	0x0800DA34	PartsGrid_InitScreen_0800DA34
+F	0x0800DA34	MedabotGrid_InitScreen
 F	0x0800E020	PartDetailScreen_Init
 F	0x0800E4F8	Menu_PartsDetailDispatch
 F	0x0800EA2C	PartDetail_SceneStep
@@ -2754,6 +2755,11 @@ F	0x08072D28	snd_cmd_FD
 F	0x08072D4C	snd_cmd_mode
 F	0x08072D5C	snd_cmd_end
 F	0x08072D68	Snd_TrackStepInterpreter
+L	0x08072D90	Snd_OpcodeTablePtr
+L	0x08072D94	Snd_OpcodeTable_E0_FF
+L	0x08072E14	Snd_OpE1_Entry
+F	0x08072F04	Snd_DispatchBelowE0
+F	0x08072F2E	Snd_OpE0_Rest
 F	0x08072F7C	snd_track_cmd_ext
 F	0x08073058	snd_track_update
 F	0x08073094	snd_update_frame
@@ -2775,6 +2781,7 @@ F	0x080739DC	snd_render_group_b
 F	0x080739F4	snd_master_ctrl_write
 F	0x08073A48	snd_hw_channel_reset
 F	0x08073A88	snd_hw_init
+F	0x08073AB8	snd_dma_channel_setup
 F	0x08073AE4	snd_hw_channel_load
 F	0x08073B68	snd_semitone_factor
 F	0x08073BC8	snd_semitone_scale
@@ -2814,6 +2821,7 @@ F	0x08074728	Snd_UpdateChannelIfIdle_08074728
 F	0x0807474C	Snd_TrackUpdateFlagged
 F	0x0807490C	snd_track_reset_state
 F	0x0807495C	snd_track_stop_callback
+L	0x08074968	Snd_StopCallback_ResetCall
 F	0x08074978	snd_track_list_insert
 F	0x080749B8	List_RemoveNode
 F	0x08074A04	snd_track_init_all
@@ -2848,6 +2856,7 @@ L	0x08075C50	gObjTextGlyphFrameRecords
 L	0x08075FF8	gObjTextGlyphFrames
 F	0x0807C8B0	bios_set_reg_by_id
 F	0x0807C918	bios_store_idx
+L	0x0807C92C	Snd_TM0CNT_Candidate
 F	0x0807C950	bios_init_ring
 F	0x0807C9D8	lib_timer_queue_clear
 F	0x0807CA1C	lib_dma3_copy
@@ -2950,6 +2959,8 @@ L	0x083ACEF8	gSceneStepTable_ACE14_PostBattle
 L	0x083AD080	Battle_FrameDispatchTable
 L	0x083AD0F0	table_medabot_screen_states
 L	0x083AD10C	Battle_SceneInitTable
+L	0x083AD114	table_medabot_screen_entry9
+L	0x083AD118	table_medabot_screen_entry10
 L	0x083AD190	Battle_StepFrameTable
 L	0x083AD380	gSpeciality8ByteTable
 L	0x083AD470	gFightFallbackPriorityRows
@@ -3224,3 +3235,4 @@ C	0x080344D0
 C	0x080344EC
 C	0x08034508
 C	0x0803D538
+C	0x0807C92C

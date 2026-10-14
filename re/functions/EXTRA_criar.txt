@@ -7,3 +7,5 @@
 0x0800CE70	DB: opcao Mdlpic do menu de debug
 0x08012B94   driver da escolha da CPU (passo GS=3 da tabela 0x083AD080). Bloco 0x08012B94..0x08012BB4 (push {lr} ... bx r0). Contem o BL 0x08012BA6 -> Fight_SelectActionsForBotGroup
 0x080196C0   chamada antes da escolha da CPU no driver 0x08012B94 (nao lida)
+0x08073AB8	SN2: configura DMA de FIFO PCM (0x040000B0+12*(n-1))
+0x0807C92C	SN2: unico uso de TM0CNT (timer PCM)
