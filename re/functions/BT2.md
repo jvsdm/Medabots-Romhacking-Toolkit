@@ -4,10 +4,10 @@ Continuação de `BT.md` (não editado). Confiança: "confirmado" = lido no deco
 (`Medabots - Metabee (Europe).gba`, só leitura); "provável" = padrão de uso; "lacuna" = não fechado.
 Nenhum emulador usado. Nada commitado.
 
-## Lacuna 2: tabelas 0x083AD190 e 0x083AD10C (CONFIRMADO o conteúdo, quem indexa = LACUNA)
+## Lacuna 2: tabelas 0x083AD190 e 0x083AD10C (CONFIRMADO o conteúdo; quem indexa = entradas i=68 e i=35 de 0x083AD080, ver BT3.md)
 
 - Busca de literal u32 em toda a ROM (python -I): `0x083AD190` e `0x083AD10C` (e as versões com bit thumb):
-  **0 ocorrências**. Não existe ponteiro literal para essas tabelas.
+  **0 ocorrências**. Não é preciso literal: não são tabelas separadas (ver BT3.md).
 - Bytes da ROM (file offset = addr - 0x08000000), lidos como ponteiros:
   - 0x083AD190 (Fight_StepBattleFrame): `0801427D, 08014315, 080143A1, 08014405, 08000841 x4, 08014549, 08000841`
     -> entrada 0 = Fight_StepBattleFrame 0x0801427C (já sabido); entrada 8 = 0x08014548 (BT.md).
@@ -52,7 +52,7 @@ Nenhum emulador usado. Nada commitado.
 ## Lacunas que NÃO foram fechadas nesta rodada (Pendente)
 
 - Lacuna 1 (entrada menu 7/8): parcial, ver acima.
-- Lacuna 2 (quem indexa 0x083AD190 e 0x083AD10C): conteúdo confirmado, quem indexa = PENDENTE. 0 literais.
+- Lacuna 2 (quem indexa 0x083AD190 e 0x083AD10C): RESOLVIDA em BT3.md (entradas i=68 e i=35 da tabela 0x083AD080, indexada pelo GS).
 - Lacuna 3 (ligação 0x083AD080 x 0x083AD190): PENDENTE (hipótese base+0x110 / +0x8C, não testada).
 - Lacuna 4 (quem grava 0x03000579 e 0x0300057A): PENDENTE. Tem 944 literais de 0x03000440; não varrido.
 - Lacuna 5 (ordem de transição 1..6): PENDENTE.

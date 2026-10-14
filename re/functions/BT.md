@@ -56,7 +56,7 @@ LOOP DE QUADRO DA LUTA (menu_list[7] = 0x08012970 Battle_FrameDispatchOrExit)
      - bits de fi+0x55: bit1 -> espera 0x60; bit2 -> 0x68; bit3 -> 0x70; bit4 -> 0x78 (gravado em *0x0300137C).
      - senão: Fight_TickActiveBotsExceptStatusTypes0F10, Fight_DrawActiveBotsOverlay,
        Fight_UpdateSixBotSprites, Fight_UpdateBotPositionEvents; se 0, sai; se != 0 avança.
-     - Quem indexa 0x083AD190: LACUNA (não há literal apontando para a tabela).
+     - Quem indexa 0x083AD190: é a entrada i=68 da tabela GS 0x083AD080 (base + 4*GS), ver BT3.md.
 
 ESCOLHA DE AÇÃO (por bot, antes da execução) — nomes do mtbe, confiança provável/confirmado por descrição
   Fight_SelectActionsForBotGroup 0x0801531C  (3 bots a partir de first_bot)
@@ -168,8 +168,7 @@ de 0x03000440. Não são o mesmo byte.
 ## Lacunas (não fechadas nesta rodada)
 
 1. Quem grava o gamestate_menu = 8 e = 7 ao entrar na Robattle (vindo do mapa). Não achado.
-2. Quem indexa a tabela 0x083AD190 (Fight_StepBattleFrame) e a 0x083AD10C (Fight_BattleSceneInit): não há
-   literal que aponte para elas. Pode ser base calculada. Não resolvido.
+2. Quem indexa 0x083AD190 e 0x083AD10C: resolvido, são as entradas i=68 e i=35 da tabela GS 0x083AD080 (BT3.md).
 3. Relação entre 0x083AD080 (Battle_FrameDispatchOrExit, por GS) e 0x083AD190 (Fight_StepBattleFrame):
    o frame de menu 7 usa 0x083AD080; onde entra 0x083AD190 não foi fechado.
 4. Quem grava 0x13A (passo de estado) e 0x139 (cena): só achei leitores. Falta varrer os chamadores de

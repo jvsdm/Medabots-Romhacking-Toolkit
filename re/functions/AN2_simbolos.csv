@@ -1,0 +1,4 @@
+address,name,kind,comment
+0x08043FEC,Anim_AdvanceRingFrameEvery3,func_thumb,[AN2] renomeada de FUN_08043FEC; streaming de quadros de tile por anel da ROM para VRAM 0x06008020; chamada por Obj_StepAccumMoveBThenSync; provavel
+0x0807E860,IrqHandlerTable_Init14_ROM,data,[AN2] 14 ponteiros Thumb copiados por CpuSet no boot para IWRAM 0x03000BA0 (InitializeInterruptsAndDefaultHandlers 0x0800045A); lidos por IntrMain 0x080001D8; idx5=0x0800099D (trilha A) idx6=0x080009A9 (trilha B); confirmado
+0x0807E874,SoundTrackHandlerPtrs_IrqIdx5_6,data,[AN2] entradas idx5/idx6 da tabela IRQ 0x0807E860 (IRQ 0x200 e 0x400 = DMA1/DMA2); provavel
