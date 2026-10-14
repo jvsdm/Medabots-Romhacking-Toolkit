@@ -1,0 +1,13 @@
+# address,name,kind,comment
+0x08001A00,Obj_Mid_08001A00_InFunc08001520,label,"confirmado (nao e dado): bytes 30 88 80 23 sao Thumb dentro da funcao 0x08001520, sem xref de dado; antes gMapState_base (nome e base 0x030057E0 nao batem aqui); nome novo e chute (loop de 0x80 slots x 0x40)"
+0x0800467C,PartEditor_SubmodeJumpTable,table,"confirmado 5 x 4: ponteiros 0x08004690 0x080046C4 0x080046E8 0x08004708 0x08004728; xref de PartEditor_DispatchSubmodeStep"
+0x0800E7D0,PartDetail_SubJT_Mode0,table,"confirmado 7 x 4: ponteiros 0x0800E7EC..0x0800E860; xref de PartDetail_DispatchSubstate"
+0x0800E884,PartDetail_SubJT_Mode12,table,"confirmado 8 x 4: ponteiros 0x0800E8A4..0x0800E924; modos 1 e 2; xref de PartDetail_DispatchSubstate"
+0x0800E948,PartDetail_SubJT_Mode3,table,"confirmado 8 x 4: ponteiros 0x0800E968..0x0800E9C8; modo 3; xref de PartDetail_DispatchSubstate"
+0x080156C0,Fight_MedaforceBotBaseLiteral,data,"confirmado 1 x 4: literal 0x03000590 (base do bloco do bot); xref de Fight_SelectMedaforceActionSource"
+0x080156C4,Fight_MedaforceMedalTableLiteral,data,"confirmado 1 x 4: literal ROM 0x083B7F8C (tabela de medalha, 3 B por linha); xref de Fight_SelectMedaforceActionSource"
+0x080156C8,Fight_MedaforceScratchLiteral,data,"confirmado 1 x 4: literal RAM 0x0300052E (buffer de medaforca); xref de Fight_SelectMedaforceActionSource; tamanho do buffer provavel"
+0x080156CC,Fight_MedaforceDescriptorLiteral,data,"confirmado 1 x 4: literal ROM 0x083B7E54 (descritor de medaforca, 6 B por id); xref de Fight_SelectMedaforceActionSource"
+0x080156F0,Fight_FallbackPriorityRowsPtr,data,"confirmado 1 x 4 (antes: gFightPriorityRowTable): so literal, ponteiro para ROM 0x083AD470 (32 x 4 B); xref READ de Fight_RandomizePriorityListSlot"
+0x0801FBEC,Fight_J02_StepTable,table,"confirmado 5 x 4: ponteiros 0x0801FC00 0x0801FC78 0x0801FCC4 0x0801FD10 0x0801FD3C (cases 0..4 de J_02); xref de J_02_SubDispatchByStep"
+0x0802845C,Fight_SelectVariantByTechnique_JumpTable,table,"confirmado 29 x 4 (tecnica 12..40): todos ponteiros 0x080284xx; xref de Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique"

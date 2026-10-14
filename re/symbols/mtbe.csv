@@ -282,7 +282,7 @@ address,name,kind,count,comment
 0x03006449,gMapSecondaryWalkState,data,,[VA2] [VA2] E+0xC69: gravado pelo opcode 0x11 (mesmo valor de C5C e C28); lido por Overworld_UpdateSecondaryActorAnim
 0x0300644E,gSecondaryMarkerScreenX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_x) [RM3] provavel (antes: str_ikki_x); X em tela do marcador secundario; lido em Map_UpdateSecondaryMarkerScreenPosition"
 0x03006450,gSecondaryMarkerScreenY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_y) [RM3] provavel (antes: str_ikki_y); Y em tela do marcador secundario; gravado em Overworld_InitFollowerFacingAndSfx57"
-0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006463,gSecondaryMarkerFacing,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: dpad_input_3)"
 0x03006468,gCurrentEventPendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventPendingFlag) [FI2] E+0xC88 evento rodando (!=0) confirmado (EV) (antes: gEvt_PendingFlag)"
 0x03006469,gEventPendingByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventStateByte) [LK] [GH-LK] byte pendente do evento (E+0xC89); escrito com 1 pelo evento 0x76; confirmado"
 0x0300646A,gEvt_ContinuationCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gCurrentEventScriptCursor) [FI] cursor continuacao provavel"
@@ -290,7 +290,7 @@ address,name,kind,count,comment
 0x0300646E,gEvt_EventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2] (antes: gCurrentEventId) [FI2] E+0xC8E id do evento atual u16 confirmado (EV)"
 0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2] [RM3] provavel; gravado por Map_CheckWalkOverTrigger e Map_CheckFacingEventTriggerAhead; lido em Event_DispatchContinuation"
 0x03006472,gEvt_ContinuationIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeByte) [RM3] provavel; lido em Event_DispatchContinuation; gravado em Event_Op80/Op81 (lotes de comando de objeto)"
-0x03006473,gEvt_SubState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate) (antes: gCurrentEventSubstate)"
+0x03006473,gEvt_SubState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate) (antes: gCurrentEventSubstate) [RM3] provavel; gravado em Script_DispatchHandler"
 0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gEventScriptArguments) (antes: gEvt_Args)"
 0x03006484,gTrackedActorSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32] (antes: gTrackedObjectSlotTable) [CU] 16 bytes: byte[id] = slot+1 (0 = vago); E+0xCA4; zerada no opcode 0x06 End (GH-CU confirmado)"
 0x03006492,gEvt_ContinuationIndex,label,,[FI] indice table2 (E+0xC92) conf
@@ -300,29 +300,29 @@ address,name,kind,count,comment
 0x0300649C,gEventCounterA,label,,[FI2] E+0xCBC contador lido pelo Op50 (sel 0) leitura confirmada; escritor aberto (antes: gEvt_CounterA)
 0x0300649D,gEventCounterB,label,,[FI2] E+0xCBD contador lido pelo Op50 (sel 1) leitura confirmada; escritor aberto (antes: gEvt_CounterB)
 0x030064A0,FieldMenu_ChoiceState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state (antes: gEventScriptRuntimeState) [FM2] [FM2] estado do menu de escolha: +0x65 linha, +0x66, +0x67 contador do sub 2, +0x6F contador de abertura, +0x70 flag (provavel)"
-0x030064A1,gEventScriptRuntimeState_vm_substate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030064AA,gEventScriptRuntimeState_queued_action_phases,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030064B2,gEventScriptRuntimeState_queued_action_bytes,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x030064F2,gEventScriptRuntimeState_queued_action_count,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030064A1,gObjTwoStageSubstate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gEventScriptRuntimeState_vm_substate)"
+0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; lido em EventOpcode82_ExecuteBatchedObjectCommandBlock e Map_TickObjectMoveRecords"
+0x030064AA,gEventScriptRuntimeState_queued_action_phases,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; params de Event_Op80/Op85 e leitura em Op82"
+0x030064B2,gEventScriptRuntimeState_queued_action_bytes,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; lido e gravado em Event_Op81_Queue_Batched_Object_Command e Op86"
+0x030064F2,gEventScriptRuntimeState_queued_action_count,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; Op81/Op86 leem e gravam"
 0x030064F4,gEventScriptRuntimeState_queued_action_actor_slots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030064FC,gEventScriptRuntimeState_queued_action_substeps,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03006505,gEventScriptRuntimeState_choice_selected_index,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03006505,gEventScriptRuntimeState_choice_selected_index,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; gravado por Overworld_InitChoiceMenuScreen e Menu_StepCursorWrap"
 0x03006506,gEventScriptRuntimeState_choice_page_or_mode,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03006507,gEventScriptRuntimeState_choice_layout_flags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x0300650C,gEventScriptRuntimeState_choice_cursor_x_tiles,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300650C,gEventScriptRuntimeState_choice_cursor_x_tiles,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM3] provavel; gravado em Overworld_InitChoiceMenuScreen; lido em Map_UpdateCursorSpritePosition"
 0x0300650D,gEventScriptRuntimeState_choice_cursor_y_tiles,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300650E,gEventScriptRuntimeState_choice_scroll_or_page,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300650F,gEventScriptRuntimeState_choice_flags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03006D14,gMapLayerBufferPtr,label,,ponteiro do buffer de camadas descomprimidas; Simon: gMapTilemapBufferPtr
+0x03006D14,gMapLayerBufferPtr,label,,ponteiro do buffer de camadas descomprimidas; Simon: gMapTilemapBufferPtr [RM3] provavel; lido em Map_LoadCurrentMapLayers
 0x03006D20,gObjectScratchBlock,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gEventScriptArguments_03006D20) [CU] bloco de estado de 1 opcode de objeto: [0] frames/estado, [1] fase, [2] contador, [3] recarga, [8] Y base do arco (u16), [10] = render (GH-CU confirmado)"
-0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
-0x03006D38,gWalkSpeedBlock,data,,[OW2] literal 0x03006D38 em Map_GetScaledStepDelta; bloco de velocidade
+0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] [RM3] chute; so referencias DATA (tabelas) nesta rodada"
+0x03006D38,gWalkSpeedBlock,data,,[OW2] literal 0x03006D38 em Map_GetScaledStepDelta; bloco de velocidade [RM3] chute; so referencias DATA e limpeza em EventScript_ClearGlobals
 0x03006D3A,gWalkSpeedMul,data,,[OW] RAM byte: multiplicador do passo (provavel corrida)
 0x03006D3E,gEquippedLegPartByte,data,,[CU2] CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado (antes: gObjectPoseBaseByte) [RM3] confirmado (antes: gObjectPoseBaseByte); byte de perna equipada escrito por PartSet 0x08047E50 e zerado no fim de evento (GH-CS2)
-0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03006F74,gKeyItemBagCursorPtr,label,,"[IN3] [IN3] ponteiro para struct do cursor da bolsa; +0x0C = indice (gShopItems/lista), +0x10 = 0 libera recusa 'cancelar'. Antes: nome Shop-like nao usado"
+0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] [RM3] provavel; gravado em Map_ResetRenderAffineState"
+0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] [RM3] provavel; gravado em Overworld_SetTransitionStepAndDispatch; lido em Anim_UpdateSoftFloatStep"
+0x03006F74,gKeyItemBagCursorPtr,label,,"[IN3] [IN3] ponteiro para struct do cursor da bolsa; +0x0C = indice (gShopItems/lista), +0x10 = 0 libera recusa 'cancelar'. Antes: nome Shop-like nao usado [RM3] chute; gravado em MainState_Dispatch2 e lido em hud_draw_row_tiles"
 0x03007014,SND_DriverPtr,data,,[SN] ponteiro para o driver de som
 0x03007F00,sp_usr,label,,stack do modo System
 0x03007FA0,sp_irq,label,,stack do modo IRQ
@@ -3530,7 +3530,7 @@ address,name,kind,count,comment
 0x08065C98,LinkMenu15Step6,func_thumb,,[LK2] [GH-LK2] passo 6 do menu 0x15: toca 0x03005010 e 0x03000B90 (troca de comandos); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step6)
 0x08065CFC,LinkMenu15Step7,func_thumb,,[LK2] [GH-LK2] passo 7 do menu 0x15 (fim da etapa); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step7)
 0x08065D10,Fight_CallHandlerWithArgCopy,func_thumb,,[confirmado] copia 32 bytes de DAT_08065D3C e CallViaR0(tabela[byte DAT_08065D40])
-0x08065D44,LinkMenu14Step0,func_thumb,,[LK3] [GH-LK3] sub 0 do menu 0x14: sem funcao no Ghidra (code Thumb valido); pendente
+0x08065D44,LinkMenu14_InitScreen,func_thumb,,[LK3] [GH-LK3] sub 0 do menu 0x14: sem funcao no Ghidra (code Thumb valido); pendente (antes: LinkMenu14Step0)
 0x08065ED0,Screen_DispatchByState3A,func_thumb,,provável: despacho por estado ctx+0x3A (jump tables não recuperadas) (antes: Screen_DispatchByState3A) (antes: LinkCommand1_Handler)
 0x08065F04,Screen_DispatchByState3A_TableA,data,,"[JT3] tabela ramo A (6 ponteiros, idx = halfword 0x03006F74+0x3A)"
 0x08065F1C,Screen_DispatchByState3A_A0,label,,"[JT3] caso A0 (corpo de 0x08065ED0), ver JT3_lista.txt"
@@ -3541,11 +3541,11 @@ address,name,kind,count,comment
 0x08066460,Link_CommandExchangeStep,func_thumb,,"[LK2] [GH-LK2] comando 0xEF00|cmd: pai envia, filho guarda cmd em obj+5 e ecoa; timer 0xFE0F; confirmado (ex FUN_08066460)"
 0x08066534,Save_WaitSfxThenFlash,func_thumb,,[provavel] waits record and SFX 4 then Save_InvokeFlashOp
 0x08066574,Save_RunOptionsThenBlendFade,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
-0x080665B0,LinkMenu14Step6,func_thumb,,[LK3] [GH-LK3] sub 6 do menu 0x14: sem funcao no Ghidra; pendente
+0x080665B0,LinkMenu14_WaitThenSetPreviewScene,func_thumb,,[LK3] [GH-LK3] sub 6 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step6)
 0x080665FC,Fx_InitStringStateMachine,func_thumb,,copia sequência de bytes e roda máquina de estados de efeito; provável
-0x0806668C,LinkMenu14Step9,func_thumb,,[LK3] [GH-LK3] sub 9 do menu 0x14: sem funcao no Ghidra; pendente
+0x0806668C,LinkMenu14_DispatchIndexCountOrSkip,func_thumb,,[LK3] [GH-LK3] sub 9 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step9)
 0x080666C8,Fx_TickStateThenInitRecord8,func_thumb,,"[confirmado] StateMachine_DispatchStep(ctx+0x48); Fx_InitRecord8(1,0x16,7)"
-0x080666F4,LinkMenu14Step11,func_thumb,,[LK3] [GH-LK3] sub 11 do menu 0x14: sem funcao no Ghidra; pendente
+0x080666F4,LinkMenu14_DispatchIndexCountReset,func_thumb,,[LK3] [GH-LK3] sub 11 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step11)
 0x08066714,Text_BuildMessageAndStep,func_thumb,,monta mensagem em ctx+0x270 (terminador 0xFF) e avanca state machine; provavel; codigos chute [LK3] [GH-LK3] sub 12 do menu 0x14: monta mensagem (2 bytes de fim -1) e avanca maquina; ao fim decide sub 5 ou sub 3 pelos halfwords de link; confirmado (codigo)
 0x08066824,Menu14_CallSubstateHandler,func_thumb,,[confirmado] copia 0x34 bytes de DAT_08066860 e CallViaR0(tabela[byte DAT_08066864]); contadores se bit 1 (antes: Fight_CallHandlerCopyArgs52)
 0x08066860,Menu14_CallSubstateHandler_Pool,label,,[QA5] DADO: pool de literais lido por LDR em 0x08066828 (1o palavra 0x080AFCC0); nao e funcao

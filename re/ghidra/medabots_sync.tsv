@@ -3145,7 +3145,7 @@ F	0x08065B0C	Link_HandshakeFrameStep
 F	0x08065C98	LinkMenu15Step6
 F	0x08065CFC	LinkMenu15Step7
 F	0x08065D10	Fight_CallHandlerWithArgCopy
-F	0x08065D44	LinkMenu14Step0
+F	0x08065D44	LinkMenu14_InitScreen
 F	0x08065ED0	Screen_DispatchByState3A
 L	0x08065F04	Screen_DispatchByState3A_TableA
 L	0x08065F1C	Screen_DispatchByState3A_A0
@@ -3156,11 +3156,11 @@ F	0x08066280	Link_SelectFiveOptionsStep
 F	0x08066460	Link_CommandExchangeStep
 F	0x08066534	Save_WaitSfxThenFlash
 F	0x08066574	Save_RunOptionsThenBlendFade
-F	0x080665B0	LinkMenu14Step6
+F	0x080665B0	LinkMenu14_WaitThenSetPreviewScene
 F	0x080665FC	Fx_InitStringStateMachine
-F	0x0806668C	LinkMenu14Step9
+F	0x0806668C	LinkMenu14_DispatchIndexCountOrSkip
 F	0x080666C8	Fx_TickStateThenInitRecord8
-F	0x080666F4	LinkMenu14Step11
+F	0x080666F4	LinkMenu14_DispatchIndexCountReset
 F	0x08066714	Text_BuildMessageAndStep
 F	0x08066824	Menu14_CallSubstateHandler
 L	0x08066860	Menu14_CallSubstateHandler_Pool
