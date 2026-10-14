@@ -1,0 +1,22 @@
+# address,name,kind,comment
+0x0806E460,Boot_DispatchSubState,function,MainState3 menu 0 (boot): CallViaR0 de 0x084859D8[GS 0x0300137C]; nome antigo Battle_DispatchThenEndTransition era errado
+0x0806E504,Gfx_ResetVramPaletteOamAndStopSong,function,boot GS 0: zera VRAM/paleta/OAM, para a música, DISPCNT=0x60
+0x0806E184,Boot_SubState2_WaitFxStep,function,boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
+0x0806E5E0,Gfx_LoadLz77ScreenAndEnableBg0,function,boot GS 4: LZ77 para VRAM 0x06000000, mapa 20 linhas, DISPCNT|=0x100
+0x0806E6E4,Gfx_LoadLz77RowsTable,function,boot GS 6: LZ77 para VRAM 0x06000000 + tabela de linhas (logo, provável)
+0x0805C0D4,Title_DispatchSubState,function,MainState2 menu 3 (título): CallViaR0 de 0x0848360C[GS 0x0300137C]
+0x0805C17C,Screen_SceneInit,function,título GS 1: carrega char 0x0878F7E8 e paleta 0x0878F5E8 do menu
+0x0805C2DC,Save_InitScreen,function,título GS 2: Save_ClearAndRetryLoad; sem save = cursor/mínimo 1 (CONTINUE desligado)
+0x0805C410,Screen_StepCounterAndDrawCell,function,título GS 3: anima contador e desenha célula
+0x0805C454,Menu_TickCursorInputAndConfirm,function,título GS 4: cursor 0..2, A confirma (2 = GS+1; 0/1 = GS 6)
+0x0805C7F8,Gfx_FadeTransitionStep,function,título GS 6: fade de saída; cursor 0 -> GS 8 (CONTINUE), 1 -> GS 7 (NEW GAME)
+0x0805C128,TitleMenu_SubState0,function,título GS 0 (sem nome; não lido)
+0x0805C8EC,TitleMenu_SubState7_NameEntry,function,GS 7 (NEW GAME); sem função no Ghidra; nome provável (tela de nome)
+0x0805C950,TitleMenu_SubState8_Continue,function,GS 8 (CONTINUE); sem função no Ghidra; nome provável
+0x0804A2F0,new_game_start,function,NEW GAME: zera RAM (dinheiro, medalhas, inventário, equipe, itens, eventos), mapa 23, tile (18,13); alias README site_NewGameClear
+0x0805EA44,Menu_TextEntryInput,function,tela de nome: teclado em grade, até 10 caracteres (tabela 0x084836E8[0])
+0x0805DF18,site_LoadGame,function,carrega o save da RAM (chamado por Site_RunSaveLoadOption op 1)
+0x084859D8,gBootSubStateTable,data,tabela de ponteiros do boot (GS 0..10)
+0x0848360C,gTitleMenuSubStateTable,data,tabela de ponteiros do menu do título (GS 0..11)
+0x084836E8,gNameEntrySubStateTable,data,tabela de sub-passos da tela de nome (entrada 0 = Menu_TextEntryInput)
+0x083D212C,gMainState1_Menu10,data,entrada 10 de MS1 (0x083D2104 + 0x28) = new_game_start

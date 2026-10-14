@@ -219,3 +219,16 @@
 0x08065A80 menu 0x15 passo 2
 0x08065C98 menu 0x15 passo 6 (troca de comandos, LK2)
 0x08065CFC menu 0x15 passo 7
+0x0806E150  boot GS 1 (entrada 1 de 0x084859D8): sem função no Ghidra (disasm falhou)
+0x0806E4CC  boot GS 3: sem função no Ghidra
+0x0806E90C  boot GS 5: sem função no Ghidra
+0x0806E93C  boot GS 7: sem função no Ghidra
+0x0806E7EC  boot GS 8: não lido
+0x0806E96C  boot GS 9: não lido
+0x0806E9C0  boot GS 10: não lido
+0x0805C8EC  título GS 7 (NEW GAME -> nome): sem função no Ghidra
+0x0805C950  título GS 8 (CONTINUE): sem função no Ghidra
+0x0805C988  título GS 9: sem função no Ghidra
+0x0805C574  título GS 5 (OPTIONS?): não lido
+0x0805C2DC..0x0805CC3C  entradas 10..11 do menu do título: não lidas
+0x0805EFD4, 0x0805EFFC, 0x0805F144, 0x0805F19C  sub-passos da tela de nome (tabela 0x084836E8): não lidos
