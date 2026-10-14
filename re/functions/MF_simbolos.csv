@@ -1,0 +1,13 @@
+# address,name,kind,comment
+0x080155A8,Fight_TrySelectMedaforceAction,func_thumb,"[MF] bloqueia sem B+0xC1==0x50 e F+0x58; slot 0/1/2 exige nivel>=10/30/60 (B+5); aleatorio=1 sorteia slot (CPU)"
+0x08015648,Fight_IsMedaforceSelectionBlockedByBattleState,func_thumb,"[MF] estado de batalha que bloqueia a escolha de medaforca"
+0x08015668,Fight_SelectMedaforceActionSource,func_thumb,"[MF] confirmado: scratch 0x0300052E = medal_medaforce_list[B+1]; B+0xA8..+0xAD = desc6[id do slot]; Fight_SelectActionSource(bot,slot+4)"
+0x083B7F8C,medal_medaforce_list,data,"[MF] 3 B por medalha (30); slots 0/1/2 -> id de medaforca (confirmado)"
+0x083B7E54,medaforce_descriptor_table,data,"[MF] 6 B por medaforca (52 ids); byte0 = id/nome; bytes 1..5 nao identificados"
+0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,"[MF] valores 5..7 do ciclo de especialidade tentam slots de medaforca"
+0x08015488,Fight_SelectFallbackActionFromPriorityList,func_thumb,"[MF] CPU com B+0xC1==0x50 sorteia Fight_TrySelectMedaforceAction(bot,0,1)"
+0x08031918,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,func_thumb,"[MF] confirmado: F+0xA8 = B+0xA8 + 0x50 (script da medaforca); F+0x164=1; zera B+0xE0/E1"
+0x0803628C,Fight_AddMedaforceChargeFromAction,func_thumb,"[MF] confirmado: B+0xC1 += 0x14 (0x28 se B+0xC0&8), teto 0x50"
+0x080127DC,Fight_AwardPartExperience,func_thumb,"[MF] confirmado: nivel 10/30/60 da peca libera slot 0/1/2 via medal_medaforce_list (literal 0x08012968 -> 0x083B7F8C)"
+0x08012968,medaforce_list_ptr_literal,label,"[MF] palavra de literal que aponta para 0x083B7F8C (nao e tabela de bytes)"
+0x0801E3C0,Fight_DispatchOnSubstateAA_H_01_ChooseActionPath,label,"[MF] chama Fight_AddMedaforceChargeFromAction na resolucao normal (0x0801E3F0/0x0801E426)"
