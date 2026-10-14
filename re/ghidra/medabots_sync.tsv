@@ -174,7 +174,7 @@ F	0x08006494	Sprite_SetPairPosition
 F	0x08006514	Sprite_ToggleFlag4000Pair
 F	0x0800656C	Battle_InitPartSprites
 F	0x0800667C	Battle_InitPartSpriteObj
-F	0x08006764	Parts_CreateIconSprite
+F	0x08006764	Parts_BuildLargeCompositePreview
 F	0x08006824	Parts_DispatchSlotHandler
 L	0x08006844	Parts_DispatchSlotHandler_JumpA
 L	0x080068A2	Parts_DispatchSlotHandler_JumpB
@@ -330,7 +330,7 @@ F	0x0800B814	Gfx_SlideFadeStepThenClear
 F	0x0800B858	Gfx_BgFillRowAndCount
 F	0x0800B890	DebugMenu_Dispatch
 F	0x0800B8B0	DebugMenu_Init
-F	0x0800B938	controls_in_debug_menu
+F	0x0800B938	DebugMenu_HandleInput
 F	0x0800BA74	DebugMenu_Exit
 F	0x0800BAB8	DebugMenu_RunOption
 F	0x0800BAD8	Dispatch_StateHandlerTable
