@@ -2311,6 +2311,7 @@ L	0x08050E6C	SceneCommandCodeTable
 L	0x08050F38	SceneCommandStep3_Advance
 L	0x08050F40	SceneCommandStep4_WaitTransitionEnd
 F	0x08050F5C	Overworld_UpdateMapSceneStateMachine
+L	0x08050F80	Overworld_MapSubstateTable
 F	0x08051368	Overworld_UpdateMapSceneStateMachine_08051368
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
 L	0x08051416	Map_LoadEntitySpawns_GroupLoop
@@ -2371,6 +2372,7 @@ F	0x080533E4	Overworld_BeginUiSceneState
 F	0x0805424C	Scene_DispatchStateHandler
 F	0x08054280	Scene_DispatchStateHandlerTail
 F	0x080567F0	Overworld_EnterSceneState
+F	0x0805716C	FieldMenu_DispatchSubstate
 F	0x0805718C	Overworld_InitChoiceMenuScreen
 F	0x08057244	Overworld_InitChoiceMenuScreen_08057244
 F	0x08057440	Map_TickChoiceListOpen
@@ -3209,6 +3211,7 @@ L	0x083D2630	gEventContinuationOpcodeTable
 L	0x083D2A40	gWalkSpeedTable
 L	0x083D2B6B	gMapArea
 L	0x083D2D0D	gObjectShadowFlagTable
+L	0x083D5FF4	Overworld_ChoiceSubstateTable
 L	0x083D6A2C	gArcHeightTable
 L	0x083F7D80	sRandomAdvanceTable
 L	0x083F7E80	gMapSpritePtrTable
@@ -3489,7 +3492,6 @@ C	0x08050E6C
 C	0x08050F2A
 C	0x08050F38
 C	0x08050F40
-C	0x0805716C
 C	0x0805C988
 C	0x0805E404
 C	0x0805EFD4

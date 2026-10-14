@@ -65,7 +65,7 @@ address,name,kind,count,comment
 0x03000584,gFlowVariant,label,,[MN] [MN] byte escrito por GameState_StartFlowByCommand cmd 0/1/2 (valor 0/1/2); provavel
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
 0x0300058C,keys_pressed_edge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: just_pressed_buttons)"
-0x03000590,battle_bot_blocks,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768] (antes: gPlayerBattleSideState)"
+0x03000590,battle_bot_block_base,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768] (antes: gPlayerBattleSideState) (antes: battle_bot_blocks)"
 0x03000591,battle_robot_1_medalID,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000594,battle_robot_1_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000595,battle_robot_1_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -217,7 +217,7 @@ address,name,kind,count,comment
 0x03005029,gLinkPeerMissCounter,label,,[LK] [GH-LK] contadores por slot (0x03005029+i) de quadros sem sinal do peer; sobe ate 11 e zera bit em 0x03005172; provavel
 0x03005030,gLinkActiveFlag,label,,[MN] [MN] byte: flag de link; testada em AgbMain e MainState2; provavel
 0x03005170,gLinkSlotInput,label,,[MN] [MN] bloco de entrada de link por slot; +2 = byte de teclas do slot; provavel
-0x03005310,gOverworldAffineState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03005310,gMapSceneSubstate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gOverworldAffineState)"
 0x0300534C,gOverworldAffineFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005350,gOverworldUiState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005590,gEventScriptBasePtr,label,,base do banco de eventos em RAM; Simon: gEventScriptDataBasePtr (antes: gEventDbBase)
@@ -2677,6 +2677,7 @@ address,name,kind,count,comment
 0x08050F38,SceneCommandStep3_Advance,label,,[SC] [SC] passo 3 (sem funcao): so avanca o passo
 0x08050F40,SceneCommandStep4_WaitTransitionEnd,label,,[SC] [SC] passo 4 (sem funcao): cmd 8 termina; outros esperam 0x08049E08 terminar e devolvem 1
 0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions."
+0x08050F80,Overworld_MapSubstateTable,table,,"[FM] [FM] tabela de 5 sub-estados do mapa (byte 0x03005311); entradas 0x08050F94, 0x08051078, 0x080510C0, 0x0805134C, 0x08051368; handlers sem funcao no Ghidra"
 0x08051368,Overworld_UpdateMapSceneStateMachine,func_thumb,,[OW2] maquina de cena do mapa; chama Overworld_ApplyWarpAtCurrentTile em um dos estados (confirmado)
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
 0x08051416,Map_LoadEntitySpawns_GroupLoop,label,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234) (antes: Map_LoadEntitySpawnsForCurrentMap)
@@ -2737,6 +2738,7 @@ address,name,kind,count,comment
 0x0805424C,Scene_DispatchStateHandler,func_thumb,,"Simon/Rokusho: Dispatch one step of the current overworld UI/scene-state machine using gOverworldUiState.{state,substate}. (antes: Overworld_DispatchUiSceneState)"
 0x08054280,Scene_DispatchStateHandlerTail,func_thumb,,[R3] (mtbe) entrada alternativa do despacho
 0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador
+0x0805716C,FieldMenu_DispatchSubstate,func_thumb,,[FM] [FM] despachante do menu 2 de MainState1 (provavel); push lr; base 0x083D5FF4 + gamestate_subroutine*4; SEM funcao no Ghidra (nao renomeado no Ghidra)
 0x0805718C,Overworld_InitChoiceMenuScreen,func_thumb,,inicia tela de escolha do overworld; Overworld_CheckStepAllowed por linha; provavel
 0x08057244,Overworld_InitChoiceMenuScreen,func_thumb,,[OW2] monta menu de 4 linhas; CheckStepAllowed(k) == 1 desenha linha ativa (confirmado)
 0x08057440,Map_TickChoiceListOpen,func_thumb,,"[provavel] abre lista de escolha em 0x10 passos (FUN_080492A8 + Map_CreateChoiceSprites); ao fim, GameState_AdvanceSubroutine"
@@ -3575,6 +3577,7 @@ address,name,kind,count,comment
 0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU)"
+0x083D5FF4,Overworld_ChoiceSubstateTable,table,,[FM] [FM] tabela de sub-estados do menu de escolha (base do despachante 0x0805716C): 0=Overworld_InitChoiceMenuScreen 0x0805718D; 1=0x08057441; 2=0x080574D5
 0x083D6A2C,gArcHeightTable,data,,"[CU] 16 linhas de 0x10 B; valor (short) de cada linha = altura do arco em 1/16 px (Map_ObjectArcStep, GH-CU)"
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
 0x083F7E80,gMapSpritePtrTable,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites) (antes: gGfx_Overworld_PonteirosSprite)
