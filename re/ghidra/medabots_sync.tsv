@@ -346,11 +346,11 @@ F	0x0800C29C	Dispatch_CallHandlerByByte33_0800C29C
 F	0x0800C2BC	Debug_ItemCountGrantScreen
 F	0x0800C6D8	Dispatch_CallHandlerByMode_A
 F	0x0800C6F8	PartsBuild_UpdateStatusPanel
-F	0x0800C7E4	debug_option4_item_entry
+F	0x0800C7E4	DebugMenu_Option4_Dispatch
 F	0x0800C804	Shop_HandleItemListAndCounts
 F	0x0800CBA8	Gfx_DispatchStateHandler
 F	0x0800CBC8	Debug_FaceScreen
-F	0x0800CE70	debug_option6_mdlpic_entry
+F	0x0800CE70	DebugMenu_Option6_Dispatch
 F	0x0800CE90	Debug_MdlpicScreen
 F	0x0800D168	Dispatch_StateHandlerTable_B
 F	0x0800D188	Debug_RndTkScreen
@@ -2294,7 +2294,7 @@ F	0x08047204	UpdateTwoCompositePreviewSlotFlags
 F	0x08047414	CompositePreviewContext_Init
 F	0x08047428	MotionInterpolateKeyframe
 F	0x08047574	EventScript_ClearGlobals
-F	0x0804763C	MainState1
+F	0x0804763C	MainState1_DispatchSubstate
 F	0x0804765C	Menu_SetStateByArg01
 F	0x080476E8	MainState_RequestModeTransition
 F	0x08047878	GameState_StartFlowByCommand
@@ -2302,7 +2302,7 @@ L	0x080479A0	GameState_StartFlowByCommand_CaseNote
 L	0x08047B98	GameState_StartFlowByCommand_store_tail
 F	0x08047BA8	Snd_SfxRequestWrapper
 F	0x08047BB4	Sound_RequestSong
-F	0x08047BC0	Sound_RequestFade
+F	0x08047BC0	Snd_RequestFade
 F	0x08047BCC	Table_GetWordByIndex_08047bd8
 F	0x08047BDC	GetBotName
 F	0x08047BEC	GetPartName

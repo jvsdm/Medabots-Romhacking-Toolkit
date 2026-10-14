@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x0801B3AC,Fight_CommitActiveBotPartFields,func_thumb,confirmado: copia campos pendentes (+0x11c..+0x133) para o registro do bot ativo; limpa buffer pendente via CpuSet; atualiza sprites e objetos
+0x0801B5FC,Fight_ResetBotPartFlags,func_thumb,confirmado: zera flag +0xbc e bits de +0xbd; zera 4 blocos de estado via CpuSet
+0x0801B69C,Fight_AssignBotTargetSlot,func_thumb,confirmado: se condicao de alvo bate grava slot alvo (+0xe0 = FindTargetSlot+1) e linha de status sorteada (+0xe1)
+0x0801B76C,Fight_ChooseBotActionCode,func_thumb,confirmado: escolhe codigos de acao 1..4 dos 3 bots (0x15c..0x15e) conforme classe de utilidade e estado da parte
+0x0801BC04,Fight_SetupBotSpriteEntry,func_thumb,confirmado: monta entrada de sprite (atributos, x/y do registro +0x1740 +8 e prioridade) no slot 0x72 da tabela de objetos
+0x0801BE48,Fight_StepBotPartTimer,func_thumb,confirmado: avanca contador de parte (+0x28, de 8 em 8) e incrementa valor (+0x20); chama Fight_SyncBotPartTimerToSlot
+0x0801BF14,Fight_SyncBotPartTimerToSlot,func_thumb,confirmado: copia 8 bytes (+0x20..+0x27) do registro do bot para o slot de Slot_FindByIdPlus1
+0x0801C524,Fight_HandleRangeMismatchFailure,func_thumb,provavel: se nao ha flag +0xc0 e nao ha parte cod 15 escolhe codigo de falha 0x0e..0x11 (+0xa6) e tipo 0..3 (+0x51) pela faixa de alcance; senao marca '-' em +0xaa
+0x0801D318,Fight_DispatchOnSubstateAA_B_00_CheckSourcePartBroken,func_thumb,confirmado: le flag +0x59 da parte de origem; zero -> codigo 5 e avanca passo; senao marca feito (+0xb5)
+0x0801D36C,Fight_DispatchOnSubstateAA_B_03_EndResult1,func_thumb,confirmado: marca feito (+0xb5) e resultado 1 (+0xab)
+0x0801D3A8,Fight_DispatchOnSubstateAA_C_00_CheckTargetPartBroken,func_thumb,confirmado: igual ao B_00 mas para a parte alvo; zero -> codigo 0xc e avanca passo; senao marca feito
+0x0801D3F8,Fight_DispatchOnSubstateAA_C_03_EndResult1,func_thumb,confirmado: marca feito (+0xb5) e resultado 1 (+0xab)
+0x0801D45C,Fight_DispatchOnSubstateAA_D_01_ClearSlot9AndPlaceSprites,func_thumb,confirmado: limpa entradas de objeto 9; posiciona sprite do slot 9 a partir dos registros de bot; Slot_SetupFromRecordList(...,9); avanca passo
+0x0801D524,Fight_DispatchOnSubstateAA_D_02_WaitSlot9ReachTarget,func_thumb,confirmado: Fight_StepSlotTowardTarget(9); ao chegar avanca passo
+0x0801D5A8,Fight_FindAllyFollowupActionSource,func_thumb,confirmado: varre 3 bots aliados; acha o que tem flag +0xbd bit 8 e parte nao quebrada; grava indice+1 (+0xde) e codigo da parte (+0xdf); achou avanca passo senao marca feito
+0x0801D6A4,Fight_DispatchOnSubstateAA_E_01_LoadPhaseGfx,func_thumb,confirmado: por codigo em +0xdf (0x1b/0x1c/0x1d) descomprime gfx com magic LZ e CpuFastSet; avanca passo
+0x0801D738,Fight_PrepareFollowupSourceDisplay,func_thumb,confirmado: copia 4 blocos de 0x40 do bot de origem (+0xde); limpa mascara do slot 0x21; desenha composto de 4 objetos com icones de parte; anim speed 8; avanca passo
+0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,func_thumb,confirmado: atualiza movimento do composto; contador +0x84 chega a 0x3c -> flags, sfx 0x40, mostra slot do objeto
+0x0801D95C,Fight_DispatchOnSubstateAA_E_04_StepBotSlot,func_thumb,confirmado: Fight_StepSlotCoordDownInRange no slot do bot; ao chegar avanca passo
+0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,func_thumb,confirmado: desliza coordenada X em +-2 ate 0x78; ao chegar seta campos e avanca passo
+0x0801DAEC,Fight_DispatchOnSubstateAA_E_06_ShowPartsHud,func_thumb,confirmado: Fight_StepSlotCoordUpInRange; ao chegar sfx 0x41, desenha icones de parte, esconde slot do objeto e avanca passo
+0x0801DC74,Fight_DispatchOnSubstateAA_E_07_SpawnSlot21,func_thumb,confirmado: espera contador +0x84 chegar a 0x1e; limpa 0x21, posiciona e Slot_SetupFromRecordList(...,0x21); avanca passo
+0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,func_thumb,confirmado: decrementa contador de 4 em 4 ate 0x40; ao chegar toca sfx 0x30 e avanca passo
+0x0801DD74,Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim,func_thumb,confirmado: Anim_RunSlotScript(slot 0x21); ao terminar (-1) copia 0xe bytes, codigo 0x16, limpa slot 0x21 e avanca passo
+0x0801DDDC,Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget,func_thumb,confirmado: Fight_SetSelectedTargetBot/Part com o alvo do passo; marca feito (+0xb5)
+0x0801DE44,Fight_DispatchOnSubstateAA_F_00_CopyPartDataPair,func_thumb,confirmado: copia 0xe bytes de dois dados de parte (tabelas por indices +0x49/+0x4a) para buffers; codigo 0x17; avanca passo
+0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,func_thumb,provavel: zera contador +0x84 e preenche duas regioes via CpuFastSet (paleta e tiles de fundo); avanca passo
+0x0801E09C,Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground,func_thumb,confirmado: maquina em 2 passos: fase 0 limpa pares, DISPCNT, descomprime tilemap LZ e carrega tiles/paleta; fase 1 ativa blend, carrega gfx de OBJ e avanca
+0x0801E200,Fight_DispatchOnSubstateAA_G_04_ResetSideSprites,func_thumb,confirmado: CpuFastSet zero; FightPreview_InitializeSideSprites, UpdateSingleLayerSideSprites, ResetSequenceStepFlags; avanca passo
+0x0801E2B8,Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold,func_thumb,provavel: atualiza sprites laterais, avanca 1 passo das sequencias esquerda e direita e marca feito (+0xb5); nao espera de fato, nome "Hold" pode ser so o estado seguinte
+0x0801E300,Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles,func_thumb,confirmado: descomprime 4 gfx LZ, CpuFastSet em 3 regioes, carrega slots de tiles laterais e fileiras de icones de parte; avanca passo
+0x0801E3C0,Fight_DispatchOnSubstateAA_H_01_ChooseActionPath,func_thumb,confirmado: escolhe codigo de caminho de acao (0x28, 0x0a, 0x30, 0x38 ou avanca) pelos flags +0xb7/+0xb8; conta uso da acao e carga de medaforce
+0x0801E474,Fight_DispatchOnSubstateAA_H_03_LoadGfxAndInitObj,func_thumb,confirmado: descomprime gfx LZ, CpuFastSet, inicializa campos do objeto (+0x280..+0x284, valor de +0x154/+0x158 pelo flag +0xf8 bit 2), sfx 0x72; avanca passo
+0x0801E54C,Fight_DispatchOnSubstateAA_H_04_WaitSlotOffset10,func_thumb,confirmado: Fight_StepSlotAnimOffsetTable(10) ate terminar; entao define timer +0x86 = 0x3c e avanca passo
+0x0801E9E0,Fight_DispatchOnSubstateAA_H_10_SfxStep2F,func_thumb,confirmado: toca sfx 0x2f e avanca passo (nome so descreve o sfx; sem efeito mais)
+0x0801E9FC,Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows,func_thumb,confirmado: FightPreview_ConsumePartCount; recarrega e desenha fileiras de icones; ao fim seta timer 0x3c e avanca
+0x0801EBF8,Fight_DispatchOnSubstateAA_H_1A_QueueBrokenBotOrSkip,func_thumb,confirmado: se parte do alvo quebrada (+0x59 zero) enfileira bot quebrado para resolucao e avanca 1; senao pula 3 passos
+0x0801F390,Fight_DispatchOnSubstateAA_H_45_RepairPartTickDrawIcons,func_thumb,confirmado: (antes: Fight_DispatchOnSubstateAA_H_45_DrawPartIconsWaitTimer) chama Fight_RepairPartTick; desenha fileiras de icones; ao fim seta timer 0x3c e avanca
+0x0801F4AC,Fight_DispatchOnSubstateAA_I_00_ClassifyPartStateJump2,func_thumb,confirmado: classifica codigo de estado da parte (+0x51 = 0..3) pelo tipo de parte; certos casos pulam para passo 2; senao avanca
+0x0801F9EC,Fight_DispatchOnSubstateAA_I_07_ApplyPartStateEffectAtXY,func_thumb,confirmado: Fight_ApplyPartStatus(bot, codigo da parte, x de +0xe8, y de +0xec); avanca passo
+0x0801FEE8,Fight_DispatchOnSubstateAA_K_04_LoadGfxSetupSlot21,func_thumb,confirmado: descomprime gfx LZ e CpuFastSet; posiciona slot 0x21 pelo registro do bot; Slot_SetupFromRecordList(...,0x21); avanca passo
+0x08020248,Fight_DispatchOnSubstateAA_L_04_CommitActionIfState3,func_thumb,confirmado: se estado +0xb7 == 3 chama Fight_CommitActionState, limpa slot 10, marca resultado 1 e avanca; senao salta para passo 6
+0x080202E0,Fight_DispatchOnSubstateAA_L_07_SlideUntilMarker0x28ThenTimer60,func_thumb,confirmado: anda pelo byte de marcador ate achar '(' (0x28) e entao seta timer 0x3c e avanca; enquanto isso move x e contadores
+0x080205A4,Fight_DispatchOnSubstateAA_M_00_LoadGfxSpawnTargetObj,func_thumb,confirmado: descomprime gfx LZ e CpuFastSet; Fight_SpawnInlineEffectTextObjects(0x21, x, y, 4) na posicao do alvo; avanca passo
+0x08020728,Fight_DispatchOnSubstateAA_M_04_ApplyPartDamage,func_thumb,confirmado: Fight_SubtractPartArmorClampZero na parte; atualiza sprites e objetos; se parte zerou enfileira bot quebrado; avanca passo
+0x08020844,Fight_DispatchOnSubstateAA_O_00_ApplyPenaltyOrMsg,func_thumb,confirmado: se nao e borda de slot acumula ROS, penalidade de virus/bug, gasta ROS; ok escala ataque e avanca; senao define codigo de mensagem (0x1a ou 0x26) e passo 2
+0x08020928,Fight_DispatchOnSubstateAA_P_0B_RepairPartOrSkip,func_thumb,confirmado: se parte com flag +0x4f e +0xca != 0 escolhe parte mais danificada reparavel, divide contagem por capacidade (codigo 0x0e); senao avanca passo
+0x080209D8,Fight_DispatchOnSubstateAA_Q_00_PenaltyIfFlagClearOrMsg,func_thumb,confirmado: se flag +0x59 do alvo zero aplica penalidade ROS (acumula, virus/bug, gasta); senao mensagem 0x27; caminho de erro usa 0x1a e passo 2
+0x08020AD0,Fight_DispatchOnSubstateAA_R_0C_SplitCountOrSkip,func_thumb,confirmado: copia stats se flag; se flag +0x4f e +0xca != 0 sorteia parte quebrada/faltando e divide contagem pelo maximo (codigo 0x0f); senao avanca
+0x08020B4C,Fight_DispatchOnSubstateAA_R_08_RepairTickDrawComposite,func_thumb,confirmado: (antes: Fight_DispatchOnSubstateAA_R_08) Fight_RepairPartTick; desenha 2 camadas de composto para o lado escolhido (flag +0x30 bit 2); avanca passo e salta por tabela nao recuperada
+0x08021300,Fight_DispatchOnSubstateAA_S_0C_CheckPartThenBranch,func_thumb,confirmado: confere parte no slot +0x8a (+0x2a e +0x2b contra +0x52); se nao bate: codigo 0x14 (se +0x51==2) ou sfx 0x3e e codigo 0x0e; se bate limpa flag e avanca
+0x08021418,Fight_DispatchOnSubstateAA_S_0F_RecordDamageAndJump,func_thumb,confirmado: grava entrada de 8 bytes no slot de dano (+0x2a..+0x2d, safe_add de x/y) conforme tipo +0x51; avanca passo; salta por tabela nao recuperada
+0x08021774,Fight_DispatchOnSubstateAA_S_23_CheckFlagOrJump25,func_thumb,confirmado: se flag +0x2a zero ou +0x2b != +0x52 toca sfx 0x3e e seta codigo 0x25; senao limpa e avanca passo
+0x08021E2C,Fight_DispatchOnSubstateAA_U_00_CheckRosAndTargetStatus,func_thumb,confirmado: acumula ROS e penalidade virus/bug, gasta ROS; ok: se parte alvo +0xc9 zero codigo 0x70 e avanca senao contador de uso e passo 4; falha codigo 0x1a
+0x08021EA0,Fight_DispatchOnSubstateAA_U_08_LoadEffectGfxOnTarget,func_thumb,confirmado: descomprime gfx LZ e CpuFastSet; liga bits 0x200 (e 0x1000) em +0x840; posiciona slot 0x21 pelo bot alvo; Slot_SetupFromRecordList(...,0x21); timer 0x3c; avanca
+0x08021F90,Fight_DispatchOnSubstateAA_U_0A_ScrollBgAndStepSlotToTarget,func_thumb,confirmado: rola offset de BG em +-0x40; Fight_StepSlotTowardTarget(0x21); ao chegar limpa bits e avanca
+0x08022010,Fight_DispatchOnSubstateAA_U_0B_ClearTargetStatus,func_thumb,confirmado: zera status da parte alvo (+0xc9..+0xcc); seta atributo de objeto e tamanho; sfx 0x37; avanca
+0x080220A0,Fight_DispatchOnSubstateAA_U_0C_RunAnimAndClearTargetSlot,func_thumb,confirmado: ajusta atributos do slot do alvo; Anim_RunSlotScript(slot 0x21); ao terminar (-1) limpa slot 0x21 e slot do alvo e avanca
+0x0802213C,Fight_DispatchOnSubstateAA_U_0D_SetMessage23,func_thumb,confirmado: seta codigo de mensagem 0x23 e avanca passo
+0x0802217C,Fight_DispatchOnSubstateAA_V_00_CheckRos,func_thumb,confirmado: acumula ROS e penalidade virus/bug, gasta ROS; ok incrementa contador de uso e passo 4; falha codigo 0x1a e avanca

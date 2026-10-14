@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x080432A0,Sprite_UpdateComposite4Motion,func_thumb,confirmado: atualiza 4 sprites de composicao (quadrantes) pelo angulo; mantem nome
+0x08043560,AdjustInventoryPartCount,func_thumb,confirmado: soma (clamp 99) ou subtrai contagem de peca no inventario por bot; mantem nome
+0x080435B0,DrawPartIconTileBlock,func_thumb,provavel: preenche retangulo do tilemap de BG com tile base da peca (0xFF = caso especial); mantem nome
+0x080436AC,PartSelect_CycleNextValid,func_thumb,confirmado: avanca/recua id de peca pulando invalidos (0x78/0x79 e pares iguais); mantem nome
+0x08043814,AreBattleSpritePartIdsValid,func_thumb,confirmado: 0 se id 0x1E ou qualquer id > 0x77; senao 1; mantem nome
+0x0804387C,Overworld_ResetEncounterStepState,func_thumb,confirmado: copia 1 byte de tabela (x8) para contador e zera outro; NAO retorna flag (antes: reset_step_and_get_encounter_flag)
+0x080438C4,Overworld_ShouldTriggerRandomEncounter,func_thumb,confirmado: checa 3 flags, incrementa passos, sorteia (>16 passos, 1/32) e zera contadores; mantem nome
+0x08043B7C,GfxBankA_LoadTilesAndPalette,func_thumb,confirmado: descomprime bloco, carrega tiles e paleta (CpuFastSet) do banco A; mantem nome
+0x08043C08,GfxBankB_LoadTilesAndPalette,func_thumb,confirmado: idem banco B (Lz_DecodeIfMagic); mantem nome
+0x08043C94,Encounter_RollPercent0To99,func_thumb,provavel: sorteia rand*100/255 (0..99); retorno vai so em r0 (Ghidra mostra void); mantem nome
+0x08043CA8,Slots_ClearFourPairs,func_thumb,confirmado: zera 4 pares de u16 apontados por ponteiros; mantem nome
+0x08043AE0,Unk_08043AE0,func_thumb,chute: bytes 10 B5 (push) mas Ghidra so mostra halt_baddata e disassemble vazio; nome mantido, nao resolvido
+0x08043B58,Unk_08043B58,func_thumb,chute: bytes 00 B5 (push) mas Ghidra so mostra halt_baddata e disassemble vazio; nome mantido, nao resolvido
+0x08043DF8,FxBlend_ApplyFromObjA,func_thumb,confirmado: aplica blend (BLDCNT/BLDALPHA) a partir do objeto A ou desliga; mantem nome
+0x08043E48,Obj_StepAccumMoveAWrapper,func_thumb,confirmado: wrapper que chama Obj_StepAccumMoveA; mantem nome
+0x08043E54,Obj_CopySlot8Bytes,func_thumb,confirmado: copia 8 bytes do slot (indice x8) para o objeto +0x74; mantem nome
+0x08043F9C,FxBlend_ApplyFromObjB,func_thumb,confirmado: igual ao ObjA mas com campos do objeto B (+0x77..0x79); mantem nome
+0x08044094,Anim_SetDefaultTimers,func_thumb,confirmado: grava 1,1,7 em tres timers de animacao; mantem nome
+0x080440B4,Count_Entries3InTable9,func_thumb,confirmado: conta entradas com valor 3 em 9 entradas (stride 8); mantem nome
+0x080440D4,Check_PairsAllEqual,func_thumb,confirmado: retorna 1 se todos os pares de bytes sao iguais, senao 0; mantem nome
+0x08044118,TileMap_ReadRectToBuffer,func_thumb,confirmado: le retangulo do tilemap BG (VRAM 0x06000000) para buffer; mantem nome
+0x08044160,TileMap_WriteBufferToRect,func_thumb,confirmado: escreve buffer no retangulo do tilemap BG (inverso de ReadRect); mantem nome
+0x080441A8,Gfx_DecompressFixedAsset,func_thumb,confirmado: Lz_DecodeIfMagic com destino fixo; mantem nome
+0x080441B8,Screen_ResetGfxAndState,func_thumb,confirmado: zera paleta e VRAM (CpuFastSet), limpa 0x14 bytes e estado de tela; mantem nome
+0x0804422C,Anim_AdvanceSlotTileOffset,func_thumb,confirmado: avanca indice de frame (+0x27) e soma offsets de tile da tabela ao slot; mantem nome
+0x080442B4,Angle32FromDelta,func_thumb,confirmado: angulo de 32 setores (0..0x1C) a partir de dx,dy em soft-float; mantem nome
+0x080445F4,FightPreview_InitCompositeBuffers,func_thumb,confirmado: zera buffers, carrega paleta/OAM e chama CompositePreviewContext_Init; mantem nome
+0x080446B4,BuildCompositePreviewSpriteLayer,func_thumb,confirmado: monta camada de sprite da preview composta e chama BuildFourPartLargePreviewComposite; mantem nome
+0x080447EC,BuildCompositePreviewSpriteLayerWithOffset,func_thumb,confirmado: como BuildCompositePreviewSpriteLayer mas soma offset (param_13) ao tempo; mantem nome
+0x08044934,PartPreview_LoadLargeDisplaySprite,func_thumb,confirmado: chama LoadPartLargeDisplaySpriteFromAppearanceTable e envia tiles/paleta; mantem nome
+0x08044A3C,MotionPlayStep,func_thumb,confirmado: avanca keyframe de movimento (MotionInterpolateKeyframe), retorna 1 ao fim; mantem nome
+0x08044B28,Gfx_LoadDefaultAsset,func_thumb,confirmado: wrapper de Lz_DecodeIfMagic sem args; mantem nome
+0x08044B34,Roster_ResolveIdIfZero,func_thumb,confirmado: se id==0 busca id na tabela de roster; senao devolve o id; mantem nome
+0x08044BA8,FightPreview_InitSideState,func_thumb,confirmado: limpa slots/atributos e estado do lado da preview; grava modo e parametro; mantem nome
+0x08044C38,FightPreview_SetSceneMode,func_thumb,confirmado: limpa slots e define estado da cena da preview para modos 0..3; mantem nome
+0x08044CDC,Dispatch_Sub4Mode,func_thumb,confirmado: despacha para Battle_SetDefaultsA..D conforme modo 0..3; mantem nome
+0x08044D0C,Asset_UnpackOrCopyBlock,func_thumb,confirmado: LZ77 para WRAM se nibble=1, senao CpuSet e grava descritor do bloco; mantem nome
+0x08044DA8,SetCompositePreviewOamShapeAndSize,func_thumb,confirmado: codifica shape/size do OAM (bits do atributo 3) a partir de w/h; mantem nome
+0x08044E64,OamSizeEncodingLookup,func_thumb,confirmado: tabela de codificacao de shape/size do OAM por (flag, valor); mantem nome
+0x08044FB4,Tile_BlitScaledRect,func_thumb,confirmado: blit de retangulo de tiles com escala (bios_div); mantem nome
+0x08045084,Tile_UnpackAndBlitBlock,func_thumb,confirmado: chama Asset_UnpackOrCopyBlock e Tile_BlitScaledRect; mantem nome
+0x08045120,ExpandCompositePreviewTemplateEntryToOam,func_thumb,confirmado: expande entrada de template em entradas de OAM (8 B cada); mantem nome
+0x08045328,InitCompositePreviewTemplateEntry,func_thumb,confirmado: inicia campos da entrada e chama ExpandCompositePreviewTemplateEntryToOam; mantem nome
+0x0804538C,LayoutCompositePreviewEntryOamGrid,func_thumb,confirmado: distribui OAM em grade (linhas/colunas) da entrada; mantem nome
+0x080454F0,FindCompositePreviewOamInsertionIndex,func_thumb,confirmado: busca binaria do indice de insercao pela chave Y (+6) na lista OAM; mantem nome
+0x08045588,InsertCompositePreviewOamSpanBySortKey,func_thumb,confirmado: desloca span de OAM e insere pela chave de ordenacao; mantem nome
+0x080455E0,CopyCompositePreviewTemplateEntryOam,func_thumb,confirmado: copia OAM da entrada de template para destino com prioridade por Y; mantem nome
+0x08045680,QueueCompositePreviewTemplateEntryOam,func_thumb,confirmado: insere span por chave de ordenacao e preenche entradas (paleta/prioridade); mantem nome
+0x08045858,EmitCompositePreviewTemplateEntriesSortedByY,func_thumb,chute: bytes 0A E0 (branch) nao e inicio de funcao; Ghidra so fragmento; nome nao verificado
+0x080458A4,AppendCompositePreviewTemplatePointer,func_thumb,provavel: grava 4 words de ponteiro de template no array se condicao (flags); corpo parcial, nome deduzido
+0x080458B8,EmitCompositePreviewTemplatePointerListOam,func_thumb,confirmado: percorre lista de ponteiros de template e copia OAM de cada um; mantem nome
+0x0804589C,InitCompositePreviewTemplatePointerList,func_thumb,provavel: leaf sem prologo; grava ponteiro da lista e zera contador (str r1,[r0]; strh #0,[r0+4]); Ghidra sem corpo; nome deduzido (antes: nenhum)
+0x080459A4,OffsetCompositePreviewTemplateEntry,func_thumb,chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x08045A14,CopyObjAffineGroupsToShadowOam,func_thumb,confirmado: copia 32 grupos de afim (4 words) para shadow OAM; mantem nome
+0x08045A40,IsCompositePreviewPointOnScreen,func_thumb,chute: Ghidra so halt_baddata; bytes sem prologo (02 1C 00 23...), nao verificado
+0x08045AEC,QueueVisibleCompositePreviewTemplateEntry,func_thumb,chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x08045B68,QueueVisibleCompositePreviewTemplateEntryWithBounds,func_thumb,chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x08045C30,QueueVisibleCompositePreviewTemplateEntryWithAffineBounds,func_thumb,chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x08045D34,BuildCompositePreviewOamTemplate,func_thumb,confirmado: monta atributos OAM do template (shape/size, paleta, tiles) a partir da parte; mantem nome
+0x08045E6C,PartPreviewPiece,func_thumb,provavel: desenha peca de preview (recursiva para subpecas +0x0F/+0x10); mantem nome
