@@ -111,7 +111,7 @@ Canais: a ligacao trilha -> canal PSG/PCM e feita pelas funcoes `snd_channel_upd
   origem dentro da amostra (SND13: watch 0x040000BC, enderecos 0x0819A020/0x0819CA80 para a amostra 58).
   Timer que dita a taxa: nao confirmado (pendente).
 - Amostras: tabela de ponteiros `0x080B16E4` (128 entradas). Cada entrada aponta para cabecalho
-  {u32 tamanho, u16 taxa, u8 flag 0, u8 nota-raiz (0x3C), u32 flag de laco, u32 inicio do laco} seguido de int8
+  {u32 tamanho, u16 taxa, u8 nota-raiz (0x3C; é o byte +6, corrigido por SN2), u8 flag 0 (+7), u32 flag de laco, u32 inicio do laco} seguido de int8
   a partir de +0x10. Confirmado pelo extrator e pelo replay (SND10/SND13).
 - Taxa de PCM por nota: `snd_pcm_rate_set` 0x08073C18 (limite 0x78000), `snd_pcm_rate_from_note` 0x08073C3C.
 

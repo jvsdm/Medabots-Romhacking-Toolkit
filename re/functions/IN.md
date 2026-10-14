@@ -31,7 +31,7 @@ Confirmado ate aqui: Map64, dinheiro, eventos 36/37/3A/3B/4B/4E/59. Proximo: xre
 - Lista de ITENS (Map64 -> gShopItems): Shop_BuildItemList64 0x0805AE4C percorre 64 pares do 0x03002BA0, copia os com
   bit 0x80 (id = &0x7F, qtd) para gShopItems e conta em estado+0x10. Usada por Shop_InitItemListScreen 0x0805CDAC
   (5 por pagina). [confirmado leitura do codigo]
-- Shop_ItemListInputStep 0x0805CFB4: no A, chama FUN_08048960(id do item) e despacha por tabela indexada pelo id
+- Shop_ItemListInputStep 0x0805CFB4: no A, chama FUN_08048960(id do item), que é KeyItem_CanUseHere (IN2), e despacha por tabela indexada pelo id
   (ponteiro em 0x0805D2C8, so se id <= 0x28; senao MainState_RequestModeTransition(4)). Resultado 1 = usa o item
   (efeito por id), 2..4 = SFX de erro/feedback. [provavel: e a TELA DE USO DE ITEM (mochila), nao a compra]
 - Shop_HandleItemListAndCounts 0x0800C804 (cursor de 3 contadores de 0..0x3F): nos botoes faz Map64_AddCountClamp99 /
@@ -41,8 +41,8 @@ Confirmado ate aqui: Map64, dinheiro, eventos 36/37/3A/3B/4B/4E/59. Proximo: xre
   validos, lido na ROM) tem 64 entradas. Nome de item = indice no texto. Os eventos 0x36/0x37/0x4B usam esse id.
   [provavel: liga por contagem, nao por uso]. O codigo "Shop_BuildItemList64" tambem monta essa lista; pode ser
   a tela de itens-chave e nao loja (o nome Shop_* pode estar errado).
-- FUN_08048960 (usado em Shop_ItemListInputStep) e um classificador de ESTADO DE ACAO DE BATALHA (0..4), nao uso
-  de item. Logo o despacho da lista nao e efeito de item: efeito por id NAO encontrado nesta rodada.
+- FUN_08048960 (usado em Shop_ItemListInputStep) é KeyItem_CanUseHere (IN2; antes dizia classificador de estado de batalha, errado), não uso
+  de item. Corrigido (IN2): Shop_* de itens = bolsa de key items; efeito por id segue em aberto.
 - Compra/venda de pecas (UI): Shop_TickBuyQuantityMenu 0x08061F00 (0x08061F00 a 0x08062240).
   * total = soma(preco * qtd) sobre as 0x78 entradas; modo compra usa preco*qtd; modo venda (estado +5 != 0) usa
     metade (>>1). Teto do total 0x0806247C (= 99999 provavel).

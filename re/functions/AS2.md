@@ -5,7 +5,7 @@ Leitura na ROM original `Medabots - Metabee (Europe).gba` (só leitura). Disasse
 (`-m arm -M force-thumb`) sobre 0x08034500..0x08034E80, conferido com os nomes do Ghidra.
 Convenção: entrada da tabela = `0x08000000 + offset` com bit thumb; a coluna "handler" mostra o endereço sem o bit.
 
-## Ponto importante: os handlers não existem como função no Ghidra
+## Ponto importante (SUPERADO por GH-AS3c): os handlers 0x36..0x6A agora SÃO funções no Ghidra (`ActionScript_OpXX_*`, 0x08034524..0x08034E78); nomes em `AS3c.md`. O texto abaixo é histórico
 
 `get_function_by_address` e `decompile_function_by_address` devolvem "No function found" para todos os handlers
 0x36..0x6A (e para 0x08034524). Os 27 alvos que eles chamam (0x08024998 .. 0x0802FE50 e os auxiliares) já têm

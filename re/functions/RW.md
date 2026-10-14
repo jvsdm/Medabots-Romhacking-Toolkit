@@ -39,9 +39,9 @@ Escritores de 0x03001968/0x03001969 (xref): só Fight_PickRandomAvailableBotPart
 ## 3. Derrota
 
 - Fim de tempo/nocaute: Fight_SceneStep48_CheckTimeUpOrLevelUp 0x08031120 (confirmado): se T+0x57 == 0 -> `Fight_EvaluateTeamWinState` 0x0801B53C + `snd_song_request(0x11)`; senão, se o bot(ctx+DAT_08031144)==0 -> passo 0x4F; senão 0x60 (nível).
-- Fight_EvaluateTeamWinState 0x0801B53C (confirmado): compara bots com status 2 (Fight_CountBotsWithStatus2, lado 0 x 3), slots de peça vazios (Fight_CountEmptyPartSlots), e dois campos de byte (+0x29/+0x31); com empate usa randbyte. Grava **fi+0x9C = 1 ou 2** (resultado: 1 = um lado, 2 = outro; qual é derrota não fechado só com esta função; o texto de derrota de BT2 da PC usa GameMessages[110]).
+- Fight_EvaluateTeamWinState 0x0801B53C (confirmado): compara bots com status 2 (Fight_CountBotsWithStatus2, lado 0 x 3), slots de peça vazios (Fight_CountEmptyPartSlots), e dois campos de byte (+0x29/+0x31); com empate usa randbyte. Grava **0x030004DC (T+0x9C, ctx; não fi+0x9C; DF) = 1 ou 2** (resultado: 1 = um lado, 2 = outro; qual é derrota não fechado só com esta função; o texto de derrota de BT2 da PC usa GameMessages[110]).
 - Saída: Fight_SceneStep50 (BT.md): T+0x89 == 1 (link) -> 0x58; Fight_SceneStep53 0x0803133C: gamestate_menu = 10 (link, sub 0x20) ou 6 (sub 0x30).
-- **Game over / perda de peça / volta ao último ponto: NÃO encontrados na cadeia lida**. Não há chamada a load/save/game over em 0x08031120..0x0803133C. Derrota = resultado 2 em fi+0x9C e saída pela mesma rota. Quem decide: Fight_EvaluateTeamWinState (com randomização no empate). Aberto: se o resultado 2 bloqueia a recompensa (HandleReward não lê fi+0x9C; a entrada é por tabela de estados 0x083ACF00, não lida).
+- **Game over / perda de peça / volta ao último ponto: NÃO encontrados na cadeia lida**. Não há chamada a load/save/game over em 0x08031120..0x0803133C. Derrota = resultado 2 em 0x030004DC (T+0x9C; DF) e saída pela mesma rota. Quem decide: Fight_EvaluateTeamWinState (com randomização no empate). Aberto: se o resultado 2 bloqueia a recompensa (HandleReward não lê fi+0x9C; a entrada é por tabela de estados 0x083ACF00, não lida).
 
 ## 4. Luta de história (evento 0x33)
 
@@ -62,10 +62,10 @@ Fight_InitializeBotFromTemplate 0x080150FC (k = 0..2 = registro do template; blo
 
 ## 6. Pendências
 
-- Derrota: se o resultado 2 (fi+0x9C) impede a recompensa; onde o resultado vira mensagem de derrota (GameMessages[110] no PC); não há game over na cadeia lida.
+- Derrota: se o resultado 2 (0x030004DC = T+0x9C, DF) impede a recompensa; onde o resultado vira mensagem de derrota (GameMessages[110] no PC); não há game over na cadeia lida.
 - Quem preenche bloco+0x4C (peças) do bot inimigo.
 - Quem põe o nibble baixo de E+0xC2E em batalhas de história (sem peça) e em aleatórias (zero).
 - Dinheiro perdido (SubClampedCounter).
 - Caminho gamestate 6 -> tela de batalha.
-- Valor exato de fi+0x9C (1 = vitória ou derrota?).
+- Valor exato de 0x030004DC / T+0x9C (1 = vitória ou derrota?). Endereço resolvido (DF).
 - Medidos no emulador: nenhum.

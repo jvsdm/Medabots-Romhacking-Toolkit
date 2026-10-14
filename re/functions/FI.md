@@ -9,8 +9,8 @@ Legenda: conf = confirmado (decompile ou literal lido na ROM) | provável (texto
 |---|---|---|---|---|---|---|
 | +0x000 | 1 | índice de nome de personagem (gTextCharacterNames[F+0x00]) | HN10 (0x080310A0) | HN10 | chute | só 1 doc |
 | +0x008 | 4 (word) | índice do passo de cena (0..7) | JT2 (0x08071648, 0x08071670, 0x080716FC) | JT2 | provável | fi+0x08 += 1 |
-| +0x028 | 8 x N | registro de suporte do time: fi+0x28 + 8*(+0x8A); byte +3==0x5A = já ativo | HN2 (0x08028078 AT_CheckSupport), AS2 | DM, HN2 | provável | CONFLITO com +0x2A (mesmo tipo de registro, índice diferente) |
-| +0x02A | 4 x 8 | registro de dano do alvo: fi+0x2A + 8*(+0x89), bytes +0x2A..+0x2D | HA1 (0x0801D264 A_26), HA5 (0x08021DAC T_11), HA4 (T_0), AS2 | HA4 (T_0: byte 8*89 == 0 -> 0x24) | provável | CONFLITO: DM/HN2 usam +0x28 + 8*(+0x8A); HA4/HA5 usam +0x2A + 8*(+0x89) |
+| +0x028 | — | NÃO é campo separado: é o mesmo array de 8 B de +0x02A (fi+0x2A + 8*k) (FI2, Conflito 2) | HN2 (0x08028078 AT_CheckSupport), AS2 | DM, HN2 | resolvido | |
+| +0x02A | 8 x N | um só array de registros de 8 B: fi+0x2A + 8*k (FI2, Conflito 2) | HA1 (0x0801D264 A_26), HA5 (0x08021DAC T_11), HA4 (T_0), AS2 | HA4 (T_0) | resolvido | |
 | +0x02C | 1 | contador de drenagem do registro (8*89) | HA1 (0x0801CF78 A_20 DrainTarget: decrementa se lado==2) | HA1 | provável | |
 | +0x02D | 1 | dano do registro (8*89) | HA1 (0x0801C660 A_02 ApplyDamage) | HA1 | provável | |
 | +0x038 | 1 | índice gfx (tabela 0x083B2628, 5 palavras) | não documentado | JT, JT2 (0x080441A8), OW, ST2 | provável | tabela não decodificada |
@@ -29,7 +29,7 @@ Legenda: conf = confirmado (decompile ou literal lido na ROM) | provável (texto
 | +0x060 | 1 | lado base do alvo (0 ou 3) = Fight_GetOpponentSideBaseIndex(fi+0x87) | HN7 (0x0802E010 BL_0B MarkOpp), TQ | HN9 (0x0802F8E4 loop F+0x60+i), AI, HANDOFF | conf | |
 | +0x061..+0x063 | 3 | candidatos de slot-alvo (!=0 válido) | TQ | AI (DAT_0803300C) | provável | |
 | +0x064..+0x067 | 4 | linha da lista de prioridade (copiada de ROM 0x083AD470 + (rand&0x1F)*4) | AI (0x080156D0, único chamador 0x08015490) | AI (Fight_SelectActionSource), HO1 (0x08039AC8: >=0x78 -> 3) | provável | CONFLITO: AI2 diz que o conteúdo não bate com ids de peça |
-| +0x084 | 1 | contador de slots (bit0 controla) | HA1 (0x0801D1AC A_25) | HA1 | chute | CONFLITO: JT/HA6 usam 0x03000440+0x84 (ctx) |
+| +0x084 | — | REMOVIDO: não é fi+0x84. É o contador de passo do ctx 0x03000440+0x84 (FI2, Conflito 7; literal 0x0801D1E0 = 0x03000440) | - | - | conf | |
 | +0x086 | 2 | NÃO é fi. Timer de espera = 0x03000440+0x86 (ctx) | - | - | conf (decompile 0x08030674 e 0x080211C8; literal 0x080306A0 = 0x03000440) | CONFLITO: HA4 (linhas 130, 135) diz "fi+0x86 (timer)" - errado; HANDOFF está certo |
 | +0x087 | 1 | bot ativo (atacante, passo 0x100) | vários Fight_DispatchOnSubstateAA_* (HA4 M_0/O_0/Q_0/S_0/T_0, FL4 0x0801C1C0) | FL4 (0x0801C4E0), HA4, HA6, MD, DM, AS2 (~84 refs) | conf (HANDOFF/DM) | eixo principal |
 | +0x088 | 1 | bot alvo (F+0x88) | HA4 (N_0, O_0, P_0, Q_0, R_0), HA6 (AC_08, AC_0E, AD_08, AE_08), DM | HA4 (+0xBD do bot alvo), HA6, HA3 | provável | |
@@ -127,8 +127,8 @@ Pendente: E+0xC8C e E+0xC92 precisam de decompile (Event_DispatchContinuation 0x
 
 ## Conflitos (resumo)
 - +0x086: HA4 atribui ao fi; decompile confirma timer em 0x03000440+0x86. Corrigir HA4.
-- +0x028 x +0x02A: dois registros de 8 B com índices diferentes (+0x8A x +0x89). Não resolvido.
-- +0x0A8: três sentidos (índice de roteiro, técnica, base de tabela).
+- +0x028 x +0x02A: um só array de registros de 8 B em fi+0x2A + 8*k (FI2, Conflito 2). Resolvido (antes: dois arrays).
+- +0x0A8: resolvido (FI2, Conflito 3): é o id da técnica/roteiro (0..59), índice de gTechniqueActionScriptPtrTable 0x083C6CA8.
 - +0x0D2: HN7 mapeia peça; decompile usa valor direto.
 - +0x0D6: dano (HN7 e decompile) x metade da armadura (AS2).
 - +0x051: BT usa como valor de SFX.

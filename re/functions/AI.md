@@ -96,9 +96,9 @@ Fight_TrySelectMedaforceAction(bot, slot, random):                           # 0
     retorna 1 (nada escolhido)
 ```
 
-Observação: em `Fight_IsMedaforceSelectionBlockedByBattleState` 0x08015648 o argumento é o `r0` que sobra
-(chamador não passa nada); bloqueia quando `arg >= 3` e `byte[DAT_0801565C+DAT_08015660] > 2`. O sentido real
-não fechou (provável; ler quem grava o byte de estado).
+Observação: em `Fight_IsMedaforceSelectionBlockedByBattleState` (= `Fight_IsMedaforceBlockedByChapter`, AI2) 0x08015648 o argumento é o `r0` que sobra
+(chamador não passa nada); bloqueia quando bot >= 3 (`arg >= 3`) e gCurrentChapter (byte 0x03005FDF = `DAT_0801565C+DAT_08015660`) <= 2 (AI2; antes dizia > 2). O sentido real
+fechado (AI2, confirmado na ROM e no decompile).
 
 ## 4. Escolha de alvo (confirmado, decompile de 0x080322C8)
 

@@ -1139,28 +1139,28 @@ address,name,kind,count,comment
 0x08020B4C,Fight_DispatchOnSubstateAA_R_08_LoadPartIconsAndJump,func_thumb,,Simon/Rokusho: Advance one repair tick and spawn the accompanying repair effects/particles. Uses different display/effect paths depending on side orientation before advancing the action sequence. (antes: Fight_AdvanceRepairTickWithEffects)
 0x08020CEC,Fight_DispatchOnSubstateAA_R_12_JumpTo02,func_thumb,,Despachante R idx 0x12; escreve 2 em +0xAA; confirmado
 0x08020CFC,Fight_DispatchOnSubstateAA_S,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x08020D24,Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart,func_thumb,,Despachante S idx 0x00; penalidade + modo fi+0x51 pelo byte +0x49 da peca; proximo 0x04; confirmado
+0x08020D24,Fight_DispatchOnSubstateAA_S_00_00_PenaltyComputeModeCopyPart,func_thumb,,Despachante S idx 0x00; penalidade + modo fi+0x51 pelo byte +0x49 da peca; proximo 0x04; confirmado (antes: Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart)
 0x08020DF8,Fight_DispatchOnSubstateAA_S_04_LoadGfxAndSfx29,func_thumb,,[HA4] Despachante S idx 0x04; graficos + sprite do alvo; SFX 0x29; ->0x05 (confirmado). Mesmo endereco nos despachantes AB..AU T U X Y
 0x08020EDC,Fight_DispatchOnSubstateAA_S_05_StepTargetSpriteAnim,func_thumb,,Despachante S idx 0x05; passo de animacao do sprite (080353CC); proximo 0x06; confirmado
 0x08020FB8,Fight_DispatchOnSubstateAA_S_06_LoadGfxAndSlots,func_thumb,,[HA4] Despachante S idx 0x06; graficos + slot 0x21; ->0x07 (confirmado)
 0x08021000,Fight_DispatchOnSubstateAA_S_07_WaitSlotAnim,func_thumb,,[HA4] Despachante S idx 0x07; espera anim slot 0x21; ->0x08 (confirmado)
-0x08021038,Fight_DispatchOnSubstateAA_S_08_LoadGfxByMode,func_thumb,,[HA4] Despachante S idx 0x08; graficos por modo fi+0x51; timer 0x3C; ->0x09 (confirmado)
-0x080211C8,Fight_DispatchOnSubstateAA_S_09_StepSpriteByteTimerByMode,func_thumb,,Despachante S idx 0x09; byte do sprite +8 ate 0x40; timer 1 (modo 3) ou 0x3C; proximo 0x0A; confirmado
-0x0802121C,Fight_DispatchOnSubstateAA_S_0A_TimerThenBranchByMode,func_thumb,,[HA4] Despachante S idx 0x0A; timer; modo 3 ->0x20; senao ->0x0B (confirmado)
-0x080212A0,Fight_DispatchOnSubstateAA_S_0B_StepSpriteUntil10,func_thumb,,Despachante S idx 0x0B; move sprite 1 px ate byte 0x10; proximo 0x0C; confirmado
-0x08021300,Fight_DispatchOnSubstateAA_S_0C_CheckPartThenBranch,func_thumb,,Simon/Rokusho (antes: Fight_EnsureMirroredSupportSummaryMatchesCurrentAction)
-0x08021370,Fight_DispatchOnSubstateAA_S_0D_StepSpriteUntil10BranchMode,func_thumb,,"Despachante S idx 0x0D; move ate byte 0x10; modo 2 -> 0x14, senao 0x0E; confirmado"
-0x080213E4,Fight_DispatchOnSubstateAA_S_0E_CountdownClearSlots,func_thumb,,[HA4] Despachante S idx 0x0E; contagem -8 ate 8; Tile_ClearSlots; ->0x0F (confirmado)
-0x08021418,Fight_DispatchOnSubstateAA_S_0F_RecordDamageAndJump,func_thumb,,"Simon/Rokusho: Accumulate per-action-slot result stats in fight_information. For a new action slot, add full total_ros and (accumulated_damage + attacker reserved_D5 bonus); for a repeated slot, add half total_ros and half (accumulated_damage + attacker reserved_D5 bonus). Also stores a use-count path for one special action class. This appears to drive battle result/stat summaries rather than the live damage formula itself. (antes: Fight_AccumulateActionResultStatsByActionSlot)"
-0x08021564,Fight_DispatchOnSubstateAA_S_10_SetMsgByMode,func_thumb,,Despachante S idx 0x10; msg 0x1E..0x21 pelo modo; proximo 0x11; confirmado
-0x080215C8,Fight_DispatchOnSubstateAA_S_14_SetFlagsSfx40,func_thumb,,[HA4] Despachante S idx 0x14; grava estado 4; 0x870=0; SFX 0x40; ->0x15 (confirmado)
-0x08021608,Fight_DispatchOnSubstateAA_S_15_StepCoordDownClearSlot,func_thumb,,Despachante S idx 0x15; passo de coordenada (080352EC) e limpa slot 0x21; proximo 0x16; confirmado
-0x08021638,Fight_DispatchOnSubstateAA_S_20_WaitSlotAnimTimer,func_thumb,,[HA4] Despachante S idx 0x20; espera anim slot 0x21; timer; ->0x21 (confirmado)
-0x0802167C,Fight_DispatchOnSubstateAA_S_21_SetupSpritesAfterTimer,func_thumb,,[HA4] Despachante S idx 0x21; timer; tiles + sprites; ->0x22 (confirmado)
-0x08021734,Fight_DispatchOnSubstateAA_S_22_StepThreeSlotsTowardTarget,func_thumb,,Despachante S idx 0x22; slots 0x21..0x23 chegam (080355F0); proximo 0x23; confirmado
-0x08021774,Fight_DispatchOnSubstateAA_S_23_CheckFlagOrJump25,func_thumb,,Simon/Rokusho (antes: Fight_EnsureMirroredSupportSummaryMatchesTeamForm)
-0x080217D8,Fight_DispatchOnSubstateAA_S_24_MoveSpriteStep,func_thumb,,[HA4] Despachante S idx 0x24; passo de sprite +-8; sempre ->0x25 (confirmado)
-0x0802186C,Fight_DispatchOnSubstateAA_S_25_ClearSlotsAfterMove,func_thumb,,"[HA4] Despachante S idx 0x25; move ate 8; Tile_ClearSlots 0x21,3; ->0x26 (confirmado)"
+0x08021038,Fight_DispatchOnSubstateAA_S_08_08_LoadGfxByMode,func_thumb,,[HA4] Despachante S idx 0x08; graficos por modo fi+0x51; timer 0x3C; ->0x09 (confirmado) (antes: Fight_DispatchOnSubstateAA_S_08_LoadGfxByMode)
+0x080211C8,Fight_DispatchOnSubstateAA_S_09_09_StepSpriteByteTimerByMode,func_thumb,,Despachante S idx 0x09; byte do sprite +8 ate 0x40; timer 1 (modo 3) ou 0x3C; proximo 0x0A; confirmado (antes: Fight_DispatchOnSubstateAA_S_09_StepSpriteByteTimerByMode)
+0x0802121C,Fight_DispatchOnSubstateAA_S_0A_0A_TimerThenBranchByMode,func_thumb,,[HA4] Despachante S idx 0x0A; timer; modo 3 ->0x20; senao ->0x0B (confirmado) (antes: Fight_DispatchOnSubstateAA_S_0A_TimerThenBranchByMode)
+0x080212A0,Fight_DispatchOnSubstateAA_S_0B_0B_StepSpriteUntil10,func_thumb,,Despachante S idx 0x0B; move sprite 1 px ate byte 0x10; proximo 0x0C; confirmado (antes: Fight_DispatchOnSubstateAA_S_0B_StepSpriteUntil10)
+0x08021300,Fight_DispatchOnSubstateAA_S_0C_0C_CheckPartThenBranch,func_thumb,,Simon/Rokusho (antes: Fight_EnsureMirroredSupportSummaryMatchesCurrentAction) (antes: Fight_DispatchOnSubstateAA_S_0C_CheckPartThenBranch)
+0x08021370,Fight_DispatchOnSubstateAA_S_0D_0D_StepSpriteUntil10BranchMode,func_thumb,,"Despachante S idx 0x0D; move ate byte 0x10; modo 2 -> 0x14, senao 0x0E; confirmado (antes: Fight_DispatchOnSubstateAA_S_0D_StepSpriteUntil10BranchMode)"
+0x080213E4,Fight_DispatchOnSubstateAA_S_0E_0E_CountdownClearSlots,func_thumb,,[HA4] Despachante S idx 0x0E; contagem -8 ate 8; Tile_ClearSlots; ->0x0F (confirmado) (antes: Fight_DispatchOnSubstateAA_S_0E_CountdownClearSlots)
+0x08021418,Fight_DispatchOnSubstateAA_S_26_0F_RecordDamageAndJump,func_thumb,,"Simon/Rokusho: Accumulate per-action-slot result stats in fight_information. For a new action slot, add full total_ros and (accumulated_damage + attacker reserved_D5 bonus); for a repeated slot, add half total_ros and half (accumulated_damage + attacker reserved_D5 bonus). Also stores a use-count path for one special action class. This appears to drive battle result/stat summaries rather than the live damage formula itself. (antes: Fight_AccumulateActionResultStatsByActionSlot) (antes: Fight_DispatchOnSubstateAA_S_0F_RecordDamageAndJump)"
+0x08021564,Fight_DispatchOnSubstateAA_S_27_10_SetMsgByMode,func_thumb,,Despachante S idx 0x10; msg 0x1E..0x21 pelo modo; proximo 0x11; confirmado (antes: Fight_DispatchOnSubstateAA_S_10_SetMsgByMode)
+0x080215C8,Fight_DispatchOnSubstateAA_S_14_14_SetFlagsSfx40,func_thumb,,[HA4] Despachante S idx 0x14; grava estado 4; 0x870=0; SFX 0x40; ->0x15 (confirmado) (antes: Fight_DispatchOnSubstateAA_S_14_SetFlagsSfx40)
+0x08021608,Fight_DispatchOnSubstateAA_S_15_15_StepCoordDownClearSlot,func_thumb,,Despachante S idx 0x15; passo de coordenada (080352EC) e limpa slot 0x21; proximo 0x16; confirmado (antes: Fight_DispatchOnSubstateAA_S_15_StepCoordDownClearSlot)
+0x08021638,Fight_DispatchOnSubstateAA_S_20_20_WaitSlotAnimTimer,func_thumb,,[HA4] Despachante S idx 0x20; espera anim slot 0x21; timer; ->0x21 (confirmado) (antes: Fight_DispatchOnSubstateAA_S_20_WaitSlotAnimTimer)
+0x0802167C,Fight_DispatchOnSubstateAA_S_21_21_SetupSpritesAfterTimer,func_thumb,,[HA4] Despachante S idx 0x21; timer; tiles + sprites; ->0x22 (confirmado) (antes: Fight_DispatchOnSubstateAA_S_21_SetupSpritesAfterTimer)
+0x08021734,Fight_DispatchOnSubstateAA_S_22_22_StepThreeSlotsTowardTarget,func_thumb,,Despachante S idx 0x22; slots 0x21..0x23 chegam (080355F0); proximo 0x23; confirmado (antes: Fight_DispatchOnSubstateAA_S_22_StepThreeSlotsTowardTarget)
+0x08021774,Fight_DispatchOnSubstateAA_S_23_23_CheckFlagOrJump25,func_thumb,,Simon/Rokusho (antes: Fight_EnsureMirroredSupportSummaryMatchesTeamForm) (antes: Fight_DispatchOnSubstateAA_S_23_CheckFlagOrJump25)
+0x080217D8,Fight_DispatchOnSubstateAA_S_24_24_MoveSpriteStep,func_thumb,,[HA4] Despachante S idx 0x24; passo de sprite +-8; sempre ->0x25 (confirmado) (antes: Fight_DispatchOnSubstateAA_S_24_MoveSpriteStep)
+0x0802186C,Fight_DispatchOnSubstateAA_S_25_25_ClearSlotsAfterMove,func_thumb,,"[HA4] Despachante S idx 0x25; move ate 8; Tile_ClearSlots 0x21,3; ->0x26 (confirmado) (antes: Fight_DispatchOnSubstateAA_S_25_ClearSlotsAfterMove)"
 0x080218BC,Fight_DispatchOnSubstateAA_T,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x080218E4,Fight_DispatchOnSubstateAA_T_00_PenaltyRecordFlagBranch,func_thumb,,Despachante T idx 0x00; penalidade + flag do registro de dano (fi+0x2A); msg 0x24 ou 0x04; confirmado
 0x08021950,Fight_DispatchOnSubstateAA_T_08_LoadGfxAndSlot,func_thumb,,[HA4] Despachante T idx 0x08; graficos + slot (record +0xE4); ->0x09 (confirmado)
@@ -1174,40 +1174,40 @@ address,name,kind,count,comment
 0x08021DAC,Fight_DispatchOnSubstateAA_T_11_ClearRecordSlot,func_thumb,,"T 0x11: zera 4 bytes de registro 8 bytes em 0x03001800+0x2A, indice +0x89 (confirmado; era sem funcao no Ghidra)"
 0x08021DEC,Fight_DispatchOnSubstateAA_T_12_SetStepCode25,func_thumb,,T 0x12: grava +0xA6 = 0x25 e +0xAA++ (confirmado; significado de 0x25 chute; era sem funcao)
 0x08021E04,Fight_DispatchOnSubstateAA_U,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x08021E2C,Fight_DispatchOnSubstateAA_U_00_CheckRosAndTargetStatus,func_thumb,,[HN1] Handler U idx 0x00; ver HN1.md
-0x08021EA0,Fight_DispatchOnSubstateAA_U_08_LoadEffectGfxOnTarget,func_thumb,,[HN1] Handler U idx 0x08; ver HN1.md
-0x08021F90,Fight_DispatchOnSubstateAA_U_0A_ScrollBgAndStepSlotToTarget,func_thumb,,[HN1] Handler U idx 0x0A; ver HN1.md
-0x08022010,Fight_DispatchOnSubstateAA_U_0B_ClearTargetStatus,func_thumb,,[HN1] Handler U idx 0x0B; ver HN1.md
-0x080220A0,Fight_DispatchOnSubstateAA_U_0C_RunAnimAndClearTargetSlot,func_thumb,,[HN1] Handler U idx 0x0C; ver HN1.md
-0x0802213C,Fight_DispatchOnSubstateAA_U_0D_SetMessage23,func_thumb,,[HN1] Handler U idx 0x0D; ver HN1.md
+0x08021E2C,Fight_DispatchOnSubstateAA_U_00_00_CheckRosAndTargetStatus,func_thumb,,[HN1] Handler U idx 0x00; ver HN1.md (antes: Fight_DispatchOnSubstateAA_U_00_CheckRosAndTargetStatus)
+0x08021EA0,Fight_DispatchOnSubstateAA_U_08_08_LoadEffectGfxOnTarget,func_thumb,,[HN1] Handler U idx 0x08; ver HN1.md (antes: Fight_DispatchOnSubstateAA_U_08_LoadEffectGfxOnTarget)
+0x08021F90,Fight_DispatchOnSubstateAA_U_0A_0A_ScrollBgAndStepSlotToTarget,func_thumb,,[HN1] Handler U idx 0x0A; ver HN1.md (antes: Fight_DispatchOnSubstateAA_U_0A_ScrollBgAndStepSlotToTarget)
+0x08022010,Fight_DispatchOnSubstateAA_U_0B_0B_ClearTargetStatus,func_thumb,,[HN1] Handler U idx 0x0B; ver HN1.md (antes: Fight_DispatchOnSubstateAA_U_0B_ClearTargetStatus)
+0x080220A0,Fight_DispatchOnSubstateAA_U_0C_0C_RunAnimAndClearTargetSlot,func_thumb,,[HN1] Handler U idx 0x0C; ver HN1.md (antes: Fight_DispatchOnSubstateAA_U_0C_RunAnimAndClearTargetSlot)
+0x0802213C,Fight_DispatchOnSubstateAA_U_0D_0D_SetMessage23,func_thumb,,[HN1] Handler U idx 0x0D; ver HN1.md (antes: Fight_DispatchOnSubstateAA_U_0D_SetMessage23)
 0x08022154,Fight_DispatchOnSubstateAA_V,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x0802217C,Fight_DispatchOnSubstateAA_V_00_CheckRos,func_thumb,,[HN1] Handler V idx 0x00; ver HN1.md
-0x080221C8,Fight_DispatchOnSubstateAA_V_04_SpawnFourOrbsOnActor,func_thumb,,[HN1] Handler V idx 0x04; ver HN1.md
-0x080222A8,Fight_DispatchOnSubstateAA_V_05_SpiralOrbsAroundActor,func_thumb,,[HN1] Handler V idx 0x05; ver HN1.md
-0x08022380,Fight_DispatchOnSubstateAA_V_06_ToggleFlag58Message,func_thumb,,[HN1] Handler V idx 0x06; ver HN1.md
+0x0802217C,Fight_DispatchOnSubstateAA_V_00_00_CheckRos,func_thumb,,[HN1] Handler V idx 0x00; ver HN1.md (antes: Fight_DispatchOnSubstateAA_V_00_CheckRos)
+0x080221C8,Fight_DispatchOnSubstateAA_V_04_04_SpawnFourOrbsOnActor,func_thumb,,[HN1] Handler V idx 0x04; ver HN1.md (antes: Fight_DispatchOnSubstateAA_V_04_SpawnFourOrbsOnActor)
+0x080222A8,Fight_DispatchOnSubstateAA_V_05_05_SpiralOrbsAroundActor,func_thumb,,[HN1] Handler V idx 0x05; ver HN1.md (antes: Fight_DispatchOnSubstateAA_V_05_SpiralOrbsAroundActor)
+0x08022380,Fight_DispatchOnSubstateAA_V_06_06_ToggleFlag58Message,func_thumb,,[HN1] Handler V idx 0x06; ver HN1.md (antes: Fight_DispatchOnSubstateAA_V_06_ToggleFlag58Message)
 0x080223BC,Fight_DispatchOnSubstateAA_W,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x080223E4,Fight_DispatchOnSubstateAA_W_00_CheckRosPickVariant,func_thumb,,[HN1] Handler W idx 0x00; ver HN1.md
-0x08022480,Fight_DispatchOnSubstateAA_W_04_LoadVariantGfxTwoSprites,func_thumb,,[HN1] Handler W idx 0x04; ver HN1.md
-0x08022648,Fight_DispatchOnSubstateAA_W_05_MoveSpritesInward,func_thumb,,[HN1] Handler W idx 0x05; ver HN1.md
-0x08022708,Fight_DispatchOnSubstateAA_W_06_RunAnimUntilDone,func_thumb,,[HN1] Handler W idx 0x06; ver HN1.md
-0x08022748,Fight_DispatchOnSubstateAA_W_07_ApplyActorChargeBuff,func_thumb,,"Simon/Rokusho: Enable a stored defender reaction source from the current part. Sets reaction_status_flags bit 0x08, caches the current part technique/effect id into reaction_source_action_kind, and stores the current damage scratch as the reaction threshold. (antes: Fight_EnableStoredReactionSourceFromCurrentPart)"
-0x080227C0,Fight_DispatchOnSubstateAA_W_08_SetMessage1B,func_thumb,,[HN1] Handler W idx 0x08; ver HN1.md
+0x080223E4,Fight_DispatchOnSubstateAA_W_00_00_CheckRosPickVariant,func_thumb,,[HN1] Handler W idx 0x00; ver HN1.md (antes: Fight_DispatchOnSubstateAA_W_00_CheckRosPickVariant)
+0x08022480,Fight_DispatchOnSubstateAA_W_04_04_LoadVariantGfxTwoSprites,func_thumb,,[HN1] Handler W idx 0x04; ver HN1.md (antes: Fight_DispatchOnSubstateAA_W_04_LoadVariantGfxTwoSprites)
+0x08022648,Fight_DispatchOnSubstateAA_W_05_05_MoveSpritesInward,func_thumb,,[HN1] Handler W idx 0x05; ver HN1.md (antes: Fight_DispatchOnSubstateAA_W_05_MoveSpritesInward)
+0x08022708,Fight_DispatchOnSubstateAA_W_06_06_RunAnimUntilDone,func_thumb,,[HN1] Handler W idx 0x06; ver HN1.md (antes: Fight_DispatchOnSubstateAA_W_06_RunAnimUntilDone)
+0x08022748,Fight_DispatchOnSubstateAA_W_07_07_ApplyActorChargeBuff,func_thumb,,"Simon/Rokusho: Enable a stored defender reaction source from the current part. Sets reaction_status_flags bit 0x08, caches the current part technique/effect id into reaction_source_action_kind, and stores the current damage scratch as the reaction threshold. (antes: Fight_EnableStoredReactionSourceFromCurrentPart) (antes: Fight_DispatchOnSubstateAA_W_07_ApplyActorChargeBuff)"
+0x080227C0,Fight_DispatchOnSubstateAA_W_08_08_SetMessage1B,func_thumb,,[HN1] Handler W idx 0x08; ver HN1.md (antes: Fight_DispatchOnSubstateAA_W_08_SetMessage1B)
 0x080227D8,Fight_DispatchOnSubstateAA_X,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x08022800,Fight_DispatchOnSubstateAA_X_00_CheckRosAndTargetTech16,func_thumb,,[HN1] Handler X idx 0x00; ver HN1.md
-0x08022870,Fight_DispatchOnSubstateAA_X_08_LoadEffectGfxOnTarget,func_thumb,,[HN1] Handler X idx 0x08; ver HN1.md
+0x08022800,Fight_DispatchOnSubstateAA_X_00_00_CheckRosAndTargetTech16,func_thumb,,[HN1] Handler X idx 0x00; ver HN1.md (antes: Fight_DispatchOnSubstateAA_X_00_CheckRosAndTargetTech16)
+0x08022870,Fight_DispatchOnSubstateAA_X_08_08_LoadEffectGfxOnTarget,func_thumb,,[HN1] Handler X idx 0x08; ver HN1.md (antes: Fight_DispatchOnSubstateAA_X_08_LoadEffectGfxOnTarget)
 0x08022938,Fight_DispatchOnSubstateAA_X_09_WaitAnimOrTimer,func_thumb,,[HN1] Handler X idx 0x09; ver HN1.md
 0x08022990,Fight_DispatchOnSubstateAA_X_0A_StepSlotToTarget,func_thumb,,[HN1] Handler X idx 0x0A; ver HN1.md
 0x080229C0,Fight_DispatchOnSubstateAA_X_0B_SlideOutAndClearSlot,func_thumb,,[HN1] Handler X idx 0x0B; ver HN1.md
-0x08022A04,Fight_DispatchOnSubstateAA_X_0C_SpawnRingSpritesOnTarget,func_thumb,,[HN1] Handler X idx 0x0C; ver HN1.md
+0x08022A04,Fight_DispatchOnSubstateAA_X_0C_0C_SpawnRingSpritesOnTarget,func_thumb,,[HN1] Handler X idx 0x0C; ver HN1.md (antes: Fight_DispatchOnSubstateAA_X_0C_SpawnRingSpritesOnTarget)
 0x08022B40,Fight_DispatchOnSubstateAA_X_0D_ExpandRingAndClear,func_thumb,,[HN1] Handler X idx 0x0D; ver HN1.md
-0x08022C28,Fight_DispatchOnSubstateAA_X_0E_InflictStatus1F,func_thumb,,Simon/Rokusho: Commit the secondary AutoRecover effect (0x1F). This seeds the secondary long-lived effect block from total_ros and accumulated_damage. (antes: Fight_CommitAutoRecoverSecondaryEffect)
-0x08022C90,Fight_DispatchOnSubstateAA_X_0F_SetMessage29,func_thumb,,[HN1] Handler X idx 0x0F; ver HN1.md
+0x08022C28,Fight_DispatchOnSubstateAA_X_0E_0E_InflictStatus1F,func_thumb,,Simon/Rokusho: Commit the secondary AutoRecover effect (0x1F). This seeds the secondary long-lived effect block from total_ros and accumulated_damage. (antes: Fight_CommitAutoRecoverSecondaryEffect) (antes: Fight_DispatchOnSubstateAA_X_0E_InflictStatus1F)
+0x08022C90,Fight_DispatchOnSubstateAA_X_0F_0F_SetMessage29,func_thumb,,[HN1] Handler X idx 0x0F; ver HN1.md (antes: Fight_DispatchOnSubstateAA_X_0F_SetMessage29)
 0x08022CA8,Fight_DispatchOnSubstateAA_Y,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x08022CD0,Fight_DispatchOnSubstateAA_Y_00_CheckRosAndTargetDown,func_thumb,,[HN1] Handler Y idx 0x00; ver HN1.md
-0x08022D4C,Fight_DispatchOnSubstateAA_Y_08_LoadEffectGfxOnTarget,func_thumb,,[HN1] Handler Y idx 0x08; ver HN1.md
-0x08022E14,Fight_DispatchOnSubstateAA_Y_0C_SpawnRingSpritesOnTarget,func_thumb,,[HN1] Handler Y idx 0x0C; ver HN1.md
-0x08022F50,Fight_DispatchOnSubstateAA_Y_0E_ReviveTarget,func_thumb,,"Simon/Rokusho: Commit a direct repair action to the target head slot. Clamps the repair amount, writes the resulting armor value back to the live battle state, marks the part runtime as active, and refreshes dependent battle state. (antes: Fight_CommitDirectRepairToHead)"
-0x08022FB4,Fight_DispatchOnSubstateAA_Y_0F_PlayEffectSetMessage28,func_thumb,,[HN1] Handler Y idx 0x0F; ver HN1.md
+0x08022CD0,Fight_DispatchOnSubstateAA_Y_00_00_CheckRosAndTargetDown,func_thumb,,[HN1] Handler Y idx 0x00; ver HN1.md (antes: Fight_DispatchOnSubstateAA_Y_00_CheckRosAndTargetDown)
+0x08022D4C,Fight_DispatchOnSubstateAA_Y_08_08_LoadEffectGfxOnTarget,func_thumb,,[HN1] Handler Y idx 0x08; ver HN1.md (antes: Fight_DispatchOnSubstateAA_Y_08_LoadEffectGfxOnTarget)
+0x08022E14,Fight_DispatchOnSubstateAA_Y_0C_0C_SpawnRingSpritesOnTarget,func_thumb,,[HN1] Handler Y idx 0x0C; ver HN1.md (antes: Fight_DispatchOnSubstateAA_Y_0C_SpawnRingSpritesOnTarget)
+0x08022F50,Fight_DispatchOnSubstateAA_Y_0E_0E_ReviveTarget,func_thumb,,"Simon/Rokusho: Commit a direct repair action to the target head slot. Clamps the repair amount, writes the resulting armor value back to the live battle state, marks the part runtime as active, and refreshes dependent battle state. (antes: Fight_CommitDirectRepairToHead) (antes: Fight_DispatchOnSubstateAA_Y_0E_ReviveTarget)"
+0x08022FB4,Fight_DispatchOnSubstateAA_Y_0F_0F_PlayEffectSetMessage28,func_thumb,,[HN1] Handler Y idx 0x0F; ver HN1.md (antes: Fight_DispatchOnSubstateAA_Y_0F_PlayEffectSetMessage28)
 0x08022FF0,Fight_DispatchOnSubstateAA_Z,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08023018,Fight_DispatchOnSubstateAA_Z_00_CheckRos,func_thumb,,[HN1] Handler Z idx 0x00; ver HN1.md
 0x0802306C,Fight_DispatchOnSubstateAA_Z_04_LoadEffectGfx,func_thumb,,[HN1] Handler Z idx 0x04; ver HN1.md
@@ -1241,21 +1241,21 @@ address,name,kind,count,comment
 0x08023A48,Fight_DispatchOnSubstateAA_AB_CopyDisplayValues,func_thumb,,Simon/Rokusho: Commit the secondary Boost Charge effect (0x26). This seeds the secondary long-lived effect block from total_ros and accumulated_damage. (antes: Fight_CommitBoostChargeSecondaryEffect)
 0x08023AB0,Fight_DispatchOnSubstateAA_AB_0F_SetStepCode2C,func_thumb,,AB 0x0F: grava 0x2C em +0xA6 (confirmado; sentido chute)
 0x08023AC8,Fight_DispatchOnSubstateAA_AC,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x08023AF0,Fight_DispatchOnSubstateAA_AC_00_RosCalcPart,func_thumb,,AC 0x00: ROS sem checagem de custo (confirmado)
-0x08023B44,Fight_DispatchOnSubstateAA_AC_08_LoadGfxSetupSlot21,func_thumb,,"AC 0x08: gfx, slot 0x21 (reg +0x114), contador 0x45 (confirmado)"
-0x08023C18,Fight_DispatchOnSubstateAA_AC_SetupSlot46Sfx4E,func_thumb,,[HA6] HA6 AC/0B: +0x84=0x46; slot registro +0x118; sfx 0x4E; +0xAA. Confirmado.
-0x08023C50,Fight_DispatchOnSubstateAA_AC_0E_SetBotFlagBF,func_thumb,,AC 0x0E: escreve 1 em flag do bot2 +0xBF (confirmado; sentido chute)
-0x08023C78,Fight_DispatchOnSubstateAA_AC_0F_SetStepCode2B,func_thumb,,AC 0x0F: grava 0x2B em +0xA6 (confirmado; sentido chute)
+0x08023AF0,Fight_DispatchOnSubstateAA_AC_00_00_RosCalcPart,func_thumb,,AC 0x00: ROS sem checagem de custo (confirmado) (antes: Fight_DispatchOnSubstateAA_AC_00_RosCalcPart)
+0x08023B44,Fight_DispatchOnSubstateAA_AC_08_08_LoadGfxSetupSlot21,func_thumb,,"AC 0x08: gfx, slot 0x21 (reg +0x114), contador 0x45 (confirmado) (antes: Fight_DispatchOnSubstateAA_AC_08_LoadGfxSetupSlot21)"
+0x08023C18,Fight_DispatchOnSubstateAA_AC_0B_SetupSlot46Sfx4E,func_thumb,,[HA6] HA6 AC/0B: +0x84=0x46; slot registro +0x118; sfx 0x4E; +0xAA. Confirmado. (antes: Fight_DispatchOnSubstateAA_AC_SetupSlot46Sfx4E)
+0x08023C50,Fight_DispatchOnSubstateAA_AC_0E_0E_SetBotFlagBF,func_thumb,,AC 0x0E: escreve 1 em flag do bot2 +0xBF (confirmado; sentido chute) (antes: Fight_DispatchOnSubstateAA_AC_0E_SetBotFlagBF)
+0x08023C78,Fight_DispatchOnSubstateAA_AC_0F_0F_SetStepCode2B,func_thumb,,AC 0x0F: grava 0x2B em +0xA6 (confirmado; sentido chute) (antes: Fight_DispatchOnSubstateAA_AC_0F_SetStepCode2B)
 0x08023C90,Fight_DispatchOnSubstateAA_AD,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
-0x08023CB8,Fight_DispatchOnSubstateAA_AD_00_RosCalcPartNoTech16,func_thumb,,AD 0x00: ROS; testa tecnica 16 nos dois bots (confirmado)
-0x08023D44,Fight_DispatchOnSubstateAA_AD_08_LoadGfxSetupSlot21,func_thumb,,"AD 0x08: gfx, slot 0x21 (reg +0x108), contador 0x42 (confirmado)"
-0x08023E18,Fight_DispatchOnSubstateAA_AD_SetupSlot44Sfx4E,func_thumb,,[HA6] HA6 AD/0B: +0x84=0x44; slot registro +0x110; sfx 0x4E; +0xAA. Confirmado.
-0x08023E50,Fight_DispatchOnSubstateAA_AD_StepFadeBytes8Clear,func_thumb,,[HA6] HA6 AD/0D: como AB/0D com Slot_ClearAttrMask; +0xAA. Confirmado.
-0x08023E94,Fight_DispatchOnSubstateAA_AD_LoadGfxSetupSlot,func_thumb,,[HA6] HA6 AD/0E: gfx + flags 0x8000 + slot 0x42 + timer 0x3C; +0xAA. Confirmado.
-0x08023F48,Fight_DispatchOnSubstateAA_AD_0F_FadeSlotBytesStep8,func_thumb,,"AD 0x0F: fade de bytes 0x848/0x849 de 8, teste 0x40 (confirmado)"
-0x08023F80,Fight_DispatchOnSubstateAA_AD_SetupSlot43Sfx4E,func_thumb,,[HA6] HA6 AD/12: +0x84=0x43; slot registro +0x10C; sfx 0x4E; +0xAA. Confirmado.
-0x08023FB8,Fight_DispatchOnSubstateAA_AD_WriteBotDisplayRows,func_thumb,,Simon/Rokusho: Commit the Drain Charge effect (0x29) into both the primary pending-effect block and the secondary long-lived effect block. (antes: Fight_CommitDrainChargePrimaryAndSecondaryEffects)
-0x08024078,Fight_DispatchOnSubstateAA_AD_16_SetStepCode2D,func_thumb,,AD 0x16: grava 0x2D em +0xA6 (confirmado; sentido chute)
+0x08023CB8,Fight_DispatchOnSubstateAA_AD_00_00_RosCalcPartNoTech16,func_thumb,,AD 0x00: ROS; testa tecnica 16 nos dois bots (confirmado) (antes: Fight_DispatchOnSubstateAA_AD_00_RosCalcPartNoTech16)
+0x08023D44,Fight_DispatchOnSubstateAA_AD_08_08_LoadGfxSetupSlot21,func_thumb,,"AD 0x08: gfx, slot 0x21 (reg +0x108), contador 0x42 (confirmado) (antes: Fight_DispatchOnSubstateAA_AD_08_LoadGfxSetupSlot21)"
+0x08023E18,Fight_DispatchOnSubstateAA_AD_0B_SetupSlot44Sfx4E,func_thumb,,[HA6] HA6 AD/0B: +0x84=0x44; slot registro +0x110; sfx 0x4E; +0xAA. Confirmado. (antes: Fight_DispatchOnSubstateAA_AD_SetupSlot44Sfx4E)
+0x08023E50,Fight_DispatchOnSubstateAA_AD_0D_StepFadeBytes8Clear,func_thumb,,[HA6] HA6 AD/0D: como AB/0D com Slot_ClearAttrMask; +0xAA. Confirmado. (antes: Fight_DispatchOnSubstateAA_AD_StepFadeBytes8Clear)
+0x08023E94,Fight_DispatchOnSubstateAA_AD_0E_LoadGfxSetupSlot,func_thumb,,[HA6] HA6 AD/0E: gfx + flags 0x8000 + slot 0x42 + timer 0x3C; +0xAA. Confirmado. (antes: Fight_DispatchOnSubstateAA_AD_LoadGfxSetupSlot)
+0x08023F48,Fight_DispatchOnSubstateAA_AD_0F_0F_FadeSlotBytesStep8,func_thumb,,"AD 0x0F: fade de bytes 0x848/0x849 de 8, teste 0x40 (confirmado) (antes: Fight_DispatchOnSubstateAA_AD_0F_FadeSlotBytesStep8)"
+0x08023F80,Fight_DispatchOnSubstateAA_AD_12_SetupSlot43Sfx4E,func_thumb,,[HA6] HA6 AD/12: +0x84=0x43; slot registro +0x10C; sfx 0x4E; +0xAA. Confirmado. (antes: Fight_DispatchOnSubstateAA_AD_SetupSlot43Sfx4E)
+0x08023FB8,Fight_DispatchOnSubstateAA_AD_15_WriteBotDisplayRows,func_thumb,,Simon/Rokusho: Commit the Drain Charge effect (0x29) into both the primary pending-effect block and the secondary long-lived effect block. (antes: Fight_CommitDrainChargePrimaryAndSecondaryEffects) (antes: Fight_DispatchOnSubstateAA_AD_WriteBotDisplayRows)
+0x08024078,Fight_DispatchOnSubstateAA_AD_16_16_SetStepCode2D,func_thumb,,AD 0x16: grava 0x2D em +0xA6 (confirmado; sentido chute) (antes: Fight_DispatchOnSubstateAA_AD_16_SetStepCode2D)
 0x08024090,Fight_DispatchOnSubstateAA_AE,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x080240B8,Fight_DispatchOnSubstateAA_AE_00_RosCalcPart,func_thumb,,AE 0x00: igual AA 0x00 (confirmado)
 0x0802410C,Fight_DispatchOnSubstateAA_AE_08_LoadGfxSetupSlot21,func_thumb,,"AE 0x08: gfx, slot 0x21, flag 0x1000 se +0xF8 bit0 (confirmado)"
@@ -1626,7 +1626,7 @@ address,name,kind,count,comment
 0x080305E0,ActionFamily_StatusCheckFamily_Handler,func_thumb,,Simon/Rokusho
 0x08030608,ActionFamily_TrapFamily_Handler,func_thumb,,Simon/Rokusho
 0x08030624,ActionFamily_HealChange_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Heal Change. Waits on either a button press or a countdown, clears the temporary object slot when done, and advances the action state."
-0x08030674,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[HN5] indice 0x0E de 19 despachantes: espera +86 ou avanco rapido (confirmado)
+0x08030674,Fight_DispatchOnSubstateAA_U_09_WaitTimerOrSkip,func_thumb,,[HN5] indice 0x0E de 19 despachantes: espera +86 ou avanco rapido (confirmado) (antes: Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip)
 0x080306B8,ActionFamily_Change_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Change. Waits for either a confirm-button press or a countdown, then clears all active temporary object slots in the tracked range and advances the action state."
 0x08030780,Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer,func_thumb,,[HN6] AG 0x09: slot 0x21 +0x18 +-0x40/frame (&0x3FF); timer 0x03000440+0x86 (A pula); +0xAA++ (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_ScrollSlotWaitTimer)
 0x0803080C,Fight_DispatchOnSubstateAA_Shared_SetDone,func_thumb,,"[HN6] terminal compartilhado (48 tabelas, J 0x04, AG 0x03): +0xB5 = 1 (confirmado; renomeado no Ghidra)"

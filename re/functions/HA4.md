@@ -126,13 +126,13 @@ Coluna "Próximo" = valor escrito em +0xAA ao sair (+1 quando não há outro val
 - Próximo: 0x09. Confiança: confirmado (decompile).
 
 ## 0x080211C8 S 0x09 -> Fight_DispatchOnSubstateAA_S_09_StepSpriteByteTimerByMode
-- Passo: soma 8 a um byte de atributo do sprite por frame (DAT_080211F4 + DAT_080211F8; provável gObjectSlots +0x848). Quando o byte chega a 0x40: se fi+0x51 == 3, timer +0x86 = 1; senão timer = 0x3C. Avança.
-- Lê/escreve: fi+0x51; escreve o byte do sprite, fi+0x86 (timer), fi+0xAA.
+- Passo: soma 8 a um byte de atributo do sprite por frame (DAT_080211F4 + DAT_080211F8; provável gObjectSlots +0x848). Quando o byte chega a 0x40: se fi+0x51 == 3, timer 0x03000440+0x86 = 1; senão = 0x3C (ctx, não fi; FI2). Avança.
+- Lê/escreve: fi+0x51; escreve o byte do sprite, timer 0x03000440+0x86 (ctx, não fi+0x86; FI/FI2), fi+0xAA.
 - Próximo: 0x0A (+1). Confiança: confirmado (decompile). Endereço exato do byte: provável.
 
 ## 0x0802121C S 0x0A -> Fight_DispatchOnSubstateAA_S_0A_TimerThenBranchByMode
-- Passo: conta o timer (+0x86); quando zera, se modo (fi+0x51) < 3 zera um byte e vai para 0x0B; se modo == 3 toca SFX 0x52 e vai para 0x20.
-- Lê/escreve: lê fi+0x51, fi+0x86, fi+0x89; escreve fi+0x86 e +0xAA.
+- Passo: conta o timer (ctx 0x03000440+0x86, não fi+0x86; FI2); quando zera, se modo (fi+0x51) < 3 zera um byte e vai para 0x0B; se modo == 3 toca SFX 0x52 e vai para 0x20.
+- Lê/escreve: lê fi+0x51, fi+0x89 e o timer 0x03000440+0x86 (ctx, não fi+0x86; FI2); escreve o timer 0x03000440+0x86 e +0xAA.
 - Próximo: 0x0B ou 0x20. Confiança: confirmado (decompile).
 
 ## 0x080212A0 S 0x0B -> Fight_DispatchOnSubstateAA_S_0B_StepSpriteUntil10
@@ -179,7 +179,7 @@ Coluna "Próximo" = valor escrito em +0xAA ao sair (+1 quando não há outro val
 - Próximo: 0x21. Confiança: confirmado (decompile).
 
 ## 0x0802167C S 0x21 -> Fight_DispatchOnSubstateAA_S_21_SetupSpritesAfterTimer
-- Passo: conta o timer (+0x86); ao zerar, copia tiles (FUN_0803F63C) e posiciona sprites (0x58, 0x40, 0x28; x 0x88/0x68 pela flag de tela).
+- Passo: conta o timer (ctx 0x03000440+0x86, não fi+0x86; FI2); ao zerar, copia tiles (FUN_0803F63C) e posiciona sprites (0x58, 0x40, 0x28; x 0x88/0x68 pela flag de tela).
 - Próximo: 0x22. Confiança: confirmado (decompile).
 
 ## 0x08021734 S 0x22 -> Fight_DispatchOnSubstateAA_S_22_StepThreeSlotsTowardTarget

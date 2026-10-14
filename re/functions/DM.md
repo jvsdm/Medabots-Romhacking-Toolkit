@@ -103,7 +103,7 @@ script = ptr_table[0x083C6CA8][F.A8]             # ponteiro do roteiro (u32 por 
 op  = script[F.BC]                                # byte no cursor (u16 em F+0xBC)
 F.BC = F.BC + 1 + LEN[op]                         # LEN = tabela de bytes em 0x083C6EB8 indexada pelo opcode
 ```
-A tabela `0x083C6EB8` tem os comprimentos (opcodes sem argumento = 0; ex.: 0x13 e 0x03 = 1 byte de argumento; confirmado só para os
+A tabela `0x083C6EB8` tem os comprimentos (opcodes sem argumento = 0; LEN real (corrigido por AS3a/AS3b/TQ2): LEN[0x02]=1, LEN[0x03]=4, LEN[0x13]=0, demais 0; antes dizia 0x13 e 0x03 = 1 byte. Confirmado só para os
 bytes lidos). O cursor avança o tamanho do opcode lido, não um passo fixo.
 
 ## 6. Acerto, esquiva, crítico e defesa de perna (confirmado; era pendência 6 e 7)

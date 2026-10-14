@@ -65,8 +65,8 @@ FF n chama `tabela[n]` para n < 5 (tabela de 5 ponteiros em 0x08040884, lida na 
 - n = 0, 2, 3 -> 0x08040898: se o byte de flag do ctx (ldrb [ctx+0]) & máscara for != 0, chama o SFX 0x0D
   (`snd_sfx_request(0xd)`, mesmo som de confirmação do FC) e avança o estado de ctx (ctx+4++). Confirmado: SFX 0x0D
   e estado++; a condição exata (máscara do flag) fica provável.
-- n = 1, 4 -> 0x080408BC: avança ctx+4 de OUTRO objeto (registrador r3, provavelmente o ctx de outro motor),
-  sem SFX. Provável; alvo não identificado.
+- n = 1, 4 -> 0x080408BC: avança ctx+4++ do MESMO ctx 0x03000440 (MS2; antes dizia outro objeto),
+  sem SFX (MS2).
 - n >= 5: estado++ do ctx (padrão).
 Conclusão: o byte n do FF escolhe a ação de fechamento (som + avanço / avanço de outro objeto). Os valores vistos
 nas mensagens (0, 2, 3, 4) caem nas duas famílias; o FF não é "fim" literal: é o comando de término da mensagem.
@@ -96,5 +96,5 @@ seção 2 deste arquivo. Mensagens de combate: END com `FA 50` antes; de sistema
 - Corrigir `re/symbols/mtbe.csv` linha 0x080678D4 (Text_TypewriterRowStep: "NÃO é impressora de mensagem; linha de menu/anel") e
   o comentário de 0x0803FC20 (é o carregador da moldura, consistente com H1).
 - Fechar o miolo do estado 2 (cópia de 0x500 após liga BG0) e o alvo do wrapper 0x0807CCxx do estado 4.
-- Fechar a máscara do flag do FF 0/2/3 e o objeto de FF 1/4 (ctx de outro motor).
+- Fechar a máscara do flag do FF 0/2/3 (FF 1/4 já resolvido: mesmo ctx 0x03000440, MS2).
 - Não testado no emulador (fora desta tarefa).

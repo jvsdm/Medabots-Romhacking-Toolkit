@@ -96,8 +96,8 @@ Tabela de campos com endereço absoluto (confirmado nos HE1/HC1; "provável" ond
   byte E+0xC89 (StateByte) e o u16 E+0xC8A (cursor), não zera cursor em outro lugar.
 - Gatilho de frente (`Map_CheckFacingEventTriggerAhead`) também grava 1 em 0x03005815 (= 0x03002C30+0xBE5, mesmo byte
   que o End escreve com 1): "modo evento" (provável; nome a confirmar no emulador).
-- Carga das entradas do mapa: `Map_LoadEntitySpawnsForCurrentMap` 0x08051416 (confirmado): lê ponteiro por mapa
-  na tabela de ponteiros (literal 0x08483234 com xref confirmado; índice pelo byte de mapa, provável). Cada
+- Carga das entradas do mapa: `Map_LoadEntitySpawnsForCurrentMap` (entrada = 0x080513C8; 0x08051416 é o miolo) (EX): lê ponteiro por mapa
+  na tabela de ponteiros (literal 0x08483234 com xref confirmado; índice = gCurrentMapId 0x03005FDE, u32[0x08483234 + 4*id] (EX)). Cada
   registro de 8 B é percorrido até 0xFF: +0 x, +1 y, +2 u16 (kind<<12 | id&0xFFF), +4 byte (nibble alto = variante de
   sprite, baixo = direção), +5 grupo (0..31; laço externo de 0x20 grupos), +6 u16 máscara de condição. Só entra se
   bit da máscara bate (deslocamento do literal 0x08051484) e o id NÃO está com flag marcada (EventFlag_IsSetByPackedId):
@@ -114,7 +114,7 @@ Tabela de campos com endereço absoluto (confirmado nos HE1/HC1; "provável" ond
 1. Extrator: id = u16 & 0xFFF (kind = nibble alto). Confere com `Map_LoadEntitySpawns` e os gatilhos (0xFFF). OK.
 2. Extrator: 8 bytes/registro, 0xFF termina. Confere. `people_event_ids` lê só o id (+2) e ignora +4 (sprite/direção),
    +5 (grupo) e +6 (máscara de condição) que o jogo usa para filtrar. Efeito no PC: não verificado (checar pc/game).
-3. Extrator: lê um ponteiro por mapa (0x483234). O jogo percorre um laço de 0x20 grupos e pega ponteiros por tabela
+3. Extrator: lê um ponteiro por mapa (0x483234). O jogo percorre um laço de 0x20 grupos e relê a mesma lista (NÃO há tabela de ponteiros por grupo; EX)
    (literais 0x08051478/0x0805147C, índice por byte: provavelmente o mapa atual, não resolvido). Se a tabela tiver
    mais de um ponteiro por mapa, o extrator perde pessoas. Confirmar no ROM.
 4. Extrator: `event_start` usa bank_tbl = ptr_tbl + count*2 com count = (bank_rel-0x4000)/2. Código do jogo: bank =

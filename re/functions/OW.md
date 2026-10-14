@@ -31,7 +31,7 @@ Base IWRAM `0x030057E0` (literais de `Overworld_*`/`Map_*`). Endereço = base + 
 | 0x0300643F | +0xC5F | gEncounterSuppressB | != 0 = sem encontro | confirmado |
 | 0x03006447 | +0xC67 | gLoadFacingSource | lido no load para `Overworld_SetPlayerFacingAndRefreshFollower` (facing inicial) | provável |
 | 0x03003815 | slot 0x2F +0x25 | gPlayerLoadFlag | recebe 1 no load (`Map_LoadCurrentSceneResources`) | provável |
-| 0x03006D3A | (DAT 0x03006D38+2) | gWalkSpeedMul | multiplicador do passo (`Map_GetScaledStepDelta`) | provável (corrida) |
+| 0x03006D3A | (DAT 0x03006D38+2) | índice na tabela de velocidade 0x083D2A40 (não multiplicador; OW2) | usado em `Map_GetScaledStepDelta` | conf (OW2) |
 | 0x03002B64 | — | gKeysHeld | palavra de teclas lida pelo `Overworld_ProcessDirectionInput` | confirmado (literal) |
 | 0x03002C30 | — | gObjectSlots | 128 slots × 0x40 B (todos os objetos do mapa) | confirmado |
 | 0x030037F0 | slot 0x2F | gPlayerObject | objeto do jogador = slot 0x2F (`Map_SetObjectAnimationVariant(0x2F, facing)`) | confirmado no código |
@@ -59,7 +59,7 @@ Velocidade: `Map_GetScaledStepDelta(slot)` 0x08051940 = `T[obj+0x2A] × m`, onde
   2. `Map_FindWarpTriggerAtTile(x, y)`: warp → som via tabela (+3 do bloco) e `Overworld_ResetAndStartScreenTransitionEffect` (transição de tela);
   3. senão, se o objeto não é o tipo 1 e `Overworld_ShouldTriggerRandomEncounter` devolve 1 → `Overworld_BuildEncounterNpcSnapshot` 0x080505FC e `GameState_StartFlowByCommand(0x21, 0)` (entra na batalha).
 - Câmera: move com o jogador (`Map_AddCameraScrollX/Y`) só quando o jogador passa do centro da tela (x ≥ 0x80 px; limite direito = largura do mapa − 0xF0) e com o scroll na borda inicial 0. Lógica por eixo em `Overworld_WalkStepByDirection`. Provável para mapas maiores que a tela.
-- Colisão de TILE: `Overworld_CheckStepAllowed` 0x08057D80, parâmetro = kind 0..3, devolve 0 = pode, 1..6 = negado:
+- Colisão de TILE (CORREÇÃO OW2: `Overworld_CheckStepAllowed` 0x08057D80 é do menu de 4 linhas, não da colisão; texto abaixo é histórico): `Overworld_CheckStepAllowed` 0x08057D80, parâmetro = kind 0..3, devolve 0 = pode, 1..6 = negado:
   - kind 0: exige item 0x12, conjunto de peças 0x55 e um byte em `gStepKindFlags`;
   - kind 1: item 0x18, bit 0x10 == 0;
   - kind 2: item 0x19 e conjunto 0x0B; `gMapArea[gCurrentMapId] == 0x0A` nega (passo negado; ver §4);
@@ -97,9 +97,9 @@ Ordem de troca: warp → transição (`Overworld_StartScreenTransitionEffect` 0x
 ## 7. Pendente
 
 - `gMapEncounters` +0/+1 (quem consome a flag de área e o que é +1 além de +0x38 da luta).
-- Índices da tabela de velocidade 0x083D2A40 (+0x2A do objeto) e o byte 0x03006D3A (corrida).
+- Índices da tabela de velocidade 0x083D2A40 (+0x2A do objeto) e o byte 0x03006D3A (índice da mesma tabela, não multiplicador; OW2).
 - Tradução do nibble de D-pad para combinações diagonais/opostas (3, 7, 11..15).
-- Quem chama `Overworld_CheckStepAllowed` com kind 0..3 (objetos de mapa; W4).
+- Quem chama `Overworld_CheckStepAllowed`: resolvido (OW2, FL7): é a tela do menu de 4 linhas, não objetos de mapa.
 - Quem grava o id de mapa antes da troca de mapa (warp).
 - Câmera: `Map_CenterCameraForSmallMaps` 0x080528F8 e `Map_ClampCameraToLoadedMap` 0x08052AA4 não decompilados nesta rodada.
 - Ghidra: nenhum rename feito; a função de `Overworld_CheckMovementCollision` (0x08052CC0) não testa tile e sim a borda do mapa; o nome atual serve, mas o comentário do `mtbe.csv` deve ser corrigido (W2 dizia o contrário).
