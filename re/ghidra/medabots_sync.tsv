@@ -1359,7 +1359,7 @@ F	0x080336DC	Fight_ValidateActionRequiresEnemyPartSpeciality
 F	0x08033754	Fight_ValidateEnemyHasPartWithSpeciality23
 F	0x080337CC	Fight_ValidateAllyHasTechnique4Part
 F	0x08033840	Fight_RunActionScriptLoop
-F	0x080338DC	ActionScript_Op01_pendente
+F	0x080338DC	ActionScript_Op01_EndSetsSceneAndGs
 F	0x080338F4	Fight_WaitForActionScriptByteMatch
 F	0x08033974	Fight_WaitForActionScriptChoiceByteMatch
 F	0x080339F4	ActionScript_Op04_pendente
@@ -1393,43 +1393,43 @@ F	0x08034708	ActionScript_Op42_RollPartValueAndEffect
 F	0x08034728	ActionScript_Op43_SumSideField4
 F	0x0803476C	ActionScript_Op44_SideSpritesAP
 F	0x080347AC	ActionScript_Op45_IncrementUsageCounter
-F	0x080347BC	ActionScript_Op46_SumPartDamageOfTargetBot
+F	0x080347BC	ActionScript_Op46_SumArmorMaxMinusCur
 F	0x080347F8	ActionScript_Op47_SideSpritesCopyTarget
 F	0x080348D0	ActionScript_Op48_SideSpritesAQ
-F	0x08034910	ActionScript_Op49_HalfArmorOfActiveBot
+F	0x08034910	ActionScript_Op49_HalfArmorSelfBot
 F	0x0803496C	ActionScript_Op4A_AllySideLoop
 F	0x080349D8	ActionScript_Op4B_FindBotWithPartAndPickPart
-F	0x08034A68	ActionScript_Op4C_CopyPartArmorToEC
+F	0x08034A68	ActionScript_Op4C_ArmorOfTargetPart
 F	0x08034AA0	Fight_RollDamageFromTwoDice
-F	0x08034AF4	ActionScript_Op4E_FindActiveBotWithGroupAndPickPart
+F	0x08034AF4	ActionScript_Op4E_FindBotGroupRandom
 F	0x08034B68	ActionScript_Op4F_FindActiveBotWithGroup
 F	0x08034BA0	ActionScript_Op50_CallAR
-F	0x08034BBC	ActionScript_Op51_CallAS
-F	0x08034BD8	ActionScript_Op52_CallAT
-F	0x08034BF4	ActionScript_Op53_CallAU
-F	0x08034C10	ActionScript_Op54_CallAV
-F	0x08034C2C	ActionScript_Op55_CallAW
-F	0x08034C48	ActionScript_Op56_CallAX
-F	0x08034C64	ActionScript_Op57_CallAY
-F	0x08034C80	ActionScript_Op58_CallAZ
-F	0x08034C9C	ActionScript_Op59_CallBA
-F	0x08034CB8	ActionScript_Op5A_CallBB
-F	0x08034CD4	ActionScript_Op5B_CallBC
-F	0x08034CF0	ActionScript_Op5C_CallBD
-F	0x08034D0C	ActionScript_Op5D_CallBE
-F	0x08034D28	ActionScript_Op5E_CallBF
-F	0x08034D44	ActionScript_Op5F_CallBG
-F	0x08034D60	ActionScript_Op60_CallBH
-F	0x08034D7C	ActionScript_Op61_CallBI
-F	0x08034D98	ActionScript_Op62_CallBJ
-F	0x08034DB4	ActionScript_Op63_CallBK
-F	0x08034DD0	ActionScript_Op64_CallBL
-F	0x08034DEC	ActionScript_Op65_CallBM
-F	0x08034E08	ActionScript_Op66_CallBN
-F	0x08034E24	ActionScript_Op67_CallBO
-F	0x08034E40	ActionScript_Op68_CallBP
-F	0x08034E5C	ActionScript_Op69_CallBQ
-F	0x08034E78	ActionScript_Op6A_CallBR
+F	0x08034BBC	ActionScript_Op51_StateByTechniqueSelf
+F	0x08034BD8	ActionScript_Op52_TeamSupportBonus
+F	0x08034BF4	ActionScript_Op53_ReactionMarkSelf
+F	0x08034C10	ActionScript_Op54_StateAllOpponents
+F	0x08034C2C	ActionScript_Op55_TeamProtectStatus
+F	0x08034C48	ActionScript_Op56_TeamHeal
+F	0x08034C64	ActionScript_Op57_TeamRepairArmor
+F	0x08034C80	ActionScript_Op58_TeamRestoreParts
+F	0x08034C9C	ActionScript_Op59_TeamGauge
+F	0x08034CB8	ActionScript_Op5A_TechniqueNoDamage
+F	0x08034CD4	ActionScript_Op5B_pendente
+F	0x08034CF0	ActionScript_Op5C_pendente
+F	0x08034D0C	ActionScript_Op5D_pendente
+F	0x08034D28	ActionScript_Op5E_pendente
+F	0x08034D44	ActionScript_Op5F_pendente
+F	0x08034D60	ActionScript_Op60_pendente
+F	0x08034D7C	ActionScript_Op61_pendente
+F	0x08034D98	ActionScript_Op62_pendente
+F	0x08034DB4	ActionScript_Op63_pendente
+F	0x08034DD0	ActionScript_Op64_pendente
+F	0x08034DEC	ActionScript_Op65_pendente
+F	0x08034E08	ActionScript_Op66_pendente
+F	0x08034E24	ActionScript_Op67_pendente
+F	0x08034E40	ActionScript_Op68_pendente
+F	0x08034E5C	ActionScript_Op69_pendente
+F	0x08034E78	ActionScript_Op6A_BR
 F	0x08034E94	Fight_LookupActionScriptByte
 F	0x08034EB8	Fight_ReadActionScriptInlineArgs
 F	0x08034F08	Fight_AdvanceActionScriptCursor
@@ -1486,6 +1486,7 @@ F	0x08035F20	FightPreview_UpdateDualLayerSideSprites
 F	0x08036120	FightPreview_LoadDisplayedPartIdsForSide
 F	0x080361A8	FightPreview_ResetSequenceStepFlags
 F	0x080361C4	FightPreview_AdvanceLeftSideSequenceStep
+F	0x080361F6	FightPreview_AdvanceLeftSideSequenceStep_080361F6
 F	0x08036218	FightPreview_AdvanceRightSideSequenceStep
 F	0x08036270	Fight_IncrementActionUsageCounter_08036270
 F	0x0803628C	Fight_AddMedaforceChargeFromAction
@@ -1928,6 +1929,7 @@ F	0x08048864	Map_InitializeObjectRenderSlot
 F	0x08048888	Map_ResetObjectRenderSlot
 F	0x080488AC	Map_CountDecimalDigits
 F	0x080488E8	Map_FormatDecimalDigits
+F	0x08048960	KeyItem_CanUseHere
 F	0x08048B70	Fixed_Mul88
 F	0x08048BA0	Fixed_ReciprocalQ16
 F	0x08048BB8	Map_ResetAffineScaleBlock
@@ -2403,7 +2405,9 @@ L	0x0805D3AC	KeyItemBag_Case_Id12
 L	0x0805D3C0	KeyItemBag_Case_Id13
 L	0x0805D3D4	KeyItemBag_Case_Id19
 L	0x0805D3E8	KeyItemBag_Case_Id39
+L	0x0805D3FC	KeyItemBag_Case_Id40
 L	0x0805D410	KeyItemBag_Case_Default
+L	0x0805D418	KeyItemBag_CommonTail
 F	0x0805D4A0	Slot_ActivateCursor
 F	0x0805D4E0	StateTable_WaitSubThenAdvance
 F	0x0805D4FC	Gfx_FadeOutThenClear
@@ -3056,6 +3060,7 @@ L	0x083C4B90	gTextStatusStrings
 L	0x083C6744	gTextGameMessages
 L	0x083C6A04	gTechniqueScriptStream_Generic
 L	0x083C6CA8	gTechniqueActionScriptPtrTable
+L	0x083C6EB8	gActionScriptArgLenTable
 L	0x083CAD78	gMoveStyle
 L	0x083CE164	FightPreview_SceneRowPointerTable
 L	0x083CE374	ObjectScript_ArgCountTable
@@ -3108,9 +3113,9 @@ L	0x0847E388	get_item_text
 L	0x0847E644	gMapMusic
 L	0x08483234	gMapEntityPtrTable
 L	0x08483594	gMainState2MenuTable
-L	0x084835A4	ScreenFrameTable_Entry0
+L	0x084835A4	KeyItemBag_MenuTable4
 L	0x08483614	SAVE_HANDLER_InitScreen
-L	0x08483634	StateTable_CB50
+L	0x08483634	KeyItemBag_SubStateTable
 L	0x08483688	SAVE_HANDLER_StepThenFlashOp
 L	0x084836B4	SAVE_SIGNATURE_ROM
 L	0x084836C5	SAVE_ERASE_HEADER_ROM
@@ -3285,4 +3290,13 @@ C	0x080344D0
 C	0x080344EC
 C	0x08034508
 C	0x0803D538
+C	0x080479A0
+C	0x08050CF4
+C	0x08050D08
+C	0x08050D40
+C	0x08050D72
+C	0x08050E6C
+C	0x08050F2A
+C	0x08050F38
+C	0x08050F40
 C	0x0807C92C

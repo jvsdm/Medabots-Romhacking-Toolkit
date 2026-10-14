@@ -1,0 +1,11 @@
+# Enderecos de codigo sem funcao propria no Ghidra (miolo de KeyItemBag_ListInputStep 0x0805CFB4; o Ghidra nao recupera a jump table 0x0805D2C2)
+0x0805D36C	miolo id 0 (zera byte, GS=0x0B)	label
+0x0805D384	miolo id 1 (E+0xC5C=3)	label
+0x0805D398	miolo id 5 (E+0xC5C=4)	label
+0x0805D3AC	miolo id 12 (E+0xC5C=5)	label
+0x0805D3C0	miolo id 13 (E+0xC5C=8)	label
+0x0805D3D4	miolo id 19 (E+0xC5C=6)	label
+0x0805D3E8	miolo id 39 (E+0xC5C=7)	label
+0x0805D3FC	miolo id 40 (E+0xC5C=0x0D)	label
+0x0805D410	miolo default (MainState_RequestModeTransition(4))	label
+0x0805D418	cauda comum (ctx+0x84=0, GS=0x0D)	label

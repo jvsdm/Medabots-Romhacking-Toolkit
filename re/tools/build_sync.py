@@ -149,7 +149,7 @@ def main():
             continue
         for line in open(p, encoding="utf-8"):
             tok = re.split(r"[ \t,]+", line.strip())[0]
-            if tok.lower().startswith("0x"):
+            if re.fullmatch(r"0[xX][0-9A-Fa-f]+", tok):  # ignora faixas "0x..0x"
                 key = norm(tok, True)
                 if key not in named_funcs:
                     creates.add(key)
