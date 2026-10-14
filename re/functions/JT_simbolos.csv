@@ -1,0 +1,12 @@
+address,name,kind,comment
+0x0801FBEC,Fight_J02_StepTable,data,"5 ponteiros (thumb sem bit) para os cases 0..4 de J_02; ponteiro em 0x0801FBE8; indexado pelo byte 0x03000579; salto em 0x0801FBDE"
+0x0801FC00,Fight_J02_Step0_SetupDisplayAndAdvance,label,"case 0 de J_02 (tabela 0x0801FBEC); bl 0x0801A788(1); avança seletor 0x03000579"
+0x0801FC78,Fight_J02_Step1_SetupFromBotTable,label,"case 1 de J_02; lê fi+0x38 -> tabela 0x083B2628 (nao decodificada); avança seletor"
+0x0801FCC4,Fight_J02_Step2_CopyBgTiles,label,"case 2 de J_02; 3x CpuFastSet 0x200 -> VRAM 0x0600C800/0x0600D000/0x0600D800; avança seletor"
+0x0801FD10,Fight_J02_Step3_CopyObjSlots,label,"case 3 de J_02; CpuFastSet 0x800 -> gObjectSlots 0x03002C30; avança seletor"
+0x0801FD3C,Fight_J02_Step4_FinishSetCallbackAndAdvance,label,"case 4 de J_02; grava 0x08044101 em 0x030017F0; fi+0xAA += 1; zera seletor"
+0x0801FD70,Fight_J02_ReturnCommon,label,"bx r0 de retorno (pop r0). NAO e alvo de salto; fallback de J_02 para seletor > 4"
+0x0801DADE,Fight_DispatchOnSubstateAA_E_05_ReturnTail,label,"bx r0 = retorno normal (pop r0), nao tabela; ao chegar fi+0xAA += 1 (E05 -> E06)"
+0x0801E08C,Fight_DispatchOnSubstateAA_G_02_ReturnTail,label,"bx r0 = retorno normal (pop r0), nao tabela; etapa 2 faz fi+0xAA += 1 (G02 -> G03)"
+0x0801F28A,Fight_DispatchOnSubstateAA_H_3E_ReturnTail,label,"bx r0 = retorno normal (pop r0), nao tabela; fi+0xAA += 1 (H:3E -> H:3F)"
+0x0802040C,Fight_DispatchOnSubstateAA_L_0B_ReturnTail,label,"bx r0 = retorno normal (pop r0), nao tabela; fi+0xAA += 1 (L:0B -> L:0C)"

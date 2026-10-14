@@ -1,0 +1,5 @@
+0x0801FC00	J:0x02 caso 0 (tabela 0x0801FBEC): setup de display e avança seletor 0x03000579
+0x0801FC78	J:0x02 caso 1 (tabela 0x0801FBEC): carga de gfx por fi+0x38 e avança seletor
+0x0801FCC4	J:0x02 caso 2 (tabela 0x0801FBEC): 3x CpuFastSet de tiles de fundo e avança seletor
+0x0801FD10	J:0x02 caso 3 (tabela 0x0801FBEC): CpuFastSet para gObjectSlots e avança seletor
+0x0801FD3C	J:0x02 caso 4 (tabela 0x0801FBEC): finaliza, callback 0x08044101 em 0x030017F0, fi+0xAA += 1

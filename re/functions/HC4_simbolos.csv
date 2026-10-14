@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x0804F674,Event_Op57_Cont_NoOp,event_handler,continuacao do opcode 0x57; corpo vazio; nunca ativada (setup nao grava estado 1)
+0x0804F678,Event_Op58_Cont_NoOp,event_handler,continuacao do opcode 0x58; corpo vazio; nunca ativada
+0x0804F67C,Event_Op59_Cont_OpenShop,event_handler,subpasso 0 ResetSceneCommandStep; subpasso 1 roda cena 3 com shop id ate != 0 e termina
+0x0804F6C4,Event_Op5A_Cont_NoOp,event_handler,corpo vazio; opcode 0x5A nunca ativa a continuacao
+0x0804F6C8,Event_Op5B_Cont_NoOp,event_handler,corpo vazio; opcode 0x5B e salto, sem estado 1
+0x0804F6CC,Event_Op5C_Cont_NoOp,event_handler,corpo vazio; opcode 0x5C e salto, sem estado 1
+0x0804F6D0,Event_Op5D_Cont_NoOp,event_handler,corpo vazio; opcode 0x5D sincrono
+0x0804F6D4,Event_Op5E_Cont_NoOp,event_handler,corpo vazio; opcode 0x5E sincrono
+0x0804F6D8,Event_Op5F_Cont_NoOp,event_handler,corpo vazio; opcode 0x5F sincrono
+0x0804F6DC,Event_Op62_Cont_NoOp,event_handler,corpo vazio; opcode 0x62 nao ativa a continuacao
+0x0804F6E0,Event_Op63_Cont_ShowEffect,event_handler,subpassos: aguarda UI 0xD/0x16; cria objeto 0x2F com (args0<<4)|args1; espera FUN_0804F188 e reajusta camera/colisao; termina
