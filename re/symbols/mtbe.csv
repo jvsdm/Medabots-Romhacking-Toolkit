@@ -664,6 +664,7 @@ address,name,kind,count,comment
 0x080097E0,PartsGrid_DrawCellLabel,func_thumb,,[R0] rotulo/icone da celula da grade (provavel)
 0x0800988C,Sprite_InitPairA,func_thumb,,[R0] configuracao inicial de par de sprites (provavel)
 0x08009900,Sprite_SetPairSizeB,func_thumb,,[R0] configura sprite com posicao vertical por linha (provavel)
+0x0800994C,Obj_UpdateAttrBit4000ByFlag8,func_thumb,,[FN4] provavel: liga/desliga bit 0x4000 em +0x40 e +0x80 de um objeto conforme flag 0x08 de *DAT_08009974; 4 chamadas em 0800783A/0800786E/08007974/0800799E (antes: FUN_0800994c)
 0x080099A4,PartsGrid_MoveColumnInput,func_thumb,,[R0] navegacao horizontal da grade de partes (provavel)
 0x08009A38,PartsGrid_MoveRowInput,func_thumb,,[R0] navegacao vertical da grade de partes (provavel)
 0x08009AF8,PartsGrid_RefreshCursorSprite,func_thumb,,[R0] sprite de marcacao da celula selecionada (provavel)
@@ -715,6 +716,7 @@ address,name,kind,count,comment
 0x0800B668,PartsGrid_SetupRowSelectSprite,func_thumb,,[R0] sprite de marcacao da linha de opcoes (provavel)
 0x0800B6E8,PartsGrid_CycleOptionRow3,func_thumb,,[R0] ciclo de 3 opcoes com cima/baixo e reposicao do sprite (provavel)
 0x0800B768,PartsGrid_DispatchOptionHandler,func_thumb,,[R0] despacha handler da opcao por tabela; retorna se opcao==3 (provavel)
+0x0800B79C,Obj_StepTableEntry_Flag4000AndCount,func_thumb,,"[FN4] provavel: se estado do registro == 0x1E liga 0x4000 em +0x1C0, senao liga/desliga conforme bit 4; incrementa contador; ptr em 083ACA4C (antes: FUN_0800b79c)"
 0x0800B814,Gfx_SlideFadeStepThenClear,func_thumb,,[FR1] per-frame slide/fade of ctx+0x1C8 by -8 [RV2] provavel (decrementa 2 contadores em -8; ao zerar limpa mascara via Slot_ClearAttrMask e avanca contador)
 0x0800B858,Gfx_BgFillRowAndCount,func_thumb,,preenche faixa BG e incrementa contador; provavel
 0x0800B890,DebugMenu_Dispatch,func_thumb,,menu_list[63]: chama debug_menu_subroutines[gamestate_subroutine] [RV2] confirmado (chama handler indexado por modo via CallViaR0)
@@ -730,20 +732,20 @@ address,name,kind,count,comment
 0x0800C2BC,Debug_ItemCountGrantScreen,func_thumb,,[provavel] quadro do menu de contador: input bits 0x40/0x80 mudam indice 0..2; Inv_Add/SubCount; modo 2 concede itens (cheat? confirmar) (antes: Menu_TickCountEditorAndGrant)
 0x0800C6D8,Dispatch_CallHandlerByMode_A,func_thumb,,wrapper: CallViaR0(tabela[ctx+0x33]) [RV2] confirmado (CallViaR0 em tabela indexada pelo modo +0x33)
 0x0800C6F8,PartsBuild_UpdateStatusPanel,func_thumb,,"[FL10] painel de status da montagem: número 6 dígitos, cria Medabot se pool não cheio (provável)"
-0x0800C7E4,DebugMenu_Option4_Dispatch,func_thumb,,[DB] GH-DB pendente: opcao Item (tabela 0x083ACA80 idx 4); nao e funcao no Ghidra (antes: debug_option4_item_entry)
+0x0800C7E4,DebugMenu_Option4_Dispatch,func_thumb,,[DB] GH-DB pendente: opcao Item (tabela 0x083ACA80 idx 4); nao e funcao no Ghidra (antes: debug_option4_item_entry) [RV2] confirmado (antes: debug_option4_item_entry; CallViaR0 na tabela da opcao 4 pelo indice +0x33)
 0x0800C804,Shop_HandleItemListAndCounts,func_thumb,,tela de loja: cursor 0..2 e contagens; provavel
 0x0800CBA8,Gfx_DispatchStateHandler,func_thumb,,trampolim: tabela indexada por ctx+0x33 (provavel)
 0x0800CBC8,Debug_FaceScreen,func_thumb,,"[provavel] per-frame detail page: 2 text lines, cursor, two 6-digit numbers, portrait (antes: Menu_UpdateDetailPage)"
-0x0800CE70,DebugMenu_Option6_Dispatch,func_thumb,,[DB] GH-DB pendente: opcao Mdlpic (tabela 0x083ACA80 idx 6); nao e funcao no Ghidra (antes: debug_option6_mdlpic_entry)
+0x0800CE70,DebugMenu_Option6_Dispatch,func_thumb,,[DB] GH-DB pendente: opcao Mdlpic (tabela 0x083ACA80 idx 6); nao e funcao no Ghidra (antes: debug_option6_mdlpic_entry) [RV2] confirmado (antes: debug_option6_mdlpic_entry; CallViaR0 na tabela da opcao 6 pelo indice +0x33)
 0x0800CE90,Debug_MdlpicScreen,func_thumb,,tela de selecao com painel e 2 numeros de 6 digitos; provavel (antes: Menu_InfoPanelStep)
 0x0800D168,Dispatch_StateHandlerTable_B,func_thumb,,despacho por byte +0x33 via CallViaR0 (2a tabela); provável
 0x0800D188,Debug_RndTkScreen,func_thumb,,[provavel] rotulo de 8 chars + numero de 6 digitos (Num_FormatDecimal6Glyphs); toggle de byte com mascara 0x30 (antes: Hud_DrawLabelAndDecimal6)
 0x0800D25C,Dispatch_CallHandlerByByte33_b,func_thumb,,duplicata de Dispatch_CallHandlerByByte33 (outro literal); confirmado
 0x0800D27C,Menu_TickSingleCountSelector,func_thumb,,[provavel] versao de uma linha de Menu_TickCountEditorAndGrant; bits 0x10/0x20 mudam indice; botao 1 grava valor
-0x0800D3C4,Dispatch_CallHandlerByMode_B,func_thumb,,wrapper igual ao _A com outra tabela
+0x0800D3C4,Dispatch_CallHandlerByMode_B,func_thumb,,wrapper igual ao _A com outra tabela [RV2] confirmado (CallViaR0 em tabela indexada pelo modo +0x33; igual ao _A)
 0x0800D3E4,PartsBuild_UpdateEditPanel,func_thumb,,"[FL10] irmão do painel de status: seleção de 2 textos, dígitos com volta, sfx/música (provável)"
-0x0800D664,Debug_MotionDispatch,func_thumb,,"[DB] GH-DB RENOMEADA (era FUN_0800d664): opcao Motion; CallViaR0(0x083ACB38[byte 0x03000473]); base idx 30 (k0 clear OAM, k1 FightPreview_BuildLayers, k2 Main, k3 PlayKind)"
-0x0800D684,Menu_ClearObjectAttrsAndAdvance,func_thumb,,"[N1] JT3 idx 30 tabela 0x083ACAC0; ClearObjectAttributeEntries(0,0x80); bloco 0x0800D6A4 +0x39=0, +0x33++"
+0x0800D664,Debug_MotionDispatch,func_thumb,,"[DB] GH-DB RENOMEADA (era FUN_0800d664): opcao Motion; CallViaR0(0x083ACB38[byte 0x03000473]); base idx 30 (k0 clear OAM, k1 FightPreview_BuildLayers, k2 Main, k3 PlayKind) [RV2] confirmado (CallViaR0 em tabela indexada pelo modo +0x33)"
+0x0800D684,Menu_ClearObjectAttrsAndAdvance,func_thumb,,"[N1] JT3 idx 30 tabela 0x083ACAC0; ClearObjectAttributeEntries(0,0x80); bloco 0x0800D6A4 +0x39=0, +0x33++ [RV2] confirmado (limpa 0x80 entradas de OAM"
 0x0800D6A8,FightPreview_BuildLayers,func_thumb,,monta 2 camadas de sprite do preview de luta (provavel)
 0x0800D710,DebugMotion_Main,func_thumb,,"opcao Motion do debug: monta 2 bots (BuildCompositePreviewSpriteLayerWithOffset), START/SELECT trocam o bot (0-121), A avanca [DB] GH-DB confirmado: k2; bot 0..121 em 0x03000479 (START/SELECT, volta a k1); Dir/Esq altera kinds (0x03000475+cursor); A->k3; B limpa OAM e 0x0300137C=1"
 0x0800D90C,DebugMotion_PlayKind,func_thumb,,"toca MotionPlayStep(lado [DB] GH-DB confirmado: k3; MotionPlayStep(lado 0/1, kinds[cursor]) nos 2 bots por frame; B recua 2 estados", gDebugMotionKinds[gDebugMotionCursor]) nos dois bots
@@ -755,7 +757,7 @@ address,name,kind,count,comment
 0x0800DE00,PartsGrid_HandleSelectionInput,func_thumb,,"[FS3] FS3 provavel: entrada A/B da grade, sfx 4/5/6"
 0x0800DEC8,PartDetail_SlideInClearStep,func_thumb,,[FS3] FS3 provavel: entrada com CpuFastSet e blend
 0x0800DF14,PartDetail_SlideInBlendStep,func_thumb,,[FS3] FS3 provavel: entrada ate GpuBlend_TickStep
-0x0800DF4C,PartDetail_InitStateRegisters,func_thumb,,[FS3] FS3 chute: limpa OAM e grava 0/2/0x10 em 3 campos
+0x0800DF4C,PartDetail_InitStateRegisters,func_thumb,,[FS3] FS3 chute: limpa OAM e grava 0/2/0x10 em 3 campos [RV2] confirmado (limpa OAM 0x80 entradas e grava registros de estado 0 / 2 / 0x10)
 0x0800DF78,PartDetail_SlideInPaletteCommitStep,func_thumb,,[FS3] FS3 provavel: entrada que copia paleta ao hardware
 0x0800DFB8,PartDetail_SlideInFadeOutStep,func_thumb,,"[FS3] FS3 provavel: entrada com fade ate passo 9, grava 0x10"
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts. [PS2] [PS2] init da tela de detalhe da peca: GetPartStats(ctx+0x3D,+0x3E,ctx+0xEE), nome/atributo/descricao/stats; ctx+0x42=1; confirmado"
@@ -931,6 +933,7 @@ address,name,kind,count,comment
 0x08012608,Fight_CountBotsBonus16C,func_thumb,,"conta 3 bots nao zero, +8 por bot em ctx+0x16C (provavel)"
 0x0801264C,Fight_AdjustAvgStatBonus,func_thumb,,[provavel] averages of bot byte +5 over two sides; adds bonus short at DAT_080126E8+0x16C
 0x080126EC,Battle_SumBotPartLossScore,func_thumb,,[FR2] provável; soma perdas de partes dos 3 bots para o campo 0x16C da luta (FUN_080126ec)
+0x0801275C,Fight_AddByteTimes5ToXpPool,func_thumb,,"[FN4] confirmado no decompile: fi+0x16C += byte(fi+0x16B)*5; chamada por 080125A2 (XP da luta, ver XP.md) (antes: FUN_0801275c)"
 0x0801277C,Battle_SumPartBytesToCtx16C,func_thumb,,[provavel] soma bytes de 3 entradas (passo 0x100) com flag +0x38 em ctx+0x16C
 0x080127DC,Fight_AwardPartExperience,func_thumb,,[R0a] progressao de nivel das pecas apos a luta (provavel)
 0x08012968,medaforce_list_ptr_literal,label,,[MF] [MF] palavra de literal que aponta para 0x083B7F8C (nao e tabela de bytes)
@@ -978,6 +981,7 @@ address,name,kind,count,comment
 0x08013E84,UpdateSelectedMedabotPreviewScreen_AltEntry_8013e84,label,,[HD2] [HD2] Chamador unico de 0x080183A4 (confirmado por xref) (antes: UpdateSelectedMedabotPreviewScreen)
 0x08013FA8,Fight_SelectScreenFrame,func_thumb,,"[provavel] medabot select/preview frame with GpuBlend fade, sets wait 0x3C"
 0x08014050,Fight_LoadResultSceneStep,func_thumb,,"[FS5] [FS5] i=64; descompacta graficos, fade de som, SFX 0x6e; provavel (nome de resultado e suposicao)"
+0x080140B0,Fight_SceneStep65_TimedSequence,func_thumb,,"[FN4] provavel: maquina de 4 estados em +0x84 (init, contagem por byte +0xE0, espera de 0x3C quadros com ClearObjectAttributeEntries); ptr em 083AD184 = entrada 65 da tabela de cena de batalha 0x083AD080 (antes: FUN_080140b0)"
 0x0801425C,Fight_PlayResultCueStep,func_thumb,,[FS5] [FS5] i=66; toca sinal de resultado por estado; provavel
 0x0801427C,Fight_StepBattleFrame,func_thumb,,loop principal por frame da batalha (timers e bots); provável
 0x08014314,Fight_BotEventQueueStep,func_thumb,,[FS5] [FS5] i=69; fila de eventos do bot; provavel
@@ -1107,6 +1111,8 @@ address,name,kind,count,comment
 0x08017178,Fight_InitKindObjectE,func_thumb,,"[R1] Objeto de tipo em (0x78,0x6C) (par de B); provavel"
 0x080171C0,Fight_InitKindObjectF,func_thumb,,"[R1] Objeto de tipo em (0x6C,0x78) (par de C); provavel"
 0x08017208,Fight_InitKindObjectG,func_thumb,,"[R1] Objeto de tipo em (0x84,0x78) (par de D); provavel"
+0x08017268,Fight_UpdateBotNameLine,func_thumb,,[FN4] provavel: copia nome/medalha por estado (3 B de paleta/texto) e monta linha com Text_LayoutGlyphSprites; chamada por 08013410 e 08017662 (antes: FUN_08017268)
+0x080173B4,Fight_UpdateBotInfoPanel,func_thumb,,[FN4] provavel: param 0 = so texto; param 1 = redesenha painel (Fight_DrawBotInfoPanel 0/1) e texto; 4 chamadores 08013416/08013476/0801359A/08017668 (antes: FUN_080173b4)
 0x080175FC,Fight_UpdatePartKindSelectorB,func_thumb,,"[R1] Mesma maquina de tipo que 0x080169AC, para o outro lado; provavel"
 0x0801767C,Fight_InitKindObjectsForStateB,func_thumb,,[R1] Despacha init dos objetos E/F/G/84 pelo tipo; provavel
 0x08017734,Fight_DrawBotInfoPanel,func_thumb,,[FS6] [FS6] provavel; painel de info do bot
@@ -2687,7 +2693,7 @@ address,name,kind,count,comment
 0x08047B98,GameState_StartFlowByCommand_store_tail,label,,[RW] GH-RW: cauda compartilhada de GameState_StartFlowByCommand (sem nome confirmado; NAO renomeado)
 0x08047BA8,Snd_SfxRequestWrapper,func_thumb,,Simon/Rokusho: Start the map-transition effect selected by the current warp/event transition state. Commonly triggered when a matched MapWarpRecord requests a non-zero transition kind. (antes: Overworld_StartMapTransitionEffect; decisao CF)
 0x08047BB4,Sound_RequestSong,func_thumb,,[R2b] Wrapper de snd_song_request
-0x08047BC0,Snd_RequestFade,func_thumb,,[R2b] Wrapper de snd_fade_request (antes: Sound_RequestFade)
+0x08047BC0,Snd_RequestFade,func_thumb,,[R2b] Wrapper de snd_fade_request (antes: Sound_RequestFade) [RV13] [RV13] confirmado (antes: Sound_RequestFade): wrapper de snd_fade_request
 0x08047BCC,Table_GetWordByIndex_08047bd8,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x08047BD8 [arg]
 0x08047BDC,GetBotName,func_thumb,,gBotNames[bot] [RV13] [RV13] confirmado: retorna gBotNames[bot]
 0x08047BEC,GetPartName,func_thumb,,"GetPartName(kind, bot): gPartNames[bot*4 + kind] [RV13] [RV13] confirmado: retorna gPartNames[bot*4+kind]"
@@ -2851,7 +2857,7 @@ address,name,kind,count,comment
 0x0804C53C,Event_Op33_StartBattle,func_thumb,,"Simon/Rokusho: Primary/setup handler for Start_Battle (opcode 0x33). Reads three inline bytes from the event stream and stores them as current battle id, current battle mode flags, and post-battle mode flags before entering deferred mode. (antes: EventOpcode33_StartBattle_Setup) [HN6] 3 bytes -> E+0xC2A/0xC2F/0xC2E; pendente (confirmado)"
 0x0804C588,Event_Op34_RotateNpc,func_thumb,,Simon/Rokusho (antes: EventOpcode34_RotateNpc) [HN6] 3 bytes; Table64_FindOffsetByKey + Map_SetEventMarkerFacingVariant; imediato (confirmado)
 0x0804C5E4,Event_Op35_SetAllTrackedActorsFacingVariant,func_thumb,,Simon/Rokusho (antes: EventOpcode35_SetTrackedActorsFacingVariant) [HN6] 1 byte; aplica variante nos slots logicos 0..3 ativos; imediato (confirmado)
-0x0804C648,Event_Op36_GetItem,func_thumb,,Simon/Rokusho (antes: EventOpcode36_GetItem_Setup)
+0x0804C648,Event_Op36_GetItem,func_thumb,,"Simon/Rokusho (antes: EventOpcode36_GetItem_Setup) [RV15] confirmado: le 2 bytes (id,qtd), marca slot 0->1 (setup)"
 0x0804C678,Event_Op37_LoseItem,func_thumb,,Simon/Rokusho (antes: EventOpcode37_LoseItem_Setup) [HN6] 2 bytes; qtd 0 -> 1; pendente (confirmado)
 0x0804C6A8,Event_Op38_GetPart,func_thumb,,Simon/Rokusho (antes: EventOpcode38_GetPart_Setup) [HN6] 3 bytes; pendente (confirmado setup)
 0x0804C6C8,Event_Op39_LosePart,func_thumb,,Simon/Rokusho (antes: EventOpcode39_LosePart_Setup) [HN6] 3 bytes; pendente (confirmado setup)

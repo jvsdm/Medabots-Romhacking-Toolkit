@@ -280,6 +280,7 @@ F	0x08009750	PartsGrid_UpdateSelectedPreview
 F	0x080097E0	PartsGrid_DrawCellLabel
 F	0x0800988C	Sprite_InitPairA
 F	0x08009900	Sprite_SetPairSizeB
+F	0x0800994C	Obj_UpdateAttrBit4000ByFlag8
 F	0x080099A4	PartsGrid_MoveColumnInput
 F	0x08009A38	PartsGrid_MoveRowInput
 F	0x08009AF8	PartsGrid_RefreshCursorSprite
@@ -331,6 +332,7 @@ F	0x0800B5E8	PartsGrid_SetupIconAnimSprite
 F	0x0800B668	PartsGrid_SetupRowSelectSprite
 F	0x0800B6E8	PartsGrid_CycleOptionRow3
 F	0x0800B768	PartsGrid_DispatchOptionHandler
+F	0x0800B79C	Obj_StepTableEntry_Flag4000AndCount
 F	0x0800B814	Gfx_SlideFadeStepThenClear
 F	0x0800B858	Gfx_BgFillRowAndCount
 F	0x0800B890	DebugMenu_Dispatch
@@ -547,6 +549,7 @@ F	0x080125B4	Fight_AverageOverActiveBots
 F	0x08012608	Fight_CountBotsBonus16C
 F	0x0801264C	Fight_AdjustAvgStatBonus
 F	0x080126EC	Battle_SumBotPartLossScore
+F	0x0801275C	Fight_AddByteTimes5ToXpPool
 F	0x0801277C	Battle_SumPartBytesToCtx16C
 F	0x080127DC	Fight_AwardPartExperience
 L	0x08012968	medaforce_list_ptr_literal
@@ -594,6 +597,7 @@ F	0x08013E30	UpdateSelectedMedabotPreviewScreen
 L	0x08013E84	UpdateSelectedMedabotPreviewScreen_AltEntry_8013e84
 F	0x08013FA8	Fight_SelectScreenFrame
 F	0x08014050	Fight_LoadResultSceneStep
+F	0x080140B0	Fight_SceneStep65_TimedSequence
 F	0x0801425C	Fight_PlayResultCueStep
 F	0x0801427C	Fight_StepBattleFrame
 F	0x08014314	Fight_BotEventQueueStep
@@ -723,6 +727,8 @@ F	0x08017130	Fight_InitObjectAt84Frame
 F	0x08017178	Fight_InitKindObjectE
 F	0x080171C0	Fight_InitKindObjectF
 F	0x08017208	Fight_InitKindObjectG
+F	0x08017268	Fight_UpdateBotNameLine
+F	0x080173B4	Fight_UpdateBotInfoPanel
 F	0x080175FC	Fight_UpdatePartKindSelectorB
 F	0x0801767C	Fight_InitKindObjectsForStateB
 F	0x08017734	Fight_DrawBotInfoPanel
@@ -3951,7 +3957,6 @@ L	0x087F5500	gTextDump
 C	0x08001278
 C	0x08002574
 C	0x0800275C
-C	0x080140B0
 C	0x08033C10
 C	0x08033CF0
 C	0x08033D00

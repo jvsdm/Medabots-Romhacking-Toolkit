@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x08015358,Fight_SelectActionFromCycleOrPendingOverride,func_thumb,confirmado: se bot+0xC9==';' vai ao fallback; senao tenta ciclo de especialidade e cai no fallback se falhar
+0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,confirmado: switch sobre o tipo de acao do bot (0 nada; 1-3 pecas com bloqueio; 4 acao 0; 5-7 medaforca); retorna 1 se nao escolheu
+0x08015438,Fight_AdvanceSpecialityCycleForActiveBots,func_thumb,confirmado: Ghidra nao decompilou (bytes 30 B5 = push; Thumb; ARM errado no Ghidra); loop nos 6 bots com +0x40 != 0 chamando Fight_AdvanceSpecialityCycleIndex 0x08015414 (antes: Fight_UnknownStep_08015438)
+0x08015464,Fight_SelectFallbackActionFromPriorityList,func_thumb,confirmado: se medidor +0xC1=='P' e bit sorteado tenta medaforca; senao embaralha lista fi+0x64 e escolhe a 1a acao nao bloqueada (ate 4); ou 0
+0x080154E0,Fight_IsPartActionLockedByPendingEffect,func_thumb,confirmado: 1 se bot+0xC9=='+' e bot+0xCA == parte
+0x08015508,Fight_IsHeadActionUnavailable,func_thumb,confirmado: acao 1 (cabeca) indisponivel se bot+0x58==0
+0x08015528,Fight_IsPartActionUnavailable,func_thumb,confirmado: le byte +0x59 do bloco da peca (k-1) e devolve se ==0
+0x08015564,Fight_SelectActionSource,func_thumb,confirmado: grava bot+0xDD=fonte; para fonte 1..3 copia +0x56/+0x57 da peca para bot+0xE0/E1
+0x080155A8,Fight_TrySelectMedaforceAction,func_thumb,confirmado: gates (capitulo; bot+0x58; medidor +0xC1=='P'); slot por nivel (bot+5 >=10; >0x1D; >0x3B); 0 = escolheu
+0x08015648,Fight_IsMedaforceBlockedByChapter,func_thumb,confirmado: bloqueado (1) se bot>=3 e capitulo (0x03005FDF)<=2
+0x08015668,Fight_SelectMedaforceActionSource,func_thumb,confirmado: copia 3 B da medalha (0x083B7F8C[medalha*3]) para scratch e 6 B do descritor (0x083B7E54[id*6]) para bot+0xA8; chama SelectActionSource(k+4)
+0x080156D0,Fight_RandomizePriorityListSlot,func_thumb,confirmado: sorteia linha (rand&0x1F) da tabela gFightPriorityRowTable e copia 4 B para a lista de prioridade
+0x080156F8,Fight_IsPartActionBlocked,func_thumb,confirmado: 1 se efeito pendente; cabeca indisponivel; peca sem ((+0x59)==0) ou validacao (Fight_BeginPartActionValidation) falhar
+0x08015738,Fight_LoadHudTileset,func_thumb,provavel: LoadTilesWithMalias(bloco 0x0E; 3; ...) de tiles de HUD; conteudo nao conferido
+0x08015760,Fight_FillPartTilemapRows,func_thumb,confirmado: preenche tilemap de BG nas linhas 4/7/10 (colunas 2 e 0x1A) por bot; tile normal ou da peca (+0x91)
+0x08015838,Fight_GetDisplayedPartIdsOrBrokenGlyphs,func_thumb,confirmado: grava 4 caracteres por peca (glifo 'x'+id ou glifo de quebrada se +0x59/+0x71/+0x89/+0xA1 == 0)
+0x080158D0,Fight_LoadBotCompositeSpriteTiles,func_thumb,confirmado: obtem ids das pecas e chama LoadCompositeBattleSpriteTiles
+0x080158F8,Fight_RefreshDisplayedPartSpritesForActiveBots,func_thumb,confirmado: para os 6 bots com +0x40 != 0 recarrega tiles das pecas
+0x08015924,Fight_ShouldMirrorReactionIndicatorX,func_thumb,provavel: retorna 1 conforme bit 0x04 de bot+0xBD e lado (bot<3 com bit; bot>=3 sem bit); efeito visual nao confirmado
+0x08015960,Fight_CreateBotCompositeSprites,func_thumb,confirmado: ids das pecas + espelhamento -> CreateCompositeBattleSpriteObjects
+0x080159BC,Fight_CreateAllBotCompositeSprites,func_thumb,confirmado: cria sprites compostos dos 6 bots ativos (x 0x28 p/ bot<3 senao 200; y=(bot%3)*0x18+0x24)
+0x08015A00,Fight_RefreshBotDisplayedPartSprites,func_thumb,confirmado: reescreve 4 sprites de peca do bot e zera 2 entradas de OAM/tilemap auxiliares
+0x08015A90,Fight_LoadBattleBotTilesSet,func_thumb,confirmado: 4 chamadas LoadTilesWithMalias (bloco 0 e 0x0C/0x14) para tiles de bot de batalha
+0x08015AFC,Fight_LoadBattleBotTilesSetExtra,func_thumb,confirmado: 2 chamadas LoadTilesWithMalias extras (blocos 0x0C e 0x14)
+0x08015BA8,Fight_FillSideLabelBandA,func_thumb,confirmado: preenche faixa lateral A (x=1 p/ bot<3; x=0x15 senao) do tilemap
+0x08015BF4,Fight_FillSideLabelBandB,func_thumb,confirmado: igual a BandA com outro tile/ponteiro (faixa B)
+0x08015F24,Fight_DrawBotNameLabel,func_thumb,confirmado: limpa atributos de slot e copia 12 B do nome do bot (tabela por bot+0x81) e monta glifos
+0x08015F78,Fight_SetupAllIndicatorSlots,func_thumb,confirmado: loop dos 6 bots chamando Fight_SetupIndicatorSlot
+0x08016068,Fight_SetupAllIndicatorSlotsAlt,func_thumb,confirmado: loop dos 6 bots chamando Fight_SetupIndicatorSlotAlt
+0x08016138,Fight_StepAllIndicatorSlotAnims,func_thumb,confirmado: loop dos 6 slots chamando Fight_StepIndicatorSlotAnim
+0x08016AD8,Fight_DrawSelectedActionDescription,func_thumb,confirmado: desenha descricao da acao selecionada (texto repetido se 0; senao texto da peca/medaforca/tecnica)
+0x08016C0C,Fight_DrawSelectedActionStatusText,func_thumb,confirmado: desenha texto de status da acao selecionada (indisponivel/medaforca) e oculta se bit 8 de +0x84
+0x08017B24,Fight_DrawSelectCursorObject,func_thumb,confirmado: monta objeto OBJ do cursor de selecao (posicao por tabela indexada pelo cursor +0x3C/+0x3D)
+0x08017D50,Fight_LoadActiveBotIconTiles,func_thumb,confirmado: CpuFastSet dos tiles de icone do bot ativo (32 B)
+0x08017D90,Fight_DrawActiveBotNameSprites,func_thumb,confirmado: limpa atributos e copia 11 B do nome do bot ativo; monta glifos
+0x08018074,SetSelectedMedabotPreviewPartIds,func_thumb,confirmado: grava 4 ids de peca em ctx+0x98..0x9B
+0x08018098,InitializeSelectedMedabotPreviewRenderer,func_thumb,confirmado: zera buffers (0xD0/0x800/0x60); inicia contexto de composicao e monta preview grande
+0x08018180,RenderSelectedMedabotPreviewFrame,func_thumb,confirmado: monta composicao de 4 pecas (28x28) e limpa tela de preview
+0x08018218,RenderSelectedMedabotLargePreviewFrame,func_thumb,confirmado: monta composicao grande de 4 pecas (44x2A; modo 5)
+0x080182D0,AdvanceSelectedMedabotPreviewAnimationSlot,func_thumb,confirmado: avanca quadro de animacao 0..2 do preview (ctx+0x46) e de +0x3D
+0x080183A4,HandleSelectedMedabotPreviewCursorInput,func_thumb,confirmado: navega cursor da grade de bots (3x3 por botoes); toca SFX 2 e redesenha painel
+0x080185A8,Fight_SlotConfirmRedrawAndBlink,func_thumb,confirmado: desenha sprite do slot escolhido; limpa 8 entradas OBJ e ativa blink do painel de info (nao desliza) (antes: Fight_SlotConfirmStartSlide)
+0x08018900,Fight_IncrementActionUsageCounter,func_thumb,confirmado: incrementa contador de uso (+0xB0+k) da acao escolhida (peca 1..3 ou medaforca 5..7; copiando descritor)
+0x08018A18,Fight_ApplyPostBattleMode20PlayerSideState,func_thumb,provavel: se estado&0xF0==0x20 grava 0x50 em 3 bots do lado do jogador (offset +0xC1 = medidor; nao conferido)
+0x08018A54,Fight_PlayResultCueByState,func_thumb,confirmado: toca musica de resultado conforme flag +0x89 e estado (9; tabela; 0xC ou 0xD)
+0x08018C38,Fight_TickSecondaryEffectTimers,func_thumb,confirmado: contador +0x56 (mod 0x20) e timer +0x57; ao zerar chama Fight_TickActiveBotStatusEffects
+0x08018CBC,Fight_TickActiveBotStatusEffects,func_thumb,confirmado: para 6 bots ativos tica efeito secundario de reparo (+0xC4) e efeito pendente (+0xC9)
+0x08018D0C,Fight_TickSecondaryRepairEffectAndEmitResult,func_thumb,confirmado: decrementa +0xC6 em 4; ao terminar zera +0xC4..; enquanto ativo repara pecas danificadas e marca resultado
+0x08018DF4,Fight_TickPendingEffectDurationAndEmitResult,func_thumb,confirmado: decrementa duracao +0xCB em 4; tipos 19/20 (Fire/Melt) aplicam dano as pecas e marcam resultado
+0x08018EE0,Fight_FindDamagedPartIndex1Based,func_thumb,confirmado: 1-based index da 1a peca com atual (+0xD) != 0 e != max (+0x0); 0 se nenhuma
+0x080191A4,Fight_SubBotMeterClampZero,func_thumb,confirmado: bot+0xBB -= valor; piso 0
+0x08018F0C,Fight_AddPartArmorClampOverflow,func_thumb,confirmado: soma valor ao atual da peca (+0x59); limita ao maximo (+0x4C) e devolve excedente
+0x08018F6C,Fight_FindNextPartWithArmorForPendingEffect,func_thumb,confirmado: procura a proxima peca com armadura >1 a partir da peca do efeito pendente (+0xCA) em ciclo; 1-based ou 0
+0x08018FF0,Fight_ApplyPendingEffectDamageToPart,func_thumb,confirmado: subtrai dano da peca com piso 1 (nunca quebra) e devolve o excedente
+0x08019440,Fight_UpdateBotScreenXFromMeterInverted,func_thumb,confirmado: atualiza X do objeto de medidor do bot a partir do medidor invertido (+0xBB); com limites por lado
+0x08019544,Fight_UpdateBotMeterDisplayObject,func_thumb,confirmado: ajusta velocidade da animacao do medidor pelo valor de +0xBB (0x20 - v)>>1 ou move o composto
+0x08019B40,Fight_DrawPartStatusIcon,func_thumb,confirmado: desenha o icone de estado da peca (flags +0xBD 8/0x10; tipos 0x1B/0x1C/0x1D) via slot de animacao ou registro
+0x0801A0D0,Fight_PlaceActiveBotObjects,func_thumb,confirmado: para os 6 bots ativos chama Fight_RefreshBotDisplayedPartSprites na posicao do bot
+0x0801A640,Fight_UpdatePhaseFromCounter,func_thumb,confirmado: fase = (contador fi+0x45 -1) e fi+0x89 = fase/3; fi+0x8A = fase/3 ^1
+0x0801B274,Fight_SelectBotActivePart,func_thumb,confirmado: limpa bit 1 de +0xBD; copia fonte (+0xDD) p/ +0xDE e tipo da peca (+0x49) p/ +0xDF; zera contadores de 4 pecas; limpa flags de peca quebrada; chama Fight_CommitActiveBotPartFields

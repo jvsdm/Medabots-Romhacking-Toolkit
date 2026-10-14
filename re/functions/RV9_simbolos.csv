@@ -1,0 +1,61 @@
+address,name,kind,comment
+0x0803579C,Fight_AccumRosPart,func_thumb,confirmado
+0x08035814,Fight_ApplyVirusBugRosPenalty,func_thumb,confirmado
+0x08035844,Fight_AccumDefenderLevelRosBase,func_thumb,confirmado
+0x08035880,Fight_IsAntiAirAgainstAirTarget,func_thumb,confirmado
+0x080358B8,Fight_IsAntiSeaAgainstSeaTarget,func_thumb,confirmado
+0x080358F0,Fight_AddStrengthenRosBonus,func_thumb,confirmado
+0x08035928,Fight_SetSelectedTargetBot,func_thumb,confirmado
+0x08035944,Fight_SetSelectedTargetPart,func_thumb,confirmado
+0x08035960,Fight_BotHasActivePartWithKind,func_thumb,confirmado
+0x0803598C,Fight_IsOpticClassAction,func_thumb,confirmado
+0x080359D8,Fight_IsBombClassAction,func_thumb,confirmado
+0x08035A24,Fight_IsGravClassAction,func_thumb,confirmado
+0x08035A70,Fight_TargetHasAction34ReactionAffinity,func_thumb,provavel (checa acao 0x34 do atacante + flag bot+0xC0 bit1 do alvo; nome do afinidade e deduzido)
+0x08035AAC,Fight_TargetHasOpticAffinity,func_thumb,confirmado
+0x08035AFC,Fight_TargetHasBombAffinity,func_thumb,confirmado
+0x08035B4C,Fight_TargetHasGravAffinity,func_thumb,confirmado
+0x08035B9C,Fight_AddStrengthenDamageBonus,func_thumb,confirmado
+0x08035BD4,Fight_AddRandomBonusUpTo3,func_thumb,confirmado
+0x08035BFC,Fight_ScaleDamageByPartScalar,func_thumb,confirmado
+0x08035C70,FightPreview_InitializeSideSprites,func_thumb,confirmado
+0x08035DE8,FightPreview_UpdateSingleLayerSideSprites,func_thumb,confirmado
+0x08035F20,FightPreview_UpdateDualLayerSideSprites,func_thumb,confirmado
+0x08036120,FightPreview_LoadDisplayedPartIdsForSide,func_thumb,confirmado
+0x080361A8,FightPreview_ResetSequenceStepFlags,func_thumb,confirmado
+0x080361C4,FightPreview_AdvanceLeftSideSequenceStep,func_thumb,confirmado
+0x08036218,FightPreview_AdvanceRightSideSequenceStep,func_thumb,confirmado
+0x08036270,Fight_IncrementActionUsageCounter,func_thumb,confirmado (Ghidra tem sufixo _08036270; so incrementa contador de uso)
+0x0803628C,Fight_AddMedaforceChargeFromAction,func_thumb,confirmado
+0x080362C4,FightPreview_LoadSideTileSlots,func_thumb,confirmado
+0x08036340,FightPreview_LoadSideTiles,func_thumb,confirmado
+0x08036370,FightPreview_LoadPartIconRows,func_thumb,confirmado
+0x080363E8,FightPreview_DrawPartIconRow8,func_thumb,confirmado
+0x080364A8,FightPreview_DrawPartIconPairs,func_thumb,confirmado
+0x080366DC,FightPreview_AdvanceSlotOffset,func_thumb,confirmado
+0x08036784,FightPreview_SetupFourSprites,func_thumb,confirmado
+0x0803684C,FightPreview_TickSpriteTimers,func_thumb,confirmado
+0x080368C4,FightPreview_BuildSpriteListRow,func_thumb,confirmado
+0x080369C8,FightPreview_BuildSpriteListRowAlt,func_thumb,confirmado
+0x08036AC4,Fight_AdvanceSlotYByWaveTable,func_thumb,confirmado
+0x08036B1C,FightPreview_AdvanceRowSlotsMarked,func_thumb,confirmado
+0x08036B50,FightPreview_AdvanceRowSlots,func_thumb,confirmado
+0x08036B84,Fight_CopyPartArmorToDisplayValues,func_thumb,confirmado
+0x08036BB8,FightPreview_ConsumePartCount,func_thumb,confirmado
+0x08036C20,FightPreview_SetupOneSprite,func_thumb,confirmado
+0x08036CCC,FightPreview_SplitCountByCapacity,func_thumb,confirmado
+0x08036D24,Fight_RepairPartTick,func_thumb,confirmado
+0x08036D64,Fight_IsPartStatusProtected,func_thumb,"troca (antes: FightPreview_IsPartTypeFlagSet): le bot+0xCF por tipo de status (13/14 bit1, 15/16 bit8, 17/18 bit2, 19/20 bit4); usado pela logica de combate, nao pela tela"
+0x08036DE8,FightPreview_AdvanceSlotXDir,func_thumb,confirmado
+0x08036E54,Fight_ClampDisplayValue1To99,func_thumb,confirmado
+0x08036E64,Fight_SetPendingPartStatus,func_thumb,"troca (antes: Fight_ApplyPartStatus): grava so o registro pendente bot+0xC9..0xCC (tipo, duracao, valor); o efeito e aplicado depois"
+0x08036FA0,Fight_ResetBotPartState,func_thumb,confirmado
+0x08036FF8,Fight_SpawnInlineEffectTextObjects,func_thumb,confirmado
+0x080370AC,Fight_TickSlotScriptsUntilDone,func_thumb,confirmado
+0x0803713C,Fight_CommitActionState,func_thumb,confirmado
+0x08037230,FightPreview_IsPartSlotEdge,func_thumb,provavel (retorna 1 se armadura atual = 0 ou = maxima; nome 'edge' e vago)
+0x0803725C,Fight_SpendRos20ReturnsExhausted,func_thumb,confirmado
+0x08037280,Fight_ScaleAttackValueByPartScalar,func_thumb,confirmado
+0x080372D4,FightPreview_SplitCountByMax,func_thumb,confirmado
+0x08037330,FightPreview_SetGroupActive4,func_thumb,confirmado
+0x080373D4,FightPreview_ShowGroup4,func_thumb,confirmado
