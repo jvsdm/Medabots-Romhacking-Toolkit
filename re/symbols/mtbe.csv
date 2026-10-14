@@ -1848,19 +1848,19 @@ address,name,kind,count,comment
 0x08034684,ActionScript_Op40_SideSpritesAO,func_thumb,,[AS2] GH-AS2: opcode 0x40 -> UpdateSingleLayerSideSprites + AdvanceLeft/RightSideSequenceStep + ..._AO
 0x080346C4,ActionScript_Op41_PickRandomOpponentTargetPart,func_thumb,,sorteia bot e parte alvo adversários; provável (antes: Fight_ChooseRandomOpponentTarget)
 0x08034708,ActionScript_Op42_RollPartValueAndEffect,func_thumb,,"[provavel] chama Fight_RollPartValue, Fight_ComputeEffectValueFromRos, Fight_AdvanceActionScriptCursor (ctx+0x87) (antes: Fight_RollPartAndAdvanceScript)"
-0x08034728,ActionScript_Op43_SumSideField4,func_thumb,,[AS2] GH-AS2: opcode 0x43 soma campo +4 dos 3 bots do lado em u16; provavel
+0x08034728,ActionScript_Op43_AddActiveBotPartBonusToEC,func_thumb,,[AS2] GH-AS2: opcode 0x43 soma campo +4 dos 3 bots do lado em u16; provavel (antes: ActionScript_Op43_SumSideField4)
 0x0803476C,ActionScript_Op44_SideSpritesAP,func_thumb,,[AS2] GH-AS2: opcode 0x44 -> side sprites + ..._AP
 0x080347AC,ActionScript_Op45_IncrementUsageCounter,func_thumb,,[AS2] GH-AS2: opcode 0x45 -> Fight_IncrementActionUsageCounter
-0x080347BC,ActionScript_Op46_SumArmorMaxMinusCur,func_thumb,,[AS2] GH-AS2: opcode 0x46 soma (armadura max - atual) das 4 pecas do bot indicado; provavel (antes: ActionScript_Op46_SumPartDamageOfTargetBot)
+0x080347BC,ActionScript_Op46_SumPartDamageOfTargetBot,func_thumb,,[AS2] GH-AS2: opcode 0x46 soma (armadura max - atual) das 4 pecas do bot indicado; provavel (antes: ActionScript_Op46_SumPartDamageOfTargetBot) (antes: ActionScript_Op46_SumArmorMaxMinusCur)
 0x080347F8,ActionScript_Op47_SideSpritesCopyTarget,func_thumb,,[AS2] GH-AS2: opcode 0x47 side sprites + Fight_CopySelectedTargetToFightInfo; cauda pendente
 0x080348D0,ActionScript_Op48_SideSpritesAQ,func_thumb,,[AS2] GH-AS2: opcode 0x48 -> side sprites + ..._AQ
 0x08034910,ActionScript_Op49_HalfArmorSelfBot,func_thumb,,[AS2] GH-AS2: opcode 0x49 fight+0xD6+2k = armadura_k>>1 do bot ativo; fight+0xEC += metades; confirmado disasm (antes: ActionScript_Op49_HalfArmorOfActiveBot)
-0x0803496C,ActionScript_Op4A_AllySideLoop,func_thumb,,soma 10 em ctx+0x8C por peca zerada do lado; semantica do 10 chute; provavel (antes: Fight_AccumulatePartBonusForSide)
+0x0803496C,ActionScript_Op4A_CountBrokenAllyParts,func_thumb,,soma 10 em ctx+0x8C por peca zerada do lado; semantica do 10 chute; provavel (antes: Fight_AccumulatePartBonusForSide) (antes: ActionScript_Op4A_AllySideLoop)
 0x080349D8,ActionScript_Op4B_FindBotWithPartAndPickPart,func_thumb,,Simon/Rokusho: Choose a target bot/part for reaction-driven targeting. Prefer an opponent that currently advertises a usable reaction source; otherwise fall back to a random active opponent and random target part. Writes selected_target_bot_id and selected_target_part_id. (antes: Fight_SelectReactionTargetFromOpponentState)
 0x08034A68,ActionScript_Op4C_ArmorOfTargetPart,func_thumb,,[confirmado] le halfword bot+0x59+0x18*parte para ctx+0xEC; chama Fight_AdvanceActionScriptCursor (antes: Fight_CopyBotPartWordAndAdvance) (antes: ActionScript_Op4C_CopyPartArmorToEC)
 0x08034AA0,Fight_RollDamageFromTwoDice,func_thumb,,[AS2] GH-AS2: opcode 0x4D chama randbyte duas vezes; provavel (antes: ActionScript_Op4D_RandomChance)
-0x08034AF4,ActionScript_Op4E_FindBotGroupRandom,func_thumb,,provável: escolhe alvo adversário e parte; avança script de ação (antes: Fight_PickOpponentTargetStep) (antes: ActionScript_Op4E_FindActiveBotWithGroupAndPickPart)
-0x08034B68,ActionScript_Op4F_FindActiveBotWithGroup,func_thumb,,"[FL10] +0x60 = lado adversario; FUN_08037830(base,side); 0xFF -> +0xEC=10; avanca cursor do roteiro (provável) (antes: Fight_SetOpponentBaseAndAdvanceScript)"
+0x08034AF4,ActionScript_Op4E_FindActiveBotWithGroupAndPickPart,func_thumb,,provável: escolhe alvo adversário e parte; avança script de ação (antes: Fight_PickOpponentTargetStep) (antes: ActionScript_Op4E_FindActiveBotWithGroupAndPickPart) (antes: ActionScript_Op4E_FindBotGroupRandom)
+0x08034B68,ActionScript_Op4F_SetEffect10IfNoGroupMatch,func_thumb,,"[FL10] +0x60 = lado adversario; FUN_08037830(base,side); 0xFF -> +0xEC=10; avanca cursor do roteiro (provável) (antes: Fight_SetOpponentBaseAndAdvanceScript) (antes: ActionScript_Op4F_FindActiveBotWithGroup)"
 0x08034BA0,ActionScript_Op50_CallAR,func_thumb,,[AS2] GH-AS2: opcode 0x50 (AR) dano em peca aleatoria dos adversarios; ver HN2.md
 0x08034BBC,ActionScript_Op51_StateByTechniqueSelf,func_thumb,,[AS2] GH-AS2: opcode 0x51 (AS) estado por tecnica no proprio bot; ver HN2.md (antes: ActionScript_Op51_CallAS)
 0x08034BD8,ActionScript_Op52_TeamSupportBonus,func_thumb,,[AS2] GH-AS2: opcode 0x52 (AT) bonus de suporte do time; ver HN2.md (antes: ActionScript_Op52_CallAT)
