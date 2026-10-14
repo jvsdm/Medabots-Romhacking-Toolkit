@@ -1,0 +1,6 @@
+# Endereços sem função no Ghidra (ST2): criar função no Ghidra fica para o MedabotsSync
+0x0800EB34  SceneStep_Menu5_PartDetail_Step66  (entrada 66 de 0x083ACCD4; ja documentada)
+0x0800D9DC  Menu5_Dispatch_PartsScreens        (menu_list[5]; ja documentada em MN.md)
+0x0803C0CC  Fight_ScrollSlotPhase_C0CC         (le AFC2C; inicio por push-lr, sem corpo no Ghidra)
+0x0803D538  Scene_GsDispatch_Menu10_Link       (le AFC78; ja em BT2)
+0x08010264  Scene_GsDispatch_Menu6_Encounter   (ja em BT2)

@@ -10,3 +10,9 @@
 0x08073AB8	SN2: configura DMA de FIFO PCM (0x040000B0+12*(n-1))
 0x0807C92C	SN2: unico uso de TM0CNT (timer PCM)
 0x080332EC	TQ: handler de validacao de tecnica (11 tecnicas), zera +0x0F do registro da peca
+0x0800EB34  SceneStep_Menu5_PartDetail_Step66  (entrada 66 de 0x083ACCD4; ja documentada)
+0x0800D9DC  Menu5_Dispatch_PartsScreens        (menu_list[5]; ja documentada em MN.md)
+0x0803C0CC  Fight_ScrollSlotPhase_C0CC         (le AFC2C; inicio por push-lr, sem corpo no Ghidra)
+0x0803D538  Scene_GsDispatch_Menu10_Link       (le AFC78; ja em BT2)
+0x08010264  Scene_GsDispatch_Menu6_Encounter   (ja em BT2)
+0x0800EB34	ST2: passo 66 da tabela 0x083ACCD4 (menu 5)

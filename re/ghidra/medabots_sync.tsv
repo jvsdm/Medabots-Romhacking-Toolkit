@@ -242,6 +242,7 @@ F	0x0800D684	Menu_ClearObjectAttrsAndAdvance
 F	0x0800D6A8	FightPreview_BuildLayers
 F	0x0800D710	DebugMotion_Main
 F	0x0800D90C	DebugMotion_PlayKind
+F	0x0800D9DC	Menu5_Dispatch_PartsScreens
 F	0x0800DA34	MedabotGrid_InitScreen
 F	0x0800E020	PartDetailScreen_Init
 F	0x0800E4F8	Menu_PartsDetailDispatch
@@ -282,7 +283,7 @@ F	0x080100BC	PartDetail_MoveAttributeCursor
 F	0x0801013C	PartDetail_DispatchModeHandler
 F	0x080101E8	Slot_CountdownStepAndClear
 F	0x0801022C	BgMap_FillRectTickCounter
-L	0x08010264	Scene_GsDispatch_Menu6
+L	0x08010264	Scene_GsDispatch_Menu6_Encounter
 F	0x080102C0	Scr_HideSpritesPlaySong8
 F	0x08010478	Screen_ScrollRevealRowsStep
 F	0x0801053C	Fight_ResetTemplateAndPalette
@@ -1630,6 +1631,7 @@ F	0x0803B8C8	Dispatch39Slots
 F	0x0803B900	Fight_EffectEntryTriggerStep
 F	0x0803BBE0	FightPreview_ApplyObjectMotionKind
 F	0x0803BE44	Fight_BotSlideScroll
+F	0x0803C0CC	Fight_ScrollSlotPhase_C0CC
 F	0x0803C33C	Fight_ScrollEntryPhase
 F	0x0803C5F8	Anim_SlotFrameStep
 F	0x0803C680	Anim_SlotScriptTick
@@ -2973,7 +2975,9 @@ L	0x083ACBA0	debug_menu_text
 L	0x083ACBCC	gTextProcessStrings3
 L	0x083ACC08	debug_parts_spawn_names
 L	0x083ACC2C	debug_item_grant_names
+L	0x083ACCD4	gMenu5StepTable_ACCD4
 L	0x083ACE14	gSceneStepTable_ACE14
+L	0x083ACE24	gSceneStepSub_ACE24
 L	0x083ACE54	gSceneStepTable_ACE14_PreBattle
 L	0x083ACEF8	gSceneStepTable_ACE14_PostBattle
 L	0x083ACF00	gRewardStateTable
@@ -2995,6 +2999,9 @@ L	0x083AF090	gPartActionHandlerTable
 L	0x083AF180	gActionScriptOpcodeHandlerTable
 L	0x083AF380	gRollDieFaceTable
 L	0x083AF8C0	gObjectOpcodeHandlerTable
+L	0x083AFC2C	gFightScrollSlotBytes_AFC2C
+L	0x083AFC38	gSlotWaveTable_AFC38
+L	0x083AFC78	gMenu10StepTable_AFC78
 L	0x083AFCA0	gSceneStepTable_AFC78_A
 L	0x083AFD08	gSceneStepTable_AFC78_B
 L	0x083AFE88	gGfx_Portrait_PonteirosImagens

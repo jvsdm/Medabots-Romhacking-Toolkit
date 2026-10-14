@@ -136,6 +136,7 @@ address,name,kind,count,comment
 0x03002B8C,gGameStateMenu,label,,"u32: indice em menu_list executado pelo MainState0 (63 = menu de debug); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: gamestate_menu)"
 0x03002BA0,gItemInventory,label,,"[IN] [IN] 64 pares [0x80|id, qtd] (Map64)"
 0x03002C30,gObjectSlots,label,,slots de objeto (0x40 B): +0x2B anim, +0x2C tipo de movimento/contador, +0x2D recarga, +0x2E repeticoes, +0x30 espera (s16); indice atual em 0x0300056F
+0x03002D59,gPartDetailMode,label,,[ST2] [ST2] = gObjectSlots(0x03002C30)+0x129 = slot 4 +0x29; modo 0..3 do passo de detalhe; 3 = fim; provavel
 0x030037F0,gPlayerObject,data,,[OW] slot 0x2F de gObjectSlots (jogador)
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -528,6 +529,7 @@ address,name,kind,count,comment
 0x0800D6A8,FightPreview_BuildLayers,func_thumb,,monta 2 camadas de sprite do preview de luta (provavel)
 0x0800D710,DebugMotion_Main,func_thumb,,"opcao Motion do debug: monta 2 bots (BuildCompositePreviewSpriteLayerWithOffset), START/SELECT trocam o bot (0-121), A avanca"
 0x0800D90C,DebugMotion_PlayKind,func_thumb,,toca MotionPlayStep(lado, gDebugMotionKinds[gDebugMotionCursor]) nos dois bots
+0x0800D9DC,Menu5_Dispatch_PartsScreens,func_thumb,,"[ST2] [ST2] menu_list[5] (0x083AC2C8+5); Battle_CheckExitShortcut, DMA se 0x03000430==2, CallViaR0(0x083ACCD4[0x0300137C]); sem funcao no Ghidra; nome provavel"
 0x0800DA34,MedabotGrid_InitScreen,func_thumb,,[provavel] parts grid screen init: decompress + tile loads + grid draw (antes: PartsGrid_InitScreen)
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
 0x0800E4F8,Menu_PartsDetailDispatch,func_thumb,,dispatcher de 5 estados (+0x3C) da tela de pecas; provavel
@@ -568,7 +570,7 @@ address,name,kind,count,comment
 0x0801013C,PartDetail_DispatchModeHandler,func_thumb,,[R0] dispatch por modo; retorna modo==3 (chute)
 0x080101E8,Slot_CountdownStepAndClear,func_thumb,,"contagem regressiva de byte de contexto +0x108; limpa slot (4,1) ao zerar; provavel"
 0x0801022C,BgMap_FillRectTickCounter,func_thumb,,"[provavel] BgMap_FillRect16(12,8,18,5,tile) + contador de byte++"
-0x08010264,Scene_GsDispatch_Menu6,label,,"[BT2] [GH-BT2] menu_list[6]; despachante por GS com tabela 0x083ACE24, DMA limpeza se 0x03000430==2; sem funcao no Ghidra; nao confirmado como volta ao mapa"
+0x08010264,Scene_GsDispatch_Menu6_Encounter,label,,"[BT2] [GH-BT2] menu_list[6]; despachante por GS com tabela 0x083ACE24, DMA limpeza se 0x03000430==2; sem funcao no Ghidra; nao confirmado como volta ao mapa (antes: Scene_GsDispatch_Menu6)"
 0x080102C0,Scr_HideSpritesPlaySong8,func_thumb,,provável: oculta 4 sprites e pede música 8
 0x08010478,Screen_ScrollRevealRowsStep,func_thumb,,[FL10] revelação por linhas no mapa de fundo; contador +0x48; subsistema não confirmado
 0x0801053C,Fight_ResetTemplateAndPalette,func_thumb,,"zera estado +0x132, paleta e area; provavel"
@@ -1917,6 +1919,7 @@ address,name,kind,count,comment
 0x0803B900,Fight_EffectEntryTriggerStep,func_thumb,,passo de registro de efeito: marca +0x2B e contador +0x29; provavel
 0x0803BBE0,FightPreview_ApplyObjectMotionKind,func_thumb,,copia gObjectSlots[atual]+0x2C para o tipo de movimento do lado (fight_information+0x112) depois da espera +0x30
 0x0803BE44,Fight_BotSlideScroll,func_thumb,,deslize horizontal do bot e scroll (provavel)
+0x0803C0CC,Fight_ScrollSlotPhase_C0CC,func_thumb,,"[ST2] [ST2] sem funcao no Ghidra; le AFC2C[fight+0x38] (literal 0x0803C170); nome sugerido, nao confirmado"
 0x0803C33C,Fight_ScrollEntryPhase,func_thumb,,[provavel] entry scroll phase with thresholds 0x78/0x160/0x188
 0x0803C5F8,Anim_SlotFrameStep,func_thumb,,"passo por frame de slot de animacao, roda script; provavel"
 0x0803C680,Anim_SlotScriptTick,func_thumb,,tick de dois contadores de animação por slot; provável (jump table não recuperada)
@@ -3260,7 +3263,9 @@ address,name,kind,count,comment
 0x083ACBCC,gTextProcessStrings3,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083ACC08,debug_parts_spawn_names,data,,[DB] GH-DB: ponteiros de nome das linhas de Debug_PartsSpawnScreen
 0x083ACC2C,debug_item_grant_names,data,,[DB] GH-DB: ponteiros de nome das linhas de Debug_ItemCountGrantScreen
+0x083ACCD4,gMenu5StepTable_ACCD4,data,,"[ST2] [ST2] 72 ponteiros Thumb de passos do menu 5 (0x0300137C); idx0 MedabotGrid_InitScreen, idx64 PartDetail_SceneStep, idx66 0x0800EB34; fim 0x083ACDF0; renomeado no Ghidra"
 0x083ACE14,gSceneStepTable_ACE14,data,,[ST] [ST] bloco de 148 ponteiros Thumb (0x08000841 = vazio); lido por 0x0801013C com indice = byte 0x03002D59; confirmado no codigo; significado da cena pendente
+0x083ACE24,gSceneStepSub_ACE24,data,,[ST2] [ST2] subvetor ACE14+0x10 (menu 6); entrada 0 = 0x080102C0
 0x083ACE54,gSceneStepTable_ACE14_PreBattle,data,,"[ST] [ST] = ACE14+0x40 (indice 16); entrada 0 = 0x08010815 (site PRE principal, TX); provavel"
 0x083ACEF8,gSceneStepTable_ACE14_PostBattle,data,,"[ST] [ST] = ACE14+0xE4 (indice 57); entrada 0 = 0x08010BD1 (site POST principal, TX); provavel"
 0x083ACF00,gRewardStateTable,data,,[RW] GH-RW: tabela de estados que chama Fight_HandleRewardGrantOrSkipByPostBattleFlags (xref DATA; nome provavel)
@@ -3282,6 +3287,9 @@ address,name,kind,count,comment
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
 0x083AF380,gRollDieFaceTable,data,,[TX] GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable)"
+0x083AFC2C,gFightScrollSlotBytes_AFC2C,data,,"[ST2] [ST2] 12 bytes u8 indexados por fight_information+0x38 (0x03001800+0x38); lidos por Fight_BotSlideScroll, Fight_ScrollSlotPhase_C0CC, Fight_ScrollEntryPhase; renomeado no Ghidra"
+0x083AFC38,gSlotWaveTable_AFC38,data,,"[ST2] [ST2] 32 halfwords (0x40 B, fim em AFC78); Anim_SlotScriptTick soma AFC38[slot+0x23 & 0x1F] em slot+0x04; renomeado no Ghidra"
+0x083AFC78,gMenu10StepTable_AFC78,data,,"[ST2] [ST2] 96 ponteiros de passos do menu 10 (Link), lido por 0x0803D538 com 0x0300137C; renomeado no Ghidra"
 0x083AFCA0,gSceneStepTable_AFC78_A,data,,[ST] [ST] = bloco AFC78 + 0x28 (indice 10); entrada 0 = 0x0803D9A1 (PRE fixo); fim do bloco 0x083AFDF8 = 03020100; dono nao identificado
 0x083AFD08,gSceneStepTable_AFC78_B,data,,[ST] [ST] = bloco AFC78 + 0x90 (indice 36); entrada 0 = 0x0803DB4D (POST fixo); dono nao identificado
 0x083AFE88,gGfx_Portrait_PonteirosImagens,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images (antes: gPortraitImages)
