@@ -2781,7 +2781,7 @@ F	0x08052CC0	Overworld_CheckMovementCollision
 F	0x08052D90	Map_SetObjectRenderSlotFacingVariant
 F	0x08052E0C	Overworld_SetPlayerFacingAndRefreshFollower
 F	0x08052E34	Map_SetSecondaryMarkerFacing
-F	0x08052E58	set_collision
+F	0x08052E58	Map_SetCollisionTile
 F	0x08052E88	Overworld_ApplyWarpAtCurrentTile
 L	0x08052EA0	Overworld_ApplyWarpAtCurrentTile_AltEntry_8052ea0
 F	0x08052F64	Map_InitSecondaryMarkerOverlay
@@ -2909,7 +2909,7 @@ F	0x0805B984	Shop_BlinkCursorAttr
 F	0x0805BA34	Screen_LoadLZ77TileBlock
 F	0x0805BAA0	Screen_ShiftTileRowAttr
 F	0x0805BB0C	Screen_ReadTwoBitField
-F	0x0805BBE0	MainState2
+F	0x0805BBE0	MainState_Dispatch2
 L	0x0805BC54	Unnamed_ShopTableBaseRef
 F	0x0805BC5C	Screen_DrawCellAdvance
 F	0x0805BCB0	Screen_HighlightGridRow

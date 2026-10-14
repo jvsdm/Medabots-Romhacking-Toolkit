@@ -1,0 +1,6 @@
+addr,nome,kind,comentario
+0x03000440,gScreenCtx,data,"confirmado (antes: ctx_team_screen): base do ctx de tela; xrefs [PARAM] em PartsGrid_*, PartDetail_*, Fight_*, Debug_*, Scene_*: nao e so da tela de time"
+0x0300047D,gPartsGridCursorIndex,data,"confirmado (antes: currently_selected_medal): ctx+0x3D = indice 0..35 do cursor da grade; PartsGrid_SplitRowCol faz /6 e %6 (decompile)"
+0x0300047F,gPartsGridCursorRow,data,"confirmado (antes: gCtx_TeamScreenState): ctx+0x3F = linha (index/6), gravado por PartsGrid_SplitRowCol (decompile). Conflita com nota FI2 (PS=estado); ver RM1.md"
+0x030004C6,gCtx_WaitTimer,data,"confirmado: Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance grava 0x3C (u16) em ctx+0x86 (decompile)"
+0x030004DC,gCtx_TeamWinner,data,"provavel: DC.md diz vencedor = ctx+0x9C (0x030004DC); nao reconferido no xref nesta rodada"
