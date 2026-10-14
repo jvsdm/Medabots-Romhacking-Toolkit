@@ -117,6 +117,7 @@ address,name,kind,count,comment
 0x03002B86,SAVE_WINS,data,,[SV] [SV] u16 vitorias (<= total; provavel)
 0x03002B88,SAVE_GAME_TIME_FRAMES,label,,tempo de jogo em frames; trava em 21599999 (99:59:59) (antes: gPlayTimeFrames)
 0x03002B8C,gamestate_menu,label,,"u32: indice em menu_list executado pelo MainState0 (63 = menu de debug); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03002BA0,gItemInventory,label,,"[IN] [IN] 64 pares [0x80|id, qtd] (Map64)"
 0x03002C30,gObjectSlots,label,,slots de objeto (0x40 B): +0x2B anim, +0x2C tipo de movimento/contador, +0x2D recarga, +0x2E repeticoes, +0x30 espera (s16); indice atual em 0x0300056F
 0x030037F0,gPlayerObject,data,,[OW] slot 0x2F de gObjectSlots (jogador)
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
