@@ -854,11 +854,11 @@ address,name,kind,count,comment
 0x0801D738,Fight_PrepareFollowupSourceDisplay,func_thumb,,"Simon/Rokusho: Prepare the chained/follow-up source bot for display. Copies the source bot's live battle state into a temporary display area, rebuilds its displayed part ids, and creates the temporary composite sprite used for the follow-up presentation."
 0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,label,,"Simon/Rokusho: Animate the follow-up source bot's temporary display sprite into view. When the intro completes, seeds the temporary bot state for the follow-up action and advances the action sequence. (antes: Fight_AnimateFollowupSourceIntro)"
 0x0801D95C,Fight_DispatchOnSubstateAA_E_04_StepBotSlot,label,,Simon/Rokusho: Advance the temporary follow-up source display toward its next staged position while animating its composite sprite. (antes: Fight_AdvanceFollowupSourceApproach)
-0x0801D9DC,ActionFamily_Recovery_Handler,func_thumb,,"Simon/Rokusho: Action-family entry for Recovery. Drives a temporary source/target movement or presentation step, then advances into the later follow-up/repair-state pipeline once the animated approach reaches its threshold."
+0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,func_thumb,,"Simon/Rokusho: Action-family entry for Recovery. Drives a temporary source/target movement or presentation step, then advances into the later follow-up/repair-state pipeline once the animated approach reaches its threshold. (antes: ActionFamily_Recovery_Handler; decisao CF)"
 0x0801DADE,Fight_DispatchOnSubstateAA_E_05_ReturnTail,label,,"bx r0 = retorno normal (pop r0), nao tabela; ao chegar fi+0xAA += 1 (E05 -> E06)"
 0x0801DAEC,Fight_DispatchOnSubstateAA_E_06_ShowPartsHud,label,,"Simon/Rokusho: Finalize the follow-up source presentation, refresh the displayed parts, reset temporary motion fields, and advance after the source sprite reaches its commit position. (antes: ActionFamily_AutoRecover_Handler)"
 0x0801DC74,Fight_DispatchOnSubstateAA_E_07_SpawnSlot21,label,,"Simon/Rokusho: Action-family entry for Repair. Waits on a timer-like presentation counter, then creates the temporary repair indicator object and advances into the repair-family resolution pipeline. (antes: ActionFamily_Repair_Handler)"
-0x0801DD30,ActionFamily_Reactivate_Handler,func_thumb,,Simon/Rokusho
+0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,func_thumb,,Simon/Rokusho (antes: ActionFamily_Reactivate_Handler; decisao CF)
 0x0801DD74,Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim,label,,"Simon/Rokusho: Show the follow-up source part label/text for the currently selected chained-action source, then advance once the text object setup is ready. (antes: ActionFamily_AntiAir_Handler)"
 0x0801DDDC,Fight_DispatchOnSubstateAA_E_0B_SetSelectedTarget,label,,Simon/Rokusho: Commit the chained/follow-up action source into active battle state. Transfers the selected source relationship into the main acting bot state and marks the outer action-sequence step complete. (antes: ActionFamily_Scout_Handler)
 0x0801DE1C,Fight_DispatchOnSubstateAA_F,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
@@ -1583,7 +1583,7 @@ address,name,kind,count,comment
 0x08034EB8,Fight_ReadActionScriptInlineArgs,func_thumb,,Simon/Rokusho: Decode the current action-script opcode's inline argument payload into fight_information.action_script_inline_args[0..].
 0x08034F08,Fight_AdvanceActionScriptCursor,func_thumb,,Simon/Rokusho: Advance fight_information.action_script_cursor past the current opcode byte and its inline argument payload length. Also clears the action-script repeat/continue byte at +0xAA.
 0x08034F44,Fight_SideHasPartCode15,func_thumb,,[R1b] provavel na estrutura; significado do 0x15 chute
-0x08034F68,do_damage_on_part,func_thumb,,Simon/Rokusho
+0x08034F68,Fight_ApplyDamageToPart,func_thumb,,Simon/Rokusho (antes: do_damage_on_part; decisao CF)
 0x08034FC8,Fight_SetBotSlotPosFromDirection,func_thumb,,[R1b] provavel: move slot de objeto do bot por direcao
 0x080350E0,Fight_PlaceBotMarkerSlotsAroundBase,func_thumb,,[R1b] confirmado: 3 slots marcadores ao redor do slot-base
 0x0803512C,Fight_SetBotBaseSlotAndMarkers,func_thumb,,[R1b] provavel: posiciona slot-base do bot e marcadores
@@ -1610,7 +1610,7 @@ address,name,kind,count,comment
 0x08035740,safe_add,func_thumb,,Simon/Rokusho
 0x08035754,safe_subtract,func_thumb,,Simon/Rokusho
 0x0803576C,Fight_GetMedalPartCompatibilityBonus,func_thumb,,Simon/Rokusho: Sum the part_compatibility_bonus of all equipped parts whose BattlePartState.medal_compatibility matches the bot's medal class.
-0x0803579C,Fight_GetPartProficiencyBase,func_thumb,,Simon/Rokusho: Base ROS term for a selected part. | Formula: | base = part.success_or_propulsion |      + Fight_GetMedalPartCompatibilityBonus(attacker) |      + rand(0..7) |      + attacker.skill_level[part.skill_id] |      + attacker.legs_range_bonus(part.skill_id) | where legs_range_bonus picks effective_proximity_or_uses for close-range skills and effective_remoteness_or_cooldown for ranged skills.
+0x0803579C,Fight_AccumRosPart,func_thumb,,Simon/Rokusho: Base ROS term for a selected part. | Formula: | base = part.success_or_propulsion |      + Fight_GetMedalPartCompatibilityBonus(attacker) |      + rand(0..7) |      + attacker.skill_level[part.skill_id] |      + attacker.legs_range_bonus(part.skill_id) | where legs_range_bonus picks effective_proximity_or_uses for close-range skills and effective_remoteness_or_cooldown for ranged skills. (antes: Fight_GetPartProficiencyBase; decisao CF)
 0x08035814,Fight_ApplyVirusBugRosPenalty,func_thumb,,"Simon/Rokusho: Apply the ROS penalty from Bug/Virus pending effects. When pending_effect_kind is Bug (0x0D) or Virus (0x0E), subtract pending_effect_value_1 from total ROS."
 0x08035844,Fight_GetBaseDefenderRosReduction,func_thumb,,Simon/Rokusho: Base defender ROS reduction term. | Formula: | reduction = defender.legs.success_or_propulsion |           + Fight_GetMedalPartCompatibilityBonus(defender) |           + rand(0..7) | This scratch term is then extended by Fight_ApplyEvasionReductionToRos or Fight_ApplyDefenseReductionToRos.
 0x08035880,Fight_IsAntiAirAgainstAirTarget,func_thumb,,Simon/Rokusho: True when the current selected part uses the Anti-Air technique and the defender is in the air movement state.
@@ -1715,7 +1715,7 @@ address,name,kind,count,comment
 0x080392D8,Fight_SetDefenderAffinityResultFromSelectedAction,func_thumb,,"Simon/Rokusho: Classify the selected defender target into a defensive affinity result family. Writes action_result_flow_flags.DEFENDER_AFFINITY_RESULT and the defender_affinity_result_kind classifier when optic, bomb, or grav defender affinity applies."
 0x0803934C,Fight_SetDefenderAffinityResultFromMirroredAction,func_thumb,,Simon/Rokusho
 0x080393BC,ObjectScript_RunUntilYield,func_thumb,,[HO1] provavel (nome; nao renomeado no Ghidra): roda ObjectScript_OpcodeDispatch ate ctx 0x03002C30+0x2A != 0
-0x080393EC,ObjectScript_OpcodeDispatch,func_thumb,,"A3: despachante do roteiro de objeto. Le 1 byte de FUN_0803D424 e grava em gObjectSlots+0x29 (slot 0 fixo no codigo); chama o handler 0x083AF8C0[opcode]. Break no replay rec_2: hit de f1446 em diante."
+0x080393EC,ObjectScript_OpcodeDispatch,func_thumb,,A3: despachante do roteiro de objeto. Le 1 byte de FUN_0803D424 e grava em gObjectSlots+0x29 (slot 0 fixo no codigo); chama o handler 0x083AF8C0[opcode]. Break no replay rec_2: hit de f1446 em diante.
 0x08039430,ObjScript_Op01_SetFlag2A_B5,func_thumb,,[HO1] confirmado: fim do script; cede quadro e fight+0xB5=1; argc 0
 0x08039448,ObjScript_Op02_SkipToLabel,func_thumb,,[HO1] confirmado: goto para frente ate o rotulo a0; argc 1
 0x080394C4,ObjScript_Op03_SkipToLabelByFlag,func_thumb,,[HO1] confirmado: goto rotulo a[fight+0xFD]; argc 4
@@ -1930,7 +1930,7 @@ address,name,kind,count,comment
 0x08042CA0,ComputeBattleSpriteStatOffsets,func_thumb,,Simon/Rokusho
 0x08042D94,LoadCompositeBattleSpriteTiles,func_thumb,,Simon/Rokusho: Load a composite battle sprite's tile graphics by decompressing one base resource plus five component resources into the selected VRAM/tile block.
 0x08042E58,CreateCompositeBattleSpriteObjects,func_thumb,,Simon/Rokusho: Create a 4-object composite battle sprite from four component tile indices. Writes object attributes for the assembled sprite using the selected palette/tile base and flip state.
-0x0804305C,BuildCompositeBattleSpriteObjects,func_thumb,,"Simon/Rokusho: Instantiate the four OAM objects that make up a composite Medabot battle sprite using head/right-arm/left-arm/legs palette-family bytes and the selected tile block. Used by battle preview, part selection, and fight presentation refresh paths."
+0x0804305C,Sprite_WriteComposite4Objects,func_thumb,,"Simon/Rokusho: Instantiate the four OAM objects that make up a composite Medabot battle sprite using head/right-arm/left-arm/legs palette-family bytes and the selected tile block. Used by battle preview, part selection, and fight presentation refresh paths. (antes: BuildCompositeBattleSpriteObjects; decisao CF)"
 0x08043240,SetCompositeBattleSpriteAnimationSpeed,func_thumb,,Simon/Rokusho
 0x080432A0,AnimateCompositeBattleSpriteObjects,func_thumb,,Simon/Rokusho: Animate the 4-object composite battle sprite group by advancing the orbit/pose subobjects around the anchor object and updating their frame/tile selection.
 0x08043560,AdjustInventoryPartCount,func_thumb,,Simon/Rokusho: Increase or decrease the inventory count for a specific part entry. Addition saturates at 99; subtraction decrements directly.
@@ -1990,7 +1990,7 @@ address,name,kind,count,comment
 0x080458B8,EmitCompositePreviewTemplatePointerListOam,func_thumb,,Simon/Rokusho
 0x080459A4,OffsetCompositePreviewTemplateEntry,func_thumb,,Simon/Rokusho: Offsets one composite-preview template entry before ShiftCompositePreviewTemplateEntryX applies the X delta to every OAM record generated from that entry. Mode 1 derives position from the first OAM record; the alternate mode derives it from the auxiliary descriptor/anchor struct at entry+4.
 0x08045A14,CopyObjAffineGroupsToShadowOam,func_thumb,,[R2b] Copia 32 grupos afim (pa..pd) para a OAM sombra; chamada no VBlank (G8)
-0x08045A40,IsCompositePreviewPointOnScreen,func_thumb,,Simon/Rokusho
+0x08045A40,IsCompositePreviewPointOnScreen,func_thumb,,Simon/Rokusho [CF: nao e funcao; literal pool/dado]
 0x08045A60,Oam_QueuePreviewEntryWrapper,func_thumb,,"[confirmado] wrapper: QueueCompositePreviewTemplateEntryOam(...,0x80,...); corpo 0x29 bytes (lista dizia 7164)"
 0x08045AEC,QueueVisibleCompositePreviewTemplateEntry,func_thumb,,"Simon/Rokusho: Queues one composite-preview template entry only if the requested screen point is on-screen. Offsets the entry, emits its OAM via QueueCompositePreviewTemplateEntryOam, and optionally writes a 4-halfword bounds/attachment record for the caller."
 0x08045B68,QueueVisibleCompositePreviewTemplateEntryWithBounds,func_thumb,,Simon/Rokusho
@@ -2008,7 +2008,7 @@ address,name,kind,count,comment
 0x08047574,EventScript_ClearGlobals,func_thumb,,"Simon/Rokusho: Clears the core event-engine globals before a new game/map/event-system bring-up. Confirmed blocks: gEventScriptDataBasePtr (installed ROM script base), gEventFlagListPtr (pointer to gEventFlagList), gEventFlagList (main event/game state blob), gEventScriptArguments (opcode argument buffer filled by EventScript_ReadBytes), gEventScriptRuntimeState (active script cursor/branch/temp state), and gEventObjectWorkArea (0x200-byte per-object/event actor work array). Remaining cleared blocks are auxiliary event/overworld work areas that still need field-level RE."
 0x0804763C,MainState1,func_thumb,,estado 1
 0x08047878,GameState_StartFlowByCommand,func_thumb,,Simon/Rokusho: Start a top-level flow selected by a command id. Important confirmed cases: command 0x20 starts a scripted/forced battle flow (sets gCurrentBattleSourceFlag = 1); command 0x21 starts the random encounter battle flow (sets gCurrentBattleSourceFlag = 0); command 3 opens a shop using param_2 as shop id.
-0x08047BA8,Overworld_StartMapTransitionEffect,func_thumb,,Simon/Rokusho: Start the map-transition effect selected by the current warp/event transition state. Commonly triggered when a matched MapWarpRecord requests a non-zero transition kind.
+0x08047BA8,Snd_SfxRequestWrapper,func_thumb,,Simon/Rokusho: Start the map-transition effect selected by the current warp/event transition state. Commonly triggered when a matched MapWarpRecord requests a non-zero transition kind. (antes: Overworld_StartMapTransitionEffect; decisao CF)
 0x08047BB4,Sound_RequestSong,func_thumb,,[R2b] Wrapper de snd_song_request
 0x08047BC0,Sound_RequestFade,func_thumb,,[R2b] Wrapper de snd_fade_request
 0x08047BDC,GetBotName,func_thumb,,gBotNames[bot]
@@ -2079,7 +2079,7 @@ address,name,kind,count,comment
 0x0804B73C,EventInitOpcode00_NoOp,func_thumb,,Simon/Rokusho
 0x0804B740,EventInitOpcode01_Skip3BytesAndMarkInitialized,func_thumb,,Simon/Rokusho
 0x0804B74C,EventInitOpcode02_Skip3BytesAndMarkInitialized,func_thumb,,Simon/Rokusho
-0x0804B758,EventInit_Skip3BytesAndMarkInitialized,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 01 and 02. Reads and discards 3 bytes from the event stream, then sets gCurrentEventStateByte = 1 to move the event VM out of initialization dispatch."
+0x0804B758,Event_ReadMessageArgsAndDefer,func_thumb,,"Simon/Rokusho: Shared event-init helper used by opcodes 01 and 02. Reads and discards 3 bytes from the event stream, then sets gCurrentEventStateByte = 1 to move the event VM out of initialization dispatch. (antes: EventInit_Skip3BytesAndMarkInitialized; decisao CF)"
 0x0804B778,EventInitOpcode03_MarkInitialized,func_thumb,,Simon/Rokusho
 0x0804B78C,EventInitOpcode04_ReadByteAndMarkInitialized,func_thumb,,Simon/Rokusho
 0x0804B7B4,EventInitOpcode05_MarkInitialized,func_thumb,,Simon/Rokusho
@@ -2338,7 +2338,7 @@ address,name,kind,count,comment
 0x080507EC,Map_SetObjectAttrBits10,func_thumb,,[R3] halfwords +0x00/+0x32 do slot; bits altos = v<<10 (significado chute)
 0x0805080C,Map_SetTrackedObjectTileAttr,func_thumb,,[R3] resolve id logico e chama Map_SetObjectAttrBits10
 0x0805082C,Map_TickObjectFlicker,func_thumb,,Simon/Rokusho
-0x080508B4,Map_TickObjectAnimation,func_thumb,,Simon/Rokusho
+0x080508B4,Map_ObjectAnimStep,func_thumb,,Simon/Rokusho (antes: Map_TickObjectAnimation; decisao CF)
 0x08050918,Map_TickObjectHop,func_thumb,,Simon/Rokusho
 0x080509EC,Map_TickTrackedObjectTransition,func_thumb,,"Simon/Rokusho: Tick the per-slot tracked-object transition used by event opcode 0x66. Initializes facing/animation and starts a map-transition effect on the first tick, then advances the object's vertical arc and render mode until the effect completes."
 0x08050B9C,Map_ResetObjectStateBlocks,func_thumb,,[R3] zera 3 blocos de 4 bytes via set_zeros
@@ -2824,7 +2824,7 @@ address,name,kind,count,comment
 0x08074070,snd_track_dispatch_all,func_thumb,,[R4] R4: despacha as duas trilhas; provavel
 0x08074090,snd_track_tick_a,func_thumb,,[R4] R4: tick da trilha de base +0x690; provavel
 0x080740D4,snd_track_tick_b,func_thumb,,[R4] R4: tick da trilha de base +0x6D8; provavel
-0x08074118,snd_track_step,func_thumb,,[R4] R4: avanca passo da trilha (periodo/fim de sequencia); provavel
+0x08074118,Snd_ChannelTickStep,func_thumb,,[R4] R4: avanca passo da trilha (periodo/fim de sequencia); provavel (antes: snd_track_step; decisao CF)
 0x080741F4,snd_buffer_release,func_thumb,,[R4] R4: libera buffer da trilha (chama FUN_0807CCC4); chute
 0x08074224,snd_ring_read,func_thumb,,[R4] R4: le byte do buffer ciclico de 48 bytes da trilha; provavel
 0x0807424C,snd_ring_write,func_thumb,,[R4] R4: escreve byte no buffer ciclico de 48 bytes; provavel
@@ -3057,35 +3057,35 @@ address,name,kind,count,comment
 0x087852CF,gStarterData,label,,dados do bot inicial
 0x08785FB4,sSharedPartScreenTileSheet,label,,Simon/Rokusho em 0x08785FD8
 0x087F5500,gTextDump,label,,inicio do texto
-0x08034048,FightPreview_SetupSceneFromPartTechnique,func_thumb,,"A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]."
-0x083CE164,FightPreview_SceneRowPointerTable,data,,"A5: 132 ponteiros para linhas de halfwords (indexadas por sequence_cursor). Linha = sel de +0xF9. Dump: pc/research/A5_preview_rows.tsv"
-0x083CE374,FightPreview_EntryCountBlocks,data,,"A5: blocos (byte count + ...) apontados por Row[cursor] (signed halfword). Count = numero de halfwords copiadas por 0x0803D450."
-0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,"A6 (rec_2): cursor(+0x100 = 0x03001900) += 1 + byte(0x083CE374 + s16(Row[cursor])); escrita pc 0x0803D4DC; chamada pelos handlers 8-12 do roteiro de objeto"
-0x080340A4,FightPreview_CursorReset,code_pc,,"A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864"
-0x08072D68,snd_track_step,func_thumb,,"SND12 (EU, Ghidra FUN_08072d68): interpretador de trilha. Le 1 byte do cursor track+0x14, cursor++, despacha: 00-7F nota (snd_cmd_note), 80/E0 pausa (snd_cmd_rest), 90/A0/B0/C0 e EC-EF nada, D0-DF volume (snd_cmd_volume), E1-EB ver comandos, F0-FF fluxo/FB/F9/FA/FE/FF"
-0x08072910,snd_cmd_note,func_thumb,,"SND12: nota = byte (MIDI; 0x24=C2). Le duracao no byte seguinte (dur = b+1 + FA<<8 ticks; 1 tick = 1 quadro). key = nota + transpose(track+0x6A) - 0x24; freq = snd_freq_lookup(key). Modo track+0x63==0 (FE) e o normal"
-0x08072AC0,snd_cmd_rest,func_thumb,,"SND12: pausa de (byte+1) ticks; track+0x28 = contador; flags |= 0x52"
+0x08034048,FightPreview_SetupSceneFromPartTechnique,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel].
+0x083CE164,FightPreview_SceneRowPointerTable,data,,A5: 132 ponteiros para linhas de halfwords (indexadas por sequence_cursor). Linha = sel de +0xF9. Dump: pc/research/A5_preview_rows.tsv
+0x083CE374,FightPreview_EntryCountBlocks,data,,A5: blocos (byte count + ...) apontados por Row[cursor] (signed halfword). Count = numero de halfwords copiadas por 0x0803D450.
+0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,,A6 (rec_2): cursor(+0x100 = 0x03001900) += 1 + byte(0x083CE374 + s16(Row[cursor])); escrita pc 0x0803D4DC; chamada pelos handlers 8-12 do roteiro de objeto
+0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
+0x08072D68,Snd_TrackStepInterpreter,func_thumb,,"SND12 (EU, Ghidra FUN_08072d68): interpretador de trilha. Le 1 byte do cursor track+0x14, cursor++, despacha: 00-7F nota (snd_cmd_note), 80/E0 pausa (snd_cmd_rest), 90/A0/B0/C0 e EC-EF nada, D0-DF volume (snd_cmd_volume), E1-EB ver comandos, F0-FF fluxo/FB/F9/FA/FE/FF (antes: snd_track_step; decisao CF)"
+0x08072910,snd_cmd_note,func_thumb,,SND12: nota = byte (MIDI; 0x24=C2). Le duracao no byte seguinte (dur = b+1 + FA<<8 ticks; 1 tick = 1 quadro). key = nota + transpose(track+0x6A) - 0x24; freq = snd_freq_lookup(key). Modo track+0x63==0 (FE) e o normal
+0x08072AC0,snd_cmd_rest,func_thumb,,SND12: pausa de (byte+1) ticks; track+0x28 = contador; flags |= 0x52
 0x08072AFC,snd_cmd_volume,func_thumb,,"SND12: Dn -> track+0x65 e +0x66 = n (0..15). Confirmado: f3500 k0=D4 -> 65=04, k1=D9 -> 09, k2=DB -> 0B, k8/k9=DF -> 0F"
-0x08072B34,snd_cmd_voice,func_thumb,,"SND12: E3 xx -> track+0x67 = xx (flag 0x20). Em k8/k9 (PCM) xx=3A/45 bate com indice de amostra (SND10). GUESS: voz/amostra"
+0x08072B34,snd_cmd_voice,func_thumb,,SND12: E3 xx -> track+0x67 = xx (flag 0x20). Em k8/k9 (PCM) xx=3A/45 bate com indice de amostra (SND10). GUESS: voz/amostra
 0x08072B64,snd_cmd_transpose,func_thumb,,"SND12: E8 xx -> track+0x6A (signed), somado a nota antes do freq (key = n + xx - 0x24). Confirmado no codigo"
 0x08072B74,snd_cmd_E9,func_thumb,,"SND12: E9 xx -> track+0x6B = min(xx,0x30). GUESS: volume/expressao"
-0x08072BAC,snd_cmd_EB,func_thumb,,"SND12: EB -> track+0x4C += 1. GUESS: contador"
-0x08072BB8,snd_cmd_loop_start,func_thumb,,"SND12: F0 n -> track+0x52 = n; track+0x18 = cursor (inicio de laco 1)"
-0x08072BCC,snd_cmd_loop_end,func_thumb,,"SND12: F1 -> --track+0x52; se != 0 cursor = track+0x18 (fim de laco 1)"
-0x08072BE4,snd_cmd_loop2_start,func_thumb,,"SND12: F2 n -> track+0x53 = n; track+0x1C = cursor (laco 2)"
-0x08072BF8,snd_cmd_loop2_end,func_thumb,,"SND12: F3 -> --track+0x53; se != 0 cursor = track+0x1C"
-0x08072C10,snd_cmd_jump,func_thumb,,"SND12: F4 a32 -> cursor = a (JMP). Usado para repetir a trilha: JMP a inicio a cada ~1920 ticks em T0..T5"
-0x08072C20,snd_cmd_call,func_thumb,,"SND12: F5 a32 -> track+0x20 = retorno; cursor = a (CALL)"
-0x08072C34,snd_cmd_return,func_thumb,,"SND12: F6 -> cursor = track+0x20 (RET)"
-0x08072C3C,snd_cmd_F7,func_thumb,,"SND12: F7 xx -> track+0x54 = xx (0 -> 8); flag 0x08. GUESS: vibrato/ataque"
-0x08072C64,snd_cmd_F8,func_thumb,,"SND12: F8 xx -> track+0x55 = xx. GUESS"
+0x08072BAC,snd_cmd_EB,func_thumb,,SND12: EB -> track+0x4C += 1. GUESS: contador
+0x08072BB8,snd_cmd_loop_start,func_thumb,,SND12: F0 n -> track+0x52 = n; track+0x18 = cursor (inicio de laco 1)
+0x08072BCC,snd_cmd_loop_end,func_thumb,,SND12: F1 -> --track+0x52; se != 0 cursor = track+0x18 (fim de laco 1)
+0x08072BE4,snd_cmd_loop2_start,func_thumb,,SND12: F2 n -> track+0x53 = n; track+0x1C = cursor (laco 2)
+0x08072BF8,snd_cmd_loop2_end,func_thumb,,SND12: F3 -> --track+0x53; se != 0 cursor = track+0x1C
+0x08072C10,snd_cmd_jump,func_thumb,,SND12: F4 a32 -> cursor = a (JMP). Usado para repetir a trilha: JMP a inicio a cada ~1920 ticks em T0..T5
+0x08072C20,snd_cmd_call,func_thumb,,SND12: F5 a32 -> track+0x20 = retorno; cursor = a (CALL)
+0x08072C34,snd_cmd_return,func_thumb,,SND12: F6 -> cursor = track+0x20 (RET)
+0x08072C3C,snd_cmd_F7,func_thumb,,SND12: F7 xx -> track+0x54 = xx (0 -> 8); flag 0x08. GUESS: vibrato/ataque
+0x08072C64,snd_cmd_F8,func_thumb,,SND12: F8 xx -> track+0x55 = xx. GUESS
 0x08072C74,snd_cmd_lfo,func_thumb,,"SND12: F9 aa bb -> track+0x56=aa, +0x57=bb&F, +0x58=bb>>4. Usado em snd_calc_vibrato. Medido: ch1 freq oscila +-4 em torno de snd_freq_lookup. GUESS: profundidade/taxa"
-0x08072CA0,snd_cmd_dur_hi,func_thumb,,"SND12: FA xx -> track+0x6E = byte alto da duracao da proxima nota (dur = FA<<8 + b + 1). Confirmado no codigo"
-0x08072CB0,snd_cmd_envelope,func_thumb,,"SND12: FB a b c d -> track+0x5B..0x5E; flag 0x62=1. GUESS: envelope (4 bytes)"
-0x08072D04,snd_cmd_FC,func_thumb,,"SND12: FC -> track+0x62 = 1. GUESS"
-0x08072D28,snd_cmd_FD,func_thumb,,"SND12: FD -> track+0x62 = 0. GUESS"
-0x08072D4C,snd_cmd_mode,func_thumb,,"SND12: FE xx -> track+0x63 = xx (modo da nota: 0 normal; 1/2 nao decodificados)"
+0x08072CA0,snd_cmd_dur_hi,func_thumb,,SND12: FA xx -> track+0x6E = byte alto da duracao da proxima nota (dur = FA<<8 + b + 1). Confirmado no codigo
+0x08072CB0,snd_cmd_envelope,func_thumb,,SND12: FB a b c d -> track+0x5B..0x5E; flag 0x62=1. GUESS: envelope (4 bytes)
+0x08072D04,snd_cmd_FC,func_thumb,,SND12: FC -> track+0x62 = 1. GUESS
+0x08072D28,snd_cmd_FD,func_thumb,,SND12: FD -> track+0x62 = 0. GUESS
+0x08072D4C,snd_cmd_mode,func_thumb,,SND12: FE xx -> track+0x63 = xx (modo da nota: 0 normal; 1/2 nao decodificados)
 0x08072D5C,snd_cmd_end,func_thumb,,SND12: FF -> snd_cmd_end: zera cursor e chama o handler track+0x0C. Trilha com FF no inicio (T3) fica muda
 0x080732B8,snd_freq_lookup,func_thumb,,"SND12: halfword table[key] em ROM 0x083ABB50 (74 entradas). PSG: key 0 = C2 (0x002E), key 26 = 0x0642 (= nota 0x3E), key 33 = 0x06D6 (A4=440 Hz). Confirmado no replay (ch1 0x04000064)"
-0x080726D4,snd_calc_vibrato,func_thumb,,"SND12: calcula amplitude/inclinacao de vibrato a partir de track+0x56/57/58 e freq[key+2]-freq[key]"
+0x080726D4,snd_calc_vibrato,func_thumb,,SND12: calcula amplitude/inclinacao de vibrato a partir de track+0x56/57/58 e freq[key+2]-freq[key]
 0x08073E24,snd_block_tick,func_thumb,,"SND12: NAO e o sequenciador de trilha. Tick do bloco driver+0x690 (0x03002AC0): so le parametros de PCM/tempo (ponteiro em +0x1C -> struct 0x082DAD70, taxa 20000, raiz 0x3C). Chamado pelo handler da trilha 8"
