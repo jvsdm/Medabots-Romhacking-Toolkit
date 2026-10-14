@@ -83,7 +83,7 @@ address,name,kind,count,comment
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state
 0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03001798,pressed_buttons_03001798,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
-0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356]"
+0x03001800,gFightInformation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -630,6 +630,7 @@ address,name,kind,count,comment
 0x08015648,Fight_IsMedaforceSelectionBlockedByBattleState,func_thumb,,Simon/Rokusho
 0x08015668,Fight_SelectMedaforceActionSource,func_thumb,,"Simon/Rokusho: Commit a medaforce action source selection. This caches the medal medaforce list, copies the selected medaforce descriptor into battle scratch, and selects action source values 4..6."
 0x080156D0,Fight_RandomizePriorityListSlot,func_thumb,,"[R0a] sorteia slot da lista de prioridade (chute; nome sugerido, sem rename)"
+0x080156F0,gFightPriorityRowTable,data,,[AI] [GH-AI] ponteiro (literal) para ROM 0x083AD470: 32 linhas de 4 B usadas como lista de fallback; conteudo nao fechado
 0x080156F8,Fight_IsPartActionBlocked,func_thumb,,"Simon/Rokusho: Return nonzero when a requested part action slot is blocked (0 = available). This first honors the pending effect that locks a specific part slot, then rejects broken/unusable parts, then runs the shared part-action validation path."
 0x08015738,Fight_LoadHudTileset,func_thumb,,[R0b] Carrega 0x200 bytes de tiles (bloco 3) da ROM
 0x08015760,Fight_FillPartTilemapRows,func_thumb,,[R0b] Preenche tilemap das 6 linhas de partes dos bots
@@ -3180,9 +3181,12 @@ address,name,kind,count,comment
 0x083AD080,Battle_FrameDispatchTable,data,,"[BT] tabela de 4+ ponteiros indexada por GS (usada por Battle_FrameDispatchOrExit); conteudo lido: 0x08012A20.., confirmado (ponteiros)"
 0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA
 0x083AD190,Battle_StepFrameTable,data,,"[BT] tabela de modos; entrada 0 = Fight_StepBattleFrame, 8 = 0x08014548; quem indexa: LACUNA"
+0x083AD380,gSpecialityWeightTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas
+0x083AD470,gFightFallbackPriorityRows,data,,[AI] [GH-AI] 32 x 4 B na ROM; sorteadas por Fight_RandomizePriorityListSlot; valores nao batem com ids de peca (provavel nome)
 0x083AECD8,gFightSceneSteps,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado)
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
+0x083AF080,gFightSlotRandomTable16,data,,[AI] [GH-AI] 16 B lidos; usada por Fight_RandomSlotFromTable16 (randbyte&0xF)
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
 0x083AF380,gRollDieFaceTable,data,,[TX] GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable)"

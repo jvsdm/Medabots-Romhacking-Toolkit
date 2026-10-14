@@ -1,0 +1,50 @@
+# address,name,kind,comment
+0x08072D68,Snd_TrackStepInterpreter,func_thumb,interpretador de trilha: le byte em track+0x14; switch completa lida (SN.md sec.4)
+0x08072910,snd_cmd_note,func_thumb,nota 0x00-0x7F; modo FE 0/1/2; dur=(FA<<8)+b+1; key=nota+E8-0x24
+0x08072AC0,snd_cmd_rest,func_thumb,pausa 0x80-0x8F e E0; 1 operando; nao usa FA
+0x08072AFC,snd_cmd_volume,func_thumb,D0-DF: track+0x65=n; ramo extra FE=1 sub=3
+0x08072B18,snd_cmd_E1_set_track_2c,func_thumb,E1 xx: track+0x2C=xx (renomeado nesta rodada)
+0x08072B20,snd_cmd_E2_set_track_69,func_thumb,E2 xx: track+0x69=xx; flags 0x51 (renomeado nesta rodada)
+0x08072B34,snd_cmd_voice,func_thumb,E3 xx: voz/amostra em track+0x67 (indice PCM em k8/k9)
+0x08072B64,snd_cmd_transpose,func_thumb,E8 xx: track+0x6A com sinal
+0x08072B74,snd_cmd_E9,func_thumb,E9 xx: track+0x6B=min(xx,0x30) (GUESS)
+0x08072B90,snd_cmd_EA_set_track_6f,func_thumb,EA xx: track+0x6F=xx; flag 0x40 (renomeado nesta rodada)
+0x08072BAC,snd_cmd_EB,func_thumb,EB: track+0x4C+=1 (GUESS)
+0x08072C10,snd_cmd_jump,func_thumb,F4 a32: cursor=a
+0x08072C20,snd_cmd_call,func_thumb,F5 a32: track+0x20=retorno; cursor=a
+0x08072C34,snd_cmd_return,func_thumb,F6: cursor=track+0x20
+0x08072C74,snd_cmd_lfo,func_thumb,F9 aa bb: +0x56=aa; +0x57=bb&F; +0x58=bb>>4
+0x08072CA0,snd_cmd_dur_hi,func_thumb,FA xx: track+0x6E=byte alto da duracao
+0x08072CB0,snd_cmd_envelope,func_thumb,FB a b c d: track+0x5B..0x5E; flag 0x62 (GUESS)
+0x08072D4C,snd_cmd_mode,func_thumb,FE xx: track+0x63=modo (0 normal, 1 nota com operando extra)
+0x08072D5C,snd_cmd_end,func_thumb,FF: zera cursor; chama handler track+0x0C
+0x080726D4,snd_calc_vibrato,func_thumb,amplitude de vibrato a partir de track+0x56..0x58 e freq
+0x080732B8,snd_freq_lookup,func_thumb,halfword de 0x083ABB50[key] (74 entradas, PSG)
+0x08073094,snd_update_frame,func_thumb,tick por quadro: trilhas (lista +0x5E4), PSG 1-4, grupos, ring, master
+0x08073274,snd_frame_tick,func_thumb,chamado so por VBlankIrqHandler 0x080007FC; guarda +0x730
+0x080739F4,snd_master_ctrl_write,func_thumb,SOUNDCNT_L 0x04000080 = (+0x72E)|((+0x72D)<<4)|0xFF00 se bit0 de +0x72C
+0x08073A88,snd_hw_init,func_thumb,inicializa registradores de som; escritas exatas pendentes
+0x08073C18,snd_pcm_rate_set,func_thumb,taxa PCM do canal (limite 0x78000)
+0x08073C3C,snd_pcm_rate_from_note,func_thumb,nota -> taxa PCM
+0x08073E24,snd_block_tick,func_thumb,tick do bloco driver+0x690 (PCM/tempo); NAO e o sequenciador
+0x080736A0,snd_channel_update_1,func_thumb,PSG canal 1
+0x08073718,snd_channel_update_2,func_thumb,PSG canal 2
+0x08073784,snd_channel_update_3,func_thumb,PSG canal 3 (ondas)
+0x080737E8,snd_channel_update_4,func_thumb,PSG canal 4 (ruido)
+0x0807490C,snd_track_reset_state,func_thumb,zera estado da trilha (pendente: quem zera +0x6D)
+0x08074A8C,snd_song_start,func_thumb,inicia musica: mascara u16 + prio + ponteiros a partir de +4; grava id em driver+0x72F
+0x08074B88,snd_song_request,func_thumb,pede musica pelo id (contador +0x730 + snd_song_start)
+0x08074D50,snd_sfx_start,func_thumb,inicia sfx: so se track+0x6D <= prio do sfx; tabela driver+0x68C
+0x08074DE0,snd_sfx_request,func_thumb,pede sfx: guarda +0x730 e chama snd_sfx_start(id,0)
+0x08047BB4,Sound_RequestSong,func_thumb,wrapper de snd_song_request (R2b)
+0x08047BA8,Snd_SfxRequestWrapper,func_thumb,chama snd_sfx_request (nao e transicao de mapa)
+0x080B012C,SND_SongTable,data,tabela de ponteiros de musica (4 B por id; ids 0..53; driver+0x688)
+0x080B16E4,SND_SampleTable,data,tabela de ponteiros de amostra PCM (128 entradas; cabecalho {u32 tam,u16 taxa,u8 0,u8 raiz,u32 laco,u32 ini})
+0x0847E644,gMapMusic,data,id de musica por mapa (192 B)
+0x083ABB50,SND_PsgFreqTable,data,74 halfwords de frequencia PSG (Hz=131072/(2048-v))
+0x03002430,SND_Driver,data,estado do driver de som (apontado por [0x03007014]); trilhas em +k*0x74
+0x03007014,SND_DriverPtr,data,ponteiro para o driver de som
+0x0804842C,SND_PolicyRequest,func_thumb,politica de musica/sfx (caso 1 = snd_song_request), GUESS do nome
+0x080B0204,SND_Song0Header,data,cabecalho da musica 0 (confirmado por leitura da tabela)
+0x08486E54,SND_LitFifoA,data,literal 0x040000A0 (FIFO A do DMA de PCM)
+0x08486E58,SND_LitFifoB,data,literal 0x040000A4 (FIFO B do DMA de PCM)

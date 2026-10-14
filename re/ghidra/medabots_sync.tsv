@@ -368,6 +368,7 @@ F	0x080155A8	Fight_TrySelectMedaforceAction
 F	0x08015648	Fight_IsMedaforceSelectionBlockedByBattleState
 F	0x08015668	Fight_SelectMedaforceActionSource
 F	0x080156D0	Fight_RandomizePriorityListSlot
+L	0x080156F0	gFightPriorityRowTable
 F	0x080156F8	Fight_IsPartActionBlocked
 F	0x08015738	Fight_LoadHudTileset
 F	0x08015760	Fight_FillPartTilemapRows
@@ -2917,9 +2918,12 @@ L	0x083ACBCC	gTextProcessStrings3
 L	0x083AD080	Battle_FrameDispatchTable
 L	0x083AD10C	Battle_SceneInitTable
 L	0x083AD190	Battle_StepFrameTable
+L	0x083AD380	gSpecialityWeightTable
+L	0x083AD470	gFightFallbackPriorityRows
 L	0x083AECD8	gFightSceneSteps
 L	0x083AEEA0	gTechniqueActionSetupHandlerTable
 L	0x083AEF90	gTechniqueActionValidationHandlerTable
+L	0x083AF080	gFightSlotRandomTable16
 L	0x083AF180	gActionScriptOpcodeHandlerTable
 L	0x083AF380	gRollDieFaceTable
 L	0x083AF8C0	gObjectOpcodeHandlerTable
