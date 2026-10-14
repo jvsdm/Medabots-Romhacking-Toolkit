@@ -315,6 +315,7 @@ F	0x0801264C	Fight_AdjustAvgStatBonus
 F	0x080126EC	Battle_SumBotPartLossScore
 F	0x0801277C	Battle_SumPartBytesToCtx16C
 F	0x080127DC	Fight_AwardPartExperience
+L	0x08012968	medaforce_list_ptr_literal
 F	0x08012970	Battle_FrameDispatchOrExit
 F	0x080129C8	Fight_SetupBattleBotStates
 F	0x08012A20	Fight_PartPanelStep
@@ -359,6 +360,7 @@ F	0x08015358	Fight_SelectActionFromCycleOrPendingOverride
 F	0x08015390	Fight_TrySelectActionFromSpecialityCycle
 F	0x08015414	Fight_AdvanceSpecialityCycleIndex
 F	0x08015464	Fight_SelectFallbackActionFromPriorityList
+F	0x08015488	Fight_SelectFallbackActionFromPriorityList_08015488
 F	0x080154E0	Fight_IsPartActionLockedByPendingEffect
 F	0x08015508	Fight_IsHeadActionUnavailable
 F	0x08015528	Fight_IsPartActionUnavailable
@@ -2948,6 +2950,7 @@ L	0x083B7048	gTextAttackTypeNames
 L	0x083B722C	gTextAttackTypeDesc
 L	0x083B74B8	gTextMedaforceNames
 L	0x083B7580	gTextMedaforceDesc
+L	0x083B7E54	medaforce_descriptor_table
 L	0x083B7F8C	medal_medaforce_list
 L	0x083B80C0	gTextMedaforceDesc1
 L	0x083B82F0	gTextSpecialAttackDesc

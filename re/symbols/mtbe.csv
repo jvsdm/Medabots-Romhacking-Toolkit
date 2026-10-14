@@ -83,7 +83,7 @@ address,name,kind,count,comment
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state
 0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03001798,pressed_buttons_03001798,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
-0x03001800,gFightInformation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information)"
+0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -577,6 +577,7 @@ address,name,kind,count,comment
 0x080126EC,Battle_SumBotPartLossScore,func_thumb,,[FR2] provável; soma perdas de partes dos 3 bots para o campo 0x16C da luta (FUN_080126ec)
 0x0801277C,Battle_SumPartBytesToCtx16C,func_thumb,,[provavel] soma bytes de 3 entradas (passo 0x100) com flag +0x38 em ctx+0x16C
 0x080127DC,Fight_AwardPartExperience,func_thumb,,[R0a] progressao de nivel das pecas apos a luta (provavel)
+0x08012968,medaforce_list_ptr_literal,label,,[MF] [MF] palavra de literal que aponta para 0x083B7F8C (nao e tabela de bytes)
 0x08012970,Battle_FrameDispatchOrExit,func_thumb,,passo de batalha por quadro: checa saida e despacha tabela; provavel
 0x080129C8,Fight_SetupBattleBotStates,func_thumb,,[provavel] zera ctx+0x13A; se ctx+0x89!=1 roda ClearBattleBuffer/UpdateBotActiveFlagCount/RefreshBotPartRecords/InitializeEnemyBotStates; sempre RefreshBotPartSlotDisplays
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
@@ -621,6 +622,7 @@ address,name,kind,count,comment
 0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,,"Simon/Rokusho: Resolve the current action entry from BattleBotStateRecord.speciality_action_table[current_speciality_cycle_index]. Values 1..3 try the part slots, value 4 clears the source and returns 0, and values 5..7 try medaforce slots."
 0x08015414,Fight_AdvanceSpecialityCycleIndex,func_thumb,,[R0a] avanca indice do ciclo de especialidade (+0x3F) (confirmado)
 0x08015464,Fight_SelectFallbackActionFromPriorityList,func_thumb,,"Simon/Rokusho: Choose a fallback action source when the current speciality-cycle entry cannot be used directly. This scans the 4-byte priority list in fight_information and falls back to Fight_SelectActionSource(bot, 0) when no usable entry exists."
+0x08015488,Fight_SelectFallbackActionFromPriorityList,func_thumb,,"[MF] [MF] CPU com B+0xC1==0x50 sorteia Fight_TrySelectMedaforceAction(bot,0,1)"
 0x080154E0,Fight_IsPartActionLockedByPendingEffect,func_thumb,,Simon/Rokusho: Return nonzero when pending effect kind 0x2B targets the requested part slot. This is used by action availability and description UI to show an override/locked state for that slot.
 0x08015508,Fight_IsHeadActionUnavailable,func_thumb,,Simon/Rokusho
 0x08015528,Fight_IsPartActionUnavailable,func_thumb,,Simon/Rokusho
@@ -3211,6 +3213,7 @@ address,name,kind,count,comment
 0x083B722C,gTextAttackTypeDesc,ptr,8,tabela de texto: Descrições dos ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B74B8,gTextMedaforceNames,ptr,50,tabela de texto: Nomes das Medaforças; 50 entradas (o script de traducao usava 52 e invadia MedaforceDesc); fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B7580,gTextMedaforceDesc,ptr,53,tabela de texto: Descrições das Medaforças; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B7E54,medaforce_descriptor_table,data,,[MF] [MF] 6 B por medaforca (52 ids); byte0 = id/nome; bytes 1..5 nao identificados
 0x083B7F8C,medal_medaforce_list,label,,Simon/Rokusho em 0x083B7FAC
 0x083B80C0,gTextMedaforceDesc1,ptr,5,tabela de texto: Descrições das Medaforças1; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B82F0,gTextSpecialAttackDesc,ptr,8,tabela de texto: Descrições de ataques; fonte: dump_text_clean_v2.py (traducao PT-BR)
