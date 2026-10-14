@@ -150,7 +150,7 @@ probabilidade, não confirmado. Pendente: ler quem lê F+0xA9..0xAD (bot+0xA9..0
 ## 6. Quem zera B+0xC1 (medidor)
 
 - `Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction` 0x08031918 (decompile desta rodada): grava
-  `F+0x164 = 1`, `B+0xA8 = desc_id + 0x50`, zera `B+0xE0` e `B+0xE1`, `GM = 9`, `GS = 0`. NÃO escreve B+0xC1.
+  `F+0x164 = 1`, `F+0xA8 = B+0xA8 + 0x50` (QA4; antes escrito como B+0xA8, errado), zera `B+0xE0` e `B+0xE1`, `GM = 9`, `GS = 0`. NÃO escreve B+0xC1.
 - Gate `Fight_TrySelectMedaforceAction` 0x080155A8 só lê B+0xC1 (== 0x50).
 - `Fight_AddMedaforceChargeFromAction` 0x0803628C só soma (teto 0x50).
 - Resultado: quem zera B+0xC1 ao usar ainda NÃO foi achado. Próximo passo: achar escritas em `0x03000590 + bot*0x100 + 0xC1`
