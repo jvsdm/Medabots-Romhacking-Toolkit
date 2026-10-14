@@ -70,6 +70,7 @@ F	0x08003A38	InitializeBattleStatusScreen
 F	0x08003EE0	Gfx_ResetTileState
 F	0x0800406C	InitializeBattleSceneScreen
 F	0x080048D8	FightPreview_CachePlayerLoadoutForScene
+F	0x08004A2A	Fight_RefreshCaller_Unresolved
 F	0x08004DB4	Battle_SlotDrawStep
 F	0x08004E74	Pair_TickUpCounterIfFlag
 F	0x08004E98	ObjectSlots_Init4
@@ -298,6 +299,7 @@ F	0x08010BD0	Fight_ShowPostBattleTextForCharacter
 F	0x08010C50	Fight_HandleRewardGrantOrSkipByPostBattleFlags
 L	0x08010CCA	Fight_RewardAddsPartToInventory_Call
 F	0x08011344	Scene_InitBgAndLoadRecord
+F	0x08011490	Fight_MedalStageUpSeqStep
 F	0x08011500	Gfx_ResetBgLayersAndSong
 F	0x08011644	Fx_InitBlendTableAndTick
 F	0x08011764	Fight_InitBotPartPanel
@@ -2435,7 +2437,7 @@ F	0x0805C17C	Screen_SceneInit
 F	0x0805C2DC	Save_InitScreen
 F	0x0805C410	Screen_StepCounterAndDrawCell
 F	0x0805C454	Menu_TickCursorInputAndConfirm
-F	0x0805C574	Menu_ThreeRowCursorInput
+F	0x0805C574	Options_ThreeRowMenuStep
 F	0x0805C7F8	Gfx_FadeTransitionStep
 F	0x0805C8EC	TitleMenu_SubState7_NameEntry
 F	0x0805C950	TitleMenu_SubState8_Continue
@@ -3033,6 +3035,7 @@ L	0x0807FDB0	gGfx_PartLarge_DescTable_Sz2
 L	0x08080550	gGfx_PartLarge_DescTable_Sz3
 L	0x08081490	sCompositePreviewMirroredDescriptorMap
 L	0x080814C4	gMotionData
+L	0x080AF8CA	Opt_SongTable
 L	0x080AFC18	StateTable_CopySrc_63C
 L	0x080AFC88	LinkMenu15StepTable
 L	0x080AFCC0	LinkMenu14SubstateTable

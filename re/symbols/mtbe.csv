@@ -73,6 +73,7 @@ address,name,kind,count,comment
 0x0300059A,battle_robot_1_name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030005A8,battle_robot_1_autobattle_rotation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030005B0,battle_robot_1_medal_stats,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x030005D0,gBotBlock0Ident,data,,[PB] [GH-PB] = bloco do bot 0 +0x40 (destino de Fight_CopyBotIdentityRecords)
 0x030005D3,battle_robot_1_head_partId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030005D8,battle_robot_1_head_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030005D9,battle_robot_1_head_animation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -102,7 +103,7 @@ address,name,kind,count,comment
 0x03000890,gEnemyBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
 0x03000B90,gLinkLocalSlotIndex,label,,[MN] [MN] byte: indice do slot local usado no teste de reset por link (0 -> le halfword em +8 e +0xC conforme); provavel
 0x03000B94,SAVE_OPT_C,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b3-4 (validado <3; nome nao confirmado)
-0x03000BE0,gPartRoster_BuildRecords,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleMedalStateRecord[30][1920] (antes: gBattleMedalStateTable)"
+0x03000BE0,gMedalRecords_RAM,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleMedalStateRecord[30][1920] (antes: gBattleMedalStateTable) (antes: gPartRoster_BuildRecords)"
 0x03000BE1,first_medal_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BE4,first_medal_attribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BE5,first_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -118,7 +119,7 @@ address,name,kind,count,comment
 0x03001790,keys_prev,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: pressed_buttons)"
 0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798)"
 0x030017A0,team_records_9x8,label,,"[PS] [PS] time: 9 registros de 8 B [estado, genero, medalha, cabeca, braco D, braco E, pernas, indice]; confirmado pela troca"
-0x03001800,gFightInformation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information) (antes: fight_information_template)"
+0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information) (antes: fight_information_template) (antes: gFightInformation)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -185,8 +186,9 @@ address,name,kind,count,comment
 0x03001968,won_bodypart_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03001969,won_bodypart_id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300196A,won_bodypart_is_new,label,,"[RW] GH-RW confirmado: 1 se Inv_ReadCounter16 da peca == 0 (peca nova), senao nibble de E+0xC2E"
-0x0300196C,fight_post_battle_xp,label,,"[RW] GH-RW confirmado: u16 XP do fim da luta (somado por Battle_SumPartBytesToCtx16C, lido por Fight_AwardPartExperience)"
-0x03001974,gFight_MedaforceFlag,label,,[FI] flag medaforca conf
+0x0300196C,fi_XP_pool,label,,"[RW] GH-RW confirmado: u16 XP do fim da luta (somado por Battle_SumPartBytesToCtx16C, lido por Fight_AwardPartExperience) (antes: fight_post_battle_xp)"
+0x0300196F,fi_stage_flag,data,,[XP] flag de estagio-up por bot (fi+0x16F+8i); lido por Fight_MedalStageUpSeqStep
+0x03001974,fi_medaforce_flag,label,,[FI] flag medaforca conf (antes: gFight_MedaforceFlag)
 0x03001987,won_bodypart_slot,label,,[RW] GH-RW confirmado: slot do bot inimigo (3..5) de onde saiu a peca sorteada
 0x030019A0,gFight_BarValue,label,,[FI] barra 0..0x60 provavel
 0x030019AE,gFight_Flag1AE,label,,[FI] flag provavel
@@ -433,6 +435,7 @@ address,name,kind,count,comment
 0x08003EE0,Gfx_ResetTileState,func_thumb,,[provavel] CpuFastSet + Tile_ClearSlots reset
 0x0800406C,InitializeBattleSceneScreen,func_thumb,,"Simon/Rokusho: Initialize the main battle scene screen. Configures BG layers, decompresses battle scene graphics/tilemaps, loads composite battle sprite resources, builds the sprite objects, initializes supporting scene widgets, and advances the current game subroutine state."
 0x080048D8,FightPreview_CachePlayerLoadoutForScene,func_thumb,,"Simon/Rokusho: Cache the current player-side preview loadout into fight_information.preview_loadout_cache. For each of the three player preview bots, store the leg icon index plus the four part ids used later by the preview/battle-intro scene."
+0x08004A2A,Fight_RefreshCaller_Unresolved,func_thumb,,[PB] [GH-PB] BL para Fight_RefreshBotPartRecords sem funcao no Ghidra (miolo nao detectado). Pendente
 0x08004DB4,Battle_SlotDrawStep,func_thumb,,passo de desenho dos slots de batalha por frame; provavel
 0x08004E74,Pair_TickUpCounterIfFlag,func_thumb,,[R0] incrementa contador e seguinte se bit0 de flag (provavel) (antes: tick_par_contador_b)
 0x08004E98,ObjectSlots_Init4,func_thumb,,[R0] inicializa 4 slots de objeto (provavel) (antes: init_4_slots)
@@ -661,6 +664,7 @@ address,name,kind,count,comment
 0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,,Simon/Rokusho: Post-battle reward handler keyed by gPostBattleModeFlags low nibble. Low nibble 0 runs the normal reward grant path; nonzero clears the mode byte and jumps directly to subroutine 0x3E.
 0x08010CCA,Fight_RewardAddsPartToInventory_Call,label,,[IN] [IN] chamada Inv_AddCountClamp99 no fim da recompensa de batalha
 0x08011344,Scene_InitBgAndLoadRecord,func_thumb,,reset de BG e cópia de registro de 4 bytes; provável (registro não identificado)
+0x08011490,Fight_MedalStageUpSeqStep,func_thumb,,[XP] provavel: le flag de estagio fi+0x16F+8*cnt (cnt=fi+0x186); grava 0x4E em 0x0300137C; cnt==3 -> 0x5B (nome provisorio)
 0x08011500,Gfx_ResetBgLayersAndSong,func_thumb,,"pede musica 1, limpa tiles/slots e mapas BG0-BG3; provavel"
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
 0x08011764,Fight_InitBotPartPanel,func_thumb,,provável: monta painel de peças do bot na luta
@@ -2799,7 +2803,7 @@ address,name,kind,count,comment
 0x0805C2DC,Save_InitScreen,func_thumb,,"[provavel] init de tela de save: DISPCNT, Save_ClearAndRetryLoad, Palette_FadeBlockUpload, Screen_HighlightBitmaskGrid(3)"
 0x0805C410,Screen_StepCounterAndDrawCell,func_thumb,,contador por Anim_StepRecordCounter; redesenha celula e liga BG2; provavel
 0x0805C454,Menu_TickCursorInputAndConfirm,func_thumb,,"[provavel] cursor 3 posicoes, botoes 0x40/0x80 mudam com SFX 2; botao 1 SFX 4 confirma na posicao 2"
-0x0805C574,Menu_ThreeRowCursorInput,func_thumb,,provável: cursor de 3 linhas com A/B e direcionais
+0x0805C574,Options_ThreeRowMenuStep,func_thumb,,provável: cursor de 3 linhas com A/B e direcionais (antes: Menu_ThreeRowCursorInput)
 0x0805C7F8,Gfx_FadeTransitionStep,func_thumb,,[FL10] fade de paleta 9 passos com 0x7FFF; upload de bloco; posta 7/8 (provável)
 0x0805C8EC,TitleMenu_SubState7_NameEntry,func_thumb,,[TL] GS 7 (NEW GAME); sem função no Ghidra; nome provável (tela de nome)
 0x0805C950,TitleMenu_SubState8_Continue,func_thumb,,[TL] GS 8 (CONTINUE); sem função no Ghidra; nome provável
@@ -3397,6 +3401,7 @@ address,name,kind,count,comment
 0x08080550,gGfx_PartLarge_DescTable_Sz3,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable (antes: gPreviewLegs)
 0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
 0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
+0x080AF8CA,Opt_SongTable,data,,"[OP] [OP] bytes 9,10,11,9; indice = valor da opcao 0x03000B94; confirmado (leitura da ROM)"
 0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C)
 0x080AFC88,LinkMenu15StepTable,data,,[LK2] [GH-LK2] tabela de 8 passos do menu 0x15 (sub 0..7); confirmado
 0x080AFCC0,LinkMenu14SubstateTable,data,,"[LK2] [GH-LK2] 13 ponteiros de handler de comando de link (indice=comando, provavel); referenciada por 0x08066860 (antes: LinkCommandHandlerTable)"
