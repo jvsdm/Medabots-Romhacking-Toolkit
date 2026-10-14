@@ -1,0 +1,71 @@
+address,name,kind,comment
+0x03001800,gFight_Base,label,fight_information base (FI.md tabela 1)
+0x03001808,gFight_StepSceneIndex,label,u32 indice de passo de cena (JT2) provavel
+0x03001828,gFight_TeamSupportRecord,label,registro 8B x N (+0x8A) CONFLITO com +0x2A
+0x0300182A,gFight_TargetDamageRecord,label,registro 8B x N (+0x89) provavel
+0x03001838,gFight_GfxIndex,label,indice gfx tabela 0x083B2628 provavel
+0x03001851,gFight_EffectMode,label,modo de efeito 0..3 (HA4 S_0) conf
+0x03001852,gFight_PartModeCopy,label,copia do byte +0x49 da peca provavel
+0x03001853,gFight_SideBPhase,label,fase do lado B provavel
+0x03001855,gFight_SecondaryPhaseMask,label,bitmask fase secundaria provavel
+0x03001857,gFight_TimeUp,label,tempo esgotado provavel
+0x03001858,gFight_MedaforceEligible,label,elegibilidade medaforce provavel
+0x0300185B,gFight_EnemyBotCount,label,numero de bots inimigos provavel
+0x0300185C,gFight_ActionBot,label,bot da acao provavel
+0x0300185D,gFight_ActionPartMinus1,label,peca-1 da acao provavel
+0x0300185E,gFight_TargetSlotPlus1,label,alvo+1 provavel
+0x03001860,gFight_OpponentSideBase,label,lado base do alvo (0/3) conf
+0x03001861,gFight_TargetCandidates,label,3 candidatos de slot provavel
+0x03001864,gFight_PriorityListLine,label,linha de prioridade 4B provavel CONFLITO
+0x03001887,gFight_ActiveBot,label,bot ativo (atacante) conf
+0x03001888,gFight_TargetBot,label,bot alvo conf
+0x03001889,gFight_TargetSlotIndex,label,slot alvo i provavel
+0x0300188A,gFight_TeamRecordBranch,label,ramo do registro do time provavel
+0x0300188B,gFight_ChosenPart,label,peca escolhida 0..3 provavel
+0x0300189C,gFight_TableCIndex,label,indice tabela C substates provavel
+0x0300189D,gFight_TableCArg,label,argumento tabela C provavel
+0x0300189E,gFight_TableCExitFlag,label,flag de saida tabela C provavel
+0x030018A1,gFight_TableAIndex,label,indice tabela A substates conf
+0x030018A2,gFight_TableACode,label,code tabela A conf
+0x030018A6,gFight_MessageCode,label,codigo de passo/mensagem conf
+0x030018A7,gFight_PartIndex,label,peca k 0..3 provavel
+0x030018A8,gFight_ScriptOrTechnique,label,CONFLITO: indice de roteiro vs tecnica
+0x030018AA,gFight_StepSubstate,label,passo da acao conf
+0x030018B5,gFight_HandlerDone,label,handler concluido conf
+0x030018BC,gFight_ScriptCursor,label,cursor do roteiro u16 provavel
+0x030018C8,gFight_CombatValue,label,valor de combate (dano) u16 provavel
+0x030018D0,gFight_RepairPart,label,peca do reparo provavel
+0x030018D1,gFight_PartBreakFlag,label,peca quebra provavel
+0x030018D2,gFight_TargetPartFlags,label,3 bytes alvo+peca conf (decompile BP_08)
+0x030018D6,gFight_TargetDamage,label,3 u16 dano por alvo conf (decompile BP_08) CONFLITO AS2
+0x030018DE,gFight_FollowUpBot,label,bot de follow-up provavel
+0x030018DF,gFight_FollowUpType,label,tipo de follow-up provavel
+0x030018E8,gFight_RosTotal,label,total de ROS u16 provavel
+0x030018EA,gFight_PreDamage,label,pre-dano s16 provavel
+0x030018EC,gFight_AttackAccum,label,acumulador de dano u16 provavel
+0x030018FD,gFight_CondFlag,label,flag de condicao (HO1) conf
+0x03001900,gFight_ObjScriptCursor,label,cursor script de objeto provavel
+0x03001902,gFight_ObjScriptArgs,label,argumentos halfword provavel
+0x03001954,gFight_SideZeroX,label,posicao bot lado 0 provavel
+0x03001958,gFight_SideOneX,label,posicao bot lado 1 provavel
+0x03001964,gFight_MedaforceOk,label,flag medaforce provavel
+0x03001965,gFight_LevelUpFlag,label,flag level-up provavel
+0x0300196C,gFight_XpRemaining,label,XP restante u16 provavel
+0x03001974,gFight_MedaforceFlag,label,flag medaforca conf
+0x030019A0,gFight_BarValue,label,barra 0..0x60 provavel
+0x030019AE,gFight_Flag1AE,label,flag provavel
+0x03002040,gFight_GfxHalfword,label,halfword gfx provavel
+0x03000440,gCtx_Base,label,ctx battle animation base
+0x030004C4,gCtx_CounterAnim,label,contador animacao provavel CONFLITO com fi+0x84
+0x030004C6,gCtx_WaitTimer,label,timer de espera u16 conf
+0x030004C9,gCtx_FreeFlag,label,flag ctx livre provavel
+0x030004DC,gCtx_TeamWinner,label,vencedor de Fight_EvaluateTeamWinState conf
+0x03000579,gCtx_SceneSelector,label,seletor de cena conf
+0x0300057A,gCtx_StepByte,label,byte de estado conf
+0x0300640A,gEvt_EncounterTemplateId,label,id de template de encontro provavel
+0x0300640D,gEvt_EncounterFlag,label,flag sorteio aberta provavel
+0x0300643F,gEvt_RepeatScene,label,repete despacho de cena provavel
+0x03006469,gEvt_ContinuationPending,label,continuacao pendente conf
+0x0300646A,gEvt_ContinuationCursor,label,cursor continuacao provavel
+0x03006473,gEvt_SubState,label,subestado do opcode conf
+0x03006472,gEvt_ContinuationIndex,label,indice table2 (E+0xC92) conf

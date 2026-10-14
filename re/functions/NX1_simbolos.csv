@@ -1,0 +1,14 @@
+# address,name,kind,comment
+0x0800D9DC,Menu5_Dispatch_PartsScreens,func_thumb,despachante do menu 5 (pecas); menu_list[5]
+0x0800EB34,SceneStep_Caller_ACE14,func_thumb,passo 66 do menu 5 (tabela 0x083ACCD4)
+0x0800C7E4,debug_option4_item_entry,func_thumb,opcao Item do menu de debug (tabela pelo byte +0x33)
+0x0800CE70,debug_option6_mdlpic_entry,func_thumb,opcao Mdlpic do menu de debug (tabela pelo byte +0x33)
+0x0801013C,PartDetail_DispatchModeHandler,func_thumb,le modo em 0x03002D59; retorna modo==3
+0x08010264,Scene_GsDispatch_Menu6_Encounter,func_thumb,menu 6 (encontro); despacha por GS; DMA se GS==2
+0x08012B94,Battle_CpuActionSelectStep,func_thumb,driver da escolha da CPU (passo GS=3 de 0x083AD080)
+0x080332EC,Fight_ValidatePart_ClearPartByte0F,func_thumb,validacao de tecnica; zera campo +0x0F do registro de peca
+0x08033CD0,Fight_ResolveDefenderRosPhase,func_thumb,chama ResolveDefenderRosReductions e AdvanceActionScriptCursor
+0x0803C0CC,Fight_ScrollSlotPhase_C0CC,func_thumb,fase de rolagem dos slots (le AFC2C)
+0x0803D538,Scene_GsDispatch_Menu10_Link,func_thumb,menu 10 (link); despacha por GS; tabela 0x083AFC78
+0x08073AB8,Sound_DmaFifo_SetupChannel,func_thumb,renomeada de snd_dma_channel_setup; grava DMA0..3 em 0x040000B0+12*param
+0x0807C918,Sound_TimerSlot_Select,func_thumb,renomeada de bios_store_idx; grava TMxCNT_L (0x04000100+idx*4); miolo em 0x0807C92C
