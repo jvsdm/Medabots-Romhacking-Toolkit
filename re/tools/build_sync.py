@@ -43,6 +43,7 @@ SPLIT_LISTS = ["QA5_criar.txt"]
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 GENERIC = re.compile(r"^(FUN|sub|DAT|LAB|PTR|thunk_FUN)_", re.I)
 DATA_KINDS = {"data", "ptr", "label", "table"}
+CONF = re.compile(r"confirmad|provav|provável|chute|confirmed|probable|guess", re.I)
 
 
 def norm(addr, func):
@@ -110,6 +111,14 @@ def main():
             body.append(r)
             by_addr[key] = r
             added += 1
+        elif r[1] == name:
+            # Revisão que só confirma o nome: grava a confiança no comentário se ele ainda não tiver uma.
+            while len(r) < 5:
+                r.append("")
+            old_c = " ".join(r[3:])
+            upgrade = re.search(r"confirmad|provav|provável", comment, re.I) and re.search(r"chute|guess", old_c, re.I)                 and prefix not in old_c
+            if CONF.search(comment) and (not CONF.search(old_c) or upgrade):
+                r[4] = (r[4] + " [%s] %s" % (prefix, comment)).strip()
         elif r[1] != name and key not in KEEP_MTBE:
             while len(r) < 5:
                 r.append("")
