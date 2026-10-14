@@ -2662,19 +2662,25 @@ F	0x0806096C	Screen_EnableBgLayersInit
 F	0x080609D4	Anim_CountdownAndSpawnObject
 F	0x08060A1C	Anim_UpdateStepAndSprites
 F	0x08060A54	Menu_CursorStepSfxAdvance
+F	0x08060AF4	Screen_TickStateMachineFrame
+F	0x08060B28	Screen_FadeOutAndTransition
 F	0x08060BE4	Screen_HighlightOption4
 F	0x08060D28	Text_CopyUntilFF
 F	0x08060D6C	Menu_Shop_Main
+F	0x08060DD4	Screen_InitLoadLZ77TilesAndMaps
 F	0x08060F78	Screen_InitNumberDisplay
+F	0x0806113C	Screen_EnableBgLayersAndClearVram
 F	0x080611E8	Menu_TickOptionFadeTransition
 F	0x080612E8	Text_CopyAndDispatchStep
 F	0x08061338	Menu_HandleCursorInput3Options
+F	0x08061440	Screen_TickStateMachineStep
 F	0x08061468	Gfx_FadeOutStepAndDisableBg
 F	0x080614DC	Gfx_WipeTransitionStep
 F	0x08061594	Text_RunMessageStep
 F	0x080615D4	Menu_OptionCursorStep
 F	0x08061860	Menu_HighlightOptionStep
 F	0x080618B4	Screen_TickFadeOutAndReset
+F	0x08061998	Screen_ClearPairsAndAdvance
 F	0x080619B0	Shop_InitPartSelectionScreen
 F	0x08061CE0	Shop_RefreshPartListScreen
 F	0x08061E98	Shop_FadeInStepThenBlink
@@ -2682,7 +2688,9 @@ F	0x08061F00	Shop_TickBuyQuantityMenu
 F	0x08062484	Fight_PreviewFadeThenInit
 F	0x080625F0	Screen_DispatchStateAndCount
 F	0x08062614	Shop_CommitBuySellTransaction
+F	0x08062754	Screen_TickThenPickNextState
 F	0x080627A0	Gfx_FadeThenPreviewInit
+F	0x0806280C	Screen_SetupNumberDisplay
 F	0x08062970	Shop_FadeInStep
 F	0x080629DC	Dispatch_CallHandlerByByteIndex4
 F	0x08062A10	BattlePanel_InitOrRedraw
@@ -2719,6 +2727,7 @@ F	0x08064524	Flow_StepSfxCommit
 F	0x080645A0	Obj_StepThenTimerOnMatch
 F	0x08064610	Anim_WaitCounterThenAdvance
 F	0x0806463C	Dispatch_StateTableWithCopy
+F	0x080646C4	Screen_InitLoadBgAndObjTimer
 F	0x08064880	Anim_StepOscillatingSprite
 F	0x080648E0	Anim_UpdateBlinkFrameAndTimer
 F	0x0806495C	Fx_TickBlinkFrameAndSetOam
@@ -2731,7 +2740,13 @@ F	0x08064C4C	Battle_SetDefaultsD
 F	0x08064C6C	Battle_DrawPartNameSprites
 F	0x08064E18	Fight_BuildActiveSlotList
 F	0x08064EB4	Screen_InitLoadAssetsB
+F	0x08065074	PartGrid_InitSlotsAndDraw
 F	0x08065198	Anim_PaletteFadeThenSpawn
+F	0x08065208	PartGrid_HandleCursorStep
+F	0x080654C0	Screen_FadeOutToStateSix
+F	0x0806552C	Screen_FadeOutToModeTwo
+F	0x08065590	PartGrid_WaitInputOrExit
+F	0x080655FC	PartGrid_HandleSelectionAction
 F	0x080656DC	Obj_InitTimerRecord
 F	0x08065710	Anim_StepRecordCounter
 F	0x08065790	LinkMenu15Step0
@@ -2783,7 +2798,12 @@ F	0x080674BC	draw_text_rtl_tiles
 F	0x08067524	bg_copy_panel_rows
 F	0x08067578	bg_scroll_rows_up
 F	0x080675D4	Screen_InitRingSpritesSong5
+F	0x08067870	Screen_PointRingFadeStep
 F	0x080678D4	Menu_RingPanelColumnStep
+F	0x08067974	Screen_ScrollTextRowsStep
+F	0x08067A70	Screen_ScrollRowsUpPhase
+F	0x08067ACC	Screen_ClearRowsAndFadeMusic
+F	0x08067B28	Screen_FadeAndWaitMusicToMode12
 F	0x08067BDC	set_state_timed
 F	0x08067C04	fx_particles_blend_step
 F	0x08067D00	Screen_LoadSceneWithSong
@@ -2833,6 +2853,7 @@ F	0x0806A3C4	scene_sequence_a
 F	0x0806A654	scene_sequence_b
 F	0x0806A718	wait_gate_0xf1
 F	0x0806A748	Battle_EmitBotSpritesInDepthOrder
+F	0x0806AA10	Battle_AdvanceBotPartTimerByTable
 F	0x0806ADB0	Battle_UpdateCompositeBotMotion
 F	0x0806B01C	slots_move_group3
 F	0x0806B0D4	slots_update_anim
@@ -2847,6 +2868,8 @@ F	0x0806B820	Screen_InitObjectSlotsLz77
 L	0x0806B826	Screen_InitObjectSlotsLz77_AltEntry_806b826
 L	0x0806B8CE	TeamSlots_WriteFi41_Candidate
 L	0x0806BC48	Fight_TickBattleFrame
+F	0x0806BC94	Battle_EffectFallPhase1Step
+F	0x0806BCC4	Battle_EffectPhase2Step
 F	0x0806BCFC	Fx_StepTableB_Check
 F	0x0806BD3C	Screen_ResetDisplayAndStopSong
 F	0x0806BD70	dispatch_state_8
@@ -2880,7 +2903,9 @@ F	0x0806D7A0	Gfx_LoadScreenLZ77Assets
 F	0x0806D8AC	Battle_SetupRenderSlots
 F	0x0806D9A8	Battle_IntroSetupStep
 F	0x0806DAA4	Screen_IntroTimeline
+F	0x0806DCC0	Battle_InitScreenAndSlots
 F	0x0806DE0C	battle_effects_5_slots_update
+F	0x0806DE9C	Battle_BuildBotSpriteOam
 F	0x0806E10C	battle_slot_init
 F	0x0806E184	Boot_SubState2_WaitFxStep
 F	0x0806E2A0	Screen_InitRowBufferAndFx
@@ -3871,33 +3896,13 @@ C	0x0805FC58
 C	0x0805FFF8
 C	0x08060280
 C	0x08060688
-C	0x08060AF4
-C	0x08060B28
-C	0x08060DD4
-C	0x0806113C
-C	0x08061440
 C	0x080617E0
 C	0x08061958
-C	0x08061998
-C	0x08062754
-C	0x0806280C
 C	0x08063948
-C	0x080646C4
 C	0x08064A08
 C	0x08064B90
 C	0x08064BBC
 C	0x08064DB4
-C	0x08065074
-C	0x08065208
-C	0x080654C0
-C	0x0806552C
-C	0x08065590
-C	0x080655FC
-C	0x08067870
-C	0x08067974
-C	0x08067A70
-C	0x08067ACC
-C	0x08067B28
 C	0x08067B9C
 C	0x08068920
 C	0x08068924
@@ -3913,7 +3918,6 @@ C	0x0806920C
 C	0x08069258
 C	0x080692A8
 C	0x080692EC
-C	0x0806AA10
 C	0x0806B134
 C	0x0806B1FC
 C	0x0806B248
@@ -3921,13 +3925,9 @@ C	0x0806B3D8
 C	0x0806BB24
 C	0x0806BB44
 C	0x0806BB64
-C	0x0806BC94
-C	0x0806BCC4
 C	0x0806D588
 C	0x0806DBFC
 C	0x0806DC7C
-C	0x0806DCC0
-C	0x0806DE9C
 C	0x0806E038
 C	0x0806E074
 C	0x0806E130

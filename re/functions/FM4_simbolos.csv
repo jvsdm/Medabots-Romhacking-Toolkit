@@ -1,0 +1,13 @@
+# address,name,kind,comment
+0x083AC404,MainState0_Menu1_SubTable,table,"[FM4] 12 entradas: 0=0x080027DC init; 1=0x080028AC reveal; 2=0x08002A2C cursor/controle; 3=0x08002AF8 fecha (faixas); 4,5=NoOp; 6=0x08002C34 quadro do cursor; 7=0x08002D48 wipe; 8=0x08002DF4 slide; 9=0x08002EC4 destino por cursor (confirmado); 10,11=NoOp"
+0x08002A2C,MainState0_Menu1_Sub2_CursorInput,func_thumb,"[FM4] sub 2 da tela de B: cima/baixo muda cursor ctx+0x8E&3; A -> sub 6; B -> fade e sub 3 (confirmado); nome do sync Menu_CursorStepAndConfirm"
+0x08002AF8,MainState0_Menu1_Sub3_CloseStrips,func_thumb,"[FM4] sub 3 (fechar tela de B): faixas do mapa em ordem inversa; NAO grava gMainState/menu (saida pendente); nome do sync Gfx_BgStripeStep"
+0x08002EC4,MenuB_Sub9_ExecRow,func_thumb,"[FM4] sub 9 da tela de B: destino pelo cursor. 0=gMainState0/menu2 (MEDAWATCH, FUN_08003374); 1=gMainState2/menu4 (bolsa ITEM); 2=Menu_SetStateByArg01(1) -> gMainState1/menu2 (overlay VEICULO); 3=gMainState2/menu5 (SALVAR, provavel). RENOMEADO de FUN_08002ec4"
+0x08003374,MainState0_Menu2_Dispatch,func_thumb,"[FM4] despachante do menu 2 de MainState0 (MEDAWATCH): CallViaR0 de 0x083AC454[gamestate_subroutine]; sem nome no Ghidra antes"
+0x083AC454,MainState0_Menu2_SubTable,table,"[FM4] tabela do menu 2 de MainState0: 0=0x08003394 Gfx_InitBgLayersAndEnableDisplay; 1=0x080034A4; 2=0x08003504; 3=0x08003620; 4=0x08003654; 5=0x080036A8; 6,7=NoOp; 8=0x080036C8; 9=0x080036F4"
+0x08003394,MainState0_Menu2_Sub0_InitBg,func_thumb,"[FM4] sub 0 do menu 2 (MEDAWATCH): init de BG e DISPCNT, sub+1 (confirmado no decompile)"
+0x0804765C,Menu_SetStateByArg01,func_thumb,"[FM4] arg 1 (confirmado): gMainState 0x0300178C=1; gamestate_menu 0x03002B8C=2; sub=0 -> overlay de VEICULO (MainState1 menu 2). arg 0: nao lido. Nome do sync mantido"
+0x0805D704,MainState2_Menu5_Dispatch,func_thumb,"[FM4] despachante do menu 5 de MainState2 (SALVAR provavel): tabela 0x08483670[gamestate_subroutine]"
+0x08483670,MainState2_Menu5_SubTable,table,"[FM4] tabela do menu 5 de MainState2: 0=0x0805D750; 1=0x0805D790; 2=0x0805D860; 3=0x0805DA14; 4=0x0805DAB0; 5=0x0805DAD4"
+0x0805D750,MainState2_Menu5_Sub0_ClearBuffer,func_thumb,"[FM4] sub 0 do menu 5 (SALVAR provavel): limpa buffer, DISPCNT=0x160, sub+1"
+0x08047C00,FieldMenu_CloseChoice_Provavel,func_thumb,"[FM4] chamado pelos saidas 0x0D/0x0F (FM3); decompile: chama Overworld_NoOpStateHandler e zera dois pares u16 (confirmado); nome do sync mantido"

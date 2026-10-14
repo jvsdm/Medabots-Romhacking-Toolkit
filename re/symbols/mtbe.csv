@@ -3043,19 +3043,25 @@ address,name,kind,count,comment
 0x080609D4,Anim_CountdownAndSpawnObject,func_thumb,,"[provavel] contagem regressiva em byte; ao zerar Obj_InitSlotAndLoad(1,2,0)"
 0x08060A1C,Anim_UpdateStepAndSprites,func_thumb,,passo de state machine por ctx+0x17 e atualizacao de sprites; provavel
 0x08060A54,Menu_CursorStepSfxAdvance,func_thumb,,[FS8] [FS8] provavel: Shop_MoveCursorByDpad (nome do callee e chute em R3) + SFX 4/5 + estado. Entrada 0x08483848
+0x08060AF4,Screen_TickStateMachineFrame,func_thumb,,[FS9] provavel: tick de quadro + StateMachine_DispatchSub; tabela 0x0848384C
+0x08060B28,Screen_FadeOutAndTransition,func_thumb,,[FS9] provavel: fade 9 passos + transicao de modo 6/5; tabela 0x08483850
 0x08060BE4,Screen_HighlightOption4,func_thumb,,[R3] destaque de 4 opções no tilemap (provavel)
 0x08060D28,Text_CopyUntilFF,func_thumb,,[R3] copia texto até 0xFF (provavel)
 0x08060D6C,Menu_Shop_Main,func_thumb,,"[MU] [MU] MS2[11], cmd 0x03 (loja). Sem funcao no Ghidra; provavel pelo SC.md"
+0x08060DD4,Screen_InitLoadLZ77TilesAndMaps,func_thumb,,"[FS9] provavel: init de tela (VRAM/OAM, LZ77, DISPCNT=0x60); tabela 0x080AFB98"
 0x08060F78,Screen_InitNumberDisplay,func_thumb,,[provavel] 4 sprites + Num_FormatDecimalToGlyphs + Text_LayoutGlyphSprites
+0x0806113C,Screen_EnableBgLayersAndClearVram,func_thumb,,[FS9] confirmado: DISPCNT |= BG1..BG4 + cpufastset; tabela 0x084838AC
 0x080611E8,Menu_TickOptionFadeTransition,func_thumb,,"[provavel] fade de opcao: ate 9 passos de paleta A/B, depois Obj_InitSlotAndLoad e estado 9"
 0x080612E8,Text_CopyAndDispatchStep,func_thumb,,provável: copia texto até 0xFF e roda máquina de estados
 0x08061338,Menu_HandleCursorInput3Options,func_thumb,,"[FL10] lista de 3 opcoes: cima/baixo com volta, A (sfx4) confirma, B (sfx5) cancela (provável)"
+0x08061440,Screen_TickStateMachineStep,func_thumb,,[FS9] provavel: StateMachine_DispatchSub sem paleta; tabela 0x084838BC
 0x08061468,Gfx_FadeOutStepAndDisableBg,func_thumb,,fade em 9 passos e desliga BG em REG_DISPCNT; provavel
 0x080614DC,Gfx_WipeTransitionStep,func_thumb,,"passo de transicao wipe/blend, limite 0x11 (provavel)"
 0x08061594,Text_RunMessageStep,func_thumb,,[provavel] copies 0xFF-terminated text and runs state machine on it
 0x080615D4,Menu_OptionCursorStep,func_thumb,,"menu de 4 opcoes com cursor, A confirma, B cancela; provavel"
 0x08061860,Menu_HighlightOptionStep,func_thumb,,destaque de opção de menu com espera e avanço; provável
 0x080618B4,Screen_TickFadeOutAndReset,func_thumb,,[provavel] fade de 9 passos como Screen_TickFadeOutAndClear; limpa tilemap e variaveis
+0x08061998,Screen_ClearPairsAndAdvance,func_thumb,,[FS9] provavel (trivial): Clear4PairsHalfwords + contador; tabela 0x080AFBA4
 0x080619B0,Shop_InitPartSelectionScreen,func_thumb,,"Simon/Rokusho: Initialize the shop part-selection screen. Builds either the sellable inventory list or the current shop stock list, and computes each listed part's displayed price as RomPartRecord.price_hundreds * 100."
 0x08061CE0,Shop_RefreshPartListScreen,func_thumb,,"[provavel] DISPCNT|=0x1000, desenha lista de pecas da loja e quantidades"
 0x08061E98,Shop_FadeInStepThenBlink,func_thumb,,fade de entrada de 9 passos e Shop_BlinkCursorAttr; provavel; nome Shop a confirmar
@@ -3063,7 +3069,9 @@ address,name,kind,count,comment
 0x08062484,Fight_PreviewFadeThenInit,func_thumb,,provável: fade de 9 passos e init do preview (gShopItems)
 0x080625F0,Screen_DispatchStateAndCount,func_thumb,,[FL10] StateMachine_DispatchStep(+0x1C); contador DAT_08062610++ ao terminar (confirmado)
 0x08062614,Shop_CommitBuySellTransaction,func_thumb,,compra/venda: dinheiro e inventario gInventory; provavel
+0x08062754,Screen_TickThenPickNextState,func_thumb,,[FS9] provavel: tick + escolhe estado 4/5 por flag +0x2A; tabela 0x08483940
 0x080627A0,Gfx_FadeThenPreviewInit,func_thumb,,fade de paleta e depois FightPreview_InitSideState (provavel)
+0x0806280C,Screen_SetupNumberDisplay,func_thumb,,[FS9] provavel: texto numerico em sprites (Num_FormatDecimalToGlyphs); tabela 0x080AFBA0
 0x08062970,Shop_FadeInStep,func_thumb,,[provavel] shop palette fade-in then Shop_BlinkCursorAttr
 0x080629DC,Dispatch_CallHandlerByByteIndex4,func_thumb,,[FR2] provável; despacho por byte para 4 ponteiros via CallViaR0 (FUN_080629dc)
 0x08062A10,BattlePanel_InitOrRedraw,func_thumb,,[R3] inicializa/redesenha painel de peça (chute)
@@ -3100,6 +3108,7 @@ address,name,kind,count,comment
 0x080645A0,Obj_StepThenTimerOnMatch,func_thumb,,[JT3] alvo de 0x0806463C idx 10 (ja existe)
 0x08064610,Anim_WaitCounterThenAdvance,func_thumb,,[JT3] alvo de 0x0806463C idx 11 (ja existe)
 0x0806463C,Dispatch_StateTableWithCopy,func_thumb,,copia tabela para pilha e despacha por índice; provável
+0x080646C4,Screen_InitLoadBgAndObjTimer,func_thumb,,"[FS9] provavel: BG2/BG3CNT, tiles/mapas, Obj_InitTimerRecord 0x10; tabela 0x080AFC48"
 0x08064880,Anim_StepOscillatingSprite,func_thumb,,[provavel] posicao = ctx+0x3A*0x10+0x1B8 com mascara; bit 0x100 pelo bit 0x20
 0x080648E0,Anim_UpdateBlinkFrameAndTimer,func_thumb,,contador de quadros com piscar por bit 0x20; inicia timer; provavel
 0x0806495C,Fx_TickBlinkFrameAndSetOam,func_thumb,,[provavel] frame +0x3A; Anim_StepRecordCounter(+0x50); OAM attr1=frame*0x10+0x1B8; bit 0x100 pelo bit 0x20
@@ -3112,7 +3121,13 @@ address,name,kind,count,comment
 0x08064C6C,Battle_DrawPartNameSprites,func_thumb,,[R3] desenha até 4 nomes de peça com glifos (provavel)
 0x08064E18,Fight_BuildActiveSlotList,func_thumb,,monta lista de 30 slots com bit 0x80 em ctx+0xB0 (provavel)
 0x08064EB4,Screen_InitLoadAssetsB,func_thumb,,[provavel] screen init variant with 2 sprite slots and number draw
+0x08065074,PartGrid_InitSlotsAndDraw,func_thumb,,[FS9] provavel: grade de 16 slots (0xFE vazio) + nomes de peca; tabela 0x08483954
 0x08065198,Anim_PaletteFadeThenSpawn,func_thumb,,[FR2] provável; fade de paleta A/B em 9 passos e depois cria objeto 1 (FUN_08065198)
+0x08065208,PartGrid_HandleCursorStep,func_thumb,,[FS9] provavel: cursor da grade de pecas com sfx 2/4/5; tabela 0x0848395C
+0x080654C0,Screen_FadeOutToStateSix,func_thumb,,[FS9] provavel: fade 9 passos + estado 6; tabela 0x08483960
+0x0806552C,Screen_FadeOutToModeTwo,func_thumb,,[FS9] confirmado: fade 9 passos + MainState_RequestModeTransition(2); tabela 0x08483964
+0x08065590,PartGrid_WaitInputOrExit,func_thumb,,[FS9] provavel: espera tecla (mascara 3) e sai p/ estado 5; tabela 0x08483968
+0x080655FC,PartGrid_HandleSelectionAction,func_thumb,,[FS9] provavel: confirmar peca com checagem de custo >= 100; tabela 0x0848396C
 0x080656DC,Obj_InitTimerRecord,func_thumb,,[R3] inicia registro de temporizador (chute)
 0x08065710,Anim_StepRecordCounter,func_thumb,,"[R3] passo de contador de animação, devolve 1 ao fim (chute)"
 0x08065790,LinkMenu15Step0,func_thumb,,[LK2] [GH-LK2] passo 0 do menu 0x15 (preparo); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step0)
@@ -3164,7 +3179,12 @@ address,name,kind,count,comment
 0x08067524,bg_copy_panel_rows,func_thumb,,[R4] R4: copia 3 linhas de painel p/ tilemap; provavel
 0x08067578,bg_scroll_rows_up,func_thumb,,[R4] R4: rola 3 linhas do tilemap; provavel
 0x080675D4,Screen_InitRingSpritesSong5,func_thumb,,provável: tela com 36 sprites em anel (raio 0x32) e música 5
+0x08067870,Screen_PointRingFadeStep,func_thumb,,[FS9] provavel: PointRing_StepFrame + fade ate 0x41; tabela 0x080B0024
 0x080678D4,Menu_RingPanelColumnStep,func_thumb,,[FL10] impressora letra a letra: 14 colunas por linha; bg_copy_panel_rows ao fim (provável) (antes: Text_TypewriterRowStep)
+0x08067974,Screen_ScrollTextRowsStep,func_thumb,,[FS9] provavel: desenha linha de texto RTL a cada 32 quadros; tabela 0x080B002C
+0x08067A70,Screen_ScrollRowsUpPhase,func_thumb,,[FS9] provavel: bg_scroll_rows_up + avanca fase; tabela 0x080B0030
+0x08067ACC,Screen_ClearRowsAndFadeMusic,func_thumb,,[FS9] provavel: limpa 15 linhas de tilemap + snd_fade_request(0xC0); tabela 0x080B0034
+0x08067B28,Screen_FadeAndWaitMusicToMode12,func_thumb,,"[FS9] provavel: fade /6 ate 0xC1, espera musica parar, modo 0xC; tabela 0x080B0038"
 0x08067BDC,set_state_timed,func_thumb,,"[R4] R4: gMainState=2, timer=0x18; provavel"
 0x08067C04,fx_particles_blend_step,func_thumb,,[R4] R4: 16 particulas com fade BLDCNT; provavel
 0x08067D00,Screen_LoadSceneWithSong,func_thumb,,"monta tela: musica 0x19, tiles LZ77, 16 sprites (provavel)"
@@ -3214,6 +3234,7 @@ address,name,kind,count,comment
 0x0806A654,scene_sequence_b,func_thumb,,[R4] R4: espera 0xB4 quadros e 3 sprites; provavel
 0x0806A718,wait_gate_0xf1,func_thumb,,[R4] R4: timer 0xF1 com pre-condicao; provavel
 0x0806A748,Battle_EmitBotSpritesInDepthOrder,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
+0x0806AA10,Battle_AdvanceBotPartTimerByTable,func_thumb,,[FS9] provavel: avanca +0x1A do bot por tabela; chamado pelo BL de 0x08069212 (FN3 tinha o mesmo nome)
 0x0806ADB0,Battle_UpdateCompositeBotMotion,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
 0x0806B01C,slots_move_group3,func_thumb,,"[R4] R4: move 3 slots grupo, limite -15 em y; provavel"
 0x0806B0D4,slots_update_anim,func_thumb,,[R4] R4: loop de 20 slots com frame e reinicio; provavel
@@ -3228,6 +3249,8 @@ address,name,kind,count,comment
 0x0806B826,Screen_InitObjectSlotsLz77_AltEntry_806b826,label,,[QA5] alvo de desvio/tabela dentro do host (Ghidra: corpo contém; sem BL/prologo PUSH); rotulo
 0x0806B8CE,TeamSlots_WriteFi41_Candidate,label,,[TP] [GH-TP provavel] grava r3 em fi+0x41; escritor da escolha de time? valor/origem aberto
 0x0806BC48,Fight_TickBattleFrame,label,,[confirmado] despachante por quadro: counter_oscillate_x/battle_state_fire/select_entity_max ou battle_phase_spawn_move; depois battle_update_objects etc.; jump table nao recuperado
+0x0806BC94,Battle_EffectFallPhase1Step,func_thumb,,[FS9] provavel: fase 1 de efeito de queda (effect_anim_fall) -> estado 8; tabela 0x08485914
+0x0806BCC4,Battle_EffectPhase2Step,func_thumb,,[FS9] provavel: fase 2 do efeito (effect_anim_phase2) -> estado 8; tabela 0x08485918
 0x0806BCFC,Fx_StepTableB_Check,func_thumb,,provável: checa fx_step_table_b e grava registro de efeito
 0x0806BD3C,Screen_ResetDisplayAndStopSong,func_thumb,,"[FL10] entrada de tela: DAT_0806BD68=0xFF/0x10, REG_DISPCNT mask, snd_song_request(0) (provável)"
 0x0806BD70,dispatch_state_8,func_thumb,,[R4] R4: despacho 8 estados (jumptable nao recuperada); provavel
@@ -3261,7 +3284,9 @@ address,name,kind,count,comment
 0x0806D8AC,Battle_SetupRenderSlots,func_thumb,,[provavel] battle render slot setup by state and REG_DISPCNT layers
 0x0806D9A8,Battle_IntroSetupStep,func_thumb,,[FR2] provável; música 0 + objetos e slots 3/4/7/8 da entrada da batalha (FUN_0806d9a8)
 0x0806DAA4,Screen_IntroTimeline,func_thumb,,linha do tempo de intro com curva de fade e jump table; provável
+0x0806DCC0,Battle_InitScreenAndSlots,func_thumb,,"[FS9] provavel: init da tela de batalha (fx_screen_setup_a, 5 slots, DISPCNT |= 0x1300); tabela 0x0848598C"
 0x0806DE0C,battle_effects_5_slots_update,func_thumb,,[R4] R4: update de 5 efeitos com timer e liberacao via 0806B718; provavel
+0x0806DE9C,Battle_BuildBotSpriteOam,func_thumb,,[FS9] provavel: monta atributos de OAM do bot (contador +0x22 0..0x1E); tabela 0x08485994
 0x0806E10C,battle_slot_init,func_thumb,,"[R4] R4: inicializa slot de batalha (tipo em +0x20, timer zero); confirmado"
 0x0806E184,Boot_SubState2_WaitFxStep,func_thumb,,[TL] boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
 0x0806E2A0,Screen_InitRowBufferAndFx,func_thumb,,"descomprime tiles, copia 20 linhas para buffer, liga BG1 e fx; provavel"
