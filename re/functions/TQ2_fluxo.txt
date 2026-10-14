@@ -1,0 +1,550 @@
+83C6A04 04                  ActionScript_Op04_pendente  <== ENTRADA tec 0 Sword,1 Hammer,2 Rifle,3 ChainGun,4 Laser,5 Beam,6 Missile,7 Napalm,8 Break,9 Press,13 Bug,14 Virus,15 Thunder,16 Freeze,17 Wave,18 Hold,19 Fire,20 Melt,34 AntiAir,35 AntiSea
+83C6A05 03 80818181         escolha por +0xAB: [0]->83C6A0A [1]->83C6A4B [2]->83C6A4B [3]->83C6A4B
+83C6A0B 05                  ActionScript_Op05_pendente
+83C6A0C 03 82818181         escolha por +0xAB: [0]->83C6A11 [1]->83C6A4B [2]->83C6A4B [3]->83C6A4B
+83C6A12 06                  Fight_EnsureSelectedActionMetadata
+83C6A13 07                  FUN_08033A78
+83C6A14 03 83818181         escolha por +0xAB: [0]->83C6A19 [1]->83C6A4B [2]->83C6A4B [3]->83C6A4B
+83C6A1A 08                  FUN_08033A94
+83C6A1B 09                  FUN_08033AB0
+83C6A1C 0B                  Fight_ApplySpecialityDamageFlags
+83C6A1D 0C                  Fight_ComputeTotalRosPhase
+83C6A1E 0D                  FUN_08033C10
+83C6A1F 03 84858585         escolha por +0xAB: [0]->83C6A24 [1]->83C6A2E [2]->83C6A2E [3]->83C6A2E
+83C6A25 0E                  Fight_ApplyPendingEffectStatusFlags
+83C6A26 0F                  Fight_ResolveDefenderRosPhase
+83C6A27 10                  Fight_UpdateActionArgSelectorPhase
+83C6A28 03 86878787         escolha por +0xAB: [0]->83C6A2D [1]->83C6A37 [2]->83C6A37 [3]->83C6A37
+83C6A2F 11                  FUN_08033CF0
+83C6A30 12                  FUN_08033D00
+83C6A31 13                  Fight_SeedPreDamageFromTotalRos
+83C6A32 14                  Fight_AccumulateBaseDamage
+83C6A33 15                  Fight_HandleActionScriptOpcode1D?(nome Ghidra, tabela=0x15)
+83C6A34 16                  Fight_HandleActionScriptOpcode1C?(nome Ghidra, tabela=0x16)
+83C6A35 17                  Fight_MarkDefenderFollowupFromDamageThreshold
+83C6A36 18                  FUN_08034008
+83C6A38 19                  FUN_0803402C
+83C6A39 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6A3A 1B                  FUN_08034074
+83C6A3B 1C                  FUN_08034120
+83C6A3C 22                  FUN_08034288
+83C6A3D 03 88898989         escolha por +0xAB: [0]->83C6A45 [1]->83C6A42 [2]->83C6A42 [3]->83C6A42
+83C6A43 1B                  FUN_08034074
+83C6A44 1C                  FUN_08034120
+83C6A46 1D                  FUN_08034170
+83C6A47 1E                  FUN_080341C0
+83C6A48 1F                  FUN_08034200
+83C6A49 20                  FUN_08034240
+83C6A4A 0A                  Fight_CommitSelectedReferencedBotGraphics
+83C6A4C 21                  FUN_0803426C
+83C6A4D 01                  ActionScript_Op01_pendente
+83C6A4E 01                  ActionScript_Op01_pendente
+83C6A4F 01                  ActionScript_Op01_pendente
+83C6A50 01                  ActionScript_Op01_pendente
+83C6A51 01                  ActionScript_Op01_pendente
+83C6A52 01                  ActionScript_Op01_pendente
+83C6A53 01                  ActionScript_Op01_pendente
+83C6A54 01                  ActionScript_Op01_pendente
+83C6A55 01                  ActionScript_Op01_pendente
+83C6A56 01                  ActionScript_Op01_pendente
+83C6A57 29                  FUN_080343B8  <== ENTRADA tec 10 GrapTrap
+83C6A58 01                  ActionScript_Op01_pendente
+83C6A59 29                  FUN_080343B8  <== ENTRADA tec 11 ShotTrap
+83C6A5A 01                  ActionScript_Op01_pendente
+83C6A5B 29                  FUN_080343B8  <== ENTRADA tec 12 AttackClr
+83C6A5C 01                  ActionScript_Op01_pendente
+83C6A5D 01                  ActionScript_Op01_pendente
+83C6A5E 01                  ActionScript_Op01_pendente
+83C6A5F 01                  ActionScript_Op01_pendente
+83C6A60 01                  ActionScript_Op01_pendente
+83C6A61 01                  ActionScript_Op01_pendente
+83C6A62 01                  ActionScript_Op01_pendente
+83C6A63 01                  ActionScript_Op01_pendente
+83C6A64 01                  ActionScript_Op01_pendente
+83C6A65 2A                  FUN_080343D4  <== ENTRADA tec 21 BreakForm
+83C6A66 01                  ActionScript_Op01_pendente
+83C6A67 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 22 Stability
+83C6A68 08                  FUN_08033A94
+83C6A69 2B                  FUN_080343F0
+83C6A6A 01                  ActionScript_Op01_pendente
+83C6A6B 2C                  FUN_0803440C  <== ENTRADA tec 23 ForceBind
+83C6A6C 01                  ActionScript_Op01_pendente
+83C6A6D 01                  ActionScript_Op01_pendente  <== ENTRADA tec 24 CancelOptic
+83C6A6E 01                  ActionScript_Op01_pendente  <== ENTRADA tec 25 CancelBomb
+83C6A6F 01                  ActionScript_Op01_pendente  <== ENTRADA tec 26 CancelGrav
+83C6A70 2D                  FUN_08034428  <== ENTRADA tec 27 Defence
+83C6A71 01                  ActionScript_Op01_pendente
+83C6A72 2D                  FUN_08034428  <== ENTRADA tec 28 FullBlock
+83C6A73 01                  ActionScript_Op01_pendente
+83C6A74 2D                  FUN_08034428  <== ENTRADA tec 29 HalfBlock
+83C6A75 01                  ActionScript_Op01_pendente
+83C6A76 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 30 Recovery
+83C6A77 08                  FUN_08033A94
+83C6A78 25                  FUN_08034300
+83C6A79 03 80818181         escolha por +0xAB: [0]->83C6A7E [1]->83C6A85 [2]->83C6A85 [3]->83C6A85
+83C6A7F 19                  FUN_0803402C
+83C6A80 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6A81 1B                  FUN_08034074
+83C6A82 1C                  FUN_08034120
+83C6A83 26                  FUN_0803431C
+83C6A84 20                  FUN_08034240
+83C6A86 01                  ActionScript_Op01_pendente
+83C6A87 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 31 AutoRecover
+83C6A88 08                  FUN_08033A94
+83C6A89 2E                  FUN_08034444
+83C6A8A 01                  ActionScript_Op01_pendente
+83C6A8B 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 32 Repair
+83C6A8C 08                  FUN_08033A94
+83C6A8D 27                  FUN_0803435C
+83C6A8E 03 80818181         escolha por +0xAB: [0]->83C6A93 [1]->83C6A9A [2]->83C6A9A [3]->83C6A9A
+83C6A94 19                  FUN_0803402C
+83C6A95 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6A96 1B                  FUN_08034074
+83C6A97 1C                  FUN_08034120
+83C6A98 28                  FUN_08034378
+83C6A99 20                  FUN_08034240
+83C6A9B 01                  ActionScript_Op01_pendente
+83C6A9C 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 33 Reactivate
+83C6A9D 08                  FUN_08033A94
+83C6A9E 2F                  FUN_08034460
+83C6A9F 01                  ActionScript_Op01_pendente
+83C6AA0 01                  ActionScript_Op01_pendente
+83C6AA1 01                  ActionScript_Op01_pendente
+83C6AA2 30                  FUN_0803447C  <== ENTRADA tec 36 Scout
+83C6AA3 01                  ActionScript_Op01_pendente
+83C6AA4 31                  FUN_08034498  <== ENTRADA tec 37 Conceal
+83C6AA5 01                  ActionScript_Op01_pendente
+83C6AA6 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 38 BoostChrg
+83C6AA7 08                  FUN_08033A94
+83C6AA8 32                  FUN_080344B4
+83C6AA9 01                  ActionScript_Op01_pendente
+83C6AAA 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 39 RapidChrg
+83C6AAB 08                  FUN_08033A94
+83C6AAC 33                  FUN_080344D0
+83C6AAD 01                  ActionScript_Op01_pendente
+83C6AAE 01                  ActionScript_Op01_pendente  <== ENTRADA tec 40 AccelChrg
+83C6AAF 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 41 DrainChrg
+83C6AB0 08                  FUN_08033A94
+83C6AB1 34                  FUN_080344EC
+83C6AB2 01                  ActionScript_Op01_pendente
+83C6AB3 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 42 Pushover
+83C6AB4 08                  FUN_08033A94
+83C6AB5 35                  FUN_08034508
+83C6AB6 21                  FUN_0803426C
+83C6AB7 01                  ActionScript_Op01_pendente
+83C6AB8 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 43 Impair
+83C6AB9 08                  FUN_08033A94
+83C6ABA 36                  ActionScript_Op36_CallAF
+83C6ABB 01                  ActionScript_Op01_pendente
+83C6ABC 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 44 Confusion
+83C6ABD 08                  FUN_08033A94
+83C6ABE 37                  ActionScript_Op37_CallAG
+83C6ABF 01                  ActionScript_Op01_pendente
+83C6AC0 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 45 UseDrain
+83C6AC1 08                  FUN_08033A94
+83C6AC2 38                  ActionScript_Op38_CallAH
+83C6AC3 01                  ActionScript_Op01_pendente
+83C6AC4 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 46 NoEscape
+83C6AC5 08                  FUN_08033A94
+83C6AC6 39                  ActionScript_Op39_CallAI
+83C6AC7 01                  ActionScript_Op01_pendente
+83C6AC8 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 47 NoDefense
+83C6AC9 08                  FUN_08033A94
+83C6ACA 39                  ActionScript_Op39_CallAI
+83C6ACB 01                  ActionScript_Op01_pendente
+83C6ACC 05                  ActionScript_Op05_pendente  <== ENTRADA tec 48 Destroy
+83C6ACD 03 82818181         escolha por +0xAB: [0]->83C6AD2 [1]->83C6AFC [2]->83C6AFC [3]->83C6AFC
+83C6AD3 06                  Fight_EnsureSelectedActionMetadata
+83C6AD4 07                  FUN_08033A78
+83C6AD5 03 83818181         escolha por +0xAB: [0]->83C6ADA [1]->83C6AFC [2]->83C6AFC [3]->83C6AFC
+83C6ADB 08                  FUN_08033A94
+83C6ADC 24                  FUN_080342E4
+83C6ADD 03 88818181         escolha por +0xAB: [0]->83C6AE2 [1]->83C6AFC [2]->83C6AFC [3]->83C6AFC
+83C6AE3 0B                  Fight_ApplySpecialityDamageFlags
+83C6AE4 0C                  Fight_ComputeTotalRosPhase
+83C6AE5 0E                  Fight_ApplyPendingEffectStatusFlags
+83C6AE6 0F                  Fight_ResolveDefenderRosPhase
+83C6AE7 10                  Fight_UpdateActionArgSelectorPhase
+83C6AE8 03 86878787         escolha por +0xAB: [0]->83C6AED [1]->83C6AF3 [2]->83C6AF3 [3]->83C6AF3
+83C6AEE 11                  FUN_08033CF0
+83C6AEF 12                  FUN_08033D00
+83C6AF0 13                  Fight_SeedPreDamageFromTotalRos
+83C6AF1 14                  Fight_AccumulateBaseDamage
+83C6AF2 18                  FUN_08034008
+83C6AF4 19                  FUN_0803402C
+83C6AF5 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6AF6 1B                  FUN_08034074
+83C6AF7 1C                  FUN_08034120
+83C6AF8 1D                  FUN_08034170
+83C6AF9 1E                  FUN_080341C0
+83C6AFA 1F                  FUN_08034200
+83C6AFB 20                  FUN_08034240
+83C6AFD 21                  FUN_0803426C
+83C6AFE 01                  ActionScript_Op01_pendente
+83C6AFF 05                  ActionScript_Op05_pendente  <== ENTRADA tec 49 Sacrifice
+83C6B00 03 82818181         escolha por +0xAB: [0]->83C6B05 [1]->83C6B29 [2]->83C6B29 [3]->83C6B29
+83C6B06 06                  Fight_EnsureSelectedActionMetadata
+83C6B07 07                  FUN_08033A78
+83C6B08 03 83818181         escolha por +0xAB: [0]->83C6B0D [1]->83C6B29 [2]->83C6B29 [3]->83C6B29
+83C6B0E 08                  FUN_08033A94
+83C6B0F 0B                  Fight_ApplySpecialityDamageFlags
+83C6B10 0C                  Fight_ComputeTotalRosPhase
+83C6B11 0E                  Fight_ApplyPendingEffectStatusFlags
+83C6B12 0F                  Fight_ResolveDefenderRosPhase
+83C6B13 10                  Fight_UpdateActionArgSelectorPhase
+83C6B14 03 86878787         escolha por +0xAB: [0]->83C6B19 [1]->83C6B1F [2]->83C6B1F [3]->83C6B1F
+83C6B1A 11                  FUN_08033CF0
+83C6B1B 12                  FUN_08033D00
+83C6B1C 13                  Fight_SeedPreDamageFromTotalRos
+83C6B1D 14                  Fight_AccumulateBaseDamage
+83C6B1E 18                  FUN_08034008
+83C6B20 19                  FUN_0803402C
+83C6B21 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6B22 1B                  FUN_08034074
+83C6B23 1C                  FUN_08034120
+83C6B24 1D                  FUN_08034170
+83C6B25 1E                  FUN_080341C0
+83C6B26 1F                  FUN_08034200
+83C6B27 20                  FUN_08034240
+83C6B28 23                  FUN_080342C8
+83C6B2A 21                  FUN_0803426C
+83C6B2B 01                  ActionScript_Op01_pendente
+83C6B2C 06                  Fight_EnsureSelectedActionMetadata  <== ENTRADA tec 50 Forcedrain
+83C6B2D 08                  FUN_08033A94
+83C6B2E 3A                  ActionScript_Op3A_CallAJ
+83C6B2F 01                  ActionScript_Op01_pendente
+83C6B30 29                  FUN_080343B8  <== ENTRADA tec 51 TeamForm
+83C6B31 01                  ActionScript_Op01_pendente
+83C6B32 04                  ActionScript_Op04_pendente  <== ENTRADA tec 52 TeamAttack
+83C6B33 03 80818181         escolha por +0xAB: [0]->83C6B38 [1]->83C6B82 [2]->83C6B82 [3]->83C6B82
+83C6B39 05                  ActionScript_Op05_pendente
+83C6B3A 03 82818181         escolha por +0xAB: [0]->83C6B3F [1]->83C6B82 [2]->83C6B82 [3]->83C6B82
+83C6B40 3B                  ActionScript_Op3B_CallAK
+83C6B41 03 8a818181         escolha por +0xAB: [0]->83C6B46 [1]->83C6B82 [2]->83C6B82 [3]->83C6B82
+83C6B47 06                  Fight_EnsureSelectedActionMetadata
+83C6B48 07                  FUN_08033A78
+83C6B49 03 83818181         escolha por +0xAB: [0]->83C6B4E [1]->83C6B82 [2]->83C6B82 [3]->83C6B82
+83C6B4F 3C                  ActionScript_Op3C_CallAL
+83C6B50 08                  FUN_08033A94
+83C6B51 09                  FUN_08033AB0
+83C6B52 0B                  Fight_ApplySpecialityDamageFlags
+83C6B53 0C                  Fight_ComputeTotalRosPhase
+83C6B54 0D                  FUN_08033C10
+83C6B55 03 84858585         escolha por +0xAB: [0]->83C6B5A [1]->83C6B64 [2]->83C6B64 [3]->83C6B64
+83C6B5B 0E                  Fight_ApplyPendingEffectStatusFlags
+83C6B5C 0F                  Fight_ResolveDefenderRosPhase
+83C6B5D 10                  Fight_UpdateActionArgSelectorPhase
+83C6B5E 03 86878787         escolha por +0xAB: [0]->83C6B63 [1]->83C6B6D [2]->83C6B6D [3]->83C6B6D
+83C6B65 11                  FUN_08033CF0
+83C6B66 12                  FUN_08033D00
+83C6B67 13                  Fight_SeedPreDamageFromTotalRos
+83C6B68 14                  Fight_AccumulateBaseDamage
+83C6B69 15                  Fight_HandleActionScriptOpcode1D?(nome Ghidra, tabela=0x15)
+83C6B6A 16                  Fight_HandleActionScriptOpcode1C?(nome Ghidra, tabela=0x16)
+83C6B6B 17                  Fight_MarkDefenderFollowupFromDamageThreshold
+83C6B6C 18                  FUN_08034008
+83C6B6E 19                  FUN_0803402C
+83C6B6F 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6B70 1B                  FUN_08034074
+83C6B71 1C                  FUN_08034120
+83C6B72 22                  FUN_08034288
+83C6B73 03 88898989         escolha por +0xAB: [0]->83C6B7B [1]->83C6B78 [2]->83C6B78 [3]->83C6B78
+83C6B79 1B                  FUN_08034074
+83C6B7A 1C                  FUN_08034120
+83C6B7C 1D                  FUN_08034170
+83C6B7D 1E                  FUN_080341C0
+83C6B7E 1F                  FUN_08034200
+83C6B7F 20                  FUN_08034240
+83C6B80 0A                  Fight_CommitSelectedReferencedBotGraphics
+83C6B81 3D                  ActionScript_Op3D_ClearSupportRecord
+83C6B83 21                  FUN_0803426C
+83C6B84 01                  ActionScript_Op01_pendente
+83C6B85 01                  ActionScript_Op01_pendente  <== ENTRADA tec 53 Strengthen
+83C6B86 3E                  ActionScript_Op3E_CallAM  <== ENTRADA tec 54 CntrAttk
+83C6B87 01                  ActionScript_Op01_pendente
+83C6B88 3F                  ActionScript_Op3F_CallAN_SceneExit  <== ENTRADA tec 55 Change
+83C6B89 01                  ActionScript_Op01_pendente
+83C6B8A 3F                  ActionScript_Op3F_CallAN_SceneExit  <== ENTRADA tec 56 ItrpChange
+83C6B8B 01                  ActionScript_Op01_pendente
+83C6B8C 3F                  ActionScript_Op3F_CallAN_SceneExit  <== ENTRADA tec 57 AttkChange
+83C6B8D 01                  ActionScript_Op01_pendente
+83C6B8E 3F                  ActionScript_Op3F_CallAN_SceneExit  <== ENTRADA tec 58 DEFChange
+83C6B8F 01                  ActionScript_Op01_pendente
+83C6B90 3F                  ActionScript_Op3F_CallAN_SceneExit  <== ENTRADA tec 59 HealChange
+83C6B91 01                  ActionScript_Op01_pendente
+83C6B92 06                  Fight_EnsureSelectedActionMetadata
+83C6B93 08                  FUN_08033A94
+83C6B94 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6B95 1B                  FUN_08034074
+83C6B96 1C                  FUN_08034120
+83C6B97 40                  ActionScript_Op40_SideSpritesAO
+83C6B98 20                  FUN_08034240
+83C6B99 45                  ActionScript_Op45_IncrementUsageCounter
+83C6B9A 21                  FUN_0803426C
+83C6B9B 01                  ActionScript_Op01_pendente
+83C6B9C 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6B9D 50                  ActionScript_Op50_CallAR
+83C6B9E 45                  ActionScript_Op45_IncrementUsageCounter
+83C6B9F 21                  FUN_0803426C
+83C6BA0 01                  ActionScript_Op01_pendente
+83C6BA1 41                  ActionScript_Op41_PickRandomOpponentTargetPart
+83C6BA2 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BA3 43                  ActionScript_Op43_SumSideField4
+83C6BA4 08                  FUN_08033A94
+83C6BA5 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6BA6 1B                  FUN_08034074
+83C6BA7 1C                  FUN_08034120
+83C6BA8 1D                  FUN_08034170
+83C6BA9 44                  ActionScript_Op44_SideSpritesAP
+83C6BAA 20                  FUN_08034240
+83C6BAB 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BAC 21                  FUN_0803426C
+83C6BAD 01                  ActionScript_Op01_pendente
+83C6BAE 41                  ActionScript_Op41_PickRandomOpponentTargetPart
+83C6BAF 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BB0 46                  ActionScript_Op46_SumPartDamageOfTargetBot
+83C6BB1 08                  FUN_08033A94
+83C6BB2 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6BB3 1B                  FUN_08034074
+83C6BB4 1C                  FUN_08034120
+83C6BB5 1D                  FUN_08034170
+83C6BB6 44                  ActionScript_Op44_SideSpritesAP
+83C6BB7 20                  FUN_08034240
+83C6BB8 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BB9 21                  FUN_0803426C
+83C6BBA 01                  ActionScript_Op01_pendente
+83C6BBB 51                  ActionScript_Op51_CallAS
+83C6BBC 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BBD 01                  ActionScript_Op01_pendente
+83C6BBE 51                  ActionScript_Op51_CallAS
+83C6BBF 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BC0 01                  ActionScript_Op01_pendente
+83C6BC1 51                  ActionScript_Op51_CallAS
+83C6BC2 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BC3 01                  ActionScript_Op01_pendente
+83C6BC4 51                  ActionScript_Op51_CallAS
+83C6BC5 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BC6 01                  ActionScript_Op01_pendente
+83C6BC7 51                  ActionScript_Op51_CallAS
+83C6BC8 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BC9 01                  ActionScript_Op01_pendente
+83C6BCA 51                  ActionScript_Op51_CallAS
+83C6BCB 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BCC 01                  ActionScript_Op01_pendente
+83C6BCD 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BCE 52                  ActionScript_Op52_CallAT
+83C6BCF 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BD0 01                  ActionScript_Op01_pendente
+83C6BD1 53                  ActionScript_Op53_CallAU
+83C6BD2 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BD3 01                  ActionScript_Op01_pendente
+83C6BD4 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BD5 54                  ActionScript_Op54_CallAV
+83C6BD6 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BD7 01                  ActionScript_Op01_pendente
+83C6BD8 55                  ActionScript_Op55_CallAW
+83C6BD9 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BDA 01                  ActionScript_Op01_pendente
+83C6BDB 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BDC 54                  ActionScript_Op54_CallAV
+83C6BDD 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BDE 01                  ActionScript_Op01_pendente
+83C6BDF 55                  ActionScript_Op55_CallAW
+83C6BE0 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BE1 01                  ActionScript_Op01_pendente
+83C6BE2 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BE3 54                  ActionScript_Op54_CallAV
+83C6BE4 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BE5 01                  ActionScript_Op01_pendente
+83C6BE6 55                  ActionScript_Op55_CallAW
+83C6BE7 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BE8 01                  ActionScript_Op01_pendente
+83C6BE9 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BEA 54                  ActionScript_Op54_CallAV
+83C6BEB 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BEC 01                  ActionScript_Op01_pendente
+83C6BED 55                  ActionScript_Op55_CallAW
+83C6BEE 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BEF 01                  ActionScript_Op01_pendente
+83C6BF0 41                  ActionScript_Op41_PickRandomOpponentTargetPart
+83C6BF1 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6BF2 08                  FUN_08033A94
+83C6BF3 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6BF4 1B                  FUN_08034074
+83C6BF5 1C                  FUN_08034120
+83C6BF6 1D                  FUN_08034170
+83C6BF7 44                  ActionScript_Op44_SideSpritesAP
+83C6BF8 47                  ActionScript_Op47_SideSpritesCopyTarget
+83C6BF9 1B                  FUN_08034074
+83C6BFA 1C                  FUN_08034120
+83C6BFB 48                  ActionScript_Op48_SideSpritesAQ
+83C6BFC 20                  FUN_08034240
+83C6BFD 45                  ActionScript_Op45_IncrementUsageCounter
+83C6BFE 21                  FUN_0803426C
+83C6BFF 01                  ActionScript_Op01_pendente
+83C6C00 56                  ActionScript_Op56_CallAX
+83C6C01 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C02 01                  ActionScript_Op01_pendente
+83C6C03 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C04 59                  ActionScript_Op59_CallBA
+83C6C05 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C06 01                  ActionScript_Op01_pendente
+83C6C07 5A                  ActionScript_Op5A_CallBB
+83C6C08 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C09 01                  ActionScript_Op01_pendente
+83C6C0A 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C0B 5B                  ActionScript_Op5B_CallBC
+83C6C0C 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C0D 01                  ActionScript_Op01_pendente
+83C6C0E 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C0F 5C                  ActionScript_Op5C_CallBD
+83C6C10 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C11 01                  ActionScript_Op01_pendente
+83C6C12 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C13 57                  ActionScript_Op57_CallAY
+83C6C14 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C15 01                  ActionScript_Op01_pendente
+83C6C16 41                  ActionScript_Op41_PickRandomOpponentTargetPart
+83C6C17 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C18 08                  FUN_08033A94
+83C6C19 49                  ActionScript_Op49_HalfArmorOfActiveBot
+83C6C1A 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6C1B 1B                  FUN_08034074
+83C6C1C 1C                  FUN_08034120
+83C6C1D 1D                  FUN_08034170
+83C6C1E 44                  ActionScript_Op44_SideSpritesAP
+83C6C1F 20                  FUN_08034240
+83C6C20 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C21 21                  FUN_0803426C
+83C6C22 01                  ActionScript_Op01_pendente
+83C6C23 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C24 58                  ActionScript_Op58_CallAZ
+83C6C25 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C26 01                  ActionScript_Op01_pendente
+83C6C27 41                  ActionScript_Op41_PickRandomOpponentTargetPart
+83C6C28 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C29 08                  FUN_08033A94
+83C6C2A 4A                  ActionScript_Op4A_AllySideLoop
+83C6C2B 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6C2C 1B                  FUN_08034074
+83C6C2D 1C                  FUN_08034120
+83C6C2E 1D                  FUN_08034170
+83C6C2F 44                  ActionScript_Op44_SideSpritesAP
+83C6C30 20                  FUN_08034240
+83C6C31 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C32 21                  FUN_0803426C
+83C6C33 01                  ActionScript_Op01_pendente
+83C6C34 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C35 5D                  ActionScript_Op5D_CallBE
+83C6C36 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C37 01                  ActionScript_Op01_pendente
+83C6C38 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C39 5E                  ActionScript_Op5E_CallBF
+83C6C3A 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C3B 01                  ActionScript_Op01_pendente
+83C6C3C 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C3D 5D                  ActionScript_Op5D_CallBE
+83C6C3E 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C3F 01                  ActionScript_Op01_pendente
+83C6C40 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C41 5E                  ActionScript_Op5E_CallBF
+83C6C42 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C43 01                  ActionScript_Op01_pendente
+83C6C44 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C45 5F                  ActionScript_Op5F_CallBG
+83C6C46 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C47 01                  ActionScript_Op01_pendente
+83C6C48 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C49 5E                  ActionScript_Op5E_CallBF
+83C6C4A 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C4B 01                  ActionScript_Op01_pendente
+83C6C4C 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C4D 60                  ActionScript_Op60_CallBH
+83C6C4E 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C4F 01                  ActionScript_Op01_pendente
+83C6C50 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C51 5E                  ActionScript_Op5E_CallBF
+83C6C52 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C53 01                  ActionScript_Op01_pendente
+83C6C54 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C55 61                  ActionScript_Op61_CallBI
+83C6C56 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C57 01                  ActionScript_Op01_pendente
+83C6C58 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C59 62                  ActionScript_Op62_CallBJ
+83C6C5A 21                  FUN_0803426C
+83C6C5B 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C5C 01                  ActionScript_Op01_pendente
+83C6C5D 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C5E 54                  ActionScript_Op54_CallAV
+83C6C5F 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C60 01                  ActionScript_Op01_pendente
+83C6C61 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C62 63                  ActionScript_Op63_CallBK
+83C6C63 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C64 01                  ActionScript_Op01_pendente
+83C6C65 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C66 64                  ActionScript_Op64_CallBL
+83C6C67 21                  FUN_0803426C
+83C6C68 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C69 01                  ActionScript_Op01_pendente
+83C6C6A 4B                  ActionScript_Op4B_FindBotWithPartAndPickPart
+83C6C6B 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C6C 08                  FUN_08033A94
+83C6C6D 4C                  ActionScript_Op4C_CopyPartArmorToEC
+83C6C6E 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6C6F 1B                  FUN_08034074
+83C6C70 1C                  FUN_08034120
+83C6C71 1D                  FUN_08034170
+83C6C72 44                  ActionScript_Op44_SideSpritesAP
+83C6C73 20                  FUN_08034240
+83C6C74 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C75 21                  FUN_0803426C
+83C6C76 01                  ActionScript_Op01_pendente
+83C6C77 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C78 65                  ActionScript_Op65_CallBM
+83C6C79 21                  FUN_0803426C
+83C6C7A 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C7B 01                  ActionScript_Op01_pendente
+83C6C7C 66                  ActionScript_Op66_CallBN
+83C6C7D 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C7E 01                  ActionScript_Op01_pendente
+83C6C7F 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C80 67                  ActionScript_Op67_CallBO
+83C6C81 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C82 01                  ActionScript_Op01_pendente
+83C6C83 68                  ActionScript_Op68_CallBP
+83C6C84 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C85 01                  ActionScript_Op01_pendente
+83C6C86 69                  ActionScript_Op69_CallBQ
+83C6C87 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C88 01                  ActionScript_Op01_pendente
+83C6C89 6A                  ActionScript_Op6A_CallBR
+83C6C8A 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C8B 01                  ActionScript_Op01_pendente
+83C6C8C 41                  ActionScript_Op41_PickRandomOpponentTargetPart
+83C6C8D 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C8E 08                  FUN_08033A94
+83C6C8F 4D                  ActionScript_Op4D_RandomChance
+83C6C90 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6C91 1B                  FUN_08034074
+83C6C92 1C                  FUN_08034120
+83C6C93 1D                  FUN_08034170
+83C6C94 44                  ActionScript_Op44_SideSpritesAP
+83C6C95 20                  FUN_08034240
+83C6C96 45                  ActionScript_Op45_IncrementUsageCounter
+83C6C97 21                  FUN_0803426C
+83C6C98 01                  ActionScript_Op01_pendente
+83C6C99 4E                  ActionScript_Op4E_FindActiveBotWithGroupAndPickPart
+83C6C9A 42                  ActionScript_Op42_RollPartValueAndEffect
+83C6C9B 08                  FUN_08033A94
+83C6C9C 4F                  ActionScript_Op4F_FindActiveBotWithGroup
+83C6C9D 1A                  FightPreview_SetupSceneFromPartTechnique
+83C6C9E 1B                  FUN_08034074
+83C6C9F 1C                  FUN_08034120
+83C6CA0 1D                  FUN_08034170
+83C6CA1 44                  ActionScript_Op44_SideSpritesAP
+83C6CA2 20                  FUN_08034240
+83C6CA3 45                  ActionScript_Op45_IncrementUsageCounter
+83C6CA4 21                  FUN_0803426C
+83C6CA5 01                  ActionScript_Op01_pendente
