@@ -2612,6 +2612,7 @@ address,name,kind,count,comment
 0x08043E54,Obj_CopySlot8Bytes,func_thumb,,[R2a] R2a: copia 8 bytes de +0x74 para tabela indexada por +0x38
 0x08043E78,Obj_StepAccumMoveB,func_thumb,,[R2] revisto CH2: provável; mesma lógica da A para o objeto B (campos +0x74..+0x7B); renomeado de FUN_08043e78
 0x08043F9C,FxBlend_ApplyFromObjB,func_thumb,,[R2a] R2a: igual a FxBlend_ApplyFromObjA para o objeto B (+0x77..+0x79)
+0x08043FEC,Anim_AdvanceRingFrameEvery3,func_thumb,,[AN2] [AN2] renomeada de FUN_08043FEC; streaming de quadros de tile por anel da ROM para VRAM 0x06008020; chamada por Obj_StepAccumMoveBThenSync; provavel
 0x08044094,Anim_SetDefaultTimers,func_thumb,,"[R2a] R2a: grava 1,1,7 em tres bytes globais de animacao"
 0x08044098,Anim_SetDefaultTimers,func_thumb,,[FM5] gMainState=1 menu=1 sub=7; chamado no fim do sub 3 da tela de B (confirmado)
 0x080440B4,Count_Entries3InTable9,func_thumb,,[R2a] R2a: conta entradas com byte 3 em 9 registros de 8 bytes
@@ -3702,6 +3703,7 @@ address,name,kind,count,comment
 0x080719B8,Anim_StepSlotTimerReturnStatus,func_thumb,,provável: timer do slot; devolve 0xFF se timer < 0x19
 0x08071A64,Anim_StepSlotKeyframeSpawn,func_thumb,,[FL10] slot com 12 quadros; no quadro 8 cria objeto de render e anim 3 (provável)
 0x08071B64,Obj_RunSpriteSequenceTable12,func_thumb,,[FS10] FS10 tabela de 12 bytes vs +0x21; cria slot filho 0x0C ou k+1 em contador 8; BL de 0x08072E66; confianca provavel
+0x08071BD0,ObjSeq_CompareTable12,data,,[SN3] 12 bytes 14 01 0B 08 30 2C 03 00 0E 05 00 00; copiados por Obj_RunSpriteSequenceTable12 0x08071B64; significado provavel (SN3)
 0x08071C68,Obj_StepXRightWithShadow,func_thumb,,[FS10] FS10 +2 += 1 espelhado no slot k+4; recalcula +6/+0x30; ptr 0x08485BC8; confianca provavel
 0x08071CBC,Obj_StepXLeftWithShadow,func_thumb,,[FS10] FS10 igual a Obj_StepXRightWithShadow com -1; ptr 0x08485BCC; confianca provavel
 0x08071DB8,slot_start_v2,func_thumb,,[R4] R4: cria slot com extra em +0x34; confirmado
@@ -3943,6 +3945,8 @@ address,name,kind,count,comment
 0x0807E78C,sf_neg64,func_thumb,,"[R4] R4: lib soft-float (negacao de 64 bits, __negdi2); confirmado"
 0x0807E7A4,lib_memcpy,func_thumb,,"[R4] R4: libc (copia de bytes/palavras, memcpy); confirmado"
 0x0807E804,lib_memset,func_thumb,,"[R4] R4: libc (preenchimento de bytes, memset); confirmado"
+0x0807E860,IrqHandlerTable_Init14_ROM,data,,[AN2] [AN2] 14 ponteiros Thumb copiados por CpuSet no boot para IWRAM 0x03000BA0 (InitializeInterruptsAndDefaultHandlers 0x0800045A); lidos por IntrMain 0x080001D8; idx5=0x0800099D (trilha A) idx6=0x080009A9 (trilha B); confirmado
+0x0807E874,SoundTrackHandlerPtrs_IrqIdx5_6,data,,[AN2] [AN2] entradas idx5/idx6 da tabela IRQ 0x0807E860 (IRQ 0x200 e 0x400 = DMA1/DMA2); provavel
 0x0807E8EC,gMoveScriptTable,label,,roteiros de deslocamento em batalha: [kind*7 + estilo]
 0x0807EE10,gPreviewJointTemplates,data,96,"provavel: 4 registros de 0x18 B (juntas sinteticas 3-6 do preview grande: cabeca, esq, dir, pernas); byte 0x10 = molde raiz da peca, 0x0D invertido (-2-x) no lado 1; ver re/reference/large_part_layout.md"
 0x0807EE70,gGfx_PartLarge_DescTable_Sz0,data,1952,preview cabeca: 122 x 16 B (antes: gPreviewHead)
@@ -3951,6 +3955,7 @@ address,name,kind,count,comment
 0x08080550,gGfx_PartLarge_DescTable_Sz3,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable (antes: gPreviewLegs)
 0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
 0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
+0x080A89F2,Data_080A89F2,data,,[SN3] NAO e codigo (BFF4=IT
 0x080AEB74,gLZ77RecordTable,data,,[CS2] registros de 16 B usados pelo passo 0xFFFC (src +4
 0x080AF8CA,Opt_SongTable,data,,"[OP] [OP] bytes 9,10,11,9; indice = valor da opcao 0x03000B94; confirmado (leitura da ROM)"
 0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C)
@@ -3960,6 +3965,7 @@ address,name,kind,count,comment
 0x080B012C,SND_SongTable,data,,[SN] tabela de ponteiros de musica (4 B por id; ids 0..53; driver+0x688)
 0x080B0204,SND_Song0Header,data,,[SN] cabecalho da musica 0 (confirmado por leitura da tabela)
 0x080B16E4,SND_SampleTable,data,,[SN] tabela de ponteiros de amostra PCM (128 entradas; cabecalho {u32 tam
+0x080EC9EE,Data_080EC9EE,func_thumb,,[SN3] provavel dado (LDMIA base-na-lista
 0x083ABB50,SND_PsgFreqTable,data,,[SN] 74 halfwords de frequencia PSG (Hz=131072/(2048-v))
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
@@ -3970,7 +3976,7 @@ address,name,kind,count,comment
 0x083AC568,BattleStepTable_Unknown,data,,[TP] [GH-TP] tabela de ponteiros de passos GS; 0x08004A19 e entrada 0 desta linha; despachante nao achado
 0x083AC614,debug_mdlpic_model_ptrs,data,,"[DB2] GH-DB2: 150 ponteiros para dados comprimidos de modelo, indice v0*5+v1 (v0 0..0x1D, v1 0..4); provavel"
 0x083AC86C,gPartsGridStateTable,table,,"[PG] [PG] 112 ponteiros Thumb u32 (stride 4), indice = word em 0x0300137C; dispatcher FUN_08007584 (PartsGrid_DispatchStateTable); substitui table_partsgrid_states 0x083AC880 stride 0xC (errado)"
-0x083AC880,table_partsgrid_states,label,,"[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas) (PG: meio da tabela 0x083AC86C, stride 4; antes: table_partsgrid_states) (antes: gPartsGridStateTable_Entry5)"
+0x083AC880,gPartsGridStateTable_Entry5,label,,"[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas) (PG: meio da tabela 0x083AC86C, stride 4; antes: table_partsgrid_states) (antes: gPartsGridStateTable_Entry5) (antes: table_partsgrid_states)"
 0x083AC9F8,table_partsgrid_row1_9F8,label,,[JT8] JT8 registro 1 (stride 0xC) de tabela de estados da grade; NAO cabecalho; inicio provavel 0x083AC9EC; ver JT8.md sec 2
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
 0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]

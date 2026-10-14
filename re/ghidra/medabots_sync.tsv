@@ -2228,6 +2228,7 @@ F	0x08043E48	Obj_StepAccumMoveAWrapper
 F	0x08043E54	Obj_CopySlot8Bytes
 F	0x08043E78	Obj_StepAccumMoveB
 F	0x08043F9C	FxBlend_ApplyFromObjB
+F	0x08043FEC	Anim_AdvanceRingFrameEvery3
 F	0x08044094	Anim_SetDefaultTimers
 F	0x08044098	Anim_SetDefaultTimers_08044098
 F	0x080440B4	Count_Entries3InTable9
@@ -3318,6 +3319,7 @@ F	0x0807190C	Fight_TickSlotScriptStep
 F	0x080719B8	Anim_StepSlotTimerReturnStatus
 F	0x08071A64	Anim_StepSlotKeyframeSpawn
 F	0x08071B64	Obj_RunSpriteSequenceTable12
+L	0x08071BD0	ObjSeq_CompareTable12
 F	0x08071C68	Obj_StepXRightWithShadow
 F	0x08071CBC	Obj_StepXLeftWithShadow
 F	0x08071DB8	slot_start_v2
@@ -3559,6 +3561,8 @@ F	0x0807E71C	sf_mul32x32_64
 F	0x0807E78C	sf_neg64
 F	0x0807E7A4	lib_memcpy
 F	0x0807E804	lib_memset
+L	0x0807E860	IrqHandlerTable_Init14_ROM
+L	0x0807E874	SoundTrackHandlerPtrs_IrqIdx5_6
 L	0x0807E8EC	gMoveScriptTable
 L	0x0807EE10	gPreviewJointTemplates
 L	0x0807EE70	gGfx_PartLarge_DescTable_Sz0
@@ -3567,6 +3571,7 @@ L	0x0807FDB0	gGfx_PartLarge_DescTable_Sz2
 L	0x08080550	gGfx_PartLarge_DescTable_Sz3
 L	0x08081490	sCompositePreviewMirroredDescriptorMap
 L	0x080814C4	gMotionData
+L	0x080A89F2	Data_080A89F2
 L	0x080AEB74	gLZ77RecordTable
 L	0x080AF8CA	Opt_SongTable
 L	0x080AFC18	StateTable_CopySrc_63C
@@ -3576,6 +3581,7 @@ L	0x080B003C	StateTable_CopySrc_8400
 L	0x080B012C	SND_SongTable
 L	0x080B0204	SND_Song0Header
 L	0x080B16E4	SND_SampleTable
+F	0x080EC9EE	Data_080EC9EE
 L	0x083ABB50	SND_PsgFreqTable
 L	0x083ABF98	gMainStateTable
 L	0x083ABFB0	gSpriteSetTable0
@@ -3586,7 +3592,7 @@ L	0x083AC560	BattleStepTable_Base_Unresolved
 L	0x083AC568	BattleStepTable_Unknown
 L	0x083AC614	debug_mdlpic_model_ptrs
 L	0x083AC86C	gPartsGridStateTable
-L	0x083AC880	table_partsgrid_states
+L	0x083AC880	gPartsGridStateTable_Entry5
 L	0x083AC9F8	table_partsgrid_row1_9F8
 L	0x083ACA4C	debug_menu_more_idk
 L	0x083ACA5C	debug_menu_subroutines
@@ -4025,5 +4031,3 @@ C	0x0806E93C
 C	0x0806E9C0
 C	0x0806EA98
 C	0x0807DD58
-C	0x080A89F2
-C	0x080EC9EE

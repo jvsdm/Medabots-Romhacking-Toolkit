@@ -1,0 +1,2 @@
+# Alvos de tabela (JT8) que devem virar funcao. Nenhum: os 23 alvos de PartDetail_DispatchSubstate sao labels internos
+# (0x0800E7EC..0x0800E9C8, dentro do corpo de 0x0800E78C; get_function_by_address em 0x0800E7EC: sem funcao).
