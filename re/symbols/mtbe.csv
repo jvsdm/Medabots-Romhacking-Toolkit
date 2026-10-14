@@ -10,19 +10,27 @@ address,name,kind,count,comment
 0x02030000,SAVE_STAGING_EWRAM,data,,"[SV] [SV] buffer de staging do save (EWRAM), 0x1CC0 B (confirmado por literal)"
 0x03000430,debug_motion_mode_flag,label,,[DB] GH-DB provavel: zerado ao sair do Motion (B); mesmo byte do CpuFastSet em JT3 (==2)
 0x03000440,ctx_team_screen,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra (antes: gTextState) (antes: gMessageCtx)"
-0x03000448,current_dialog_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
-0x0300044C,current_character_in_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x0300045A,text_speed,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03000444,gCtx_MsgState,label,,[FI2] ctx+0x04 estado do motor de mensagem (0..8; indexa 0x083B291C) confirmado (GH-MS
+0x03000448,gCtx_MsgScriptPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: current_dialog_text)"
+0x0300044C,gCtx_MsgPc,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: current_character_in_text)"
+0x03000453,gCtx_MsgParada,label,,[FI2] ctx+0x13 parada da mensagem provavel (MS)
+0x03000459,gCtx_MsgMode,label,,[FI2] ctx+0x19 modo da mensagem (1 nova linha
+0x0300045A,gCtx_MsgWaitCounter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: text_speed)"
+0x0300045B,gCtx_MsgDispatchByte,label,,[FI2] ctx+0x1B byte de despacho (tabela 0x083B2990) e flag de fim (zerado por A6) confirmado (literal 0x08040990
+0x03000465,gCtx_MsgPage,label,,[FI2] ctx+0x25 pagina da mensagem provavel (MS)
+0x03000466,gCtx_MsgStep3,label,,[FI2] ctx+0x26 passo de estado 3 confirmado (GH-MS)
+0x03000467,gCtx_MsgItalic,label,,[FI2] ctx+0x27 flag italico confirmado (GH-MS)
 0x03000470,gDebugReturnScene,label,,u8: cena para onde o menu de debug volta ao sair (passo 2)
 0x03000471,gDebugReturnStep,label,,u8: passo da cena de retorno do menu de debug
 0x03000472,gDebugMenuOption,label,,u8: opcao do menu de debug (0-10)
-0x03000473,gDebugSubstate,label,,[DB] GH-DB confirmado: byte de estado dos despachantes de opcao (ctx+0x33); tabela 0x083ACAC0
-0x03000474,gDebugRowCursor,label,,u8: indice do tipo no visualizador Motion (antes: gDebugMotionCursor)
+0x03000473,gCtx_DebugSubstate,label,,[DB] GH-DB confirmado: byte de estado dos despachantes de opcao (ctx+0x33); tabela 0x083ACAC0 (antes: gDebugSubstate)
+0x03000474,gCtx_DebugRowCursor,label,,u8: indice do tipo no visualizador Motion (antes: gDebugMotionCursor) (antes: gDebugRowCursor)
 0x03000475,gDebugRowValue0,label,,u8[]: tipo de movimento tocado pelo visualizador Motion (direita/esquerda) (antes: gDebugMotionKinds)
 0x03000476,gDebugRowValue1,label,,[DB] GH-DB confirmado: valor da linha 1 (ctx+0x36)
 0x03000477,gDebugRowValue2,label,,[DB] GH-DB confirmado: valor da linha 2 (ctx+0x37)
-0x03000479,gDebugBotIndex,label,,[DB] GH-DB confirmado: bot 0..121 do visualizador Motion (ctx+0x39)
+0x03000479,gCtx_DebugBotIndex,label,,[DB] GH-DB confirmado: bot 0..121 do visualizador Motion (ctx+0x39) (antes: gDebugBotIndex)
 0x0300047D,currently_selected_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300047F,gCtx_TeamScreenState,label,,[FI2] ctx+0x3F estado da tela de time (PS) conflito com PS2 (slot) aberto
 0x03000484,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
 0x03000486,gCtx_WaitTimer,label,,[FI] timer de espera u16 conf
 0x03000489,gCtx_FreeFlag,label,,[FI] flag ctx livre provavel
@@ -30,12 +38,16 @@ address,name,kind,count,comment
 0x03000493,selected_tinpet_has_all_parts,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300049A,selected_tinpet_selected_part,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300049C,gCtx_TeamWinner,label,,[FI] vencedor de Fight_EvaluateTeamWinState conf
+0x030004C0,gCtx_EntryByte,label,,[FI2] ctx+0x80 byte de entrada da luta (Fight_AnimateEntryFrames) nao confirmado no ctx 0x03000440 (FL2/FL3)
 0x030004C4,gCtx_CounterAnim,label,,[FI] contador animacao provavel CONFLITO com fi+0x84
+0x030004C5,gCtx_ClearAtEnd,label,,[FI2] ctx+0x85 zerado no fim do despachante GS (BT2) provavel
 0x030004C6,gCtx_WaitTimer,label,,[FI] timer de espera u16 conf
 0x030004C9,gCtx_FreeFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1] (antes: gDeterministicRandom)"
 0x030004CC,random_number,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x030004CD,gDeterministicRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004CD,gCtx_RandIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gDeterministicRandomIndex)"
 0x030004CE,menu_selected_item,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x030004D0,gCtx_BlendMode,label,,[FI2] ctx+0x90 modo do efeito de blend (R2) provavel
+0x030004D2,gCtx_BlendStep,label,,[FI2] ctx+0x92 passo do efeito de blend (R2) provavel
 0x030004D7,tinpet_sel_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004D8,selected_tinpet_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004D9,selected_tinpet_left_arm,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -45,7 +57,8 @@ address,name,kind,count,comment
 0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
 0x03000536,IWRAM_PlayerSpecialtyBase,func_thumb,,[DM] [aberto] 7 bytes 0x03000537..0x0300053D = 0x03000440+0xF7..0xFD; origem nao achada; usados por Medabot_SpawnFromRecord
-0x0300056F,gCurrentObjectSlot,label,,u8: slot de gObjectSlots em uso
+0x03000537,gCtx_PlayerSpecialty,label,,[FI2] ctx+0xF7 inicio de 7 bytes de especialidade do jogador (IWRAM_PlayerSpecialtyBase) aberto (DM)
+0x0300056F,gCtx_SlotIndex,label,,u8: slot de gObjectSlots em uso (antes: gCurrentObjectSlot)
 0x03000579,gCtx_SceneSelector,label,,[FI] seletor de cena conf
 0x0300057A,gCtx_StepByte,label,,[FI] byte de estado conf
 0x03000584,gFlowVariant,label,,[MN] [MN] byte escrito por GameState_StartFlowByCommand cmd 0/1/2 (valor 0/1/2); provavel
@@ -224,7 +237,7 @@ address,name,kind,count,comment
 0x0300640C,gEncounterBlockFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gRandomEncounterModeFlags)"
 0x0300640D,gEncounterRollSuppressed,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentBattleSourceFlag)"
 0x0300640E,gPostBattleModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x0300640F,gCurrentBattleModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300640F,gEvt_BattleMode,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentBattleModeFlags)"
 0x03006417,gRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300642A,gEventFlagList_selectedEncounterBattleId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006432,ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
@@ -238,22 +251,27 @@ address,name,kind,count,comment
 0x0300643D,gOverworldEventModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643E,gOverworldEventModeFlagsBackup,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643F,gEncounterSuppressB,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável) (antes: gEventRunSceneStepFlag)
+0x03006440,gEvt_MapObjIndexSaved,label,,[FI2] E+0xC60 indice guardado pelo Op4C e lido pelo Op51 confirmado (HE3_simbolos)
 0x03006447,gLoadFacingSource,data,,[OW] RAM: facing inicial lido no load
 0x0300644E,str_ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006450,str_ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03006468,gCurrentEventPendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006468,gEvt_PendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventPendingFlag)"
 0x03006469,gEventPendingByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventStateByte)"
 0x0300646A,gEvt_ContinuationCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gCurrentEventScriptCursor)"
-0x0300646C,gCurrentEventAuxWord646C,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x0300646E,gCurrentEventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
+0x0300646C,gEvt_SavedCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gCurrentEventAuxWord646C)"
+0x0300646E,gEvt_EventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2] (antes: gCurrentEventId)"
 0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
 0x03006472,gEvt_ContinuationIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeByte)"
 0x03006473,gEvt_SubState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate) (antes: gCurrentEventSubstate)"
-0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006474,gEvt_Args,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gEventScriptArguments)"
 0x03006484,gTrackedObjectSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32]"
 0x03006492,gEvt_ContinuationIndex,label,,[FI] indice table2 (E+0xC92) conf
-0x03006494,gCurrentEventObjectIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gCurrentEventActiveMapObjectIndex)"
+0x03006494,gEvt_ActiveObjIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gCurrentEventActiveMapObjectIndex) (antes: gCurrentEventObjectIndex)"
+0x03006495,gEvt_YesNoOrder,label,,[FI2] E+0xCB5 flag Sim/Nao: 0 em Op31 e 1 em Op32 escrita confirmada (decompile Op31); leitor nao achado
+0x0300649A,gEvt_MapModeFlag,label,,[FI2] E+0xCBA modo do evento de mapa (0/1 iguais; 2 regrava bit 7) provavel (EX
+0x0300649C,gEvt_CounterA,label,,[FI2] E+0xCBC contador lido pelo Op50 (sel 0) leitura confirmada; escritor aberto
+0x0300649D,gEvt_CounterB,label,,[FI2] E+0xCBD contador lido pelo Op50 (sel 1) leitura confirmada; escritor aberto
 0x030064A0,gEventScriptRuntimeState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state"
 0x030064A1,gEventScriptRuntimeState_vm_substate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"

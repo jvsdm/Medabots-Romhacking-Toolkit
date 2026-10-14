@@ -1,0 +1,10 @@
+# Endereços de menu sem função no Ghidra (GH-MU): precisa criar função ou ler por disassembly
+0x080027BC  menu_list[1]   (estado 0, cena do fluxo 0x40)
+0x08003374  menu_list[2]
+0x080039E0  menu_list[3]
+0x08007584  menu_list[4]
+0x08060688  MS2[10]/MS2[23]
+0x08060D6C  MS2[11]        (loja, cmd 0x03)
+0x08063948  MS2[16]
+0x08064DB4  MS2[18]        (flow 0x12)
+0x0806E130  MS3[3]         (flow 0x12)

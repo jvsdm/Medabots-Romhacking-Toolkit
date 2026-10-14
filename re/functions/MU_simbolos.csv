@@ -1,0 +1,8 @@
+# address,name,kind,comment
+0x08002534,MainState0,function,"[MU] gMainStateTable[0]; cena do jogo, indexa menu_list 0x083AC2C8 (confirmado)"
+0x0804763C,MainState1,function,"[MU] gMainStateTable[1]; indexa MS1 0x083D2104 (confirmado)"
+0x0805BBE0,MainState2,function,"[MU] gMainStateTable[2]; indexa MS2 0x08483594 (confirmado)"
+0x08068440,MainState3,function,"[MU] gMainStateTable[3]; indexa MS3 0x084856E8 (confirmado)"
+0x08060D6C,Menu_Shop_Main,function,"[MU] MS2[11], cmd 0x03 (loja). Sem funcao no Ghidra; provavel pelo SC.md"
+0x0804A2F0,Menu_NewGame_Main,function,"[MU] MS1[10] = site_NewGameClear; provavel pelo README"
+0x0800D9DC,Menu5_Dispatch_PartsScreens,function,"[MU] menu_list[5] (confirmado no Ghidra)"
