@@ -41,7 +41,7 @@ F	0x080022DC	QueueLinkTransferPacket
 F	0x080023D8	SwapDisplayBuffersOnVBlank
 F	0x08002534	MainState0
 F	0x08002554	Dispatch_CallIndexedHandler
-L	0x0800256C	gMenuListSubStepTable
+L	0x0800256C	gMenuList0SubTablePtr
 F	0x080025B4	Menu_ReadPadMoveCursor
 F	0x080026A4	Portrait_TickMoveAndFlagDone
 F	0x080026E0	StateMachine_InitTableAndStep

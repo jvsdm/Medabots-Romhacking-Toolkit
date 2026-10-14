@@ -315,7 +315,7 @@ address,name,kind,count,comment
 0x080023D8,SwapDisplayBuffersOnVBlank,func_thumb,,[R0] troca buffers duplos (chute)
 0x08002534,MainState0,func_thumb,,estado 0 (soft reset volta para ca)
 0x08002554,Dispatch_CallIndexedHandler,func_thumb,,chama table[idx] via CallViaR0; confirmado (tabela nao identificada)
-0x0800256C,gMenuListSubStepTable,table,,[MN] [MN] ponteiro usado por Dispatch_CallIndexedHandler (menu_list[0]); indexa por byte 0x03000584?? nao confirmado (ler literal 0x08002570)
+0x0800256C,gMenuList0SubTablePtr,table,,[MN] [MN] ponteiro usado por Dispatch_CallIndexedHandler (menu_list[0]); indexa por byte 0x03000584?? nao confirmado (ler literal 0x08002570) (antes: gMenuListSubStepTable)
 0x080025B4,Menu_ReadPadMoveCursor,func_thumb,,le estado de entrada e move cursor; provável
 0x080026A4,Portrait_TickMoveAndFlagDone,func_thumb,,"[provavel] chama Move_Character_Portraits(0,1,8,4,..); quando retorna 1 grava 1 em *DAT_080026DC"
 0x080026E0,StateMachine_InitTableAndStep,func_thumb,,grava tabela de 10 bytes; passo de maquina de estados; provavel
