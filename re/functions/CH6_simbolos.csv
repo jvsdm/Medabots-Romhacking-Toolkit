@@ -1,0 +1,5 @@
+addr,nome,kind,comentario
+0x08007834,PartsGrid_SlideInStep,func_thumb,"[CH6] revisto CH6: confianca provavel (mantido). Corpo identico ao gemeo 0x08007998 (mesmos alvos BL e mesmos literais 0x03001780 / GS 0x0300137C); so a entrada da tabela 0x083AC86C (GS=1) da o sentido 'entrada'"
+0x08007998,PartsGrid_SlideOutStep,func_thumb,"[CH6] revisto CH6: confianca provavel (mantido). Mesmo corpo de 0x08007834; sentido 'saida' vem da tabela 0x083AC86C (GS=4,7,105)"
+0x08007DDC,PartsGrid_SelectNextStateByCursor,func_thumb,"[CH6] revisto CH6: confirmado no efeito, nome provavel (antes: PartsGrid_SetSelectorPosByIndex). Limpa OAM (0,0x80); le ctx 0x03000440 +0x42 (cursor 0..3) e escreve em GS 0x0300137C o valor 8/0x18/0x28/0x38 (proximo estado). Nao escreve posicao. Entradas 22,38,54,70 da tabela 0x083AC86C"
+0x080140B0,Fight_SceneStep65_TimedSequence,func_thumb,"[CH6] revisto CH6: confirmado que e a entrada 65 de 0x083AD080 (ponteiro 0x083AD184 = 0x080140B1); maquina de 4 estados em +0x84, timer +0x86 ate 0x3C, ClearObjectAttributeEntries(3,2) no fim; nome provavel (sequencia temporizada, tipo do efeito nao identificado)"

@@ -1,0 +1,71 @@
+addr,nome,kind,comentario
+0x083F7D80,sRandomAdvanceTable,data,provavel: 0x100 B ate 0x083F7E80; bytes nao monotonicos; xrefs de Random_NextScaled e fx/Obj (DATA); nome mantido
+0x083F7E80,gMapSpritePtrTable,table,provavel: slots id-indexados 0x540 B = 336 x 4 B; ~61 validos (CS.md/CS2); ponteiro LZ77 de sprite (antes: Overworld_Sprites)
+0x083F83C0,gMapSpritePaletteTablePtr,table,provavel: slots 336 x 4 B (mesmo tamanho); 61 validos (CS2.md); entrada 0 = usa id 1
+0x083F8900,gMapDimensions,table,confirmado: 192 x 2 B (largura,altura em tiles 8px); mapa 10 = 24x22 conferido no byte
+0x08409480,gMapAnimDescTable,table,confirmado: 192 x 4 B; descritor ROM[+4m] por gCurrentMapId (MP2.md) (antes: gMapBlockA)
+0x0840F880,gMapBlockB,table,confirmado: 192 x 4 B ponteiros (run exato de 192)
+0x08411AE0,gTextDialogue_08411AE0,table,provavel: ponteiros de texto; 202 entradas (CSV/dump)
+0x08411E08,gWarpList_Map0,data,confirmado: 8 B por entrada (warps do mapa 0; OW2.md); tamanho nao fechado
+0x08412E60,gWarpTablePtrs,table,confirmado: 192 x 4 B (run de 384 = esta + tabela seguinte de 192) (antes: gMapWarps)
+0x08413160,gMapSpriteIndexByMap,table,confirmado: 192 x 4 B ponteiros; lista de sprites por mapa (CS.md) (antes: gMapSprites)
+0x08413EE0,gPoseIdNestedTablePtrs,table,provavel: ponteiros para tabelas aninhadas ids >=0xD0 (CU2.md); >=16 x 4 B, fim nao fechado
+0x084144B4,gTextDialogue_084144B4,table,provavel: ponteiros de texto; 248 entradas (CSV/dump)
+0x084798F4,gTextDialogue_084798F4,table,provavel: ponteiros de texto; 389 entradas (CSV/dump)
+0x08479F0C,gTextDialogue_08479F0C,table,provavel: ponteiros de texto; 237 entradas (CSV/dump)
+0x0847A2C4,gTextDialogue_0847A2C4,table,provavel: ponteiros de texto; 303 entradas (CSV/dump)
+0x0847A784,gTextDialogue_0847A784,table,provavel: ponteiros de texto; 323 entradas (CSV/dump)
+0x0847AC94,gTextDialogue_0847AC94,table,provavel: ponteiros de texto; 286 entradas (CSV/dump)
+0x0847B110,gTextDialogue_0847B110,table,provavel: ponteiros de texto; 295 entradas (CSV/dump)
+0x0847B5B0,gTextDialogue_0847B5B0,table,provavel: ponteiros de texto; 259 entradas (CSV/dump)
+0x0847B9C0,gTextDialogue_0847B9C0,table,provavel: ponteiros de texto; 263 entradas (CSV/dump)
+0x0847BDE0,gTextDialogue_0847BDE0,table,provavel: ponteiros de texto; 281 entradas (CSV/dump)
+0x0847C248,gTextDialogue_0847C248,table,provavel: ponteiros de texto; 256 entradas (CSV/dump)
+0x0847C64C,gTextDialogue_0847C64C,table,provavel: ponteiros de texto; 277 entradas (CSV/dump)
+0x0847CAA8,gTextDialogue_0847CAA8,table,provavel: ponteiros de texto; 180 entradas (CSV/dump)
+0x0847CD7C,gTextDialogue_0847CD7C,table,provavel: ponteiros de texto; 233 entradas (CSV/dump)
+0x0847D124,gTextDialogue_0847D124,table,provavel: ponteiros de texto; 293 entradas (CSV/dump)
+0x0847D5C0,gTextDialogue_0847D5C0,table,provavel: ponteiros de texto; 323 entradas (CSV/dump)
+0x0847DAD0,gTextDialogue_0847DAD0,table,provavel: ponteiros de texto; 276 entradas (CSV/dump)
+0x0847DF24,gTextPointerTable,table,confirmado: 16 x 4 B, aponta para os 16 gTextDialogue_* (xref Screen_UpdateByStep/Event_Op01)
+0x0847E388,gEventItemTextTable,table,provavel: ponteiros de texto indexados por item/parte; xrefs EventOpcode38/39/3D e Event_Op36 (antes: get_item_text); tamanho nao fechado
+0x0847E644,gMapMusic,data,confirmado: 192 x 1 B (id de musica por mapa)
+0x084835A4,KeyItemBag_MenuTable4,table,provavel: tabela de quadros; menu 4 da MainState2 (base 0x08483594, KI.md); nome KeyItemBag pode ser so a tela que usa; entrada 0 = 0x0805CB50
+0x0848360C,gTitleMenuSubStateTable,table,provavel: sub-passos do menu do titulo (TL.md); tamanho em conflito: 12 entradas vs. 0x08483634 comecar dentro do range
+0x08483634,KeyItemBag_SubStateTable,table,provavel: 30 x 4 B; indice 2 = tela da bolsa (IN2); usada tambem por Shop_InitItemListScreen (IN2/IN3); nome mantido
+0x08483670,gMainState2_Menu5SubTable,table,provavel: tabela do menu 5 (save); FM4 diz 6 entradas, FM5 diz 8; fim nao fechado
+0x084836E8,gNameEntrySubStateTable,table,confirmado: 3 x 4 B (ponteiros; 4a posicao nao e ponteiro); TL.md
+0x084838E4,gShops,table,confirmado: 15 lojas x 4 slots x 1 B (ID de bot, 0xFF vazio); acesso id*4+i (IN2.md:40)
+0x08483ED8,gTextKeyItems,table,provavel: 64 x 4 B ponteiros de texto (dump)
+0x0848521C,gTextShopDialogue,table,provavel: 19 x 4 B ponteiros de texto (dump); usada pela StateMachine do fluxo (FM6)
+0x084859D8,gBootSubStateTable,table,confirmado: 12 x 4 B (11 ponteiros de estado + NoOp no fim; TL.md)
+0x08485F88,gTextTournamentMessages,table,provavel: 31 x 4 B ponteiros de texto (dump)
+0x0848698C,gTextRaceMessages,table,provavel: 12 x 4 B ponteiros de texto (dump)
+0x08486E54,SND_LitFifoA,data,confirmado: 1 x 4 B literal 0x040000A0 (FIFO A do DMA)
+0x08486E58,SND_LitFifoB,data,confirmado: 1 x 4 B literal 0x040000A4 (FIFO B do DMA)
+0x08486E6C,gGfx_Dialog_Moldura,data,confirmado: Malias, +2 = 0x0220 (bytes conferidos)
+0x084881E0,gGfx_Battle_BotTiles_B,data,confirmado: Malias, +2 = 0x0038 (bytes conferidos)
+0x08488240,gGfx_Battle_BotTiles_C,data,confirmado: Malias, +2 = 0x004C (bytes conferidos)
+0x08488290,gGfx_Battle_BotTiles_D,data,confirmado: Malias, +2 = 0x0060 (bytes conferidos)
+0x084882CC,gGfx_Battle_BotTiles_A,data,confirmado: Malias, +2 = 0x0070 (bytes conferidos)
+0x08488520,gGfx_Dialog_PaletaOrnamento,data,provavel: 1 paleta de 16 cores BGR15 (32 B) cru
+0x084BFC6C,gFont,data,provavel: 128 x 0x20 B (4bpp 8x16); bytes iniciais 0x11 (cor 1 = fundo) (antes: label)
+0x084C29D8,gGfx_BotIconTable_Base,table,confirmado: icones de 0x80 B em stride; +30*0x80 = gGfx_BotIcon_Default30 (aritmetica confirmada)
+0x084C2E58,gGfx_MedalIcon_Kuwagata,data,provavel: 0x80 B = base+9*0x80 (IC.md; medalha 0 hipotese)
+0x084C38D8,gGfx_BotIcon_Default30,data,confirmado: base+30*0x80 (icone padrao quando slot>=30)
+0x084C39D8,gGfx_Dialog_Tiles2,data,confirmado: Malias, +2 = 0x0040
+0x084C3A24,gGfx_PartsGrid_Tiles_Bg1,data,confirmado: Malias, +2 = 0x0340
+0x084C3BF8,gGfx_PartsGrid_Tiles_Bg2,data,confirmado: Malias, +2 = 0x0580
+0x084C3E64,gGfx_PartDetail_Tiles_Bg6,data,confirmado: Malias, +2 = 0x0140
+0x084C3F0C,gGfx_FightScene_Tiles_Bg2,data,confirmado: Malias, +2 = 0x0280
+0x084C4B4C,gGfx_PartDetail_Tiles_Bg3,data,confirmado: Malias, +2 = 0x0100
+0x084C4BDC,gGfx_PartDetail_Tiles_Bg1,data,confirmado: Malias, +2 = 0x1080 (kind label -> data; cabecalho Malias confirmado)
+0x084C4FBC,gGfx_PartDetail_Tiles_Bg2,data,confirmado: Malias, +2 = 0x0040
+0x084C4FFC,gGfx_PartDetail_Tiles_Bg4,data,confirmado: Malias, +2 = 0x0100
+0x084C50D0,gGfx_BattleScene_Tiles_Bg1a,data,confirmado: Malias, +2 = 0x0200
+0x084C5250,gGfx_BattleScene_Tiles_Bg1b,data,confirmado: Malias, +2 = 0x0200
+0x084C53C8,gGfx_PartDetail_Tiles_Bg5,data,confirmado: Malias, +2 = 0x0380
+0x084C55CC,gGfx_BattleScene_Tiles_Bg3,data,confirmado: Malias, +2 = 0x0380
+0x084C58D8,gGfx_FightScene_Tiles_Bg3,data,confirmado: Malias, +2 = 0x0040
+0x084C58F4,gGfx_FightScene_Tiles_Bg1,data,confirmado: Malias, +2 = 0x0100
+0x084C59AC,gItalicFont,data,provavel: 128 x 0x20 B (4bpp 8x16); CSV nota ROM EU danificada (antes: label)

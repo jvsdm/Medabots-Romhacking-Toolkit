@@ -4269,7 +4269,7 @@ address,name,kind,count,comment
 0x0847D5C0,gTextDialogue_0847D5C0,ptr,323,tabela de texto: Diálogo de história (15); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 323 entradas (CSV/dump)
 0x0847DAD0,gTextDialogue_0847DAD0,ptr,276,tabela de texto: Diálogo de história (16); fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: ponteiros de texto; 276 entradas (CSV/dump)
 0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto [RD6] confirmado: 16 x 4 B
-0x0847E388,gEventItemTextTable,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4] (antes: get_item_text)
+0x0847E388,gEventItemTextTable,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4] (antes: get_item_text) [RD6] provavel: ponteiros de texto indexados por item/parte; xrefs EventOpcode38/39/3D e Event_Op36 (antes: get_item_text); tamanho nao fechado
 0x0847E644,gMapMusic,data,192,musica por mapa
 0x08483234,gMapPeoplePtrTable,ptr,192,"pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople) (antes: gMapEntityPtrTable) [MP] [MP] provavel (extract_objects.py + dados): 4 B por mapa -> lista de registros de 8 B (x,y,kind<<12|evento,sprite,grupo,mascara cap.) terminada em 0xFF; leitor nao lido"
 0x08483594,gMainState2MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel
@@ -4323,7 +4323,7 @@ address,name,kind,count,comment
 0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU) [RD6] provavel: 128 x 0x20 B (4bpp 8x16); CSV nota ROM EU danificada (antes: label)
 0x084C7C54,gGfx_Overlay_Tiles_Bg1,data,,[GF2] Malias 0x08C0 -> VRAM 0x06007000; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: Malias +2=0x08C0 -> VRAM 0x06007000 (GF2)
 0x084C7E7C,gGfx_Overlay_Tiles_Bg2,data,,[GF2] Malias 0x0120 -> VRAM 0x06007A00; Overlay_InitScreenGraphics (GF2) [RD7] confirmado: Malias +2=0x0120 -> VRAM 0x06007A00 (GF2)
-0x084C8034,gObjTextFontGfx,label,,Simon/Rokusho em 0x084C8058 (antes: sShopPartScreenUiTileSheet) (antes: gGfx_Obj_Malias_09C0)
+0x084C8034,gObjTextFontGfx,label,,"Simon/Rokusho em 0x084C8058 (antes: sShopPartScreenUiTileSheet) (antes: gGfx_Obj_Malias_09C0) [RD7] confirmado: Malias 'Le' +2=0x09C0 (78 tiles 4bpp) -> OBJ 0x06017400 (GF, DB). Duplicado: label gGfx_Obj_Malias_09C0 deve sair do mtbe (antes: gGfx_Obj_Malias_09C0 label)"
 0x084C8034,gObjTextFontGfx,data,,fonte 8x8 dos rotulos em sprite (comprimida, 0x9C0 B = 78 tiles 4bpp), carregada em OBJ tile 0x3A0 (0x06017400)
 0x084C88B8,gGfx_PartsGrid_Tiles_Bg3,data,,[GF] Malias 0x01C0 -> VRAM 0x06017E00; PartsGrid_InitScreen (GF) [RD7] confirmado: Malias +2=0x01C0 -> VRAM 0x06017E00 (GF)
 0x084C92B0,gGfx_BotPartSelect_Tiles_Obj,data,,[GF4] Malias +2 0x0800 -> VRAM 0x06012800; Fight_InitBotPartSelectScreen; GF4 [RD7] confirmado: Malias +2=0x0800 -> VRAM 0x06012800 (GF4)
@@ -4370,11 +4370,11 @@ address,name,kind,count,comment
 0x0850F378,sPartScreenObjPaletteBlockB,label,,"Simon/Rokusho em 0x0850F39C [RD7] provavel: paleta crua, tamanho nao lido (vizinha de A em 0x60 B). (kind label->data)"
 0x0850F498,gMiniSpritePalettes,data,128,4 paletas OBJ do mini sprite (a 4a zerada); Simon: sPartSelectionComponentPaletteSet [RD7] confirmado (mtbe): 4 paletas OBJ = 128 B (4a zerada). Divergencia: GF2 diz 0x40 words (256 B); conferir
 0x08765EC0,gEventDb,label,,"base do banco de eventos (header: offsets das tabelas) [RD7] confirmado bytes: header u16[0]=0x4000, u16[2]=0x51E0 -> 2288 eventos (0x51E0-0x4000)/2. (kind label->table)"
-0x08765EC4,gEventDb_HeaderPad,label,,Simon/Rokusho em 0x08765EE4 (antes: event_operation_list)
+0x08765EC4,gEventDb_HeaderPad,label,,Simon/Rokusho em 0x08765EE4 (antes: event_operation_list) [RD7] confirmado: zeros (sem literal ref no codigo). Nao e lista de operacoes. (antes: event_operation_list)
 0x08769EC0,gEventPointerTable,label,,tabela de ponteiros de eventos (base + 0x4000) [RD7] confirmado EV.md: 2288 x u16 LE = 0x11E0 B (ponteiro = base+0x4000). Tabela de bancos em base+0x51E0 (1 B por evento). (kind label->table)
 0x087852CF,gStarterData,label,,dados do bot inicial [RD7] chute: sem xref de literal nem de Ghidra; Bot_InitStarterRecord (0x08044B58) nao le daqui (escreve direto). Bytes em grupos de 4 B (2B idx 01 38/3D). Nome mantido
 0x08785EC0,gGfx_BattlePanel_Char,data,,[GF3] Asset Malias +2 0x03E0 do painel de batalha; GF3 [IC] [GH-IC] Malias 0x03E0 (31 tiles) decomprimido para VRAM 0x06004000 + tamanho(bloco 0x0879DA90); destino provavel 0x06006FE0 (confirmar no emulador)
-0x08785FB4,gGfx_PartSelect_Obj,label,,Simon/Rokusho em 0x08785FD8 (antes: sSharedPartScreenTileSheet) (antes: gGfx_Shop_PartSelect_Obj)
+0x08785FB4,gGfx_PartSelect_Obj,label,,"Simon/Rokusho em 0x08785FD8 (antes: sSharedPartScreenTileSheet) (antes: gGfx_Shop_PartSelect_Obj) [RD7] confirmado: Malias +2=0x3A80 -> OBJ 0x06010000; usado pela loja e pelo BattlePanel (GF3, GF4). (antes: gGfx_Shop_PartSelect_Obj)"
 0x0878F7E8,gGfx_TitleMenu_Char,data,,[GF3] Char do menu do titulo (LZ77 0x3880 -> VRAM 0x06004000); GF3 [RD7] confirmado: LZ77 0x3880 -> VRAM 0x06004000 (GF3)
 0x0879DA90,gGfx_BattlePanel_Tiles,data,,[GF4] LZ77 0x10 size 0x2FE0 -> buffer 0x02030000 -> VRAM 0x06004000 via Asset_UnpackOrCopyBlock 0x08044D0C; GF4 [RD7] confirmado: LZ77 0x2FE0 -> buffer 0x02030000 -> VRAM 0x06004000 (GF4)
 0x0879EFC0,gGfx_BattlePanel_Map_Bg0,data,,[GF4] LZ77 0x10 size 0x810 mapa; Screen_LoadLZ77TileBlock via BattlePanel_SceneInit 0x08062FB4; BGCNT nao fechado; GF4 [RD7] confirmado: LZ77 0x810 (2048 B mapa). BGCNT aberto (GF4)
