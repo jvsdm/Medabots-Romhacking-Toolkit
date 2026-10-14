@@ -1,0 +1,12 @@
+addr,nome,kind,comentario
+0x03006472,gCurrentEventOpcodeByte,data,"confirmado (antes: gEvt_ContinuationIndex); E+0xC92 em EV.md/FI2.md; xrefs: Script_DispatchHandler WRITE/READ, Event_DispatchContinuation READ; tambem tocado em Event_Op80/Op81 (uso extra nao mapeado)"
+0x0300643B,gCurrentMapSceneVariant,data,"confirmado sem troca (VA.md, HE1.md); Event_Op0B/0C e Event_Op69"
+0x0300643D,gOverworldEventModeFlags,data,"provavel sem troca: HE3 confirma operacoes de bit (Op5D/5E, restore em Map_RestoreFocusedEventModeFlags); CONFLITO com OW.md:30 que chama o mesmo byte de gStepKindFlags (provavel); origem nao mapeada"
+0x0300643E,gOverworldEventModeFlagsBackup,data,confirmado sem troca (HE3.md: restaurado para 0x0300643D em Map_RestoreFocusedEventModeFlags)
+0x030064F4,gEventScriptRuntimeState_queued_action_actor_slots,data,sem troca: 1 xref PARAM em Event_Op80_Begin_Batched_Object_Command_Block; sem doc de conteudo
+0x030064FC,gEventScriptRuntimeState_queued_action_substeps,data,sem troca: 0 xrefs diretos (acesso por base+offset); sem doc
+0x03006506,gEventScriptRuntimeState_choice_page_or_mode,data,sem troca: escrito em Overworld_InitChoiceMenuScreen e Map_TickChoiceListOpen; lido em Map_UpdateCursorSpritePosition e FieldMenu_ChoiceSub2_SelectRow
+0x03006507,gEventScriptRuntimeState_choice_layout_flags,data,"sem troca: escrito em Overworld_InitChoiceMenuScreen, FieldMenu_ChoiceSub2_SelectRow; lido em Map_CreateChoiceSprites e Map_TickChoiceListOpen"
+0x0300650D,gEventScriptRuntimeState_choice_cursor_y_tiles,data,"sem troca: escrito/lido em Menu_StepCursorWrap e Overworld_InitChoiceMenuScreen; lido em Map_UpdateCursorSpritePosition (nome de cursor_y pelo uso, nao confirmado)"
+0x0300650E,gEventScriptRuntimeState_choice_scroll_or_page,data,sem troca: escrito em Overworld_InitChoiceMenuScreen e FieldMenu_ChoiceSub2_SelectRow; lido em Map_CreateChoiceSprites
+0x0300650F,gEventScriptRuntimeState_choice_flags,data,"sem troca: 1 escrita em Overworld_InitChoiceMenuScreen; JT2.md:134 chama o byte de contador de Menu_ChoiceCountdownStep (conflito de nome a resolver, provavel)"

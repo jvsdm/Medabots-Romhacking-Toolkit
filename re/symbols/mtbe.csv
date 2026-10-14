@@ -293,7 +293,6 @@ address,name,kind,count,comment
 0x03006473,gEvt_SubState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate) (antes: gCurrentEventSubstate) [RM3] provavel; gravado em Script_DispatchHandler"
 0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gEventScriptArguments) (antes: gEvt_Args)"
 0x03006484,gTrackedActorSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32] (antes: gTrackedObjectSlotTable) [CU] 16 bytes: byte[id] = slot+1 (0 = vago); E+0xCA4; zerada no opcode 0x06 End (GH-CU confirmado)"
-0x03006492,gEvt_ContinuationIndex,label,,"[FI] indice table2 (E+0xC92) conf [RM6] [RM6] DUPLICATA suspeita: 0 xrefs no Ghidra; FI registrou este nome com 'E+0xC92', que e 0x03006472 (acima). Provavel erro de transcricao em mtbe.csv; nome nao usado, sugerir remover a linha"
 0x03006494,gEvt_ActiveObjIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gCurrentEventActiveMapObjectIndex) (antes: gCurrentEventObjectIndex) [FI2] E+0xCB4 indice do objeto de mapa do evento (-1 sem objeto) confirmado (EV)"
 0x03006495,gEvt_YesNoOrder,label,,[FI2] E+0xCB5 flag Sim/Nao: 0 em Op31 e 1 em Op32 escrita confirmada (decompile Op31); leitor nao achado
 0x0300649A,gEvt_MapModeFlag,label,,[FI2] E+0xCBA modo do evento de mapa (0/1 iguais; 2 regrava bit 7) provavel (EX
@@ -4289,7 +4288,7 @@ address,name,kind,count,comment
 0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents
 0x08483ED8,gTextKeyItems,ptr,64,tabela de texto: Key Items; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x084850CA,KeyItemBag_MsgScript,data,,[IN3] [IN3-2] bytecode do script de recusa (+0x20 de 0x0848521C). Nao decodificado: id de mensagem a descobrir
-0x0848521C,KeyItemBag_MsgStateObj,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextShopDialogue)
+0x0848521C,KeyItemBag_MsgStateObj,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextShopDialogue) [IN3] [IN3-2] objeto de estado (ROM) usado pelo sub 9 (Flow_StepCounterTickB): +0x20 = 0x084850CA (script). Recusa 2..4 cai aqui; id de mensagem NAO confirmado
 0x084856E8,gMainState3MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState3; [0]=boot (0x0806E460); [3..6] handlers; provavel
 0x084859D8,gBootSubStateTable,data,,[TL] tabela de ponteiros do boot (GS 0..10)
 0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR)

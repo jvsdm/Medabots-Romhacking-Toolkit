@@ -1,0 +1,9 @@
+IN3 - codigo sem funcao no Ghidra (rodada 2, 2026-10-14)
+
+Nenhum bloco de codigo do caminho da bolsa ficou sem funcao: 0x0805D5F0 (antes tratado como 0x0805D5F1) ja e
+funcao (renomeada KeyItemBag_Sub0C_FadeToBlankSetMenu10), e 0x0805D5D0, 0x0805D658, 0x0805D674, 0x0805D580
+ja existem.
+
+Pendente de decodificacao (dado, nao funcao):
+- 0x084850CA: bytecode do script de recusa (objeto 0x0848521C, +0x20). Decodificar para achar o id de mensagem
+  (retornos 2..4 de KeyItem_CanUseHere). Se o script tiver interpretador proprio, criar a funcao de opcode.

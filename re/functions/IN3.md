@@ -99,3 +99,59 @@ Obs.: o buffer gShopItems (0x02000000, espelho 0x02040000) e reaproveitado pela 
 - Consumidor de E+0xC5C 3..8 e 0x0D (velocidade/animacao): confirmar com tabela A (§4).
 - Pedidos de correcao em mtbe.csv (nao editado): linha 3194/3195 (41 entradas, nao 0x28); linha 2682 (ordem id 0);
   linha 3190/3193 (renames aplicados, nomes ainda Shop_ no CSV); 0x0805D36C (ItemListSwitch_Table -> KeyItemBag_Case_Id0).
+
+## 7. Complemento (rodada 2, 2026-10-14): fecha o que faltava
+
+Feito por Ghidra (decompile/disasm de 0x0805D262, 0x0805D5F0, 0x0805D580, 0x0805CFB4) e leitura da ROM (python -I).
+
+### 7.1 Id 0: efeito completo [confirmado no decompile]
+Corrige §3 ("sub 0x0C sem funcao; fim NAO confirmado"): o sub 0x0C e 0x0805D5F0 (Thumb 0x0805D5F1 e so o bit de
+modo), funcao ja existente no Ghidra. Sequencia do uso do id 0 (retorno 1, ids nao especiais):
+1. Sub 0x0B (Fx_SetBldcntAndAdvance 0x0805D5D0): REG_BLDCNT=0x2FF; GS 0x0B -> 0x0C.
+2. Sub 0x0C = **KeyItemBag_Sub0C_FadeToBlankSetMenu10** (antes: Screen_StepToBlank, 0x0805D5F0): a cada quadro
+   soma 1 no byte cursor+0 (0x03006F74 -> +0), grava REG_BLDY 0x04000054 = contador<<1 (fade de 8 passos);
+   ao chegar em 8: limpa REG_DISPCNT bits 0x0200 e 0x0400 (BG1/BG2 off), ClearObjectAttributeEntries(0,0x80),
+   cursor+6 = 1, **gGameStateMenu 0x03002B8C = 0x0A**, GS 0x0300137C = 0.
+   Confianca: o decompile e claro; o significado de "cena 0x0A" (tela de destino do id 0) e provavel e nao confirmado.
+   O id 0 nao mexe em E+0xC5C (confirmado).
+Cruzamento: a checagem de gMapArea == 0x0A (recusa, retorno 2) existe justamente para esse caso.
+
+### 7.2 Cura, evento, tela por id
+- **Cura: nenhum id da tabela 0x0805D2C8 cura** (ids 1,5,12,13,19,39,40 so gravam E+0xC5C; id 0 troca de tela;
+  os demais so tocam SFX ou nada). Nao ha efeito de HP/PP nessa tabela.
+- **Evento: nenhum id chama EventScript/flag de historia** neste caminho (nenhum Event_Op aparece nos alvos).
+- **Tela**: so o id 0 troca de tela (cena 0x0A em gGameStateMenu, ver 7.1). Os ids 1..40 especiais passam
+  pelo CommonTail 0x0805D418 -> fade (sub 0x0E) -> MainState_RequestModeTransition(4) (sai da bolsa).
+- **"Nao pode usar aqui"**: retornos 2, 3, 4 de KeyItem_CanUseHere (tabela §2).
+  * 2 (id 0, mapa gMapArea==0x0A), 3 (id 0 com E+0xC5D bit 0x20; ou ids especiais com E+0xC5D bit 0x01),
+    4 (ids especiais com E+0xC5C em {1,2}).
+  * Caminho do retorno 2..4 (0x0805D262, dentro de KeyItemBag_ListInputStep): SFX 6 (0x08074DE0);
+    chama Obj_ResetStateFields (0x0803FB0C) SEM argumento; limpa bit 0x4000 de halfwords OBJ 0x03004070 e
+    0x030040B0 (literal 0x0805D298 = 0xFFFFBFFF); GS = 9.
+  * Estado 9 = Flow_StepCounterTickB (0x0805D580): StateMachine_DispatchStep(*(0x0848521C + 0x20)) e GS++ quando
+    o passo retorna != 0. O objeto de estado e ROM 0x0848521C (ponteiro +0x20 = 0x084850CA, bytecode de script).
+  * **Id de mensagem: NAO CONFIRMADO.** O texto esta no script do objeto 0x084850CA, que nao foi decodificado.
+    Proximo passo: decodificar o script de 0x084850CA (opcodes que chamam o desenho de texto) e anotar o id.
+    Nao ha id no r0 nem em argumento de funcao neste caminho.
+
+### 7.3 Tabela completa id -> efeito (versao final)
+| id | Retorno | Efeito | RAM/flags | Mensagem |
+|---|---|---|---|---|
+| 0 | 1 | fade + cena 0x0A (ver 7.1); E+0xC5C intacto | 0x03006F74, REG_BLDCNT, REG_BLDY, 0x03002B8C, GS | nao |
+| 0 | 2 / 3 | recusa (mapa 0x0A / flag E+0xC5D bit 0x20) | ROM 0x083D2B6B; 0x0300643D | script 0x084850CA (id nao confirmado) |
+| 1,5,12,13,19,39,40 | 1 | E+0xC5C = 3,4,5,8,6,7,0x0D; fade e sai da bolsa | 0x0300643C, ctx+0x84, GS | nao |
+| 1,5,12,13,19,39,40 | 3 / 4 | recusa | E+0xC5D bit 0x01; E+0xC5C em {1,2} | script (id nao confirmado) |
+| 2-4, 6-11, 14-18, 20-38 | 0 | so SFX 6 | — | nao |
+| demais > 0x28 | 0 | so SFX 6 (tabela nao alcancada) | — | nao |
+
+### 7.4 Renames desta rodada (confirmado: "Function renamed successfully")
+- 0x0805D5F0 Screen_StepToBlank -> KeyItemBag_Sub0C_FadeToBlankSetMenu10 (so referenciada pela tabela 0x08483634
+  indice 12; liga gGameStateMenu=0x0A). Provavel.
+- Mantidos: Flow_StepCounterTickB 0x0805D580 (generico; sub 9 da tabela 0x08483634 e tambem usado por outras
+  cenas nao verificadas), Fx_SetBldcntAndAdvance, StateTable_WaitSubThenAdvance_B, Screen_TickFadeOutAndClear.
+
+### 7.5 Pendencias restantes
+- Id de mensagem da recusa (script 0x084850CA): aberto.
+- Significado de gGameStateMenu 0x0A (tela do id 0): aberto; confirmar com o menu que abre (replay/savestate).
+- E+0xC5D bits 0x01 e 0x20 (origem): aberto.
+- Consumidor de E+0xC5C 3..8 e 0x0D: aberto (ver §4).

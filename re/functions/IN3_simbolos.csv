@@ -28,3 +28,8 @@ address,name,kind,comment
 0x0300643C,gMapPlayerWalkState,data,"[IN3] E+0xC5C: modo de andar; itens 1,5,12,13,19,39,40 gravam 3,4,5,8,6,7,0x0D. Recusa se valor em {1,2}"
 0x0300643D,gOverworldEventModeFlags,label,"[IN3] E+0xC5D: bit 0x01 e bit 0x20 testados em KeyItem_CanUseHere (origem nao mapeada)"
 0x03006F74,gKeyItemBagCursorPtr,label,"[IN3] ponteiro para struct do cursor da bolsa; +0x0C = indice (gShopItems/lista), +0x10 = 0 libera recusa 'cancelar'. Antes: nome Shop-like nao usado"
+0x0805D5F0,KeyItemBag_Sub0C_FadeToBlankSetMenu10,func_thumb,"[IN3-2] renomeado de Screen_StepToBlank (antes: Screen_StepToBlank). Sub 0x0C da tabela 0x08483634 (idx 12, unica referencia). Fade BLDY 8 passos; ao fim BG1/BG2 off, ClearObjectAttributeEntries, cursor+6=1, gGameStateMenu=0x0A, GS=0. Provavel"
+0x0848521C,KeyItemBag_MsgStateObj,data,"[IN3-2] objeto de estado (ROM) usado pelo sub 9 (Flow_StepCounterTickB): +0x20 = 0x084850CA (script). Recusa 2..4 cai aqui; id de mensagem NAO confirmado"
+0x084850CA,KeyItemBag_MsgScript,data,"[IN3-2] bytecode do script de recusa (+0x20 de 0x0848521C). Nao decodificado: id de mensagem a descobrir"
+0x0805D5D0,Fx_SetBldcntAndAdvance,func_thumb,"[IN3-2] confirmado de novo: REG_BLDCNT=0x2FF; GS++ (sub 0x0B do id 0)"
+0x0805D262,KeyItemBag_Result2to4_Message,label,"[IN3-2] confirmado: SFX 6; Obj_ResetStateFields sem argumento; GS=9. Sem id de mensagem em r0"
