@@ -1,0 +1,48 @@
+address,name,kind,comment
+0x03000444,gCtx_MsgState,label,ctx+0x04 estado do motor de mensagem (0..8; indexa 0x083B291C) confirmado (GH-MS; literal 0x0803FB5C)
+0x03000448,gCtx_MsgScriptPtr,label,ctx+0x08 ponteiro do roteiro da mensagem provavel (A6; MS)
+0x0300044C,gCtx_MsgPc,label,ctx+0x0C pc do roteiro (u16) provavel (A6; MS)
+0x03000453,gCtx_MsgParada,label,ctx+0x13 parada da mensagem provavel (MS)
+0x03000459,gCtx_MsgMode,label,ctx+0x19 modo da mensagem (1 nova linha; 2 espera tecla) provavel (MS)
+0x0300045A,gCtx_MsgWaitCounter,label,ctx+0x1A contador de espera (FF = sem) provavel (MS)
+0x0300045B,gCtx_MsgDispatchByte,label,ctx+0x1B byte de despacho (tabela 0x083B2990) e flag de fim (zerado por A6) confirmado (literal 0x08040990; JT2)
+0x03000465,gCtx_MsgPage,label,ctx+0x25 pagina da mensagem provavel (MS)
+0x03000466,gCtx_MsgStep3,label,ctx+0x26 passo de estado 3 confirmado (GH-MS)
+0x03000467,gCtx_MsgItalic,label,ctx+0x27 flag italico confirmado (GH-MS)
+0x03000473,gCtx_DebugSubstate,label,ctx+0x33 byte de estado dos despachantes do debug (tabela 0x083ACAC0) confirmado (GH-DB)
+0x03000474,gCtx_DebugRowCursor,label,ctx+0x34 cursor de linha do debug confirmado (GH-DB)
+0x03000479,gCtx_DebugBotIndex,label,ctx+0x39 bot 0..121 do visualizador Motion confirmado (GH-DB)
+0x0300047F,gCtx_TeamScreenState,label,ctx+0x3F estado da tela de time (PS) conflito com PS2 (slot) aberto
+0x030004C0,gCtx_EntryByte,label,ctx+0x80 byte de entrada da luta (Fight_AnimateEntryFrames) nao confirmado no ctx 0x03000440 (FL2/FL3)
+0x030004C4,gCtx_CounterAnim,label,ctx+0x84 contador de passo confirmado (decompile A_25; literal 0x0801D1E0 = 0x03000440)
+0x030004C5,gCtx_ClearAtEnd,label,ctx+0x85 zerado no fim do despachante GS (BT2) provavel
+0x030004C6,gCtx_WaitTimer,label,ctx+0x86 timer de espera u16 confirmado (decompile 0x08030674)
+0x030004C9,gCtx_FreeFlag,label,ctx+0x89 flag do ctx (==1 libera UI; !=0 habilita randbyte; ==0 pula espera) usos confirmados; escritor aberto; AI2 chama de gDeterministicRandom (conflito)
+0x030004CD,gCtx_RandIndex,label,ctx+0x8D indice do randbyte (ROM 0x083B29EC) provavel (DT)
+0x030004D0,gCtx_BlendMode,label,ctx+0x90 modo do efeito de blend (R2) provavel
+0x030004D2,gCtx_BlendStep,label,ctx+0x92 passo do efeito de blend (R2) provavel
+0x030004DC,gCtx_TeamWinner,label,ctx+0x9C vencedor de Fight_EvaluateTeamWinState (1 ou 2) confirmado (decompile 0x0801B53C)
+0x03000537,gCtx_PlayerSpecialty,label,ctx+0xF7 inicio de 7 bytes de especialidade do jogador (IWRAM_PlayerSpecialtyBase) aberto (DM)
+0x0300056F,gCtx_SlotIndex,label,ctx+0x12F indice de slot k (gObjectSlots + k*0x40) provavel (JT2; JT3)
+0x03000579,gCtx_SceneSelector,label,ctx+0x139 seletor de cena 0..5 confirmado (decompile 0x08013904)
+0x0300057A,gCtx_StepByte,label,ctx+0x13A byte de estado/passo 0..8 confirmado (decompile 0x0801A788)
+0x0300640A,gEvt_EncounterTemplateId,label,E+0xC2A id de template de encontro (0..245) confirmado (EN; HE2)
+0x0300640B,gEvt_StepCounter,label,E+0xC2B passos no mapa; >16 inicia sorteio de encontro confirmado (OW.md)
+0x0300640D,gEvt_EncounterRollSuppressed,label,E+0xC2D 0 = sorteia; !=0 usa E+0xC2A direto; quem põe 1 aberto
+0x0300640E,gEvt_PostBattleMode,label,E+0xC2E pos-batalha (byte 3 do Op33) provavel (HE2)
+0x0300640F,gEvt_BattleMode,label,E+0xC2F modo da batalha (byte 2 do Op33) provavel (HE2)
+0x0300643F,gEvt_RepeatScene,label,E+0xC5F repete o passo da cena no mesmo quadro confirmado (EV)
+0x03006440,gEvt_MapObjIndexSaved,label,E+0xC60 indice guardado pelo Op4C e lido pelo Op51 confirmado (HE3_simbolos)
+0x03006468,gEvt_PendingFlag,label,E+0xC88 evento rodando (!=0) confirmado (EV)
+0x03006469,gEvt_ContinuationPending,label,E+0xC89 estado: 0 fase primaria; 1 continuacao confirmado (decompile Op31)
+0x0300646A,gEvt_ScriptCursor,label,E+0xC8A cursor do script u16 confirmado (EV)
+0x0300646C,gEvt_SavedCursor,label,E+0xC8C cursor salvo (copia de C8A) base dos saltos confirmado (decompile Op31)
+0x0300646E,gEvt_EventId,label,E+0xC8E id do evento atual u16 confirmado (EV)
+0x03006472,gEvt_OpcodeByte,label,E+0xC92 opcode atual (indice das tabelas 0x083D222C e 0x083D2630) confirmado (EV)
+0x03006473,gEvt_SubState,label,E+0xC93 subestado do opcode confirmado (EV)
+0x03006474,gEvt_Args,label,E+0xC94 argumentos do opcode (contador em Op04) confirmado (EV; HC1)
+0x03006494,gEvt_ActiveObjIndex,label,E+0xCB4 indice do objeto de mapa do evento (-1 sem objeto) confirmado (EV)
+0x03006495,gEvt_YesNoOrder,label,E+0xCB5 flag Sim/Nao: 0 em Op31 e 1 em Op32 escrita confirmada (decompile Op31); leitor nao achado
+0x0300649A,gEvt_MapModeFlag,label,E+0xCBA modo do evento de mapa (0/1 iguais; 2 regrava bit 7) provavel (EX; HC3)
+0x0300649C,gEvt_CounterA,label,E+0xCBC contador lido pelo Op50 (sel 0) leitura confirmada; escritor aberto
+0x0300649D,gEvt_CounterB,label,E+0xCBD contador lido pelo Op50 (sel 1) leitura confirmada; escritor aberto
