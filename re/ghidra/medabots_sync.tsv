@@ -1,5 +1,5 @@
 # gerado por re/tools/build_sync.py; nao editar a mao
-F	0x08000000	entry
+L	0x08000000	entry
 L	0x080000A0	header_title
 L	0x080000AC	header_gamecode
 F	0x080000C0	crt0

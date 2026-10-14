@@ -30,9 +30,11 @@ TIERS = [
     r"CF\d*|NM\d*",
 ]
 # MERGE_NOTAS: aqui o nome do mtbe é o correto.
+# Nunca viram função: 0x08000000 é o cabeçalho ARM da ROM (b crt0 + logo); o usuário apaga à mão (QA1).
+NEVER_FUNC = {0x08000000}
 KEEP_MTBE = {"0x08035754", "0x08035814", "0x08035880", "0x08035740"}
 # Listas de endereços que devem virar função (alvos de tabela de ponteiros).
-CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt"]
+CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt", "QA5_criar.txt"]
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 GENERIC = re.compile(r"^(FUN|sub|DAT|LAB|PTR|thunk_FUN)_", re.I)
@@ -141,7 +143,7 @@ def main():
         name = r[1]
         if not IDENT.match(name) or GENERIC.match(name):
             continue
-        func = kind.startswith("func")
+        func = kind.startswith("func") and a not in NEVER_FUNC
         key = norm(r[0], func)
         if name in seen and seen[name] != key:
             dups.append((name, seen[name], key))
@@ -150,7 +152,7 @@ def main():
         if func:
             lines.append("F\t%s\t%s" % (key, name))
             named_funcs.add(key)
-        elif kind in DATA_KINDS:
+        elif kind in DATA_KINDS or a in NEVER_FUNC:
             lines.append("L\t%s\t%s" % (key, name))
 
     creates = set()
@@ -162,7 +164,7 @@ def main():
             tok = re.split(r"[ \t,]+", line.strip())[0]
             if re.fullmatch(r"0[xX][0-9A-Fa-f]+", tok):  # ignora faixas "0x..0x"
                 key = norm(tok, True)
-                if key not in named_funcs:
+                if key not in named_funcs and int(key, 16) not in NEVER_FUNC:
                     creates.add(key)
     lines += ["C\t%s" % a for a in sorted(creates)]
 
