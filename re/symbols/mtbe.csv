@@ -153,6 +153,7 @@ address,name,kind,count,comment
 0x030018D6,gFight_TargetDamage,label,,[FI] 3 u16 dano por alvo conf (decompile BP_08) CONFLITO AS2
 0x030018DE,gFight_FollowUpBot,label,,[FI] bot de follow-up provavel
 0x030018DF,gFight_FollowUpType,label,,[FI] tipo de follow-up provavel
+0x030018E0,fi_BrokenBotQueue,data,,[DF] [GH-DF confirmado] fila de 3 bytes id+1 de bots com cabeca quebrada (redesenho); consumida por K_00
 0x030018E8,gFight_RosTotal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: TotalROS)"
 0x030018EA,gFight_PreDamage,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: TotalROS_4)"
 0x030018EC,gFight_AttackAccum,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: damage)"
@@ -695,6 +696,7 @@ address,name,kind,count,comment
 0x08013AE4,Fight_MarkSelectedOptionFrame,func_thumb,,menu de 3 opcoes: OR de bit no +0x44 pelo cursor; provavel
 0x08013B8C,Fight_BattleSceneInit,func_thumb,,inicializa a cena de luta e desenha a UI (provavel)
 0x08013E30,UpdateSelectedMedabotPreviewScreen,func_thumb,,"Simon/Rokusho: Selected-Medabot/Medawatch full preview update loop. Refreshes the preview renderer, responds to button state, updates displayed part ids, and redraws both the small and large selected-bot previews for the current cursor position."
+0x08013E84,UpdateSelectedMedabotPreviewScreen,func_thumb,,[HD2] [HD2] Chamador unico de 0x080183A4 (confirmado por xref)
 0x08013FA8,Fight_SelectScreenFrame,func_thumb,,"[provavel] medabot select/preview frame with GpuBlend fade, sets wait 0x3C"
 0x0801427C,Fight_StepBattleFrame,func_thumb,,loop principal por frame da batalha (timers e bots); provável
 0x08014A60,StateMachine_TickStepCounter,func_thumb,,[provavel] chama StateMachine_DispatchStep; conta retorno != 0
@@ -799,8 +801,11 @@ address,name,kind,count,comment
 0x08017948,Fight_DrawCounterFieldPair12B,func_thumb,,[R1] Familia contador: 2 campos se contador < 12; provavel na forma
 0x08017994,Fight_DrawBotSlotSprite,func_thumb,,[R1] Sprite de slot do bot (ativo ou nao) pelo indice fight_information+0x3D/+0x46; provavel
 0x08017A14,Fight_DrawSideBotSlots,func_thumb,,"[R1] Laco dos 3 bots de um lado (presentes, +0x40); provavel"
+0x08017B24,Fight_DrawSelectCursorObject,func_thumb,,"[HD2] [HD2] Cursor 3x3 da luta: OBJ slot 0x40 (0x03002C30+0x200), tile 0x306/0x307, x +-0x10, y da tabela 0x083AD524; estado 0x03000440+0x3C/+0x3D. Renomeada (antes FUN_08017b24)"
 0x08017BD0,Fight_DrawActiveBotNameBox,func_thumb,,[R1] Caixa de nome do bot ativo por lado; provavel
 0x08017CE8,Ui_TickBlinkCounter,func_thumb,,"[G] Contador de piscar, bit 3 (provavel)"
+0x08017D50,Fight_LoadActiveBotIconTiles,func_thumb,,[HD2] [HD2] CpuFastSet de 0x20 words da ROM 0x084C29D8+(bot+1)*0x80 para VRAM 0x06007800. Renomeada (antes FUN_08017d50)
+0x08017D90,Fight_DrawActiveBotNameSprites,func_thumb,,[HD2] [HD2] Nome do bot ativo em sprites de texto (0xB bytes da tabela 0x083B6590 para 0x030004DE; Text_LayoutGlyphSprites). Renomeada (antes FUN_08017d90)
 0x08017E00,Fight_DrawFourPartIcons,func_thumb,,[R1] Icones das 4 pecas do bot ativo; provavel na forma
 0x08017EA8,Fight_DrawFourPartRowsWithStats,func_thumb,,[R1] 4 linhas de peca com GetPartStats do bot ativo; provavel
 0x08017F9C,Fight_DrawFourPartStatColumns,func_thumb,,[R1] Colunas de valores das 4 pecas do bot ativo; provavel na forma
@@ -1842,7 +1847,7 @@ address,name,kind,count,comment
 0x0803684C,FightPreview_TickSpriteTimers,func_thumb,,[R2] decrementa timers de sprite; retorna 1 se todos ociosos
 0x080368C4,FightPreview_BuildSpriteListRow,func_thumb,,[R2] monta ate 5 sprites de lista (terminador 0xfe)
 0x080369C8,FightPreview_BuildSpriteListRowAlt,func_thumb,,[R2] variante de BuildSpriteListRow com outras tabelas
-0x08036AC4,Fight_AdvanceSlotXByWaveTable,func_thumb,,[R2] passo de X por tabela com contador por slot (antes: FightPreview_AdvanceSlotX)
+0x08036AC4,Fight_AdvanceSlotYByWaveTable,func_thumb,,[R2] passo de X por tabela com contador por slot (antes: FightPreview_AdvanceSlotX) (antes: Fight_AdvanceSlotXByWaveTable)
 0x08036B1C,FightPreview_AdvanceRowSlotsMarked,func_thumb,,[R2] avanca ate 5 slots marcando +9
 0x08036B50,FightPreview_AdvanceRowSlots,func_thumb,,[R2] avanca ate 5 slots sem marcar +9
 0x08036B84,Fight_CopyPartArmorToDisplayValues,func_thumb,,[R2] copia id da peca do bot para o sprite (antes: FightPreview_SetPartSpriteId)
@@ -2005,6 +2010,7 @@ address,name,kind,count,comment
 0x0803DB4C,Fight_ShowPostBattleTextIndex1,func_thumb,,[TX] GH-TX: StateMachine_DispatchStep(gTextPostBattleMessage[1]) (indice fixo). Sem funcao no Ghidra
 0x0803DC8C,Screen_ResetAndSetSub4Mode,func_thumb,,"[provavel] limpa VRAM/slots, SetGpuBlendMode(5,0x3F,0x20), Dispatch_Sub4Mode(3)"
 0x0803DCDC,Overlay_InitScreenGraphics,func_thumb,,"init de tela do overlay: gfx, blend, paleta, OAM, musica 0x14; provavel"
+0x0803DDC6,Overlay_InitScreenGraphics,func_thumb,,[HD2] [HD2] Chama Overlay_DrawSixDigitRow (0x0803E8EC) na inicializacao
 0x0803E4F4,Gfx_BlankSceneInit,func_thumb,,cena vazia: limpa mapas de BG e liga camadas (provavel)
 0x0803E634,Flow_StepCounterTickA,func_thumb,,[FR1] StateMachine_DispatchStep on object +0x30 then counter++ on done
 0x0803E780,Overlay_ClearTimerIfFlag,func_thumb,,[R2] zera timer se flag +0x89 == 1 (chute)
@@ -2073,10 +2079,10 @@ address,name,kind,count,comment
 0x08040898,MsgFF_SfxAdvanceCtx,func_thumb,,"[MS] FF n=0,2,3: se flag ctx+0 & mascara != 0 -> SFX 0x0D (snd_sfx_request via 08074DE0) e estado++; mascara provavel"
 0x080408BC,MsgFF_AdvanceOtherObj,func_thumb,,"[MS] FF n=1,4: estado++ de outro objeto (r3), sem SFX; provavel; alvo nao identificado"
 0x080408D0,MsgState_DispatchByScriptByte,func_thumb,,"[MS] estado 6: byte do roteiro em pc+1, indice byte*4 sobre tabela 0x083B2940, chama via 0807CCF0; provavel (faixa do indice aberta)"
-0x080408F4,Dispatch_CallHandlerByByte1B,func_thumb,,[confirmado] CallViaR0(tabela[ctx+0x1B*4]); tabela em DAT_0804090C
-0x08040914,Dispatch_CallHandlerByByte1B,func_thumb,,despachante por tabela indexada por ctx+0x1B; provavel; subsistema chute
-0x08040934,Fight_CallHandlerByIndex,func_thumb,,"[confirmado] CallViaR0(tabela[byte+0x1B]); trampolim, alvo depende da tabela"
-0x08040954,Dispatch_CallHandlerByIdx1B,func_thumb,,wrapper: CallViaR0(tabela[ctx+0x1B])
+0x080408F4,MsgState9_CtxB1BDispatch,func_thumb,,[confirmado] CallViaR0(tabela[ctx+0x1B*4]); tabela em DAT_0804090C (antes: Dispatch_CallHandlerByByte1B)
+0x08040914,MsgState10_CtxB1BDispatch,func_thumb,,despachante por tabela indexada por ctx+0x1B; provavel; subsistema chute (antes: Dispatch_CallHandlerByByte1B)
+0x08040934,MsgState11_CtxB1BDispatch,func_thumb,,"[confirmado] CallViaR0(tabela[byte+0x1B]); trampolim, alvo depende da tabela (antes: Fight_CallHandlerByIndex)"
+0x08040954,MsgState12_CtxB1BDispatch,func_thumb,,wrapper: CallViaR0(tabela[ctx+0x1B]) (antes: Dispatch_CallHandlerByIdx1B)
 0x08040974,MsgState13_CtxB1BDispatch,func_thumb,,[FL10] trampolim: CallViaR0(tabela[byte +0x1B]) (provável) (antes: Dispatch_CallHandlerByByteAt1B)
 0x08040994,BgMap_TickRectFillState,func_thumb,,[provavel] preenche retangulo do mapa de fundo; contador +0x1B
 0x08040A00,BgMap_TickFlashStep,func_thumb,,"[provavel] passo de efeito: FillRect16 se +2==1, soma 2 ou 1 ao +0x1B"
@@ -3315,7 +3321,7 @@ address,name,kind,count,comment
 0x083ABB50,SND_PsgFreqTable,data,,[SN] 74 halfwords de frequencia PSG (Hz=131072/(2048-v))
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
-0x083AC2C8,menu_list,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4]
+0x083AC2C8,gMainStateTable,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list)
 0x083AC880,table_partsgrid_states,label,,[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas)
 0x083ACA4C,debug_menu_more_idk,label,,Simon/Rokusho em 0x083ACA6C; tipo undefined *32[4]
 0x083ACA5C,debug_menu_subroutines,label,,Simon/Rokusho em 0x083ACA7C; tipo undefined *32[4]
@@ -3351,6 +3357,7 @@ address,name,kind,count,comment
 0x083AF090,gPartActionHandlerTable,data,,"[AI2] [AI2] tabela de ponteiros de handler de acao de peca (188 entradas, indexada pelo byte +0x49 da peca). Ponteiros nao lidos"
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
 0x083AF380,gRollDieFaceTable,data,,[TX] GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado
+0x083AF620,gFightRowWaveTable,data,,[HD2] [HD2] Tabela u8 de deslocamento Y para a descida das linhas de peca ; valores nao lidos
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable)"
 0x083AFC2C,gFightScrollSlotBytes_AFC2C,data,,"[ST2] [ST2] 12 bytes u8 indexados por fight_information+0x38 (0x03001800+0x38); lidos por Fight_BotSlideScroll, Fight_ScrollSlotPhase_C0CC, Fight_ScrollEntryPhase; renomeado no Ghidra"
 0x083AFC38,gSlotWaveTable_AFC38,data,,"[ST2] [ST2] 32 halfwords (0x40 B, fim em AFC78); Anim_SlotScriptTick soma AFC38[slot+0x23 & 0x1F] em slot+0x04; renomeado no Ghidra"
@@ -3362,6 +3369,10 @@ address,name,kind,count,comment
 0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable
 0x083B291C,gMessageStateHandlerTable,data,,"[A6] tabela de handlers de estado do motor de mensagem (ctx 0x03000440 +4); 0 = Gfx_PaletteFlushStep, 5 = ScriptVM_RunOpcodes; confirmado (literal + decompile)"
 0x083B2940,MsgState6_DispatchTable,data,,[MS] tabela indexada pelo byte do roteiro (estado 6); literal confirmado; numero de entradas aberto
+0x083B2954,gMessageDispatch9Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 9
+0x083B296C,gMessageDispatch10Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 10
+0x083B2984,gMessageDispatch11Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 11
+0x083B2988,gMessageDispatch12Table,data,,[MS2] [MS2] tabela de ctx+1B do estado 12
 0x083B2990,Dispatch_CallHandlerByByteAt1B_Table,data,,[JT2] [GH-JT2] 23 ponteiros de handler (indices 0..22) chamados via CallViaR0 (0x0807CCF0) por 0x08040974; indice = byte 0x0300045B (0x03000440+0x1B); sem limite no codigo; 0x083B29EC nao e ponteiro
 0x083B29EC,gRandomLUT,label,,Simon/Rokusho em 0x083B2A0C
 0x083B4C60,gGfx_Portrait_PonteirosLayout,data,,"[JT2] [GH-JT2] dados (nao codigo) indexados por slot+0x2C em 0x0803C7DC; passada a 0x0803F15C; passo 0x80; 8 entradas lidas, fim nao achado (antes: Fight_AnimSlot_TableB)"
@@ -3566,3 +3577,44 @@ address,name,kind,count,comment
 0x087BB7E0,gGfx_Title_Map_Bg2_ANOMALIA,data,,[GF4] SEM cabecalho LZ77 em +0 (zeros); destino trace 0x06007500; nao confiar ate conferir no emulador; GF4
 0x087F314C,gGfx_Logo_Char,data,,[GF3] Char do logo NATSUME (LZ77 0x0DE0 -> VRAM 0x06000000); GF3
 0x087F5500,gTextDump,label,,inicio do texto
+0x103C6A04,gActionScript_AntiSea,data,,"[TQ2] roteiro de action-script da tecnica 35 (GH-TQ2); fluxo linear, entrada em 103C6A04; mesma entrada que tec 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 18, 19, 20, 34"
+0x103C6A57,gActionScript_GrapTrap,data,,"[TQ2] roteiro de action-script da tecnica 10 (GH-TQ2); fluxo linear, entrada em 103C6A57"
+0x103C6A59,gActionScript_ShotTrap,data,,"[TQ2] roteiro de action-script da tecnica 11 (GH-TQ2); fluxo linear, entrada em 103C6A59"
+0x103C6A5B,gActionScript_AttackClr,data,,"[TQ2] roteiro de action-script da tecnica 12 (GH-TQ2); fluxo linear, entrada em 103C6A5B"
+0x103C6A65,gActionScript_BreakForm,data,,"[TQ2] roteiro de action-script da tecnica 21 (GH-TQ2); fluxo linear, entrada em 103C6A65"
+0x103C6A67,gActionScript_Stability,data,,"[TQ2] roteiro de action-script da tecnica 22 (GH-TQ2); fluxo linear, entrada em 103C6A67"
+0x103C6A6B,gActionScript_ForceBind,data,,"[TQ2] roteiro de action-script da tecnica 23 (GH-TQ2); fluxo linear, entrada em 103C6A6B"
+0x103C6A6D,gActionScript_CancelOptic,data,,"[TQ2] roteiro de action-script da tecnica 24 (GH-TQ2); fluxo linear, entrada em 103C6A6D"
+0x103C6A6E,gActionScript_CancelBomb,data,,"[TQ2] roteiro de action-script da tecnica 25 (GH-TQ2); fluxo linear, entrada em 103C6A6E"
+0x103C6A6F,gActionScript_CancelGrav,data,,"[TQ2] roteiro de action-script da tecnica 26 (GH-TQ2); fluxo linear, entrada em 103C6A6F"
+0x103C6A70,gActionScript_Defence,data,,"[TQ2] roteiro de action-script da tecnica 27 (GH-TQ2); fluxo linear, entrada em 103C6A70"
+0x103C6A72,gActionScript_FullBlock,data,,"[TQ2] roteiro de action-script da tecnica 28 (GH-TQ2); fluxo linear, entrada em 103C6A72"
+0x103C6A74,gActionScript_HalfBlock,data,,"[TQ2] roteiro de action-script da tecnica 29 (GH-TQ2); fluxo linear, entrada em 103C6A74"
+0x103C6A76,gActionScript_Recovery,data,,"[TQ2] roteiro de action-script da tecnica 30 (GH-TQ2); fluxo linear, entrada em 103C6A76"
+0x103C6A87,gActionScript_AutoRecover,data,,"[TQ2] roteiro de action-script da tecnica 31 (GH-TQ2); fluxo linear, entrada em 103C6A87"
+0x103C6A8B,gActionScript_Repair,data,,"[TQ2] roteiro de action-script da tecnica 32 (GH-TQ2); fluxo linear, entrada em 103C6A8B"
+0x103C6A9C,gActionScript_Reactivate,data,,"[TQ2] roteiro de action-script da tecnica 33 (GH-TQ2); fluxo linear, entrada em 103C6A9C"
+0x103C6AA2,gActionScript_Scout,data,,"[TQ2] roteiro de action-script da tecnica 36 (GH-TQ2); fluxo linear, entrada em 103C6AA2"
+0x103C6AA4,gActionScript_Conceal,data,,"[TQ2] roteiro de action-script da tecnica 37 (GH-TQ2); fluxo linear, entrada em 103C6AA4"
+0x103C6AA6,gActionScript_BoostChrg,data,,"[TQ2] roteiro de action-script da tecnica 38 (GH-TQ2); fluxo linear, entrada em 103C6AA6"
+0x103C6AAA,gActionScript_RapidChrg,data,,"[TQ2] roteiro de action-script da tecnica 39 (GH-TQ2); fluxo linear, entrada em 103C6AAA"
+0x103C6AAE,gActionScript_AccelChrg,data,,"[TQ2] roteiro de action-script da tecnica 40 (GH-TQ2); fluxo linear, entrada em 103C6AAE"
+0x103C6AAF,gActionScript_DrainChrg,data,,"[TQ2] roteiro de action-script da tecnica 41 (GH-TQ2); fluxo linear, entrada em 103C6AAF"
+0x103C6AB3,gActionScript_Pushover,data,,"[TQ2] roteiro de action-script da tecnica 42 (GH-TQ2); fluxo linear, entrada em 103C6AB3"
+0x103C6AB8,gActionScript_Impair,data,,"[TQ2] roteiro de action-script da tecnica 43 (GH-TQ2); fluxo linear, entrada em 103C6AB8"
+0x103C6ABC,gActionScript_Confusion,data,,"[TQ2] roteiro de action-script da tecnica 44 (GH-TQ2); fluxo linear, entrada em 103C6ABC"
+0x103C6AC0,gActionScript_UseDrain,data,,"[TQ2] roteiro de action-script da tecnica 45 (GH-TQ2); fluxo linear, entrada em 103C6AC0"
+0x103C6AC4,gActionScript_NoEscape,data,,"[TQ2] roteiro de action-script da tecnica 46 (GH-TQ2); fluxo linear, entrada em 103C6AC4"
+0x103C6AC8,gActionScript_NoDefense,data,,"[TQ2] roteiro de action-script da tecnica 47 (GH-TQ2); fluxo linear, entrada em 103C6AC8"
+0x103C6ACC,gActionScript_Destroy,data,,"[TQ2] roteiro de action-script da tecnica 48 (GH-TQ2); fluxo linear, entrada em 103C6ACC"
+0x103C6AFF,gActionScript_Sacrifice,data,,"[TQ2] roteiro de action-script da tecnica 49 (GH-TQ2); fluxo linear, entrada em 103C6AFF"
+0x103C6B2C,gActionScript_Forcedrain,data,,"[TQ2] roteiro de action-script da tecnica 50 (GH-TQ2); fluxo linear, entrada em 103C6B2C"
+0x103C6B30,gActionScript_TeamForm,data,,"[TQ2] roteiro de action-script da tecnica 51 (GH-TQ2); fluxo linear, entrada em 103C6B30"
+0x103C6B32,gActionScript_TeamAttack,data,,"[TQ2] roteiro de action-script da tecnica 52 (GH-TQ2); fluxo linear, entrada em 103C6B32"
+0x103C6B85,gActionScript_Strengthen,data,,"[TQ2] roteiro de action-script da tecnica 53 (GH-TQ2); fluxo linear, entrada em 103C6B85"
+0x103C6B86,gActionScript_CntrAttk,data,,"[TQ2] roteiro de action-script da tecnica 54 (GH-TQ2); fluxo linear, entrada em 103C6B86"
+0x103C6B88,gActionScript_Change,data,,"[TQ2] roteiro de action-script da tecnica 55 (GH-TQ2); fluxo linear, entrada em 103C6B88"
+0x103C6B8A,gActionScript_ItrpChange,data,,"[TQ2] roteiro de action-script da tecnica 56 (GH-TQ2); fluxo linear, entrada em 103C6B8A"
+0x103C6B8C,gActionScript_AttkChange,data,,"[TQ2] roteiro de action-script da tecnica 57 (GH-TQ2); fluxo linear, entrada em 103C6B8C"
+0x103C6B8E,gActionScript_DEFChange,data,,"[TQ2] roteiro de action-script da tecnica 58 (GH-TQ2); fluxo linear, entrada em 103C6B8E"
+0x103C6B90,gActionScript_HealChange,data,,"[TQ2] roteiro de action-script da tecnica 59 (GH-TQ2); fluxo linear, entrada em 103C6B90"

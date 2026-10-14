@@ -354,6 +354,7 @@ F	0x08013904	Dispatch_ByteStateIndexTable_08013904
 F	0x08013AE4	Fight_MarkSelectedOptionFrame
 F	0x08013B8C	Fight_BattleSceneInit
 F	0x08013E30	UpdateSelectedMedabotPreviewScreen
+F	0x08013E84	UpdateSelectedMedabotPreviewScreen_08013E84
 F	0x08013FA8	Fight_SelectScreenFrame
 F	0x0801427C	Fight_StepBattleFrame
 F	0x08014A60	StateMachine_TickStepCounter
@@ -458,8 +459,11 @@ F	0x08017914	Fight_FillSideLabelBandForBot
 F	0x08017948	Fight_DrawCounterFieldPair12B
 F	0x08017994	Fight_DrawBotSlotSprite
 F	0x08017A14	Fight_DrawSideBotSlots
+F	0x08017B24	Fight_DrawSelectCursorObject
 F	0x08017BD0	Fight_DrawActiveBotNameBox
 F	0x08017CE8	Ui_TickBlinkCounter
+F	0x08017D50	Fight_LoadActiveBotIconTiles
+F	0x08017D90	Fight_DrawActiveBotNameSprites
 F	0x08017E00	Fight_DrawFourPartIcons
 F	0x08017EA8	Fight_DrawFourPartRowsWithStats
 F	0x08017F9C	Fight_DrawFourPartStatColumns
@@ -1500,7 +1504,7 @@ F	0x08036784	FightPreview_SetupFourSprites
 F	0x0803684C	FightPreview_TickSpriteTimers
 F	0x080368C4	FightPreview_BuildSpriteListRow
 F	0x080369C8	FightPreview_BuildSpriteListRowAlt
-F	0x08036AC4	Fight_AdvanceSlotXByWaveTable
+F	0x08036AC4	Fight_AdvanceSlotYByWaveTable
 F	0x08036B1C	FightPreview_AdvanceRowSlotsMarked
 F	0x08036B50	FightPreview_AdvanceRowSlots
 F	0x08036B84	Fight_CopyPartArmorToDisplayValues
@@ -1663,6 +1667,7 @@ F	0x0803DB1C	Snd_RequestSongByFlag
 F	0x0803DB4C	Fight_ShowPostBattleTextIndex1
 F	0x0803DC8C	Screen_ResetAndSetSub4Mode
 F	0x0803DCDC	Overlay_InitScreenGraphics
+F	0x0803DDC6	Overlay_InitScreenGraphics_0803DDC6
 F	0x0803E4F4	Gfx_BlankSceneInit
 F	0x0803E634	Flow_StepCounterTickA
 F	0x0803E780	Overlay_ClearTimerIfFlag
@@ -1731,10 +1736,10 @@ L	0x08040884	MsgFF_SubcommandTable
 F	0x08040898	MsgFF_SfxAdvanceCtx
 F	0x080408BC	MsgFF_AdvanceOtherObj
 F	0x080408D0	MsgState_DispatchByScriptByte
-F	0x080408F4	Dispatch_CallHandlerByByte1B
-F	0x08040914	Dispatch_CallHandlerByByte1B_08040914
-F	0x08040934	Fight_CallHandlerByIndex
-F	0x08040954	Dispatch_CallHandlerByIdx1B
+F	0x080408F4	MsgState9_CtxB1BDispatch
+F	0x08040914	MsgState10_CtxB1BDispatch
+F	0x08040934	MsgState11_CtxB1BDispatch
+F	0x08040954	MsgState12_CtxB1BDispatch
 F	0x08040974	MsgState13_CtxB1BDispatch
 F	0x08040994	BgMap_TickRectFillState
 F	0x08040A00	BgMap_TickFlashStep
@@ -2973,7 +2978,7 @@ L	0x080B16E4	SND_SampleTable
 L	0x083ABB50	SND_PsgFreqTable
 L	0x083ABF98	gMainStateTable
 L	0x083ABFB0	gSpriteSetTable0
-L	0x083AC2C8	menu_list
+L	0x083AC2C8	gMainStateTable_083AC2C8
 L	0x083AC880	table_partsgrid_states
 L	0x083ACA4C	debug_menu_more_idk
 L	0x083ACA5C	debug_menu_subroutines
@@ -3009,6 +3014,7 @@ L	0x083AF080	gFightSlotRandomTable16
 L	0x083AF090	gPartActionHandlerTable
 L	0x083AF180	gActionScriptOpcodeHandlerTable
 L	0x083AF380	gRollDieFaceTable
+L	0x083AF620	gFightRowWaveTable
 L	0x083AF8C0	gObjectOpcodeHandlerTable
 L	0x083AFC2C	gFightScrollSlotBytes_AFC2C
 L	0x083AFC38	gSlotWaveTable_AFC38
@@ -3020,6 +3026,10 @@ L	0x083B1748	gGfx_Portrait_Paleta
 L	0x083B1A08	gBattleSprites
 L	0x083B291C	gMessageStateHandlerTable
 L	0x083B2940	MsgState6_DispatchTable
+L	0x083B2954	gMessageDispatch9Table
+L	0x083B296C	gMessageDispatch10Table
+L	0x083B2984	gMessageDispatch11Table
+L	0x083B2988	gMessageDispatch12Table
 L	0x083B2990	Dispatch_CallHandlerByByteAt1B_Table
 L	0x083B29EC	gRandomLUT
 L	0x083B4C60	gGfx_Portrait_PonteirosLayout

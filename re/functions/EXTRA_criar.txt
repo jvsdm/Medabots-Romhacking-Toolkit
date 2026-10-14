@@ -30,3 +30,6 @@
 0x08049E08	Overworld_RunScreenTransitionStep: função existe, não lida neste lote	pendente (só chamada)
 0x08049D18	Overworld_StartScreenTransitionEffect: função existe, não lida neste lote	pendente (só chamada)
 0x08050BC8	Map_ModeDispatch: função existe, não lida neste lote	pendente (só chamada)
+0x08040898	MS2: FF 0/2/3 espera A/B, SFX 0x0D, ctx+4++
+0x080408BC	MS2: FF 1/4 ctx+4++
+0x08040820	MS2: limpeza da caixa antes do FF
