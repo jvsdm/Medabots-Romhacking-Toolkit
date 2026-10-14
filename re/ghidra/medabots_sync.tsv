@@ -1913,6 +1913,8 @@ F	0x08049D0C	Overworld_ResetScreenTransitionResources
 F	0x08049D18	Overworld_StartScreenTransitionEffect
 F	0x08049D90	Overworld_ResetAndStartScreenTransitionEffect
 F	0x08049E08	Overworld_RunScreenTransitionStep
+F	0x08049EC0	Palette_FadeRowsToColorA_Wrapper
+F	0x08049ED4	Palette_FadeRowsToColorB_Wrapper
 F	0x0804A210	GameState_AdvanceSubroutine
 F	0x0804A220	EventScript_RunCurrent
 F	0x0804A2F0	new_game_start
@@ -1920,6 +1922,7 @@ L	0x0804A3B6	lit_EventDbBase0
 L	0x0804A584	lit_EventDbBase1
 F	0x0804A60C	Map_InitScreenAndTransition
 F	0x0804A764	Overworld_InitMapScene
+F	0x0804A7A0	Overworld_InitMapScene_0804A7A0
 L	0x0804A8C8	lit_EventDbBase2
 F	0x0804A900	Overworld_FinishTransitionInitPlayer
 F	0x0804A944	Overworld_ReloadMapSceneAfterReset
@@ -2205,6 +2208,7 @@ F	0x08050CC0	Event_ResetSceneCommandStep
 F	0x08050CCC	Event_RunSceneCommandSequence
 F	0x08050F5C	Overworld_UpdateMapSceneStateMachine
 F	0x080513C8	Map_LoadEntitySpawnsForCurrentMap
+F	0x08051416	Map_LoadEntitySpawnsForCurrentMap_08051416
 F	0x080517F0	Overworld_InitPlayerSprites
 F	0x08051940	Map_GetScaledStepDelta
 F	0x0805196C	Overworld_ClearFollowerQueuedMove
@@ -2219,6 +2223,7 @@ F	0x0805218C	Map_SetEventMarkerFacingVariant
 F	0x080521A8	Overworld_TickRandomObjectAnim
 F	0x08052204	Map_TickAllObjectAnimations
 F	0x08052284	Map_CheckFacingEventTriggerAhead
+F	0x08052330	Map_CheckFacingEventTriggerAhead_08052330
 F	0x08052400	Map_CheckWalkOverTrigger
 F	0x080524C8	Map_GetAdjacentCollisionTileByDirection
 F	0x080525BC	Overworld_CheckMovementObjectBlocker
@@ -2950,8 +2955,9 @@ L	0x083D1D78	gMoldTable
 L	0x083D1E40	gMotionAngleTable
 L	0x083D1F2C	gMotionOffsetTable
 L	0x083D2018	gMotionDurationTable
-L	0x083D222C	gEventOpcodeTableA
-L	0x083D2630	gEventOpcodeTableB
+L	0x083D212C	gSceneSubroutineTable
+L	0x083D222C	gEventPrimaryOpcodeTable
+L	0x083D2630	gEventContinuationOpcodeTable
 L	0x083D2B6B	gMapArea
 L	0x083F7D80	sRandomAdvanceTable
 L	0x083F7E80	Overworld_Sprites
@@ -2986,7 +2992,7 @@ L	0x0847DAD0	gTextDialogue_0847DAD0
 L	0x0847DF24	gTextPointerTable
 L	0x0847E388	get_item_text
 L	0x0847E644	gMapMusic
-L	0x08483234	gMapPeople
+L	0x08483234	gMapEntityPtrTable
 L	0x08483634	StateTable_CB50
 L	0x08483774	gMapAreaB
 L	0x084838E4	gShops

@@ -116,12 +116,13 @@ address,name,kind,count,comment
 0x03005310,gOverworldAffineState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300534C,gOverworldAffineFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005350,gOverworldUiState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03005590,gEventDbBase,label,,base do banco de eventos em RAM; Simon: gEventScriptDataBasePtr
+0x03005590,gEventScriptBasePtr,label,,base do banco de eventos em RAM; Simon: gEventScriptDataBasePtr (antes: gEventDbBase)
 0x030055A0,gEventObjectWorkArea,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030057A0,gMapTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo MapTransitionState[40]"
 0x030057D8,gEventFlagListPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x030057DC,gMapScratchBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x030057E0,event_flag_list,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]; Simon: gEventFlagList"
+0x03005815,gEventModeFlag,label,,[EV] byte = 1 no início (gatilhos) e no fim (End): modo de evento (provável; nome a confirmar)
 0x03005DBC,gActiveMapObjectTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo ActiveMapObjectEntry[64][512]"
 0x03005DBD,first_event_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005DBE,first_event_eventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -148,6 +149,7 @@ address,name,kind,count,comment
 0x0300643B,gCurrentMapSceneVariant,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643D,gOverworldEventModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643E,gOverworldEventModeFlagsBackup,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300643F,gEventRunSceneStepFlag,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável)
 0x0300644E,str_ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006450,str_ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -158,10 +160,10 @@ address,name,kind,count,comment
 0x0300646E,gCurrentEventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
 0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
 0x03006472,gCurrentEventOpcodeByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03006473,gCurrentEventOpcodeSubstate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006473,gCurrentEventSubstate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate)"
 0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006484,gTrackedObjectSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32]"
-0x03006494,gCurrentEventActiveMapObjectIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03006494,gCurrentEventObjectIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: gCurrentEventActiveMapObjectIndex)"
 0x030064A0,gEventScriptRuntimeState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); Simon: gEventScriptRuntimeState_vm_state"
 0x030064A1,gEventScriptRuntimeState_vm_substate,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x030064A2,gEventScriptRuntimeState_queued_action_timers,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -2160,6 +2162,8 @@ address,name,kind,count,comment
 0x08049D18,Overworld_StartScreenTransitionEffect,func_thumb,,Simon/Rokusho: Start a screen-transition effect using the supplied resource/config ids without first resetting the transition resource state.
 0x08049D90,Overworld_ResetAndStartScreenTransitionEffect,func_thumb,,"Simon/Rokusho: Reset screen-transition resources, then start a configured screen-transition effect for a map load / transition sequence."
 0x08049E08,Overworld_RunScreenTransitionStep,func_thumb,,Simon/Rokusho: Advance one step of the overworld screen-transition interpolator. Updates two screen-space coordinates toward their targets and returns nonzero when the transition completes.
+0x08049EC0,Palette_FadeRowsToColorA_Wrapper,func_thumb,,[FN2] confirmado: Wrapper que chama Palette_FadeRowsToColorA
+0x08049ED4,Palette_FadeRowsToColorB_Wrapper,func_thumb,,[FN2] confirmado: Wrapper que chama Palette_FadeRowsToColorB
 0x0804A210,GameState_AdvanceSubroutine,func_thumb,,Simon/Rokusho
 0x0804A220,EventScript_RunCurrent,func_thumb,,"Simon/Rokusho: Main overworld event VM tick. |  | State model: | - gCurrentEventPendingFlag == 0: run overworld startup/map-scene subroutine table | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte == 0: run one event-initialization opcode | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte != 0: dispatch the current normal event opcode |  | The VM is two-level: | - gCurrentEventOpcodeByte selects the current opcode handler | - gCurrentEventOpcodeSubstate is per-opcode local state used by multi-step normal opcode handlers |  | The event script stream is addressed through the installed event database, gCurrentEventId, and gCurrentEventScriptCursor."
 0x0804A2F0,new_game_start,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported.
@@ -2167,6 +2171,7 @@ address,name,kind,count,comment
 0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
 0x0804A764,Overworld_InitMapScene,func_thumb,,"Simon/Rokusho: Primary overworld map-scene initialization. Clears OAM/VRAM shadow state, resets event/object work areas, installs the core overworld/map/event pointers, loads the current map and entities, clamps the camera, and enables the main overworld rendering path."
+0x0804A7A0,Overworld_InitMapScene,func_thumb,,"[EV] entrada de cena do mapa: zera Pendente (C88), StateByte (C89), cursor (C8A); carrega mapa e entidades (confirmado)"
 0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
 0x0804A900,Overworld_FinishTransitionInitPlayer,func_thumb,,"[FL10] fim da transição: sprites do jogador, marcador, direção; estado=5 (provável)"
 0x0804A944,Overworld_ReloadMapSceneAfterReset,func_thumb,,"Simon/Rokusho: Reload the current map scene after a heavier display/reset step. Clears OAM/object state, resets blend state, rebuilds the current map scene, reclamps the camera, restores the main display configuration, and resumes the overworld scene loop."
@@ -2452,6 +2457,7 @@ address,name,kind,count,comment
 0x08050CCC,Event_RunSceneCommandSequence,func_thumb,,"Simon/Rokusho: Run a multi-step scene/event command sequence selected by a small command id. |  | This helper is not map-load-specific. Depending on the command id, it can: | - launch top-level game/menu flows through GameState_StartFlowByCommand | - run scene transitions | - trigger side-effect commands through 0x0804842C | - advance an internal step byte in gEventScriptArguments[0x0B] |  | Returns nonzero when the sequence has finished."
 0x08050F5C,Overworld_UpdateMapSceneStateMachine,func_thumb,,"Simon/Rokusho: Main per-frame overworld map-scene state machine. Small states handle immediate warp/trigger/walk transitions; later states update markers and visible objects, then run walking, facing-event checks, warp resolution, encounter setup, and screen transitions."
 0x080513C8,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,"Simon/Rokusho: Build the live active map object table from the current map's MapEntitySpawnEntry records for the requested activeSpawnGroup. record_kind_and_event_id uses low 12 bits for the event/object id and a high nibble for the runtime record kind. In ActiveMapObjectEntry.render_slot_and_flags, low 5 bits store the primary render slot, bit 0x40 marks that an auxiliary paired render slot is allocated, and bit 0x80 marks the entry as active/enabled in map object logic."
+0x08051416,Map_LoadEntitySpawnsForCurrentMap,func_thumb,,[EV] carrega registros de 8 B do mapa em 0x03005DBC; filtra por grupo/máscara/flag de evento feito (confirmado; ponteiro literal 0x08483234)
 0x080517F0,Overworld_InitPlayerSprites,func_thumb,,"Simon/Rokusho: Initialize the player's map marker / cursor UI after a map load. Converts the player's world position to tile coordinates, loads the marker graphics, seeds the marker sprite state, and sets the initial on-screen position relative to the current camera. (antes: Map_InitPlayerMapMarker)"
 0x08051940,Map_GetScaledStepDelta,func_thumb,,"[R3] revisto CH3: provável - devolve produto de dois bytes de DAT_08051960 (um indexado pelo byte +0x2A do slot idx, outro por DAT_08051968+2); passo de movimento escalado"
 0x0805196C,Overworld_ClearFollowerQueuedMove,func_thumb,,"Simon/Rokusho: Clear the follower's queued movement/facing state, then reset the follower animation queue helper used when the player changes facing without taking a full step."
@@ -2466,6 +2472,7 @@ address,name,kind,count,comment
 0x080521A8,Overworld_TickRandomObjectAnim,func_thumb,,Simon/Rokusho: Update idle facing-trigger animation markers. Periodically picks a random active facing event marker and changes its displayed facing/animation variant when the event entry is marked as animation-capable. (antes: Map_UpdateIdleFacingEventAnimation)
 0x08052204,Map_TickAllObjectAnimations,func_thumb,,"Simon/Rokusho: Refresh the animation for active objects whose record kind is 6, using the current event/object state to decide whether their type-6 marker animation should advance. (antes: Map_RefreshType6MarkerAnimations)"
 0x08052284,Map_CheckFacingEventTriggerAhead,func_thumb,,Simon/Rokusho: Check for a facing-triggered map event or facing-sensitive marker immediately in front of the player. ActiveMapObjectEntry.record_kind_and_event_id high nibble selects whether the record arms an event or only updates marker facing.
+0x08052330,Map_CheckFacingEventTriggerAhead,func_thumb,,"[EV] gatilho de frente (kind 0/4/6 na casa à frente); Pendente=1, id em E+0xC8E, StateByte=0, cursor=0, índice em E+0xCB4 (confirmado)"
 0x08052400,Map_CheckWalkOverTrigger,func_thumb,,Simon/Rokusho: Scan the live ActiveMapObjectEntry table for a walk-over trigger at the player's current tile. record_kind_and_event_id high nibble 0x8 denotes a walk-over event trigger; low 12 bits become current_event.
 0x080524C8,Map_GetAdjacentCollisionTileByDirection,func_thumb,,Simon/Rokusho: Return the collision/metatile byte for the tile adjacent to the player in the requested direction using the current map collision layer.
 0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,,Simon/Rokusho
@@ -3197,8 +3204,9 @@ address,name,kind,count,comment
 0x083D1E40,gMotionAngleTable,ptr,59,roteiro -> s16 angulo [molde 1..49][N quadros-chave] (1/65536 volta); o tocador le 63 moldes; provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
 0x083D1F2C,gMotionOffsetTable,ptr,59,"roteiro -> (s8 x, s8 y) [molde 1..49][N]"
 0x083D2018,gMotionDurationTable,ptr,59,"roteiro -> duracao (quadros) de cada quadro-chave, fim 0; N = tamanho"
-0x083D222C,gEventOpcodeTableA,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable
-0x083D2630,gEventOpcodeTableB,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable
+0x083D212C,gSceneSubroutineTable,label,,[EV] tabela indexada por 0x0300137C (gamestate_subroutine); usada sem evento e após despacho com E+0xC5F (confirmado no literal)
+0x083D222C,gEventPrimaryOpcodeTable,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable (antes: gEventOpcodeTableA)
+0x083D2630,gEventContinuationOpcodeTable,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable (antes: gEventOpcodeTableB)
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
 0x083F7E80,Overworld_Sprites,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4]
@@ -3233,7 +3241,7 @@ address,name,kind,count,comment
 0x0847DF24,gTextPointerTable,label,,tabela de ponteiros de texto
 0x0847E388,get_item_text,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4]
 0x0847E644,gMapMusic,data,192,musica por mapa
-0x08483234,gMapPeople,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable
+0x08483234,gMapEntityPtrTable,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople)
 0x08483634,StateTable_CB50,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C"
 0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B)
 0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents
