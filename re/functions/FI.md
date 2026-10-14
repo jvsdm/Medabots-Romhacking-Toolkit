@@ -56,7 +56,7 @@ Legenda: conf = confirmado (decompile ou literal lido na ROM) | provável (texto
 | +0x0CC | 2 (u16) | espelho de +0xC8 | FH, HD, MD | HN7, HN9 | provável | |
 | +0x0D0 | 1 | peça do reparo (= fi+0x8B) | HA4 O_0 | HA4 (0x08036CCC Fight_ClampRepairToMissingArmor) | provável | |
 | +0x0D1 | 1 | flag "peça quebra" | FH, HD, CF (=1), MD (=0), DM | HN7 (bit7 de D2) | provável | |
-| +0x0D2..+0x0D4 | 1 por alvo i (0..2) | bit7 = D1 (quebra); bits0..6 = índice de peça (x0x18) do bot alvo (fi+0x60+i) | HN7 (BK/BL), BP_08 (0x0802F8E4, conf) | BP_08, HN9, HN7, HN5 (DAT_0802CAC0 = fi+0xD2) | conf (decompile BP_08) | CONFLITO: HN7 mapeia 1->2, 2->3; o decompile usa o valor direto |
+| +0x0D2..+0x0D4 | 1 por alvo i (0..2) | bit7 = D1 (quebra); bits0..6 = peça 1/2/3 mapeada para 2/3/1 no leitor BK_0E (`fi+0xD2 & 0x7F`) (QA3) | HN7 (BK/BL), BP_08 (0x0802F8E4, conf) | BP_08, HN9, HN7, HN5 (DAT_0802CAC0 = fi+0xD2) | conf (decompile BP_08) | CONFLITO: HN7 mapeia 1->2, 2->3 (confirmado em BK_0E, QA3); "valor direto" não conferido em BP_08/HN9/HN5 |
 | +0x0D6..+0x0DA | 2 (u16) por alvo i | dano por alvo i (BP_08 grava C8) | BP_08 (conf), HN7 | BP_08, HN9 | conf (decompile) | CONFLITO: AS2 (0x08034910, inline) diz D6+2k = armadura>>1 |
 | +0x0DE | 2 (u16) | bot de follow-up (bloco 0x1640 + 0x100*idx); bit0 de +0xF8 = sentido | JT (literal 0x0801DA20) | HA1, MD | provável | |
 | +0x0DF | 1 | tipo de follow-up (0x1B/0x1C = gfx; 0x1B = -DEF) | JT | HA1, MD, DM | provável | |
@@ -129,7 +129,7 @@ Pendente: E+0xC8C e E+0xC92 precisam de decompile (Event_DispatchContinuation 0x
 - +0x086: HA4 atribui ao fi; decompile confirma timer em 0x03000440+0x86. Corrigir HA4.
 - +0x028 x +0x02A: um só array de registros de 8 B em fi+0x2A + 8*k (FI2, Conflito 2). Resolvido (antes: dois arrays).
 - +0x0A8: resolvido (FI2, Conflito 3): é o id da técnica/roteiro (0..59), índice de gTechniqueActionScriptPtrTable 0x083C6CA8.
-- +0x0D2: HN7 mapeia peça; decompile usa valor direto.
+- +0x0D2: HN7 mapeia peça (BK_0E: 1->2, 2->3, outro->1; bit7 fica de fora) (QA3); "valor direto" retirado até conferir BP_08, HN9 e HN5.
 - +0x0D6: dano (HN7 e decompile) x metade da armadura (AS2).
 - +0x051: BT usa como valor de SFX.
 - +0x084: HA1 x ctx.

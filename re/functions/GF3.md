@@ -124,7 +124,7 @@ Endereços de título já documentados em `pc/research/IN1_intro.md` e `README.m
 
 | Endereço do asset | Formato | Tamanho (cabeçalho) | Destino | Função que carrega | Tela |
 |---|---|---|---|---|---|
-| 0x087B67B0 | LZ77 0x10 | 0x0061C0 | VRAM 0x06008000 (BG0) | Title loader 0x0806D7A0 (bios_lz77_vram 0x0807CCD8) | Título: BG0 |
+| 0x087B67B0 | LZ77 0x10 | 0x0061C0 | VRAM = r1 do chamador (sem literal de destino; QA3/DC2) | Title loader 0x0806D7A0 (bios_lz77_vram 0x0807CCD8) | Título: BG0 | DC2: 0x06008000 não é o par; 0x06000000 não existe no pool. 0x0806D7A0 = push; ldr r0 <- 0x0806D844 (= 0x087B67B0), BL 0x0807CCD8 com r1 vindo do chamador. 0x06008000 (pool 0x0806D850) é destino de DMA3 (control 0x84000090) |
 | 0x087BB060 | LZ77 0x10 | 0x000500 | VRAM 0x06006800 (BG tilemap) | idem | Título: mapa BG |
 | 0x087BB2A0 | LZ77 0x10 | não lido | VRAM 0x06007000 | idem | Título: mapa BG |
 | 0x087BB7E0 | LZ77 0x10 | não lido | VRAM 0x06007800 | idem | Título: mapa BG |

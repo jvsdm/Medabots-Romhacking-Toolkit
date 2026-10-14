@@ -109,8 +109,7 @@ Laço por quadro sobre a grade de células do bloco 0x03005010: célula i em `+0
   com esse nome. Candidato provável: menu 0x15 (`GameState_StartFlowByCommand(4)`), handlers de MainState2. Sem achado.
 - **Batalha por link, fluxo completo**: falta ler o handler do menu 10 (0x0803D538) e o menu 0x15. Sem achado.
 - Significado de 0xFEFE e do bit SI no filho: confirmar com emulador (não usado nesta rodada, por regra).
-- Conflito de documentação: EV.md cita o pendente em 0x03006468; HC1.md e o literal de Event_Op76 dizem 0x03006469
-  (E+0xC89). Usado 0x03006469.
+- Pendente (QA3): flag 0x03006468 (E+0xC88, ≠0 = evento rodando) + byte de estado 0x03006469 (E+0xC89, escolhe o despacho). EV.md certo; HC1 corrigido. Usado: o par 0x03006468 + 0x03006469.
 
 ## 7. Renomeados no Ghidra (nesta rodada)
 - `FUN_08065b0c` -> `Link_HandshakeFrameStep` (confirmado que é link: 0x03005010, 0x03005030, 0x0300137C).

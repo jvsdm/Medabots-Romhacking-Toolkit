@@ -26,7 +26,7 @@ não em `fi+0x3C`. O mesmo bloco 0x03000440 é o do timer de HD.md seção 2 (+0
 - Segundo número: byte +0x4C+0x18k em 3 dígitos, x=0x1B (significado não confirmado; "+0x4C" = pesquisa +0x0C).
 - `FillBgTilemapRectSequential(1,2,0x1A,y, mapa, (tile)|0x3A4)`: preenchimento de 1 tile de largura na coluna 0x1A
   (candidato a "barra": preenche o trecho entre armadura e o número; forma visual não verificada no emulador).
-- Chamada por: `HandleSelectedMedabotPreviewCursorInput` 0x08018534 (cursor da luta, ver item 2), `Fight_BattleSceneInit`
+- Chamada por: `HandleSelectedMedabotPreviewCursorInput` 0x08018534 (cursor 3x3 da tela de prévia, ver item 2) (QA3), `Fight_BattleSceneInit`
   0x08013CD8, `Fight_SlideSideBackStep` 0x080188EC.
 - Confiança: confirmado (código); o que é a "barra" visual = provável.
 
@@ -53,11 +53,10 @@ não em `fi+0x3C`. O mesmo bloco 0x03000440 é o do timer de HD.md seção 2 (+0
   `*0x0400000A` (ver item 3).
 - Confiança: escritores confirmados; leitores = docs (provável).
 
-## 2. Cursor de seleção 3x3 da luta
+## 2. Cursor de seleção 3x3 da tela de prévia (escolha de peça) (QA3)
 
-- `HandleSelectedMedabotPreviewCursorInput` 0x080183A4 (0x080183A4..0x08018597) é o cursor 3x3 **da luta**, não da prévia
-  (confirmado no decompile). PS.md, CF.md e PS2.md que dizem "prévia" estão errados neste ponto; R1.md está certo.
-  Único chamador achado: `UpdateSelectedMedabotPreviewScreen` 0x08013E84.
+- `HandleSelectedMedabotPreviewCursorInput` 0x080183A4 (0x080183A4..0x08018597) é o cursor 3x3 da **tela de prévia** do Medabot (QA3; escolha de peça dentro da preparação da luta). Não é o cursor da luta em outro quadro.
+  Único chamador: `UpdateSelectedMedabotPreviewScreen` 0x08013E84 (QA3). A leitura "da luta" deste arquivo estava errada.
 - Estado: `0x03000440`: +0x3C = coluna, +0x3D = linha; índice = coluna*3 + linha. Teclas lidas de `0x03001798`
   (mascara 0xA0/0x50 para a coluna 0; 0x90/0x60 para as colunas 1 e 2).
   Movimento só vertical nesta função, com volta; só move para célula com flag 0x40 do bloco do bot (`0x03000590 + idx*0x100`)

@@ -1,7 +1,7 @@
 # HC1: continuacoes dos opcodes de evento (tabela 0x083D2630), lote 1
 
 Continuacao = segunda fase de um opcode: rodada enquanto E+0xC89 != 0 (chamada por `Event_DispatchContinuation` 0x0804DC0C).
-Estado: E = 0x030057E0 (E+0xC89 = 0x03006469 pendente; E+0xC93 = substado; E+0xC94.. = argumentos).
+Estado: E = 0x030057E0 (gate = E+0xC88 = 0x03006468, ≠0 = evento rodando; E+0xC89 = 0x03006469 = byte de estado que escolhe o despacho; E+0xC93 = substado; E+0xC94.. = argumentos) (QA3).
 Termino padrao: `Event_EndOpcode` 0x08050290 (zera E+0xC89 e E+0xC93).
 
 ## 0x0804DC34 Event_Op00_Cont_NoOp

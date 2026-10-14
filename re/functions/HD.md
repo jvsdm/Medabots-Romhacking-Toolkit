@@ -116,6 +116,6 @@ Status: **PENDENTE** até cada seção ser decompilada e confirmada.
 
 ### Pendente nesta passagem
 - Desenho exato da barra de armadura das 4 peças e a descida animada (candidatas acima, não lidas).
-- Cursor 3x3 da luta (`Battle_*`, CF.md diz que `HandleSelectedMedabotPreviewCursorInput` 0x080183A4 é da prévia, não da luta).
+- Cursor 3x3 da tela de prévia (escolha de peça): `HandleSelectedMedabotPreviewCursorInput` 0x080183A4, único chamador `UpdateSelectedMedabotPreviewScreen` 0x08013E84 (QA3).
 - Texto dos letreiros e destino BG dos gauges (BG1? CBB/SBB).
 - Renomes no Ghidra: nenhum novo nesta passagem (os nomes desta seção já estavam aplicados).

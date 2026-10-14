@@ -14,7 +14,7 @@ Convenção: "Malias +2" = u16 do cabeçalho (semântica ainda não confirmada);
 ## Cabeçalhos da tela de título (cena 2, IN1/IN2)
 | Endereço | Formato | Tamanho | Destino | Carregador | Tela | Confiança |
 |---|---|---|---|---|---|---|
-| 0x087BB2A0 | LZ77 0x10 | 0x000500 (1280 B) | VRAM 0x06006D00 (`IN1_swi_calls.txt` linha 70: SWI 0x0C r1=0x06006D00) | Title loader 0x0806D7A0 | Título: mapa BG | confirmado (trace). GF3 dizia 0x06007000: conflito, vale o trace |
+| 0x087BB2A0 | LZ77 0x10 | 0x000500 (1280 B) | VRAM 0x06007000 (QA3: pool 0x0806D86C; par de `bios_lz77`) | Title loader 0x0806D7A0 | Título: mapa BG | confirmado na ROM (QA3). Trace `IN1_swi_calls.txt` linha 70 (0x06006D00) não bate com o código: não usar como prova |
 | 0x087BB7E0 | **sem cabeçalho LZ77 em +0** | — | trace (IN1 linha 71) diz VRAM 0x06007500 | Title loader | Título: mapa BG | **ANOMALIA**: +0..+0x1F são 0x00, depois 0x01 (1883 de 2048 bytes não nulos). Não é início de bloco; provável ponteiro errado ou meio de bloco. Não rotular até conferir no emulador (RAM/SWI) |
 
 ## Grade de peças: paleta 0x084F4840
