@@ -43,39 +43,38 @@ Updated 2026-10-13. **Current focus: discovery and documentation of ROM function
   - HC.md: the event continuation table 0x083D2630 (137 ops, 85 unique targets, 30 are already functions).
 - Confidence across the CSVs: about 723 entries "provável" and 178 "chute"; the rest "confirmado".
 
-## Next discovery tasks (suggested priority)
-1. **Continuation table of event opcodes, `0x083D2630`** (see HC.md). `HC_lista.txt` is ready with the 55 targets
-   that are not functions yet.
-   - **The user needs to run** `re/ghidra/CreateHandlerFunctions.java` with `HC_lista.txt` and save the project.
-   - Then document them in HC1..HCn.md (`Event_OpXX_Cont_<Name>`).
-   - 0x0804DC34 is the common stub (53 ops, NoOp).
-2. **Unnamed battle helpers that recur in many handlers** (high value):
-   - FUN_0803725C, FUN_08037280 (common start AccumRosPart -> ApplyStatusCostIfFlag -> 0x0803725C).
-   - FUN_080376F4, FUN_080370AC, FUN_08036AC4, FUN_08036E54, FUN_08036B84, FUN_08036D24.
-   - Fight_RollPartValue.
-   - Fight_RunSubstateDispatchC (second substate dispatcher, AJ 0C..13).
-   - Who reads the codes at +0xA6 (0x1A, 0x1C, 0x1D, 0x25, 0x2B, 0x2C, 0x2D, 0x39).
-3. **Indirect jumps Ghidra did not recover** (jump tables "UNRECOVERED"): HA2 E05/G02, HA3 H:0x3E (0x0801F28A),
-   J:0x02 (0x0801FBC4, 5 entries + fallback 0x0801FD70), L:0x0B (0x0802040C), HA1 E/05 (0x0801DADE). Read the table
-   from the ROM and fix it with set_disassembly_comment / document the targets.
-4. **Leftover Ghidra functions**: list with `mcp__ghidra__list_functions` and filter names `FUN_*` that aren't in
-   mtbe.csv (functions that are neither BL targets nor in handler tables: callbacks, IRQ, and the ones created now).
-   Also the 62 generic names, 55 with no name and 19 named "?" that the merge ignored (see MERGE_RELATORIO.md).
-5. **Pending conflicts** (MERGE_RELATORIO.md; 258 cases kept the mtbe name). Needing a decision:
-   - 0x0803579C: Fight_GetPartProficiencyBase vs Fight_AccumRosPart.
-   - 0x08034F68: do_damage_on_part vs Fight_ApplyDamageToPart.
-   - 0x080183A4: mtbe says "Medabot preview screen cursor"; an agent says "3x3 battle cursor".
-   - 0x08047BA8: the mtbe name Overworld_StartMapTransitionEffect is wrong (it only calls sfx); no new name yet.
-   - 0x08045A40: may be a literal pool, not a function.
-   - 0x0804305C vs 0x08042E58: possible duplicate composite-sprite routines.
-   - E/01, E/05 (HA1): mtbe ActionFamily_CancelGravHandler etc. vs the code (loads graphics by follow-up +0xDF).
-   - 0x08036FF8 Fight_SpawnInlineEffectTextObjects: its use in M 0x00 looks like sprite creation.
-   - Duplicate names after the merge: Map_TickObjectAnimation (0x08049440 / 0x080508B4), snd_track_step
-     (0x08072D68 / 0x08074118).
-6. **Data tables**: name the ROM tables cited in the literal pools (part, technique, medal, text, motion tables)
-   in mtbe.csv with kind `data`, and document the format of each one.
-7. **Validation in the emulator** (later): replays to confirm the "provável" entries in key systems (damage,
-   RNG 0x080424B8, encounter, collision, Medaforce).
+## Next discovery tasks (updated 2026-10-13, after the 10-agent round)
+Done this round: HC1..HC5 (all 55 event continuations), FH (battle helpers), JT (5 of the 6 "UNRECOVERED" jumps
+were a normal return; only J:0x02 has a real table, 0x0801FBEC), HA2-resto, DT (16 tables), FL (list of 940 FUN_).
+
+0. **User step in Ghidra:** run `re/ghidra/ApplyMtbeNamesToFUN.java` (pick `re/symbols/mtbe.csv`) and save.
+   402 of the 940 FUN_ already have a name in mtbe.csv. The script only renames FUN_* and touches nothing else.
+   **Never** use MedabotsSetup.java on this project (it removes functions and clears the listing).
+1. **Merge into mtbe.csv** all the *_simbolos.csv not merged yet: HA1..HA8, HC1..HC5, FH, JT, DT, FL (same
+   script as the previous merge; see MERGE_RELATORIO.md). Name divergences to decide:
+   - FH: 0x08037280 (mtbe Fight_ComputePartValue), 0x0803725C (FightPreview_ClearQueueFlag / HN1
+     Fight_CheckRosMeetsMinimumThreshold; real = Fight_SpendRos20ReturnsExhausted), 0x08040CD0
+     (ClearObjectAttributeEntries vs Tile_ClearSlots), 0x08036B84 (FightPreview_SetPartSpriteId, wrong).
+   - HA2: 0x0801D738, 0x0801DD30 have other names in mtbe. HC1: 0x0804B758 (mtbe "Skip3Bytes" is wrong; it stores
+     the args).
+   - Fix the old notes: HA1/HA2/HA3 still say "tail-call not recovered" for E05/G02/H:0x3E/L:0x0B (it's a normal
+     return; see JT.md). HE4 0x76/0x7A/0x7F (see HC5.md). HE2 0x32 (see HC3.md).
+2. **FL: 409 FUN_ candidates left** (FL_lista.txt, ordered by refs). Split into lists of ~40 and give one agent per
+   list. Run step 0 first so work isn't redone. 0x08000840 has 1190 literal refs (table/data? look into it).
+3. **+0xA6 code -> message/script map:** the reader is 0x080305E0 -> Fight_RunSubstateDispatch 0x0801C0BC
+   (table 0x083AD580, 9 entries) -> FUN_0801AC24 -> StateMachine_DispatchStep(table 0x083C6744 = scripts at
+   0x083C4E24+). Decode that script format.
+   - Table 0x083AD5A4 (Fight_RunSubstateDispatchC) is not decoded either.
+4. **DT, remaining tables:** handlers (0x083AF8C0, 0x083AF180, 0x083D222C/0x083D2630), gMapArea 0x083D2B6B,
+   gBotNames 0x083BA658, gTechniqueNames 0x083BE868, gMoldTable 0x083D1D78, pre/post-battle texts
+   0x083C2D3C / 0x083C3B04. Use rename_data in Ghidra.
+5. **Validate in the emulator** (later): 0x02 message B (where the box appears), 0x29/0x2A (ends at the first
+   actor?), 0x41 (does it hang with no slot?), damage/ROS (FH formulas), RNG.
+
+Damage/ROS formulas (FH, confirmed by decompile):
+- Fight_RollPartValue 0x0803769C: fi+0xE8 = bot+0xAB + medal bonus + (randbyte&7) + specialty[bot+0xA9].
+- 0x08037280: fi+0xEC = max(1, ((fi+0xE8>>2) + part.power) / part.scalar).
+- 0x0803725C: fi+0xE8 -= 0x20 (clamped at 0); returns 1 if it ran out.
 
 ## Key facts (don't rediscover)
 - New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
