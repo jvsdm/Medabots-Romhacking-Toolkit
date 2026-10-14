@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x0803EA18,Gauge_AdvanceAnimStep,func_thumb,confirmado: byte +0x1A0 += 4, zera ao passar de 0x60
+0x0803EA38,Gauge_DrawBar12Tiles,func_thumb,confirmado: 12 tiles, cheios = (+0x1A0)>>3 e parcial = &7
+0x0803EAD8,Gauge_DrawEmpty12Tiles,func_thumb,confirmado: 12 tiles de vazio
+0x0803EB0C,Gauge_DrawByFlag4,func_thumb,confirmado: bit 4 de u16 +0x86 escolhe barra ou vazio
+0x0803EB30,Gauge_SetCounterFrom0x68,func_thumb,confirmado: contador = 0x68 - (+0x1A0), minimo 0x0C
+0x0803EB5C,Gauge_DispatchByStepIndex,func_thumb,confirmado: step = (+0x1A0)>>4 em +0x1A2; tabela de 7 handlers, resto grava campo
+0x0803EC04,Tween_SetSpeedAndPlayEntry,func_thumb,confirmado: velocidade +0xA4=(+0x1A0>>2)+4, zera +0xA5, toca entrada de lista de slot
+0x0803EC50,Tween_StepPosition,func_thumb,confirmado: acumula +0xA4 em +0xA0, move +0x84 por 1/4 de pixel em sentido de +0xA5
+0x0803EC98,Tween_StepUntilTarget,func_thumb,confirmado: StepPosition e para no alvo (ret 1), senao acelera a cada 4 quadros
+0x0803ECF0,Gauge_FullTriggersSound7,func_thumb,confirmado: se +0x1A0 == 0x60 toca SFX 7
+0x0803ED10,Tween_ResetDirectionForward,func_thumb,confirmado: +0xA4=0 e +0xA5=1
+0x0803ED28,Tween_StepClampOrAccelerate,func_thumb,confirmado: StepPosition; se passou do alvo fixa no alvo (ret 1), senao +0xA4++ (ret 0)
+0x0803ED6C,Gauge_DrawTwoTileSegment,func_thumb,confirmado: 4 tiles de largura em (7,2) com altura de +0x1A2; base escolhida pelo bit 4 de +0x86
+0x0803EE10,Overlay_PickRandomSlotAndDrawCursor,func_thumb,confirmado: sorteia slot (rand&0xF) com flag em +0xBA, ate 3 tentativas; grava sprite do cursor (tile +0x47) na OAM
+0x0803FB0C,Obj_ResetStateFields,func_thumb,confirmado: zera campos de estado (+0x4=4, +0xC, +0x14..+0x1B, +0x24, +0x25, +0x27)
+0x0803EED8,Battle_CheckExitShortcut,func_thumb,provavel: se byte +0x89==1 e bit de ptr+0x1C ativo, grava 0/10/0x10 em 3 saidas e retorna 1; contexto de batalha nao confirmado
+0x0803EF20,Boot_ResetSystemAndState,func_thumb,confirmado: zera hardware, IRQ, link; gMainState=3; toca musica 0
+0x0803EF8C,BgMap_FillRect16,func_thumb,confirmado: preenche retangulo (w,h) no tilemap com valor de 16 bits; bloco de tela de (arg5>>8)&0x1F
+0x0803EFD8,BgMap_FillRectWrapped,func_thumb,confirmado: preenche retangulo no tilemap 32x32 com quebra de linha/coluna
+0x0803F15C,BgMap_CopyRectWithOffset,func_thumb,confirmado: copia origem somando offset (16 bits gravado no global) a cada tile
+0x0803F1C8,BgMap_CopyRectWrapped,func_thumb,confirmado: igual ao CopyRectWithOffset mas com quebra no tilemap 32x32
+0x0803F3A8,Assets_LoadPairAndFastCopy,func_thumb,confirmado: LZ-decode de dois pares (magic) e CpuFastSet de 8 palavras
+0x0803F3E0,Video_EnableBg0AndLoadTiles,func_thumb,confirmado: DISPCNT |= 0x100 (BG0), BG0CNT=0x500, carrega tiles
+0x0803F624,Mem_FillBytes,func_thumb,confirmado: preenche n bytes com valor
+0x0803F63C,Mem_CopyBytes,func_thumb,confirmado: copia n bytes origem(p1) -> destino(p2); conferido com README
+0x0803F65C,Mem_SwapBytes,func_thumb,confirmado: troca n bytes entre p1 e p2
+0x0803F684,Palette_FadeRowsToColorA,func_thumb,confirmado: mistura 16 linhas de paleta com a cor do 1o argumento (quantidade = 2o, clamp 0x20); mascara de linhas no 3o; CpuFastSet p/ 0x05000000. Sufixo 'ColorA' e ambiguo (irmao Palette_FadeRowsToColorB existe)
+0x080402B4,Text_RenderGlyphStepVariant,func_thumb,confirmado: passo do renderizador de glifos; bytes < 5 viram codigos de controle (tabela), demais desenham glifo com largura e CpuSet. Sufixo 'Variant' nao tem sentido claro, manter
+0x08040954,MsgState12_CtxB1BDispatch,func_thumb,confirmado: chama handler de tabela indexado por ctx+0x1B (estado 12 da maquina de mensagem)
+0x08040A40,BgMap_LoadTileStageStep,func_thumb,confirmado: estagio em +0x26: 1 preenche retangulo do mapa, 2 e 3 descomprimem LZ e carregam tiles; decrementa e avanca +0x1B
+0x08040AF0,Slot_AdvanceStepByFlag,func_thumb,confirmado: +0x1B += 1, ou += 2 se o byte de flag do slot for != 0
+0x08040B0C,Palette_FadeStepAndDispatch,func_thumb,confirmado: aplica Palette_FadeRowsToColorA e B com o passo de +0x1C; decrementa passo ou avanca +0x1B; despacha ponteiro
+0x08040B50,Slot_SetTimer8,func_thumb,confirmado: +0x04 = 8
+0x08040CD0,ClearObjectAttributeEntries,func_thumb,confirmado: zera N entradas de 0x40 bytes da OAM a partir da linha p1 (CpuFastSet); nome sem prefixo Obj_ mas descreve; mantido
+0x08040D0C,Obj_ClearAttr0Mask,func_thumb,confirmado: AND do attr0 (halfword) de N entradas OAM (passo 0x40) com mascara; (antes: Slot_ClearAttrMask)
+0x08040DB8,Text_LayoutGlyphSprites,func_thumb,confirmado: monta sprites de glifo na OAM a partir da string (largura, alinhamento 0/1/2 esquerda/centro/direita)
+0x0804177C,BgMap_ClearCopyRowsStep,func_thumb,confirmado: limpa 2 linhas, copia 2 linhas de 8 tiles de duas fontes, limpa 2 linhas; +0x29 += 1
+0x08041818,BgMap_CopyTwoRowsStep,func_thumb,confirmado: limpa 1 linha, copia 2 linhas de 8 tiles (duas fontes), limpa 1 linha; +0x29 += 1
+0x08041BF4,Slot_SetFrameFromStepAndAdvance,func_thumb,confirmado: +0x28 = (+0x2A)*0x10 + 1; +0x29 += 1
+0x08041D04,Mem_CopyBytes_Dup,func_thumb,confirmado: igual a Mem_CopyBytes (0x0803F63C) mas o tamanho e truncado a 8 bits (n & 0xFF); nome mantido, e copia de duplicado
+0x08041D3C,Slot_FindByIdPlus1,func_thumb,confirmado: busca nos 30 slots (0x40 B) o de bit 0x80 ativo e id = arg; retorna indice+1 ou 0
+0x08041D70,Medabot_SpawnFromRecord,func_thumb,confirmado: copia registro de 0x10 B do bot, acha slot livre, preenche nivel (+5), estagio (+8), HP (+2 = (nivel+1)*100) e atributos (base + base*(nivel/10), teto 100)
+0x08041FE4,Slot_ReleaseById,func_thumb,confirmado: acha slot ativo com id, zera 0x40 B e mantem so os bits baixos do byte de status
+0x08042028,Slot_CopyRecordIntoFree,func_thumb,confirmado: copia 0x40 B do arg para o primeiro slot livre (bit 0x80 inativo), mantem bit ativo e bits baixos
+0x0804206C,Level_ComputeReferenceFromSlots,func_thumb,confirmado: junta niveis (+5) dos 30 slots numa lista u16, ordena decrescente (Sort_Records8Descending) e devolve media entre topo e ponto DAT_080420C0
+0x08042114,Inv_ReadCounter16,func_thumb,confirmado: le contador de 2 bytes do inventario (stride 0xF0, passo 2) e devolve em ordem alta/baixa
+0x0804213C,Inv_AddCountClamp99,func_thumb,confirmado: soma ao contador do inventario com teto 99
+0x08042170,Inv_SubCountClampZero,func_thumb,confirmado: subtrai do contador do inventario com piso 0
+0x08042238,Tinpet_CreateRecord,func_thumb,confirmado: acha 1 de 9 registros livres (8 B), marca ativo, flag = arg&1, tempo 0x1E, 4 bytes 0x78+flag; nome 'Tinpet' e termo do jogo, mantido
+0x080424B8,randbyte,func_thumb,confirmado: gerador pseudoaleatorio de 1 byte (estado em +0x8A/+0x8C, ou sequencia de tabela se +0x89 != 0); confere com README (rand)
+0x0804253C,SetGpuBlendMode,func_thumb,confirmado: grava modo de blend (1..6) nos registros BLDCNT/BLDALPHA/BLDY com coeficientes; modos fora do 1..6 zeram
+0x08042678,BuildRepeatedGlyphString,func_thumb,confirmado: escreve n bytes 0x43 seguidos do terminador 0xFE
+0x08042698,FillBgTilemapRectSequential,func_thumb,confirmado: preenche retangulo de tilemap com valores sequenciais (incremento por tile)
+0x08042B58,GetPartStats,func_thumb,confirmado: copia 16 B de gPartStats + bot*0x40 + tipo*0x10 (confere com README)
+0x08042B80,Speciality_IsRemotenessClass,func_thumb,provavel: switch de id -> 0 ou 1 (classe); significado de 'remoteness' nao confirmado, nome mantido
+0x08042CA0,CompositeSprite_ComputeClampedOffsetWord,func_thumb,confirmado: calcula offset x/y por ponto flutuante a partir de tabelas e empacota em uma palavra com limite
+0x08042D94,LoadCompositeBattleSpriteTiles,func_thumb,confirmado: descomprime 6 conjuntos de tiles (LZ) para VRAM de sprite composto, deslocamento por param5*0x400
+0x08042E58,CreateCompositeBattleSpriteObjects,func_thumb,confirmado: limpa 4 entradas OAM e escreve 4 objetos do sprite composto (posicao, tile, paleta, flip/prioridade)
+0x0804305C,Sprite_WriteComposite4Objects,func_thumb,confirmado: versao de atualizacao (sem limpar OAM) dos 4 objetos do sprite composto; nome com prefixo diferente de Create..., mantido
+0x08043240,SetCompositeBattleSpriteAnimationSpeed,func_thumb,provavel: grava bit 0x200 em 2 entradas OAM e um byte (+0x24) em 4 entradas com o valor do argumento; significado 'velocidade' e chute pelo nome

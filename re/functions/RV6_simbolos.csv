@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x080268AC,Fight_DispatchOnSubstateAA_AO_01_RollPartValueForBot,func_thumb,"provavel: rola valor de peca (Fight_RollPartValue + ROS) e avanca passo; ""ForBot"" nao confirmado"
+0x080268D4,Fight_DispatchOnSubstateAA_AO_02_ClampPartCountsToLimit,func_thumb,confirmado: 4 chamadas FightPreview_ClampPartCountToLimit com limite +0xEC
+0x08026924,Fight_DispatchOnSubstateAA_AO_03_ShowFourPartValues,func_thumb,confirmado: decomprime, escreve 4 numeros e linhas de sprite, SFX 0x5B
+0x08026A24,Fight_DispatchOnSubstateAA_AO_04_WaitPartRowsDrawn,func_thumb,confirmado: espera 4 AdvanceRowSlots; timer 0x3C e passo++
+0x08026A74,Fight_DispatchOnSubstateAA_AO_07_DrawPartIconsWaitReady,func_thumb,confirmado: ConsumePartCount x4, desenha icones; se soma==4 timer 0x3C e passo++
+0x08026AF4,Fight_DispatchOnSubstateAA_AO_09_ShowPartFlagsOrBackup,func_thumb,confirmado: sprites das pecas marcadas; sem marca -> passo++, senao Backup de stats (metade) e passo 0x0D
+0x08026BF8,Fight_DispatchOnSubstateAA_AO_0D_WaitPartEffectAnimsClear,func_thumb,confirmado: espera Anim_RunSlotScript dos 4 slots terminar; ClearObjectAttributeEntries(10,4); passo++
+0x08026CBC,Fight_DispatchOnSubstateAA_AO_10_QueueHeadBreakIfDefenderHeadZero,func_thumb,confirmado: se cabeca do defensor (bloco+0x59) == 0 enfileira Fight_QueueHeadBrokenBotForResolution; passo++
+0x08026D1C,Fight_DispatchOnSubstateAA_AP_01_WaitUnlessFlagB8Bit1,func_thumb,confirmado: se bit 0x02 de +0xB8 esta clear avanca passo, senao fica no passo 0x20 (espera)
+0x08026D44,Fight_DispatchOnSubstateAA_AP_ApplyDamageToRandomTargetPart,func_thumb,confirmado: escolhe parte-alvo aleatoria, aplica dano (+0xCA), passo+=3, depois tail-jump por tabela
+0x08026D98,Fight_DispatchOnSubstateAA_AP_18_SetupHitEffectSprite,func_thumb,"confirmado: (antes: Fight_DispatchOnSubstateAA_AP_0x18) decomprime gfx, SFX 0x2A, posiciona sprite de efeito conforme lado (flag +0xF8 bit 1); passo++ e tail-jump"
+0x08026EC0,Fight_DispatchOnSubstateAA_AP_1B_LoopToStep02,func_thumb,confirmado: passo = 2
+0x08026EF8,Fight_DispatchOnSubstateAA_AQ_00_PickActorPartToRepair,func_thumb,confirmado: Fight_PickMostDamagedRepairablePart; sem parte -> passo++, senao grava alvo (+0xD0/+0x8B) e passo=2
+0x08026F34,Fight_DispatchOnSubstateAA_AQ_02_SplitRepairAmountByCapacity,func_thumb,confirmado: (antes: Fight_DispatchOnSubstateAA_AQ_02_RepairActorPart) limpa 0x80 entradas de objeto e divide quantidade (+0xD0) pela capacidade (+0xEC); nao aplica reparo em si; passo++
+0x08026F6C,Fight_DispatchOnSubstateAA_AQ_0D_RepairPartByAmountCA,func_thumb,provavel: escolhe parte mais danificada (+0xCA), divide quantia por capacidade; passo=0x10
+0x08026FC0,Fight_DispatchOnSubstateAA_AQ_13_JumpToStep04,func_thumb,confirmado: passo = 4
+0x08026FF8,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam,func_thumb,confirmado: zera 3 slots; para cada bot oponente vivo rola entrada aleatoria e aplica dano (+0xEC); passo++
+0x08027494,Fight_DispatchOnSubstateAA_AR_ApplyTeamPartDamage,func_thumb,confirmado: subtrai dano das partes (+0x59) dos 3 bots, Backup de stats e enfileira cabeca quebrada se zerou; passo++
+0x08028130,Fight_DispatchOnSubstateAA_AT_ApplyTeamSupportBonus,func_thumb,provavel: grava registro de bonus de apoio (marcador 0x5A) no bot e soma valores de +0xEC/+0xE8; passo++
+0x08029B84,Fight_DispatchOnSubstateAA_AY_06_ApplyArmorRepair,func_thumb,confirmado: para cada linha de time escolhe parte mais danificada (ate 4 vezes), divide reparo, soma em +0x59 e acumula em +0xEC; passo++
+0x080288C8,Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked,label,pendente: sem funcao no Ghidra; decompile devolve funcao vizinha AV_ApplyStatusToOpponents. Nome nao verificado
+0x08028908,Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked,label,pendente: sem funcao no Ghidra (idem AV_0D). Nome nao verificado
+0x08028944,Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked,label,pendente: sem funcao no Ghidra (idem AV_0D). Nome nao verificado
+0x08028980,Fight_DispatchOnSubstateAA_AV_13_ApplyFireUnlessMasked,label,pendente: sem funcao no Ghidra (idem AV_0D). Nome nao verificado
+0x080289BC,Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion,label,pendente: sem funcao no Ghidra (idem AV_0D). Nome nao verificado
+0x0802C644,Fight_DispatchOnSubstateAA_BI,func_thumb,confirmado: stub de despacho (zera +0xB5, CallViaR0 tabela[passo])
+0x0802CB34,Fight_CommitBoostChargeSecondaryEffectToMarkedTargets,func_thumb,provavel: para alvos marcados grava codigo de efeito 0x26 e dois valores 1..99 (+0xE8/+0xEC); passo++
+0x0802CBE8,Fight_DispatchOnSubstateAA_BJ,func_thumb,confirmado: stub de despacho
+0x0802D688,Fight_DispatchOnSubstateAA_BK,func_thumb,confirmado: stub de despacho
+0x0802DA0C,Fight_DispatchOnSubstateAA_BK_09_WaitIconBounceDone,func_thumb,confirmado: espera Fight_AdvanceSlotYByWaveTable de todos os slots marcados; timer 0x3C e passo++
+0x0802DA60,Fight_DispatchOnSubstateAA_BK_0B_ShowMarkedSlotsAffine,func_thumb,confirmado: liga flags de afim (0x220) e tamanho 0x80 nos slots marcados; passo++
+0x0802DAD0,Fight_DispatchOnSubstateAA_BK_0C_ShrinkMarkedSlots,func_thumb,confirmado: encolhe slots marcados em -8 (ou conta os '@'); SFX 0x3C e passo++ se todos prontos
+0x0802DB3C,Fight_DispatchOnSubstateAA_BK_0D_ShakeSlotsOnTargets,func_thumb,confirmado: treme x dos slots alvo +-2 ate timer 0x3C; ClearObjectAttributeEntries(0x21,6); passo++
+0x0802DBD8,Fight_DispatchOnSubstateAA_BK_0E_SetPendingStatus2B,func_thumb,confirmado: grava efeito 0x2B e valores 1..99 nos alvos; classe de status 1->2 2->3 senao 1; passo++
+0x0802DC9C,Fight_DispatchOnSubstateAA_BK_0F_SetMessage5E,func_thumb,confirmado: grava mensagem 0x5E em +0xA6; passo++
+0x0802DCB4,Fight_DispatchOnSubstateAA_BL,func_thumb,confirmado: stub de despacho
+0x0802DCDC,Fight_DispatchOnSubstateAA_BL_00_LoadGfxSpawnSwingSlot,func_thumb,confirmado: descomprime gfx (LZ), monta slot 0x21 a partir da lista de registros; passo++
+0x0802DD98,Fight_DispatchOnSubstateAA_BL_03_SlideSlotIn,func_thumb,confirmado: roda script do slot 0x21 e desliza x ate 0x40; passo++
+0x0802DE1C,Fight_DispatchOnSubstateAA_BL_04_SwingSlotByTable,func_thumb,confirmado: balanco do slot 0x21 por tabela (0xFF = limpa slot, passo 10)
+0x0802DF18,Fight_DispatchOnSubstateAA_BL_05_SetFlashTileSfx,func_thumb,confirmado: grava tile de flash, SFX 0x38; passo++
+0x0802DF48,Fight_DispatchOnSubstateAA_BL_06_BlendPaletteToWhite,func_thumb,confirmado: Palette_FadeRowsToColorA/B ate 0x20 (passo +=2); passo++ ao fim
+0x0802DF98,Fight_DispatchOnSubstateAA_BL_07_BlendPaletteBack,func_thumb,confirmado: fade de volta (passo -=2) ate 0x10; passo++ ao fim
+0x0802DFE8,Fight_DispatchOnSubstateAA_BL_08_ResetSlotLoopToSwing,func_thumb,confirmado: remonta slot 0x21 e passo=4 (volta ao balanco)
+0x0802E010,Fight_DispatchOnSubstateAA_BL_0B_MarkOpponentsWithFlagBD4,func_thumb,confirmado: marca oponentes com bit 0x04 de +0xBD; passo +2 se achou, senao +1
+0x0802E098,Fight_DispatchOnSubstateAA_BL_0D_SpawnEffectOnTargets,func_thumb,confirmado: cria objetos de efeito nos 3 alvos; SFX 0x54; passo++
+0x0802E140,Fight_DispatchOnSubstateAA_BL_0E_ShrinkEffectSlots,func_thumb,confirmado: encolhe slots de efeito -8; ao fim timer 0x3C e passo++
+0x0802E1A4,Fight_DispatchOnSubstateAA_BL_10_ClearSlotsSetMessage43,func_thumb,confirmado: limpa 3 slots, mensagem 0x43 em +0xA6; passo++
+0x0802E1C8,Fight_DispatchOnSubstateAA_BL_12_DamageRandomPartOfTargets,func_thumb,confirmado: por alvo rola parte aleatoria, aplica dano 200, enfileira cabeca quebrada se zerou; passo++
+0x0802E424,Fight_DispatchOnSubstateAA_BM,func_thumb,confirmado: stub de despacho
+0x0802EBC0,Fight_DispatchOnSubstateAA_BN,func_thumb,confirmado: stub de despacho
+0x0802F030,Fight_DispatchOnSubstateAA_BO,func_thumb,confirmado: stub de despacho
+0x0802F628,Fight_DispatchOnSubstateAA_BP,func_thumb,confirmado: stub de despacho
+0x0802F990,Fight_DispatchOnSubstateAA_BQ,func_thumb,confirmado: stub de despacho
+0x0802FE50,Fight_DispatchOnSubstateAA_BR,func_thumb,confirmado: stub de despacho
+0x08029F50,Fight_DispatchOnSubstateAA_AZ_02_FlagAlliesWithBrokenParts,func_thumb,confirmado: marca bots aliados com parte quebrada (+0xD2=1); passo +2 se achou, senao +1
+0x08029FE0,Fight_DispatchOnSubstateAA_AZ_06_RestoreBrokenParts,func_thumb,confirmado: restaura partes quebradas (split por max), copia stats se flag, recarrega sprites; passo++
+0x080305E0,ActionFamily_StatusCheckFamily_Handler,func_thumb,provavel: roda Fight_RunSubstateDispatch(+0xA6); passo++ quando retorna != 0
+0x08030608,ActionFamily_TrapFamily_Handler,func_thumb,provavel: roda Fight_RunSubstateDispatchB; passo++ quando retorna != 0
+0x08030624,Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10,func_thumb,confirmado: conta timer +0x86 ate 0; limpa slot 10; passo++
+0x080306B8,Fight_DispatchOnSubstateAA_H_0F_WaitTimerClearSlots,func_thumb,confirmado: limpa 20 slots com bit 0x8000 quando timer 0; passo++

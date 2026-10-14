@@ -19,6 +19,7 @@ F	0x080005D0	Gfx_VBlankIrq
 F	0x0800065C	VBlankIrqHandler
 F	0x080007E0	VBlankIrqHandler_080007E0
 L	0x080007FC	Snd_VBlankCallSite
+F	0x08000824	Irq_Slot3_CallHandlerAndAck
 F	0x08000840	NoOpActionHandler
 F	0x08000844	get_player_inputs
 F	0x080008C0	SoftResetSequence
@@ -45,6 +46,7 @@ F	0x08001EA8	SetObjectScaleVectorFromMode
 F	0x08001FF8	RotateObjectOffsetByAffineAngle
 F	0x08002060	SortActiveObjectIndicesByPriority
 F	0x080020C8	InitializeLinkTransferState
+F	0x08002190	Link_MarkHandshakeReady
 F	0x080021A4	Link_RearmSioMultiplayer
 F	0x080021F4	UpdateLinkTransferState
 F	0x080022DC	QueueLinkTransferPacket
@@ -85,6 +87,7 @@ F	0x08003784	Gfx_SceneInit
 F	0x080038CC	PartScreen_WaitBlendThenResetStep
 F	0x080038F0	PartScreen_SetNextStateStep
 F	0x08003904	Screen_DecompressRowImageByIndex
+F	0x0800393C	PartScreen_InitSpritesAndLoadGfx
 F	0x080039BC	Pair_TickDownCounterIfFlag
 F	0x080039E0	Scene_FrameTickSubstateDispatch
 F	0x08003A38	BattleStatusScreen_InitStep
@@ -123,6 +126,8 @@ F	0x080049C8	TeamPick_LoadSlotObjectStep
 F	0x080049EC	TeamPick_DispatchSubStateStep
 F	0x08004A18	BattleStep_PreRefreshBots
 L	0x08004A2A	Fight_RefreshCaller_Unresolved
+F	0x08004A40	Overlay_TickThenAdvanceWhenReached
+F	0x08004A78	Overlay_ResetFieldsAtState18AndAdvance
 F	0x08004AF8	TeamPick_FillBotSlotsStep
 F	0x08004C58	TeamPick_ResetCounterStep
 F	0x08004CA4	TeamPick_CompareSelectionStep
@@ -634,7 +639,7 @@ F	0x0801531C	Fight_SelectActionsForBotGroup
 F	0x08015358	Fight_SelectActionFromCycleOrPendingOverride
 F	0x08015390	Fight_TrySelectActionFromSpecialityCycle
 F	0x08015414	Fight_AdvanceSpecialityCycleIndex
-F	0x08015438	Fight_UnknownStep_08015438
+F	0x08015438	Fight_AdvanceSpecialityCycleForActiveBots
 F	0x08015464	Fight_SelectFallbackActionFromPriorityList
 L	0x08015488	Fight_SelectFallbackActionFromPriorityList_08015488
 F	0x080154E0	Fight_IsPartActionLockedByPendingEffect
@@ -1776,13 +1781,13 @@ F	0x0803512C	Fight_SetBotBaseSlotAndMarkers
 F	0x08035164	Fight_SubtractPartArmorClampZero
 F	0x08035194	Fight_BackupHalvedStatsIfFlagClear
 F	0x080351E8	Fight_CopyStatsIfFlagSet
-F	0x08035234	Fight_QueueHeadBrokenBotForResolution
+F	0x08035234	Fight_QueueBrokenBotForResolution
 F	0x0803526C	Fight_StepSlotCoordUpInRange
 F	0x080352EC	Fight_StepSlotCoordDownInRange
 F	0x0803536C	Fight_SetFacingSlotX
 F	0x080353CC	Fight_StepSlotAnimOffsetTable
 F	0x08035410	Slot_BlinkRepeatStep
-F	0x08035478	Fight_SelectLowestPriorityTargetBot
+F	0x08035478	Fight_SelectOpponentBotByExtremeValue
 F	0x08035528	Fight_SelectRandomTargetPartForSelectedBot
 F	0x0803556C	Fight_RollStatusRowRandomEntry
 F	0x08035590	Fight_GetStatusRowIndex
@@ -3946,8 +3951,6 @@ L	0x087F5500	gTextDump
 C	0x08001278
 C	0x08002574
 C	0x0800275C
-C	0x08004A40
-C	0x08004A78
 C	0x080140B0
 C	0x08033C10
 C	0x08033CF0
