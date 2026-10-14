@@ -3204,12 +3204,22 @@ F	0x08068888	fx_step_table_a
 F	0x080688E0	fx_step_table_b
 F	0x08068920	Stub_ReturnTrue_08068920
 F	0x08068A84	Palette_CrossfadeStep
+F	0x08068B74	Scene_ProgressIndex16
 F	0x08068BC4	Fx_PeriodicSineEmitStep
 F	0x08068CC8	fx_palette_fade_step
 F	0x08068DD0	Dispatch_ScrollTickThenHandler
+F	0x08068E00	Scene_EnterSetupA
+F	0x08068E88	Scene_FxStepAdvance
 F	0x08068EA8	Fx_StepTableBThenSetDispcnt
+F	0x08068F08	Scene_IntroStepAdvance
 F	0x08068F34	Screen_ResetWrap
 F	0x08068F50	FightPreview_LoadCachedAndEncounterLoadouts
+F	0x08069168	Scene_DispatchStepThenAdvance7
+F	0x08069194	Scene_EnterSetupB
+F	0x080691E0	Scene_AnimSeqStepAdvance9
+F	0x0806920C	Fight_FrameTickWaitGate10
+F	0x08069258	Scene_EnterSetupC
+F	0x080692A8	Scene_SequenceAFadeAdvance
 F	0x08069320	gfx_clear_regs_init
 F	0x0806938C	menu_draw_stats
 F	0x0806941C	panel_setup_tiles
@@ -3237,11 +3247,14 @@ F	0x0806A3C4	scene_sequence_a
 F	0x0806A654	scene_sequence_b
 F	0x0806A718	wait_gate_0xf1
 F	0x0806A748	Battle_EmitBotSpritesInDepthOrder
+F	0x0806A860	Fight_TickSlotTimersAndSpawn
 F	0x0806AA10	Battle_AdvanceBotPartTimerByTable
+F	0x0806AAA4	Fight_TickSlotMotionPhases
 F	0x0806ADB0	Battle_UpdateCompositeBotMotion
 F	0x0806B01C	slots_move_group3
 F	0x0806B0D4	BotAnim_TickStageCallbacksAll
 F	0x0806B2F4	Obj_UpdateSlotPosition
+F	0x0806B3D8	BotAnim_StageWalkStep
 F	0x0806B4A4	scroll_tick_flag
 F	0x0806B4C8	slots_advance_anim
 F	0x0806B530	slot_spawn
@@ -3251,6 +3264,8 @@ F	0x0806B764	Screen_InitFxSetup
 F	0x0806B820	Screen_InitObjectSlotsLz77
 L	0x0806B826	Screen_InitObjectSlotsLz77_AltEntry_806b826
 L	0x0806B8CE	TeamSlots_WriteFi41_Candidate
+F	0x0806BB24	Scene_StepFxSongAdvance
+F	0x0806BB44	Scene_DispatchState8Anim
 L	0x0806BC48	Fight_TickBattleFrame
 F	0x0806BC94	Battle_EffectFallPhase1Step
 F	0x0806BCC4	Battle_EffectPhase2Step
@@ -3282,15 +3297,20 @@ F	0x0806D398	battle_spawn_two_effects
 F	0x0806D3EC	battle_mark_active_slots
 F	0x0806D41C	battle_transition_main_state
 F	0x0806D4A4	battle_effect_affine_lines
+F	0x0806D588	Battle_TickEffectsAndTransition
 F	0x0806D600	Fx_StepTableBThenEnterScene
 F	0x0806D7A0	Gfx_LoadScreenLZ77Assets
 F	0x0806D8AC	Battle_SetupRenderSlots
 F	0x0806D9A8	Battle_IntroSetupStep
 F	0x0806DAA4	Screen_IntroTimeline
+F	0x0806DBFC	Battle_WaitTransitionA
+F	0x0806DC7C	Battle_TimedTransition41
 F	0x0806DCC0	Battle_InitScreenAndSlots
 F	0x0806DE0C	battle_effects_5_slots_update
 F	0x0806DE9C	Battle_BuildBotSpriteOam
 F	0x0806E10C	battle_slot_init
+F	0x0806E130	Battle_DispatchPhaseTable
+F	0x0806E150	Scene_StepLoadStateTriple
 F	0x0806E184	Boot_SubState2_WaitFxStep
 F	0x0806E2A0	Screen_InitRowBufferAndFx
 F	0x0806E3C4	Fx_TickStepTableEntry
@@ -3298,13 +3318,17 @@ F	0x0806E3F8	Scene_SetSubstate2Wrapper
 F	0x0806E404	battle_timer_end_transition
 F	0x0806E460	Boot_DispatchSubState
 F	0x0806E484	fade_step_bld
+F	0x0806E4CC	Scene_FadeStepLoadStateTriple
 F	0x0806E504	Gfx_ResetVramPaletteOamAndStopSong
 F	0x0806E5E0	Gfx_LoadLz77ScreenAndEnableBg0
 F	0x0806E6E4	Gfx_LoadLz77RowsTable
 F	0x0806E7EC	Screen_InitLZ77ToVram
+F	0x0806E90C	Scene_TimedWait61ThenAdvance2
+F	0x0806E93C	Scene_TimedWait60ThenAdvance8
 F	0x0806E96C	Screen_LayerHideTimedStep
 F	0x0806E9E0	menu_state2_setup
 F	0x0806EA54	battle_exit_button
+F	0x0806EA98	Battle_MenuPhaseDispatch
 F	0x0806EAC0	Fade_ApplyPaletteTargetsWhenDone
 F	0x0806EAF4	Fade_ApplyBlendTargetsWhenDone
 F	0x0806EB28	Fx_StepFadeLatch
@@ -3451,10 +3475,13 @@ F	0x08073058	snd_track_update
 F	0x08073094	snd_update_frame
 F	0x08073274	snd_frame_tick
 F	0x080732B8	snd_freq_lookup
+F	0x080732C8	Obj_FlushFlag8ToWord
 F	0x080732F0	snd_channel_reg_value
 F	0x0807334C	Snd_UpdateChannelFreqEnv
+F	0x080733BC	Obj_FlushFlag2ScaledValue
 F	0x08073404	snd_channel_freq_write_a
 F	0x08073480	snd_channel_freq_write_b
+F	0x080734F4	Obj_FlushFlag1Value69
 F	0x08073524	snd_channel_note_write
 F	0x08073604	snd_channel_ctrl_write
 F	0x080736A0	snd_channel_update_1
@@ -3593,6 +3620,7 @@ F	0x0807DB80	Math_SoftFloat64Compare
 F	0x0807DBCC	SoftF64_CompareAlt1
 F	0x0807DC18	sf_from_i32
 F	0x0807DC94	sf_to_i32
+F	0x0807DD08	Math_F64IsZero
 F	0x0807DD30	sf64_pack_wrap
 F	0x0807DD9C	sf32_pack
 F	0x0807DE54	sf32_unpack
@@ -4026,35 +4054,13 @@ C	0x08061958
 C	0x08063948
 C	0x08068924
 C	0x08068978
-C	0x08068B74
-C	0x08068E00
-C	0x08068E88
-C	0x08068F08
-C	0x08069168
-C	0x08069194
-C	0x080691E0
-C	0x0806920C
-C	0x08069258
-C	0x080692A8
 C	0x080692EC
 C	0x0806B134
 C	0x0806B1FC
 C	0x0806B248
-C	0x0806B3D8
 C	0x0806B484
-C	0x0806BB24
-C	0x0806BB44
 C	0x0806BB64
-C	0x0806D588
-C	0x0806DBFC
-C	0x0806DC7C
 C	0x0806E038
 C	0x0806E074
-C	0x0806E130
-C	0x0806E150
-C	0x0806E4CC
-C	0x0806E90C
-C	0x0806E93C
 C	0x0806E9C0
-C	0x0806EA98
 C	0x0807DD58

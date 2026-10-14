@@ -942,7 +942,7 @@ address,name,kind,count,comment
 0x080129F2,Fight_SetupBattleBotStates,label,,"[EN] GH-EN: se ctx+0x89 != 1 chama Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords, Fight_InitializeEnemyBotStates. Confirmado no decompile; significado de ctx+0x89 aberto."
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
 0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos [RV2] confirmado (ate 9 passos: Palette_FadeRowsToColorA/B com fator -4*passo; depois so incrementa contador)"
-0x08012B94,Battle_CpuActionSelectStep,func_thumb,,[AI2] [AI2] entrada 3 da tabela de cena 0x083AD080 (GS=0x0300137C). Corpo: bl 0x080196C0; se byte 0x030004C9==1 pula; senao Fight_SelectActionsForBotGroup(3); GS++. Sem funcao no Ghidra ainda: ver AI2_lista.txt
+0x08012B94,Battle_CpuActionSelectStep,func_thumb,,[AI2] [AI2] entrada 3 da tabela de cena 0x083AD080 (GS=0x0300137C). Corpo: bl 0x080196C0; se byte 0x030004C9==1 pula; senao Fight_SelectActionsForBotGroup(3); GS++. Sem funcao no Ghidra ainda: ver AI2_lista.txt [RV2] confirmado (desenha overlay de bots ativos; se estado nao for 1 escolhe acoes do grupo 3; avanca contador)
 0x08012BC0,Fight_DrawBotsOverlayStep,func_thumb,,[FS4] [FS4] Fight_DrawActiveBotsOverlay + FUN_08016370(ctx+0x80); GS+1; tabela 0x083AD090; provavel
 0x08012BE4,Fight_AnimSpriteGroupStep,func_thumb,,[FS4] [FS4] overlay + Fight_UpdateSpriteGroupMoveAnim(ctx+0x80); retorno!=0 -> GS+1; tabela 0x083AD094; provavel
 0x08012C0C,Fight_SetupEntryScreenStep,func_thumb,,[FS5] [FS5] entrada i=6 da tabela GS 0x083AD080; setup da tela de entrada do bot; provavel
@@ -2080,8 +2080,8 @@ address,name,kind,count,comment
 0x080338DC,ActionScript_Op01_SetSceneExitState,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos (antes: ActionScript_Op01_pendente) (antes: ActionScript_Op01_EndSetsSceneAndGs) [MG3] grava cena 8 em 0x03002B8C e GS 0x40 em 0x0300137C: volta a batalha no BR_50 (nao sai do combate); confirmado
 0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,,Simon/Rokusho [AS1] AS1 provavel: op 0x02; espera byte +0xAC casar com tabela[+0xA8][+0xBC]; grava flag +0xB5
 0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,,Simon/Rokusho [AS1] AS1 provavel: op 0x03; espera byte +0xAC+[+0xAB] casar; grava flag +0xB5
-0x080339F4,ActionScript_Op04_DispatchOnSubstateAA,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra (antes: ActionScript_Op04_pendente)
-0x08033A10,ActionScript_Op05_DispatchOnSubstateAA_B,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra (antes: ActionScript_Op05_pendente)
+0x080339F4,ActionScript_Op04_DispatchOnSubstateAA,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra (antes: ActionScript_Op04_pendente) [RV22] provavel: wrapper; chama Fight_DispatchOnSubstateAA e avanca cursor se +0xB5 (antes: ActionScript_Op04_pendente)
+0x08033A10,ActionScript_Op05_DispatchOnSubstateAA_B,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra (antes: ActionScript_Op05_pendente) [RV22] confirmado: wrapper do despachante _B; avanca cursor se +0xB5 (antes: ActionScript_Op05_pendente)
 0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,,"Simon/Rokusho: Ensure the acting bot has selected target metadata. If selected_target_bot_id or selected_target_part_id is zero, populate them through helper routines before continuing the action flow. [RV22] confirmado: garante alvo e parte escolhidos (0xE0/0xE1 zerados => sorteia)"
 0x08033A78,ActionScript_Op07_DispatchOnSubstateAA_C,func_thumb,,[AB] AB; despachante C (0x083AD6B0); ramo pela peca-alvo [RV22] confirmado: wrapper do despachante _C com avanco por +0xB5
 0x08033A94,ActionScript_Op08_DispatchOnSubstateAA_D,func_thumb,,[AB] AB; despachante D (0x083AD6D0); sprite do bot de apoio no slot 9 [RV22] confirmado: wrapper do despachante _D com avanco por +0xB5
@@ -2944,14 +2944,14 @@ address,name,kind,count,comment
 0x0804D2F4,Event_Op6F_Move_Actor_E,func_thumb,,Simon/Rokusho (antes: EventOpcode6F_Primary) [HN6] igual 0x24 (confirmado)
 0x0804D32C,Event_Op70_Run_Scene_Command_13,func_thumb,,Simon/Rokusho (antes: EventOpcode70_Primary) [HN6] 0 bytes; so pendente (confirmado setup)
 0x0804D340,Event_Op71_Run_Scene_Command_00,func_thumb,,Simon/Rokusho (antes: EventOpcode71_Primary) [HN6] 0 bytes; so pendente (confirmado setup)
-0x0804D354,Event_Op72_Run_Scene_Command_02,func_thumb,,Simon/Rokusho (antes: EventOpcode72_Primary)
-0x0804D368,Event_Op73_Run_Scene_Command_08,func_thumb,,Simon/Rokusho (antes: EventOpcode73_Primary)
-0x0804D37C,Event_Op74_Reserved_NoOp,func_thumb,,[HE4] ver HE4.md
+0x0804D354,Event_Op72_Run_Scene_Command_02,func_thumb,,Simon/Rokusho (antes: EventOpcode72_Primary) [RV15] provavel: so marca flag=1; nome por indice
+0x0804D368,Event_Op73_Run_Scene_Command_08,func_thumb,,Simon/Rokusho (antes: EventOpcode73_Primary) [RV15] provavel: so marca flag=1; nome por indice
+0x0804D37C,Event_Op74_Reserved_NoOp,func_thumb,,[HE4] ver HE4.md [RV15] confirmado: corpo vazio (reservado)
 0x0804D380,Event_Op75,func_thumb,,[HE4] sem definicao; bx lr (confirmado)
 0x0804D384,Event_Op76_Start_Medabot_Link,func_thumb,,"[HE4] ver HE4.md [LK] [GH-LK] grava 1 em 0x03006469 (pendente do evento, E+0xC89); confirmado"
 0x0804D398,Event_Op77,func_thumb,,[HE4] sem definicao; bx lr (confirmado)
-0x0804D39C,Event_Op78_Run_Scene_Command_10_If_At_Least_Three_Complete_Part_Sets,func_thumb,,Simon/Rokusho (antes: EventOpcode78_RunSceneCommand10IfAtLeastThreeCompletePartSets)
-0x0804D400,Event_Op79_Run_Scene_Command_12,func_thumb,,"Simon/Rokusho: Primary event opcode 0x79. Reads one scene argument byte, stores it into runtime state, and enters deferred mode; continuation runs scene command 0x12. (antes: EventOpcode79_RunSceneCommand12_Setup)"
+0x0804D39C,Event_Op78_Run_Scene_Command_10_If_At_Least_Three_Complete_Part_Sets,func_thumb,,"Simon/Rokusho (antes: EventOpcode78_RunSceneCommand10IfAtLeastThreeCompletePartSets) [RV15] confirmado: le 2 bytes; grava byte; Team_CountSlotsWithStatus3()<3 salta, senao marca flag (cmd 10)"
+0x0804D400,Event_Op79_Run_Scene_Command_12,func_thumb,,"Simon/Rokusho: Primary event opcode 0x79. Reads one scene argument byte, stores it into runtime state, and enters deferred mode; continuation runs scene command 0x12. (antes: EventOpcode79_RunSceneCommand12_Setup) [RV15] provavel: le 1 byte para campo+1 e marca flag; nome por indice"
 0x0804D424,Event_Op7A_Run_Scene_Command_11,func_thumb,,Simon/Rokusho (antes: EventOpcode7A_RunSceneCommand11_Setup)
 0x0804D438,Event_Op7B_Jump_If_No_Spare_Part,func_thumb,,Simon/Rokusho (antes: EventOpcode7B_JumpIfNoSparePart)
 0x0804D48C,Event_Op7C_Reserved_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode7C_ReservedNoOp)
@@ -3006,14 +3006,14 @@ address,name,kind,count,comment
 0x0804E51C,Event_Op23_Cont_MoveActorA,func_thumb,,Simon/Rokusho (antes: EventOpcode23_MoveActorA) [RV16] confirmado wrapper de Event_RunActorStepSequence
 0x0804E528,Event_Op24_Cont_MoveActorB,func_thumb,,Simon/Rokusho (antes: EventOpcode24_MoveActorB) [HC2] Continuacao 0x24: mesmo corpo da 0x23 (chama 0x0804E534). Confianca confirmado.
 0x0804E534,Event_RunActorStepSequence,func_thumb,,"Simon/Rokusho: Shared existing-actor movement sequence used by EventOpcode23 and EventOpcode24. |  | Starts a directional step on the target actor render slot, then ticks the object-step state until the movement completes. [RV16] confirmado fase 0 inicia passo do ator; fase 1 espera Map_TickObjectStep"
-0x0804E58C,EventOpcode26_FlickerActor,func_thumb,,Simon/Rokusho
+0x0804E58C,EventOpcode26_FlickerActor,func_thumb,,Simon/Rokusho [RV16] confirmado Map_TickObjectFlicker sobre slot de ator; encerra quando retorna !=0
 0x0804E5A8,Event_Op27_Cont_ActorDoAnimation,func_thumb,,Simon/Rokusho (antes: EventOpcode27_ActorDoAnimation) [HC2] Continuacao 0x27: Map_ObjectAnimStep() ate devolver 1; depois Event_EndOpcode. Confianca confirmado.
 0x0804E5BC,Event_Op28_Cont_HopActor,func_thumb,,Simon/Rokusho (antes: EventOpcode28_HopActor) [HC2] Continuacao 0x28: Map_ObjectArcStep ate devolver 1 (16 passos); depois Event_EndOpcode. Confianca confirmado.
-0x0804E5D0,Event_Op29_Cont_MoveAllTrackedActorsA,func_thumb,,Simon/Rokusho (antes: EventOpcode29_MoveAllActorsA)
+0x0804E5D0,Event_Op29_Cont_MoveAllTrackedActorsA,func_thumb,,Simon/Rokusho (antes: EventOpcode29_MoveAllActorsA) [RV16] confirmado wrapper de RunAllTrackedActorsStepSequence(0
 0x0804E5E0,Event_Op2A_Cont_MoveAllTrackedActorsB,func_thumb,,Simon/Rokusho (antes: EventOpcode2A_MoveAllActorsB) [HC2] Continuacao 0x2A: igual 0x29 com flag B=1. Confianca confirmado.
 0x0804E5F0,Event_RunAllTrackedActorsStepSequence,func_thumb,,"Simon/Rokusho: Shared multi-actor movement sequence. |  | Iterates the four tracked actor slots, starts or ticks a directional step sequence on each active actor, and ends the current opcode when all participating actors are finished. [CU] (flagSpeed, mode): fase 0 Map_StartObjectStep (mode 1) ou Obj_StartStepNoAnim (mode 0) para cada ator ativo; fase 1 Map_TickObjectStep e Event_EndOpcode no primeiro que acaba ou no halfword 0 (GH-CU confirmado)"
-0x0804E700,Event_Op2B_Cont_SpawnAndStepActor,func_thumb,,Simon/Rokusho (antes: EventOpcode2B_InitiateActor)
-0x0804E784,Event_Op2D_Cont_StepActor,func_thumb,,Simon/Rokusho (antes: EventOpcode2D_RotateActor)
+0x0804E700,Event_Op2B_Cont_SpawnAndStepActor,func_thumb,,Simon/Rokusho (antes: EventOpcode2B_InitiateActor) [RV16] confirmado spawna ator rastreado no tile
+0x0804E784,Event_Op2D_Cont_StepActor,func_thumb,,Simon/Rokusho (antes: EventOpcode2D_RotateActor) [RV16] confirmado inicia passo do ator e espera Map_TickObjectStep
 0x0804E7DC,Event_Op2E_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode2E_NoOp) [HC2] Continuacao 0x2E: so bx lr. Confianca confirmado.
 0x0804E7E0,Event_Op2F_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode2F_NoOp) [HC2] Continuacao 0x2F: so bx lr. Confianca confirmado.
 0x0804E7E4,Event_Op30_Cont_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode30_NoOp) [HC3] continuacao 0x30: so bx lr (confirmado)
@@ -3069,19 +3069,19 @@ address,name,kind,count,comment
 0x0804FC6C,Event_Op7E_Cont_Move_All_Tracked_Actors_C,func_thumb,,"Simon/Rokusho (antes: EventOpcode7E_MoveAllTrackedActorsC) [HC5] confirmado chamada; chama Event_RunAllTrackedActorsStepSequence (0x0804E5F0) com (0,0); padrao vem de E+0xC94"
 0x0804FC7C,Event_Op7F_Cont_Copy_Tracked_Actor_Records,func_thumb,,"confirmado; copia blocos de 0x40 (0x03003FF0/0x03004A70 + arg0*0x40 -> 0x03003830/0x030042B0), grava 0xFFFF em 0x030055A0; significado chute [CU] copia slot 0x4F+arg -> slot 0x30 (com X de E+0xC6E em +0x0C e Y de E+0xC70 em +0x10); slot 0x79+arg -> slot 0x5A; halfword 0x030055A0[render]=0xFFFF (GH-CU confirmado)"
 0x0804FD10,EventOpcode82_ExecuteBatchedObjectCommandBlock,func_thumb,,Simon/Rokusho [RV17] confirmado - percorre bloco de comandos de objeto (param/frame
-0x0804FE6C,EventOpcode84_SetMapSceneVariant_Continuation,func_thumb,,Simon/Rokusho (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation)
+0x0804FE6C,EventOpcode84_SetMapSceneVariant_Continuation,func_thumb,,Simon/Rokusho (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation) [RV17] provavel - quando timer zera copia byte de +0x98 para +0x38 e fecha opcode; 'FacesUp' sem evidencia no decompile (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation)
 0x0804FE9C,Map_TickObjectMoveRecords,func_thumb,,"[provavel] 0x52 registros de 8 B de movimento de objeto; Map_SetEventMarkerFacingVariant, Map_SetObjectAnimationVariant; fim = Event_EndOpcode"
 0x080500BC,Map_StartObjectStep,func_thumb,,Simon/Rokusho [RV17] confirmado - grava nibbles de facing/anim
 0x08050124,Obj_StartStepNoAnim,func_thumb,,"[CU] renomeado de FUN_08050124 (GH-CU): +0x27 = cmd&0xF, +0x20 = cmd>>4 direto, +0x2A = speedIdx, +0x28 = 16/delta; NAO troca animacao/sprite [RV17] confirmado - como StartObjectStep mas sem Map_SetObjectAnimationVariant; nome mantido"
 0x08050168,Map_TickObjectAnimationTimes,func_thumb,,Simon/Rokusho: Advance an overworld object's walk animation frame sequence by its current movement speed. Calls the per-frame animation step helper once per moved pixel. (antes: Overworld_AdvanceObjectWalkAnimationBySpeed) [RV17] confirmado - repete Map_TickObjectAnimation N vezes (step delta); nome mantido
 0x0805018C,Map_TickObjectStep,func_thumb,,Simon/Rokusho [RV17] confirmado - avanca posicao por modo
 0x08050290,Event_EndOpcode,func_thumb,,"Simon/Rokusho: Shared normal-event helper used when the current opcode finishes. |  | It clears the opcode-local runtime bytes used by many normal event handlers. The actual next opcode fetch happens elsewhere in the VM flow, so this is an opcode-completion/reset helper, not a pure transition helper. [EV] zera E+0xC93 e E+0xC89 (fim de opcode diferido); não zera Pendente (confirmado)"
-0x080502B0,Util_HighNibble,func_thumb,,[R3] x >> 4
-0x080502B8,Util_Low2Bits,func_thumb,,[R3] x & 3
+0x080502B0,Util_HighNibble,func_thumb,,[R3] x >> 4 [RV17] confirmado - retorna (x&0xFF)>>4; nome mantido
+0x080502B8,Util_Low2Bits,func_thumb,,[R3] x & 3 [RV17] confirmado - retorna x&3; nome mantido
 0x080502C8,Obj_FrameBaseFromSprite,func_thumb,,[CS] CONFIRMADO decompile: retorna (sprite>>4)*12+(sprite&3)*3 = frame base (+0x06)
-0x08050300,Overworld_GetObjectAnimationIndexForFacing,func_thumb,,"Simon/Rokusho: Return the animation index for an overworld object slot given its current facing/direction variant. Used by follower, marker, and map-scene sprite refresh code."
+0x08050300,Overworld_GetObjectAnimationIndexForFacing,func_thumb,,"Simon/Rokusho: Return the animation index for an overworld object slot given its current facing/direction variant. Used by follower, marker, and map-scene sprite refresh code. [RV17] confirmado - facing + campo +0x2B*4 do objeto; nome mantido"
 0x08050320,Obj_ComputeActorTableIndex,func_thumb,,[FN5] formula de indice de ator (confirmado formula; provavel nome; era FN2)
-0x08050358,Map_SpawnTrackedObjectAtTile,func_thumb,,Simon/Rokusho
+0x08050358,Map_SpawnTrackedObjectAtTile,func_thumb,,Simon/Rokusho [RV17] confirmado - toca SFX de warp se houver trigger
 0x080503FC,Map_InitObjectSprite,func_thumb,,"[R3] cria sprite do objeto idx+0x4F: paleta, posicao x*16/y*16, sombra opcional em idx+0x79 [CU] (actorId, sprite, tileX, tileY): render = id+0x4F; +0x2B = sprite>>4, +0x20 = sprite&3, X/Y = tile*16 + u16[E+0xC48/0xC4A] <<8; halfword 0xFFFF; +0x30 pose; sombra no slot 0x79+id (GH-CU confirmado)"
 0x08050554,Map_RemoveTrackedObjectByPackedId,func_thumb,,Simon/Rokusho
 0x080505FC,Overworld_BuildEncounterNpcSnapshot,func_thumb,,Simon/Rokusho: Build a compact snapshot of nearby active NPC/object state for use by the encounter/transition path. Converts active event objects into tile coordinates plus facing/type flags and stores them in a 6-entry packed table.
@@ -3156,13 +3156,13 @@ address,name,kind,count,comment
 0x08052A50,Map_GetCameraScrollX,func_thumb,,Simon/Rokusho: Return the current shared map camera X scroll value. [RV18] confirmado: le o scroll X da camera
 0x08052A64,Map_GetCameraScrollY,func_thumb,,Simon/Rokusho: Return the current shared map camera Y scroll value. [RV18] confirmado: le o scroll Y da camera
 0x08052A78,Map_AddCameraScrollX,func_thumb,,Simon/Rokusho [RV18] confirmado: soma delta ao scroll X nas 3 copias
-0x08052AA4,Map_ClampCameraToLoadedMap,func_thumb,,"Simon/Rokusho: Clamp the camera scroll to the currently loaded map bounds around the player position. Uses compact map dimensions and the current player tile position, then writes the final X/Y scroll into the shared camera scroll slots."
-0x08052B44,Map_AddCameraScrollY,func_thumb,,Simon/Rokusho
-0x08052B70,Map_UpdatePlayerMarkerScreenPosition,func_thumb,,Simon/Rokusho: Recompute the player's map marker screen position from the player's world coordinates and the current camera scroll.
+0x08052AA4,Map_ClampCameraToLoadedMap,func_thumb,,"Simon/Rokusho: Clamp the camera scroll to the currently loaded map bounds around the player position. Uses compact map dimensions and the current player tile position, then writes the final X/Y scroll into the shared camera scroll slots. [RV18] confirmado: limita scroll X/Y aos limites do mapa (centraliza quando o mapa e pequeno) e grava via SetCameraScroll"
+0x08052B44,Map_AddCameraScrollY,func_thumb,,Simon/Rokusho [RV18] confirmado: soma delta ao scroll Y nas 3 copias
+0x08052B70,Map_UpdatePlayerMarkerScreenPosition,func_thumb,,Simon/Rokusho: Recompute the player's map marker screen position from the player's world coordinates and the current camera scroll. [RV18] confirmado: posicao em tela do marcador do jogador = mundo - scroll (com ajuste -5 em Y)
 0x08052BEC,Map_ApplySceneVariantScrollPreset,func_thumb,,Simon/Rokusho: Apply the small scene-variant-specific scroll/camera preset used when gCurrentMapSceneVariant toggles between variant 0 and 1.
 0x08052C30,Overworld_UpdateSecondaryActorAnim,func_thumb,,[R3] ator secundario: estado 1 -> tabela e frame 1 (provavel)
-0x08052C68,Map_FindWarpTriggerAtTile,func_thumb,,"Simon/Rokusho: Scan the current map's MapWarpRecord list for a warp at the given tile. On match, cache the high nibble of arrival_facing_and_transition_kind into the map-transition scratch state so the caller can decide whether to start an animated transition effect."
-0x08052CC0,Overworld_CheckMovementCollision,func_thumb,,Simon/Rokusho
+0x08052C68,Map_FindWarpTriggerAtTile,func_thumb,,"Simon/Rokusho: Scan the current map's MapWarpRecord list for a warp at the given tile. On match, cache the high nibble of arrival_facing_and_transition_kind into the map-transition scratch state so the caller can decide whether to start an animated transition effect. [RV18] confirmado: varre tabela de warp do mapa; se tile bate grava destino (nibble alto) no estado e devolve 1"
+0x08052CC0,Overworld_CheckMovementCollision,func_thumb,,Simon/Rokusho [RV18] provavel: checa se o jogador chegou ao limite do passo/borda na direcao; se sim
 0x08052D90,Map_SetObjectRenderSlotFacingVariant,func_thumb,,"Simon/Rokusho [CU] (render, facing): +0x20 = facing, +0x21 = facing, halfword +0x06 = 12*(+0x2B)+3*facing (GH-CU confirmado)"
 0x08052E0C,Overworld_SetPlayerFacingAndRefreshFollower,func_thumb,,"Simon/Rokusho: Set the player's facing direction in overworld state, refresh the player object's facing-dependent sprite data, and immediately resync follower facing/animation."
 0x08052E34,Map_SetSecondaryMarkerFacing,func_thumb,,[R3] (mtbe) grava facing em 0x030057E0+0xC83 e atualiza slot 0x30
@@ -3284,7 +3284,7 @@ address,name,kind,count,comment
 0x0805B0D8,Shop_BuildAvailablePartList,func_thumb,,"Simon/Rokusho: Build the sellable-part list for the current player inventory. Each entry stores the part id, available count, a category/gender byte from RomPartRecord, and the sell price computed as RomPartRecord.price_hundreds * 100. (antes: Shop_BuildSellablePartList) [G] Reconstroi gShopItems com pecas disponiveis (provavel)"
 0x0805B188,Shop_LoadPartIconFrame,func_thumb,,[G] Descomprime frame do icone da peca para VRAM (provavel)
 0x0805B22C,Shop_DrawPartListPage,func_thumb,,[G] Desenha pagina de 4 pecas da loja/troca (provavel)
-0x0805B530,Screen_ClearTileRowHalfwords,func_thumb,,[R3] zera halfwords de linha de tilemap
+0x0805B530,Screen_ClearTileRowHalfwords,func_thumb,,[R3] zera halfwords de linha de tilemap [RV19] confirmado: zera param3 halfwords a partir de base+x*2+y*0x40
 0x0805B558,Shop_DrawPageNumbers,func_thumb,,[R3] numeros de pagina da loja (provavel)
 0x0805B594,KeyItemBag_DrawSelectedNameText,func_thumb,,[R3] nome do item selecionado (provavel) (antes: Shop_DrawSelectedNameText)
 0x0805B5BC,Menu_UpdateSpritePriorityByRange,func_thumb,,[G] Bit de prioridade 0x4000 do cursor por faixa (provavel)
@@ -3589,12 +3589,22 @@ address,name,kind,count,comment
 0x080688E0,fx_step_table_b,func_thumb,,[R4] R4: idem fx_step_table_a sem DISPCNT; provavel
 0x08068920,Stub_ReturnTrue_08068920,func_thumb,,[FN5] retorna 1 (confirmado)
 0x08068A84,Palette_CrossfadeStep,func_thumb,,[FR3] [FR3] crossfade de paleta em 32 passos (progresso/divisor); retorna 1 ao fim (provavel)
+0x08068B74,Scene_ProgressIndex16,func_thumb,,[FN6] provavel: se X%B==0 grava X/B em *ptr e retorna X==16*B; ponteiros 0x08485720/0x08485724
 0x08068BC4,Fx_PeriodicSineEmitStep,func_thumb,,provável: emite 4 entradas de efeito a cada período; handler indireto não recuperado
 0x08068CC8,fx_palette_fade_step,func_thumb,,[R4] R4: interpolacao RGB555 (a*(32-t)+b*t)>>5; provavel
 0x08068DD0,Dispatch_ScrollTickThenHandler,func_thumb,,[FL10] scroll_tick_flag se flag zero; CallViaR0(tabela[byte]) (provável)
+0x08068E00,Scene_EnterSetupA,func_thumb,,"[FN6] provavel: setup de cena (gfx_clear_regs_init, snd 0 e 0x13, fx_screen_setup_a, REG_DISPCNT|=0x1E00, zera campos) e proximo estado; ponteiro 0x08485730"
+0x08068E88,Scene_FxStepAdvance,func_thumb,,[FN6] provavel: se fx_step_table_a() != 0 copia valor (estado) ; ponteiro 0x08485734
 0x08068EA8,Fx_StepTableBThenSetDispcnt,func_thumb,,chama fx_step_table_b e ajusta REG_DISPCNT; provavel
+0x08068F08,Scene_IntroStepAdvance,func_thumb,,"[FN6] provavel: se intro_scene_step() != 0 grava 0,4,2 nos campos de estado; ponteiro 0x0848573C"
 0x08068F34,Screen_ResetWrap,func_thumb,,wrapper: seta estado e chama Screen_ResetGfxAndState (confirmado)
 0x08068F50,FightPreview_LoadCachedAndEncounterLoadouts,func_thumb,,Simon/Rokusho: Load battle preview/composite sprites using the cached player preview loadout from fight_information.preview_loadout_cache and the selected encounter fight templates from list_of_all_fights. Also seeds the preview scene state before handing control to the scene-specific main loop. [RV20] provavel: carrega tiles de sprite dos loadouts em cache (2 lados) e configura DISPCNT
+0x08069168,Scene_DispatchStepThenAdvance7,func_thumb,,"[FN6] provavel: se dispatch_scene_state() != 0 grava 0,7,2; ponteiro 0x08485748"
+0x08069194,Scene_EnterSetupB,func_thumb,,"[FN6] provavel: setup (scene_init_c, grid_9, d; snd 0 e 0x17; BG 0x1E00) e grava proximo estado 8; ponteiro 0x0848574C"
+0x080691E0,Scene_AnimSeqStepAdvance9,func_thumb,,[FN6] provavel: BotAnim_TickStageCallbacksAll + slots_advance_anim; se scene_sequence_b() != 0 vai para estado 9; ponteiro 0x08485750
+0x0806920C,Fight_FrameTickWaitGate10,func_thumb,,"[FN6] provavel: quadro de batalha (chama 0x0806A860, 0x0806AAA4 por BL; Battle_*; BotAnim_TickStageCallbacksAll); se wait_gate_0xf1() != 0 vai para 10; ponteiro 0x08485754"
+0x08069258,Scene_EnterSetupC,func_thumb,,"[FN6] provavel: setup (gfx_clear, parts_gfx, menu_draw_stats, scene_init_e, snd 0 e 0x13; BG 0x1A00); estado 0xB; ponteiro 0x08485758"
+0x080692A8,Scene_SequenceAFadeAdvance,func_thumb,,"[FN6] provavel: se scene_sequence_a() != 0 zera BLDY, snd_fade_request(0x20), estado 0xC; ponteiro 0x0848575C"
 0x08069320,gfx_clear_regs_init,func_thumb,,[R4] R4: DMA + DISPCNT=0x60 + zera 4 pares; provavel
 0x0806938C,menu_draw_stats,func_thumb,,[R4] R4: 3 textos/valores de status via 0803F41C; provavel
 0x0806941C,panel_setup_tiles,func_thumb,,[R4] R4: monta tiles de painel por linha; provavel
@@ -3622,11 +3632,14 @@ address,name,kind,count,comment
 0x0806A654,scene_sequence_b,func_thumb,,[R4] R4: espera 0xB4 quadros e 3 sprites; provavel
 0x0806A718,wait_gate_0xf1,func_thumb,,[R4] R4: timer 0xF1 com pre-condicao; provavel
 0x0806A748,Battle_EmitBotSpritesInDepthOrder,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
+0x0806A860,Fight_TickSlotTimersAndSpawn,func_thumb,,"[FN6] provavel: loop de 3 slots de batalha: timers do bot (+0x1A), spawn de slot_spawn com 0x20/0x44/0x43; chamado por BL de 0x0806920C; chamado por BL de 0x0806920C"
 0x0806AA10,Battle_AdvanceBotPartTimerByTable,func_thumb,,[FS9] provavel: avanca +0x1A do bot por tabela; chamado pelo BL de 0x08069212 (FN3 tinha o mesmo nome)
+0x0806AAA4,Fight_TickSlotMotionPhases,func_thumb,,"[FN6] provavel: loop de 3 slots: SetCompositeBattleSpriteAnimationSpeed, draw_part_cell_3x3, Sprite_UpdateComposite4Motion; chamado por BL de 0x0806920C"
 0x0806ADB0,Battle_UpdateCompositeBotMotion,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
 0x0806B01C,slots_move_group3,func_thumb,,"[R4] R4: move 3 slots grupo, limite -15 em y; provavel"
 0x0806B0D4,BotAnim_TickStageCallbacksAll,func_thumb,,[R4] R4: loop de 20 slots com frame e reinicio; provavel (antes: slots_update_anim)
 0x0806B2F4,Obj_UpdateSlotPosition,func_thumb,,[provavel] object slot velocity and screen position update
+0x0806B3D8,BotAnim_StageWalkStep,func_thumb,,"[FN6] confirmado (ponteiro) provavel (nome): callback de estagio, param=bot; tabela 0x084857D0 indice 9 (chamado via BotAnim_TickStageCallbacksAll 0x0806B0D4); anda X +-1 conforme flag"
 0x0806B4A4,scroll_tick_flag,func_thumb,,[R4] R4: contador de rolagem por bit 0; chute
 0x0806B4C8,slots_advance_anim,func_thumb,,"[R4] R4: animacao de slot por tabela (duracao,proximo,frame); provavel"
 0x0806B530,slot_spawn,func_thumb,,[R4] R4: cria/limpa slot de sprite kind 1..10; provavel
@@ -3636,6 +3649,8 @@ address,name,kind,count,comment
 0x0806B820,Screen_InitObjectSlotsLz77,func_thumb,,[provavel] 4 LZ77 para VRAM; ~13 Map_InitializeObjectRenderSlot; REG_DISPCNT |= 0x1E00
 0x0806B826,Screen_InitObjectSlotsLz77_AltEntry_806b826,label,,[QA5] alvo de desvio/tabela dentro do host (Ghidra: corpo contém; sem BL/prologo PUSH); rotulo
 0x0806B8CE,TeamSlots_WriteFi41_Candidate,label,,[TP] [GH-TP provavel] grava r3 em fi+0x41; escritor da escolha de time? valor/origem aberto
+0x0806BB24,Scene_StepFxSongAdvance,func_thumb,,[FN6] provavel: se fx_step_table_a() != 0 toca musica 0x14 e incrementa contador; ponteiro 0x08485904
+0x0806BB44,Scene_DispatchState8Anim,func_thumb,,[FN6] provavel: se dispatch_state_8() != 0 incrementa contador; chama anim_dispatch_state; ponteiro 0x08485908
 0x0806BC48,Fight_TickBattleFrame,label,,[confirmado] despachante por quadro: counter_oscillate_x/battle_state_fire/select_entity_max ou battle_phase_spawn_move; depois battle_update_objects etc.; jump table nao recuperado
 0x0806BC94,Battle_EffectFallPhase1Step,func_thumb,,[FS9] provavel: fase 1 de efeito de queda (effect_anim_fall) -> estado 8; tabela 0x08485914
 0x0806BCC4,Battle_EffectPhase2Step,func_thumb,,[FS9] provavel: fase 2 do efeito (effect_anim_phase2) -> estado 8; tabela 0x08485918
@@ -3667,15 +3682,20 @@ address,name,kind,count,comment
 0x0806D3EC,battle_mark_active_slots,func_thumb,,"[R4] R4: x=0x78 p/ slots ativos, 0xC8 p/ inativos (3 objetos); confirmado"
 0x0806D41C,battle_transition_main_state,func_thumb,,[R4] R4: transicao de estado principal por botao; provavel
 0x0806D4A4,battle_effect_affine_lines,func_thumb,,"[R4] R4: deslocamento por linha (0xA0 linhas, perfil affine/HDMA); provavel"
+0x0806D588,Battle_TickEffectsAndTransition,func_thumb,,"[FN6] provavel: battle_effect_affine_lines, CallViaR0(tabela), battle_effects_5_slots_update, battle_transition_main_state; ponteiro 0x084856F0"
 0x0806D600,Fx_StepTableBThenEnterScene,func_thumb,,"chama fx_step_table_b, ajusta gMainState e pede musica 0; provavel"
 0x0806D7A0,Gfx_LoadScreenLZ77Assets,func_thumb,,carrega assets LZ77 para VRAM e fx_screen_setup_a (provavel)
 0x0806D8AC,Battle_SetupRenderSlots,func_thumb,,[provavel] battle render slot setup by state and REG_DISPCNT layers
 0x0806D9A8,Battle_IntroSetupStep,func_thumb,,[FR2] provável; música 0 + objetos e slots 3/4/7/8 da entrada da batalha (FUN_0806d9a8)
 0x0806DAA4,Screen_IntroTimeline,func_thumb,,linha do tempo de intro com curva de fade e jump table; provável
+0x0806DBFC,Battle_WaitTransitionA,func_thumb,,"[FN6] provavel: se bit 8 de *DAT_0806dc2c: battle_slot_init(6,2) e snd_sfx 3; senao espera contador > limite e vai para estado 3 com fx_screen_setup_b; ponteiro 0x08485984"
+0x0806DC7C,Battle_TimedTransition41,func_thumb,,"[FN6] provavel: conta ate 0x29 (41 quadros), depois slot_ptr_stub(2), fx_screen_setup_b e estado 2; ponteiro 0x08485988"
 0x0806DCC0,Battle_InitScreenAndSlots,func_thumb,,"[FS9] provavel: init da tela de batalha (fx_screen_setup_a, 5 slots, DISPCNT |= 0x1300); tabela 0x0848598C"
 0x0806DE0C,battle_effects_5_slots_update,func_thumb,,[R4] R4: update de 5 efeitos com timer e liberacao via 0806B718; provavel
 0x0806DE9C,Battle_BuildBotSpriteOam,func_thumb,,[FS9] provavel: monta atributos de OAM do bot (contador +0x22 0..0x1E); tabela 0x08485994
 0x0806E10C,battle_slot_init,func_thumb,,"[R4] R4: inicializa slot de batalha (tipo em +0x20, timer zero); confirmado"
+0x0806E130,Battle_DispatchPhaseTable,func_thumb,,[FN6] provavel: CallViaR0 com tabela indexada por *DAT_0806e14c; ponteiro 0x084856F4
+0x0806E150,Scene_StepLoadStateTriple,func_thumb,,[FN6] provavel: se fx_step_table_a() != 0 copia 3 halfwords da tabela para gMainState e vizinhos; 5 ponteiros em tabelas 0x08485960..0x08485B6C
 0x0806E184,Boot_SubState2_WaitFxStep,func_thumb,,[TL] boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
 0x0806E2A0,Screen_InitRowBufferAndFx,func_thumb,,"descomprime tiles, copia 20 linhas para buffer, liga BG1 e fx; provavel"
 0x0806E3C4,Fx_TickStepTableEntry,func_thumb,,[provavel] StateMachine_DispatchStep(tabela[+0xC]); ao terminar grava ctx+4=5 e estado global=2
@@ -3683,13 +3703,17 @@ address,name,kind,count,comment
 0x0806E404,battle_timer_end_transition,func_thumb,,[R4] R4: timer de fim e saida de batalha por botao bit 3; provavel
 0x0806E460,Boot_DispatchSubState,func_thumb,,provável: CallViaR0 de tabela indexada e fim de transição (antes: Battle_DispatchThenEndTransition)
 0x0806E484,fade_step_bld,func_thumb,,[R4] R4: fade 0..16 por 4 quadros grava registro BLD; provavel
+0x0806E4CC,Scene_FadeStepLoadStateTriple,func_thumb,,"[FN6] provavel: se fade_step_bld() != 0 zera contador, copia 3 halfwords (como 0x0806E150); ponteiro 0x084859E4"
 0x0806E504,Gfx_ResetVramPaletteOamAndStopSong,func_thumb,,"[FL10] lista de copias DMA3 (VRAM/paleta/OAM), REG_DISPCNT=0x60, musica 0, fx_screen_setup_a (provável)"
 0x0806E5E0,Gfx_LoadLz77ScreenAndEnableBg0,func_thumb,,descomprime LZ77 para VRAM e liga BG0; provavel
 0x0806E6E4,Gfx_LoadLz77RowsTable,func_thumb,,descomprime e copia 20 linhas para tabela 0x40 (provavel)
 0x0806E7EC,Screen_InitLZ77ToVram,func_thumb,,[provavel] two LZ77 VRAM loads plus 20-row bank-offset table
+0x0806E90C,Scene_TimedWait61ThenAdvance2,func_thumb,,"[FN6] provavel: conta ate 0x3D quadros, depois grava 6 e estado 2; ponteiro 0x084859EC"
+0x0806E93C,Scene_TimedWait60ThenAdvance8,func_thumb,,"[FN6] provavel: conta ate 0x3C quadros, marca flag e estado 8; ponteiro 0x084859F4"
 0x0806E96C,Screen_LayerHideTimedStep,func_thumb,,[FR2] provável; apaga camadas de REG_DISPCNT por 60 quadros; salto final não recuperado (FUN_0806e96c)
 0x0806E9E0,menu_state2_setup,func_thumb,,[R4] R4: configuracao de menu no estado 2 (080446B4); chute
 0x0806EA54,battle_exit_button,func_thumb,,[R4] R4: saida do estado por botao bit 3; confirmado
+0x0806EA98,Battle_MenuPhaseDispatch,func_thumb,,"[FN6] provavel: menu_state2_setup, CallViaR0 com tabela indexada por *DAT_0806eabc, battle_exit_button; ponteiro 0x084856EC"
 0x0806EAC0,Fade_ApplyPaletteTargetsWhenDone,func_thumb,,[FS10] FS10 fim de fade de paleta: 3 halfwords para destinos via ponteiro; ptr 0x08485A14; confianca provavel
 0x0806EAF4,Fade_ApplyBlendTargetsWhenDone,func_thumb,,[FS10] FS10 fim de fade de blend; ptr 0x08485A18; confianca provavel
 0x0806EB28,Fx_StepFadeLatch,func_thumb,,rampa de brilho e latch de parâmetros; provável
@@ -3703,7 +3727,7 @@ address,name,kind,count,comment
 0x0806F21C,Screen_ArmBg2TimerStep0C,func_thumb,,"[FS10] FS10 timer_enable_bg2, passo 7 -> 0x0C; ptr 0x08485A34; confianca provavel"
 0x0806F23C,Screen_TextCounterStep,func_thumb,,[FR1] text/counter screen step: two counters + jump tables + 6-digit format [RV20] confirmado: contador de tela com digitos (counter_2_digits) e text_step_char; ao chegar em 0x187 muda estado
 0x0806F578,Screen_ResetTextArmBg2Step0E,func_thumb,,[FS10] FS10 clear_text_buffer + ListRing_InitFour + passo 7 -> 0x0E; ptr 0x08485A3C; confianca provavel
-0x0806F5A0,Screen_TextCounterStepAlt,func_thumb,,[FR1] twin of Screen_TextCounterStep with other context and end state 9 (antes: Screen_TextCounterStepB)
+0x0806F5A0,Screen_TextCounterStepAlt,func_thumb,,[FR1] twin of Screen_TextCounterStep with other context and end state 9 (antes: Screen_TextCounterStepB) [RV20] provavel (antes: Screen_TextCounterStepB): variante do contador com outro tile/estado final (9)
 0x0806F914,Screen_ArmBg2TimerStep11,func_thumb,,"[FS10] FS10 timer_enable_bg2, passo 0x0A -> 0x11; ptr 0x08485A48; confianca provavel"
 0x0806F934,Screen_WaitFramesThenStep12,func_thumb,,[FS10] FS10 contador fi+8 (0x03001800) ate 0x3C; depois passo 0x12; ptr 0x08485A4C; confianca provavel
 0x0806F9D8,fade_palette_16,func_thumb,,[R4] R4: fade de paleta BGR555 de 16 cores com fator linear; provavel
@@ -3770,7 +3794,7 @@ address,name,kind,count,comment
 0x08071E0C,Fx_RampCounterStepDone,func_thumb,,rampa em 3 fases e espera contador +0x9A; devolve 1 ao terminar; provavel
 0x08071E8C,Obj_SlideSlot3AndPlaySfx54,func_thumb,,[FS10] FS10 slot 3: Y e +0x1A e X ate o fim; SFX 0x54; fi+0x10 += 1; ptr 0x08485BDC; confianca provavel
 0x08071EFC,Anim_RampStepThenSfx54,func_thumb,,[FR1] timed ramp on +0x104/+0x11A then SFX 0x54 and indirect jump [RV20] confirmado: rampa de valores (+0x104
-0x08071F74,Anim_RampStepThenSfx54Alt,func_thumb,,[FR1] twin of Anim_RampStepThenSfx54 (offsets 0x144/0x15A (antes: Anim_RampStepThenSfx54B)
+0x08071F74,Anim_RampStepThenSfx54Alt,func_thumb,,[FR1] twin of Anim_RampStepThenSfx54 (offsets 0x144/0x15A (antes: Anim_RampStepThenSfx54B) [RV20] provavel (antes: Anim_RampStepThenSfx54B): mesma rampa com limites diferentes
 0x08071FF8,Anim_FrameCycleStep,func_thumb,,[FR2] provável; ciclo de 4 quadros com SFX 0x59 e DMA3 ao final (FUN_08071ff8)
 0x08072080,Palette_FadeStepWithSfx,func_thumb,,"[FR3] [FR3] passo de fade de paleta BGR555 (escala por contador +0x11), SFX 0x51 em 0x14, SFX 10 ao fim (provavel)"
 0x08072188,FightPreview_TickIntroAndBuildLayer,func_thumb,,[provavel] ctx+0x5A ate 0x1F; FightPreview_InitCompositeBuffers; BuildCompositePreviewSpriteLayer
@@ -3836,10 +3860,13 @@ address,name,kind,count,comment
 0x08073094,snd_update_frame,func_thumb,,[R4] R4: percorre trilhas e subgrupos do driver por quadro; provavel
 0x08073274,snd_frame_tick,func_thumb,,[R4] R4: tick do contador +0x730 e chamada de snd_update_frame; provavel
 0x080732B8,snd_freq_lookup,func_thumb,,"SND12: halfword table[key] em ROM 0x083ABB50 (74 entradas). PSG: key 0 = C2 (0x002E), key 26 = 0x0642 (= nota 0x3E), key 33 = 0x06D6 (A4=440 Hz). Confirmado no replay (ch1 0x04000064)"
+0x080732C8,Obj_FlushFlag8ToWord,func_thumb,,[FN6] provavel: se flag bit3 de obj+0x50: grava byte obj+0x54 em *out e limpa o bit; sem BL/ponteiro achado na ROM
 0x080732F0,snd_channel_reg_value,func_thumb,,"[R4] R4: monta valor de registrador do canal (freq*vol, voz, bit 0x800); provavel"
 0x0807334C,Snd_UpdateChannelFreqEnv,func_thumb,,[G] Atualiza freq e envelope de canal de som (provavel)
+0x080733BC,Obj_FlushFlag2ScaledValue,func_thumb,,"[FN6] provavel: se flag bit1 de obj+0x50: calcula (obj+0x40 * obj+0x66) & mask, grava em obj+0x4A e *out, seta bit0; sem BL/ponteiro achado"
 0x08073404,snd_channel_freq_write_a,func_thumb,,[R4] R4: grava registrador de frequencia do canal com gatilho 0x8000; provavel
 0x08073480,snd_channel_freq_write_b,func_thumb,,[R4] R4: variante de freq para outro tipo de canal; provavel
+0x080734F4,Obj_FlushFlag1Value69,func_thumb,,[FN6] provavel: se flag bit0 de obj+0x50: grava obj+0x69 | 0x8000 em *out e limpa o bit; sem BL/ponteiro achado
 0x08073524,snd_channel_note_write,func_thumb,,[R4] R4: escreve nota do canal (ramo PCM tipo 2); provavel
 0x08073604,snd_channel_ctrl_write,func_thumb,,[R4] R4: grava registrador de controle do canal (mascara + envelope); provavel
 0x080736A0,snd_channel_update_1,func_thumb,,"[R4] R4: atualiza canal 1 do PSG (registro, freq, controle ou nota); provavel"
@@ -3978,6 +4005,7 @@ address,name,kind,count,comment
 0x0807DBCC,SoftF64_CompareAlt1,func_thumb,,"[FR3] [FR3] classe<2 -> 1, senao sf64_cmp_core; igual a SoftFloat64_Compare 0x0807DA50 (provavel) (antes: SoftFloat64_CompareSafe)"
 0x0807DC18,sf_from_i32,func_thumb,,[R4] R4: int para float; provavel
 0x0807DC94,sf_to_i32,func_thumb,,[R4] R4: float para int (trunca); provavel
+0x0807DD08,Math_F64IsZero,func_thumb,,[FN6] provavel: sf_unpack e sf64_pack de float 64 e retorna (valor == 0); sem BL/ponteiro achado
 0x0807DD30,sf64_pack_wrap,func_thumb,,[R4] R4: wrapper de sf64_pack; provavel
 0x0807DD9C,sf32_pack,func_thumb,,[R4] R4: soft-float empacota float32 (IEEE single); provavel
 0x0807DE54,sf32_unpack,func_thumb,,"[R4] R4: lib soft-float (unpack de float32: classe, sinal, expoente, mantissa); confirmado"
