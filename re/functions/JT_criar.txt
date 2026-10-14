@@ -19,3 +19,7 @@
 0x08068238	JT3 0x08068400 idx 2 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
 0x08068298	JT3 0x08068400 idx 3 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
 0x08068328	JT3 0x08068400 idx 4 (copia de 0x080B003C): sem funcao no Ghidra, descricao nao lida
+0x0801C0F8	codigo da tabela A indice 0 sem funcao no Ghidra (Fight_SubstateA_0)
+0x0801C138	codigo da tabela A indice 2 sem funcao no Ghidra (Fight_SubstateA_2)
+0x0801C32C	codigo da tabela C indice 0 sem funcao no Ghidra (Fight_SubstateC_0)
+0x0801C3F8	codigo da tabela C indice 4 sem funcao no Ghidra (Fight_SubstateC_4)
