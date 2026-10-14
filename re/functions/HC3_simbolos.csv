@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x0804E7E4,Event_Op30_Cont_NoOp,func,continuacao 0x30: so bx lr (confirmado)
+0x0804E7E8,Event_Op31_Cont_YesOrNoBox,func,continuacao 0x31: caixa sim/nao (FUN_08048000 abre; FUN_08048038 consulta; salto E+0xC94; provavel)
+0x0804E860,Event_Op32_Cont_NoOrYesBox,func,continuacao 0x32: caixa nao/sim, cursor inicial 1 (confirmado no fluxo)
+0x0804E928,Event_Op36_Cont_GetItem,func,continuacao 0x36: soma item no inventario (qtd max 99), mensagem, espera caixa (provavel no nome do inventario)
+0x0804F0A4,Event_Op41_Cont_FlickerAllActors,func,continuacao 0x41: pisca de todos os atores rastreados ate halfword 0x030055A0 zerar (risco: sem slot ativo nao termina)
+0x0804F5C8,Event_Op51_Cont_NoOp,func,continuacao 0x51: so bx lr (confirmado)
+0x0804F5CC,Event_Op52_Cont_NoOp,func,continuacao 0x52: so bx lr (confirmado)
+0x0804F5D0,Event_Op53_Cont_NoOp,func,continuacao 0x53: so bx lr (confirmado)
+0x0804F5D4,Event_Op54_Cont_NoOp,func,continuacao 0x54: so bx lr (confirmado)
+0x0804F5D8,Event_Op55_Cont_NoOp,func,continuacao 0x55: so bx lr (confirmado)
+0x0804F5DC,Event_Op56_Cont_LoadEntities,func,continuacao 0x56: recarrega entidades e colisao do mapa, um quadro, termina (confirmado; nomes dos auxiliares provaveis)
