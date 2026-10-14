@@ -49,17 +49,18 @@ and applied), FIX (old notes fixed), FR1..FR3 (FL leftovers; nothing left), JT2/
 (+0xA6 code = direct index into gTextGameMessages 0x083C6744), SD (substate tables A 9 / C 10), DT2/DT3 (tables),
 CH1 (38 guesses), CH2 (39 guesses), CH3 (16 of 38 from R3).
 
-0. **User step in Ghidra:** run CreateHandlerFunctions with `JT_criar.txt` (24 addresses), then Ctrl+S.
-   Then document those 24 functions: the targets are in JT2.md / JT3.md / SD.md; the SD names go in
-   SD_simbolos.csv.
-1. **3rd merge into mtbe.csv** of the CSVs from this round that are not in it yet: FR1..FR3, JT2, JT3, A6, SD,
-   DT2, DT3, CH1 (R0/R0a/R0b/R1/R1b/G), CH2 (R2), CH3 (R3).
-   - Decide the 62 conflicts in MERGE_RELATORIO2.md: most are a generic "Substate" name -> new name. Suggestion:
-     swap them all.
-   - 0x08037830: FR3 = Fight_FindActiveBotInSideWithGroup, CH2 = Fight_FindLiveSlotMatchingField91 (the latter
-     is the one in Ghidra). Pick one.
-   - Remove/mark 0x08045A40 (data). Unify the soft-float duplicates (0x0807DA50/0x0807DAE8/0x0807DB34/0x0807DBCC;
-     0x0807D48C vs 0x0807D4BC).
+0. **Single sync with Ghidra (2026-10-14):** the only source of truth is `re/symbols/mtbe.csv`.
+   - `python -I re/tools/build_sync.py` merges every `functions/*_simbolos.csv` into mtbe.csv (newer layers win;
+     the old name goes in the comment) and generates `re/ghidra/medabots_sync.tsv`.
+   - The user runs **`re/ghidra/MedabotsSync.java`** (no prompts). It creates the missing functions (H_lista,
+     HC_lista, JT_criar), applies the names and labels, and writes `re/ghidra/medabots_sync_log.txt`. Then Ctrl+S.
+   - The old CreateHandlerFunctions/ApplyMtbeNamesToFUN scripts are gone. **Never** use MedabotsSetup.java (it
+     destroys functions).
+   - Agent workflow from now on: agent writes `XX_simbolos.csv` -> Opus runs build_sync.py -> commit -> user
+     runs MedabotsSync.
+1. **After the sync:** read medabots_sync_log.txt (lines "miolo" = targets inside another function; "erro").
+   Document the 24 new functions from JT_criar (JT2.md / JT3.md / SD.md).
+   The 3rd merge is already done by build_sync.py (291 names swapped, 72 new).
 2. **CH3 leftovers:** 22 guesses in R3 (list in CH3.md) + ~30 in R4 (not started).
 3. **Bad names to fix** (CH1): Fight_DrawBotPartEntrySprites/Icons/Tiles, Fight_FormatBotLabelText (suggestions
    in the CH1 report: Fight_LoadBotPartEntryTiles, Fight_CreateBotPartEntrySprites,
