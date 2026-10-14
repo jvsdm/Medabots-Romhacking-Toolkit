@@ -6,6 +6,7 @@
      F <addr> <nome>   função: cria se não existir, renomeia se o nome for diferente
      C <addr>          só criar função (alvo de tabela ainda sem nome)
      L <addr> <nome>   rótulo de dado na ROM
+     S <addr>          função engolida por outra: remove a hospedeira, cria esta, recria a hospedeira
 
 Uso: python -I re/tools/build_sync.py   (rodar da raiz do Toolkit)
 """
@@ -34,7 +35,9 @@ TIERS = [
 NEVER_FUNC = {0x08000000}
 KEEP_MTBE = {"0x08035754", "0x08035814", "0x08035880", "0x08035740"}
 # Listas de endereços que devem virar função (alvos de tabela de ponteiros).
-CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt", "QA5_criar.txt"]
+CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt"]
+# Funções que o Ghidra engoliu dentro de outra (QA5): o sync tira a hospedeira, cria estas e recria a hospedeira.
+SPLIT_LISTS = ["QA5_criar.txt"]
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 GENERIC = re.compile(r"^(FUN|sub|DAT|LAB|PTR|thunk_FUN)_", re.I)
@@ -123,6 +126,13 @@ def main():
             m = re.match(r"miolo ([0-9a-fA-F]{8}) ", line)
             if m:
                 inside.add("0x%08X" % int(m.group(1), 16))
+        for fn in SPLIT_LISTS:  # estas são função de verdade; o sync separa da hospedeira
+            p = os.path.join(FUNC_DIR, fn)
+            if os.path.exists(p):
+                for line in open(p, encoding="utf-8"):
+                    tok = re.split(r"[ 	,]+", line.strip())[0]
+                    if re.fullmatch(r"0[xX][0-9A-Fa-f]+", tok):
+                        inside.discard(norm(tok, True))
         for r in body:
             if len(r) > 2 and r[2].startswith("func") and norm(r[0], True) in inside:
                 r[2] = "label"
@@ -135,6 +145,7 @@ def main():
     seen = {}
     lines, dups = [], []
     named_funcs = set()
+    data_addrs = set()  # rótulo/dado nunca vira linha C
     for r in body:
         kind = r[2] if len(r) > 2 else ""
         a = int(r[0], 16)
@@ -153,28 +164,32 @@ def main():
             lines.append("F\t%s\t%s" % (key, name))
             named_funcs.add(key)
         elif kind in DATA_KINDS or a in NEVER_FUNC:
+            data_addrs.add(key)
             lines.append("L\t%s\t%s" % (key, name))
 
-    creates = set()
-    for fn in CREATE_LISTS:
+    def read_list(fn):
         p = os.path.join(FUNC_DIR, fn)
         if not os.path.exists(p):
-            continue
+            return
         for line in open(p, encoding="utf-8"):
             tok = re.split(r"[ \t,]+", line.strip())[0]
             if re.fullmatch(r"0[xX][0-9A-Fa-f]+", tok):  # ignora faixas "0x..0x"
                 key = norm(tok, True)
-                if key not in named_funcs and int(key, 16) not in NEVER_FUNC:
-                    creates.add(key)
-    lines += ["C\t%s" % a for a in sorted(creates)]
+                if int(key, 16) not in NEVER_FUNC and key not in data_addrs:
+                    yield key
+
+    splits = sorted({k for fn in SPLIT_LISTS for k in read_list(fn)})
+    creates = {k for fn in CREATE_LISTS for k in read_list(fn)} - named_funcs - set(splits)
+    # S vem antes de tudo: o F com o nome destas só acha a função depois de separar.
+    lines = ["S\t%s" % a for a in splits] + lines + ["C\t%s" % a for a in sorted(creates)]
 
     with open(SYNC, "w", encoding="utf-8", newline="\n") as f:
         f.write("# gerado por re/tools/build_sync.py; nao editar a mao\n")
         f.write("\n".join(lines) + "\n")
 
     print("mtbe.csv: %d linhas, +%d novos, %d trocados" % (len(body), added, changed))
-    print("sync: %d funcoes, %d rotulos, %d so criar" % (
-        sum(l[0] == "F" for l in lines), sum(l[0] == "L" for l in lines), len(creates)))
+    print("sync: %d funcoes, %d rotulos, %d so criar, %d separar" % (
+        sum(l[0] == "F" for l in lines), sum(l[0] == "L" for l in lines), len(creates), len(splits)))
     for name, a, b in dups:
         print("nome repetido: %s em %s e %s (o segundo ganhou sufixo)" % (name, a, b))
 

@@ -1,5 +1,6 @@
 // Deixa o Ghidra igual ao repositório: lê medabots_sync.tsv (mesma pasta deste script), cria as funções que
-// faltam e aplica os nomes de re/symbols/mtbe.csv. Não apaga função nem limpa listagem.
+// faltam e aplica os nomes de re/symbols/mtbe.csv. Linhas S separam uma função que o Ghidra engoliu dentro de
+// outra (remove a hospedeira, cria a nova, recria a hospedeira com o mesmo nome). Fora isso não apaga nada.
 // Grava o que mudou em medabots_sync_log.txt (mesma pasta). Depois salve o projeto (Ctrl+S).
 // @category Medabots
 // @menupath Tools.Medabots.Sync
@@ -36,6 +37,28 @@ public class MedabotsSync extends GhidraScript {
             String[] p = line.split("\t");
             Address a = toAddr(Long.decode(p[1]));
             try {
+                if (p[0].equals("S")) {
+                    // Função engolida por outra: tira a hospedeira, cria esta, recria a hospedeira com o mesmo nome.
+                    if (getFunctionAt(a) != null) continue;
+                    Function host = getFunctionContaining(a);
+                    Address hostEntry = null;
+                    String hostName = null;
+                    if (host != null) {
+                        hostEntry = host.getEntryPoint();
+                        hostName = host.getName();
+                        removeFunction(host);
+                    }
+                    disassemble(a);
+                    Function fn = createFunction(a, null);
+                    if (fn == null) { failed++; log.println("falhou separar " + a); }
+                    else { created++; log.println("separada " + a + (hostName != null ? " de " + hostName : "")); }
+                    if (hostEntry != null && getFunctionAt(hostEntry) == null) {
+                        Function h = createFunction(hostEntry, null);
+                        if (h == null) { failed++; log.println("falhou recriar " + hostEntry + " " + hostName); }
+                        else h.setName(hostName, SourceType.USER_DEFINED);
+                    }
+                    continue;
+                }
                 if (p[0].equals("L")) {
                     Symbol s = getSymbolAt(a);
                     if (s == null || !s.getName().equals(p[2])) {
