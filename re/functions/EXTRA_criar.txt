@@ -233,3 +233,11 @@
 0x0805C2DC..0x0805CC3C  entradas 10..11 do menu do título: não lidas
 0x0805EFD4, 0x0805EFFC, 0x0805F144, 0x0805F19C  sub-passos da tela de nome (tabela 0x084836E8): não lidos
 0x08004A2A	PB: miolo/funcao que chama Fight_RefreshBotPartRecords
+0x0805716C  despachante do menu 2 de MainState1 (sem função; dentro de nada no Ghidra)
+0x080574D5  sub 2 da tabela 0x083D5FF4 (não checado)
+0x08050F94  sub 0 do mapa (tabela 0x08050F80); Ghidra só mostra o despachante
+0x08051078  sub 1 do mapa (tabela 0x08050F80)
+0x080510C0  sub 2 do mapa (leitura de held 0x0805114C; tabela 0x08050F80)
+0x0805134C  sub 3 do mapa (tabela 0x08050F80)
+0x08051368  sub 4 do mapa (tabela 0x08050F80)
+0x0805716C	FM: despachante do menu de campo (MainState1[2])

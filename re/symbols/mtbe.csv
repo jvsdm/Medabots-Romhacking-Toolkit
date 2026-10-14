@@ -2976,6 +2976,11 @@ address,name,kind,count,comment
 0x08065710,Anim_StepRecordCounter,func_thumb,,"[R3] passo de contador de animação, devolve 1 ao fim (chute)"
 0x08065790,LinkMenu15Step0,func_thumb,,[LK2] [GH-LK2] passo 0 do menu 0x15 (preparo); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step0)
 0x080657C4,Sm_StepSfxRepeat3,func_thumb,,repete passo com SFX até 3 vezes e depois avança; provável (jump table não recuperada)
+0x08065870,Sm_StepSfxRepeat3_JumpTable,data,,[JT4] tabela real de 6 ponteiros (indice = estado +8); JT4
+0x08065888,Sm_StepSfxRepeat3_Case0,label,,[JT4] caso 0 da tabela; confere condicao e SFX 0x0D; JT4
+0x080658DC,Sm_StepSfxRepeat3_Case1to3,label,,[JT4] casos 1-3: espera tecla A 3 vezes; JT4
+0x08065970,Sm_StepSfxRepeat3_Case4,label,,[JT4] caso 4 da tabela; JT4
+0x080659B0,Sm_StepSfxRepeat3_Case5,label,,[JT4] caso 5 da tabela (finaliza); JT4
 0x08065A0C,Battle_TickTwoStageSequence,func_thumb,,[provavel] StateMachine_DispatchStep(0x18 ou 0x1C); snd_sfx_request(0xD); 2 etapas
 0x08065A80,LinkMenu15Step2,func_thumb,,[LK2] [GH-LK2] passo 2 do menu 0x15 (espera de texto); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step2)
 0x08065A94,Menu15_Sub4_WaitAThenAdvance,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 0x15; provavel (antes: LinkMenu15_Step4)
@@ -3158,6 +3163,14 @@ address,name,kind,count,comment
 0x08071138,Anim_DisableAnim4IfIdle,func_thumb,,[FR1] if flag at DAT_0807115C+0x660 is 0: disable_anim4(0x19
 0x08071164,Anim_StageDispatch,func_thumb,,[provavel] animation stage dispatcher via jump table DAT_08071180
 0x08071304,Screen_TableStepTimedSetup,func_thumb,,[FR2] provável; passo de tabela com limite 0x19 e fx_screen_setup_b(4
+0x08071328,Screen_TableStepTimedSetup_JumpTable,data,,[JT4] tabela real de 26 ponteiros (indice = estado +8); JT4
+0x08071390,Screen_TableStepTimedSetup_Case0,label,,[JT4] setup inicial; JT4
+0x0807139C,Screen_TableStepTimedSetup_CaseAdvance,label,,[JT4] casos 4/8/12/16/20/24; JT4
+0x080713A2,Screen_TableStepTimedSetup_CaseWaitData,label,,[JT4] casos 1/5/9/13/17/21; JT4
+0x080713CC,Screen_TableStepTimedSetup_Case25,label,,[JT4] caso 25; JT4
+0x080713E2,Screen_TableStepTimedSetup_CaseTimer,label,,[JT4] casos 2/6/10/14/18; JT4
+0x080713F0,Screen_TableStepTimedSetup_Case22,label,,[JT4] caso 22 (gfx e paleta); JT4
+0x08071424,Screen_TableStepTimedSetup_CaseCall,label,,[JT4] casos 3/7/11/15/19/23; JT4
 0x08071460,Scene_InitObjectRenderSlots,func_thumb,,"[FR3] [FR3] inicializa slots de render de objeto e enable_anim4(0x18,0x3F,0xC) (provavel)"
 0x08071630,Dispatch_CallHandlerOrStartAnims,func_thumb,,[provavel] jumptable tabela DAT_0807164C se idx<8; senao enable_anim4 x3 e slot_start_v2 x2; tabela nao recuperada
 0x08071650,Dispatch_CallHandlerOrStartAnims_Table,data,,[JT2] [GH-JT2] 8 labels thumb (passos 0..7) indexados por fi+0x08 (word 0x03001808); impares = espera por 0x0803FB3C

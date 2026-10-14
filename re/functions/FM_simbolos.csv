@@ -1,0 +1,10 @@
+# address,name,kind,comment
+0x0805716C,FieldMenu_DispatchSubstate,func_thumb,"[FM] despachante do menu 2 de MainState1 (provavel); push lr; base 0x083D5FF4 + gamestate_subroutine*4; SEM funcao no Ghidra (nao renomeado no Ghidra)"
+0x0805718C,Overworld_InitChoiceMenuScreen,func_thumb,"[FM] menu de 4 linhas do mapa (corpo 0805718C-080573F3); sub 0 da tabela 0x083D5FF4; linha k ativa se Overworld_CheckStepAllowed(k)==1 (OW2)"
+0x08057440,Map_TickChoiceListOpen,func_thumb,"[FM] sub 1 da tabela 0x083D5FF4 (provavel); abre lista de escolha"
+0x083D5FF4,Overworld_ChoiceSubstateTable,table,"[FM] tabela de sub-estados do menu de escolha (base do despachante 0x0805716C): 0=Overworld_InitChoiceMenuScreen 0x0805718D; 1=0x08057441; 2=0x080574D5"
+0x083D2104,MainState1_MenuTable,table,"[FM] tabela de menus de MainState1 (menu 1 = mapa EventScript_RunCurrent; menu 2 = despachante 0x0805716D)"
+0x08050F80,Overworld_MapSubstateTable,table,"[FM] tabela de 5 sub-estados do mapa (byte 0x03005311); entradas 0x08050F94, 0x08051078, 0x080510C0, 0x0805134C, 0x08051368; handlers sem funcao no Ghidra"
+0x03005310,gMapSceneCtx,ram,"[FM] contexto da maquina de estados do mapa (literal de Overworld_UpdateMapSceneStateMachine); +1 = sub-estado"
+0x03005311,gMapSceneSubstate,ram,"[FM] byte de sub-estado do mapa (0..4): escrito em Overworld_UpdateMapSceneStateMachine e Overworld_WalkStepByDirection; nome provavel"
+0x08483594,MainState2_MenuTable,table,"[FM] tabela de menus de MainState2 (menu 4 = despachante da bolsa 0x0805CB50; confirmado em KI.md)"

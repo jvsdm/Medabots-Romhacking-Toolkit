@@ -2610,6 +2610,11 @@ F	0x080656DC	Obj_InitTimerRecord
 F	0x08065710	Anim_StepRecordCounter
 F	0x08065790	LinkMenu15Step0
 F	0x080657C4	Sm_StepSfxRepeat3
+L	0x08065870	Sm_StepSfxRepeat3_JumpTable
+L	0x08065888	Sm_StepSfxRepeat3_Case0
+L	0x080658DC	Sm_StepSfxRepeat3_Case1to3
+L	0x08065970	Sm_StepSfxRepeat3_Case4
+L	0x080659B0	Sm_StepSfxRepeat3_Case5
 F	0x08065A0C	Battle_TickTwoStageSequence
 F	0x08065A80	LinkMenu15Step2
 F	0x08065A94	Menu15_Sub4_WaitAThenAdvance
@@ -2792,6 +2797,14 @@ F	0x080710F4	Anim_StartSlotsIfNotDone
 F	0x08071138	Anim_DisableAnim4IfIdle
 F	0x08071164	Anim_StageDispatch
 F	0x08071304	Screen_TableStepTimedSetup
+L	0x08071328	Screen_TableStepTimedSetup_JumpTable
+L	0x08071390	Screen_TableStepTimedSetup_Case0
+L	0x0807139C	Screen_TableStepTimedSetup_CaseAdvance
+L	0x080713A2	Screen_TableStepTimedSetup_CaseWaitData
+L	0x080713CC	Screen_TableStepTimedSetup_Case25
+L	0x080713E2	Screen_TableStepTimedSetup_CaseTimer
+L	0x080713F0	Screen_TableStepTimedSetup_Case22
+L	0x08071424	Screen_TableStepTimedSetup_CaseCall
 F	0x08071460	Scene_InitObjectRenderSlots
 F	0x08071630	Dispatch_CallHandlerOrStartAnims
 L	0x08071650	Dispatch_CallHandlerOrStartAnims_Table
@@ -3492,6 +3505,11 @@ C	0x08050E6C
 C	0x08050F2A
 C	0x08050F38
 C	0x08050F40
+C	0x08050F94
+C	0x08051078
+C	0x080510C0
+C	0x0805134C
+C	0x080574D4
 C	0x0805C988
 C	0x0805E404
 C	0x0805EFD4
