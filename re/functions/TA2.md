@@ -184,6 +184,7 @@ não cobre escrita com registrador copiado por `mov` antes do `strb` nem `strb` 
 - Efeito real de cada variante/bit (gráfico, alvo, status em termos de dano): depende de consumidores acima; não confirmado em runtime.
 
 ## 6. TABELA técnica 0..59 -> o que muda (TQ.md + leitores de B+0xA8)
+> **(ver QA4)** Hipótese confirmada: opcodes 0x40..0x6A só existem nos roteiros de Medaforce (0x50+id). Os valores lidos de B+0xA8 (4..40) são ids de Medaforce, não técnicas de peça. Veja QA4.md §4 para a tabela corrigida.
 
 Colunas: setup/alvo (TQ §4); efeito de estado/variante/passo (TA2 deste arquivo); "—" = sem leitor de B+0xA8 neste
 conjunto (efeito vem só do roteiro/opcodes, TQ2). **Confirmado** = lido em asm/decompile; **provável** = por nome ou

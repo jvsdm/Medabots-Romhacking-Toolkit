@@ -4,6 +4,7 @@ Updated 2026-10-13. **Current focus: discovery and documentation of ROM function
 (`pc/game/src/script.lua`) is paused by the user's choice; don't start it without being asked.
 
 ## How to resume (read in this order)
+0. **`INDEX.md`**: map of all the docs by subsystem + the big open issues (2026-10-14).
 1. This file.
 2. `re/functions/README.md`: .md/.csv format, Ghidra tips, English naming `Subsystem_VerbObject`.
 3. `re/functions/H.md`: the battle dispatchers (Fight_DispatchOnSubstateAA_*).
