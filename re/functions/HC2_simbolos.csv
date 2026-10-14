@@ -1,0 +1,12 @@
+# address,name,kind,comment
+0x0804E464,Event_Op1E_Cont_FlickerNpc,func_thumb,Continuacao 0x1E: Map_TickObjectFlicker(render) ate frames=0; depois Event_EndOpcode. Confianca confirmado.
+0x0804E480,Event_Op1F_Cont_InitiateMovingActorA,func_thumb,Continuacao 0x1F: chama Event_RunInitiateMovingActorSequence (spawn + passo, fase E+0xC93). Confianca confirmado.
+0x0804E48C,Event_Op20_Cont_InitiateMovingActorB,func_thumb,Continuacao 0x20: mesmo corpo da 0x1F (chama 0x0804E498). Confianca confirmado.
+0x0804E51C,Event_Op23_Cont_MoveActorA,func_thumb,Continuacao 0x23: Map_StartObjectStep(render, move) e espera Map_TickObjectStep; depois Event_EndOpcode. Confianca confirmado.
+0x0804E528,Event_Op24_Cont_MoveActorB,func_thumb,Continuacao 0x24: mesmo corpo da 0x23 (chama 0x0804E534). Confianca confirmado.
+0x0804E5A8,Event_Op27_Cont_ActorDoAnimation,func_thumb,Continuacao 0x27: Map_ObjectAnimStep() ate devolver 1; depois Event_EndOpcode. Confianca confirmado.
+0x0804E5BC,Event_Op28_Cont_HopActor,func_thumb,Continuacao 0x28: Map_ObjectArcStep ate devolver 1 (16 passos); depois Event_EndOpcode. Confianca confirmado.
+0x0804E5D0,Event_Op29_Cont_MoveAllTrackedActorsA,func_thumb,Continuacao 0x29: Event_RunAllTrackedActorsStepSequence(flag A=0, modo 1). Fim no primeiro ator que termina (disasm). Confianca confirmado.
+0x0804E5E0,Event_Op2A_Cont_MoveAllTrackedActorsB,func_thumb,Continuacao 0x2A: igual 0x29 com flag B=1. Confianca confirmado.
+0x0804E7DC,Event_Op2E_Cont_NoOp,func_thumb,Continuacao 0x2E: so bx lr. Confianca confirmado.
+0x0804E7E0,Event_Op2F_Cont_NoOp,func_thumb,Continuacao 0x2F: so bx lr. Confianca confirmado.
