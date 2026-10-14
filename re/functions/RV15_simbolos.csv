@@ -1,0 +1,61 @@
+# address,name,kind,comment
+0x0804C648,Event_Op36_GetItem,func_thumb,"confirmado: le 2 bytes (id,qtd), marca slot 0->1 (setup)"
+0x0804C678,Event_Op37_LoseItem,func_thumb,"provavel: le 2 bytes, marca slot=1 igual Op36; nome descreve o opcode, efeito de perda nao aparece aqui (setup)"
+0x0804C6A8,Event_Op38_GetPart,func_thumb,"confirmado: le 3 bytes (bot,part,qtd), marca flag=1 (setup)"
+0x0804C6C8,Event_Op39_LosePart,func_thumb,"provavel: le 3 bytes, marca flag=1; corpo identico a Op38 GetPart (setup; perda nao aparece aqui)"
+0x0804C6E8,Event_Op3A_GetMoney,func_thumb,"provavel: le 2 bytes, marca flag=1 (setup)"
+0x0804C708,Event_Op3B_LoseMoney,func_thumb,"provavel: le 2 bytes, marca flag=1; corpo identico a Op3A (setup)"
+0x0804C728,Event_Op3C_GetMedal,func_thumb,"confirmado: le 1 byte guardado no slot de medalha, marca flag=1 (setup)"
+0x0804C750,Event_Op3D_GetTinpet,func_thumb,"provavel: le 1 byte guardado, marca flag=1 (setup)"
+0x0804C928,Event_Op42_NoOp,func_thumb,confirmado: corpo vazio (return)
+0x0804C9A0,Event_Op48_Play_Persistent_Music,func_thumb,"confirmado: le 1 byte (faixa) guardado; SND_PolicyRequest(3, faixa)"
+0x0804C9C4,Event_Op49_Play_Map_Music,func_thumb,"provavel: SND_PolicyRequest(4,0), sem argumento de faixa"
+0x0804CB94,Event_Op4F_Jump_If_Previous_Scene_Command_Failed,func_thumb,"provavel: copia ponteiro de script, le 1 byte; se estado+0x39 == 2 aplica salto (offset); significado de 2 = falha a confirmar"
+0x0804CC5C,Event_Op51_Jump_If_Found_Part_Index_Not_Equal,func_thumb,provavel: le 2 bytes; compara (byte - 0x46) com outro byte do bloco; se diferente aplica salto
+0x0804CCAC,Event_Op52_Random_Jump,func_thumb,confirmado: le 2 bytes; Random_NextScaled(0xff)&0xF != 0 aplica salto (1/16 nao salta)
+0x0804CCF4,Event_Op53_Set_Map_Sprite_Slot,func_thumb,"confirmado: le 2 bytes, grava byte no slot de sprite, chama Map_LoadOverworldSpriteGraphicsForCurrentMap; depois paleta conforme modo"
+0x0804CD60,Event_Op54_NoOp,func_thumb,confirmado: corpo vazio
+0x0804CD64,Event_Op55_NoOp,func_thumb,confirmado: corpo vazio
+0x0804CD68,Event_Op56_Load_Entities,func_thumb,"provavel: marca flag=1 (pedido de carga de entidades, executado em outro ponto)"
+0x0804CD7C,Event_Op57_NoOp,func_thumb,confirmado: corpo vazio
+0x0804CD80,Event_Op58_NoOp,func_thumb,confirmado: corpo vazio
+0x0804CD84,Event_Op59_Open_Shop,func_thumb,"provavel: le 1 byte, marca flag=1 (pedido de loja; abertura real em outro ponto)"
+0x0804CDA4,Event_Op5A_Set_Secondary_Marker_Facing,func_thumb,"confirmado: le 1 byte, grava em 2 campos, anima objeto 0x30 por facing e chama Map_SetSecondaryMarkerFacing"
+0x0804CE04,Event_Op5B_Jump_If_Fewer_Than_Three_Complete_Part_Sets,func_thumb,provavel: le 1 byte; Team_CountSlotsWithStatus3() < 3 aplica salto; 'conjunto completo' depende do significado de status 3
+0x0804CE44,Event_Op5C_Jump_If_Missing_Complete_Monochrome_Part_Set,func_thumb,confirmado: le 2 bytes; PartSet_HasCompleteMonochromeEntry()==0 aplica salto
+0x0804CE90,Event_Op5D_Update_Overworld_Event_Mode_Flags,func_thumb,confirmado: le 1 byte; bit7 =0 grava nibble baixo; bit7=1 mexe no bit5 de dois campos conforme nibble==1
+0x0804CEF8,Event_Op5E_Set_Overworld_Event_Mode_Bit0,func_thumb,"confirmado: le 1 byte, guarda; se ==1 seta bit0 de um campo, senao limpa bit0 de outro"
+0x0804CF40,Event_Op5F_Set_Random_Encounter_Mode_Flags,func_thumb,provavel: le 1 byte e grava num campo; 'random encounter' vem so do nome do campo
+0x0804CF5C,Event_Op60_Focus_Event_Object,func_thumb,confirmado: le 3 bytes; resolve slot do ator (tabela de tracked actors ou Table64) e chama Map_FocusEventObjectRenderSlot
+0x0804D00C,Event_Op61_Restore_Focused_Event_Mode_Flags,func_thumb,confirmado: chama Map_RestoreFocusedEventModeFlags
+0x0804D018,Event_Op62_Equip_Starter_Parts,func_thumb,"provavel: so chama Bot_InitStarterRecord; nome fala em pecas, callee fala em registro do bot"
+0x0804D024,Event_Op63_Show_Effect,func_thumb,"provavel: le 3 bytes, Overworld_BeginUiSceneState(coords de tela) e marca flag=1; nome generico (efeito/cena UI)"
+0x0804D084,Event_Op64_Reset_Overworld_UI_Render_State,func_thumb,confirmado: chama Overworld_ResetUiRenderState
+0x0804D090,Event_Op65_NoOp,func_thumb,confirmado: corpo vazio
+0x0804D094,Event_Op66_Animate_Tracked_Object_Transition,func_thumb,"provavel: le 2 bytes; slot do ator rastreado -> estado 'O'+slot, zera campo de anim, marca flag=1"
+0x0804D0E0,Event_Op67_Skip_Two_Bytes_Wait,func_thumb,provavel: le 2 bytes (pula args) e marca flag=1 de espera
+0x0804D100,Event_Op68_Clear_Collision_For_Packed_Object,func_thumb,"confirmado: le 2 bytes; se campo packed bate com chave, set_collision(x,y,0)"
+0x0804D158,Event_Op69_Set_Map_Scene_Variant,func_thumb,"confirmado: le 2 bytes; inverte bit 0 da variante, Map_ApplySceneVariantScrollPreset, copia buffers conforme variante"
+0x0804D204,Event_Op6A_NoOp,func_thumb,confirmado: corpo vazio
+0x0804D208,Event_Op6B_Set_Current_Chapter,func_thumb,confirmado: le 1 byte e grava no campo de capitulo
+0x0804D224,Event_Op6C_Initiate_Moving_Actor_C,func_thumb,"provavel: le 5 bytes; aloca slot livre de objeto rastreado, associa ao ator, estado 'O'+slot, marca flag"
+0x0804D270,Event_Op6D_Move_Actor_D,func_thumb,"provavel: le 2 bytes; estado 'O'+slot do ator rastreado, marca flag (sem alocar slot)"
+0x0804D2A8,Event_Op6E_Initiate_Moving_Actor_D,func_thumb,"provavel: mesmo corpo de Op6C (5 bytes, slot livre), so globais diferentes"
+0x0804D2F4,Event_Op6F_Move_Actor_E,func_thumb,"provavel: mesmo corpo de Op6D (2 bytes), so globais diferentes"
+0x0804D32C,Event_Op70_Run_Scene_Command_13,func_thumb,"provavel: so marca flag=1; nome por indice do comando de cena, efeito real no despachante"
+0x0804D340,Event_Op71_Run_Scene_Command_00,func_thumb,provavel: so marca flag=1; nome por indice do comando de cena
+0x0804D354,Event_Op72_Run_Scene_Command_02,func_thumb,provavel: so marca flag=1; nome por indice
+0x0804D368,Event_Op73_Run_Scene_Command_08,func_thumb,provavel: so marca flag=1; nome por indice
+0x0804D37C,Event_Op74_Reserved_NoOp,func_thumb,confirmado: corpo vazio (reservado)
+0x0804D384,Event_Op76_Start_Medabot_Link,func_thumb,"provavel: so marca flag=1; sem logica de link no corpo (pedido, executado em outro ponto)"
+0x0804D39C,Event_Op78_Run_Scene_Command_10_If_At_Least_Three_Complete_Part_Sets,func_thumb,"confirmado: le 2 bytes; grava byte; Team_CountSlotsWithStatus3()<3 salta, senao marca flag (cmd 10)"
+0x0804D400,Event_Op79_Run_Scene_Command_12,func_thumb,provavel: le 1 byte para campo+1 e marca flag; nome por indice
+0x0804D424,Event_Op7A_Run_Scene_Command_11,func_thumb,provavel: so marca flag=1; nome por indice
+0x0804D438,Event_Op7B_Jump_If_No_Spare_Part,func_thumb,provavel: le 3 bytes; Inv_ReadCounter16 byte alto ==0 aplica salto; 'peca reserva' so pelo contador
+0x0804D48C,Event_Op7C_Reserved_NoOp,func_thumb,confirmado: corpo vazio (reservado)
+0x0804D4AC,Event_Op7E_Move_All_Tracked_Actors_C,func_thumb,"provavel: nome do opcode (C#/Toolkit) mantido; o handler primario so le args e liga pedido, o efeito fica na continuacao (HC). Revertido pelo Opus."
+0x0804D4D4,Event_Op7F_Store_Byte_Set_Flag,func_thumb,confirmado: le 1 byte para campo e marca flag (antes: Event_Op7F)
+0x0804D4FC,Event_Op80_Begin_Batched_Object_Command_Block,func_thumb,"confirmado: zera buffers do bloco em lote, le byte e despacha via tabela (CallViaR0)"
+0x0804D580,Event_Op81_Queue_Batched_Object_Command,func_thumb,"confirmado: le 8 bytes para o buffer do lote, le opcode e despacha via tabela (CallViaR0)"
+0x0804D5DC,Event_Op82_Execute_Batched_Object_Command_Block,func_thumb,provavel: so marca flag=1 (executa o lote em outro ponto)
+0x0804D5F0,Event_Op83_Set_Object_Render_Mode,func_thumb,"provavel: le 2 bytes; despacha por mascara (0x10/0x40/0x20) para Map_SetTrackedObjectTileAttr, Map_SetObjectAttrBits10 ou Map_*Field0B"

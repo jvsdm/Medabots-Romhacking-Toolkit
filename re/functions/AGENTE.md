@@ -34,3 +34,7 @@ Save_, Text_). Prefixos de batalha: `Fight_DispatchOnSubstateAA_<Desp>_<Passo>_<
 
 ## Relatório final (curto, ≤15 linhas)
 Quantos feitos, quantos renomeados, divergências com nomes antigos, o que ficou aberto.
+
+## Opcodes de evento (Event_OpXX)
+O handler primário só lê argumentos e liga um pedido/flag; o efeito real fica na continuação (tabela HC
+0x083D2630). Não renomeie Event_OpXX pelo corpo do primário: mantenha o nome do opcode e anote no comentário.

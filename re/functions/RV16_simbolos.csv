@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x0804D758,Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up,func_thumb,"provavel: nome do opcode (C#/Toolkit) mantido; o handler primario so le args e liga pedido, o efeito fica na continuacao (HC). Revertido pelo Opus."
+0x0804D778,Event_Op85_Begin_Event_Object_Facing_Cycle_Block,func_thumb,confirmado zera contador +0x52 e 3 blocos de slots
+0x0804D7AC,Event_Op86_Queue_Event_Object_Facing_Cycle,func_thumb,confirmado le 8 bytes e copia para slot indexado pelo contador; incrementa
+0x0804D7E4,Event_Op87_Execute_Event_Object_Facing_Cycle_Block,func_thumb,provavel seta byte de flag=1 (dispara o bloco de ciclo)
+0x0804D7F8,Event_Op88_Jump_If_Flag_C76_Clear,func_thumb,provavel le 2 bytes e soma offset relativo ao ponteiro se byte de flag==0; flag C76 vem do nome
+0x0804D83C,EventScript_ReadNextByte,func_thumb,confirmado le 1 byte do script com avanco do ponteiro (banco 0x4000)
+0x0804D8CC,Script_ReadBytes,func_thumb,confirmado le N bytes via EventScript_ReadNextByte para buffer
+0x0804D8F4,Table64_FindIndexByKey,func_thumb,confirmado busca chave em 64 entradas de 8 bytes; retorna indice ou 0xFFFFFFFF
+0x0804D938,Table64_FindOffsetByKey,func_thumb,confirmado mesma busca mas retorna offset da entrada; 0 se nao achar
+0x0804D980,Map_ClearActiveObjectEntry,func_thumb,confirmado limpa colisao do tile; reseta 2 slots de render se bit 0x40; zera 8 bytes
+0x0804D9F8,Map_FocusEventObjectRenderSlot,func_thumb,provavel copia slot 0x40 B; reseta slots 0x30/0x5A; posiciona e anima objeto focado (corpo longo)
+0x0804DB80,Map_RestoreFocusedEventModeFlags,func_thumb,provavel reseta slots 0x30/0x5A; zera flag e restaura byte salvo (modo)
+0x0804DBB4,Map_ClearTrackedObjectSlotByIndex,func_thumb,confirmado zera byte do slot rastreado pelo indice
+0x0804DBD0,Event_SetTrackedActorSlot,func_thumb,confirmado grava valor+1 no slot rastreado do ator
+0x0804DBF0,Event_GetTrackedActorSlot,func_thumb,confirmado retorna valor do slot-1
+0x0804DC34,Event_Op00_Cont_NoOp,func_thumb,confirmado corpo vazio (retorno)
+0x0804DC38,Event_Op01_Cont_ShowMessageA,func_thumb,provavel fase 0 monta params de mensagem e limpa menu; fase 1 despacha objeto de dois estagios
+0x0804DCF8,Event_Op02_Cont_Finish,func_thumb,confirmado chama Event_EndOpcode
+0x0804DD04,Event_Op03_Cont_CloseMessageBox,func_thumb,provavel despacha StateMachine_DispatchSub e encerra quando retorna !=0
+0x0804DD18,Event_Op04_Cont_WaitFrames,func_thumb,confirmado decrementa contador de frames; encerra em zero
+0x0804DD3C,EventOpcode05_WaitForButtonPress,func_thumb,confirmado encerra quando bit A ou Start esta pressionado
+0x0804DD5C,Event_Op07_Cont_FadeToBlack,func_thumb,provavel roda transicao de tela com param 0; corpo identico ao Op08 (direcao nao aparece aqui)
+0x0804DD70,Event_Op08_Cont_FadeFromBlack,func_thumb,provavel roda transicao de tela com param 0; corpo identico ao Op07
+0x0804DD84,EventOpcode09_FadeToWhite,func_thumb,provavel transicao com parametro constante (DAT_0804dd98)
+0x0804DD9C,EventOpcode0A_FadeFromWhite,func_thumb,provavel transicao com outro parametro constante (DAT_0804ddb0)
+0x0804DDB4,Event_Op0B_Cont_WarpA_LoadScene,func_thumb,provavel chama Map_LoadCurrentSceneResources; identico ao Op0C
+0x0804DDC0,Event_Op0C_Cont_WarpB_LoadScene,func_thumb,provavel chama Map_LoadCurrentSceneResources; identico ao Op0B
+0x0804DDCC,Map_LoadCurrentSceneResources,func_thumb,confirmado carrega paletas; camadas; sprites do jogador e encerra opcode
+0x0804DE74,EventOpcode0E_PlayerHopInPlace,func_thumb,confirmado pulo vertical do jogador em 16 passos sem mudar direcao
+0x0804DF40,EventOpcode0F_PlayerHopInDirection,func_thumb,confirmado pulo do jogador na direcao lida do byte de estado (4 direcoes)
+0x0804E134,EventOpcode10_MovePlayer,func_thumb,confirmado fase 0 roda passos do jogador; fase 1 restaura 8 bytes e encerra
+0x0804E370,Event_Cont11_ChangePlayerCostume,func_thumb,confirmado troca indice de sprite do jogador; recarrega graficos e pose
+0x0804E43C,Event_Op1A_Cont_NpcDoAnimation,func_thumb,confirmado wrapper de Map_ObjectAnimStep
+0x0804E450,Event_Op1D_Cont_HopEventNpc,func_thumb,confirmado wrapper de Map_ObjectArcStep (pulo em arco)
+0x0804E464,Event_Op1E_Cont_FlickerNpc,func_thumb,confirmado wrapper de Map_TickObjectFlicker
+0x0804E480,Event_Op1F_Cont_InitiateMovingActorA,func_thumb,confirmado wrapper de Event_RunInitiateMovingActorSequence
+0x0804E48C,Event_Op20_Cont_InitiateMovingActorB,func_thumb,provavel identico ao Op1F (so despacho diferente)
+0x0804E498,Event_RunInitiateMovingActorSequence,func_thumb,confirmado fase 0 spawna ator rastreado no tile e inicia passo; fase 1 espera fim
+0x0804E51C,Event_Op23_Cont_MoveActorA,func_thumb,confirmado wrapper de Event_RunActorStepSequence
+0x0804E528,Event_Op24_Cont_MoveActorB,func_thumb,provavel identico ao Op23 (so despacho diferente)
+0x0804E534,Event_RunActorStepSequence,func_thumb,confirmado fase 0 inicia passo do ator; fase 1 espera Map_TickObjectStep
+0x0804E58C,EventOpcode26_FlickerActor,func_thumb,confirmado Map_TickObjectFlicker sobre slot de ator; encerra quando retorna !=0
+0x0804E5A8,Event_Op27_Cont_ActorDoAnimation,func_thumb,confirmado wrapper de Map_ObjectAnimStep
+0x0804E5BC,Event_Op28_Cont_HopActor,func_thumb,confirmado wrapper de Map_ObjectArcStep
+0x0804E5D0,Event_Op29_Cont_MoveAllTrackedActorsA,func_thumb,confirmado wrapper de RunAllTrackedActorsStepSequence(0;1)
+0x0804E5E0,Event_Op2A_Cont_MoveAllTrackedActorsB,func_thumb,confirmado wrapper de RunAllTrackedActorsStepSequence(1;1)
+0x0804E5F0,Event_RunAllTrackedActorsStepSequence,func_thumb,confirmado fase 0 inicia passo em todos os 4 atores rastreados; fase 1 espera todos
+0x0804E700,Event_Op2B_Cont_SpawnAndStepActor,func_thumb,confirmado spawna ator rastreado no tile; inicia passo e espera fim
+0x0804E784,Event_Op2D_Cont_StepActor,func_thumb,confirmado inicia passo do ator e espera Map_TickObjectStep
+0x0804E7DC,Event_Op2E_Cont_NoOp,func_thumb,confirmado corpo vazio
+0x0804E7E0,Event_Op2F_Cont_NoOp,func_thumb,confirmado corpo vazio
+0x0804E7E4,Event_Op30_Cont_NoOp,func_thumb,confirmado corpo vazio
+0x0804E7E8,Event_Op31_Cont_YesOrNoBox,func_thumb,provavel setup de layers (param 0); espera escolha via Fx_StateMachine_Dispatch3 e encerra no sub-dispatch
+0x0804E860,Event_Op32_Cont_NoOrYesBox,func_thumb,provavel mesma estrutura do Op31 com setup param 1 (cursor inicial distinto)
+0x0804E8C4,EventOpcode33_StartBattle_Continuation,func_thumb,provavel roda Event_RunSceneCommandSequence(0x20) e guarda resultado 1/2 no byte +0x39; nao chama batalha direto
+0x0804E928,Event_Op36_Cont_GetItem,func_thumb,confirmado soma item no inventario (clamp 99); mostra nome e quantidade; mensagem de cheio se 99
+0x0804EA18,EventOpcode37_LoseItem,func_thumb,confirmado subtrai item do inventario; mensagem de nome/quantidade; ramo sem item
+0x0804EB0C,EventOpcode38_GetPart,func_thumb,confirmado mesmo fluxo do Op36 para pecas (GetPartName; clamp 99)
+0x0804EC38,EventOpcode39_LosePart,func_thumb,confirmado mesmo fluxo do Op37 para pecas (GetPartName; subtrai)
+0x0804ED88,EventOpcode3A_GetMoney,func_thumb,confirmado soma valor*10 ao dinheiro (AddClampedCounter); mostra quantia

@@ -104,7 +104,7 @@ address,name,kind,count,comment
 0x03000651,battle_robot_1_current_medaforce,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000659,battle_bot0_status_C9,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_status_effect)"
 0x0300065F,battle_bot0_protect_mask_CF,label,,"[SS2] bot+0xCF mascara de protecao: 01 Bug/Virus, 08 Freeze, 02 Hold, 04 Fire (C, SS2 secao 1)"
-0x03000666,battle_robot_1_form,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000666,gFightBot0Flags_D6,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_form)"
 0x0300066D,battle_bot0_chosen_part_DD,label,,"[SS2] bot+0xDD peca escolhida 1..3 (DF.md, Fight_SelectActionSource) (C, SS2)"
 0x0300066E,battle_bot0_part_icon_DE,label,,"[SS2] bot+0xDE indice 1-based da peca do icone de status; escritor nao achado (A, SS2)"
 0x0300066F,battle_bot0_part_icon_type_DF,label,,"[SS2] bot+0xDF tipo de acao/tecnica do icone de peca (C, SS2)"
@@ -112,34 +112,34 @@ address,name,kind,count,comment
 0x03000B90,gLinkLocalSlotIndex,label,,[MN] [MN] byte: indice do slot local usado no teste de reset por link (0 -> le halfword em +8 e +0xC conforme); provavel
 0x03000B94,SAVE_OPT_C,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b3-4 (validado <3; nome nao confirmado)
 0x03000BE0,gMedalRecords_RAM,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleMedalStateRecord[30][1920] (antes: gBattleMedalStateTable) (antes: gPartRoster_BuildRecords)"
-0x03000BE1,first_medal_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000BE4,first_medal_attribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000BE5,first_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000BE6,first_medal_aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000BE7,first_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000BE1,gMedalRecord_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_Id)"
+0x03000BE4,gMedalRecord_Attribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_attribute)"
+0x03000BE5,gMedalRecord_Level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_level)"
+0x03000BE6,gMedalRecord_Aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_aim)"
+0x03000BE7,gMedalRecord_Compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_compatibility)"
 0x03000BEA,object_slot_records,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_name) [DB] GH-DB provavel: base dos registros de objeto (0x40 por slot) gravados por Debug_PartsSpawnScreen"
 0x03001360,SAVE_OPT_B,data,,[A6] flag (byte) lido em Fight_TryUiActionByIndex; 0 = pode disparar; confirmado (literal) (antes: gMessageBusyFlag)
 0x0300137C,gMainSubStateCounter,label,,"passo interno da cena atual (debug: 0 init, 1 menu, 2 sai, 3 opcao); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: gamestate_subroutine) [RW] GH-RW: contador/estado de fluxo; zerado e setado pela recompensa (0x3E) e pelo flow 0x20 (nome provavel, nao confirmado)"
-0x03001780,gFrameCount,label,,contador de frames (AgbMain)
+0x03001780,gFrameCount,label,,contador de frames (AgbMain) [RM2] confirmado: escrito em AgbMain
 0x03001784,SAVE_FLAGS,data,,[SV] [SV] bit0 = salvando (ligado antes de salvar); bit1 = opcao salva em 0x1CB8 b5 (confirmado)
 0x03001788,SAVE_OPT_A,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b0-1 (validado <3; nome nao confirmado)
 0x0300178C,gMainState,label,,"indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state [RW] GH-RW: zerado pelo flow 0x20 (nome provavel, ja usado no debug)"
 0x03001790,keys_prev,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: pressed_buttons) [MN] [MN] u16: teclas do quadro anterior; confirmado (get_player_inputs)"
-0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798)"
+0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798) [RM2] provavel: escrito em get_player_inputs; conceito parecido com gKeysHeld 0x03002B64 (checar duplicata)"
 0x030017A0,team_records_9x8,label,,"[PS] [PS] time: 9 registros de 8 B [estado, genero, medalha, cabeca, braco D, braco E, pernas, indice]; confirmado pela troca"
 0x030017F0,gCtx_VBlankCallback,label,,"[BI] BI: callback de um quadro, chamado no VBlank e reposto ao padrão. Escrito por G03 (0x08043E49), J02 (0x08044101), SceneStep53 (nop). Confirmado (leitura pelo VBlank)."
 0x03001800,fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information) (antes: fight_information_template) (antes: gFightInformation)"
-0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM2] confirmado: contador de loop em Fight_CreateBotPartEntrySprites (fight_information+2)"
+0x03001804,gFightBot0PartIds,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: bot_one_in_fight_information)"
+0x03001806,gFightBot0PartId_Slot2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: bot_1_head)"
 0x03001808,gFight_StepSceneIndex,label,,[FI] u32 indice de passo de cena (JT2) provavel
 0x03001828,fight_scout_bonus_table_0x28,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: team_1_scout_score) (antes: gFight_TeamSupportRecord) (antes: fight_support_record_0x28)"
 0x0300182A,gFight_TargetDamageRecord,label,,[FI] registro 8B x N (+0x89) provavel
-0x0300182B,team_1_trap,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x0300182C,team_1_trap_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x0300182B,team_1_trap,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM2] chute: lido em varios dispatchers de falha/slot; sem efeito visto"
+0x0300182C,team_1_trap_value,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM2] chute: par de team_1_trap"
 0x03001838,gFight_GfxIndex,label,,[FI] indice gfx tabela 0x083B2628 provavel
 0x03001840,gFight_GfxHalfword,label,,[FI] halfword gfx provavel
-0x03001851,gFight_EffectMode,label,,[FI] modo de efeito 0..3 (HA4 S_0) conf
+0x03001851,gTeamPickCounter,label,,[FI] modo de efeito 0..3 (HA4 S_0) conf (antes: gFight_EffectMode)
 0x03001852,gFight_PartModeCopy,label,,[FI] copia do byte +0x49 da peca provavel
 0x03001853,gFight_SideBPhase,label,,[FI] fase do lado B provavel
 0x03001855,gFight_SecondaryPhaseMask,label,,[FI] bitmask fase secundaria provavel
@@ -149,12 +149,12 @@ address,name,kind,count,comment
 0x0300185C,gFight_ActionBot,label,,[FI] bot da acao provavel
 0x0300185D,gFight_ActionPartMinus1,label,,[FI] peca-1 da acao provavel
 0x0300185E,gFight_TargetSlotPlus1,label,,[FI] alvo+1 provavel
-0x03001860,gFight_OpponentSideBase,label,,[FI] lado base do alvo (0/3) conf
+0x03001860,gFight_OpponentSideBase,label,,[FI] lado base do alvo (0/3) conf [RM2] provavel: passado como ponteiro (PARAM) em FightPreview_LoadDisplayedPartIdsForSide e Fight_CreateBotCompositeSprites
 0x03001861,gFight_TargetCandidates,label,,[FI] 3 candidatos de slot provavel
-0x03001864,team_preview_part_ids,label,,"[PS] [PS] 4 ids da previa do Medabot selecionado (cabeca, braco D, braco E, pernas)"
-0x03001882,DPAD_press,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03001887,gFight_ActiveBot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: robot_doing_an_action)"
-0x03001888,gFight_TargetBot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: index_of_targetted_robot)"
+0x03001864,team_preview_part_ids,label,,"[PS] [PS] 4 ids da previa do Medabot selecionado (cabeca, braco D, braco E, pernas) [RM2] confirmado: lido em FightPreview_LoadDisplayedPartIdsForSide"
+0x03001882,DPAD_press,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RM2] chute: lido em Fight_DrawSelectedActionStatusText e Fight_DrawKindIconAndLabel"
+0x03001887,gFight_ActiveBot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: robot_doing_an_action) [RM2] provavel: lido em Fight_PickBotActionStep e FightPreview"
+0x03001888,gFight_TargetBot,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: index_of_targetted_robot) [RM2] provavel: lido em Fight_DispatchOnSubstateAA_U_0B_ClearTargetStatus"
 0x03001889,fight_phase_index,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: attacking_team) (antes: gFight_TargetSlotIndex)"
 0x0300188A,gFight_TeamRecordBranch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: defending_team) [FI] ramo do registro do time provavel"
 0x0300188B,gFight_ChosenPart,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: targetted_bodypart) [FI] peca escolhida 0..3 provavel"
@@ -266,30 +266,30 @@ address,name,kind,count,comment
 0x03006417,gRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] [RM3] provavel; indice lido e gravado em Random_NextScaled 0x08049790"
 0x03006428,gMapCameraScrollX,data,,[MP2] base+0xC48: deslocamento X de centralizacao (px) (antes: gMapCameraClampX) [RM3] confirmado (antes: gMapCameraClampX); posicao X da camera lida em Map_GetCameraScrollX e gravada em Map_CenterCameraForSmallMaps
 0x0300642A,gMapCameraScrollY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gEventFlagList_selectedEncounterBattleId) (antes: gMapCameraClampY) [RM3] confirmado (antes: gMapCameraClampY); posicao Y da camera lida em Map_GetCameraScrollY e gravada em Map_CenterCameraForSmallMaps"
-0x03006432,ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x03006434,ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x03006436,gPlayerTileX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_tile_x)"
-0x03006437,gPlayerTileY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gOverworldFacingDirection)"
-0x03006438,ikki_walk_cooldown,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03006439,ikki_look_dir,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006432,gPlayerPixelX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: ikki_x)"
+0x03006434,gPlayerPixelY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: ikki_y)"
+0x03006436,gPlayerTileX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_tile_x) [RM3] confirmado; tile X lido em Map_CheckWalkOverTrigger e Map_ClampCameraToLoadedMap; gravado em Overworld_UpdateMapSceneStateMachine"
+0x03006437,gPlayerTileY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gOverworldFacingDirection) [RM3] confirmado; tile Y gravado em Overworld_WalkStepByDirection e Overworld_ProcessDirectionInput"
+0x03006438,gPlayerWalkCooldown,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_walk_cooldown)"
+0x03006439,gPlayerQueuedDirection,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_look_dir)"
 0x0300643B,gCurrentMapSceneVariant,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643C,gMapPlayerWalkState,data,,"[KI] [KI] E+0xC5C: modo do uso de key item (3,4,5,8,6,7,0x0D); indice em 0x083D2A30 (Move_Player, HE1) (antes: KeyItem_ModeByte)"
 0x0300643D,gOverworldEventModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643E,gOverworldEventModeFlagsBackup,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643F,gEncounterSuppressB,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável) (antes: gEventRunSceneStepFlag)
 0x03006440,gEvt_MapObjIndexSaved,label,,[FI2] E+0xC60 indice guardado pelo Op4C e lido pelo Op51 confirmado (HE3_simbolos)
-0x03006447,gLoadFacingSource,data,,[OW] RAM: facing inicial lido no load
+0x03006447,gPlayerFacingDir,data,,[OW] RAM: facing inicial lido no load (antes: gLoadFacingSource)
 0x03006449,gMapSecondaryWalkState,data,,[VA2] [VA2] E+0xC69: gravado pelo opcode 0x11 (mesmo valor de C5C e C28); lido por Overworld_UpdateSecondaryActorAnim
-0x0300644E,str_ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x03006450,str_ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x0300644E,gSecondaryMarkerScreenX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_x)"
+0x03006450,gSecondaryMarkerScreenY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: str_ikki_y)"
 0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006468,gCurrentEventPendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventPendingFlag) [FI2] E+0xC88 evento rodando (!=0) confirmado (EV) (antes: gEvt_PendingFlag)"
 0x03006469,gEventPendingByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventStateByte) [LK] [GH-LK] byte pendente do evento (E+0xC89); escrito com 1 pelo evento 0x76; confirmado"
 0x0300646A,gEvt_ContinuationCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gCurrentEventScriptCursor) [FI] cursor continuacao provavel"
 0x0300646C,gEvt_SavedCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: gCurrentEventAuxWord646C) [FI2] E+0xC8C cursor salvo (copia de C8A) base dos saltos confirmado (decompile Op31)"
 0x0300646E,gEvt_EventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2] (antes: gCurrentEventId) [FI2] E+0xC8E id do evento atual u16 confirmado (EV)"
-0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
-0x03006472,gEvt_ContinuationIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeByte)"
+0x03006470,gCurrentEventIdMirror,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2] [RM3] provavel; gravado por Map_CheckWalkOverTrigger e Map_CheckFacingEventTriggerAhead; lido em Event_DispatchContinuation"
+0x03006472,gEvt_ContinuationIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeByte) [RM3] provavel; lido em Event_DispatchContinuation; gravado em Event_Op80/Op81 (lotes de comando de objeto)"
 0x03006473,gEvt_SubState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventOpcodeSubstate) (antes: gCurrentEventSubstate)"
 0x03006474,gEventScriptArguments,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gEventScriptArguments) (antes: gEvt_Args)"
 0x03006484,gTrackedActorSlotTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[32][32] (antes: gTrackedObjectSlotTable) [CU] 16 bytes: byte[id] = slot+1 (0 = vago); E+0xCA4; zerada no opcode 0x06 End (GH-CU confirmado)"
@@ -319,7 +319,7 @@ address,name,kind,count,comment
 0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03006D38,gWalkSpeedBlock,data,,[OW2] literal 0x03006D38 em Map_GetScaledStepDelta; bloco de velocidade
 0x03006D3A,gWalkSpeedMul,data,,[OW] RAM byte: multiplicador do passo (provavel corrida)
-0x03006D3E,gObjectPoseBaseByte,data,,[CU2] CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado
+0x03006D3E,gEquippedLegPartByte,data,,[CU2] CU2: byte lido por Map_PoseIdToTileIndex (base do indice); conteudo nao dumpado (antes: gObjectPoseBaseByte)
 0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006F74,gKeyItemBagCursorPtr,label,,"[IN3] [IN3] ponteiro para struct do cursor da bolsa; +0x0C = indice (gShopItems/lista), +0x10 = 0 libera recusa 'cancelar'. Antes: nome Shop-like nao usado"
@@ -2956,7 +2956,7 @@ address,name,kind,count,comment
 0x0804D438,Event_Op7B_Jump_If_No_Spare_Part,func_thumb,,Simon/Rokusho (antes: EventOpcode7B_JumpIfNoSparePart) [RV15] provavel: le 3 bytes; Inv_ReadCounter16 byte alto ==0 aplica salto; 'peca reserva' so pelo contador
 0x0804D48C,Event_Op7C_Reserved_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode7C_ReservedNoOp) [RV15] confirmado: corpo vazio (reservado)
 0x0804D490,Event_Op7D,func_thumb,,[HE4] sem definicao; 1 byte -> 0x03006412 (confirmado) (antes: Event_Op7D_Set_Field_C32)
-0x0804D4AC,Event_Op7E_Store_Byte_Set_Flag,func_thumb,,"Simon/Rokusho (antes: EventOpcode7E_MoveAllTrackedActorsC_Setup) [RV15] provavel: le 1 byte para campo e marca flag; corpo nao move atores, so guarda parametro (antes: Event_Op7E_Move_All_Tracked_Actors_C)"
+0x0804D4AC,Event_Op7E_Move_All_Tracked_Actors_C,func_thumb,,"Simon/Rokusho (antes: EventOpcode7E_MoveAllTrackedActorsC_Setup) [RV15] provavel: le 1 byte para campo e marca flag; corpo nao move atores, so guarda parametro (antes: Event_Op7E_Move_All_Tracked_Actors_C) (antes: Event_Op7E_Store_Byte_Set_Flag)"
 0x0804D4D4,Event_Op7F_Store_Byte_Set_Flag,func_thumb,,[HE4] sem definicao; 1 byte -> args + pendente; continuacao 0x0804FC7C [RV15] confirmado: le 1 byte para campo e marca flag; nome antigo era placeholder (antes: Event_Op7F) (antes: Event_Op7F)
 0x0804D4FC,Event_Op80_Begin_Batched_Object_Command_Block,func_thumb,,"Simon/Rokusho: Reset the event-script runtime block at gEventScriptRuntimeState, fetch the first event opcode byte into gCurrentEventOpcodeByte, clear the event initialization/state byte and opcode substate, and dispatch the initialization handler for the new event. (antes: EventOpcode80_BeginBatchedObjectCommandBlock) [RV15] confirmado: zera buffers do bloco em lote, le byte e despacha via tabela (CallViaR0)"
 0x0804D580,Event_Op81_Queue_Batched_Object_Command,func_thumb,,"Simon/Rokusho (antes: EventOpcode81_QueueBatchedObjectCommand) [RV15] confirmado: le 8 bytes para o buffer do lote, le opcode e despacha via tabela (CallViaR0)"
@@ -2964,7 +2964,7 @@ address,name,kind,count,comment
 0x0804D59C,Event_Op81_SelectSavedArgRecord,label,,"Simon/Rokusho: Run one embedded event-initialization opcode using a saved 8-byte argument block. |  | Copies a saved argument record into gEventScriptArguments, fetches the next byte as an init opcode, clears gCurrentEventStateByte and gCurrentEventOpcodeSubstate, then dispatches through sEventInitializationOpcodeHandlerTable. |  | This is the bridge between the normal event VM and the initialization-opcode VM. (antes: Event_RunEmbeddedInitOpcode)"
 0x0804D5DC,Event_Op82_Execute_Batched_Object_Command_Block,func_thumb,,Simon/Rokusho (antes: EventOpcode82_ExecuteBatchedObjectCommandBlock_Setup) [RV15] provavel: so marca flag=1 (executa o lote em outro ponto)
 0x0804D5F0,Event_Op83_Set_Object_Render_Mode,func_thumb,,"Simon/Rokusho (antes: EventOpcode53_Primary) [RV15] provavel: le 2 bytes; despacha por mascara (0x10/0x40/0x20) para Map_SetTrackedObjectTileAttr, Map_SetObjectAttrBits10 ou Map_*Field0B"
-0x0804D758,Event_Op84_Set_Scene_Variant_Flag,func_thumb,,"Simon/Rokusho: Primary handler for event opcode 0x84. Reads one byte argument (map scene variant), marks the opcode as deferred, and lets the continuation wait until the player facing byte reaches 0 before committing the requested map scene variant to the same runtime byte used by opcode 0x69. (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp) (antes: Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up) [RV16] provavel (antes: Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up) le 1 byte de script e marca byte de cena=1; sem teste de facing no corpo"
+0x0804D758,Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up,func_thumb,,"Simon/Rokusho: Primary handler for event opcode 0x84. Reads one byte argument (map scene variant), marks the opcode as deferred, and lets the continuation wait until the player facing byte reaches 0 before committing the requested map scene variant to the same runtime byte used by opcode 0x69. (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp) (antes: Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up) [RV16] provavel (antes: Event_Op84_Set_Map_Scene_Variant_When_Player_Faces_Up) le 1 byte de script e marca byte de cena=1; sem teste de facing no corpo (antes: Event_Op84_Set_Scene_Variant_Flag)"
 0x0804D778,Event_Op85_Begin_Event_Object_Facing_Cycle_Block,func_thumb,,[HE4] ver HE4.md [RV16] confirmado zera contador +0x52 e 3 blocos de slots
 0x0804D7AC,Event_Op86_Queue_Event_Object_Facing_Cycle,func_thumb,,Simon/Rokusho (antes: EventOpcode56_Primary_0804D7AC) [RV16] confirmado le 8 bytes e copia para slot indexado pelo contador
 0x0804D7E4,Event_Op87_Execute_Event_Object_Facing_Cycle_Block,func_thumb,,Simon/Rokusho (antes: EventOpcode57_Primary_0804D7E4) [RV16] provavel seta byte de flag=1 (dispara o bloco de ciclo)
@@ -3097,8 +3097,8 @@ address,name,kind,count,comment
 0x08050918,Map_ObjectArcStep,func_thumb,,Simon/Rokusho (antes: Map_TickObjectHop) [CU] salto de 16 quadros: Y = base - tab[+0x28][0]/16 em +0x10; +0x2C = tab2>>4; fim devolve 1 e pousa em base (GH-CU confirmado)
 0x080509EC,Map_ObjectMoveStateStep,func_thumb,,"Simon/Rokusho: Tick the per-slot tracked-object transition used by event opcode 0x66. Initializes facing/animation and starts a map-transition effect on the first tick, then advances the object's vertical arc and render mode until the effect completes. (antes: Map_TickTrackedObjectTransition) [RV17] confirmado - maquina de estados de deslocamento (SFX 0x70"
 0x08050B9C,Map_ResetObjectStateBlocks,func_thumb,,[R3] zera 3 blocos de 4 bytes via set_zeros [RV17] confirmado - zera tres blocos de 4 bytes de estado; nome mantido
-0x08050BC8,Map_ModeDispatch,func_thumb,,Simon/Rokusho: Run one step of the event-script-driven map-load command state machine until the underlying overworld UI scene state reports completion. (antes: Overworld_RunMapLoadCommandState)
-0x08050C94,Overworld_ResetUiRenderState,func_thumb,,Simon/Rokusho
+0x08050BC8,Map_ModeDispatch,func_thumb,,Simon/Rokusho: Run one step of the event-script-driven map-load command state machine until the underlying overworld UI scene state reports completion. (antes: Overworld_RunMapLoadCommandState) [RV17] confirmado - despacha handler de cena e
+0x08050C94,Overworld_ResetUiRenderState,func_thumb,,Simon/Rokusho [RV17] provavel - zera buffer 0xA00
 0x08050CC0,Event_ResetSceneCommandStep,func_thumb,,Simon/Rokusho [SC] [SC] confirmado (R3): zera byte +0x0B do passo de cena (0x03006D20)
 0x08050CCC,Event_RunSceneCommandSequence,func_thumb,,"Simon/Rokusho: Run a multi-step scene/event command sequence selected by a small command id. |  | This helper is not map-load-specific. Depending on the command id, it can: | - launch top-level game/menu flows through GameState_StartFlowByCommand | - run scene transitions | - trigger side-effect commands through 0x0804842C | - advance an internal step byte in gEventScriptArguments[0x0B] |  | Returns nonzero when the sequence has finished. [SC] [SC] confirmado no disasm: r0=cmd, r1=arg; despacha passo 0..4 pela tabela 0x08050CF4; devolve !=0 quando termina; comandos 0x00,0x02,0x03,0x05,0x08,0x10..0x14,0x20 com entrada no switch 0x08050E6C"
 0x08050CEA,Event_RunSceneCommandSequence_Jump,label,,[JT5] mov pc: tabela real 5 entradas em 0x08050CF4 (idx byte +0xB de 0x03006D20); JT5
@@ -3185,8 +3185,8 @@ address,name,kind,count,comment
 0x08053238,EventField3Bit_SetByPackedId,func_thumb,,Simon/Rokusho: Write a small 3-bit field into the event flag list using a packed 16-bit id. The low bit selects which nibble/bitfield family is targeted; the remaining bits select the byte index. (antes: EventFlag_SetIndexedFieldByPackedId) [RV18] confirmado: grava campo de 3 bits (par: bits 4-6 / impar: bits 0-2) no array de eventos
 0x08053260,lit_EventFlagArrayBase_EvenSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (par) -> 0x030057D8
 0x0805327C,lit_EventFlagArrayBase_OddSetField,data,,[EF] [EF] literal de pool de EventField3Bit_SetByPackedId (impar) -> 0x030057D8
-0x08053280,EventField3Bit_IncrementByPackedId,func_thumb,,Simon/Rokusho: Increment a small indexed field in the event flag list using a packed 16-bit id. The low bit selects which field family is targeted; the remaining bits select the byte index. (antes: EventFlag_IncrementIndexedFieldByPackedId)
-0x080532D4,EventField3Bit_GetByPackedId,func_thumb,,[R3] (mtbe) le campo de 3 bits por id
+0x08053280,EventField3Bit_IncrementByPackedId,func_thumb,,Simon/Rokusho: Increment a small indexed field in the event flag list using a packed 16-bit id. The low bit selects which field family is targeted; the remaining bits select the byte index. (antes: EventFlag_IncrementIndexedFieldByPackedId) [RV18] confirmado: incrementa campo de 3 bits (par: mascara 0x70 / impar: 0x07) do id empacotado
+0x080532D4,EventField3Bit_GetByPackedId,func_thumb,,[R3] (mtbe) le campo de 3 bits por id [RV18] confirmado: le campo de 3 bits (par: bits 6..4 / impar: bits 2..0)
 0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8
 0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
@@ -3220,7 +3220,7 @@ address,name,kind,count,comment
 0x0805718C,Overworld_InitChoiceMenuScreen,func_thumb,,inicia tela de escolha do overworld; Overworld_CheckStepAllowed por linha; provavel
 0x08057244,Overworld_InitChoiceMenuScreen,label,,[OW2] monta menu de 4 linhas; CheckStepAllowed(k) == 1 desenha linha ativa (confirmado)
 0x08057440,Map_TickChoiceListOpen,func_thumb,,"[provavel] abre lista de escolha em 0x10 passos (FUN_080492A8 + Map_CreateChoiceSprites); ao fim, GameState_AdvanceSubroutine"
-0x080574D4,FieldMenu_ChoiceSub2_SelectRow,func_thumb,,"[FM2] [FM2] sub 2 do menu de escolha 0x083D5FF4 (Thumb, sem funcao no Ghidra); linha ativa via Overworld_CheckStepAllowed; switch 0..5 pela tabela 0x08057534"
+0x080574D4,FieldMenu_ChoiceSub2_SelectRow,func_thumb,,"[FM2] [FM2] sub 2 do menu de escolha 0x083D5FF4 (Thumb, sem funcao no Ghidra); linha ativa via Overworld_CheckStepAllowed; switch 0..5 pela tabela 0x08057534 [RV18] provavel: menu de escolha: move cursor (wrap 4 linhas); A checa passo permitido via Overworld_CheckStepAllowed; B fecha"
 0x08057534,FieldMenu_RowActionTable,table,,"[FM2] [FM2] tabela do switch de linha: idx0=0x080575D4, idx1=0x0805754C (sub 0x0B), idx2=0x08057564 (sub 0x0D), idx3..5=0x08057570 (sub 0x0F)"
 0x0805754C,FieldMenu_RowAction1_Sub0B,label,,[FM2] [FM2] idx 1 do switch: gamestate_subroutine=0x0B (lido); mapeamento de opcao pendente
 0x08057564,FieldMenu_RowAction2_Sub0D,label,,[FM2] [FM2] idx 2 do switch: gamestate_subroutine=0x0D (lido); mapeamento pendente
@@ -3234,7 +3234,7 @@ address,name,kind,count,comment
 0x08057AD0,Overworld_FinishTransitionInitCursor,func_thumb,,[FL10] fim da transição: sprite do cursor do mapa (slot 0x7F); estado=2 (provável)
 0x08057B0C,Map_ExitStateDispatchFlow,func_thumb,,saida de tela de mapa: escolhe fluxo 0x41/0x42/0x43 pelo estado +0x65; provavel
 0x08057B6C,FieldMenu_Sub0B_RowMachine,func_thumb,,[FM3] [FM3] sub 0x0B da tabela 0x083D5FF4: sub-maquina por linha (ctx+0x65) e passo ctx+0x70; SEM funcao no Ghidra; codigo 2 cai aqui [FS8] [FS8] nome ja existente (FM3); provavel
-0x08057CB0,Flow_WaitObjectThenCount,func_thumb,,[FR1] waits FUN_08047C24 (object state machine) per table id then counts up to 6 steps
+0x08057CB0,Flow_WaitObjectThenCount,func_thumb,,[FR1] waits FUN_08047C24 (object state machine) per table id then counts up to 6 steps [RV18] provavel: espera Obj_TwoStageInitThenDispatch terminar
 0x08057D04,FieldMenu_Sub0D_Close,func_thumb,,[FM3] [FM3] sub 0x0D: BL 0x08047C00; BL 0x0804A210 (fim de lista); retorna. Saida do menu (codigo 3). SEM funcao no Ghidra [FS8] [FS8] nome ja existente (FM3); confirmado: saida do menu
 0x08057D14,Obj_TwoStageInitSetState2_A,func_thumb,,"[FN5] Obj_TwoStageInitThenDispatch(1,1,0,[+0x204]); ==2 no estado (provavel)"
 0x08057D40,FieldMenu_Sub0F_Close,func_thumb,,[FM3] [FM3] sub 0x0F: corpo igual ao 0x0D (BL 0x08047C00; BL 0x0804A210). Saida do menu (codigos 4..6). SEM funcao no Ghidra [FS8] [FS8] nome ja existente (FM3); provavel: mesmo corpo do 0x0D
@@ -3408,7 +3408,7 @@ address,name,kind,count,comment
 0x0805FD10,Screen_InitMenuLayoutAndAssets,func_thumb,,"[provavel] layout e assets de tela de menu: 3 LZ77 tile blocks, Asset_UnpackOrCopyBlock, 3 registros de objeto; timer +0x15=0x3C"
 0x0805FEC8,Anim_CountdownThenHideLayer,func_thumb,,provável: contador que halveia valor e oculta camada ao zerar
 0x0805FF1C,Gfx_SlideInLayerStep,func_thumb,,[FL10] entrada deslizante de camada: contador +0x5A ate 0x78; liga BG0 (confirmado)
-0x0805FFF8,Screen_IntroFlashScrollStep,func_thumb,,"[FN5] timer de intro: DISPCNT 0x200, SFX 0x17, rolagem (chute no detalhe)"
+0x0805FFF8,Screen_IntroFlashScrollStep,func_thumb,,"[FN5] timer de intro: DISPCNT 0x200, SFX 0x17, rolagem (chute no detalhe) [RV19] confirmado: passo da abertura: flash de DISPCNT no passo 4 com sfx 0x17, scroll de faixas de tiles e paleta"
 0x080601D4,Fx_ScrollTileBandStep,func_thumb,,efeito de rolagem de faixa com tabela de 8 entradas; provavel
 0x08060248,Anim_CycleTileFrame64,func_thumb,,[R3] ciclo de frame de 64 (provavel)
 0x08060280,Task_CallHandlerThenDecrementIfFlag,func_thumb,,[FN5] CallViaR0 + decremento se bit0 (provavel)
