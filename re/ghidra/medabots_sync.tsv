@@ -576,11 +576,13 @@ F	0x0801AFB8	Fight_StepBotVisualDown
 F	0x0801B004	Fight_BuildBotPartObjects8
 F	0x0801B0E8	Fight_StepBotPartObjects8
 F	0x0801B274	Fight_SelectBotActivePart
+F	0x0801B37C	Fight_SelectBotActivePart_0801B37C
 F	0x0801B3AC	Fight_CommitActiveBotPartFields
 F	0x0801B4C8	Fight_CountBotsWithStatus2
 F	0x0801B4F8	Fight_CountEmptyPartSlots
 F	0x0801B53C	Fight_EvaluateTeamWinState
 F	0x0801B5FC	Fight_ResetBotPartFlags
+F	0x0801B60C	Fight_ResetBotPartFlags_0801B60C
 F	0x0801B67C	Fight_SetTeamSideState3
 F	0x0801B69C	Fight_AssignBotTargetSlot
 F	0x0801B700	Fight_FindTargetSlot
@@ -1322,6 +1324,7 @@ F	0x0803080C	Fight_DispatchOnSubstateAA_Shared_SetDone
 F	0x0803081C	Fight_DispatchOnSubstateAA_AG_0E_WaitSlotScriptEnd
 F	0x08030860	Fight_SceneMain
 F	0x08030890	Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx
+F	0x080308BC	Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx_080308BC
 F	0x08030910	Fight_DispatchOnSubstateAA_BR_11_ActionSelectSetupSlot3
 F	0x08030990	Fight_DispatchOnSubstateAA_BR_12_ActionSelectWaitSlot3
 F	0x080309C8	Fight_DispatchOnSubstateAA_BR_13_ActionSelectCheckPart
@@ -1339,6 +1342,7 @@ F	0x08030DB4	Fight_DispatchOnSubstateAA_BR_26_BuildPartObjects
 F	0x08030E14	Fight_DispatchOnSubstateAA_BR_27_StepPartObjects
 F	0x08030E54	Fight_DispatchOnSubstateAA_BR_31_RunStepCodeMessage
 F	0x08030E78	Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated
+F	0x08030E8C	Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated_08030E8C
 F	0x08030F10	Fight_SceneStep41_LoadKoBanner
 F	0x08030FB4	Fight_SceneStep42_SlideBannerIn
 F	0x08030FEC	Fight_SceneStep43_HoldBannerThenJingle
@@ -1576,7 +1580,7 @@ F	0x08036BB8	FightPreview_ConsumePartCount
 F	0x08036C20	FightPreview_SetupOneSprite
 F	0x08036CCC	FightPreview_SplitCountByCapacity
 F	0x08036D24	Fight_RepairPartTick
-F	0x08036D64	Fight_CheckPartHasStatus
+F	0x08036D64	FightPreview_IsPartTypeFlagSet
 F	0x08036DE8	FightPreview_AdvanceSlotXDir
 F	0x08036E54	Fight_ClampDisplayValue1To99
 F	0x08036E64	Fight_ApplyPartStatus
@@ -2429,7 +2433,9 @@ L	0x08053308	lit_EventFlagArrayBase_EvenGet
 F	0x0805330C	Map_LoadSecondaryMarkerRecord
 F	0x080533E4	Overworld_BeginUiSceneState
 F	0x0805424C	Scene_DispatchStateHandler
-F	0x08054280	Scene_DispatchStateHandlerTail
+L	0x08054280	Scene_DispatchStateHandlerTail
+L	0x080542A2	Scene_DispatchStateHandlerTail_Jump
+L	0x080542B0	Scene_DispatchStateHandler_CodeTable
 F	0x080567F0	Overworld_EnterSceneState
 F	0x0805716C	FieldMenu_DispatchSubstate
 F	0x0805718C	Overworld_InitChoiceMenuScreen
@@ -2455,12 +2461,20 @@ F	0x08058208	Map_HandleMarkerCommandFromState
 F	0x0805821C	Map_HandleMarkerCommand
 F	0x080582B8	Map_SyncMarkerEventFields
 F	0x0805830C	Screen_UpdateByStep
+L	0x08058328	Screen_UpdateByStep_JumpStep
+L	0x08058334	Screen_UpdateByStep_TableStep
+L	0x08058378	Screen_UpdateByStep_JumpState6
+L	0x08058572	Screen_UpdateByStep_JumpState5
+L	0x08058716	Screen_UpdateByStep_JumpState4
+L	0x08058858	Screen_UpdateByStep_JumpState7
 F	0x080589A4	Screen_StepCyclicIndex
 F	0x08058A10	Map_StepMarkerCounterUp
 F	0x08058AB8	Map_StepMarkerCounterNoSync
 F	0x08058B28	Map_StepSlotCounterUp
 F	0x08058B90	Map_CycleSlotIndex
 F	0x08058C0C	Screen_RedrawAndDispatchStep
+L	0x08058C44	Screen_RedrawAndDispatchStep_Jump
+L	0x08058C54	Screen_RedrawAndDispatchStep_Table
 F	0x080593FA	Screen_NoopReturn
 F	0x080594C8	Screen_HandleStateTransition
 F	0x08059560	Screen_ResetEntries40
@@ -2764,6 +2778,8 @@ F	0x0806A024	hud_update_cursor_idx
 F	0x0806A078	copy_str_until_ctrl
 F	0x0806A08C	intro_scene_step
 F	0x0806A114	dispatch_scene_state
+L	0x0806A12A	dispatch_scene_state_Jump
+L	0x0806A134	dispatch_scene_state_Table
 F	0x0806A3C4	scene_sequence_a
 F	0x0806A654	scene_sequence_b
 F	0x0806A718	wait_gate_0xf1
@@ -2784,6 +2800,8 @@ L	0x0806BC48	Fight_TickBattleFrame
 F	0x0806BCFC	Fx_StepTableB_Check
 F	0x0806BD3C	Screen_ResetDisplayAndStopSong
 F	0x0806BD70	dispatch_state_8
+L	0x0806BD8C	dispatch_state_8_Jump
+L	0x0806BD98	dispatch_state_8_Table
 F	0x0806BF18	select_entity_max
 F	0x0806BFEC	counter_oscillate_x
 F	0x0806C084	fsm_obj_states_1_3
@@ -2795,6 +2813,8 @@ F	0x0806C7E4	TeamSlots_WriteFi41_Candidate2
 F	0x0806C88C	effect_anim_fall
 F	0x0806C958	effect_anim_phase2
 F	0x0806CB28	anim_dispatch_state
+L	0x0806CB58	anim_dispatch_state_Jump
+L	0x0806CB6C	anim_dispatch_state_Table
 F	0x0806CC80	battle_frame_tile_state_a
 F	0x0806CD68	battle_frame_tile_target
 F	0x0806CEDC	battle_frame_tile_state_c
@@ -3116,6 +3136,7 @@ L	0x0807FDB0	gGfx_PartLarge_DescTable_Sz2
 L	0x08080550	gGfx_PartLarge_DescTable_Sz3
 L	0x08081490	sCompositePreviewMirroredDescriptorMap
 L	0x080814C4	gMotionData
+L	0x080AEB74	gLZ77RecordTable
 L	0x080AF8CA	Opt_SongTable
 L	0x080AFC18	StateTable_CopySrc_63C
 L	0x080AFC88	LinkMenu15StepTable
@@ -3128,6 +3149,7 @@ L	0x083ABB50	SND_PsgFreqTable
 L	0x083ABF98	gMainStateTable
 L	0x083ABFB0	gSpriteSetTable0
 L	0x083AC2C8	gMainStateTable_083AC2C8
+L	0x083AC560	BattleStepTable_Base_Unresolved
 L	0x083AC568	BattleStepTable_Unknown
 L	0x083AC614	debug_mdlpic_model_ptrs
 L	0x083AC880	table_partsgrid_states
@@ -3289,7 +3311,10 @@ L	0x083D212C	gMainState1_Menu10
 L	0x083D222C	gEventPrimaryOpcodeTable
 L	0x083D2630	gEventContinuationOpcodeTable
 L	0x083D2A40	gWalkSpeedTable
+L	0x083D2A88	gPlayerSpeedByWalkState
+L	0x083D2A98	gMapPassBlockTable
 L	0x083D2B6B	gMapArea
+L	0x083D2C5D	gObjectField0BByPoseTable
 L	0x083D2D0D	gObjectShadowFlagTable
 L	0x083D5FF4	Overworld_ChoiceSubstateTable
 L	0x083D6298	unknown_ChapterLiteralPool
@@ -3297,6 +3322,7 @@ L	0x083D6A2C	gArcHeightTable
 L	0x083F7B80	gObjectAnimScriptPtrTable
 L	0x083F7D80	sRandomAdvanceTable
 L	0x083F7E80	gMapSpritePtrTable
+L	0x083F83C0	gMapSpritePaletteTablePtr
 L	0x083F8900	gMapDimensions
 L	0x083F8A80	gMapTilesetPtrTable
 L	0x083F8D80	gMapTilesetExtraPtrTable

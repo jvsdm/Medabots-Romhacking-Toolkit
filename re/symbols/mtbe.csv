@@ -219,6 +219,7 @@ address,name,kind,count,comment
 0x030037F0,gPlayerObject,data,,[OW] slot 0x2F de gObjectSlots (jogador)
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300381A,gPlayerSpeedIndex,data,,[VA] [VA] obj+0x2A do slot 0x2F; escrito por Map_LoadSecondaryMarkerRecord a partir de 0x083D2A88[walk state]
 0x03004C40,SAVE_PARTS_INV_RAM,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory (antes: gInventory)
 0x03005010,gLinkStateBlock,label,,[MN] [MN] bloco de estado do link (bitfield de slots conectados em +0; contadores +0x18..+0x1B; flags +0x1D/+0x1E); provavel
 0x03005014,gLinkPacketOut,label,,[MN] [MN] pacote de saida enfileirado por QueueLinkTransferPacket; provavel
@@ -246,6 +247,9 @@ address,name,kind,count,comment
 0x03005FE2,map_height,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03005FF0,gMapCollisionOccupancyBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1024][1024]; Simon: map_data"
 0x030063F0,gMapPassTable,data,,[MP2] base+0xC10: 4 B por valor de colisao 0..3; != 0 bloqueia (3 = condicional)
+0x030063F3,gMapPassTable_Value3,data,,[VA] [VA] E+0xC13: passabilidade do valor 3 (!=0 bloqueia)
+0x03006400,gMapPassSaveScratch,data,,[VA] [VA] E+0xC18 e vizinhos: guarda do bloco de 8 B (0x69 salva/restaura); tambem scratch do Move_Player (HE1 0x0804BB14)
+0x03006408,gMapBlockIndex,data,,[VA] [VA] E+0xC28: indice do bloco de 8 B em ROM 0x083D2A98; escritor nao achado (pendente)
 0x03006409,gEncounterEnabledFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1] (antes: gCurrentMapHasEncounters)"
 0x0300640A,gEncounterSlotIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentBattleId)"
 0x0300640B,gStepCounter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1] (antes: gRandomEncounterStepCounter)"
@@ -956,11 +960,13 @@ address,name,kind,count,comment
 0x0801B004,Fight_BuildBotPartObjects8,func_thumb,,[R1] Monta 8 objetos OAM de peca do bot (paleta +3C; posicao do bot); provavel
 0x0801B0E8,Fight_StepBotPartObjects8,func_thumb,,"[R1] Avanca 8 objetos de peca (X-8, tile, Y ao bot); retorna 1 se todos inativos; provavel"
 0x0801B274,Fight_SelectBotActivePart,func_thumb,,Simon/Rokusho: Reset per-bot action-selection state. Caches the current selected action source part into reaction_source_part_id and seeds reaction_source_action_kind from that part's technique when the source is a normal part action. Also clears per-part target metadata and normalizes reaction-status bits. (antes: Fight_ResetBotActionSelectionState)
+0x0801B37C,Fight_SelectBotActivePart,func_thumb,,[TR] [TR] escritor de bot+0xDE (=bot+0xDD) e bot+0xDF; BD&=0xFE; BD&=0xE7 se peca quebrada; confirmado
 0x0801B3AC,Fight_CommitActiveBotPartFields,func_thumb,,"Simon/Rokusho: Commit a previously staged part replacement from fight_information back into the selected live BattlePartState. Restores the staged part fields including attack_damage_scalar and part_id, refreshes action metadata, then clears the staging flag. (antes: Fight_CommitStagedPartReplacement)"
 0x0801B4C8,Fight_CountBotsWithStatus2,func_thumb,,[R1] Conta 3 bots com status +BA == 2; confirmado
 0x0801B4F8,Fight_CountEmptyPartSlots,func_thumb,,[R1] Conta pecas vazias (+59) de 3 bots vivos; confirmado
 0x0801B53C,Fight_EvaluateTeamWinState,func_thumb,,[R1] Compara lados e grava estado 1/2 em +9C; provavel
 0x0801B5FC,Fight_ResetBotPartFlags,func_thumb,,"Simon/Rokusho: Reset one bot's defender-resolution flags and shared action scratch. Clears defender_resolution_flags, clears transient reaction_status_flags bits 0x02/0x08/0x10, and zeroes the shared fight_information action-script / result scratch regions. (antes: Fight_ResetBotResolutionAndActionScratch)"
+0x0801B60C,Fight_ResetBotPartFlags,func_thumb,,[TR] [TR] bot+0xBC=0 e BD&=0xE5 do ator; chamado so por BR_10 passo 0 (inicio de acao); confirmado
 0x0801B67C,Fight_SetTeamSideState3,func_thumb,,[R1] Grava 0 ou 3 em +F8 do bloco de lado; confirmado
 0x0801B69C,Fight_AssignBotTargetSlot,func_thumb,,"Simon/Rokusho: When Confusion (pending effect kind 0x2C) is active, choose a new recovery/target part and overwrite the bot's selected target metadata. This is a control-disruption retargeting path, not direct damage math. (antes: Fight_SelectRecoveryTargetFromPendingEffect)"
 0x0801B700,Fight_FindTargetSlot,func_thumb,,[R1] Procura slot de alvo vivo ate 6 tentativas; provavel
@@ -1702,6 +1708,7 @@ address,name,kind,count,comment
 0x0803081C,Fight_DispatchOnSubstateAA_AG_0E_WaitSlotScriptEnd,func_thumb,,[HN6] AG 0x0E: roteiro do slot 0x21 (0x083B6100[+0x84]); +0xAA++ quando gObjectSlots+0x862 == 0xFF (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_WaitSlotScriptEnd)
 0x08030860,Fight_SceneMain,func_thumb,,[HN10] menu_list[8]: chama 0x083AECD8[gamestate_subroutine] (sem função no Ghidra; nao renomeado). Tabela 0x083AECD8 = BR+0x40: indices 'BR 0x10+' da H_lista sao passos desta cena (passo = idx-0x10) (confirmado)
 0x08030890,Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx,func_thumb,,"[HN9] Na verdade cena 8 (menu_list[8] 0x08030860, tabela 0x083AECD8=BR+0x40) GS 0x00: reset flags, gfx 0x084CA064; GS++ (confirmado; renomeado)"
+0x080308BC,Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx,func_thumb,,[TR] [TR] passo 0 chama Fight_ResetBotPartFlags(fi+0x87)
 0x08030910,Fight_DispatchOnSubstateAA_BR_11_ActionSelectSetupSlot3,func_thumb,,"[HN9] Cena 8 GS 0x01: slot 3 record list [0x083B6100+0x54], SFX 7; GS++ (confirmado; renomeado)"
 0x08030990,Fight_DispatchOnSubstateAA_BR_12_ActionSelectWaitSlot3,func_thumb,,[HN9] Cena 8 GS 0x02: anima slot 3 ate fim; GS++ (confirmado; renomeado)
 0x080309C8,Fight_DispatchOnSubstateAA_BR_13_ActionSelectCheckPart,func_thumb,,[HN9] Cena 8 GS 0x03: +0xBD bit0 -> A6=4 GS=0x20; +0xDD==0 -> GS=0x10; senao GS++ (confirmado por bytes; decompile quebrado; renomeado)
@@ -1719,6 +1726,7 @@ address,name,kind,count,comment
 0x08030E14,Fight_DispatchOnSubstateAA_BR_27_StepPartObjects,func_thumb,,"[HN9] Cena 8 GS 0x17: StepBotVisualUp+StepBotPartObjects8 ate fim, InitBattleSprites; GS++ (confirmado; renomeado)"
 0x08030E54,Fight_DispatchOnSubstateAA_BR_31_RunStepCodeMessage,func_thumb,,[HN9] Cena 8 GS 0x21/0x32/0x38: Fight_RunSubstateDispatch(F+0xA6) ate !=0; GS++ (confirmado; renomeado)
 0x08030E78,Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated,func_thumb,,"[HN9] Cena 8 GS 0x40: bot0/bot3 +0x40==0 -> 0x03000440+0x9C=2/1, fade, SFX 0x6F, GS++; senao GS=0x48 (codigo confirmado; sentido provavel; renomeado)"
+0x08030E8C,Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated,func_thumb,,[TR] [TR] chama Fight_SelectBotActivePart (0x08030E8E)
 0x08030F10,Fight_SceneStep41_LoadKoBanner,func_thumb,,"[HN10] cena 8 passo 0x41 (lista: BR 0x51): carrega banner 0x084C9A84 no slot 0x21, frame 0x902; sub++ (confirmado; renomeado no Ghidra)"
 0x08030FB4,Fight_SceneStep42_SlideBannerIn,func_thumb,,[HN10] passos 0x42 e 0x4A (BR 0x52/0x5A): S+0x849 -= 8 ate 0x40; T+0x86=0; sub++ (confirmado; renomeado)
 0x08030FEC,Fight_SceneStep43_HoldBannerThenJingle,func_thumb,,"[HN10] passo 0x43 (BR 0x53): espera 90f, encolhe banner, song 0x1C, limpa slot 0x21, abre caixa de texto; sub++ (confirmado; renomeado)"
@@ -1957,7 +1965,7 @@ address,name,kind,count,comment
 0x08036C20,FightPreview_SetupOneSprite,func_thumb,,[R2] configura 1 sprite com posicao tabela+x/y
 0x08036CCC,FightPreview_SplitCountByCapacity,func_thumb,,Simon/Rokusho (antes: Fight_ClampRepairToMissingArmor)
 0x08036D24,Fight_RepairPartTick,func_thumb,,Simon/Rokusho
-0x08036D64,Fight_CheckPartHasStatus,func_thumb,,[R2] testa bit de flag do lado conforme tipo de peca (antes: FightPreview_IsPartTypeFlagSet)
+0x08036D64,FightPreview_IsPartTypeFlagSet,func_thumb,,[R2] testa bit de flag do lado conforme tipo de peca (antes: FightPreview_IsPartTypeFlagSet) (antes: Fight_CheckPartHasStatus)
 0x08036DE8,FightPreview_AdvanceSlotXDir,func_thumb,,[R2] passo de X +/- tabela com contador por slot
 0x08036E54,Fight_ClampDisplayValue1To99,func_thumb,,Simon/Rokusho
 0x08036E64,Fight_ApplyPartStatus,func_thumb,,"Simon/Rokusho: Store a pending status/effect payload in the acting bot runtime. In the shared commit path, pending_effect_kind is just the originating technique id: Bug/Virus/Thunder/Freeze/Wave/Hold/Fire/Melt/Defense/Full_Block/Half_Block/Impair/Confusion/No_Escape/No_Defense. (antes: Fight_SetPendingActionEffect) (antes: FightPreview_SetPartStatsByType)"
@@ -2810,7 +2818,9 @@ address,name,kind,count,comment
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
 0x080533E4,Overworld_BeginUiSceneState,func_thumb,,"Simon/Rokusho: Begin an overworld UI/scene-state sequence with the supplied state id, optional position parameters, and extra mode argument."
 0x0805424C,Scene_DispatchStateHandler,func_thumb,,"Simon/Rokusho: Dispatch one step of the current overworld UI/scene-state machine using gOverworldUiState.{state,substate}. (antes: Overworld_DispatchUiSceneState)"
-0x08054280,Scene_DispatchStateHandlerTail,func_thumb,,[R3] (mtbe) entrada alternativa do despacho
+0x08054280,Scene_DispatchStateHandlerTail,label,,[R3] (mtbe) entrada alternativa do despacho
+0x080542A2,Scene_DispatchStateHandlerTail_Jump,label,,[JT5] mov pc: tabela real 0x8C ptrs em 0x080542B0 (literal 0x080542AC); JT5
+0x080542B0,Scene_DispatchStateHandler_CodeTable,data,,[JT5] tabela real 0x8C ptrs (codigo 0..0x8B); JT5
 0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador
 0x0805716C,FieldMenu_DispatchSubstate,func_thumb,,[FM] [FM] despachante do menu 2 de MainState1 (provavel); push lr; base 0x083D5FF4 + gamestate_subroutine*4; SEM funcao no Ghidra (nao renomeado no Ghidra)
 0x0805718C,Overworld_InitChoiceMenuScreen,func_thumb,,inicia tela de escolha do overworld; Overworld_CheckStepAllowed por linha; provavel
@@ -2836,12 +2846,20 @@ address,name,kind,count,comment
 0x0805821C,Map_HandleMarkerCommand,func_thumb,,[R3] (mtbe) comandos 0/1/5/6 do marcador
 0x080582B8,Map_SyncMarkerEventFields,func_thumb,,[R3] (mtbe) sincroniza flag e campo 3 bits do marcador
 0x0805830C,Screen_UpdateByStep,func_thumb,,[R3] (mtbe) tela com passos 0..7 (nome chute)
+0x08058328,Screen_UpdateByStep_JumpStep,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058334 (step 0..7); JT5
+0x08058334,Screen_UpdateByStep_TableStep,data,,[JT5] tabela 8 ptrs; JT5
+0x08058378,Screen_UpdateByStep_JumpState6,label,,[JT5] mov pc: tabela real 6 ptrs em 0x08058384; JT5
+0x08058572,Screen_UpdateByStep_JumpState5,label,,[JT5] mov pc: tabela real 6 ptrs em 0x0805857C; JT5
+0x08058716,Screen_UpdateByStep_JumpState4,label,,[JT5] mov pc: tabela real 5 ptrs em 0x08058720; JT5
+0x08058858,Screen_UpdateByStep_JumpState7,label,,[JT5] mov pc: tabela real 7 ptrs em 0x0805886C; JT5
 0x080589A4,Screen_StepCyclicIndex,func_thumb,,[R3] indice ciclico (chute); passos 0/7 de Screen_UpdateByStep (antes: Screen_StepCyclicIndexDown)
 0x08058A10,Map_StepMarkerCounterUp,func_thumb,,[R3] contador de marcador +1/+16 com sync de evento (provavel)
 0x08058AB8,Map_StepMarkerCounterNoSync,func_thumb,,[R3] mesmo contador sem sync (provavel)
 0x08058B28,Map_StepSlotCounterUp,func_thumb,,[R3] contador por slot 0x10/0x20 (provavel)
 0x08058B90,Map_CycleSlotIndex,func_thumb,,[R3] ciclo de opcao; table==5 chama Screen_BuildMainPanels (chute no nome)
 0x08058C0C,Screen_RedrawAndDispatchStep,func_thumb,,[R3] redesenha e despacha passo por tabela (chute no nome)
+0x08058C44,Screen_RedrawAndDispatchStep_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058C54 (step 0..7); JT5
+0x08058C54,Screen_RedrawAndDispatchStep_Table,data,,[JT5] tabela 8 ptrs; JT5
 0x080593FA,Screen_NoopReturn,func_thumb,,[R3] retorno sem efeito
 0x080594C8,Screen_HandleStateTransition,func_thumb,,"Simon/Rokusho: Consume the MapTransitionState written by warp/event transition logic. transition_phase gates the reload flow, scene_mode_id selects special post-transition sprite reload cases, and queued_map_id is used by earlier map-switch setup. (antes: Overworld_RunPostTransitionMapSpriteReload)"
 0x08059560,Screen_ResetEntries40,func_thumb,,[R3] laco 0..0x27 chamando FUN_08048888
@@ -3145,6 +3163,8 @@ address,name,kind,count,comment
 0x0806A078,copy_str_until_ctrl,func_thumb,,[R4] R4: copia bytes ate >=0xF9 (controle); confirmado
 0x0806A08C,intro_scene_step,func_thumb,,[R4] R4: cena de dialogo 2 estados; provavel
 0x0806A114,dispatch_scene_state,func_thumb,,[R4] R4: despacho 0..0x16 por jumptable nao recuperada; provavel
+0x0806A12A,dispatch_scene_state_Jump,label,,[JT5] mov pc: tabela real 23 ptrs em 0x0806A134 (estado RAM 0x03006F88); JT5
+0x0806A134,dispatch_scene_state_Table,data,,[JT5] tabela 23 ptrs; JT5
 0x0806A3C4,scene_sequence_a,func_thumb,,[R4] R4: sequencia de cena por passos 0x96..6; provavel
 0x0806A654,scene_sequence_b,func_thumb,,[R4] R4: espera 0xB4 quadros e 3 sprites; provavel
 0x0806A718,wait_gate_0xf1,func_thumb,,[R4] R4: timer 0xF1 com pre-condicao; provavel
@@ -3165,6 +3185,8 @@ address,name,kind,count,comment
 0x0806BCFC,Fx_StepTableB_Check,func_thumb,,provável: checa fx_step_table_b e grava registro de efeito
 0x0806BD3C,Screen_ResetDisplayAndStopSong,func_thumb,,"[FL10] entrada de tela: DAT_0806BD68=0xFF/0x10, REG_DISPCNT mask, snd_song_request(0) (provável)"
 0x0806BD70,dispatch_state_8,func_thumb,,[R4] R4: despacho 8 estados (jumptable nao recuperada); provavel
+0x0806BD8C,dispatch_state_8_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x0806BD98 (byte +0x20 de 0x03002C30); JT5
+0x0806BD98,dispatch_state_8_Table,data,,[JT5] tabela 8 ptrs; JT5
 0x0806BF18,select_entity_max,func_thumb,,[R4] R4: escolhe max entre 8 entidades; chute
 0x0806BFEC,counter_oscillate_x,func_thumb,,[R4] R4: oscila x em passos de 3; provavel
 0x0806C084,fsm_obj_states_1_3,func_thumb,,[R4] R4: FSM 1..3 com timers 24 e 20; provavel
@@ -3176,6 +3198,8 @@ address,name,kind,count,comment
 0x0806C88C,effect_anim_fall,func_thumb,,"[R4] R4: animacao 2 estados (spawn 0x33/0x12, desce -2 a cada 8 quadros, sai em 0xEB ou tecla); provavel"
 0x0806C958,effect_anim_phase2,func_thumb,,[R4] R4: animacao 2 estados com 6 objetos a cada 4 quadros e som 0x3D; provavel
 0x0806CB28,anim_dispatch_state,func_thumb,,[R4] R4: despacho por tabela de saltos para 7 estados de animacao; confirmado
+0x0806CB58,anim_dispatch_state_Jump,label,,[JT5] mov pc: tabela real 7 ptrs em 0x0806CB6C ((byte +0x20)-1); JT5
+0x0806CB6C,anim_dispatch_state_Table,data,,[JT5] tabela 7 ptrs; JT5
 0x0806CC80,battle_frame_tile_state_a,func_thumb,,[R4] R4: seletor de tile de quadro por estado (0x1A..0x20); confirmado valores
 0x0806CD68,battle_frame_tile_target,func_thumb,,[R4] R4: seletor de tile 0-6 e 0x2B..0x2D pelo byte +0x41 do alvo; confirmado faixas
 0x0806CEDC,battle_frame_tile_state_c,func_thumb,,[R4] R4: seletor de tile 7..0x12 por contador e byte +0x38; confirmado valores
@@ -3497,6 +3521,7 @@ address,name,kind,count,comment
 0x08080550,gGfx_PartLarge_DescTable_Sz3,data,3904,preview pernas: 122 x 32 B; Simon: sCompositePreviewLegsAppearanceTable; Simon: sLargePartDisplayLegsAppearanceTable (antes: gPreviewLegs)
 0x08081490,sCompositePreviewMirroredDescriptorMap,data,50,molde -> molde no lado espelhado (troca bracos 14-16/17-19); 50 entradas: moldes novos precisam de entrada (testado 2026-10-10); Simon/Rokusho em 0x080814B0
 0x080814C4,gMotionData,label,,dados dos roteiros de movimento (ate 0x080ABE00); roteiro 0 vazio aponta aqui
+0x080AEB74,gLZ77RecordTable,data,,[CS2] registros de 16 B usados pelo passo 0xFFFC (src +4
 0x080AF8CA,Opt_SongTable,data,,"[OP] [OP] bytes 9,10,11,9; indice = valor da opcao 0x03000B94; confirmado (leitura da ROM)"
 0x080AFC18,StateTable_CopySrc_63C,data,,[JT3] 12 ponteiros copiados para pilha por 0x0806463C (idx word 0x0300137C)
 0x080AFC88,LinkMenu15StepTable,data,,[LK2] [GH-LK2] tabela de 8 passos do menu 0x15 (sub 0..7); confirmado
@@ -3509,6 +3534,7 @@ address,name,kind,count,comment
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8
 0x083AC2C8,gMainStateTable,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list)
+0x083AC560,BattleStepTable_Base_Unresolved,data,,"[TP2] [GH-TP2] base sem literal na ROM; entradas 0x080049C9, 0x080049ED, 0x08004A19 (0x568 idx), 0x08004A41, 0x08004A79, 0x08004AF9, 0x08004C59"
 0x083AC568,BattleStepTable_Unknown,data,,[TP] [GH-TP] tabela de ponteiros de passos GS; 0x08004A19 e entrada 0 desta linha; despachante nao achado
 0x083AC614,debug_mdlpic_model_ptrs,data,,"[DB2] GH-DB2: 150 ponteiros para dados comprimidos de modelo, indice v0*5+v1 (v0 0..0x1D, v1 0..4); provavel"
 0x083AC880,table_partsgrid_states,label,,[PS] [PS] tabela de estados da grade de pecas (stride 0xC; colunas nao resolvidas)
@@ -3670,7 +3696,10 @@ address,name,kind,count,comment
 0x083D222C,gEventPrimaryOpcodeTable,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable (antes: gEventOpcodeTableA)
 0x083D2630,gEventContinuationOpcodeTable,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable (antes: gEventOpcodeTableB)
 0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
+0x083D2A88,gPlayerSpeedByWalkState,data,,[VA] [VA] 16 B: 00 01 00 00 00 00 00 00 00 00 00 02 00 00 00 01
+0x083D2A98,gMapPassBlockTable,data,,"[VA] [VA] blocos de 8 B da variante; idx 0..9 lidos; idx 2 e 9 = 01 01 00 00 01 01 01 01, demais = 00 01 00 01 01 01 01 01"
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
+0x083D2C5D,gObjectField0BByPoseTable,data,,[CS2] tabela de bytes indexada por pose (+0x30); os 32 primeiros sao zero
 0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU)"
 0x083D5FF4,Overworld_ChoiceSubstateTable,table,,[FM] [FM] tabela de sub-estados do menu de escolha (base do despachante 0x0805716C): 0=Overworld_InitChoiceMenuScreen 0x0805718D; 1=0x08057441; 2=0x080574D5
 0x083D6298,unknown_ChapterLiteralPool,data,,[PR] literal 0x03005FDF sem leitor de funcao conhecido; perto de CBC/CBD (0x083D6274/78); pendente
@@ -3678,6 +3707,7 @@ address,name,kind,count,comment
 0x083F7B80,gObjectAnimScriptPtrTable,data,,[CS] ponteiros de roteiro por anim = facing+4*grupo (CONFIRMADO dump: 12 primeiros)
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
 0x083F7E80,gMapSpritePtrTable,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites) (antes: gGfx_Overworld_PonteirosSprite)
+0x083F83C0,gMapSpritePaletteTablePtr,data,,[CS2] ponteiros de paleta OBJ por id de sprite (61 validas; entrada 0 = usa id 1)
 0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B; Simon: sMapDimensionsInMetaTilesTable
 0x083F8A80,gMapTilesetPtrTable,ptr,192,graficos do tileset (LZ77); Simon: sMapTilesetGraphicsPointerTable (antes: gMapTilesetGfx) (antes: gGfx_Overworld_PonteirosTileB)
 0x083F8D80,gMapTilesetExtraPtrTable,ptr,192,atributos de cor; Simon: sMapColorAttributePointerTable (antes: gMapColorAttr)

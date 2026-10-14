@@ -1,0 +1,9 @@
+address,name,kind,comment
+0x0806C694,battle_phase_spawn_move,func_thumb,"[GH-TP2] Ghidra (ja nomeado no Ghidra). Ramo >=0x50 zera fi+0x41 (const 0); NAO e escolha de time"
+0x0806B820,Screen_InitObjectSlotsLz77,func_thumb,"[GH-TP2] Ghidra (ja nomeado). Corpo contem 0x0806B8CE: fi+0x41 <- 0 (mov r3,#0); tambem fi+0x43 <- 3 e fi+0x7A0 <- 3. Tela de init, nao escolha"
+0x080127DC,Fight_AwardPartExperience,func_thumb,"[GH-TP2] Ghidra (ja nomeado). Escreve roster +0x02/+0x05/+0x08 e medaforca; NAO toca +0x20..+0x27"
+0x080441EE,TeamSlots_ClearIndices_Candidate,func_thumb,"[GH-TP2 confirmado] zera fi+0x41..43 (r4=0). Nome provisorio; limpeza, nao escolha"
+0x0806B8CE,TeamSlots_ClearFi41_InScreenInit,misc,"[GH-TP2 confirmado] fi+0x41 <- 0 dentro de Screen_InitObjectSlotsLz77 (antes classificado como escritor de escolha; ERRADO)"
+0x0806C7E4,TeamSlots_ClearFi41_InSpawnMove,misc,"[GH-TP2 confirmado] fi+0x41 <- 0 dentro de battle_phase_spawn_move (antes classificado como escritor de escolha; ERRADO)"
+0x083AC560,BattleStepTable_Base_Unresolved,data,"[GH-TP2] base sem literal na ROM; entradas 0x080049C9, 0x080049ED, 0x08004A19 (0x568 idx), 0x08004A41, 0x08004A79, 0x08004AF9, 0x08004C59"
+0x08004A18,BattleStep_PreRefreshBots,func_thumb,"[GH-TP2] passo GS (tabela 0x083AC568 idx 0). Sem funcao no Ghidra; sem xref no Ghidra"
