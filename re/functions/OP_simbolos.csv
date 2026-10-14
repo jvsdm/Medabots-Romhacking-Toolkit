@@ -1,0 +1,8 @@
+# address,name,kind,comment
+0x0805C574,Options_ThreeRowMenuStep,func_thumb,"[OP] tela OPTIONS do titulo (GS 5 de 0x0848360C); 3 linhas: 0x03001788 / 0x03001360 / 0x03000B94; A/B volta (GS-1); confirmado"
+0x03001788,Opt_BattleTimerSpeed,data,"[OP] opcao linha 0 (save 0x1CB8 b0-1, 0..2); Fight_SetCounterTimerByState: 0->0x28, 1->0x1E, 2->0x14 em ctx+0x57; nome provavel"
+0x03001360,Opt_UiActionGate,data,"[OP] opcao linha 1 (save 0x1CB8 b2, 0/1); gate de Fight_TryUiActionByIndex/Default/MaybeStartUiAction (0 ou ctx+0x89==1 libera); CONFLITO com gMessageBusyFlag (A6)"
+0x03000B94,Opt_ResultMusicVariant,data,"[OP] opcao linha 2 (save 0x1CB8 b3-4, 0..2); tabela 0x080AF8CA[v] = musica (prévia na tela e cue de resultado em Fight_PlayResultCueByState); provavel"
+0x080AF8CA,Opt_SongTable,data,"[OP] bytes 9,10,11,9; indice = valor da opcao 0x03000B94; confirmado (leitura da ROM)"
+0x08018BD4,Fight_SetCounterTimerByState,func_thumb,"[OP] le 0x03001788 (ja nomeado no Ghidra); confirmado"
+0x08018A54,Fight_PlayResultCueByState,func_thumb,"[OP] le 0x03000B94 (cue da musica de resultado); confirmado"

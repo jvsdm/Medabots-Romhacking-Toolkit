@@ -1,0 +1,3 @@
+Literais da tela OPTIONS (ROM 0x0805C5E0..0x0805C7F4) lidos como ponteiros: nenhum código sem função novo nesta tarefa.
+Tabela 0x080AF8CA (4 bytes de ids de música) — dado, não código.
+Sem função no Ghidra: nenhum trecho de código da tela; todos os leitores têm função (ver OP.md §3).
