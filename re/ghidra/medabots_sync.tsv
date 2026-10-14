@@ -59,17 +59,17 @@ F	0x08003394	Gfx_InitBgLayersAndEnableDisplay
 F	0x080036F4	Menu_ResetSubstateByMode
 F	0x08003784	Gfx_SceneInit
 F	0x08003904	Screen_DecompressRowImageByIndex
-F	0x080039BC	tick_par_contador
+F	0x080039BC	Pair_TickDownCounterIfFlag
 F	0x08003A38	InitializeBattleStatusScreen
 F	0x08003EE0	Gfx_ResetTileState
 F	0x0800406C	InitializeBattleSceneScreen
 F	0x080048D8	FightPreview_CachePlayerLoadoutForScene
 F	0x08004DB4	Battle_SlotDrawStep
-F	0x08004E74	tick_par_contador_b
-F	0x08004E98	init_4_slots
-F	0x08004EF8	atualiza_slot
-F	0x08004FD0	desenha_9_slots_a
-F	0x08005000	desenha_9_slots_b
+F	0x08004E74	Pair_TickUpCounterIfFlag
+F	0x08004E98	ObjectSlots_Init4
+F	0x08004EF8	ObjectSlot_UpdatePosition
+F	0x08004FD0	BattlePreview_LoadSlotTiles9
+F	0x08005000	BattlePreview_CreateSlotSprites9
 F	0x0800508C	Menu_DrawPartIconGrid
 F	0x08005118	desenha_icone_a
 F	0x0800519C	desenha_icone_b
@@ -1347,16 +1347,61 @@ F	0x08033F04	Fight_HandleActionScriptOpcode1D
 F	0x08033F64	Fight_HandleActionScriptOpcode1C
 F	0x08033F9C	Fight_MarkDefenderFollowupFromDamageThreshold
 F	0x08034048	FightPreview_SetupSceneFromPartTechnique
-F	0x080345E8	Fight_ClearMirroredSupportSummary
-F	0x080346C4	Fight_ChooseRandomOpponentTarget
-F	0x08034708	Fight_RollPartAndAdvanceScript
-F	0x0803496C	Fight_AccumulatePartBonusForSide
-F	0x080349D8	Fight_SelectReactionTargetFromOpponentState
-F	0x08034A68	Fight_CopyBotPartWordAndAdvance
-F	0x08034AF4	Fight_PickOpponentTargetStep
-F	0x08034B68	Fight_SetOpponentBaseAndAdvanceScript
+F	0x08034524	ActionScript_Op36_CallAF
+F	0x08034540	ActionScript_Op37_CallAG
+F	0x0803455C	ActionScript_Op38_CallAH
+F	0x08034578	ActionScript_Op39_CallAI
+F	0x08034594	ActionScript_Op3A_CallAJ
+F	0x080345B0	ActionScript_Op3B_CallAK
+F	0x080345CC	ActionScript_Op3C_CallAL
+F	0x080345E8	ActionScript_Op3D_ClearSupportRecord
+F	0x08034628	ActionScript_Op3E_CallAM
+F	0x08034644	ActionScript_Op3F_CallAN_SceneExit
+F	0x08034684	ActionScript_Op40_SideSpritesAO
+F	0x080346C4	ActionScript_Op41_PickRandomOpponentTargetPart
+F	0x08034708	ActionScript_Op42_RollPartValueAndEffect
+F	0x08034728	ActionScript_Op43_SumSideField4
+F	0x0803476C	ActionScript_Op44_SideSpritesAP
+F	0x080347AC	ActionScript_Op45_IncrementUsageCounter
+F	0x080347BC	ActionScript_Op46_SumPartDamageOfTargetBot
+F	0x080347F8	ActionScript_Op47_SideSpritesCopyTarget
+F	0x080348D0	ActionScript_Op48_SideSpritesAQ
+F	0x08034910	ActionScript_Op49_HalfArmorOfActiveBot
+F	0x0803496C	ActionScript_Op4A_AllySideLoop
+F	0x080349D8	ActionScript_Op4B_FindBotWithPartAndPickPart
+F	0x08034A68	ActionScript_Op4C_CopyPartArmorToEC
+F	0x08034AA0	ActionScript_Op4D_RandomChance
+F	0x08034AF4	ActionScript_Op4E_FindActiveBotWithGroupAndPickPart
+F	0x08034B68	ActionScript_Op4F_FindActiveBotWithGroup
+F	0x08034BA0	ActionScript_Op50_CallAR
+F	0x08034BBC	ActionScript_Op51_CallAS
+F	0x08034BD8	ActionScript_Op52_CallAT
+F	0x08034BF4	ActionScript_Op53_CallAU
+F	0x08034C10	ActionScript_Op54_CallAV
+F	0x08034C2C	ActionScript_Op55_CallAW
+F	0x08034C48	ActionScript_Op56_CallAX
+F	0x08034C64	ActionScript_Op57_CallAY
+F	0x08034C80	ActionScript_Op58_CallAZ
+F	0x08034C9C	ActionScript_Op59_CallBA
+F	0x08034CB8	ActionScript_Op5A_CallBB
+F	0x08034CD4	ActionScript_Op5B_CallBC
+F	0x08034CF0	ActionScript_Op5C_CallBD
+F	0x08034D0C	ActionScript_Op5D_CallBE
+F	0x08034D28	ActionScript_Op5E_CallBF
+F	0x08034D44	ActionScript_Op5F_CallBG
+F	0x08034D60	ActionScript_Op60_CallBH
+F	0x08034D7C	ActionScript_Op61_CallBI
+F	0x08034D98	ActionScript_Op62_CallBJ
+F	0x08034DB4	ActionScript_Op63_CallBK
+F	0x08034DD0	ActionScript_Op64_CallBL
+F	0x08034DEC	ActionScript_Op65_CallBM
+F	0x08034E08	ActionScript_Op66_CallBN
+F	0x08034E24	ActionScript_Op67_CallBO
+F	0x08034E40	ActionScript_Op68_CallBP
+F	0x08034E5C	ActionScript_Op69_CallBQ
+F	0x08034E78	ActionScript_Op6A_CallBR
 F	0x08034EB8	Fight_ReadActionScriptInlineArgs
-F	0x08034F08	Fight_AdvanceActionScriptCursor
+F	0x08034F08	ActionScript_Advance
 F	0x08034F44	Fight_SideHasPartCode15
 F	0x08034F68	Fight_ApplyDamageToPart
 F	0x08034FC8	Fight_SetBotSlotPosFromDirection
@@ -1854,6 +1899,7 @@ F	0x08048E24	Map_ExpandMetaTilemapToBgScreenblocks
 F	0x08049110	BgMap_WriteTileEntry
 F	0x080491B8	BgMap_FillRectTilePalette
 F	0x08049210	BgMap_CopyRectWithAttrs
+F	0x080492A8	BgMap_CopyRectAddOffset
 F	0x08049318	Map_ResetRenderAffineState
 F	0x08049374	Map_RecomputeRenderAffineEntry
 F	0x08049420	Map_SetObjectAnimationVariant
@@ -2762,7 +2808,7 @@ L	0x08075FF8	gObjTextGlyphFrames
 F	0x0807C8B0	bios_set_reg_by_id
 F	0x0807C918	bios_store_idx
 F	0x0807C950	bios_init_ring
-F	0x0807C9D8	lib_dma_queue_clear
+F	0x0807C9D8	lib_timer_queue_clear
 F	0x0807CA1C	lib_dma3_copy
 F	0x0807CA9C	lib_eeprom_read64
 F	0x0807CB4C	lib_eeprom_write64
@@ -3044,48 +3090,3 @@ C	0x080344B4
 C	0x080344D0
 C	0x080344EC
 C	0x08034508
-C	0x08034524
-C	0x08034540
-C	0x0803455C
-C	0x08034578
-C	0x08034594
-C	0x080345B0
-C	0x080345CC
-C	0x08034628
-C	0x08034644
-C	0x08034684
-C	0x08034728
-C	0x0803476C
-C	0x080347AC
-C	0x080347BC
-C	0x080347F8
-C	0x080348D0
-C	0x08034910
-C	0x08034AA0
-C	0x08034BA0
-C	0x08034BBC
-C	0x08034BD8
-C	0x08034BF4
-C	0x08034C10
-C	0x08034C2C
-C	0x08034C48
-C	0x08034C64
-C	0x08034C80
-C	0x08034C9C
-C	0x08034CB8
-C	0x08034CD4
-C	0x08034CF0
-C	0x08034D0C
-C	0x08034D28
-C	0x08034D44
-C	0x08034D60
-C	0x08034D7C
-C	0x08034D98
-C	0x08034DB4
-C	0x08034DD0
-C	0x08034DEC
-C	0x08034E08
-C	0x08034E24
-C	0x08034E40
-C	0x08034E5C
-C	0x08034E78

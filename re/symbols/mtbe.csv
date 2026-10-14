@@ -305,17 +305,17 @@ address,name,kind,count,comment
 0x080036F4,Menu_ResetSubstateByMode,func_thumb,,modo obj+0x8F 0/1/2; provavel
 0x08003784,Gfx_SceneInit,func_thumb,,"setup de cena BG: DISPCNT, tiles, mapa, blend (provavel)"
 0x08003904,Screen_DecompressRowImageByIndex,func_thumb,,[FR3] [FR3] escolhe imagem A/B/C pelo byte +0x8F (0/1/2+) e decompress_and_store (provavel)
-0x080039BC,tick_par_contador,func_thumb,,[R0] decrementa contador e incrementa seguinte se bit0 de flag (provavel)
+0x080039BC,Pair_TickDownCounterIfFlag,func_thumb,,[R0] decrementa contador e incrementa seguinte se bit0 de flag (provavel) (antes: tick_par_contador)
 0x08003A38,InitializeBattleStatusScreen,func_thumb,,"Simon/Rokusho: Initialize the battle status/details screen state machine. Sets up BG layers, decompresses status-screen graphics/tilemaps, loads palettes, initializes the relevant screen widgets, and advances the current game subroutine state."
 0x08003EE0,Gfx_ResetTileState,func_thumb,,[provavel] CpuFastSet + Tile_ClearSlots reset
 0x0800406C,InitializeBattleSceneScreen,func_thumb,,"Simon/Rokusho: Initialize the main battle scene screen. Configures BG layers, decompresses battle scene graphics/tilemaps, loads composite battle sprite resources, builds the sprite objects, initializes supporting scene widgets, and advances the current game subroutine state."
 0x080048D8,FightPreview_CachePlayerLoadoutForScene,func_thumb,,"Simon/Rokusho: Cache the current player-side preview loadout into fight_information.preview_loadout_cache. For each of the three player preview bots, store the leg icon index plus the four part ids used later by the preview/battle-intro scene."
 0x08004DB4,Battle_SlotDrawStep,func_thumb,,passo de desenho dos slots de batalha por frame; provavel
-0x08004E74,tick_par_contador_b,func_thumb,,[R0] incrementa contador e seguinte se bit0 de flag (provavel)
-0x08004E98,init_4_slots,func_thumb,,[R0] inicializa 4 slots de objeto (provavel)
-0x08004EF8,atualiza_slot,func_thumb,,[R0] calcula posicao/tile de slot e avanca contador (provavel)
-0x08004FD0,desenha_9_slots_a,func_thumb,,Simon/Rokusho: Load composite preview sprite tile graphics for every active battle/menu preview slot. Each active slot contributes one four-part Medabot preview sprite. (antes: LoadBattlePreviewSpriteTilesForAllSlots)
-0x08005000,desenha_9_slots_b,func_thumb,,Simon/Rokusho: Build the composite preview sprite OAM objects for every battle/menu preview slot. Inactive slots are masked out; active slots get a 4-object composite sprite. (antes: BuildBattlePreviewSpriteObjectsForAllSlots)
+0x08004E74,Pair_TickUpCounterIfFlag,func_thumb,,[R0] incrementa contador e seguinte se bit0 de flag (provavel) (antes: tick_par_contador_b)
+0x08004E98,ObjectSlots_Init4,func_thumb,,[R0] inicializa 4 slots de objeto (provavel) (antes: init_4_slots)
+0x08004EF8,ObjectSlot_UpdatePosition,func_thumb,,[R0] calcula posicao/tile de slot e avanca contador (provavel) (antes: atualiza_slot)
+0x08004FD0,BattlePreview_LoadSlotTiles9,func_thumb,,Simon/Rokusho: Load composite preview sprite tile graphics for every active battle/menu preview slot. Each active slot contributes one four-part Medabot preview sprite. (antes: LoadBattlePreviewSpriteTilesForAllSlots) (antes: desenha_9_slots_a)
+0x08005000,BattlePreview_CreateSlotSprites9,func_thumb,,Simon/Rokusho: Build the composite preview sprite OAM objects for every battle/menu preview slot. Inactive slots are masked out; active slots get a 4-object composite sprite. (antes: BuildBattlePreviewSpriteObjectsForAllSlots) (antes: desenha_9_slots_b)
 0x0800508C,Menu_DrawPartIconGrid,func_thumb,,"Simon/Rokusho: Draw the part icon tile blocks for every battle/menu preview slot. Uses the legs/part-set preview id when valid, otherwise draws the placeholder icon. (antes: DrawBattlePreviewPartIcons)"
 0x08005118,desenha_icone_a,func_thumb,,Simon/Rokusho: Draw the medal label for the currently selected battle preview entry. Uses a generic placeholder label for some entry types and otherwise renders the actual medal text. (antes: DrawBattlePreviewMedalLabel)
 0x0800519C,desenha_icone_b,func_thumb,,Simon/Rokusho: Draw the name label for the currently selected battle preview entry. Uses a placeholder string for generic entries and otherwise copies the actual name text before rendering it as OAM text. (antes: DrawBattlePreviewNameLabel)
@@ -1594,16 +1594,61 @@ address,name,kind,count,comment
 0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,,"Simon/Rokusho: If the defender has the required status bit and the currently referenced part is still active, compare current damage scratch against the defender threshold and raise defender_followup_flags when the threshold condition is met."
 0x08034048,FightPreview_SetupSceneFromPartTechnique,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel].
 0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
-0x080345E8,Fight_ClearMirroredSupportSummary,func_thumb,,Simon/Rokusho
-0x080346C4,Fight_ChooseRandomOpponentTarget,func_thumb,,sorteia bot e parte alvo adversários; provável
-0x08034708,Fight_RollPartAndAdvanceScript,func_thumb,,"[provavel] chama Fight_RollPartValue, Fight_ComputeEffectValueFromRos, Fight_AdvanceActionScriptCursor (ctx+0x87)"
-0x0803496C,Fight_AccumulatePartBonusForSide,func_thumb,,soma 10 em ctx+0x8C por peca zerada do lado; semantica do 10 chute; provavel
-0x080349D8,Fight_SelectReactionTargetFromOpponentState,func_thumb,,Simon/Rokusho: Choose a target bot/part for reaction-driven targeting. Prefer an opponent that currently advertises a usable reaction source; otherwise fall back to a random active opponent and random target part. Writes selected_target_bot_id and selected_target_part_id.
-0x08034A68,Fight_CopyBotPartWordAndAdvance,func_thumb,,[confirmado] le halfword bot+0x59+0x18*parte para ctx+0xEC; chama Fight_AdvanceActionScriptCursor
-0x08034AF4,Fight_PickOpponentTargetStep,func_thumb,,provável: escolhe alvo adversário e parte; avança script de ação
-0x08034B68,Fight_SetOpponentBaseAndAdvanceScript,func_thumb,,"[FL10] +0x60 = lado adversario; FUN_08037830(base,side); 0xFF -> +0xEC=10; avanca cursor do roteiro (provável)"
+0x08034524,ActionScript_Op36_CallAF,func_thumb,,[AS2] GH-AS2: opcode 0x36 wrapper -> Fight_DispatchOnSubstateAA_AF + avanço se +0xB5; sem funcao no Ghidra
+0x08034540,ActionScript_Op37_CallAG,func_thumb,,[AS2] GH-AS2: opcode 0x37 wrapper -> ..._AG
+0x0803455C,ActionScript_Op38_CallAH,func_thumb,,[AS2] GH-AS2: opcode 0x38 wrapper -> ..._AH
+0x08034578,ActionScript_Op39_CallAI,func_thumb,,[AS2] GH-AS2: opcode 0x39 wrapper -> ..._AI
+0x08034594,ActionScript_Op3A_CallAJ,func_thumb,,[AS2] GH-AS2: opcode 0x3A wrapper -> ..._AJ
+0x080345B0,ActionScript_Op3B_CallAK,func_thumb,,[AS2] GH-AS2: opcode 0x3B wrapper -> ..._AK
+0x080345CC,ActionScript_Op3C_CallAL,func_thumb,,[AS2] GH-AS2: opcode 0x3C wrapper -> ..._AL
+0x080345E8,ActionScript_Op3D_ClearSupportRecord,func_thumb,,Simon/Rokusho (antes: Fight_ClearMirroredSupportSummary)
+0x08034628,ActionScript_Op3E_CallAM,func_thumb,,[AS2] GH-AS2: opcode 0x3E wrapper -> ..._AM
+0x08034644,ActionScript_Op3F_CallAN_SceneExit,func_thumb,,[AS2] GH-AS2: opcode 0x3F -> ..._AN; se +0xAB!=1 grava cena 8 (0x03002B8C) e 0 (0x0300137C); provavel
+0x08034684,ActionScript_Op40_SideSpritesAO,func_thumb,,[AS2] GH-AS2: opcode 0x40 -> UpdateSingleLayerSideSprites + AdvanceLeft/RightSideSequenceStep + ..._AO
+0x080346C4,ActionScript_Op41_PickRandomOpponentTargetPart,func_thumb,,sorteia bot e parte alvo adversários; provável (antes: Fight_ChooseRandomOpponentTarget)
+0x08034708,ActionScript_Op42_RollPartValueAndEffect,func_thumb,,"[provavel] chama Fight_RollPartValue, Fight_ComputeEffectValueFromRos, Fight_AdvanceActionScriptCursor (ctx+0x87) (antes: Fight_RollPartAndAdvanceScript)"
+0x08034728,ActionScript_Op43_SumSideField4,func_thumb,,[AS2] GH-AS2: opcode 0x43 soma campo +4 dos 3 bots do lado em u16; provavel
+0x0803476C,ActionScript_Op44_SideSpritesAP,func_thumb,,[AS2] GH-AS2: opcode 0x44 -> side sprites + ..._AP
+0x080347AC,ActionScript_Op45_IncrementUsageCounter,func_thumb,,[AS2] GH-AS2: opcode 0x45 -> Fight_IncrementActionUsageCounter
+0x080347BC,ActionScript_Op46_SumPartDamageOfTargetBot,func_thumb,,[AS2] GH-AS2: opcode 0x46 soma (armadura max - atual) das 4 pecas do bot indicado; provavel
+0x080347F8,ActionScript_Op47_SideSpritesCopyTarget,func_thumb,,[AS2] GH-AS2: opcode 0x47 side sprites + Fight_CopySelectedTargetToFightInfo; cauda pendente
+0x080348D0,ActionScript_Op48_SideSpritesAQ,func_thumb,,[AS2] GH-AS2: opcode 0x48 -> side sprites + ..._AQ
+0x08034910,ActionScript_Op49_HalfArmorOfActiveBot,func_thumb,,[AS2] GH-AS2: opcode 0x49 fight+0xD6+2k = armadura_k>>1 do bot ativo; fight+0xEC += metades; confirmado disasm
+0x0803496C,ActionScript_Op4A_AllySideLoop,func_thumb,,soma 10 em ctx+0x8C por peca zerada do lado; semantica do 10 chute; provavel (antes: Fight_AccumulatePartBonusForSide)
+0x080349D8,ActionScript_Op4B_FindBotWithPartAndPickPart,func_thumb,,Simon/Rokusho: Choose a target bot/part for reaction-driven targeting. Prefer an opponent that currently advertises a usable reaction source; otherwise fall back to a random active opponent and random target part. Writes selected_target_bot_id and selected_target_part_id. (antes: Fight_SelectReactionTargetFromOpponentState)
+0x08034A68,ActionScript_Op4C_CopyPartArmorToEC,func_thumb,,[confirmado] le halfword bot+0x59+0x18*parte para ctx+0xEC; chama Fight_AdvanceActionScriptCursor (antes: Fight_CopyBotPartWordAndAdvance)
+0x08034AA0,ActionScript_Op4D_RandomChance,func_thumb,,[AS2] GH-AS2: opcode 0x4D chama randbyte duas vezes; provavel
+0x08034AF4,ActionScript_Op4E_FindActiveBotWithGroupAndPickPart,func_thumb,,provável: escolhe alvo adversário e parte; avança script de ação (antes: Fight_PickOpponentTargetStep)
+0x08034B68,ActionScript_Op4F_FindActiveBotWithGroup,func_thumb,,"[FL10] +0x60 = lado adversario; FUN_08037830(base,side); 0xFF -> +0xEC=10; avanca cursor do roteiro (provável) (antes: Fight_SetOpponentBaseAndAdvanceScript)"
+0x08034BA0,ActionScript_Op50_CallAR,func_thumb,,[AS2] GH-AS2: opcode 0x50 (AR) dano em peca aleatoria dos adversarios; ver HN2.md
+0x08034BBC,ActionScript_Op51_CallAS,func_thumb,,[AS2] GH-AS2: opcode 0x51 (AS) estado por tecnica no proprio bot; ver HN2.md
+0x08034BD8,ActionScript_Op52_CallAT,func_thumb,,[AS2] GH-AS2: opcode 0x52 (AT) bonus de suporte do time; ver HN2.md
+0x08034BF4,ActionScript_Op53_CallAU,func_thumb,,[AS2] GH-AS2: opcode 0x53 (AU) marca de reacao no proprio bot; ver HN2.md
+0x08034C10,ActionScript_Op54_CallAV,func_thumb,,[AS2] GH-AS2: opcode 0x54 (AV) estado em todos os adversarios; ver HN2.md
+0x08034C2C,ActionScript_Op55_CallAW,func_thumb,,"[AS2] GH-AS2: opcode 0x55 -> Fight_DispatchOnSubstateAA_AW (0x08028C40); time, protecao contra status (nota)"
+0x08034C48,ActionScript_Op56_CallAX,func_thumb,,[AS2] GH-AS2: opcode 0x56 -> Fight_DispatchOnSubstateAA_AX (0x080294B4); time (nota)
+0x08034C64,ActionScript_Op57_CallAY,func_thumb,,"[AS2] GH-AS2: opcode 0x57 -> Fight_DispatchOnSubstateAA_AY (0x08029840); time, reparo de armadura (nota)"
+0x08034C80,ActionScript_Op58_CallAZ,func_thumb,,"[AS2] GH-AS2: opcode 0x58 -> Fight_DispatchOnSubstateAA_AZ (0x08029E0C); time, restaurar pecas (nota)"
+0x08034C9C,ActionScript_Op59_CallBA,func_thumb,,"[AS2] GH-AS2: opcode 0x59 -> Fight_DispatchOnSubstateAA_BA (0x0802A0E8); time, gauge (nota)"
+0x08034CB8,ActionScript_Op5A_CallBB,func_thumb,,[AS2] GH-AS2: opcode 0x5A -> Fight_DispatchOnSubstateAA_BB (0x0802A6AC); tecnica sem dano (nota)
+0x08034CD4,ActionScript_Op5B_CallBC,func_thumb,,[AS2] GH-AS2: opcode 0x5B -> Fight_DispatchOnSubstateAA_BC (0x0802AAD0)
+0x08034CF0,ActionScript_Op5C_CallBD,func_thumb,,[AS2] GH-AS2: opcode 0x5C -> Fight_DispatchOnSubstateAA_BD (0x0802ACCC)
+0x08034D0C,ActionScript_Op5D_CallBE,func_thumb,,[AS2] GH-AS2: opcode 0x5D -> Fight_DispatchOnSubstateAA_BE (0x0802B000)
+0x08034D28,ActionScript_Op5E_CallBF,func_thumb,,[AS2] GH-AS2: opcode 0x5E -> Fight_DispatchOnSubstateAA_BF (0x0802B7E8)
+0x08034D44,ActionScript_Op5F_CallBG,func_thumb,,[AS2] GH-AS2: opcode 0x5F -> Fight_DispatchOnSubstateAA_BG (0x0802BD6C)
+0x08034D60,ActionScript_Op60_CallBH,func_thumb,,[AS2] GH-AS2: opcode 0x60 -> Fight_DispatchOnSubstateAA_BH (0x0802C2AC)
+0x08034D7C,ActionScript_Op61_CallBI,func_thumb,,[AS2] GH-AS2: opcode 0x61 -> Fight_DispatchOnSubstateAA_BI (0x0802C644)
+0x08034D98,ActionScript_Op62_CallBJ,func_thumb,,[AS2] GH-AS2: opcode 0x62 -> Fight_DispatchOnSubstateAA_BJ (0x0802CBE8)
+0x08034DB4,ActionScript_Op63_CallBK,func_thumb,,[AS2] GH-AS2: opcode 0x63 -> Fight_DispatchOnSubstateAA_BK (0x0802D688)
+0x08034DD0,ActionScript_Op64_CallBL,func_thumb,,[AS2] GH-AS2: opcode 0x64 -> Fight_DispatchOnSubstateAA_BL (0x0802DCB4)
+0x08034DEC,ActionScript_Op65_CallBM,func_thumb,,[AS2] GH-AS2: opcode 0x65 -> Fight_DispatchOnSubstateAA_BM (0x0802E424)
+0x08034E08,ActionScript_Op66_CallBN,func_thumb,,[AS2] GH-AS2: opcode 0x66 -> Fight_DispatchOnSubstateAA_BN (0x0802EBC0)
+0x08034E24,ActionScript_Op67_CallBO,func_thumb,,[AS2] GH-AS2: opcode 0x67 -> Fight_DispatchOnSubstateAA_BO (0x0802F030)
+0x08034E40,ActionScript_Op68_CallBP,func_thumb,,[AS2] GH-AS2: opcode 0x68 -> Fight_DispatchOnSubstateAA_BP (0x0802F628)
+0x08034E5C,ActionScript_Op69_CallBQ,func_thumb,,[AS2] GH-AS2: opcode 0x69 -> Fight_DispatchOnSubstateAA_BQ (0x0802F990)
+0x08034E78,ActionScript_Op6A_CallBR,func_thumb,,[AS2] GH-AS2: opcode 0x6A -> Fight_DispatchOnSubstateAA_BR (0x0802FE50)
 0x08034EB8,Fight_ReadActionScriptInlineArgs,func_thumb,,Simon/Rokusho: Decode the current action-script opcode's inline argument payload into fight_information.action_script_inline_args[0..].
-0x08034F08,Fight_AdvanceActionScriptCursor,func_thumb,,Simon/Rokusho: Advance fight_information.action_script_cursor past the current opcode byte and its inline argument payload length. Also clears the action-script repeat/continue byte at +0xAA.
+0x08034F08,ActionScript_Advance,func_thumb,,Simon/Rokusho: Advance fight_information.action_script_cursor past the current opcode byte and its inline argument payload length. Also clears the action-script repeat/continue byte at +0xAA. (antes: Fight_AdvanceActionScriptCursor)
 0x08034F44,Fight_SideHasPartCode15,func_thumb,,[R1b] provavel na estrutura; significado do 0x15 chute
 0x08034F68,Fight_ApplyDamageToPart,func_thumb,,Simon/Rokusho (antes: do_damage_on_part; decisao CF)
 0x08034FC8,Fight_SetBotSlotPosFromDirection,func_thumb,,[R1b] provavel: move slot de objeto do bot por direcao
@@ -2101,6 +2146,7 @@ address,name,kind,count,comment
 0x08049110,BgMap_WriteTileEntry,func_thumb,,[R3] entrada de tilemap BG: tile + paleta<<12 + flips
 0x080491B8,BgMap_FillRectTilePalette,func_thumb,,[FN2] provavel: Preenche retangulo w x h do tilemap (stride 0x20 ou 0x40) com tile + (paleta << 12)
 0x08049210,BgMap_CopyRectWithAttrs,func_thumb,,[FN2] provavel: Copia retangulo de array fonte para tilemap aplicando mascara e atributos (paleta << 12)
+0x080492A8,BgMap_CopyRectAddOffset,func_thumb,,[FN2] provavel: Copia retangulo de array fonte para tilemap somando param9 a cada entrada (passo 0x20 ou 0x40)
 0x08049318,Map_ResetRenderAffineState,func_thumb,,Simon/Rokusho: Reset the per-map affine/render scratch state before rebuilding visible map object and overlay transforms.
 0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,,Simon/Rokusho: Recompute the affine/render coefficients for one map render entry from its angle/scale scratch values.
 0x08049420,Map_SetObjectAnimationVariant,func_thumb,,Simon/Rokusho: Set the active animation variant for one map/object render slot and reset its local frame timers.
@@ -3009,7 +3055,7 @@ address,name,kind,count,comment
 0x0807C8B0,bios_set_reg_by_id,func_thumb,,[R4] R4: escreve registrador de hardware por id (lib); chute
 0x0807C918,bios_store_idx,func_thumb,,[R4] R4: grava indice e endereco (lib); chute
 0x0807C950,bios_init_ring,func_thumb,,[R4] R4: configura fila/buffer de hardware (lib); chute
-0x0807C9D8,lib_dma_queue_clear,func_thumb,,[R4] R4: limpa fila de DMA/EEPROM em secao critica; chute
+0x0807C9D8,lib_timer_queue_clear,func_thumb,,[R4] R4: limpa fila de DMA/EEPROM em secao critica; chute (antes: lib_dma_queue_clear)
 0x0807CA1C,lib_dma3_copy,func_thumb,,[R4] R4: copia por DMA3 e espera fim; provavel
 0x0807CA9C,lib_eeprom_read64,func_thumb,,[R4] R4: le bloco de 64 bits da EEPROM; provavel
 0x0807CB4C,lib_eeprom_write64,func_thumb,,[R4] R4: grava bloco de 64 bits na EEPROM; provavel
