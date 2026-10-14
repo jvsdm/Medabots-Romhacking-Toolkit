@@ -438,7 +438,7 @@ F	0x0801531C	Fight_SelectActionsForBotGroup
 F	0x08015358	Fight_SelectActionFromCycleOrPendingOverride
 F	0x08015390	Fight_TrySelectActionFromSpecialityCycle
 F	0x08015414	Fight_AdvanceSpecialityCycleIndex
-L	0x08015438	Fight_UnknownStep_08015438
+F	0x08015438	Fight_UnknownStep_08015438
 F	0x08015464	Fight_SelectFallbackActionFromPriorityList
 L	0x08015488	Fight_SelectFallbackActionFromPriorityList_08015488
 F	0x080154E0	Fight_IsPartActionLockedByPendingEffect
@@ -1799,9 +1799,28 @@ F	0x0803DCDC	Overlay_InitScreenGraphics
 L	0x0803DDC6	Overlay_InitScreenGraphics_AltEntry_803ddc6
 F	0x0803DEF0	LinkSync_MenuStep52
 F	0x0803DF98	LinkSync_MenuStep53
+F	0x0803E03C	Anim_RunSlotScriptThenSfx54
+F	0x0803E098	Anim_TweenUntilDoneThenReset
+F	0x0803E0C0	Anim_TweenClampThenSfx2A
+F	0x0803E0F0	Anim_DrawSegmentUntil120
+F	0x0803E120	Anim_DrawSegmentThenJumpPtr
+F	0x0803E170	Anim_DrawSegmentThenLoadSlot
+F	0x0803E1A4	Anim_DrawSegmentThenDispatchLoad
+F	0x0803E1FC	Anim_DrawSegmentThenDispatchStep
+F	0x0803E234	Anim_DrawSegmentUntilOverlayReached
+F	0x0803E270	Anim_DrawCycleStateZeroToFour
+F	0x0803E2AC	Anim_DrawFadeSfx8Step
+F	0x0803E2DC	Anim_DrawFlushPaletteThenReset
+F	0x0803E314	Anim_DrawFadeRowsStep
+F	0x0803E374	Anim_PickSlotActivateEntryCopy
+F	0x0803E434	Anim_DrawSegmentThenDispatchLoadAlt
+F	0x0803E48C	Anim_DrawSetValue3E
 F	0x0803E4B4	PeerLost_MenuStep16
+F	0x0803E4D8	Anim_GpuBlendTickThenCount
 F	0x0803E4F4	Gfx_BlankSceneInit
+F	0x0803E618	Anim_InitSlotAndLoadCount
 F	0x0803E634	Flow_StepCounterTickA
+F	0x0803E674	Boot_ResetSystemWrapper
 F	0x0803E680	LinkSync_MenuStep80
 F	0x0803E780	Overlay_ClearTimerIfFlag
 F	0x0803E79C	Overlay_SetTargetAndCheckReached
@@ -1880,6 +1899,7 @@ F	0x08040A40	BgMap_LoadTileStageStep
 F	0x08040AF0	Slot_AdvanceStepByFlag
 F	0x08040B0C	Palette_FadeStepAndDispatch
 F	0x08040B50	Slot_SetTimer8
+F	0x08040B5C	Gfx_CpuSetCopy52Blocks
 F	0x08040B90	Slot_SetupFromRecordList
 F	0x08040BD8	Anim_RunSlotScript
 F	0x08040CD0	ClearObjectAttributeEntries
@@ -1957,19 +1977,22 @@ L	0x08043820	AreBattleSpritePartIdsValid_08043820
 F	0x0804384C	Lookup_FindPartIndexById
 F	0x0804387C	reset_step_and_get_encounter_flag
 F	0x080438C4	Overworld_ShouldTriggerRandomEncounter
+L	0x08043AE0	Unk_08043AE0
+L	0x08043B58	Unk_08043B58
 F	0x08043B7C	GfxBankA_LoadTilesAndPalette
 F	0x08043C08	GfxBankB_LoadTilesAndPalette
 F	0x08043C94	Encounter_RollPercent0To99
 F	0x08043CA8	Slots_ClearFourPairs
 F	0x08043CD4	Obj_StepAccumMoveA
 F	0x08043DF8	FxBlend_ApplyFromObjA
-L	0x08043E48	Fight_G03_VBlankCallback_ptr
+L	0x08043E48	Obj_StepAccumMoveAWrapper
 F	0x08043E54	Obj_CopySlot8Bytes
 F	0x08043E78	Obj_StepAccumMoveB
 F	0x08043F9C	FxBlend_ApplyFromObjB
 F	0x08044094	Anim_SetDefaultTimers
 F	0x080440B4	Count_Entries3InTable9
 F	0x080440D4	Check_PairsAllEqual
+F	0x08044100	Obj_StepAccumMoveBThenSync
 F	0x08044118	TileMap_ReadRectToBuffer
 F	0x08044160	TileMap_WriteBufferToRect
 F	0x080441A8	Gfx_DecompressFixedAsset
@@ -2036,7 +2059,8 @@ F	0x08047BC0	Sound_RequestFade
 F	0x08047BCC	Table_GetWordByIndex_08047bd8
 F	0x08047BDC	GetBotName
 F	0x08047BEC	GetPartName
-F	0x08047C00	FieldMenu_CloseChoice_Provavel
+F	0x08047C00	FieldMenu_ClearTwoSlotPairs
+F	0x08047C24	Obj_TwoStageInitThenDispatch
 F	0x08047C84	Text_WriteDecimalToSlot
 F	0x08047CE4	Text_CopyStringToSlot
 F	0x08047D24	Num_FormatTable4EntryToGlyphs
@@ -2059,6 +2083,7 @@ F	0x08047EF0	PartSet_HasMatchingSlotPartId
 F	0x08047F50	PartSet_FindCompleteEntryIndex
 F	0x08047F9C	Team_CountSlotsWithStatus3
 F	0x08047FBC	PartSet_HasCompleteMonochromeEntry
+F	0x08048000	Fx_SetupLayersAndInitRecord8
 F	0x080480D4	Table_GetWordByIndex_080480e0
 F	0x080480E4	Map_LoadCurrentMapAndEntities
 F	0x08048174	Map_UpdateBackgroundAnimations
@@ -2094,6 +2119,8 @@ F	0x08049728	fill_memory
 F	0x08049740	Mem_CountDiffBytes
 F	0x08049780	Random_NextScaled
 F	0x080497C0	mem_copy
+F	0x080497E0	Overworld_SetTransitionStepAndDispatch
+F	0x08049CC8	Obj_LoadPairFromRecord
 F	0x08049D0C	Overworld_ResetScreenTransitionResources
 F	0x08049D18	Overworld_StartScreenTransitionEffect
 F	0x08049D90	Overworld_ResetAndStartScreenTransitionEffect
@@ -2487,7 +2514,14 @@ F	0x080532D4	EventField3Bit_GetByPackedId
 L	0x080532F0	lit_EventFlagArrayBase_OddGet
 L	0x08053308	lit_EventFlagArrayBase_EvenGet
 F	0x0805330C	Map_LoadSecondaryMarkerRecord
+L	0x08053360	Unk_08053360
+L	0x08053380	Unk_08053380
+L	0x080533A4	Unk_080533A4
 F	0x080533E4	Overworld_BeginUiSceneState
+L	0x080534C4	Unk_080534C4
+L	0x080535C8	Unk_080535C8
+L	0x080537BC	Unk_080537BC
+L	0x080537D8	Unk_080537D8
 F	0x080537E4	Viewport_SetFloatBounds
 F	0x08053858	Viewport_ComputeRectEdgeA
 F	0x0805390C	Viewport_ComputeRectEdgeB
@@ -3826,33 +3860,6 @@ C	0x0803DE70
 C	0x0803DE90
 C	0x0803DEB0
 C	0x0803E018
-C	0x0803E03C
-C	0x0803E098
-C	0x0803E0C0
-C	0x0803E0F0
-C	0x0803E120
-C	0x0803E170
-C	0x0803E1A4
-C	0x0803E1FC
-C	0x0803E234
-C	0x0803E270
-C	0x0803E2AC
-C	0x0803E2DC
-C	0x0803E314
-C	0x0803E374
-C	0x0803E434
-C	0x0803E48C
-C	0x0803E4D8
-C	0x0803E618
-C	0x0803E674
-C	0x08040B5C
-C	0x08043AE0
-C	0x08043B58
-C	0x08044100
-C	0x08047C24
-C	0x08048000
-C	0x080497E0
-C	0x08049CC8
 C	0x0804A6A0
 C	0x0804A6BC
 C	0x0804A6C8
@@ -3882,13 +3889,6 @@ C	0x0804AF98
 C	0x0804AFCC
 C	0x0804AFE0
 C	0x0804B15C
-C	0x08053360
-C	0x08053380
-C	0x080533A4
-C	0x080534C4
-C	0x080535C8
-C	0x080537BC
-C	0x080537D8
 C	0x080576D0
 C	0x08057D14
 C	0x08057D50

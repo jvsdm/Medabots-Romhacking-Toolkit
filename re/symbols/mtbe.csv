@@ -821,7 +821,7 @@ address,name,kind,count,comment
 0x08015358,Fight_SelectActionFromCycleOrPendingOverride,func_thumb,,"Simon/Rokusho: Select an action source from the current speciality cycle, unless pending effect kind 0x2C forces the fallback priority-list selector path immediately."
 0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,,"Simon/Rokusho: Resolve the current action entry from BattleBotStateRecord.speciality_action_table[current_speciality_cycle_index]. Values 1..3 try the part slots, value 4 clears the source and returns 0, and values 5..7 try medaforce slots."
 0x08015414,Fight_AdvanceSpecialityCycleIndex,func_thumb,,[R0a] avanca indice do ciclo de especialidade (+0x3F) (confirmado)
-0x08015438,Fight_UnknownStep_08015438,label,,"[FS5] [FS5] kind=label: dado (bad instruction, halt_baddata), alvo de BL de 0x08012BF0; nao e funcao; confirmado (antes: Data_08015438_BadInstruction)"
+0x08015438,Fight_UnknownStep_08015438,func_thumb,,"[FS5] chute: push {r4,r5,lr}, Thumb real; alvo de BL de 0x08012BF0"
 0x08015464,Fight_SelectFallbackActionFromPriorityList,func_thumb,,"Simon/Rokusho: Choose a fallback action source when the current speciality-cycle entry cannot be used directly. This scans the 4-byte priority list in fight_information and falls back to Fight_SelectActionSource(bot, 0) when no usable entry exists."
 0x08015488,Fight_SelectFallbackActionFromPriorityList,label,,"[MF] [MF] CPU com B+0xC1==0x50 sorteia Fight_TrySelectMedaforceAction(bot,0,1)"
 0x080154E0,Fight_IsPartActionLockedByPendingEffect,func_thumb,,Simon/Rokusho: Return nonzero when pending effect kind 0x2B targets the requested part slot. This is used by action availability and description UI to show an override/locked state for that slot.
@@ -2183,9 +2183,28 @@ address,name,kind,count,comment
 0x0803DDC6,Overlay_InitScreenGraphics_AltEntry_803ddc6,label,,[HD2] [HD2] Chama Overlay_DrawSixDigitRow (0x0803E8EC) na inicializacao (antes: Overlay_InitScreenGraphics)
 0x0803DEF0,LinkSync_MenuStep52,func_thumb,,[LK2] [GH-LK2] passo 0x34 do menu 10 le 0x03005010 (sincronia); provavel
 0x0803DF98,LinkSync_MenuStep53,func_thumb,,[LK2] [GH-LK2] passo 0x35 do menu 10 le 0x03005010; provavel
+0x0803E03C,Anim_RunSlotScriptThenSfx54,func_thumb,,[FS7] [FS7] passo por quadro; roda script de slot; SFX 0x54 ao fim; provavel
+0x0803E098,Anim_TweenUntilDoneThenReset,func_thumb,,[FS7] [FS7] tween ate alvo; som de barra cheia; reseta direcao; provavel
+0x0803E0C0,Anim_TweenClampThenSfx2A,func_thumb,,[FS7] [FS7] tween com fixacao no alvo; SFX 0x2A; provavel
+0x0803E0F0,Anim_DrawSegmentUntil120,func_thumb,,[FS7] [FS7] desenha segmento e conta ate 0x78; provavel
+0x0803E120,Anim_DrawSegmentThenJumpPtr,func_thumb,,[FS7] [FS7] desenha segmento; salto por ponteiro nao recuperado (jt em 0x0803E168); chute no salto
+0x0803E170,Anim_DrawSegmentThenLoadSlot,func_thumb,,[FS7] [FS7] desenha segmento; carrega slot 1; provavel
+0x0803E1A4,Anim_DrawSegmentThenDispatchLoad,func_thumb,,[FS7] [FS7] desenha segmento; StateMachine_DispatchStep; carrega slot 1; provavel
+0x0803E1FC,Anim_DrawSegmentThenDispatchStep,func_thumb,,[FS7] [FS7] desenha segmento; despacha maquina de estados em +4; provavel
+0x0803E234,Anim_DrawSegmentUntilOverlayReached,func_thumb,,[FS7] [FS7] desenha segmento; move alvo do overlay ate chegar; provavel
+0x0803E270,Anim_DrawCycleStateZeroToFour,func_thumb,,[FS7] [FS7] desenha segmento; byte +0x84 cicla 0..4; provavel
+0x0803E2AC,Anim_DrawFadeSfx8Step,func_thumb,,[FS7] [FS7] desenha segmento; snd_fade_request(8); provavel
+0x0803E2DC,Anim_DrawFlushPaletteThenReset,func_thumb,,[FS7] [FS7] desenha segmento; CopyPaletteBuffersToHardware; provavel
+0x0803E314,Anim_DrawFadeRowsStep,func_thumb,,[FS7] [FS7] desenha segmento; fade de linhas de paleta A e B em 9 passos; provavel
+0x0803E374,Anim_PickSlotActivateEntryCopy,func_thumb,,[FS7] [FS7] sorteia slot; inventario ou Tinpet_ActivateMatchingEntry; copia 15 bytes; provavel (escolha chute)
+0x0803E434,Anim_DrawSegmentThenDispatchLoadAlt,func_thumb,,[FS7] [FS7] variante de Anim_DrawSegmentThenDispatchLoad com campos +0x18/+0x1C; provavel
+0x0803E48C,Anim_DrawSetValue3E,func_thumb,,[FS7] [FS7] desenha segmento; grava 0x3E em ponteiro fixo; provavel
 0x0803E4B4,PeerLost_MenuStep16,func_thumb,,[LK2] [GH-LK2] passo 0x10 do menu 10: entrada do peer sumiu (MS2 seta sub 0x10); provavel
+0x0803E4D8,Anim_GpuBlendTickThenCount,func_thumb,,[FS7] [FS7] avanca GpuBlend_TickStep e conta; provavel
 0x0803E4F4,Gfx_BlankSceneInit,func_thumb,,cena vazia: limpa mapas de BG e liga camadas (provavel)
+0x0803E618,Anim_InitSlotAndLoadCount,func_thumb,,[FS7] [FS7] Obj_InitSlotAndLoad(1
 0x0803E634,Flow_StepCounterTickA,func_thumb,,[FR1] StateMachine_DispatchStep on object +0x30 then counter++ on done
+0x0803E674,Boot_ResetSystemWrapper,func_thumb,,[FS7] [FS7] wrapper de Boot_ResetSystemAndState (0x0803EF20); confirmado
 0x0803E680,LinkSync_MenuStep80,func_thumb,,[LK2] [GH-LK2] passo 0x50 do menu 10 le 0x03005010 e 0x03002B70; provavel. Sem funcao no Ghidra
 0x0803E780,Overlay_ClearTimerIfFlag,func_thumb,,[R2] zera timer se flag +0x89 == 1 (chute)
 0x0803E79C,Overlay_SetTargetAndCheckReached,func_thumb,,[R2] grava alvo e testa se chegou (chute)
@@ -2264,6 +2283,7 @@ address,name,kind,count,comment
 0x08040AF0,Slot_AdvanceStepByFlag,func_thumb,,[N1] JT2 idx 18 (0x08040AF1); bloco *blk==0 ? +0x1B+=1 : +=2
 0x08040B0C,Palette_FadeStepAndDispatch,func_thumb,,[N1] JT2 idx 19 (0x08040B0D); fade de paleta A/B; termina em salto indireto nao recuperado (0x08040B4C)
 0x08040B50,Slot_SetTimer8,func_thumb,,[N1] JT2 idx 0/20/22; escreve 8 em DAT_08040B58+4
+0x08040B5C,Gfx_CpuSetCopy52Blocks,func_thumb,,[FS7] [FS7] 52 blocos bios_cpuset de 0x20 palavras; byte +0x1B; handler da gMessageDispatch12Table (0x083B2988); provavel
 0x08040B90,Slot_SetupFromRecordList,func_thumb,,[R2] le lista de registros de 3 bytes ate terminador >0xFA e grava halfword no slot (provavel)
 0x08040BD8,Anim_RunSlotScript,func_thumb,,[R2] interpretador de animacao por slot: duracao; quadro; salto; fim (confirmado lógica)
 0x08040CD0,ClearObjectAttributeEntries,func_thumb,,Simon/Rokusho
@@ -2341,19 +2361,22 @@ address,name,kind,count,comment
 0x0804384C,Lookup_FindPartIndexById,func_thumb,,[G] Indice na tabela de 9 registros pelo id; 0xFF se nao acha (provavel)
 0x0804387C,reset_step_and_get_encounter_flag,func_thumb,,Simon/Rokusho
 0x080438C4,Overworld_ShouldTriggerRandomEncounter,func_thumb,,"Simon/Rokusho: Return whether the current landing tile should trigger a random encounter. Random encounters are blocked when gRandomEncounterModeFlags bit 0 is set, when encounter disable bytes are nonzero, or when the map's encounter enable byte is zero."
+0x08043AE0,Unk_08043AE0,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = prologo Thumb (push r4 lr); precisa re-disassemble; ponteiro na struct 0x08043AD8; chute
+0x08043B58,Unk_08043B58,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL; precisa re-disassemble; chute
 0x08043B7C,GfxBankA_LoadTilesAndPalette,func_thumb,,"[R2a] R2a: descomprime banco A, carrega 2 conjuntos de tiles e paleta (0x05000000 ou buffer)"
 0x08043C08,GfxBankB_LoadTilesAndPalette,func_thumb,,"[R2a] R2a: igual ao banco A, registros de 0x14 bytes, tiles nos slots 3 e 4"
 0x08043C94,Encounter_RollPercent0To99,func_thumb,,"Simon/Rokusho: Returns a 0..99-style roll by scaling generate_random__() through signed division by 0xFF. Used by encounter and fight template selection threshold logic (<0x28, <0x46, <0x5A, else last entry)."
 0x08043CA8,Slots_ClearFourPairs,func_thumb,,[R2a] R2a: zera 4 pares de halfwords de slots globais
 0x08043CD4,Obj_StepAccumMoveA,func_thumb,,[R2] revisto CH2: provável; acumula delta +0x3B em +0x3F; parte >>2 vai para +0x40 e aplica nos eixos por máscara de +0x3A; renomeado de FUN_08043cd4
 0x08043DF8,FxBlend_ApplyFromObjA,func_thumb,,[R2a] R2a: aplica blend (registro de GPU) a partir do objeto A; desliga se +0x3C=0
-0x08043E48,Fight_G03_VBlankCallback_ptr,label,,[BI] BI: alvo Thumb 0x08043E49 gravado por G03. Conteúdo não decompilado (chute).
+0x08043E48,Obj_StepAccumMoveAWrapper,label,,[BI] BI: alvo Thumb 0x08043E49 gravado por G03. Conteúdo não decompilado (chute). (antes: Fight_G03_VBlankCallback_ptr)
 0x08043E54,Obj_CopySlot8Bytes,func_thumb,,[R2a] R2a: copia 8 bytes de +0x74 para tabela indexada por +0x38
 0x08043E78,Obj_StepAccumMoveB,func_thumb,,[R2] revisto CH2: provável; mesma lógica da A para o objeto B (campos +0x74..+0x7B); renomeado de FUN_08043e78
 0x08043F9C,FxBlend_ApplyFromObjB,func_thumb,,[R2a] R2a: igual a FxBlend_ApplyFromObjA para o objeto B (+0x77..+0x79)
 0x08044094,Anim_SetDefaultTimers,func_thumb,,"[R2a] R2a: grava 1,1,7 em tres bytes globais de animacao"
 0x080440B4,Count_Entries3InTable9,func_thumb,,[R2a] R2a: conta entradas com byte 3 em 9 registros de 8 bytes
 0x080440D4,Check_PairsAllEqual,func_thumb,,[R2a] R2a: 1 se todos os pares de bytes consecutivos sao iguais
+0x08044100,Obj_StepAccumMoveBThenSync,func_thumb,,[FS7] [FS7] Obj_StepAccumMoveB (0x08043E78) e FUN_08043FEC com byte +0x38; provavel
 0x08044118,TileMap_ReadRectToBuffer,func_thumb,,[R2a] R2a: le retangulo do mapa de fundo (VRAM 0x06000000) para buffer
 0x08044160,TileMap_WriteBufferToRect,func_thumb,,[R2a] R2a: escreve buffer num retangulo do mapa de fundo (desenha campo de texto/numero)
 0x080441A8,Gfx_DecompressFixedAsset,func_thumb,,[R2a] R2a: decompress_and_store com endereco fixo
@@ -2420,7 +2443,8 @@ address,name,kind,count,comment
 0x08047BCC,Table_GetWordByIndex_08047bd8,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x08047BD8 [arg]
 0x08047BDC,GetBotName,func_thumb,,gBotNames[bot]
 0x08047BEC,GetPartName,func_thumb,,"GetPartName(kind, bot): gPartNames[bot*4 + kind]"
-0x08047C00,FieldMenu_CloseChoice_Provavel,func_thumb,,[FM3] [FM3] chamado pelos subs 0x0D e 0x0F antes de 0x0804A210; nome chute (nao lido)
+0x08047C00,FieldMenu_ClearTwoSlotPairs,func_thumb,,[FM3] [FM3] chamado pelos subs 0x0D e 0x0F antes de 0x0804A210; nome chute (nao lido) (antes: FieldMenu_CloseChoice_Provavel)
+0x08047C24,Obj_TwoStageInitThenDispatch,func_thumb,,[FS7] [FS7] maquina de 2 estados: init do slot
 0x08047C84,Text_WriteDecimalToSlot,func_thumb,,[R2b] Escreve número decimal no buffer de texto (terminador 0xFE)
 0x08047CE4,Text_CopyStringToSlot,func_thumb,,[R2b] Copia até 16 bytes para buffer de texto (terminador 0xFE)
 0x08047D24,Num_FormatTable4EntryToGlyphs,func_thumb,,[FN2] provavel: Copia 4 palavras de tabela 0x08047D48 e formata a entrada [arg] como decimal em glifos
@@ -2443,6 +2467,7 @@ address,name,kind,count,comment
 0x08047F50,PartSet_FindCompleteEntryIndex,func_thumb,,[R3] indice (0..8) do registro com +3..+6 iguais a v; -1 se nenhum
 0x08047F9C,Team_CountSlotsWithStatus3,func_thumb,,Simon/Rokusho: Count entries in gPartSetTable whose state byte is 3 (complete set). (antes: PartSet_CountCompleteEntries)
 0x08047FBC,PartSet_HasCompleteMonochromeEntry,func_thumb,,Simon/Rokusho: Return whether gPartSetTable contains a complete set entry whose four part ids (head/right/left/legs) all match the supplied monochrome part id.
+0x08048000,Fx_SetupLayersAndInitRecord8,func_thumb,,[FS7] [FS7] grava 0x500 e 0x1F60 em registradores de display; Fx_InitRecord8; provavel (nome chute)
 0x080480D4,Table_GetWordByIndex_080480e0,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x080480E0 [arg]
 0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play."
 0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM."
@@ -2478,6 +2503,8 @@ address,name,kind,count,comment
 0x08049740,Mem_CountDiffBytes,func_thumb,,confirmado: conta bytes diferentes entre dois buffers
 0x08049780,Random_NextScaled,func_thumb,,"Simon/Rokusho: Advance the byte-sized RNG index using sRandomAdvanceTable and the current overworld affine/frame counter, store the updated byte to gRandomIndex, then return the result reduced modulo the supplied bound."
 0x080497C0,mem_copy,func_thumb,,Simon/Rokusho
+0x080497E0,Overworld_SetTransitionStepAndDispatch,func_thumb,,[FS7] [FS7] grava bloco de transicao e despacha jump table em +1 (0..6); chamadores de Overworld e Map_EnterSceneSetup; provavel
+0x08049CC8,Obj_LoadPairFromRecord,func_thumb,,[FS7] [FS7] copia 6 bits de dois bytes do registro para dois destinos; provavel
 0x08049D0C,Overworld_ResetScreenTransitionResources,func_thumb,,Simon/Rokusho
 0x08049D18,Overworld_StartScreenTransitionEffect,func_thumb,,Simon/Rokusho: Start a screen-transition effect using the supplied resource/config ids without first resetting the transition resource state.
 0x08049D90,Overworld_ResetAndStartScreenTransitionEffect,func_thumb,,"Simon/Rokusho: Reset screen-transition resources, then start a configured screen-transition effect for a map load / transition sequence."
@@ -2871,7 +2898,14 @@ address,name,kind,count,comment
 0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8
 0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
+0x08053360,Unk_08053360,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute
+0x08053380,Unk_08053380,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL + literal 1.0f; precisa re-disassemble; chute
+0x080533A4,Unk_080533A4,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute
 0x080533E4,Overworld_BeginUiSceneState,func_thumb,,"Simon/Rokusho: Begin an overworld UI/scene-state sequence with the supplied state id, optional position parameters, and extra mode argument."
+0x080534C4,Unk_080534C4,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute
+0x080535C8,Unk_080535C8,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute
+0x080537BC,Unk_080537BC,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute
+0x080537D8,Unk_080537D8,label,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute
 0x080537E4,Viewport_SetFloatBounds,func_thumb,,[FS8] [FS8] provavel: monta 0x03005350 com floats +-120.5/+-80.5 e chama 0x08053858/0x0805390C; corpo bad no Ghidra (bytes lidos da ROM)
 0x08053858,Viewport_ComputeRectEdgeA,func_thumb,,[FS8] [FS8] chute: helper float sobre 0x03005350; corpo bad no Ghidra
 0x0805390C,Viewport_ComputeRectEdgeB,func_thumb,,[FS8] [FS8] chute: como 0x08053858 + trunc para tabelas 0x083D6F2C/0x083D732C; corpo bad
