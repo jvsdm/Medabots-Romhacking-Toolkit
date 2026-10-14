@@ -1,0 +1,61 @@
+addr,nome,kind,comentario
+0x08034498,ActionScript_Op31_CallSubstateAA,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AA; avança cursor se +0xB5
+0x08034524,ActionScript_Op36_CallAF,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AF; avança cursor se +0xB5
+0x08034540,ActionScript_Op37_CallAG,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AG; avança cursor se +0xB5
+0x0803455C,ActionScript_Op38_CallAH,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AH; avança cursor se +0xB5
+0x08034578,ActionScript_Op39_CallAI,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AI; avança cursor se +0xB5
+0x08034594,ActionScript_Op3A_CallAJ,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AJ; avança cursor se +0xB5
+0x080345B0,ActionScript_Op3B_CallAK,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AK; avança cursor se +0xB5
+0x080345CC,ActionScript_Op3C_CallAL,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AL; avança cursor se +0xB5
+0x080345E8,ActionScript_Op3D_ClearSupportRecord,func_thumb,provavel: zera 4 bytes em base+k*8+0x2A..0x2D (k=byte +0x8A); nome do registro de apoio deduzido; avança cursor
+0x08034628,ActionScript_Op3E_CallAM,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AM; avança cursor se +0xB5
+0x08034684,ActionScript_Op40_SideSpritesAO,func_thumb,provavel: atualiza sprites laterais (2 lados), chama Fight_DispatchOnSubstateAA_AO, avança cursor se +0xB5; sufixo AO nao descreve verbo
+0x0803476C,ActionScript_Op44_SideSpritesAP,func_thumb,provavel: atualiza sprites laterais (2 lados), chama Fight_DispatchOnSubstateAA_AP, avança cursor se +0xB5
+0x080347AC,ActionScript_Op45_IncrementUsageCounter,func_thumb,confirmado: chama Fight_IncrementActionUsageCounter_08036270; avança cursor
+0x080347F8,ActionScript_Op47_SideSpritesCopyTarget,func_thumb,provavel: sprites laterais; copia alvo selecionado (Fight_CopySelectedTargetToFightInfo); alterna bit 2 de +0xF8 e ajusta +0x114/+0xFF; avança cursor
+0x080348D0,ActionScript_Op48_SideSpritesAQ,func_thumb,provavel: atualiza sprites laterais, chama Fight_DispatchOnSubstateAA_AQ, avança cursor se +0xB5; sufixo AQ nao descreve verbo
+0x080349D8,ActionScript_Op4B_FindBotWithPartAndPickPart,func_thumb,confirmado: acha bot do lado oposto com a peca (Fight_FindTargetBotWithPart); senao sorteia bot ativo e peca aleatoria; copia alvo; avança cursor
+0x08034BA0,ActionScript_Op50_CallAR,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_AR; avança cursor se +0xB5
+0x08034BBC,ActionScript_Op51_StateByTechniqueSelf,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AS (wrapper); nome do efeito deduzido do handler, nao verificado
+0x08034BD8,ActionScript_Op52_TeamSupportBonus,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AT (wrapper); nome do efeito deduzido, nao verificado
+0x08034BF4,ActionScript_Op53_ReactionMarkSelf,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AU (wrapper); nome do efeito deduzido, nao verificado
+0x08034C10,ActionScript_Op54_StateAllOpponents,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AV (wrapper); nome do efeito deduzido, nao verificado
+0x08034C2C,ActionScript_Op55_TeamProtectStatus,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AW (wrapper); nome do efeito deduzido, nao verificado
+0x08034C48,ActionScript_Op56_TeamHeal,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AX (wrapper); nome do efeito deduzido, nao verificado
+0x08034C64,ActionScript_Op57_TeamRepairArmor,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AY (wrapper); nome do efeito deduzido, nao verificado
+0x08034C80,ActionScript_Op58_TeamRestoreParts,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_AZ (wrapper); nome do efeito deduzido, nao verificado
+0x08034C9C,ActionScript_Op59_TeamGauge,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_BA (wrapper); nome do efeito deduzido, nao verificado
+0x08034CB8,ActionScript_Op5A_TechniqueNoDamage,func_thumb,provavel: chama Fight_DispatchOnSubstateAA_BB (wrapper); nome do efeito deduzido, nao verificado
+0x08034CD4,ActionScript_Op5B_CallBC,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BC; avança cursor se +0xB5 (antes: ActionScript_Op5B_pendente)
+0x08034CF0,ActionScript_Op5C_CallBD,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BD; avança cursor se +0xB5 (antes: ActionScript_Op5C_pendente)
+0x08034D0C,ActionScript_Op5D_CallBE,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BE; avança cursor se +0xB5 (antes: ActionScript_Op5D_pendente)
+0x08034D28,ActionScript_Op5E_CallBF,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BF; avança cursor se +0xB5 (antes: ActionScript_Op5E_pendente)
+0x08034D44,ActionScript_Op5F_CallBG,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BG; avança cursor se +0xB5 (antes: ActionScript_Op5F_pendente)
+0x08034D60,ActionScript_Op60_CallBH,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BH; avança cursor se +0xB5 (antes: ActionScript_Op60_pendente)
+0x08034D7C,ActionScript_Op61_CallBI,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BI; avança cursor se +0xB5 (antes: ActionScript_Op61_pendente)
+0x08034D98,ActionScript_Op62_CallBJ,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BJ; avança cursor se +0xB5 (antes: ActionScript_Op62_pendente)
+0x08034DB4,ActionScript_Op63_CallBK,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BK; avança cursor se +0xB5 (antes: ActionScript_Op63_pendente)
+0x08034DD0,ActionScript_Op64_CallBL,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BL; avança cursor se +0xB5 (antes: ActionScript_Op64_pendente)
+0x08034DEC,ActionScript_Op65_CallBM,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BM; avança cursor se +0xB5 (antes: ActionScript_Op65_pendente)
+0x08034E08,ActionScript_Op66_CallBN,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BN; avança cursor se +0xB5 (antes: ActionScript_Op66_pendente)
+0x08034E24,ActionScript_Op67_CallBO,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BO; avança cursor se +0xB5 (antes: ActionScript_Op67_pendente)
+0x08034E40,ActionScript_Op68_CallBP,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BP; avança cursor se +0xB5 (antes: ActionScript_Op68_pendente)
+0x08034E5C,ActionScript_Op69_CallBQ,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BQ; avança cursor se +0xB5 (antes: ActionScript_Op69_pendente)
+0x08034E78,ActionScript_Op6A_CallBR,func_thumb,confirmado: chama Fight_DispatchOnSubstateAA_BR; avança cursor se +0xB5 (antes: ActionScript_Op6A_BR)
+0x08034E94,Fight_LookupActionScriptByte,func_thumb,confirmado: le byte do roteiro no cursor (tabela ptr [+0xA8]*4 + u16 +0xBC); nome mantido (antes: chute)
+0x08034EB8,Fight_ReadActionScriptInlineArgs,func_thumb,confirmado: n = byte do cursor; copia n bytes seguintes para fight_information+0xAC
+0x08034F08,Fight_AdvanceActionScriptCursor,func_thumb,confirmado: zera +0xAA e soma 1 + byte do cursor ao u16 +0xBC
+0x08034F68,Fight_SplitDamageByPartArmor,func_thumb,confirmado: dano <= armadura da peca: absorvido=dano, fi+0xD1=0; senao absorvido=armadura, excesso em fi+0xCA, fi+0xD1=1 (antes: Fight_ApplyDamageToPart; nao subtrai armadura)
+0x08035164,Fight_SubtractPartArmorClampZero,func_thumb,confirmado: armadura da peca -= dano, piso zero
+0x08035194,Fight_BackupHalvedStatsIfFlagClear,func_thumb,confirmado: se bot+0xA1==0 copia metade (>>1) de +0x95..+0x99 para +0xA2..+0xA6
+0x080351E8,Fight_CopyStatsIfFlagSet,func_thumb,confirmado: se bot+0xA1!=0 copia +0x95..+0x99 para +0xA2..+0xA6 sem reduzir
+0x08035234,Fight_QueueBrokenBotForResolution,func_thumb,provavel: se armadura do bot (+0x59 de parte 0) ==0 enfileira bot+1 na primeira vaga de 3 (antes: Fight_QueueHeadBrokenBotForResolution; 'cabeca' nao confirmada)
+0x08035478,Fight_SelectOpponentBotByExtremeValue,func_thumb,provavel: escolhe bot alvo (grava bot+0xE0 = indice+1): para lado <3 pega o menor u16 +2 entre bots ativos 3..5; senao o maior entre 0..2 (antes: Fight_SelectLowestPriorityTargetBot; metrica +2 nao identificada)
+0x08035528,Fight_SelectRandomTargetPartForSelectedBot,func_thumb,confirmado: com alvo em bot+0xE0, sorteia (rand &7) indice de peca na tabela da linha de status e grava bot+0xE1
+0x080355C4,Fight_CopySelectedTargetToFightInfo,func_thumb,confirmado: copia alvo (bot+0xE0/+0xE1, menos 1) para fight_information+0x88/+0x8B
+0x08035694,Fight_ShowObjectSlot,func_thumb,confirmado: liga bit 0x200 do slot e grava tamanho 0x40 em +4 e +9
+0x080356B4,Fight_HideObjectSlot,func_thumb,provavel: limpa bits do slot por AND com mascara (valor da mascara nao lido)
+0x080356CC,Fight_UpdateFollowerObjectSlot,func_thumb,confirmado: se o lider esta visivel (x<0xA0) e perto, liga flag 15 do seguidor e posiciona; senao Obj_ClearAttr0Mask
+0x08035740,Util_AddByteClampToMax,func_thumb,confirmado: *p = min(*p+add, limite) (antes: safe_add; prefixo Util_ novo)
+0x08035754,Util_SubtractShortClampZero,func_thumb,confirmado: *p = max(*p-n, 0) (antes: safe_subtract; prefixo Util_ novo)
+0x0803576C,Fight_GetMedalPartCompatibilityBonus,func_thumb,confirmado: soma bot+7 para cada uma das 4 pecas cujo byte 0 bate com bot+4
