@@ -453,7 +453,7 @@ F	0x0800FFF4	PartDetail_UpdateSelectionCursorPosition
 F	0x08010040	PartDetail_SetupAttributeCursorSprite
 F	0x080100BC	PartDetail_MoveAttributeCursor
 F	0x0801013C	PartDetail_DispatchModeHandler
-F	0x08010170	PartsBuild_MarkSlotFlagStep
+F	0x08010170	PartsBuild_SetOrClearSlotShapeAndAdvance
 F	0x080101E8	Slot_CountdownStepAndClear
 F	0x0801022C	BgMap_FillRectTickCounter
 F	0x08010264	Scene_GsDispatch_Menu6_Encounter
@@ -2028,8 +2028,12 @@ F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4EC	Fight_ScrollEntryCoords
 F	0x0803D538	Scene_GsDispatch_Menu10_Link
 F	0x0803D5A0	Fight_ResetStateFlagsAndCounter
+F	0x0803D5E0	Link_StepAdvanceWhenReached
+F	0x0803D608	Link_StepCycle8AndAdvance
 F	0x0803D634	LinkTick_MenuStep3
 F	0x0803D674	LinkTick_MenuStep4
+F	0x0803D6AC	Link_ResetFieldsAndSetGs50
+F	0x0803D71C	Link_RollTableEntryAndAdvance
 F	0x0803D74C	Screen_InitOverlayAndLoadAssets
 F	0x0803D928	Link_StepPaletteFadeDown
 F	0x0803D980	Link_StepLoadObjAndAdvance
@@ -2181,6 +2185,7 @@ F	0x080418C0	BgMap_CopyRect8x6
 F	0x08041920	Anim_SpawnSlotObject
 F	0x080419CC	Slot_SlideStepClamp
 F	0x08041A28	Menu_CursorStepHandler
+F	0x08041B1C	Fight_UpdateBotFlag4000ByState
 F	0x08041BA4	Slot_CountdownAndClearTile
 F	0x08041BF4	Slot_SetFrameFromStepAndAdvance
 F	0x08041C14	Slot_SetPosStepByMode
@@ -2309,6 +2314,7 @@ F	0x08047574	EventScript_ClearGlobals
 F	0x0804763C	MainState1_DispatchSubstate
 F	0x0804765C	Menu_SetStateByArg01
 F	0x080476E8	MainState_RequestModeTransition
+F	0x08047850	Sel_RequestIfIndexBelow4
 F	0x08047878	GameState_StartFlowByCommand
 L	0x080479A0	GameState_StartFlowByCommand_CaseNote
 L	0x08047B98	GameState_StartFlowByCommand_store_tail
@@ -2343,6 +2349,7 @@ F	0x08047F50	PartSet_FindCompleteEntryIndex
 F	0x08047F9C	Team_CountSlotsWithStatus3
 F	0x08047FBC	PartSet_HasCompleteMonochromeEntry
 F	0x08048000	Fx_SetupLayersAndInitRecord8
+F	0x08048038	Fx_StateMachine_Dispatch3
 F	0x08048088	Map_GetEncounterRecordByte
 F	0x080480D4	Table_GetWordByIndex_080480e0
 F	0x080480E4	Map_LoadCurrentMapAndEntities
@@ -2350,6 +2357,7 @@ F	0x08048174	Map_UpdateBackgroundAnimations
 L	0x080481D8	Map_UpdateBackgroundAnimations_AltEntry_80481d8
 F	0x08048210	Map_PoseIdToTileIndex
 F	0x08048288	Map_LoadOverworldSpriteGraphicsForCurrentMap
+F	0x080482CC	Gfx_LoadLz77Table12ByIndex
 F	0x0804830C	Map_LoadMapPaletteToShadowBuffer
 F	0x0804842C	SND_PolicyRequest
 F	0x08048684	Map_GetObjectPoseByGroup
@@ -2360,7 +2368,7 @@ F	0x08048864	Map_InitializeObjectRenderSlot
 F	0x08048888	Map_ResetObjectRenderSlot
 F	0x080488AC	Map_CountDecimalDigits
 F	0x080488E8	Map_FormatDecimalDigits
-F	0x08048960	KeyItem_CanUseHere
+F	0x08048960	Fight_ClassifyActionState
 F	0x08048B70	Fixed_Mul88
 F	0x08048BA0	Fixed_ReciprocalQ16
 F	0x08048BB8	Map_ResetAffineScaleBlock
@@ -2374,11 +2382,11 @@ F	0x08049318	Map_ResetRenderAffineState
 F	0x08049374	Map_RecomputeRenderAffineEntry
 F	0x08049420	Map_SetObjectAnimationVariant
 F	0x08049440	Map_TickObjectAnimation
-F	0x08049714	set_zeros
-F	0x08049728	fill_memory
+F	0x08049714	Mem_SetZeros
+F	0x08049728	Mem_FillBytes_08049728
 F	0x08049740	Mem_CountDiffBytes
 F	0x08049780	Random_NextScaled
-F	0x080497C0	mem_copy
+F	0x080497C0	Mem_CopyBytesLoop
 F	0x080497E0	Overworld_SetTransitionStepAndDispatch
 F	0x08049CC8	Obj_LoadPairFromRecord
 F	0x08049D0C	Overworld_ResetScreenTransitionResources
@@ -2639,7 +2647,7 @@ F	0x0804F5D8	Event_Op55_Cont_NoOp
 F	0x0804F5DC	Event_Op56_Cont_LoadEntities
 F	0x0804F674	Event_Op57_Cont_NoOp
 F	0x0804F678	Event_Op58_Cont_NoOp
-F	0x0804F67C	Event_Op59_Cont_OpenShop
+F	0x0804F67C	Event_Op59_Cont_Run_Scene_Command_03
 F	0x0804F6C4	Event_Op5A_Cont_NoOp
 F	0x0804F6C8	Event_Op5B_Cont_NoOp
 F	0x0804F6CC	Event_Op5C_Cont_NoOp
@@ -2647,7 +2655,7 @@ F	0x0804F6D0	Event_Op5D_Cont_NoOp
 F	0x0804F6D4	Event_Op5E_Cont_NoOp
 F	0x0804F6D8	Event_Op5F_Cont_NoOp
 F	0x0804F6DC	Event_Op62_Cont_NoOp
-F	0x0804F6E0	Event_Op63_Cont_ShowEffect
+F	0x0804F6E0	Event_Op63_Cont_PlayerStepThenResyncCamera
 F	0x0804F83C	Event_Op66_Cont_Animate_Tracked_Object_Transition
 F	0x0804F850	Event_Op67_Cont_Skip_Two_Bytes_Wait
 F	0x0804F860	Event_Op6A_Cont_NoOp
@@ -2731,7 +2739,7 @@ F	0x08051ED8	Overworld_ClearPendingStepIfFlag
 F	0x08051EFC	Overworld_UpdateFollowerFacing
 F	0x0805203C	Overworld_AdvanceWalkStep
 F	0x0805218C	Map_SetEventMarkerFacingVariant
-F	0x080521A8	Overworld_TickRandomObjectAnim
+F	0x080521A8	Overworld_RandomizeEventMarkerFacing
 F	0x08052204	Map_TickAllObjectAnimations
 F	0x08052284	Map_CheckFacingEventTriggerAhead
 L	0x08052330	Map_CheckFacingEventTriggerAhead_08052330
@@ -3988,10 +3996,6 @@ C	0x0803440C
 C	0x08034428
 C	0x08034444
 C	0x08034460
-C	0x0803D5E0
-C	0x0803D608
-C	0x0803D6AC
-C	0x0803D71C
 C	0x0804A6A0
 C	0x0804A6BC
 C	0x0804A6C8
