@@ -1,0 +1,3 @@
+# DB2_lista.txt: codigo do menu de debug (continuacao DB2) sem funcao no Ghidra.
+# Resultado desta rodada: nenhum. Os 7 handlers (C6F8, C804, CBC8, CE90, D188, D27C, D3E4) e os 7 despachantes
+# (C6D8, C7E4, CBA8, CE70, D168, D25C, D3C4) tem funcao no Ghidra; NoOpActionHandler 0x08000840 e CallViaR0 0x0807CCF0 tambem.
