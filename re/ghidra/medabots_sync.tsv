@@ -1696,8 +1696,8 @@ F	0x08033840	Fight_RunActionScriptLoop
 F	0x080338DC	ActionScript_Op01_SetSceneExitState
 F	0x080338F4	Fight_WaitForActionScriptByteMatch
 F	0x08033974	Fight_WaitForActionScriptChoiceByteMatch
-F	0x080339F4	ActionScript_Op04_pendente
-F	0x08033A10	ActionScript_Op05_pendente
+F	0x080339F4	ActionScript_Op04_DispatchOnSubstateAA
+F	0x08033A10	ActionScript_Op05_DispatchOnSubstateAA_B
 F	0x08033A2C	Fight_EnsureSelectedActionMetadata
 F	0x08033A78	ActionScript_Op07_DispatchOnSubstateAA_C
 F	0x08033A94	ActionScript_Op08_DispatchOnSubstateAA_D
@@ -2359,9 +2359,12 @@ F	0x08048210	Map_PoseIdToTileIndex
 F	0x08048288	Map_LoadOverworldSpriteGraphicsForCurrentMap
 F	0x080482CC	Gfx_LoadLz77Table12ByIndex
 F	0x0804830C	Map_LoadMapPaletteToShadowBuffer
+F	0x080483F8	Bot_ReadCurrentByteOrDefault
 F	0x0804842C	SND_PolicyRequest
 F	0x08048684	Map_GetObjectPoseByGroup
+F	0x080486B0	Icon_BuildSlotRecordList
 F	0x08048708	Map_LoadCurrentEventObjectPalettes
+F	0x0804877C	Icon_Build12SlotRecords
 F	0x080487C8	Map_ResetObjectField0B
 F	0x08048830	Overworld_ResetMapSceneBlendState
 F	0x08048864	Map_InitializeObjectRenderSlot
@@ -2379,6 +2382,7 @@ F	0x080491B8	BgMap_FillRectTilePalette
 F	0x08049210	BgMap_CopyRectWithAttrs
 F	0x080492A8	BgMap_CopyRectAddOffset
 F	0x08049318	Map_ResetRenderAffineState
+F	0x08049344	Slot_ClearIndexedBuffers
 F	0x08049374	Map_RecomputeRenderAffineEntry
 F	0x08049420	Map_SetObjectAnimationVariant
 F	0x08049440	Map_TickObjectAnimation
@@ -2388,6 +2392,7 @@ F	0x08049740	Mem_CountDiffBytes
 F	0x08049780	Random_NextScaled
 F	0x080497C0	Mem_CopyBytesLoop
 F	0x080497E0	Overworld_SetTransitionStepAndDispatch
+F	0x08049A6C	Anim_UpdateSoftFloatStep
 F	0x08049CC8	Obj_LoadPairFromRecord
 F	0x08049D0C	Overworld_ResetScreenTransitionResources
 F	0x08049D18	Overworld_StartScreenTransitionEffect
@@ -2413,11 +2418,16 @@ F	0x0804AA44	GameState_ToggleAndAdvance
 F	0x0804AA74	Overworld_ReloadCurrentMapScene
 F	0x0804AB60	Overworld_WalkStateToggleTo1
 F	0x0804ABCC	Overworld_WalkStateToggleTo2
+F	0x0804ACC8	Map_AdvanceSubroutineStep_F
+F	0x0804ACD4	Map_InitScreenAndStartTransition
 F	0x0804AD68	Overworld_TransitionDone_SetWalk0B
 F	0x0804ADB4	Overworld_UiDone_RestoreWalkFromC69_A
 F	0x0804AE80	Overworld_SetWalk0C_UiScene
 F	0x0804AEC8	Overworld_UiDone_RestoreWalkFromC69_B
+F	0x0804AF98	Map_HandleMarkerStepThenAdvance
 F	0x0804AFB8	Screen_UpdateStepWrap
+F	0x0804AFCC	Screen_TransitionStepResetOnDone
+F	0x0804AFE0	Overworld_StartTransitionThenAdvance
 F	0x0804B008	Map_FinishEnterTransition
 L	0x0804B036	Map_FinishEnterTransition_0804B036
 L	0x0804B124	lit_EventDbBase3
@@ -2674,7 +2684,7 @@ F	0x0804FC1C	Event_Op7A_Cont_Run_Scene_Command_11
 F	0x0804FC6C	Event_Op7E_Cont_Move_All_Tracked_Actors_C
 F	0x0804FC7C	Event_Op7F_Cont_Copy_Tracked_Actor_Records
 F	0x0804FD10	EventOpcode82_ExecuteBatchedObjectCommandBlock
-F	0x0804FE6C	EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation
+F	0x0804FE6C	EventOpcode84_SetMapSceneVariant_Continuation
 F	0x0804FE9C	Map_TickObjectMoveRecords
 F	0x080500BC	Map_StartObjectStep
 F	0x08050124	Obj_StartStepNoAnim
@@ -3308,7 +3318,7 @@ F	0x0806F1C0	Screen_InitMenuLayoutState
 F	0x0806F21C	Screen_ArmBg2TimerStep0C
 F	0x0806F23C	Screen_TextCounterStep
 F	0x0806F578	Screen_ResetTextArmBg2Step0E
-F	0x0806F5A0	Screen_TextCounterStepB
+F	0x0806F5A0	Screen_TextCounterStepAlt
 F	0x0806F914	Screen_ArmBg2TimerStep11
 F	0x0806F934	Screen_WaitFramesThenStep12
 F	0x0806F9D8	fade_palette_16
@@ -3375,7 +3385,7 @@ F	0x08071DDC	dispatch_table_r0
 F	0x08071E0C	Fx_RampCounterStepDone
 F	0x08071E8C	Obj_SlideSlot3AndPlaySfx54
 F	0x08071EFC	Anim_RampStepThenSfx54
-F	0x08071F74	Anim_RampStepThenSfx54B
+F	0x08071F74	Anim_RampStepThenSfx54Alt
 F	0x08071FF8	Anim_FrameCycleStep
 F	0x08072080	Palette_FadeStepWithSfx
 F	0x08072188	FightPreview_TickIntroAndBuildLayer
@@ -4010,11 +4020,6 @@ C	0x0804AB3C
 C	0x0804ABA8
 C	0x0804ABC0
 C	0x0804AC14
-C	0x0804ACC8
-C	0x0804ACD4
-C	0x0804AF98
-C	0x0804AFCC
-C	0x0804AFE0
 C	0x08060688
 C	0x080617E0
 C	0x08061958

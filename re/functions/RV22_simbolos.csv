@@ -1,0 +1,24 @@
+addr,nome,kind,comentario
+0x08031D7C,Fight_SetupTargetSelectionRequireStatus6A,func_thumb,confirmado: escolhe alvo entre bots ativos com a especialidade 0x6A (Fight_HasActivePartWithSpeciality) e sorteia slot
+0x080338DC,ActionScript_Op01_SetSceneExitState,func_thumb,confirmado: grava cena 8 e GS 0x40 (sem comparacao)
+0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,confirmado: avanca cursor ate byte do bot (+0xAC) bater com a tabela da tecnica; marca flag +1 ao casar
+0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,provavel: igual ao anterior mas o byte vem de fi+0xAB (indice de escolha)
+0x080339F4,ActionScript_Op04_DispatchOnSubstateAA,func_thumb,provavel: wrapper; chama Fight_DispatchOnSubstateAA e avanca cursor se +0xB5 (antes: ActionScript_Op04_pendente)
+0x08033A10,ActionScript_Op05_DispatchOnSubstateAA_B,func_thumb,confirmado: wrapper do despachante _B; avanca cursor se +0xB5 (antes: ActionScript_Op05_pendente)
+0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,confirmado: garante alvo e parte escolhidos (0xE0/0xE1 zerados => sorteia), copia para fi e avanca
+0x08033A78,ActionScript_Op07_DispatchOnSubstateAA_C,func_thumb,confirmado: wrapper do despachante _C com avanco por +0xB5
+0x08033A94,ActionScript_Op08_DispatchOnSubstateAA_D,func_thumb,confirmado: wrapper do despachante _D com avanco por +0xB5
+0x08033AB0,ActionScript_Op09_DispatchOnSubstateAA_E,func_thumb,confirmado: wrapper do despachante _E com avanco por +0xB5
+0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,confirmado: se fi+0xDE nao zero copia 4 blocos de 0x40 de graficos do bot, recria sprite e limpa +0xDE
+0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,provavel: marca bits 1 e 2 de bot+0xBC conforme status (0/1/3) da parte e do lado oposto
+0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,confirmado: wrapper de Fight_ComputeTotalRos com avanco do cursor
+0x08033C20,Fight_ApplyPendingEffectStatusFlags,func_thumb,confirmado: efeito pendente 0x2E/0x2F/0x0F/0x10 seta bits 4/8/0xC em bot+0xBC (usado por GH-SS2)
+0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,provavel: wrapper de Fight_UpdateActionArgSelectorFromDefenderState com avanco do cursor
+0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,confirmado: fi+0xEA = fi+0xE8 >> 2 (semente do dano)
+0x08033D30,Fight_AccumulateBaseDamage,func_thumb,confirmado: monta dano base em fi+0xEC somando pecas (+0x4E/+0xD0/+0xD3/+0xD4/+0xD6 e efeitos) e subtrai reducoes
+0x08033F04,ActionScript_Op15_MarkStateFromDamageBelowThreshold,func_thumb,confirmado: se fi+0xDF==0x1D e dano < bot+0xD8 seta bot+0xB8=2 e +0xBE=1
+0x08033F64,ActionScript_Op16_SetStateFromPartFlag1C,func_thumb,provavel: se fi+0xDF==0x1C seta bot+0xB8=2 e +0xBE=5 (nome do flag 0x1C nao confirmado)
+0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,provavel: se defensor tem bit 0x10 de +0xBD e dano > bot+0xD8 marca B7=3
+0x0803402C,ActionScript_Op19_DispatchOnSubstateAA_F,func_thumb,confirmado: wrapper do despachante _F com avanco por +0xB5
+0x08034048,ActionScript_Op1A_DispatchOnSubstateAA_G,func_thumb,confirmado: seta bot+0x130=1 e chama despachante _G com avanco por +0xB5
+0x0803447C,ActionScript_Op30_DispatchOnSubstateAA_Z,func_thumb,confirmado: wrapper do despachante _Z com avanco por +0xB5 (antes: ActionScript_Op30_CallSubstateZ)

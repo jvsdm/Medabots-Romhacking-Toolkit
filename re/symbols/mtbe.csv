@@ -916,8 +916,8 @@ address,name,kind,count,comment
 0x08011FEC,Fight_LoadBotPartEntryTiles,func_thumb,,[R0] sprites das entradas de peca do bot (chute) (antes: Fight_DrawBotPartEntrySprites)
 0x08012024,Fight_CreateBotPartEntrySprites,func_thumb,,[R0] icones das entradas de peca do bot (chute) (antes: Fight_DrawBotPartEntryIcons)
 0x08012098,Fight_UpdateBotPartEntryMotion,func_thumb,,[R0] tiles das entradas de peca do bot (chute) (antes: Fight_DrawBotPartEntryTiles)
-0x080120C8,Fight_DrawBotPartIconRow,func_thumb,,[R0] icone de peca por posicao 0..2 do bot (chute)
-0x0801214C,Fight_SetupFlagSprite,func_thumb,,[R0] sprite de marcador se flag 0x32 ativa (chute)
+0x080120C8,Fight_DrawBotPartIconRow,func_thumb,,[R0] icone de peca por posicao 0..2 do bot (chute) [RV2] confirmado (3 slots: icone da peca (GetPartStats + DrawPartIconTileBlock) ou icone vazio 0xFF)
+0x0801214C,Fight_SetupFlagSprite,func_thumb,,[R0] sprite de marcador se flag 0x32 ativa (chute) [RV2] confirmado (se Map64 0x32 ativo e flag livre
 0x080121A8,Fight_FormatBotLabelText,func_thumb,,[R0] texto de rotulo do bot (chute) (antes: Fight_FormatBotLabelText) (antes: Fight_CopyBotLabelRecord)
 0x080121CC,Fight_TryAssignBotPartByRoll,func_thumb,,[R0] sorteia atribuicao de peca do bot (provavel)
 0x080121F0,Fight_CountAvailableBotParts,func_thumb,,[R0] pontua vagas de peca do bot (provavel)
@@ -926,7 +926,7 @@ address,name,kind,count,comment
 0x080122F4,Fight_AssignRandomBotPartSlot,func_thumb,,[R0] grava slot e id da peca do bot (provavel)
 0x08012344,Fight_AssignRandomBotPartSlot,label,,[RW] GH-RW confirmado: sorteio cego de slot/kind (sem checar posse); grava 0x03001968/69/87
 0x080123A0,Fight_DrawBotPartSprite,func_thumb,,[R0] sprite da peca do bot por slot 0..3 (provavel)
-0x08012468,Fight_UpdateIndicatorOscillation,func_thumb,,[R0] oscila contador de indicador (chute)
+0x08012468,Fight_UpdateIndicatorOscillation,func_thumb,,[R0] oscila contador de indicador (chute) [RV2] confirmado (quando flag +0x16A ativo
 0x080124B8,Fight_DrawBotPartSpriteBig,func_thumb,,[R0] sprite da peca do bot em tamanho grande (provavel)
 0x08012584,Fight_RefreshBotDisplayState,func_thumb,,[R0] agregador que chama seis atualizadores de tela do bot (provavel)
 0x080125B4,Fight_AverageOverActiveBots,func_thumb,,media (/3) do campo +0x305 de bots ativos; provavel
@@ -941,7 +941,7 @@ address,name,kind,count,comment
 0x080129C8,Fight_SetupBattleBotStates,func_thumb,,[provavel] zera ctx+0x13A; se ctx+0x89!=1 roda ClearBattleBuffer/UpdateBotActiveFlagCount/RefreshBotPartRecords/InitializeEnemyBotStates; sempre RefreshBotPartSlotDisplays
 0x080129F2,Fight_SetupBattleBotStates,label,,"[EN] GH-EN: se ctx+0x89 != 1 chama Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords, Fight_InitializeEnemyBotStates. Confirmado no decompile; significado de ctx+0x89 aberto."
 0x08012A20,Fight_PartPanelStep,func_thumb,,provável: máquina de 3 estados do painel de peças
-0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos"
+0x08012B40,Gfx_FadeStepPaletteRows,func_thumb,,"[FL10] passo de fade de paleta (A e B), intensidade 0x20-4n, 9 passos [RV2] confirmado (ate 9 passos: Palette_FadeRowsToColorA/B com fator -4*passo; depois so incrementa contador)"
 0x08012B94,Battle_CpuActionSelectStep,func_thumb,,[AI2] [AI2] entrada 3 da tabela de cena 0x083AD080 (GS=0x0300137C). Corpo: bl 0x080196C0; se byte 0x030004C9==1 pula; senao Fight_SelectActionsForBotGroup(3); GS++. Sem funcao no Ghidra ainda: ver AI2_lista.txt
 0x08012BC0,Fight_DrawBotsOverlayStep,func_thumb,,[FS4] [FS4] Fight_DrawActiveBotsOverlay + FUN_08016370(ctx+0x80); GS+1; tabela 0x083AD090; provavel
 0x08012BE4,Fight_AnimSpriteGroupStep,func_thumb,,[FS4] [FS4] overlay + Fight_UpdateSpriteGroupMoveAnim(ctx+0x80); retorno!=0 -> GS+1; tabela 0x083AD094; provavel
@@ -2080,25 +2080,25 @@ address,name,kind,count,comment
 0x080338DC,ActionScript_Op01_SetSceneExitState,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra; bytes da ROM nao lidos (antes: ActionScript_Op01_pendente) (antes: ActionScript_Op01_EndSetsSceneAndGs) [MG3] grava cena 8 em 0x03002B8C e GS 0x40 em 0x0300137C: volta a batalha no BR_50 (nao sai do combate); confirmado
 0x080338F4,Fight_WaitForActionScriptByteMatch,func_thumb,,Simon/Rokusho [AS1] AS1 provavel: op 0x02; espera byte +0xAC casar com tabela[+0xA8][+0xBC]; grava flag +0xB5
 0x08033974,Fight_WaitForActionScriptChoiceByteMatch,func_thumb,,Simon/Rokusho [AS1] AS1 provavel: op 0x03; espera byte +0xAC+[+0xAB] casar; grava flag +0xB5
-0x080339F4,ActionScript_Op04_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
-0x08033A10,ActionScript_Op05_pendente,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra
-0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,,"Simon/Rokusho: Ensure the acting bot has selected target metadata. If selected_target_bot_id or selected_target_part_id is zero, populate them through helper routines before continuing the action flow."
-0x08033A78,ActionScript_Op07_DispatchOnSubstateAA_C,func_thumb,,[AB] AB; despachante C (0x083AD6B0); ramo pela peca-alvo
-0x08033A94,ActionScript_Op08_DispatchOnSubstateAA_D,func_thumb,,[AB] AB; despachante D (0x083AD6D0); sprite do bot de apoio no slot 9
-0x08033AB0,ActionScript_Op09_DispatchOnSubstateAA_E,func_thumb,,[AB] AB; despachante E (0x083AD6F0); follow-up: aliado entra e age
-0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,,"Simon/Rokusho: When a referenced target bot id is stored in the acting bot's selected action state, copy that bot's graphics/state blocks into the UI/work area and refresh battle presentation."
-0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,,Simon/Rokusho: Apply battle-status / damage flags based on the selected part's SpecialityId. Proximity-class specialities set one flag family; remoteness-class specialities set another.
-0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,,Simon/Rokusho: Action-script phase: compute total ROS for the current action and store it in fight_information.combat_resolution.total_ros.
+0x080339F4,ActionScript_Op04_DispatchOnSubstateAA,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra (antes: ActionScript_Op04_pendente)
+0x08033A10,ActionScript_Op05_DispatchOnSubstateAA_B,func_thumb,,[AS1] AS1 pendente: sem funcao no Ghidra (antes: ActionScript_Op05_pendente)
+0x08033A2C,Fight_EnsureSelectedActionMetadata,func_thumb,,"Simon/Rokusho: Ensure the acting bot has selected target metadata. If selected_target_bot_id or selected_target_part_id is zero, populate them through helper routines before continuing the action flow. [RV22] confirmado: garante alvo e parte escolhidos (0xE0/0xE1 zerados => sorteia)"
+0x08033A78,ActionScript_Op07_DispatchOnSubstateAA_C,func_thumb,,[AB] AB; despachante C (0x083AD6B0); ramo pela peca-alvo [RV22] confirmado: wrapper do despachante _C com avanco por +0xB5
+0x08033A94,ActionScript_Op08_DispatchOnSubstateAA_D,func_thumb,,[AB] AB; despachante D (0x083AD6D0); sprite do bot de apoio no slot 9 [RV22] confirmado: wrapper do despachante _D com avanco por +0xB5
+0x08033AB0,ActionScript_Op09_DispatchOnSubstateAA_E,func_thumb,,[AB] AB; despachante E (0x083AD6F0); follow-up: aliado entra e age [RV22] confirmado: wrapper do despachante _E com avanco por +0xB5
+0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,,"Simon/Rokusho: When a referenced target bot id is stored in the acting bot's selected action state, copy that bot's graphics/state blocks into the UI/work area and refresh battle presentation. [RV22] confirmado: se fi+0xDE nao zero copia 4 blocos de 0x40 de graficos do bot"
+0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,,Simon/Rokusho: Apply battle-status / damage flags based on the selected part's SpecialityId. Proximity-class specialities set one flag family; remoteness-class specialities set another. [RV22] provavel: marca bits 1 e 2 de bot+0xBC conforme status (0/1/3) da parte e do lado oposto
+0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,,Simon/Rokusho: Action-script phase: compute total ROS for the current action and store it in fight_information.combat_resolution.total_ros. [RV22] confirmado: wrapper de Fight_ComputeTotalRos com avanco do cursor
 0x08033C20,Fight_ApplyPendingEffectStatusFlags,func_thumb,,"Simon/Rokusho: Apply pending-effect and speciality-derived defender-resolution flags. No_Escape (0x2E) forces BYPASS_EVASION, No_Defense (0x2F) forces BYPASS_DEFENSE, and Thunder/Freeze (0x0F/0x10) force both. SPECIALITY_FLAG_0/1 are also promoted into those bypass bits. [TR] [TR] opcode 0x0E do roteiro; grava bot+0xBC bits 0x04/0x08/0x0C (alvo e ator); confirmado"
 0x08033CD0,Fight_ResolveDefenderRosPhase,func_thumb,,"[DM] [confirmado bytes, sem funcao no Ghidra] bl 0x08038E54 + bl 0x08034F08; nome provavel"
-0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,,Simon/Rokusho: Action-script phase: update the current action argument selector from defender state before later conditional action-script checks.
-0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,,Simon/Rokusho: Action-script phase: seed the pre-damage value from total ROS by taking total_ros >> 2 before later damage accumulation and modifiers.
-0x08033D30,Fight_AccumulateBaseDamage,func_thumb,,Simon/Rokusho: Accumulate final damage into fight_information.combat_resolution.accumulated_damage (+0xEC). | Formula skeleton: | 1. damage = pre_damage_value (+0xEA) | 2. + selected_part.power_or_evasion | 3. + attacker.flat_damage_bonus | 4. + close-range or long-range attacker bonus based on part.skill_id | 5. + extra half of attacker.effective_charge_or_defense for Berserk skill | 6. + selected_part.power_or_evasion again for Laser/Beam actions | 7. + selected_part.power_or_evasion again if optic/bomb/grav affinity bonus flag bit 0x01 is set | 8. + special action-script additive case for action kind 0x34 | 9. + strengthen damage bonus from active Strengthen parts | 10. - defender flat damage reduction byte at bot +0xD1 | 11. - extra pending-effect reduction when follow-up effect kind 0x1B is active | Result stays in +0xEC before clamp-to-armor/application.
+0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,,Simon/Rokusho: Action-script phase: update the current action argument selector from defender state before later conditional action-script checks. [RV22] provavel: wrapper de Fight_UpdateActionArgSelectorFromDefenderState com avanco do cursor
+0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,,Simon/Rokusho: Action-script phase: seed the pre-damage value from total ROS by taking total_ros >> 2 before later damage accumulation and modifiers. [RV22] confirmado: fi+0xEA = fi+0xE8 >> 2 (semente do dano)
+0x08033D30,Fight_AccumulateBaseDamage,func_thumb,,Simon/Rokusho: Accumulate final damage into fight_information.combat_resolution.accumulated_damage (+0xEC). | Formula skeleton: | 1. damage = pre_damage_value (+0xEA) | 2. + selected_part.power_or_evasion | 3. + attacker.flat_damage_bonus | 4. + close-range or long-range attacker bonus based on part.skill_id | 5. + extra half of attacker.effective_charge_or_defense for Berserk skill | 6. + selected_part.power_or_evasion again for Laser/Beam actions | 7. + selected_part.power_or_evasion again if optic/bomb/grav affinity bonus flag bit 0x01 is set | 8. + special action-script additive case for action kind 0x34 | 9. + strengthen damage bonus from active Strengthen parts | 10. - defender flat damage reduction byte at bot +0xD1 | 11. - extra pending-effect reduction when follow-up effect kind 0x1B is active | Result stays in +0xEC before clamp-to-armor/application. [RV22] confirmado: monta dano base em fi+0xEC somando pecas (+0x4E/+0xD0/+0xD3/+0xD4/+0xD6 e efeitos) e subtrai reducoes
 0x08033F04,ActionScript_Op15_MarkStateFromDamageBelowThreshold,func_thumb,,Simon/Rokusho: Action-script opcode 0x1D handler. Uses current damage/ROS scratch and defender threshold data to set a small action-script result code in fight_information. (antes: Fight_HandleActionScriptOpcode1D)
 0x08033F64,ActionScript_Op16_SetStateFromPartFlag1C,func_thumb,,Simon/Rokusho: Action-script opcode 0x1C handler. Sets a small action-script result code in fight_information when the currently referenced action matches the expected state. (antes: Fight_HandleActionScriptOpcode1C)
-0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,,"Simon/Rokusho: If the defender has the required status bit and the currently referenced part is still active, compare current damage scratch against the defender threshold and raise defender_followup_flags when the threshold condition is met."
-0x0803402C,ActionScript_Op19_DispatchOnSubstateAA_F,func_thumb,,[AB] AB; despachante F (0x083AD730); copia dados da peca (2 x 14)
-0x08034048,ActionScript_Op1A_DispatchOnSubstateAA_G,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]. (antes: FightPreview_SetupSceneFromPartTechnique)
+0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,,"Simon/Rokusho: If the defender has the required status bit and the currently referenced part is still active, compare current damage scratch against the defender threshold and raise defender_followup_flags when the threshold condition is met. [RV22] provavel: se defensor tem bit 0x10 de +0xBD e dano > bot+0xD8 marca B7=3"
+0x0803402C,ActionScript_Op19_DispatchOnSubstateAA_F,func_thumb,,[AB] AB; despachante F (0x083AD730); copia dados da peca (2 x 14) [RV22] confirmado: wrapper do despachante _F com avanco por +0xB5
+0x08034048,ActionScript_Op1A_DispatchOnSubstateAA_G,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]. (antes: FightPreview_SetupSceneFromPartTechnique) [RV22] confirmado: seta bot+0x130=1 e chama despachante _G com avanco por +0xB5
 0x08034056,ActionScript_Op1A_DispatchOnSubstateAA_G,label,,"[BI2] BI2: op de script G (endereço = ponto de chamada do stub G; entrada da função não conferida). Seta byte+0x130=1, chama stub G, se +0xB5!=0 avança cursor. Confirmado (decompile)."
 0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
 0x080340F6,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA2] LE B+0xA8 (paleta +0x50) e grava +0xF9/+0x69/+0xA9; NAO grava B+0xA8 (corrige TA.md)
@@ -2744,9 +2744,12 @@ address,name,kind,count,comment
 0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area."
 0x080482CC,Gfx_LoadLz77Table12ByIndex,func_thumb,,[FN4] provavel (hint FN2 aceito): Map_PoseIdToTileIndex(0x08048210) e 12 bios_lz77_vram com passo 0x900 a partir de tabela de ponteiros; chamador 08059970 (antes: FUN_080482cc)
 0x0804830C,Map_LoadMapPaletteToShadowBuffer,func_thumb,,[MP2] paleta do mapa ROM 0x083F9980[m] -> DMA3 para 0x0202FA00 (0x1A0 B)
+0x080483F8,Bot_ReadCurrentByteOrDefault,func_thumb,,[FN4] provavel (hint FN2 aceito): le 1 B de um de dois enderecos conforme byte +0xC30 == 0xFF; chamadores 080484CC/08048576/08048590/080485BA/08048664 (antes: FUN_080483f8)
 0x0804842C,SND_PolicyRequest,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling. (antes: Overworld_ApplyMapSceneModePolicy)
 0x08048684,Map_GetObjectPoseByGroup,func_thumb,,[CS] CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim (antes: Map_GetSpriteListEntry)
+0x080486B0,Icon_BuildSlotRecordList,func_thumb,,"[FN4] provavel (hint FN2 aceito): laco por Map_GetObjectPoseByGroup ate 0xFF, grava registros de 0x20 B (ponteiro + endereco + constante); chamador 0804CD50 (antes: FUN_080486b0)"
 0x08048708,Map_LoadCurrentEventObjectPalettes,func_thumb,,Simon/Rokusho: Load the palette set used by event objects / overworld NPC sprites for the current map. Resolves the per-slot sprite palette ids for the current map and copies each palette block into the shared object palette staging area. [CS2] CONFIRMADO: copia paleta 0x20 B de ROM[0x083F83C0+4*id] para EWRAM 0x0202F800+0x20*n por DMA3; fixa 0x085FB684 -> 0x0202F9C0
+0x0804877C,Icon_Build12SlotRecords,func_thumb,,[FN4] provavel (hint FN2 aceito): 12 registros de 0x20 B a partir de Map_PoseIdToTileIndex; chamador 08059978 (antes: FUN_0804877c)
 0x080487C8,Map_ResetObjectField0B,func_thumb,,[HE4] objeto+0xB = 0xFF/0/0x40 pela tabela do tipo; usado pelo 0x83 [RV13] [RV13] confirmado: define +0xb do objeto a partir de tabela (0/1/2 -> 0x40/0x00/0xff)
 0x08048830,Overworld_ResetMapSceneBlendState,func_thumb,,Simon/Rokusho: Reset the map-scene blend registers and cached screen-transition blend coefficients before showing the rebuilt overworld scene. [RV13] [RV13] provavel: grava constantes de blend/registro de cena no ctx do mapa
 0x08048864,Map_InitializeObjectRenderSlot,func_thumb,,"Simon/Rokusho: Initialize one map/object render slot descriptor with a base tile resource id, palette/graphic set id, and mode bytes. [RV13] [RV13] confirmado: preenche campos do slot de render do objeto (0x40 B)"
@@ -2764,6 +2767,7 @@ address,name,kind,count,comment
 0x08049210,BgMap_CopyRectWithAttrs,func_thumb,,[FN2] provavel: Copia retangulo de array fonte para tilemap aplicando mascara e atributos (paleta << 12)
 0x080492A8,BgMap_CopyRectAddOffset,func_thumb,,[FN2] provavel: Copia retangulo de array fonte para tilemap somando param9 a cada entrada (passo 0x20 ou 0x40)
 0x08049318,Map_ResetRenderAffineState,func_thumb,,Simon/Rokusho: Reset the per-map affine/render scratch state before rebuilding visible map object and overlay transforms.
+0x08049344,Slot_ClearIndexedBuffers,func_thumb,,[FN4] confirmado no decompile: zera 4 B e 0x40 B em dois blocos indexados por arg & 0xFF (hint FN2 aceito); chamador 0804889E (antes: FUN_08049344)
 0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,,Simon/Rokusho: Recompute the affine/render coefficients for one map render entry from its angle/scale scratch values.
 0x08049420,Map_SetObjectAnimationVariant,func_thumb,,Simon/Rokusho: Set the active animation variant for one map/object render slot and reset its local frame timers. [CS2] CONFIRMADO decompile: grava +0x24 = anim e zera +0x22 e +0x23
 0x08049440,Map_TickObjectAnimation,func_thumb,,[R3] interpretador de animacao de objeto de mapa (codigos 0..5)
@@ -2773,6 +2777,7 @@ address,name,kind,count,comment
 0x08049780,Random_NextScaled,func_thumb,,"Simon/Rokusho: Advance the byte-sized RNG index using sRandomAdvanceTable and the current overworld affine/frame counter, store the updated byte to gRandomIndex, then return the result reduced modulo the supplied bound. [RV13] [RV13] confirmado: avanca tabela de aleatorio e escala com bios_div_ret2"
 0x080497C0,Mem_CopyBytesLoop,func_thumb,,"Simon/Rokusho (antes: mem_copy) [RV13] [RV13] confirmado (antes: mem_copy): copia N bytes byte a byte (src,dst,n)"
 0x080497E0,Overworld_SetTransitionStepAndDispatch,func_thumb,,[FS7] [FS7] grava bloco de transicao e despacha jump table em +1 (0..6); chamadores de Overworld e Map_EnterSceneSetup; provavel
+0x08049A6C,Anim_UpdateSoftFloatStep,func_thumb,,[FN4] provavel (hint FN2 aceito): passo de estado com soft-float (sf_add/sf_cmp) e jump table de 0..6 em +1; chamadores 08003036/08010AD6/08049E18/08054F20/08054FC8 (antes: FUN_08049a6c)
 0x08049CC8,Obj_LoadPairFromRecord,func_thumb,,[FS7] [FS7] copia 6 bits de dois bytes do registro para dois destinos; provavel
 0x08049D0C,Overworld_ResetScreenTransitionResources,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: CopyPaletteBuffersToHardware
 0x08049D18,Overworld_StartScreenTransitionEffect,func_thumb,,Simon/Rokusho: Start a screen-transition effect using the supplied resource/config ids without first resetting the transition resource state. [RV13] [RV13] confirmado: blend de paleta com sf32 e agenda passo de transicao
@@ -2798,11 +2803,16 @@ address,name,kind,count,comment
 0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene.
 0x0804AB60,Overworld_WalkStateToggleTo1,func_thumb,,[VA3] C5C = C69 se C5C==1; senao C69=C5C e C5C=1. confirmado
 0x0804ABCC,Overworld_WalkStateToggleTo2,func_thumb,,[VA3] C5C = C69 se C5C==2; senao C69=C5C e C5C=2. confirmado
+0x0804ACC8,Map_AdvanceSubroutineStep_F,func_thumb,,[FN4] confirmado: so chama GameState_AdvanceSubroutine; mesmo padrao de Map_AdvanceSubroutineStep_A..E; ptr 083D21AC (antes: FUN_0804acc8)
+0x0804ACD4,Map_InitScreenAndStartTransition,func_thumb,,"[FN4] provavel: limpa OAM/paleta, DISPCNT=0x1E40, Map_LoadCurrentMapAndEntities, Overworld_ResetEncounterStepState, SND_PolicyRequest(0xB), efeito de transicao e avanca; ptr 083D21B0 (antes: FUN_0804acd4)"
 0x0804AD68,Overworld_TransitionDone_SetWalk0B,func_thumb,,[VA3] C5C = 0x0B quando a transicao termina. confirmado
 0x0804ADB4,Overworld_UiDone_RestoreWalkFromC69_A,func_thumb,,[VA3] C5C = C69 quando a cena de UI termina. provavel
 0x0804AE80,Overworld_SetWalk0C_UiScene,func_thumb,,[VA3] C5C = 0x0C antes de BeginUiSceneState(0x0E). confirmado
 0x0804AEC8,Overworld_UiDone_RestoreWalkFromC69_B,func_thumb,,[VA3] C5C = C69 quando a cena de UI termina (outro estado). provavel
+0x0804AF98,Map_HandleMarkerStepThenAdvance,func_thumb,,[FN4] provavel: se byte +0x11 == 0 grava +0x10=1 e Map_HandleMarkerCommandFromState(0); depois avanca; ptr 083D21EC (antes: FUN_0804af98)
 0x0804AFB8,Screen_UpdateStepWrap,func_thumb,,wrapper: chama Screen_UpdateByStep com passo ctx+0x14 (confirmado)
+0x0804AFCC,Screen_TransitionStepResetOnDone,func_thumb,,[FN4] provavel: se Screen_HandleStateTransition() termina chama Screen_ResetStateAndSelectMode; ptr 083D21F4 (antes: FUN_0804afcc)
+0x0804AFE0,Overworld_StartTransitionThenAdvance,func_thumb,,[FN4] provavel: Overworld_ResetAndStartScreenTransitionEffect e avanca subrotina; ptr 083D21F8 (antes: FUN_0804afe0)
 0x0804B008,Map_FinishEnterTransition,func_thumb,,"[provavel] map entry after transition: camera, player tile clamp, OAM clear"
 0x0804B036,Map_FinishEnterTransition,label,,[OW2] fim da transicao: se state+0x14 == 0 grava gCurrentMapId = state+0x26 (confirmado no decompile); centraliza camera e prende posicao no mapa
 0x0804B124,lit_EventDbBase3,label,,literal da base do banco de eventos
@@ -2924,10 +2934,10 @@ address,name,kind,count,comment
 0x0804D094,Event_Op66_Animate_Tracked_Object_Transition,func_thumb,,"Simon/Rokusho: Primary event opcode 0x66. Reads one inline tracked_object_index byte, resolves the tracked-object render slot into gEventScriptArguments[10], clears the transition state byte for that slot, and enters deferred mode. (antes: EventOpcode66_AnimateTrackedObjectTransition_Setup) [HE3] confirmado Ghidra; 2 args; estado=1; continuacao 0x0804F83C (Map_TickTrackedObjectTransition)"
 0x0804D0E0,Event_Op67_Skip_Two_Bytes_Wait,func_thumb,,Simon/Rokusho (antes: EventOpcode67_Primary) [HE3] confirmado Ghidra; 2 args ignorados; estado=1; continuacao so termina; sem definicao no C#
 0x0804D100,Event_Op68_Clear_Collision_For_Packed_Object,func_thumb,,"Simon/Rokusho: Event opcode 0x68. Reads a packed object id, matches it against the current active map object record, and clears collision at that object's map tile via set_collision(x, y, 0). (antes: EventOpcode68_ClearCollisionForPackedObject) [HE3] confirmado Ghidra; 2 args (Short BE); limpa colisao do objeto do evento atual se o id bate"
-0x0804D158,Event_Op69_Set_Map_Scene_Variant,func_thumb,,"Simon/Rokusho: Primary event opcode 0x69. Reads variant and skip_full_reload. If the requested map-scene variant differs from gCurrentMapSceneVariant, toggles the active scene variant, applies the matching scroll preset, and unless skip_full_reload is nonzero refreshes the current tile-behavior row and related map-scene bytes. (antes: EventOpcode69_SetMapSceneVariant)"
+0x0804D158,Event_Op69_Set_Map_Scene_Variant,func_thumb,,"Simon/Rokusho: Primary event opcode 0x69. Reads variant and skip_full_reload. If the requested map-scene variant differs from gCurrentMapSceneVariant, toggles the active scene variant, applies the matching scroll preset, and unless skip_full_reload is nonzero refreshes the current tile-behavior row and related map-scene bytes. (antes: EventOpcode69_SetMapSceneVariant) [RV15] confirmado: le 2 bytes; inverte bit 0 da variante, Map_ApplySceneVariantScrollPreset, copia buffers conforme variante"
 0x0804D17C,Event_Op69_Set_Map_Scene_Variant,label,,[MP2] troca variante de cena: copia 8 B para gMapState+0xC10 (tabela de passabilidade) [VA] [VA] confirmado: arg0==E+0xC5B -> troca variante; arg1==0: var 0 salva C10->C18 e zera C10..C17; var 1 restaura C18->C10
 0x0804D204,Event_Op6A_NoOp,func_thumb,,Simon/Rokusho (antes: EventOpcode6A_Primary) [HN6] bx lr (confirmado)
-0x0804D208,Event_Op6B_Set_Current_Chapter,func_thumb,,Simon/Rokusho: Event opcode 0x6B. Reads one byte from the script and stores it in the shared progression/chapter state byte used by scene progression. (antes: EventOpcode6B_SetCurrentChapter)
+0x0804D208,Event_Op6B_Set_Current_Chapter,func_thumb,,Simon/Rokusho: Event opcode 0x6B. Reads one byte from the script and stores it in the shared progression/chapter state byte used by scene progression. (antes: EventOpcode6B_SetCurrentChapter) [RV15] confirmado: le 1 byte e grava no campo de capitulo
 0x0804D224,Event_Op6C_Initiate_Moving_Actor_C,func_thumb,,[HE4] ver HE4.md [HN6] igual 0x2B (confirmado)
 0x0804D270,Event_Op6D_Move_Actor_D,func_thumb,,Simon/Rokusho (antes: EventOpcode6D_Primary) [HN6] igual 0x24 (confirmado)
 0x0804D2A8,Event_Op6E_Initiate_Moving_Actor_D,func_thumb,,Simon/Rokusho (antes: EventOpcode6E_Primary) [HN6] igual 0x2B (confirmado)
@@ -2985,17 +2995,17 @@ address,name,kind,count,comment
 0x0804DDCC,Map_LoadCurrentSceneResources,func_thumb,,"Simon/Rokusho: Reload the active map scene after a warp has changed the current map and player coordinates. Rebuild palettes/layers, reset encounter state, refresh markers, restore player facing, sync follower position, reload sprite graphics, and clear pending transition counters. (antes: Overworld_ReloadWarpDestinationScene) [RV16] confirmado carrega paletas"
 0x0804DE74,EventOpcode0E_PlayerHopInPlace,func_thumb,,Simon/Rokusho [RV16] confirmado pulo vertical do jogador em 16 passos sem mudar direcao
 0x0804DF40,EventOpcode0F_PlayerHopInDirection,func_thumb,,"Simon/Rokusho: Perform a directed player hop / short forced movement setup. |  | Seeds a temporary movement sequence, forces facing/input bits for one direction, animates the player hop motion, then cleans up and ends the current event opcode. [RV16] confirmado pulo do jogador na direcao lida do byte de estado (4 direcoes)"
-0x0804E134,EventOpcode10_MovePlayer,func_thumb,,"Simon/Rokusho: Execute a scripted player movement path. |  | Uses per-opcode local state and an inline movement sequence buffer to emit up to four directional movement steps, updating live tile coordinates and held-direction state until the scripted path completes."
+0x0804E134,EventOpcode10_MovePlayer,func_thumb,,"Simon/Rokusho: Execute a scripted player movement path. |  | Uses per-opcode local state and an inline movement sequence buffer to emit up to four directional movement steps, updating live tile coordinates and held-direction state until the scripted path completes. [RV16] confirmado fase 0 roda passos do jogador; fase 1 restaura 8 bytes e encerra"
 0x0804E370,Event_Cont11_ChangePlayerCostume,func_thumb,,"Simon/Rokusho: Change the player visual/costume variant. |  | Loads the new scene/player visual selector into live event/map state, reloads map object palettes and overworld sprite graphics for the current map, copies the matching palette resource, then ends the current event opcode. (antes: EventOpcode11_ChangePlayerCostume) [VA2] [VA2] confirmado: continuacao do opcode 0x11 (tabela 0x083D2630[0x11]); E+0xC5C = E+0xC69 = E+0xC28 = ROM 0x083D2B18[E+0xC94]; renomeado no Ghidra (antes EventOpcode11_ChangePlayerCostume)"
 0x0804E43C,Event_Op1A_Cont_NpcDoAnimation,func_thumb,,Simon/Rokusho (antes: EventOpcode1A_NpcDoAnimation) [HC1] Map_ObjectAnimStep 0x080508B4 ate nonzero; fim = Event_EndOpcode; HC1 confirmado
 0x0804E450,Event_Op1D_Cont_HopEventNpc,func_thumb,,Simon/Rokusho (antes: EventOpcode1D_HopEventNpc) [HC1] Map_ObjectArcStep 0x08050918 ate nonzero; fim = Event_EndOpcode; HC1 confirmado
 0x0804E464,Event_Op1E_Cont_FlickerNpc,func_thumb,,Simon/Rokusho (antes: EventOpcode1E_FlickerEventNpc) [HC2] Continuacao 0x1E: Map_TickObjectFlicker(render) ate frames=0; depois Event_EndOpcode. Confianca confirmado.
-0x0804E480,Event_Op1F_Cont_InitiateMovingActorA,func_thumb,,Simon/Rokusho (antes: EventOpcode1F_InitiateMovingActorA)
+0x0804E480,Event_Op1F_Cont_InitiateMovingActorA,func_thumb,,Simon/Rokusho (antes: EventOpcode1F_InitiateMovingActorA) [RV16] confirmado wrapper de Event_RunInitiateMovingActorSequence
 0x0804E48C,Event_Op20_Cont_InitiateMovingActorB,func_thumb,,Simon/Rokusho (antes: EventOpcode20_InitiateMovingActorB) [HC2] Continuacao 0x20: mesmo corpo da 0x1F (chama 0x0804E498). Confianca confirmado.
-0x0804E498,Event_RunInitiateMovingActorSequence,func_thumb,,"Simon/Rokusho: Shared actor-initiation sequence used by EventOpcode1F and EventOpcode20. |  | Spawns a tracked object at the requested tile, starts a directional object step sequence for the spawned render slot, then waits until the step sequence completes before ending the current event opcode."
-0x0804E51C,Event_Op23_Cont_MoveActorA,func_thumb,,Simon/Rokusho (antes: EventOpcode23_MoveActorA)
+0x0804E498,Event_RunInitiateMovingActorSequence,func_thumb,,"Simon/Rokusho: Shared actor-initiation sequence used by EventOpcode1F and EventOpcode20. |  | Spawns a tracked object at the requested tile, starts a directional object step sequence for the spawned render slot, then waits until the step sequence completes before ending the current event opcode. [RV16] confirmado fase 0 spawna ator rastreado no tile e inicia passo; fase 1 espera fim"
+0x0804E51C,Event_Op23_Cont_MoveActorA,func_thumb,,Simon/Rokusho (antes: EventOpcode23_MoveActorA) [RV16] confirmado wrapper de Event_RunActorStepSequence
 0x0804E528,Event_Op24_Cont_MoveActorB,func_thumb,,Simon/Rokusho (antes: EventOpcode24_MoveActorB) [HC2] Continuacao 0x24: mesmo corpo da 0x23 (chama 0x0804E534). Confianca confirmado.
-0x0804E534,Event_RunActorStepSequence,func_thumb,,"Simon/Rokusho: Shared existing-actor movement sequence used by EventOpcode23 and EventOpcode24. |  | Starts a directional step on the target actor render slot, then ticks the object-step state until the movement completes."
+0x0804E534,Event_RunActorStepSequence,func_thumb,,"Simon/Rokusho: Shared existing-actor movement sequence used by EventOpcode23 and EventOpcode24. |  | Starts a directional step on the target actor render slot, then ticks the object-step state until the movement completes. [RV16] confirmado fase 0 inicia passo do ator; fase 1 espera Map_TickObjectStep"
 0x0804E58C,EventOpcode26_FlickerActor,func_thumb,,Simon/Rokusho
 0x0804E5A8,Event_Op27_Cont_ActorDoAnimation,func_thumb,,Simon/Rokusho (antes: EventOpcode27_ActorDoAnimation) [HC2] Continuacao 0x27: Map_ObjectAnimStep() ate devolver 1; depois Event_EndOpcode. Confianca confirmado.
 0x0804E5BC,Event_Op28_Cont_HopActor,func_thumb,,Simon/Rokusho (antes: EventOpcode28_HopActor) [HC2] Continuacao 0x28: Map_ObjectArcStep ate devolver 1 (16 passos); depois Event_EndOpcode. Confianca confirmado.
@@ -3053,18 +3063,18 @@ address,name,kind,count,comment
 0x0804FA9C,Event_Op72_Cont_Run_Scene_Command_02,func_thumb,,"confirmado; FUN_08050CC0 + FUN_08050CCC(2,0) ate != 0"
 0x0804FADC,Event_Op73_Cont_Run_Scene_Command_08,func_thumb,,"confirmado; FUN_08050CC0 + FUN_08050CCC(8,0) ate != 0"
 0x0804FB1C,Event_Op76_Cont_Start_Flow4_Then_Scene_Command_05,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Starts top-level flow command 4, conditionally resets the scene-command step, then runs Event_RunSceneCommandSequence(command 5, 0) before ending the opcode. This is a strong battle/link/menu-flow candidate, but the exact gameplay-facing action is not yet proven from ROM alone. (antes: EventOpcode76_RunFlow4ThenSceneCommand5) [HC5] confirmado; StartFlowByCommand(4,0); checa 0x03006D20+0xC==7 uma vez; depois cena 5"
-0x0804FB8C,EventOpcode78_RunSceneCommand10,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x10, 0). On completion it may set gOverworldAffineState[0x39] before ending the opcode."
-0x0804FBDC,EventOpcode79_RunSceneCommand12,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x12, 0) until completion before ending the opcode."
+0x0804FB8C,EventOpcode78_RunSceneCommand10,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x10, 0). On completion it may set gOverworldAffineState[0x39] before ending the opcode. [RV17] confirmado - reseta passo"
+0x0804FBDC,EventOpcode79_RunSceneCommand12,func_thumb,,"Simon/Rokusho: Upper-half normal event opcode. Resets the shared scene-command step byte, then runs Event_RunSceneCommandSequence(command 0x12, 0) until completion before ending the opcode. [RV17] confirmado - reseta passo"
 0x0804FC1C,Event_Op7A_Cont_Run_Scene_Command_11,func_thumb,,confirmado; cena 0x11 e depois FUN_0804B738 != 0 grava 1 em 0x03005349 (HE4 dizia zera 0x03005310)
 0x0804FC6C,Event_Op7E_Cont_Move_All_Tracked_Actors_C,func_thumb,,"Simon/Rokusho (antes: EventOpcode7E_MoveAllTrackedActorsC) [HC5] confirmado chamada; chama Event_RunAllTrackedActorsStepSequence (0x0804E5F0) com (0,0); padrao vem de E+0xC94"
 0x0804FC7C,Event_Op7F_Cont_Copy_Tracked_Actor_Records,func_thumb,,"confirmado; copia blocos de 0x40 (0x03003FF0/0x03004A70 + arg0*0x40 -> 0x03003830/0x030042B0), grava 0xFFFF em 0x030055A0; significado chute [CU] copia slot 0x4F+arg -> slot 0x30 (com X de E+0xC6E em +0x0C e Y de E+0xC70 em +0x10); slot 0x79+arg -> slot 0x5A; halfword 0x030055A0[render]=0xFFFF (GH-CU confirmado)"
-0x0804FD10,EventOpcode82_ExecuteBatchedObjectCommandBlock,func_thumb,,Simon/Rokusho
-0x0804FE6C,EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation,func_thumb,,Simon/Rokusho
+0x0804FD10,EventOpcode82_ExecuteBatchedObjectCommandBlock,func_thumb,,Simon/Rokusho [RV17] confirmado - percorre bloco de comandos de objeto (param/frame
+0x0804FE6C,EventOpcode84_SetMapSceneVariant_Continuation,func_thumb,,Simon/Rokusho (antes: EventOpcode84_SetMapSceneVariantWhenPlayerFacesUp_Continuation)
 0x0804FE9C,Map_TickObjectMoveRecords,func_thumb,,"[provavel] 0x52 registros de 8 B de movimento de objeto; Map_SetEventMarkerFacingVariant, Map_SetObjectAnimationVariant; fim = Event_EndOpcode"
-0x080500BC,Map_StartObjectStep,func_thumb,,Simon/Rokusho
-0x08050124,Obj_StartStepNoAnim,func_thumb,,"[CU] renomeado de FUN_08050124 (GH-CU): +0x27 = cmd&0xF, +0x20 = cmd>>4 direto, +0x2A = speedIdx, +0x28 = 16/delta; NAO troca animacao/sprite"
-0x08050168,Map_TickObjectAnimationTimes,func_thumb,,Simon/Rokusho: Advance an overworld object's walk animation frame sequence by its current movement speed. Calls the per-frame animation step helper once per moved pixel. (antes: Overworld_AdvanceObjectWalkAnimationBySpeed)
-0x0805018C,Map_TickObjectStep,func_thumb,,Simon/Rokusho
+0x080500BC,Map_StartObjectStep,func_thumb,,Simon/Rokusho [RV17] confirmado - grava nibbles de facing/anim
+0x08050124,Obj_StartStepNoAnim,func_thumb,,"[CU] renomeado de FUN_08050124 (GH-CU): +0x27 = cmd&0xF, +0x20 = cmd>>4 direto, +0x2A = speedIdx, +0x28 = 16/delta; NAO troca animacao/sprite [RV17] confirmado - como StartObjectStep mas sem Map_SetObjectAnimationVariant; nome mantido"
+0x08050168,Map_TickObjectAnimationTimes,func_thumb,,Simon/Rokusho: Advance an overworld object's walk animation frame sequence by its current movement speed. Calls the per-frame animation step helper once per moved pixel. (antes: Overworld_AdvanceObjectWalkAnimationBySpeed) [RV17] confirmado - repete Map_TickObjectAnimation N vezes (step delta); nome mantido
+0x0805018C,Map_TickObjectStep,func_thumb,,Simon/Rokusho [RV17] confirmado - avanca posicao por modo
 0x08050290,Event_EndOpcode,func_thumb,,"Simon/Rokusho: Shared normal-event helper used when the current opcode finishes. |  | It clears the opcode-local runtime bytes used by many normal event handlers. The actual next opcode fetch happens elsewhere in the VM flow, so this is an opcode-completion/reset helper, not a pure transition helper. [EV] zera E+0xC93 e E+0xC89 (fim de opcode diferido); não zera Pendente (confirmado)"
 0x080502B0,Util_HighNibble,func_thumb,,[R3] x >> 4
 0x080502B8,Util_Low2Bits,func_thumb,,[R3] x & 3
@@ -3133,19 +3143,19 @@ address,name,kind,count,comment
 0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,,Simon/Rokusho [RV18] provavel: se estado pendente==2 e vizinho livre
 0x080525D0,Overworld_CheckMovementObjectBlocker,label,,[MP2] bloqueio por tabela 0x030063F0[v] (v = colisao 0..3) e estado 0x0300643C
 0x080525E6,Overworld_CheckMovementObjectBlocker,func_thumb,,[VA3] se C5C==2 e tile 0/2: C5C = C69. confirmado
-0x08052624,Map_FindDirectionalTriggerAtAdjacentTile,func_thumb,,"Simon/Rokusho: Compute the tile immediately in front of the player, clamp it against the current map bounds, then scan a per-map list of 4-byte directional trigger records {x, y, allowed_direction_mask, trigger_id}. Returns the matching trigger id or -1 when no directional trigger is active for the current facing."
+0x08052624,Map_FindDirectionalTriggerAtAdjacentTile,func_thumb,,"Simon/Rokusho: Compute the tile immediately in front of the player, clamp it against the current map bounds, then scan a per-map list of 4-byte directional trigger records {x, y, allowed_direction_mask, trigger_id}. Returns the matching trigger id or -1 when no directional trigger is active for the current facing. [RV18] confirmado: calcula tile vizinho pelo facing"
 0x0805273C,Map_PixelXToTileX,func_thumb,,Simon/Rokusho (antes: ikki_x_to_tile) [OW2] renomeado de ikki_x_to_tile: tile = (px - origem) >> 4 com correcao de negativo (confirmado)
-0x08052760,Map_PixelYToTileY,func_thumb,,Simon/Rokusho (antes: ikki_y_to_tile)
-0x08052784,Map_UpdateVisibleEventObjectSprites,func_thumb,,"Simon/Rokusho: Refresh the subset of event/NPC object sprites that are currently visible within the camera window. Hides sprites that move off-screen, updates screen-space positions for visible objects, and selects the correct sprite frame / marker overlay."
-0x080528F8,Map_CenterCameraForSmallMaps,func_thumb,,Simon/Rokusho: Center the camera when the current map is smaller than the visible viewport. Uses compact map width/height metadata and writes X/Y camera offsets into the event/game-state blob.
+0x08052760,Map_PixelYToTileY,func_thumb,,Simon/Rokusho (antes: ikki_y_to_tile) [RV18] confirmado: converte Y em pixel para tile (subtrai origem
+0x08052784,Map_UpdateVisibleEventObjectSprites,func_thumb,,"Simon/Rokusho: Refresh the subset of event/NPC object sprites that are currently visible within the camera window. Hides sprites that move off-screen, updates screen-space positions for visible objects, and selects the correct sprite frame / marker overlay. [RV18] confirmado: percorre slots 0x31..0x54; dentro da janela da camera atualiza posicao/sprite"
+0x080528F8,Map_CenterCameraForSmallMaps,func_thumb,,Simon/Rokusho: Center the camera when the current map is smaller than the visible viewport. Uses compact map width/height metadata and writes X/Y camera offsets into the event/game-state blob. [RV18] confirmado: centraliza scroll nos eixos em que o mapa e menor que a tela (15 x 10 tiles); tambem faz LZ77 para VRAM (efeito colateral)
 0x0805290C,Map_CenterCameraForSmallMaps_AltEntry_805290c,label,,[MP2] centralizacao de mapa menor que a tela: gMapState+0xC48/+0xC4A = (15-w16)*8 / (10-h16)*8 (antes: Map_CenterCameraForSmallMaps)
-0x080529AC,Map_GetMapSizeHalfTileByAxis,func_thumb,,[R3] tamanho do mapa por eixo (dobro de tiles); provisorio
-0x080529DC,Map_GetInitialScrollTileOrigin,func_thumb,,"Simon/Rokusho: Read the decompressed map layer header and return the initial scroll tile origin. selector=0 returns the first layer origin pair, selector=1 returns the second pair."
-0x08052A10,Map_SetCameraScrollX,func_thumb,,Simon/Rokusho: Write the shared map camera X scroll value to all mirrored scroll slots used by the active map renderer.
-0x08052A30,Map_SetCameraScrollY,func_thumb,,Simon/Rokusho: Write the shared map camera Y scroll value to all mirrored scroll slots used by the active map renderer.
-0x08052A50,Map_GetCameraScrollX,func_thumb,,Simon/Rokusho: Return the current shared map camera X scroll value.
-0x08052A64,Map_GetCameraScrollY,func_thumb,,Simon/Rokusho: Return the current shared map camera Y scroll value.
-0x08052A78,Map_AddCameraScrollX,func_thumb,,Simon/Rokusho
+0x080529AC,Map_GetMapSizeHalfTileByAxis,func_thumb,,[R3] tamanho do mapa por eixo (dobro de tiles); provisorio [RV18] confirmado: devolve dimensao do mapa em meio-tile (eixo 0=X
+0x080529DC,Map_GetInitialScrollTileOrigin,func_thumb,,"Simon/Rokusho: Read the decompressed map layer header and return the initial scroll tile origin. selector=0 returns the first layer origin pair, selector=1 returns the second pair. [RV18] provavel: devolve par u16 (origem de scroll inicial) de tabela do mapa conforme eixo 0/1; eixo 0 le de um registro e 1 de outro"
+0x08052A10,Map_SetCameraScrollX,func_thumb,,Simon/Rokusho: Write the shared map camera X scroll value to all mirrored scroll slots used by the active map renderer. [RV18] confirmado: grava o mesmo X de scroll em 3 copias
+0x08052A30,Map_SetCameraScrollY,func_thumb,,Simon/Rokusho: Write the shared map camera Y scroll value to all mirrored scroll slots used by the active map renderer. [RV18] confirmado: grava o mesmo Y de scroll em 3 copias
+0x08052A50,Map_GetCameraScrollX,func_thumb,,Simon/Rokusho: Return the current shared map camera X scroll value. [RV18] confirmado: le o scroll X da camera
+0x08052A64,Map_GetCameraScrollY,func_thumb,,Simon/Rokusho: Return the current shared map camera Y scroll value. [RV18] confirmado: le o scroll Y da camera
+0x08052A78,Map_AddCameraScrollX,func_thumb,,Simon/Rokusho [RV18] confirmado: soma delta ao scroll X nas 3 copias
 0x08052AA4,Map_ClampCameraToLoadedMap,func_thumb,,"Simon/Rokusho: Clamp the camera scroll to the currently loaded map bounds around the player position. Uses compact map dimensions and the current player tile position, then writes the final X/Y scroll into the shared camera scroll slots."
 0x08052B44,Map_AddCameraScrollY,func_thumb,,Simon/Rokusho
 0x08052B70,Map_UpdatePlayerMarkerScreenPosition,func_thumb,,Simon/Rokusho: Recompute the player's map marker screen position from the player's world coordinates and the current camera scroll.
@@ -3254,7 +3264,7 @@ address,name,kind,count,comment
 0x08058C0C,Screen_RedrawAndDispatchStep,func_thumb,,[R3] redesenha e despacha passo por tabela (chute no nome)
 0x08058C44,Screen_RedrawAndDispatchStep_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058C54 (step 0..7); JT5
 0x08058C54,Screen_RedrawAndDispatchStep_Table,data,,[JT5] tabela 8 ptrs; JT5
-0x080593FA,Screen_ReturnEpilogue,func_thumb,,[R3] retorno sem efeito (antes: Screen_NoopReturn)
+0x080593FA,Screen_ReturnEpilogue,func_thumb,,"[R3] retorno sem efeito (antes: Screen_NoopReturn) [RV19] confirmado: epilogo add sp,4; pop r4-r5; pop r0; bx r0 (sem corpo; nao e noop nem tabela) (antes: Screen_NoopReturn)"
 0x08059434,Screen_PrepareNibbleRowsAndReset,func_thumb,,[FS8] [FS8] provavel: chama Screen_DrawPackedNibbleRows (0x08059734) e Map_ResetObjectRenderSlot; RAM 0x030057A0
 0x080594C8,Screen_HandleStateTransition,func_thumb,,"Simon/Rokusho: Consume the MapTransitionState written by warp/event transition logic. transition_phase gates the reload flow, scene_mode_id selects special post-transition sprite reload cases, and queued_map_id is used by earlier map-switch setup. (antes: Overworld_RunPostTransitionMapSpriteReload) [R3] transicao de estado 3/4 | revisto CH3: provável - estado 3 chama Scene_DispatchStateHandler; se devolver 4, zera byte de estado e, para mapas 0x0E/0x12, recarrega sprites e registro secundário de marcador, depois Overworld_ResetUiRenderState"
 0x08059560,Screen_ResetEntries40,func_thumb,,[R3] laco 0..0x27 chamando FUN_08048888 [RV19] confirmado: laco de Map_ResetObjectRenderSlot 0..0x27 (40 slots)
@@ -3262,8 +3272,8 @@ address,name,kind,count,comment
 0x08059734,Screen_DrawPackedNibbleRows,func_thumb,,[R3] desenha nibbles em linhas de tile (chute no nome)
 0x080598C0,Screen_AppendEntryList,func_thumb,,[R3] grava n entradas de lista (chute no nome)
 0x08059960,Screen_BuildMainPanels,func_thumb,,[R3] monta layout principal da tela de estado (chute)
-0x08059E50,Screen_ClearHalfwordTable,func_thumb,,[R3] zera tabela de halfwords
-0x08059F58,Screen_DrawDecimalNumber,func_thumb,,[R3] escreve numero decimal no tilemap (0x06000000)
+0x08059E50,Screen_ClearHalfwordTable,func_thumb,,[R3] zera tabela de halfwords [RV19] provavel: zera halfwords de tabela de tiles de tras para frente em passos de 0x40; limpa area fixa
+0x08059F58,Screen_DrawDecimalNumber,func_thumb,,[R3] escreve numero decimal no tilemap (0x06000000) [RV19] confirmado: converte valor em digitos decimais (mod/div 10) e grava tiles no tilemap (base 0x06000000) com alinhamento
 0x0805A0CC,Screen_DrawDecimalNumberShadowed,func_thumb,,[R3] numero decimal com sombra (provavel)
 0x0805A3A4,Screen_DrawThreeDigitValue,func_thumb,,[R3] valor de 3 digitos (provavel)
 0x0805A444,Screen_DrawTwoDigitValue,func_thumb,,[R3] valor % 100 em 2 digitos (provavel)
@@ -3691,9 +3701,9 @@ address,name,kind,count,comment
 0x0806F114,FightPreview_SetupCompositeScreen,func_thumb,,monta camada de preview composta e liga OBJ; provavel
 0x0806F1C0,Screen_InitMenuLayoutState,func_thumb,,[FS10] FS10 Screen_InitBg0Tilemap + escrita de estado de tela; ptr 0x08485A30; confianca provavel
 0x0806F21C,Screen_ArmBg2TimerStep0C,func_thumb,,"[FS10] FS10 timer_enable_bg2, passo 7 -> 0x0C; ptr 0x08485A34; confianca provavel"
-0x0806F23C,Screen_TextCounterStep,func_thumb,,[FR1] text/counter screen step: two counters + jump tables + 6-digit format
+0x0806F23C,Screen_TextCounterStep,func_thumb,,[FR1] text/counter screen step: two counters + jump tables + 6-digit format [RV20] confirmado: contador de tela com digitos (counter_2_digits) e text_step_char; ao chegar em 0x187 muda estado
 0x0806F578,Screen_ResetTextArmBg2Step0E,func_thumb,,[FS10] FS10 clear_text_buffer + ListRing_InitFour + passo 7 -> 0x0E; ptr 0x08485A3C; confianca provavel
-0x0806F5A0,Screen_TextCounterStepB,func_thumb,,[FR1] twin of Screen_TextCounterStep with other context and end state 9
+0x0806F5A0,Screen_TextCounterStepAlt,func_thumb,,[FR1] twin of Screen_TextCounterStep with other context and end state 9 (antes: Screen_TextCounterStepB)
 0x0806F914,Screen_ArmBg2TimerStep11,func_thumb,,"[FS10] FS10 timer_enable_bg2, passo 0x0A -> 0x11; ptr 0x08485A48; confianca provavel"
 0x0806F934,Screen_WaitFramesThenStep12,func_thumb,,[FS10] FS10 contador fi+8 (0x03001800) ate 0x3C; depois passo 0x12; ptr 0x08485A4C; confianca provavel
 0x0806F9D8,fade_palette_16,func_thumb,,[R4] R4: fade de paleta BGR555 de 16 cores com fator linear; provavel
@@ -3728,7 +3738,7 @@ address,name,kind,count,comment
 0x0807105C,Anim_StartPairOnce,func_thumb,,provável: inicia 2 animações e 2 slots uma vez
 0x080710AC,Anim_StartSequenceAnim4Slots,func_thumb,,"[FL10] desliga anims 0x16/0x17, liga 0x18 (8), slot_start_v2(7,0x18,0x60) (provável)"
 0x080710F4,Anim_StartSlotsIfNotDone,func_thumb,,inicia 2 animacoes e slot uma vez por flag +0x620; provavel
-0x08071138,Anim_DisableAnim4IfIdle,func_thumb,,[FR1] if flag at DAT_0807115C+0x660 is 0: disable_anim4(0x19
+0x08071138,Anim_DisableAnim4IfIdle,func_thumb,,[FR1] if flag at DAT_0807115C+0x660 is 0: disable_anim4(0x19 [RV20] confirmado: se flag +0x660 zero
 0x08071164,Anim_StageDispatch,func_thumb,,[provavel] animation stage dispatcher via jump table DAT_08071180
 0x08071304,Screen_TableStepTimedSetup,func_thumb,,[FR2] provável; passo de tabela com limite 0x19 e fx_screen_setup_b(4
 0x08071328,Screen_TableStepTimedSetup_JumpTable,data,,[JT4] tabela real de 26 ponteiros (indice = estado +8); JT4
@@ -3759,8 +3769,8 @@ address,name,kind,count,comment
 0x08071DDC,dispatch_table_r0,func_thumb,,[R4] R4: chama funcao da tabela pelo byte +0x10 via bx r0; confirmado no mecanismo
 0x08071E0C,Fx_RampCounterStepDone,func_thumb,,rampa em 3 fases e espera contador +0x9A; devolve 1 ao terminar; provavel
 0x08071E8C,Obj_SlideSlot3AndPlaySfx54,func_thumb,,[FS10] FS10 slot 3: Y e +0x1A e X ate o fim; SFX 0x54; fi+0x10 += 1; ptr 0x08485BDC; confianca provavel
-0x08071EFC,Anim_RampStepThenSfx54,func_thumb,,[FR1] timed ramp on +0x104/+0x11A then SFX 0x54 and indirect jump
-0x08071F74,Anim_RampStepThenSfx54B,func_thumb,,[FR1] twin of Anim_RampStepThenSfx54 (offsets 0x144/0x15A
+0x08071EFC,Anim_RampStepThenSfx54,func_thumb,,[FR1] timed ramp on +0x104/+0x11A then SFX 0x54 and indirect jump [RV20] confirmado: rampa de valores (+0x104
+0x08071F74,Anim_RampStepThenSfx54Alt,func_thumb,,[FR1] twin of Anim_RampStepThenSfx54 (offsets 0x144/0x15A (antes: Anim_RampStepThenSfx54B)
 0x08071FF8,Anim_FrameCycleStep,func_thumb,,[FR2] provável; ciclo de 4 quadros com SFX 0x59 e DMA3 ao final (FUN_08071ff8)
 0x08072080,Palette_FadeStepWithSfx,func_thumb,,"[FR3] [FR3] passo de fade de paleta BGR555 (escala por contador +0x11), SFX 0x51 em 0x14, SFX 10 ao fim (provavel)"
 0x08072188,FightPreview_TickIntroAndBuildLayer,func_thumb,,[provavel] ctx+0x5A ate 0x1F; FightPreview_InitCompositeBuffers; BuildCompositePreviewSpriteLayer
