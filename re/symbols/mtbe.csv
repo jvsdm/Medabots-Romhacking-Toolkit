@@ -142,6 +142,7 @@ address,name,kind,count,comment
 0x03004C40,SAVE_PARTS_INV_RAM,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory (antes: gInventory)
 0x03005010,gLinkStateBlock,label,,[MN] [MN] bloco de estado do link (bitfield de slots conectados em +0; contadores +0x18..+0x1B; flags +0x1D/+0x1E); provavel
 0x03005014,gLinkPacketOut,label,,[MN] [MN] pacote de saida enfileirado por QueueLinkTransferPacket; provavel
+0x03005029,gLinkPeerMissCounter,label,,[LK] [GH-LK] contadores por slot (0x03005029+i) de quadros sem sinal do peer; sobe ate 11 e zera bit em 0x03005172; provavel
 0x03005030,gLinkActiveFlag,label,,[MN] [MN] byte: flag de link; testada em AgbMain e MainState2; provavel
 0x03005170,gLinkSlotInput,label,,[MN] [MN] bloco de entrada de link por slot; +2 = byte de teclas do slot; provavel
 0x03005310,gOverworldAffineState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -187,7 +188,7 @@ address,name,kind,count,comment
 0x03006450,str_ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006468,gCurrentEventPendingFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03006469,gCurrentEventStateByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006469,gEventPendingByte,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentEventStateByte)"
 0x0300646A,gCurrentEventScriptCursor,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x0300646C,gCurrentEventAuxWord646C,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x0300646E,gCurrentEventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo word[2]"
@@ -222,6 +223,7 @@ address,name,kind,count,comment
 0x03007014,SND_DriverPtr,data,,[SN] ponteiro para o driver de som
 0x03007F00,sp_usr,label,,stack do modo System
 0x03007FA0,sp_irq,label,,stack do modo IRQ
+0x03007FF8,gIntrCheck_BIOS,label,,[LK] [GH-LK] flags de IRQ do BIOS; FUN_08002438 liga bit 7 (Serial); confirmado
 0x03007FFC,INTR_VECTOR,label,,endereco do IntrMain
 0x04000000,REG_DISPCNT,label,,
 0x04000004,REG_DISPSTAT,label,,
@@ -321,9 +323,12 @@ address,name,kind,count,comment
 0x08001FF8,RotateObjectOffsetByAffineAngle,func_thumb,,"Simon/Rokusho: Rotate an (x,y) object offset vector using the affine angle stored in the object state record."
 0x08002060,SortActiveObjectIndicesByPriority,func_thumb,,Simon/Rokusho: Sort the temporary active-object index list by the secondary priority byte stored in each 4-byte entry. Used before building shadow OAM.
 0x080020C8,InitializeLinkTransferState,func_thumb,,"Simon/Rokusho: Initialize the serial/link transfer state machine, clear its ring buffers, set up the packet queues, and enable the serial interrupt."
+0x080021A4,Link_RearmSioMultiplayer,func_thumb,,"[LK] [GH-LK] SIOCNT=0x2003 (multiplayer, baud 3), IE, Timer3 reload 0x63F7; confirmado (ex FUN_080021a4)"
 0x080021F4,UpdateLinkTransferState,func_thumb,,"Simon/Rokusho: Advance the serial/link transfer state machine. Handles handshake state, starts timed transfers when appropriate, and returns a packed status bitfield describing the current link state."
 0x080022DC,QueueLinkTransferPacket,func_thumb,,"Simon/Rokusho: Queue one outbound serial/link packet into the current transmit buffer, including header/checksum fields, and mark the packet as pending for transmission."
+0x08002328,Link_CollectReceivedPackets,func_thumb,,"[LK] [GH-LK] valida pacotes (soma de 4 hw == 0xFFFF), copia payload por slot e liga bit 1<<slot; confirmado (ex FUN_08002328)"
 0x080023D8,SwapDisplayBuffersOnVBlank,func_thumb,,[R0] troca buffers duplos (chute)
+0x08002438,Link_SerialIrqTransferStep,func_thumb,,"[LK] [GH-LK] rodada SIO multiplayer: le SIOMULTI0-3, escreve SIOMLT_SEND, sentinela 0xFEFE, liga bit 7 no IntrCheck; confirmado (ex FUN_08002438)"
 0x08002534,MainState0,func_thumb,,estado 0 (soft reset volta para ca)
 0x08002554,Dispatch_CallIndexedHandler,func_thumb,,chama table[idx] via CallViaR0; confirmado (tabela nao identificada)
 0x0800256C,gMenuList0SubTablePtr,table,,[MN] [MN] ponteiro usado por Dispatch_CallIndexedHandler (menu_list[0]); indexa por byte 0x03000584?? nao confirmado (ler literal 0x08002570) (antes: gMenuListSubStepTable)
@@ -2819,6 +2824,7 @@ address,name,kind,count,comment
 0x08065710,Anim_StepRecordCounter,func_thumb,,"[R3] passo de contador de animação, devolve 1 ao fim (chute)"
 0x080657C4,Sm_StepSfxRepeat3,func_thumb,,repete passo com SFX até 3 vezes e depois avança; provável (jump table não recuperada)
 0x08065A0C,Battle_TickTwoStageSequence,func_thumb,,[provavel] StateMachine_DispatchStep(0x18 ou 0x1C); snd_sfx_request(0xD); 2 etapas
+0x08065B0C,Link_HandshakeFrameStep,func_thumb,,[LK] [GH-LK] handshake por quadro sobre a grade de gLinkStateBlock (0xFF40/0xFF41); confirma peer e avanca gamestate_subroutine; confirmado (ex FUN_08065b0c)
 0x08065D10,Fight_CallHandlerWithArgCopy,func_thumb,,[confirmado] copia 32 bytes de DAT_08065D3C e CallViaR0(tabela[byte DAT_08065D40])
 0x08065ED0,Screen_DispatchByState3A,func_thumb,,provável: despacho por estado ctx+0x3A (jump tables não recuperadas)
 0x08065F04,Screen_DispatchByState3A_TableA,data,,"[JT3] tabela ramo A (6 ponteiros, idx = halfword 0x03006F74+0x3A)"

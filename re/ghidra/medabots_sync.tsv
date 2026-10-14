@@ -37,9 +37,12 @@ F	0x08001EA8	SetObjectScaleVectorFromMode
 F	0x08001FF8	RotateObjectOffsetByAffineAngle
 F	0x08002060	SortActiveObjectIndicesByPriority
 F	0x080020C8	InitializeLinkTransferState
+F	0x080021A4	Link_RearmSioMultiplayer
 F	0x080021F4	UpdateLinkTransferState
 F	0x080022DC	QueueLinkTransferPacket
+F	0x08002328	Link_CollectReceivedPackets
 F	0x080023D8	SwapDisplayBuffersOnVBlank
+F	0x08002438	Link_SerialIrqTransferStep
 F	0x08002534	MainState0
 F	0x08002554	Dispatch_CallIndexedHandler
 L	0x0800256C	gMenuList0SubTablePtr
@@ -2534,6 +2537,7 @@ F	0x080656DC	Obj_InitTimerRecord
 F	0x08065710	Anim_StepRecordCounter
 F	0x080657C4	Sm_StepSfxRepeat3
 F	0x08065A0C	Battle_TickTwoStageSequence
+F	0x08065B0C	Link_HandshakeFrameStep
 F	0x08065D10	Fight_CallHandlerWithArgCopy
 F	0x08065ED0	Screen_DispatchByState3A
 L	0x08065F04	Screen_DispatchByState3A_TableA

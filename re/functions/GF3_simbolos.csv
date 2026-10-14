@@ -1,0 +1,18 @@
+address,name,kind,comment
+0x08486E6C,gGfx_Dialog_Moldura,data,Moldura da caixa de dialogo (Malias +2 0x0220); GF3
+0x08488520,gGfx_Dialog_PaletaOrnamento,data,Paleta banco 15 da caixa de dialogo (cru); GF3
+0x084C39D8,gGfx_Dialog_Tiles2,data,Tiles auxiliares da caixa de dialogo/escolha (Malias +2 0x0040); GF3
+0x083AFE88,gGfx_Portrait_PonteirosImagens,data,Tabela de ponteiros de retrato (1 por personagem; LZ77 -> VRAM 0x06000F80); GF3
+0x083B1748,gGfx_Portrait_Paleta,data,Paleta de retrato 16 cores -> 0x050001A0; GF3
+0x083B4C60,gGfx_Portrait_PonteirosLayout,data,Par de ponteiros de layout do retrato (0x083B2B00/0x083B2B80); GF3
+0x083F7E80,gGfx_Overworld_PonteirosSprite,data,Tabela de ponteiros de sprite de personagem (LZ77 0x900 por slot -> VRAM 0x06010000); GF3
+0x08404334,gGfx_Overworld_PonteirosCamada,data,Tabela de ponteiros de camadas do mapa (Map_LoadCurrentMapLayers); GF3
+0x083F9080,gGfx_Overworld_PonteirosTileA,data,Tabela de ponteiros de tiles BG -> VRAM 0x06009000; GF3
+0x083F8A80,gGfx_Overworld_PonteirosTileB,data,Tabela de ponteiros de tiles BG -> VRAM 0x06003000; GF3
+0x087B67B0,gGfx_Title_BG0,data,Char BG0 do titulo (LZ77 0x61C0 -> VRAM 0x06008000); GF3
+0x087AEFD0,gGfx_Title_OBJ,data,Sprites OBJ do titulo (LZ77 0x5060 -> VRAM 0x06010000); GF3
+0x0878F7E8,gGfx_TitleMenu_Char,data,Char do menu do titulo (LZ77 0x3880 -> VRAM 0x06004000); GF3
+0x087F314C,gGfx_Logo_Char,data,Char do logo NATSUME (LZ77 0x0DE0 -> VRAM 0x06000000); GF3
+0x084E6BF0,gGfx_BattleStatus_Char,data,Char principal do status de batalha (Malias +2 0x1320 -> VRAM 0x06004000); GF3
+0x084EC1F8,gGfx_PartsGrid_CharEntrada,data,Char principal da grade de pecas na entrada (Malias +2 0x2B00 -> VRAM 0x06004000); GF3
+0x08785EC0,gGfx_BattlePanel_Char,data,Asset Malias +2 0x03E0 do painel de batalha; GF3
