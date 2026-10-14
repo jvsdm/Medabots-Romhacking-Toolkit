@@ -236,9 +236,8 @@ no decompile desta rodada (confiança "provável" nos endereços de RAM).
 ## 0x0801D9DC Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace (E/05)
 - O que faz: a cada quadro move a coordenada 16 bits do bot de follow-up (fight+0xDE, bloco 0x1640 + 0x100*idx)
   em −2 (ou +2, se fight+0xF8 bit0 = 1) até cruzar 0x78; chama `Sprite_UpdateComposite4Motion`. Ao chegar, grava
-  os dados do sprite (0x78, tiles 8, flag 0) e avança +0xAA. No fim faz um salto indireto por tabela (0x0801DADE),
-  que o Ghidra não recuperou ("Too many branches"): o destino fica como pendência.
-- Confiança: provável (fluxo lido; o salto indireto não resolvido).
+  os dados do sprite (0x78, tiles 8, flag 0) e avança +0xAA. No fim faz retorno normal (`pop {r4-r7}; pop {r0}; bx r0`, sem tabela; o Ghidra leu o `bx r0` como salto por tabela em 0x0801DADE, "Too many branches"). Próximo passo: E06, só ao chegar (JT.md, E/05).
+- Confiança: confirmado (fluxo e retorno, JT.md); o salto por tabela não existe.
 - Nome já estava no Ghidra (outra sessão). Nome mtbe da linha da tabela pode diferir: conferir.
 
 ## Fora da HA1 (mesma tabela E, índices 06..0B; ver HA2 ou lista seguinte)
@@ -256,4 +255,4 @@ no decompile desta rodada (confiança "provável" nos endereços de RAM).
 - Estados sem handler em A (ex.: 0x01, 0x0E, 0x16, 0x18/0x19, 0x1E..0x1F, 0x23 aponta para C989, 0x29..0x2C
   são placeholder) ficam para a rodada de funções sem código no Ghidra.
 
-Pendente redo: as 24 seções marcadas sem função/pendente foram refeitas (decompile + rename no Ghidra + CSV). Restam: (1) FUN_080370AC e Fight_StepSlotCoordUpInRange sem nome (A/1B, A/10); (2) salto indireto de E/05 (0x0801DADE) não recuperado; (3) Família A já "provável" (A/04..A/22) não reconferida nesta rodada; (4) conflitos com mtbe: A/02 (do_damage_on_part), B/00 (SwordHammer), E/01 (CancelGrav), E/05 (nome do mtbe); (5) placeholders 0x08000841 e 0x080305E1 não são handler, continuam sem seção; (6) A/23 e a entrada 0x23 -> C989 ainda sem conferência.
+Pendente redo: as 24 seções marcadas sem função/pendente foram refeitas (decompile + rename no Ghidra + CSV). Restam: (1) FUN_080370AC e Fight_StepSlotCoordUpInRange sem nome (A/1B, A/10); (2) E/05 (0x0801DADE) é retorno normal, não salto por tabela (JT.md): fechado; (3) Família A já "provável" (A/04..A/22) não reconferida nesta rodada; (4) conflitos com mtbe: A/02 (do_damage_on_part), B/00 (SwordHammer), E/01 (CancelGrav), E/05 (nome do mtbe); (5) placeholders 0x08000841 e 0x080305E1 não são handler, continuam sem seção; (6) A/23 e a entrada 0x23 -> C989 ainda sem conferência.

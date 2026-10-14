@@ -58,7 +58,7 @@ faltam no C# 0x6A, 0x75, 0x77 (no-op, 0 bytes), 0x7D (1), 0x7F (1), 0x88 (2). RO
 - Continuações (bytes iguais exceto o imediato): 0x70 -> `0x08050CCC(0x13,0)` (0x0804FA1C, nome Ghidra
   Event_Op70_Cont_Run_Scene_Command_13), 0x71 -> cmd 0x00 (0x0804FA5C), 0x72 -> cmd 0x02 (0x0804FA9C), 0x73 -> cmd 0x08
   (0x0804FADC). Os nomes do Toolkit batem com o número do comando.
-- 0x76 (0x0804FB1C): `GameState_StartFlowByCommand(4, 0)`, espera 0x03006D20+0xC == 7, depois comando de cena 0x05.
+- 0x76 (0x0804FB1C): `GameState_StartFlowByCommand(4, 0)`; checa UMA vez 0x03006D20+0xC == 7 (não espera): se não for 7, o opcode termina sem o comando 5; se for, roda o comando de cena 0x05 (HC5.md, 0x0804FB1C).
 - Confiança: confirmado (comandos); provável (o que cada comando de cena faz). PC: **falta** (os cinco).
 
 ## 0x74 Reserved_NoOp, 0x75 (sem definição), 0x77 (sem definição), 0x7C Reserved_NoOp
@@ -76,7 +76,7 @@ faltam no C# 0x6A, 0x75, 0x77 (no-op, 0 bytes), 0x7D (1), 0x7F (1), 0x88 (2). RO
 - Confiança: confirmado. PC: **falta**.
 
 ## 0x7A Run_Scene_Command_11
-- Só liga o pendente, 0 bytes. Continuação 0x0804FC1C: comando de cena 0x11, depois espera `0x0804B738` e zera 0x03005310.
+- Só liga o pendente, 0 bytes. Continuação 0x0804FC1C: comando de cena 0x11, depois, se `0x0804B738` != 0, grava 1 em 0x03005349 (= 0x03005310+0x39; não zera 0x03005310) (HC5.md, 0x0804FC1C).
 - Confiança: confirmado. PC: **falta**.
 
 ## 0x7B Jump_If_No_Spare_Part (Toolkit: bot, part, jump) — nome Ghidra: Event_Op7B_Jump_If_No_Spare_Part
@@ -93,8 +93,8 @@ faltam no C# 0x6A, 0x75, 0x77 (no-op, 0 bytes), 0x7D (1), 0x7F (1), 0x88 (2). RO
 - Confiança: confirmado (handler); provável (continuação). PC: **falta**.
 
 ## 0x7F (sem definição no Toolkit)
-- Lê 1 byte para E+0xC94 e liga o pendente (corpo igual ao 0x7E). Continuação 0x0804FC7C: copia blocos de 0x40 bytes
-  entre 0x03002C30 e áreas de E (+0xC6E, +0xC0C; usa arg0 como índice) e 0x030055A0; termina na mesma rodada.
+- Lê 1 byte para E+0xC94 e liga o pendente (corpo igual ao 0x7E). Continuação 0x0804FC7C: copia blocos de 0x40 bytes:
+  0x03003FF0+arg0*0x40 -> 0x03003830 e 0x03004A70+arg0*0x40 -> 0x030042B0 (arg0 = E+0xC94; HC5.md, 0x0804FC7C); grava u16 de E+0xC6E/E+0xC70 em 0x0300383C/0x03003840 e 0xFFFF em 0x030055A0+(arg0+0x4F)*4; termina na mesma rodada.
 - Confiança: confirmado (handler); chute (o que a cópia representa). PC: **falta**.
 
 ## 0x80 Begin_Batched_Object_Command_Block (Toolkit: sem argumentos) — nome Ghidra: Event_Op80_Begin_Batched_Object_Command_Block

@@ -111,9 +111,8 @@ Seções "resumo": a leitura veio de lista de constantes e chamadas, não do cor
 - Assinatura: `void H_3E(void)`.
 - O que faz: descomprime gráfico e paleta (`decompress_and_store` + `bios_cpufastset` 8 palavras). Pega X/Y do bot
   (+0x158/+0x15A se +0xF8 bit 1 == 0; senão +0x154/+0x156) e chama `FUN_08036C20(10, +0x8B, x, y, 0x20)`, que cria o
-  efeito no bot. Depois +0xAA += 1 e faz um salto indireto por ponteiro (`UNRECOVERED_JUMPTABLE` em 0x0801F28A):
-  o Ghidra não recuperou o alvo. Pendência: descobrir esse alvo (pode mudar +0xAA de novo).
-- Chama: decompress_and_store, bios_cpufastset, FUN_08036C20, ponteiro não recuperado. Chamada por: tabela H (0x3E),
+  efeito no bot. Depois +0xAA += 1 e faz retorno normal (`pop {r4}; pop {r0}; bx r0` em 0x0801F284..28A; o Ghidra marcou "UNRECOVERED_JUMPTABLE" em 0x0801F28A, mas não há tabela; JT.md). Próximo passo: 0x3F.
+- Chama: decompress_and_store, bios_cpufastset, FUN_08036C20. Chamada por: tabela H (0x3E),
   AQ, P, R; e o H:0x4D/H:0x3B saltam para cá (+0xAA = 0x3E).
 - Memória: 0x03001800 (+0x8B, +0xAA); bloco do bot (+0xF8, +0x154..+0x15A).
 - Para o Lua: porta a parte de efeito; o salto indireto precisa do alvo.
@@ -284,11 +283,9 @@ Seções "resumo": a leitura veio de lista de constantes e chamadas, não do cor
 
 ## 0x0801FBC4 Fight_DispatchOnSubstateAA_J_02_SubDispatchByStep (J:0x02)
 - Assinatura: `void J_02(void)`.
-- O que faz: é um despachante secundário, não um handler. Lê um byte de estado (DAT_fbe0 + DAT_fbe4). Se é > 4, salta
-  por um ponteiro que o Ghidra não recuperou (0x0801FD70). Senão salta pela tabela de 5 entradas (0..4) em
-  `PTR_switchdata_0801FBE8`. Não grava +0xAA: quem faz isso são os alvos.
-- Chama: alvos não recuperados (5 + 1). Chamada por: tabela J (0x02).
-- Memória: byte de estado (DAT_fbe0 + DAT_fbe4, não mapeado).
+- O que faz: é um despachante secundário, não um handler. Lê o seletor em 0x03000579 (= 0x03000440+0x139). Se é > 4, sai pelo retorno 0x0801FD70 (`bx r0`, não é alvo de salto) sem fazer nada. Senão faz salto por tabela real (`mov pc,r0` em 0x0801FBDE) com 5 entradas (0..4) na tabela 0x0801FBEC (ponteiro no literal 0x0801FBE8). Não grava +0xAA: quem faz isso são os alvos (o alvo 4 faz +0xAA += 1 ao fim; JT.md).
+- Chama: alvos 0x0801FC00, 0x0801FC78, 0x0801FCC4, 0x0801FD10, 0x0801FD3C (cases internos, não funções no Ghidra; JT_lista.txt). Chamada por: tabela J (0x02).
+- Memória: seletor 0x03000579 (JT.md).
 - Para o Lua: porta quando os alvos forem conhecidos.
 - Confiança: confirmado (despachante). Alvos: não resolvidos (pendência). Correção: a versão antiga dizia que grava
   0x1901/0x1A0A/0x1B0B (tilemap); isso estava nos alvos, não no despachante.
@@ -442,9 +439,8 @@ Seções "resumo": a leitura veio de lista de constantes e chamadas, não do cor
 - Assinatura: `void L_0B(void)`.
 - O que faz: carrega gráfico e paleta (dois helpers). Pega X/Y do bot (mesmo par de L:0x02). Grava um OBJ em
   gObjectSlots+0x280 (atributo em DAT_08020414) com X/Y, atributos 0x0E e 0x80. Chama
-  `Slot_SetupFromRecordList(bloco+0x94, 10)` (slot 10), toca SFX 0x37 e +0xAA += 1. Depois salta por um ponteiro que o
-  Ghidra não recuperou (0x0802040C). Pendência: alvo desse salto.
-- Chama: decompress_and_store, bios_cpufastset, Slot_SetupFromRecordList, snd_sfx_request, ponteiro não recuperado.
+  `Slot_SetupFromRecordList(bloco+0x94, 10)` (slot 10), toca SFX 0x37 e +0xAA += 1. Depois faz retorno normal (`pop {r4,r5}; pop {r0}; bx r0` em 0x0802040A..0C; o Ghidra marcou "UNRECOVERED_JUMPTABLE" em 0x0802040C; JT.md). Próximo passo: 0x0C.
+- Chama: decompress_and_store, bios_cpufastset, Slot_SetupFromRecordList, snd_sfx_request.
   Chamada por: tabela L (0x0B).
 - Memória: gObjectSlots+0x280..; bloco do bot (+0xF8, +0x154..+0x15A); slot 10; 0x03001800+0xAA.
 - Para o Lua: porta, depois de achar o alvo do salto.
@@ -468,6 +464,6 @@ Seções "resumo": a leitura veio de lista de constantes e chamadas, não do cor
 - Só H tem chamador conhecido (0x080341DE). Qual evento escolhe a fase e o passo fica em aberto.
 
 ## Em aberto
-- Feito no redo: 42 funções decompiladas e renomeadas. Saltos indiretos não recuperados: H:0x3E (0x0801F28A), J:0x02 (0x0801FBC4, alvos 0..4 e fallback 0x0801FD70), L:0x0B (0x0802040C).
+- Feito no redo: 42 funções decompiladas e renomeadas. Saltos "não recuperados" resolvidos em JT.md: H:0x3E (0x0801F28A) e L:0x0B (0x0802040C) são retorno normal; J:0x02 (0x0801FBDE) é tabela real de 5 entradas em 0x0801FBEC; 0x0801FD70 é retorno.
 - Nomes dos helpers listados acima: não estão no mtbe.csv.
 - Passo real da Robattle (ataque, dano, troca, fim): não decifrado. Ver pc/research/R3_battle_state.md.

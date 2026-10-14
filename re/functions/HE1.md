@@ -41,7 +41,7 @@ e renomeados `Event_Op<XX>_<Nome>`. Literais do pool lidos na ROM EU (Medabots -
 - Args: 3 (C#: EventBank + Short = 3). PC: implementado (`msg`, bank = byte-2). Confianca: confirmado (tamanho e fluxo; continuacao nao lida).
 
 ## 0x0804B74C 02 Show_Message_B (Event_Op02_ShowMessageB)
-- O que faz: identico a 0x01 (mesmo helper 0x0804B758); a diferenca A/B esta so na continuacao (0x0804DCF8 vs 0x0804DC38). Diferido.
+- O que faz: identico a 0x01 (mesmo helper 0x0804B758); a diferenca A/B esta so na continuacao (0x0804DCF8 vs 0x0804DC38). Diferido. A continuacao 0x0804DCF8 so chama Event_EndOpcode (0x08050290), sem fase de caixa (HC1.md); a caixa do 0x02 fica a confirmar no emulador.
 - Args: 3 (C#: 3). PC: implementado (`msg`). Confianca: confirmado (primaria); diferenca A/B nao lida.
 
 ## 0x0804B778 03 Close_Message_Box (Event_Op03_CloseMessageBox)

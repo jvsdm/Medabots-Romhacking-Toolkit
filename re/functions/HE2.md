@@ -119,8 +119,8 @@ Tamanho = bytes de argumento lidos pelo primário (sem contar o opcode). Marca P
 - Confiança: confirmado (setup).
 
 ## 0x32 No_or_Yes_Box (Event_Op32_NoOrYesBox, 0x0804C4F8)
-- O que faz: igual ao 0x31 com E+0xCB5 = 1 (cursor inicial / ordem invertida); continuação 0x0804E860.
-- Args: 1 byte. C# bate. PC: implementado (ordem invertida é palpite). Confiança: confirmado (setup).
+- O que faz: abre a caixa não/sim com cursor inicial 1. A ordem vem do literal da chamada (`FUN_08048000(1)` na continuação 0x0804E860), não de E+0xCB5 (E+0xCB5 = 1 no setup, mas a continuação não o lê; HC3.md).
+- Args: 1 byte. C# bate. PC: implementado (ordem pelo literal 1 da continuação; ver HC3.md). Confiança: confirmado (fluxo, HC3.md).
 
 ## 0x33 Start_Battle (Event_Op33_StartBattle, 0x0804C53C)
 - O que faz: lê 3 bytes, um a um: id da batalha -> E+0xC2A, modo -> E+0xC2F, pós-batalha -> E+0xC2E. Se

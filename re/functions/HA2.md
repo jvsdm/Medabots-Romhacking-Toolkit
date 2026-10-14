@@ -67,11 +67,11 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 - O que faz: escolhe o sentido pelo bit0 de `+0xF8` do bot. Sentido 0: Y -= 2 por frame, para quando o campo
   (halfword em `bot*0x100 + base + 0x1642`) passa de 0x78. Sentido 1: Y += 2, para quando fica < 0x78. Chama
   `Sprite_UpdateComposite4Motion`. Se chegou: escreve bytes/halfwords no bloco de objetos (`bot*0x100+base+0x30/+2`,
-  `(bot+0x71)*0x40+base+2/+4` copiando o do bot `+0x87`), `+0xAA += 1`. Depois faz tail-call por ponteiro
-  (jump table não recuperada pelo Ghidra; é o alvo do próximo passo, não decodificado).
+  `(bot+0x71)*0x40+base+2/+4` copiando o do bot `+0x87`), `+0xAA += 1`. Depois faz retorno normal
+  (`pop {r0}; bx r0`; o Ghidra leu como salto por tabela, "UNRECOVERED_JUMPTABLE"; sem tabela, JT.md).
 - Subestado: hold enquanto desliza; +1 (-> E06) ao chegar.
 - Confiança: confirmado (condição de chegada e +1), provável (sentido do movimento e base `0x03002C30`, do
-  nome do literal). Tail-call não decodificado.
+  nome do literal). Retorno normal (JT.md), não tail-call.
 
 ## 0x0801DAEC Fight_DispatchOnSubstateAA_E (idx 0x06)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_E_06_ShowPartsHud(void)` (Ghidra: FUN_0801daec)
@@ -164,9 +164,9 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 - O que faz: contador de etapa em `DAT_0801dff8+DAT_0801dffc` (byte). Etapa 0: três `bios_cpufastset` de 0x200
   unidades (paleta/tiles de fundo). Etapa 1: uma cópia de 0x800 unidades. Etapa 2: escreve um ponteiro de
   `DAT_0801e090` e `Tile_ClearSlots(0, 0x80)`, zera o contador e faz `+0xAA += 1` no bloco. Toda etapa termina com
-  tail-call por ponteiro (jump table não recuperada).
+  retorno normal (`pop {r0}; bx r0`; sem tabela, JT.md).
 - Subestado: hold nas etapas 0 e 1; +1 (-> G03) só na etapa 2.
-- Confiança: confirmado (código lido: etapas, +1 na etapa 2), provável (conteúdo VRAM pelos literais). Tail-call não decodificado.
+- Confiança: confirmado (código lido: etapas, +1 na etapa 2), provável (conteúdo VRAM pelos literais). Retorno normal (JT.md); G03 só na etapa 2.
 
 ## 0x0801E09C Fight_DispatchOnSubstateAA_G (idx 0x03)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground(void)` (Ghidra: FUN_0801e09c)
@@ -456,8 +456,7 @@ G03 -> G04 (+1 na 2ª etapa) ; G04 -> G05 (+1) ; G05 -> G06 (+1 após 10 frames)
 - Redo (esta rodada): as seções marcadas "chute" foram relidas com o Ghidra. Renomeadas com o padrão
   `Fight_DispatchOnSubstateAA_<Desp>_<idx>_<Passo>`. As notas antigas "sem +1 no trecho lido" (E01, F00, G02, H03,
   H07, H11, H16) estavam erradas: esses handlers somam +1 (ou +3) no código.
-- Tail-calls por ponteiro (E05 e G02) não recuperados pelo Ghidra ("UNRECOVERED_JUMPTABLE"): o próximo passo
-  desses dois handlers fica em aberto.
+- E05 e G02 não têm tail-call: terminam em retorno normal (`bx r0`); o Ghidra marcou "UNRECOVERED_JUMPTABLE". Próximos passos (JT.md): E06 ao chegar; G03 só na etapa 2.
 - Redescritos nesta rodada (GH-HA2-resto): E02, E03, E08, G00, G01, G03, G06, H00, H0D, F02, H15, H18. Nenhum sem decompile.
 
-Pendente redo: nenhum dos 12 da rodada GH-HA2-resto. Sobra em aberto: tail-calls de E05 e G02; significado dos bytes 0x03003478/0x03003479 (E08); ponteiro 0x08043E49 gravado em 0x030017F0 (G03); origem do Y na tabela 0x083B4E04 (G01); quem consome o timer 0x030004C6 (H18); HA2_lista.txt termina em 0x1D.
+Pendente redo: nenhum dos 12 da rodada GH-HA2-resto. Sobra em aberto (E05 e G02 resolvidos, JT.md): significado dos bytes 0x03003478/0x03003479 (E08); ponteiro 0x08043E49 gravado em 0x030017F0 (G03); origem do Y na tabela 0x083B4E04 (G01); quem consome o timer 0x030004C6 (H18); HA2_lista.txt termina em 0x1D.
