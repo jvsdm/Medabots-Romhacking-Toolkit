@@ -1,0 +1,8 @@
+# address,name,kind,comment
+0x080441EE,TeamSlots_ClearIndices_Candidate,func_thumb,"[GH-TP confirmado por decode, sem funcao no Ghidra] strb 0 em fi+0x41..0x43 (r4=0). Prologo 0x080441B8 push {r4,r5,lr}. Nome provisorio"
+0x0806B8CE,TeamSlots_WriteFi41_Candidate,misc,"[GH-TP provavel] grava r3 em fi+0x41; escritor da escolha de time? valor/origem aberto"
+0x0806C7E4,TeamSlots_WriteFi41_Candidate2,misc,"[GH-TP provavel] grava r2 em fi+0x41; laco com ponteiro depois. Prologo 0x0806C694 push {r4-r6,lr}"
+0x08004A18,BattleStep_PreRefreshBots,func_thumb,"[GH-TP confirmado por bytes] passo GS (tabela 0x083AC568 idx0): BL 0x08004E74, 0x080054C0, Fight_ClearBattleBuffer, Fight_UpdateBotActiveFlagCount, Fight_RefreshBotPartRecords; GS++. Sem funcao no Ghidra"
+0x08004A2A,Fight_RefreshCaller_Unresolved,misc,"[GH-TP confirmado] BL -> 0x08014EC8 dentro de 0x08004A18 (ver TP.md secao 4). Nome anterior mantido como comentario"
+0x083AC568,BattleStepTable_Unknown,data,"[GH-TP] tabela de ponteiros de passos GS; 0x08004A19 e entrada 0 desta linha; despachante nao achado"
+0x08014E7C,Fight_ClearBattleBuffer,func_thumb,"[GH-TP] Mem_FillBytes(0x08014E90 ptr, 0x600, 0): ja no Ghidra"
