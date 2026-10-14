@@ -3810,19 +3810,19 @@ address,name,kind,count,comment
 0x08072234,Preview_InitCompositeAndMotion,func_thumb,,"BuildCompositePreviewSpriteLayer e MotionPlayStep(0,0x2C); provavel"
 0x080722B0,Preview_StepSfxSequenceAndMotion,func_thumb,,"[FR3] [FR3] sequencia (tipo,valor) de SFX + BuildCompositePreviewSpriteLayer + MotionPlayStep(0,0x2C); retorna 1 ao fim (provavel)"
 0x080723AC,snd_driver_init_block,func_thumb,,[R4] R4: troca de cena; sub-chamadas nao lidas; chute (antes: scene_start_block)
-0x080723F8,Bar_Reset,func_thumb,,[R4] R4: zera estado e valor de barra animada; confirmado
-0x08072414,Bar_StepStart,func_thumb,,[R4] R4: inicia passo de barra (contador e repeticoes); confirmado
-0x0807244C,Bar_StepDecrement,func_thumb,,[R4] R4: decrementa valor de barra em passos; provavel
-0x080724B0,Bar_StepCond,func_thumb,,[R4] R4: passo condicionado ao limite +0x28/+0x5D; confirmado
-0x080724D8,Bar_Update,func_thumb,,[R4] R4: atualiza barra animada; provavel
-0x0807250C,Bar_StepLevel3,func_thumb,,[R4] R4: fase da maquina de barra com nibbles de +0x5C; provavel
-0x0807254C,Bar_StepLevel2,func_thumb,,[R4] R4: fase da maquina de barra com nibbles de +0x5B; provavel
-0x0807258C,Bar_ResetPhase1,func_thumb,,"[R4] R4: entra na fase 1 da barra (contador=1, reps=0, estado=1); confirmado"
-0x080725B0,Bar_TickPhase1,func_thumb,,[R4] R4: decrementa contador da fase 1; ao zerar chama Bar_StepLevel2; confirmado
-0x080725D0,Bar_TickPhase2,func_thumb,,"[R4] R4: fase 2; ao zerar chama Bar_StepLevel3, senao soma reps ao valor (max 15); confirmado"
-0x08072618,Bar_TickPhase3,func_thumb,,"[R4] R4: fase 3; ao zerar chama Bar_Update, senao soma reps ao valor (min 0); confirmado"
-0x08072660,Bar_TickPhase4,func_thumb,,[R4] R4: fase 4 da barra; so chama Bar_StepCond; confirmado
-0x0807266C,Bar_TickByState,func_thumb,,"[R4] R4: despacha a maquina da barra pelo estado +0x61 (1-5), gate +0x62; confirmado"
+0x080723F8,snd_env_reset,func_thumb,,[R4] R4: zera estado e valor de barra animada; confirmado (antes: Bar_Reset)
+0x08072414,snd_env_step_start,func_thumb,,[R4] R4: inicia passo de barra (contador e repeticoes); confirmado (antes: Bar_StepStart)
+0x0807244C,snd_env_step_decrement,func_thumb,,[R4] R4: decrementa valor de barra em passos; provavel (antes: Bar_StepDecrement)
+0x080724B0,snd_env_step_cond,func_thumb,,[R4] R4: passo condicionado ao limite +0x28/+0x5D; confirmado (antes: Bar_StepCond)
+0x080724D8,snd_env_update,func_thumb,,[R4] R4: atualiza barra animada; provavel (antes: Bar_Update)
+0x0807250C,snd_env_step_level3,func_thumb,,[R4] R4: fase da maquina de barra com nibbles de +0x5C; provavel (antes: Bar_StepLevel3)
+0x0807254C,snd_env_step_level2,func_thumb,,[R4] R4: fase da maquina de barra com nibbles de +0x5B; provavel (antes: Bar_StepLevel2)
+0x0807258C,snd_env_reset_phase1,func_thumb,,"[R4] R4: entra na fase 1 da barra (contador=1, reps=0, estado=1); confirmado (antes: Bar_ResetPhase1)"
+0x080725B0,snd_env_tick_phase1,func_thumb,,[R4] R4: decrementa contador da fase 1; ao zerar chama Bar_StepLevel2; confirmado (antes: Bar_TickPhase1)
+0x080725D0,snd_env_tick_phase2,func_thumb,,"[R4] R4: fase 2; ao zerar chama Bar_StepLevel3, senao soma reps ao valor (max 15); confirmado (antes: Bar_TickPhase2)"
+0x08072618,snd_env_tick_phase3,func_thumb,,"[R4] R4: fase 3; ao zerar chama Bar_Update, senao soma reps ao valor (min 0); confirmado (antes: Bar_TickPhase3)"
+0x08072660,snd_env_tick_phase4,func_thumb,,[R4] R4: fase 4 da barra; so chama Bar_StepCond; confirmado (antes: Bar_TickPhase4)
+0x0807266C,snd_env_tick_by_state,func_thumb,,"[R4] R4: despacha a maquina da barra pelo estado +0x61 (1-5), gate +0x62; confirmado (antes: Bar_TickByState)"
 0x080726D4,snd_calc_vibrato,func_thumb,,SND12: calcula amplitude/inclinacao de vibrato a partir de track+0x56/57/58 e freq[key+2]-freq[key]
 0x08072734,snd_vibrato_init,func_thumb,,[R4] R4: calcula passo de vibrato +0x34 a partir de freq e track+0x58; provavel
 0x080727D0,snd_vibrato_tick,func_thumb,,[R4] R4: tick por quadro do vibrato (onda triangular em +0x38); provavel
@@ -3862,20 +3862,20 @@ address,name,kind,count,comment
 0x08072F04,Snd_DispatchBelowE0,label,,[SN2] despacho de 00..DF por op&0xF0: 80-8F rest; 90/A0/B0/C0 NOP 1 byte; D0 volume; resto nota (confirmado)
 0x08072F2E,Snd_OpE0_Rest,label,,[SN2] E0 = pausa igual 0x80 (confirmado)
 0x08072F7C,snd_track_cmd_ext,func_thumb,,"[R4] R4: decodificador alternativo de comandos (Dn volume, E1/E2 gravam +2C/+69, FF zera); provavel"
-0x08072FF4,Bar_TickWithSoundModulation,func_thumb,,"[FS10] FS10 snd_vibrato_tick + Bar_TickByState + snd_pitch_slide_tick; ptr 0x083ABD64; confianca confirmado (codigo), nome provavel"
-0x08073010,Obj_TickWaitCountdown,func_thumb,,"[FS10] FS10 decrementa +0x30 se +0x24 != 0; sem codigo no Ghidra, bytes a mao; ptr 0x083ABD88; confianca provavel parcial"
+0x08072FF4,snd_tick_envelope_vibrato_pitch,func_thumb,,"[FS10] FS10 snd_vibrato_tick + Bar_TickByState + snd_pitch_slide_tick; ptr 0x083ABD64; confianca confirmado (codigo), nome provavel (antes: Bar_TickWithSoundModulation)"
+0x08073010,snd_track_tick_wait,func_thumb,,"[FS10] FS10 decrementa +0x30 se +0x24 != 0; sem codigo no Ghidra, bytes a mao; ptr 0x083ABD88; confianca provavel parcial (antes: Obj_TickWaitCountdown)"
 0x08073044,snd_tick_vibrato_and_pitch_slide,func_thumb,,[FS10] FS10 chama snd_vibrato_tick e snd_pitch_slide_tick (bytes confirmados); ptr 0x083ABDC4; confianca confirmado (bytes)
 0x08073058,snd_track_update,func_thumb,,[R4] R4: avanca cursor da trilha enquanto a espera +0x28 for zero; provavel
 0x08073094,snd_update_frame,func_thumb,,[R4] R4: percorre trilhas e subgrupos do driver por quadro; provavel
 0x08073274,snd_frame_tick,func_thumb,,[R4] R4: tick do contador +0x730 e chamada de snd_update_frame; provavel
 0x080732B8,snd_freq_lookup,func_thumb,,"SND12: halfword table[key] em ROM 0x083ABB50 (74 entradas). PSG: key 0 = C2 (0x002E), key 26 = 0x0642 (= nota 0x3E), key 33 = 0x06D6 (A4=440 Hz). Confirmado no replay (ch1 0x04000064)"
-0x080732C8,Obj_FlushFlag8ToWord,func_thumb,,[FN6] provavel: se flag bit3 de obj+0x50: grava byte obj+0x54 em *out e limpa o bit; sem BL/ponteiro achado na ROM
+0x080732C8,snd_channel_flush_flag8,func_thumb,,[FN6] provavel: se flag bit3 de obj+0x50: grava byte obj+0x54 em *out e limpa o bit; sem BL/ponteiro achado na ROM (antes: Obj_FlushFlag8ToWord)
 0x080732F0,snd_channel_reg_value,func_thumb,,"[R4] R4: monta valor de registrador do canal (freq*vol, voz, bit 0x800); provavel"
 0x0807334C,Snd_UpdateChannelFreqEnv,func_thumb,,[G] Atualiza freq e envelope de canal de som (provavel)
-0x080733BC,Obj_FlushFlag2ScaledValue,func_thumb,,"[FN6] provavel: se flag bit1 de obj+0x50: calcula (obj+0x40 * obj+0x66) & mask, grava em obj+0x4A e *out, seta bit0; sem BL/ponteiro achado"
+0x080733BC,snd_channel_flush_freq_scaled,func_thumb,,"[FN6] provavel: se flag bit1 de obj+0x50: calcula (obj+0x40 * obj+0x66) & mask, grava em obj+0x4A e *out, seta bit0; sem BL/ponteiro achado (antes: Obj_FlushFlag2ScaledValue)"
 0x08073404,snd_channel_freq_write_a,func_thumb,,[R4] R4: grava registrador de frequencia do canal com gatilho 0x8000; provavel
 0x08073480,snd_channel_freq_write_b,func_thumb,,[R4] R4: variante de freq para outro tipo de canal; provavel
-0x080734F4,Obj_FlushFlag1Value69,func_thumb,,[FN6] provavel: se flag bit0 de obj+0x50: grava obj+0x69 | 0x8000 em *out e limpa o bit; sem BL/ponteiro achado
+0x080734F4,snd_channel_flush_ctrl69,func_thumb,,[FN6] provavel: se flag bit0 de obj+0x50: grava obj+0x69 | 0x8000 em *out e limpa o bit; sem BL/ponteiro achado (antes: Obj_FlushFlag1Value69)
 0x08073524,snd_channel_note_write,func_thumb,,[R4] R4: escreve nota do canal (ramo PCM tipo 2); provavel
 0x08073604,snd_channel_ctrl_write,func_thumb,,[R4] R4: grava registrador de controle do canal (mascara + envelope); provavel
 0x080736A0,snd_channel_update_1,func_thumb,,"[R4] R4: atualiza canal 1 do PSG (registro, freq, controle ou nota); provavel"
@@ -4063,6 +4063,7 @@ address,name,kind,count,comment
 0x080B16E4,SND_SampleTable,data,,[SN] tabela de ponteiros de amostra PCM (128 entradas; cabecalho {u32 tam
 0x080EC9EE,Data_080EC9EE,func_thumb,,[SN3] provavel dado (LDMIA base-na-lista
 0x083ABB50,SND_PsgFreqTable,data,,[SN] 74 halfwords de frequencia PSG (Hz=131072/(2048-v))
+0x083ABD60,ObjTbl_SndChannelTick,table,,[SN4] tabela de registros de 12 bytes {update_fn
 0x083ABF98,gMainStateTable,ptr,6,tabela de estados do AgbMain [RD4] confirmado: 6 x 4 ponteiros thumb; despacho em MN.md e MU.md
 0x083ABFB0,gSpriteSetTable0,ptr,16,sets de quadros de sprite usados por BuildShadowOamFromObjectState (slot +0x1C & 0xF = 0); set 0 = texto 8x8 [RD4] provavel: 16 x 4 ponteiros de sets de quadro; set 0 -> gObjTextGlyphFrames 0x08075FF8 (HANDOFF.md)
 0x083AC2C8,gMenuList0Table,ptr,182,182 cenas do MainState0; 63 = DebugMenu_Dispatch (provavel: nada na ROM final escolhe a cena 63); Simon/Rokusho em 0x083AC2E8; tipo undefined *32[4] (antes: menu_list) (antes: gMainStateTable)

@@ -2,3 +2,5 @@ address,name,kind,comment
 0x08043FEC,Anim_AdvanceRingFrameEvery3,func_thumb,[AN2] renomeada de FUN_08043FEC; streaming de quadros de tile por anel da ROM para VRAM 0x06008020; chamada por Obj_StepAccumMoveBThenSync; provavel
 0x0807E860,IrqHandlerTable_Init14_ROM,data,[AN2] 14 ponteiros Thumb copiados por CpuSet no boot para IWRAM 0x03000BA0 (InitializeInterruptsAndDefaultHandlers 0x0800045A); lidos por IntrMain 0x080001D8; idx5=0x0800099D (trilha A) idx6=0x080009A9 (trilha B); confirmado
 0x0807E874,SoundTrackHandlerPtrs_IrqIdx5_6,data,[AN2] entradas idx5/idx6 da tabela IRQ 0x0807E860 (IRQ 0x200 e 0x400 = DMA1/DMA2); provavel
+0x083AFCB8,gMenu10StepTable_LinkAnim_Idx16_75,table,"[AN2b] faixa de indices 16..75 de gMenu10StepTable_AFC78 (tela LINK pos-batalha); 21 entradas Anim_ em 18 funcoes; lida por Scene_GsDispatch_Menu10_Link 0x0803D538 (ldr literal 0x0803D59C); provavel"
+0x0803ED6C,Gauge_DrawTwoTileSegment,func_thumb,"[AN2b] 12 tiles de barra no tilemap BG, valor obj+0x1A0; chamada pelos Anim_ da tela LINK e LinkSync_MenuStep52/53; NAO e o medidor de Medaforce (BattleBot_MedaforceGauge 0x03000651); provavel"

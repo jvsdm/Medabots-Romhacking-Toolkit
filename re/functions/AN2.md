@@ -49,3 +49,57 @@ Nenhum emulador usado.
 - Quem chama `Fight_PartPanelStep` nao foi tracado; o uso de 0x08044101 e so pelo literal.
 - Quais tiles sao 0x083C4243 (grafico do anel) nao foi conferido visualmente.
 - Os 18 Anim_* nao foram decompilados um a um (so os 5 citados); tela Link nao foi rodada no emulador.
+
+## 5. Acrescimo AN2b (2026-10-14): quem le a tabela, qual tela, o que cada passo faz
+Pontos confirmados por literal na ROM (python -I, so leitura) e decompile. Nao rodei emulador.
+
+### 5.1 Leitor e tela
+- Literal 0x0803D59C = 0x083AFC78 (base) e usado so em 0x0803D570 (ldr r0) = `Scene_GsDispatch_Menu10_Link` 0x0803D538.
+  Ele faz `CallViaR0(tabela[GS])` com GS = 0x0300137C. Os indices 16..75 (0x083AFCB8..0x083AFDA4) sao os passos desta tela.
+- O despachante de menus contem o literal 0x0803D539 em 0x083AC2F0 (tabela de menus; provavel, nao conferi a entrada 10).
+- A tabela tem 96 ponteiros (0x083AFC78..0x083AFDF8). O literal 0x083AFDF8 esta em 0x0803D744 (inicio da tabela vizinha; nao tracei).
+- Tela: LINK (cabo) pos-batalha, como em 1. Os passos Link_* (34..54) e LinkSync_MenuStep52/53 (indices 52, 53)
+  pertencem ao mesmo fluxo. Confianca: provavel.
+
+### 5.2 A barra NAO e o medidor de Medaforce
+- `Gauge_DrawTwoTileSegment` 0x0803ED6C e `Gauge_DrawBar12Tiles` 0x0803EA38 escrevem o tilemap de BG (FillBgTilemapRectSequential)
+  com 12 tiles de barra; o valor vem de obj+0x1A0 (0..0x60, >>3 = tiles cheios). Medaforce de batalha e BattleBot_MedaforceGauge
+  (0x03000651), outra estrutura.
+- Chamadores de Gauge_DrawTwoTileSegment: os passos Anim_* desta tabela, LinkSync_MenuStep52/53 e Gauge_DrawByFlag4 (0x0803EB0C).
+  Ou seja, todos os desenhos ficam dentro da tela LINK. Confianca: provavel.
+
+### 5.3 Passos (indice: funcao: o que faz). Estado +0x84, contador +0x86 (confirmados nos decompiles abaixo)
+- 16 PeerLost_MenuStep16 e 22: nao e Anim. 18 Gfx_BlankSceneInit: nao e Anim. 21 Flow_StepCounterTickA: nao e Anim.
+  24 Boot_ResetSystemWrapper: nao e Anim. 25..31, 46, 47, 69..71, 95: NoOpActionHandler (vazio).
+- 17, 19, 23: Anim_GpuBlendTickThenCount (0x0803E4D8, confirmado): GpuBlend_TickStep; ao terminar, +1 no contador.
+- 20: Anim_InitSlotAndLoadCount (0x0803E618): nome; corpo nao decompilado.
+- 55: Anim_RunSlotScriptThenSfx54 (0x0803E03C, confirmado): roda script de slot (indice 0x75 - byte+0x1A2);
+  quando obj+0x122 == -1 toca SFX 0x54 e avanca.
+- 56: Anim_TweenUntilDoneThenReset (0x0803E098, confirmado): tween ate o alvo; ao chegar, Gauge_FullTriggersSound7
+  (som de barra cheia), reseta direcao do tween e avanca.
+- 57: Anim_TweenClampThenSfx2A (0x0803E0C0, confirmado): tween com clamp; ao chegar toca SFX 0x2A, zera +0x86, avanca.
+- 58: Anim_DrawSegmentUntil120 (0x0803E0F0, confirmado): desenha o segmento, +0x86 ate 0x78 (120 quadros), depois avanca.
+- 59, 60/73, 61, 62, 63, 74: Anim_DrawSegment* (desenham o segmento; decidem o proximo passo):
+  59 JumpPtr (0x0803E120, confirmado): desenha, +0x86++, se o byte do slot == 4 avanca, senao grava 0x48 e pula por
+  ponteiro (jumptable nao recuperada). 60/73 LoadSlot, 61 DispatchLoad, 62 DispatchStep, 63 UntilOverlayReached,
+  74 DispatchLoadAlt: nomes do Ghidra, corpo nao decompilado.
+- 64: Anim_DrawCycleStateZeroToFour (0x0803E270, confirmado): desenha o segmento, +0x86++; estado +0x84 vai de 0 a 4
+  (volta a 0 e avanca ao passar de 4).
+- 65 Anim_DrawFadeSfx8Step, 66 Anim_DrawFlushPaletteThenReset, 67 Anim_DrawFadeRowsStep: fade/paleta + segmento
+  (nomes; corpo nao decompilado).
+- 72 Anim_PickSlotActivateEntryCopy: escolhe slot, ativa e copia entrada (nome; nao decompilado).
+- 75 Anim_DrawSetValue3E (0x0803E48C, confirmado): desenha o segmento, +0x86++, grava 0x3E em 0x0803E4B0 (valor fixo).
+
+Contagem: 21 entradas Anim_ (indices 17,19,20,23,55..67,72..75) em 18 funcoes distintas. O enunciado falava em 19; nao
+consegui fechar em 19 com a tabela atual. Nao renomeei nada: os nomes ja existentes batem com os corpos lidos.
+
+### 5.4 Tabela 0x0807E874 (AN2 secao 2): quem usa
+- Nao ha literal de 0x0807E874 nem de 0x0807E878 em nenhuma instrucao da ROM. O unico leitor e a copia de boot:
+  literal 0x0807E860 em 0x080004A8 (ldr r0 em 0x0800045A, `InitializeInterruptsAndDefaultHandlers`).
+- Conteudo confirmado pela ROM: literal 0x0800099D esta em 0x0807E874 e 0x080009A9 em 0x0807E878 (os trampolins de trilha).
+- Quem chama os trampolins: `IntrMain` 0x080001D8 pela IWRAM 0x03000BA0 (secao 2 do AN2). Nao ha uso direto na tela.
+
+### 5.5 Pendencias
+- Corpos nao decompilados: 20, 60, 61, 62, 63, 65, 66, 67, 72, 74 (so pelo nome).
+- Entrada 10 do despachante em 0x083AC2F0 nao conferida.
+- Falta gravar na tela LINK (emulador) para ver o desenho; nao feito.
