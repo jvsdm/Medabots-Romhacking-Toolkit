@@ -1,0 +1,13 @@
+addr,nome,func_thumb,comentário
+0x0801D738,Fight_DispatchOnSubstateAA_E_02_CopyBotBuffers,1,copia 4x0x40 do bot da vez para buffers 0x03003470; monta objeto do bot; +1 -> E03; confirmado
+0x0801D878,Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry,1,entrada animada do bot por 60 frames (contador 0x030004C4); som 0x40; +1 -> E04; confirmado
+0x0801DD30,Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30,1,espera byte 0x03003478 chegar a 0x40 (decremento de 4); som 0x30; +1 -> E09; confirmado
+0x0801DED4,Fight_DispatchOnSubstateAA_F_02_HoldFlag,1,"hold: só +B5=1, sem +1; confirmado"
+0x0801DF0C,Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles,1,zera paleta de fundo (0x05000120) e preenche tiles (0x06004120); zera 0x030004C4; +1 -> G01; confirmado
+0x0801DF60,Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen,1,desliza sprites de fundo 10 frames (c=0x030004C4); flag +0x1AE em c==9; +1 -> G02; confirmado
+0x0801E09C,Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground,1,"duas etapas: BGs e VRAM 0x06017400 (etapa 0), OBJ e blend (etapa 1); grava 0x030017F0; +1 -> G04; confirmado"
+0x0801E2B8,Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold,1,um passo das sequências laterais; hold com +B5=1 (sem +1); confirmado
+0x0801E300,Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles,1,"carrega gráficos OBJ, paleta e tiles laterais/ícones; +1 -> H01; confirmado"
+0x0801E918,Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow,1,"carrega gráfico de números (VRAM 0x06010000), escreve dígitos do bot, som 0x5B; +1 -> H0E; confirmado"
+0x0801EAC4,Fight_DispatchOnSubstateAA_H_15_HoldFlag,1,"hold: só +B5=1, sem +1; confirmado"
+0x0801EBB8,Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance,1,arma timer halfword 0x030004C6 = 0x3C; +1 -> H19; consumidor não confirmado; confirmado

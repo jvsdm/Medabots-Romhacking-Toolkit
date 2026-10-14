@@ -27,31 +27,24 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 - Confiança: confirmado (código lido: +1 e fases), provável (endereços exatos das cargas por literal).
 
 ## 0x0801D738 Fight_DispatchOnSubstateAA_E (idx 0x02)
-- Assinatura: `undefined4 Fight_DispatchOnSubstateAA_E_02_CopyBotBuffers(void)` (Ghidra: FUN_0801d738)
-- Passo: copia os dados do bot da vez para os buffers de trabalho e prepara a posição e a composição do objeto.
-- O que faz: `bot = bloco+0xDE - 1`. Copia 4 blocos de 0x40 bytes com `0x0803F63C`: um por par de argumentos
-  `((bot-1)*0x100 + 0x030042B0 + k*0x40, 0x03003470 + k*0x40)` para k = 0..3 (DC3: sentido SRC->DST, decompile 0x0801D738: origem = 1º argumento = (bot-1)*0x100 + 0x030042B0 + k*0x40, destino = 2º = 0x03003470 + k*0x40;
-  ordem confirmada, ver acima). Depois `Slot_ClearAttrMask(0x21, 4)`,
-  `Fight_GetDisplayedPartIdsOrBrokenGlyphs(bot-1, bloco+0x64)`, `Sprite_WriteComposite4Objects(...)` com X/Y lidos de
-  `0x03002C30 + bot*0x100 + 0x1642` e `+0x1644 - 4`, slot `bot*4+0x56`, e `FUN_08043240(bot*4+0x56, 8)`. Zera o byte
-  `0x030004C4` (= `0x03000440 + 0x84`) e faz `+0xAA += 1`.
-- Subestado: +1 incondicional (-> E03).
-- Correções: a nota antiga dizia "grava 0x03000440 = 0" e listava 0x08040D0C/0x08015838/0x0804305C; o decompile mostra
-  o byte 0x030004C4 e as chamadas acima (os nomes deles vêm do Ghidra).
-- Confiança: confirmado (código lido: +1, cópias, pool 0x0801D858..0x0801D878: bloco 0x03001800, base 0x030042B0,
-  objeto 0x03002C30 via -0x1680); provável (direção da cópia e significado dos buffers).
+- Assinatura: `undefined4 Fight_DispatchOnSubstateAA_E_02_CopyBotBuffers(void)` (Ghidra: era `Fight_PrepareFollowupSourceDisplay`, renomeada)
+- Passo Robattle: entrada do bot da vez (preparação): copia os dados do bot para os buffers de trabalho e monta o objeto de sprite do bot.
+- Lê em fight_information (0x03001800): `+0xDE` (bot da vez, índice = valor - 1), `+0x64..+0x67` (ids de parte exibidos), `+0xF8` bit 0 (flag do sentido), `+0x3C`.
+- Escreve: 4 cópias de 0x40 bytes (origem `(bot-1)*0x100 + 0x030042B0 + k*0x40`, destino `0x03003470 + k*0x40`); `Slot_ClearAttrMask(0x21, 4)`;
+  `Fight_GetDisplayedPartIdsOrBrokenGlyphs` grava `+0x64..+0x67`; `Sprite_WriteComposite4Objects` (posição lida de `0x03002C30 + bot*0x100 + 0x1642/0x1644`, slot `bot*4+0x56`);
+  `SetCompositeBattleSpriteAnimationSpeed(bot*4+0x56, 8)`; byte `0x030004C4 = 0`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: +1 incondicional no fim (passo 0x02 -> 0x03, E03).
+- Confiança: confirmado (decompile: sequência de chamadas e +1 final); provável (sentido de cada buffer e significado de cada parte).
 ## 0x0801D878 Fight_DispatchOnSubstateAA_E (idx 0x03)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_E_03_AnimateBotEntry(void)` (Ghidra: FUN_0801d878)
-- Passo: anima a entrada do objeto do bot por 60 frames e, ao fim, mostra o objeto do bot.
-- O que faz: a cada frame chama `Sprite_UpdateComposite4Motion((bot-1)*4+0x5A, bot-1, flag)`, com flag = bit0 de
-  `+0xF8` invertido. Lê o bit 4 do byte `0x030004C4`: se zero, `Slot_SetFlagBit15(bot*4+0x56, 4)`; senão
-  `Slot_ClearAttrMask(bot*4+0x56, 4)`. Incrementa o byte `0x030004C4` (contador). Quando chega a 0x3C:
-  `Slot_SetFlagBit15(bot*4+0x56, 4)`, `snd_sfx_request(0x40)`, byte `0x03002C30 + bot*0x100 + 0x1664 = 4`, byte
-  `... + 0x1665 = 0`, halfword `... + 0x1670 = 0`, `Fight_ShowObjectSlot(bot+0x71)` e `+0xAA += 1`.
-- Subestado: hold enquanto o contador < 0x3C; +1 (-> E04) só ao chegar a 0x3C. A nota antiga "+1 incondicional" estava
-  errada. Os campos 0x1664/0x1665 são os bytes de controle citados em E02.
-- Confiança: confirmado (código lido: contador 0x3C, som 0x40, +1 condicional; pool 0x0801D8BC..0x0801D8C0 e
-  0x0801D940..0x0801D958); provável (significado visual do bit 4 e dos bytes de controle).
+- Passo Robattle: entrada animada do bot (60 frames) e exibição do objeto do bot ao fim.
+- Lê em fight_information: `+0xDE` (bot), `+0xF8` bit 0 (flag). Lê o byte contador `0x030004C4` (bit 4 e valor).
+- Escreve: a cada frame `Sprite_UpdateComposite4Motion((bot-1)*4+0x5A, bot-1, flag)`; se `0x030004C4 & 4 == 0` então `Slot_SetFlagBit15(bot*4+0x56, 4)`, senão `Slot_ClearAttrMask(bot*4+0x56, 4)`;
+  incrementa `0x030004C4`. Quando chega a 0x3C: `Slot_SetFlagBit15(bot*4+0x56, 4)`, `snd_sfx_request(0x40)`, dois bytes e um halfword de controle em `0x03002C30 + bot*0x100` (valores 4, 0 e 0; offsets no pool, ver texto anterior), `Fight_ShowObjectSlot(bot+0x71)`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: hold enquanto o contador < 0x3C; +1 (-> E04) só ao chegar a 0x3C.
+- Confiança: confirmado (decompile: contador 0x3C, som 0x40, +1 condicional); provável (significado visual do bit 4 e dos bytes de controle; offsets exatos dos bytes de controle dependem do pool).
 ## 0x0801D95C Fight_DispatchOnSubstateAA_E (idx 0x04)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_E_04_StepBotSlot(void)` (Ghidra: FUN_0801d95c)
 - Passo: anda com o slot de objeto do bot ativo (bot = `+0xDE`) e espera chegar.
@@ -95,15 +88,11 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 
 ## 0x0801DD30 Fight_DispatchOnSubstateAA_E (idx 0x08)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_E_08_WaitCounterThenSfx30(void)` (Ghidra: FUN_0801dd30)
-- Passo: conta um byte até 0x40 e, nesse ponto, toca o som 0x30 e avança.
-- O que faz: lê o byte `0x03003478` (= `0x03002C30 + 0x848`). Se == 0x40: `snd_sfx_request(0x30)` e `+0xAA += 1`.
-  Senão: `0x03003478 -= 4` e também `0x03003479 -= 4` (= `0x03002C30 + 0x849`).
-- Subestado: hold enquanto o contador não chega a 0x40; +1 (-> E09) quando chega.
-- Correções: a nota antiga "efeito 0x30 via 0x08074DE0 e toca 0x03002C30" estava errada. O 0x30 é som
-  (`snd_sfx_request`), não efeito visual; 0x08074DE0 e 0x03002C30 não aparecem como chamada/escrita neste handler (o
-  0x03002C30 só serve de base para o offset 0x848/0x849).
-- Confiança: confirmado (código lido: compare com 0x40, som 0x30, +1, pool 0x0801DD50..0x0801DD70); chute (significado
-  dos bytes 0x848/0x849 e por que descem de 4 em 4).
+- Passo Robattle: espera de um contador de byte e, ao atingir o valor, toca o som 0x30 e avança.
+- Lê: byte `0x03003478` (= `0x03002C30 + 0x848`). Escreve: se o valor é 0x40, `snd_sfx_request(0x30)` e +1 em `+0xAA`.
+  Senão: `0x03003478 -= 4` e `0x03003479 -= 4` (= `0x03002C30 + 0x849`). Não escreve `+0xB5` nem `+0xA6`.
+- +0xAA: hold enquanto o byte não chega a 0x40 (com decremento de 4 e wrap, leva cerca de 48 frames a partir de 0; valor inicial não verificado); +1 (-> E09) quando chega.
+- Confiança: confirmado (decompile: compare com 0x40, som 0x30, +1, decremento de 4); chute (significado dos bytes 0x848/0x849 e por que descem de 4 em 4).
 ## 0x0801DD74 Fight_DispatchOnSubstateAA_E (idx 0x09)
 - Assinatura: `void Fight_DispatchOnSubstateAA_E_09_RunSlot21Anim(void)` (Ghidra: FUN_0801dd74)
 - Passo: roda o script de animação do slot 0x21 a cada frame; quando termina, copia dados do bot e avança.
@@ -132,32 +121,28 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 
 ## 0x0801DED4 Fight_DispatchOnSubstateAA_F (idx 0x02)
 - Assinatura: `void Fight_DispatchOnSubstateAA_F_02_HoldFlag(void)` (Ghidra: FUN_0801ded4)
-- Passo: flag de espera: só põe `+0xB5 = 1` e retorna (quem avança é o despachante seguinte).
-- O que faz: `bloco(0x03001800)+0xB5 = 1`. Não escreve `+0xAA`.
-- Subestado: hold.
-- Confiança: confirmado (código lido: uma escrita, pool 0x0801DEE0 = 0x03001800).
+- Passo Robattle: flag de espera; não faz trabalho. Quem avança é o despachante seguinte.
+- Lê: nada. Escreve: `bloco(0x03001800)+0xB5 = 1` (pool 0x0801DEE0).
+- +0xB5: concluído = 1. +0xA6: não toca.
+- +0xAA: não escreve (hold).
+- Confiança: confirmado (decompile: uma escrita em `+0xB5`).
 ## 0x0801DF0C Fight_DispatchOnSubstateAA_G (idx 0x00)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_G_00_FillPaletteAndTiles(void)` (Ghidra: FUN_0801df0c)
-- Passo: zera uma linha de paleta de fundo e preenche um bloco de tiles de fundo, de uma vez (sem espera).
-- O que faz: zera o contador `0x030004C4` (= `0x03000440 + 0x84`). `bios_cpufastset` em modo fill (0x01000008 = 8 palavras,
-  origem fixa 0) zera 32 bytes em `0x05000120`. Outro fill (origem fixa 0x11111111, 8 palavras) grava em `0x06004120`.
-  Depois `+0xAA += 1`.
-- Subestado: +1 incondicional (-> G01).
-- Correções: a nota antiga falava em "copia" de paleta/tiles com CpuFastSet; no código é preenchimento (fill) com
-  zero na paleta e 0x11111111 nos tiles. Os literais estão resolvidos no pool 0x0801DF48..0x0801DF5C.
-- Confiança: confirmado (código lido, literais 0x0801DF48..0x0801DF5C, +1); provável (significado visual do 0x11111111).
+- Passo Robattle: limpeza de paleta de fundo e preenchimento de tiles de fundo, de uma vez, sem espera (início do cenário de luta).
+- Lê: nada do bloco. Escreve: byte `0x030004C4 = 0` (contador do G01); `bios_cpufastset` em modo fill (zero, 8 palavras) em `0x05000120`;
+  `bios_cpufastset` em modo fill (0x11111111, 8 palavras) em `0x06004120`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: +1 incondicional (-> G01).
+- Confiança: confirmado (decompile: zerar contador, dois fills, +1); provável (significado visual de 0x11111111).
 ## 0x0801DF60 Fight_DispatchOnSubstateAA_G (idx 0x01)
 - Assinatura: `void Fight_DispatchOnSubstateAA_G_01_SlideBgSpritesTen(void)` (Ghidra: FUN_0801df60)
-- Passo: loop de 10 frames que desliza dois conjuntos de sprites laterais (mesma rotina `FUN_0803F15C` do G05),
-  usando o contador de frames do G00 (0x030004C4) e o valor de BG0CNT (0x04000008) como argumento.
-- O que faz: a cada frame: `FUN_0803F15C(0x1E, 1, 0, c, Y, BG0CNT, 0)` e `FUN_0803F15C(0x1E, 1, 0, 0x13-c, Y, BG0CNT, 0)`,
-  onde `c` = byte `0x030004C4` e `Y` = word lida da ROM em `0x083B4E04` (= `0x083B4C60 + 0x1A4`, tabela; não decodificada).
-  Se `c == 9`: byte `0x03001800 + 0x1AE = 1` (flag) e `+0xAA += 1`. Senão: `c += 1`.
-- Subestado: hold por 10 frames; +1 (-> G02) quando c chega a 9.
-- Correções: a nota antiga dizia que escrevia 0x04000008 e 0x03002C30 e que chamava uma rotina com 0x1E; o código lê
-  BG0CNT (não escreve), escreve a flag no bloco 0x03001800+0x1AE e usa o contador 0x030004C4 (10 frames).
-- Confiança: confirmado (código lido: loop de 10, flag +0x1AE, +1; literais 0x0801DFC4..0x0801DFD0); chute (origem
-  do Y em 0x083B4E04 e o significado de 0x13-c).
+- Passo Robattle: deslizamento de 10 frames dos sprites laterais de fundo (dois conjuntos, em sentidos opostos).
+- Lê: byte contador `0x030004C4` (= c); halfword de `REG_BG0CNT` (0x04000008) pelo ponteiro `DAT_0801dfcc`; word da tabela ROM `0x083B4E04` (= `0x083B4C60 + 0x1A4`, Y).
+- Escreve: `BgMap_CopyRectWithOffset(0x1E, 1, 0, c, Y, BG0CNT, 0)` e `BgMap_CopyRectWithOffset(0x1E, 1, 0, 0x13-c, Y, BG0CNT, 0)`.
+  Se c == 9: byte `0x03001800+0x1AE = 1` e +1 em `+0xAA`. Senão `c += 1`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: hold por 10 frames; +1 (-> G02) quando c chega a 9.
+- Confiança: confirmado (decompile: loop de 10, flag +0x1AE, +1); chute (origem do Y na tabela 0x083B4E04 e significado de 0x13-c).
 ## 0x0801DFE0 Fight_DispatchOnSubstateAA_G (idx 0x02)
 - Assinatura: `void Fight_DispatchOnSubstateAA_G_02_LoadBgTilesStaged(void)` (Ghidra: FUN_0801dfe0)
 - Passo: carga de fundo em 3 etapas (tiles/mapa por CpuFastSet), uma por frame, com contador próprio.
@@ -170,26 +155,15 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 
 ## 0x0801E09C Fight_DispatchOnSubstateAA_G (idx 0x03)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground(void)` (Ghidra: FUN_0801e09c)
-- Passo: monta o cenário de fundo da luta em duas etapas (uma por frame): primeiro configura BGs, depois carrega
-  gráficos de bot para OBJ e os efeitos de blend. Só a segunda etapa avança o despachante.
-- O que faz: usa o byte de etapa `0x03000579` (= `0x03000440 + 0x139`).
-  Etapa 0: `Slots_ClearFourPairs()`; `REG_DISPCNT &= 0xE0FF` (desliga BG0..BG4); BG0CNT = 0x0500, BG1CNT = 0x1801,
-  BG2CNT = 0x590A, BG3CNT = 0x5B0B (registros 0x04000008..0x0400000E); `decompress_and_store(0x084C8034, 0x06017400)`;
-  `FUN_0803EF8C(0x20, 0x20, 0, 0, BG1CNT, 0)`; `GfxBankA_LoadTilesAndPalette(bloco+0x38, 0)`; zera 0x2000 bytes em
-  `0x03002C30` (fill 0x800 palavras); etapa += 1 (hold).
-  Etapa 1: `DISPCNT |= 0x8000`; `DISPCNT &= 0xFFDF`; `FxBlend_ApplyFromObjA()`; carrega a lista de gráficos do bot da vez
-  para OBJ VRAM (`Fight_LoadGfxListToObjVram`, índice pelo byte `+0xA7`/`+0x49` do bot ou `+0xA8+0x50` se o byte `+0xDD`
-  do bot >= 4); `Fight_LoadFixedGfxListToObjVram()`; `FUN_08035C3C()`; grava o ponteiro Thumb `0x08043E49` em
-  `0x030017F0`; zera o contador `0x030004C4` e a etapa `0x03000579`; `+0xAA += 1`.
-  Bloco do bot: `0x03000590 + bot*0x100` (bot = `bloco+0x87`).
-- Subestado: hold na etapa 0 (só avança a etapa); +1 (-> G04) na etapa 1.
-- Correções: a nota antiga listava 0x08043CA8, 0x0803EF8C, 0x08043B7C, 0x0801BC5C, 0x0801BCA0, 0x08035C3C e VRAM
-  0x06017400. Confirmados no decompile: 0x0803EF8C, 0x08035C3C, 0x06017400 (e 0x080009BC = `decompress_and_store`).
-  Não aparecem neste decompile: 0x08043CA8, 0x08043B7C, 0x08043DF8, 0x0801BC5C, 0x0801BCA0 (a nota antiga pode ter
-  vindo de disassembly ou de outro ramo; não reconferido). O ponteiro gravado em 0x030017F0 é novo nesta leitura.
-  O `|= 8000` do decompile está sem prefixo 0x; assumido 0x8000 (bit 15 de DISPCNT), provável.
-- Confiança: confirmado (código lido: duas etapas, +1 na etapa 1, literais BG e VRAM); provável (significado visual
-  das etapas); chute (o que é o ponteiro gravado em 0x030017F0).
+- Passo Robattle: montagem do cenário de fundo da luta em duas etapas (uma por frame): BGs e depois OBJ e blend.
+- Lê: byte de etapa `0x03000579` (= `0x03000440 + 0x139`); `bloco+0x38`; `bloco+0x87` (bot = valor, base `0x03000590 + bot*0x100`); `bloco+0xA7`/`+0xA8`/`+0xDD` do bot para escolher a lista de gráficos.
+- Etapa 0: `Slots_ClearFourPairs()`; `REG_DISPCNT &= 0xE0FF`; BG0CNT = 0x0500, BG1CNT = 0x1801, BG2CNT = 0x590A, BG3CNT = 0x5B0B;
+  `decompress_and_store(0x084C8034, 0x06017400)`; `BgMap_FillRect16(0x20, 0x20, 0, 0, BG1CNT, 0)`; `GfxBankA_LoadTilesAndPalette(bloco+0x38, 0)`; zera 0x2000 bytes em `0x03002C30`; etapa += 1.
+- Etapa 1: `REG_DISPCNT |= 0x8000` e `&= 0xFFDF`; `FxBlend_ApplyFromObjA()`; `Fight_LoadGfxListToObjVram(...)` (lista do bot); `Fight_LoadFixedGfxListToObjVram()`; `FUN_08035C3C()`;
+  grava o ponteiro Thumb `0x08043E49` em `0x030017F0`; zera `0x030004C4` e a etapa `0x03000579`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: hold na etapa 0 (só avança a etapa); +1 (-> G04) só na etapa 1.
+- Confiança: confirmado (decompile: duas etapas, +1 na etapa 1, BGs, VRAM 0x06017400); provável (significado visual das etapas); chute (o que é o ponteiro 0x08043E49 gravado em 0x030017F0).
 ## 0x0801E200 Fight_DispatchOnSubstateAA_G (idx 0x04)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_G_04_ResetSideSprites(void)` (Ghidra: FUN_0801e200)
 - Passo: zera e reinicia os sprites laterais da cena de luta.
@@ -211,27 +185,23 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 
 ## 0x0801E2B8 Fight_DispatchOnSubstateAA_G (idx 0x06)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_G_06_StepSideSequencesHold(void)` (Ghidra: FUN_0801e2b8)
-- Passo: um passo de animação dos sprites laterais (camada única e as duas sequências laterais) e segura o despachante.
-- O que faz: chama `FightPreview_UpdateSingleLayerSideSprites()`, `FightPreview_AdvanceLeftSideSequenceStep()` e
-  `FightPreview_AdvanceRightSideSequenceStep()`, e põe `+0xB5 = 1`. Não escreve `+0xAA`.
-- Subestado: hold (o +0xB5 só encerra este handler; quem avança é o despachante seguinte).
-- Correções: a nota antiga dizia "espera de animação" com as chamadas 0x08035DE8/0x080361C4/0x08036218; o decompile
-  mostra as três rotinas `FightPreview_*` acima (o mapeamento endereço -> nome não foi reconferido).
-- Confiança: confirmado (código lido: três chamadas, +0xB5 = 1, sem +1); provável (sentido de "sequência" lateral).
+- Passo Robattle: um passo das animações dos sprites laterais (camada única e as duas sequências) e espera.
+- Lê: nada do bloco. Chama `FightPreview_UpdateSingleLayerSideSprites()`, `FightPreview_AdvanceLeftSideSequenceStep()` e `FightPreview_AdvanceRightSideSequenceStep()`.
+- Escreve: `bloco+0xB5 = 1`. NÃO escreve `+0xAA`.
+- +0xB5: concluído = 1 (só encerra este handler). +0xA6: não toca.
+- +0xAA: hold (fica em 0x06). Quem zera `+0xB5` e avança para H17 não está neste handler.
+- Correção: a versão anterior dizia "+1 (-> H17), sem espera". O decompile mostra hold com `+0xB5 = 1` e a chamada à sequência direita, que a versão anterior não tinha.
+- Confiança: confirmado (decompile: três chamadas e `+0xB5 = 1`, sem `+0xAA`); provável (quem consome o flag).
 ## 0x0801E300 Fight_DispatchOnSubstateAA_H (idx 0x00)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_H_00_LoadSpritesTiles(void)` (Ghidra: FUN_0801e300)
-- Passo: carrega gráficos de sprites e tiles de luta (OBJ) e prepara os tiles laterais e os ícones de parte. Passo único, sem espera.
-- O que faz: quatro `decompress_and_store` da ROM para VRAM OBJ: `0x084C571C -> 0x06006400`, `0x08487D90 -> 0x06006520`,
-  `0x084C3E64 -> 0x06006600`, `0x084C7B64 -> 0x06006800`. Três `bios_cpufastset` (8 palavras) para a paleta OBJ:
-  `0x084885C0 -> 0x05000140`, `0x084E4638 -> 0x05000100`, `0x084C7FF4 -> 0x05000160`. Depois, com
-  `bVar4 = (bloco+0xF8 & 2) == 0`: `FightPreview_LoadSideTileSlots(bVar4)`, `FightPreview_LoadSideTiles(bVar4)`,
-  `FightPreview_LoadPartIconRows(bVar4, bloco+0x88)` e `FightPreview_DrawPartIconPairs(bVar4, bloco+0x88)`. Depois `+0xAA += 1`.
-  Bloco: `0x03001800`.
-- Subestado: +1 incondicional (-> H01).
-- Correções: a nota antiga citava 0x080362C4/0x08036340/0x08036370/0x080364A8 como chamadas; o decompile mostra as
-  rotinas `FightPreview_*` acima (o mapeamento não reconferido). VRAM e paleta da nota antiga estão confirmados.
-- Confiança: confirmado (código lido: +1, pool 0x0801E384..0x0801E3BC, VRAM e paleta); provável (sentido das rotinas
-  pelo nome).
+- Passo Robattle: carga única de gráficos de sprites de luta (OBJ), tiles laterais e ícones de parte.
+- Lê: `bloco+0xF8` bit 1 (define `bVar4 = (bloco+0xF8 & 2) == 0`, lado); `bloco+0x88` (usado como parâmetro dos ícones).
+- Escreve: quatro `decompress_and_store` da ROM para VRAM OBJ (`0x084C571C -> 0x06006400`, `0x08487D90 -> 0x06006520`, `0x084C3E64 -> 0x06006600`, `0x084C7B64 -> 0x06006800`);
+  três `bios_cpufastset` de 8 palavras para a paleta OBJ (`0x084885C0 -> 0x05000140`, `0x084E4638 -> 0x05000100`, `0x084C7FF4 -> 0x05000160`);
+  `FightPreview_LoadSideTileSlots(bVar4)`, `FightPreview_LoadSideTiles(bVar4)`, `FightPreview_LoadPartIconRows(bVar4, bloco+0x88)`, `FightPreview_DrawPartIconPairs(bVar4, bloco+0x88)`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: +1 incondicional (-> H01).
+- Confiança: confirmado (decompile: quatro cargas, três paletas, +1); provável (sentido das rotinas FightPreview_* pelo nome; endereços das cargas pelo pool).
 ## 0x0801E3C0 Fight_DispatchOnSubstateAA_H (idx 0x01)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_H_01_ChooseActionPath(void)` (Ghidra: FUN_0801e3c0)
 - Passo: escolhe o caminho da ação pelos bits de flags do bloco (`+0xB7`, `+0xB8`); zera `+0xB9`.
@@ -315,18 +285,13 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 
 ## 0x0801E918 Fight_DispatchOnSubstateAA_H (idx 0x0D)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow(void)` (Ghidra: FUN_0801e918)
-- Passo: carrega gráfico (descompacta da ROM para VRAM), escreve os dígitos de número do bot e monta a linha de sprites
-  na posição do bot. Toca o som 0x5B. Passo único, sem espera.
-- O que faz: `decompress_and_store(0x084D2DC4, 0x06010000)`; `bios_cpufastset(0x0850F5B8, 0x050003C0, 8)`.
-  Posição: `X/Y` = halfwords do bloco `0x03001800+0x158` ou `+0x154` (conforme `+0xF8 & 2`). Com `bot-ptr = 0x0300052E`:
-  `Fight_WriteNumberTiles(0x0300052E, halfword bloco+0xC8, 1)`; `FightPreview_BuildSpriteListRow(0x0300052E, 10, bloco+0x8B, X, Y)`;
-  `snd_sfx_request(0x5B)`; `+0xAA += 1`.
-- Subestado: +1 incondicional (-> H0E).
-- Correções: a nota antiga citava 0x0801A28C, 0x080368C4 e `0x08074DE0(0x5B)`; no decompile o som é
-  `snd_sfx_request(0x5B)` e as chamadas estão acima. A VRAM 0x06010000 está confirmada. O ponteiro 0x0300052E é o
-  registro do bot usado nas duas rotinas (o nome do registro não confirmado).
-- Confiança: confirmado (código lido: +1, som 0x5B, VRAM, pool 0x0801E944..0x0801E9AC); provável (o que são os
-  dígitos e a linha de sprites, pelos nomes das rotinas).
+- Passo Robattle: carga do gráfico de números, escrita dos dígitos do bot e montagem da linha de sprites na posição do bot; toca som 0x5B.
+- Lê: `bloco+0xF8` bit 1 (escolhe X/Y em `bloco+0x154` ou `+0x158`); halfword `bloco+0xC8`; byte `bloco+0x8B`; registro do bot `0x0300052E` (nome não confirmado).
+- Escreve: `decompress_and_store(0x084D2DC4, 0x06010000)`; `bios_cpufastset(0x0850F5B8, 0x050003C0, 8)`;
+  `Fight_WriteNumberTiles(0x0300052E, bloco+0xC8, 1)`; `FightPreview_BuildSpriteListRow(0x0300052E, 10, bloco+0x8B, X, Y)`; `snd_sfx_request(0x5B)`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: +1 incondicional (-> H0E).
+- Confiança: confirmado (decompile: +1, som 0x5B, VRAM 0x06010000, chamadas); provável (o que são os dígitos e a linha de sprites, pelos nomes).
 ## 0x0801E9B0 Fight_DispatchOnSubstateAA_H (idx 0x0E)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_H_0E_WaitSpriteStep10(void)` (Ghidra: FUN_0801e9b0)
 - Passo: avança um passo de sprite (10) e pausa 60 frames ao terminar.
@@ -368,10 +333,11 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 
 ## 0x0801EAC4 Fight_DispatchOnSubstateAA_H (idx 0x15)
 - Assinatura: `void Fight_DispatchOnSubstateAA_H_15_HoldFlag(void)` (Ghidra: FUN_0801eac4)
-- Passo: flag de espera: só põe `+0xB5 = 1` e retorna (quem avança é o despachante seguinte).
-- O que faz: `bloco(0x03001800)+0xB5 = 1`. Não escreve `+0xAA`.
-- Subestado: hold.
-- Confiança: confirmado (código lido: uma escrita, pool 0x0801EAD0 = 0x03001800).
+- Passo Robattle: flag de espera; não faz trabalho. Quem avança é o despachante seguinte.
+- Lê: nada. Escreve: `bloco(0x03001800)+0xB5 = 1` (pool 0x0801EAD0).
+- +0xB5: concluído = 1. +0xA6: não toca.
+- +0xAA: não escreve (hold).
+- Confiança: confirmado (decompile: uma escrita em `+0xB5`).
 ## 0x0801EAD4 Fight_DispatchOnSubstateAA_H (idx 0x16)
 - Assinatura: `undefined4 Fight_DispatchOnSubstateAA_H_16_SetupPartSpritesAt(void)` (Ghidra: FUN_0801ead4)
 - Passo: carrega gráfico de partes e monta os sprites de parte na posição do bot.
@@ -392,13 +358,12 @@ ainda não havia função: os textos antigos de "chute" foram reescritos após a
 
 ## 0x0801EBB8 Fight_DispatchOnSubstateAA_H (idx 0x18)
 - Assinatura: `void Fight_DispatchOnSubstateAA_H_18_SetTimer60Advance(void)` (Ghidra: FUN_0801ebb8)
-- Passo: arma um timer de 60 frames e avança. Sem chamadas.
-- O que faz: halfword em `0x03000440 + 0x86` (= `0x030004C6`) = 0x3C; depois `bloco(0x03001800)+0xAA += 1`.
-  Quem consome o timer não foi confirmado (o próximo handler, H19, é genérico).
-- Subestado: +1 incondicional (-> H19).
-- Correções: a nota antiga dizia "sem chamadas; grava 0x03000440" (o endereço do timer é 0x030004C6 e o +1 é
-  no bloco 0x03001800). O timer é o mesmo tipo de 0x3C de H04/H08/H0E, mas aqui fica na região 0x03000440.
-- Confiança: confirmado (código lido: 0x3C, +1; pool 0x0801EBCC = 0x03000440 e 0x0801EBD0 = 0x03001800).
+- Passo Robattle: arma um timer de 60 frames e avança. Sem chamadas.
+- Lê: nada. Escreve: halfword `0x030004C6` (= `0x03000440 + 0x86`) = 0x3C; `bloco(0x03001800)+0xAA += 1`.
+- +0xB5: não toca. +0xA6: não toca.
+- +0xAA: +1 incondicional (-> H19).
+- Pendente: quem consome o timer `0x030004C6` não foi confirmado (H19 é genérico; o decompile deste handler não lê o timer).
+- Confiança: confirmado (decompile: halfword 0x3C e +1); chute (consumidor do timer).
 ## 0x0801EBD4 Fight_DispatchOnSubstateAA_AO (idx 0x0E)
 - Assinatura: `void Fight_DispatchOnSubstateAA_AO_0E_UpdateSpritesWait60(void)` (Ghidra: FUN_0801ebd4)
 - Passo: atualiza sprites de duas camadas e pausa 60 frames. Dispatcher AO sem stub identificado.
@@ -459,4 +424,3 @@ G03 -> G04 (+1 na 2ª etapa) ; G04 -> G05 (+1) ; G05 -> G06 (+1 após 10 frames)
 - E05 e G02 não têm tail-call: terminam em retorno normal (`bx r0`); o Ghidra marcou "UNRECOVERED_JUMPTABLE". Próximos passos (JT.md): E06 ao chegar; G03 só na etapa 2.
 - Redescritos nesta rodada (GH-HA2-resto): E02, E03, E08, G00, G01, G03, G06, H00, H0D, F02, H15, H18. Nenhum sem decompile.
 
-Pendente redo: nenhum dos 12 da rodada GH-HA2-resto. Sobra em aberto (E05 e G02 resolvidos, JT.md): significado dos bytes 0x03003478/0x03003479 (E08); ponteiro 0x08043E49 gravado em 0x030017F0 (G03); origem do Y na tabela 0x083B4E04 (G01); quem consome o timer 0x030004C6 (H18); HA2_lista.txt termina em 0x1D.
