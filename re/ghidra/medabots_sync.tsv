@@ -30,6 +30,7 @@ F	0x08001380	CopyPaletteBuffersToHardware
 F	0x080013A8	PaletteBlendToColor
 F	0x08001454	Init_CopyStartupGraphicsToVram
 F	0x08001520	BuildShadowOamFromObjectState
+L	0x08001A00	gMapState_base
 F	0x08001CAC	SetObjectAffineMatrixFromAngleAndScale
 F	0x08001EA8	SetObjectScaleVectorFromMode
 F	0x08001FF8	RotateObjectOffsetByAffineAngle
@@ -276,10 +277,12 @@ F	0x080102C0	Scr_HideSpritesPlaySong8
 F	0x08010478	Screen_ScrollRevealRowsStep
 F	0x0801053C	Fight_ResetTemplateAndPalette
 F	0x0801058C	Fight_InitBotPartSelectScreen
+F	0x08010814	Fight_ShowPreBattleTextForCharacter
 F	0x08010A20	Tile_ResetBlendAndClearSlots
 F	0x08010A7C	Overworld_ReloadMapSceneAndAdvanceGameState
 F	0x08010AC8	Gfx_PaletteFadeStep
 F	0x08010B54	Battle_GaugeTickStep
+F	0x08010BD0	Fight_ShowPostBattleTextForCharacter
 F	0x08010C50	Fight_HandleRewardGrantOrSkipByPostBattleFlags
 F	0x08011344	Scene_InitBgAndLoadRecord
 F	0x08011500	Gfx_ResetBgLayersAndSong
@@ -1370,7 +1373,7 @@ F	0x08034910	ActionScript_Op49_HalfArmorOfActiveBot
 F	0x0803496C	ActionScript_Op4A_AllySideLoop
 F	0x080349D8	ActionScript_Op4B_FindBotWithPartAndPickPart
 F	0x08034A68	ActionScript_Op4C_CopyPartArmorToEC
-F	0x08034AA0	ActionScript_Op4D_RandomChance
+F	0x08034AA0	Fight_RollDamageFromTwoDice
 F	0x08034AF4	ActionScript_Op4E_FindActiveBotWithGroupAndPickPart
 F	0x08034B68	ActionScript_Op4F_FindActiveBotWithGroup
 F	0x08034BA0	ActionScript_Op50_CallAR
@@ -1622,9 +1625,11 @@ F	0x0803D4AC	FightPreview_AdvanceSequenceCursor
 F	0x0803D4EC	Fight_ScrollEntryCoords
 F	0x0803D5A0	Fight_ResetStateFlagsAndCounter
 F	0x0803D74C	Screen_InitOverlayAndLoadAssets
+F	0x0803D9A0	Fight_ShowPreBattleTextIndex1
 F	0x0803DA90	Fight_ClearBattleBgAndBlend
 F	0x0803DAEC	Fight_InitSelectBlockA
 F	0x0803DB1C	Snd_RequestSongByFlag
+F	0x0803DB4C	Fight_ShowPostBattleTextIndex1
 F	0x0803DC8C	Screen_ResetAndSetSub4Mode
 F	0x0803DCDC	Overlay_InitScreenGraphics
 F	0x0803E4F4	Gfx_BlankSceneInit
@@ -1936,6 +1941,7 @@ F	0x0804B298	Map_ClearBgTilemapVram
 F	0x0804B2B0	Map_LoadCurrentMapLayers
 F	0x0804B6E0	Overworld_IsUiSceneStateComplete
 F	0x0804B6F4	Script_DispatchHandler
+F	0x0804B738	Stub_ReturnZero_0804B738
 F	0x0804B73C	Event_Op00_Nop
 F	0x0804B740	Event_Op01_ShowMessageA
 F	0x0804B74C	Event_Op02_ShowMessageB
@@ -2141,6 +2147,7 @@ F	0x0804EF5C	EventOpcode3D_GetTinpet
 F	0x0804EFFC	EventOpcode40_RunPulsedScreenTransitionLoop
 F	0x0804F0A4	Event_Op41_Cont_FlickerAllActors
 F	0x0804F110	EventOpcode42_MovePlayerOneStep
+F	0x0804F188	Map_CameraFollowStepByDir
 F	0x0804F3F8	EventOpcode43_ShakeCamera
 F	0x0804F5C8	Event_Op51_Cont_NoOp
 F	0x0804F5CC	Event_Op52_Cont_NoOp
@@ -2903,6 +2910,7 @@ L	0x083AECD8	gFightSceneSteps
 L	0x083AEEA0	gTechniqueActionSetupHandlerTable
 L	0x083AEF90	gTechniqueActionValidationHandlerTable
 L	0x083AF180	gActionScriptOpcodeHandlerTable
+L	0x083AF380	gRollDieFaceTable
 L	0x083AF8C0	gObjectOpcodeHandlerTable
 L	0x083AFE88	gPortraitImages
 L	0x083B1748	gPortraitPalettes
@@ -2939,7 +2947,7 @@ L	0x083BEB68	gTextBattlefieldNames
 L	0x083BEB94	gPaletteFamily
 L	0x083BEC10	gMapEncounters
 L	0x083BF210	gMapEncountersExtra
-L	0x083C1B80	gBattlePointerTable
+L	0x083C1B80	gEncounterTemplatePtrs
 L	0x083C2D3C	gTextPreBattleMessage
 L	0x083C3B04	gTextPostBattleMessage
 L	0x083C40B8	gTextCharacterNames
@@ -2958,6 +2966,7 @@ L	0x083D2018	gMotionDurationTable
 L	0x083D212C	gSceneSubroutineTable
 L	0x083D222C	gEventPrimaryOpcodeTable
 L	0x083D2630	gEventContinuationOpcodeTable
+L	0x083D2A40	gWalkSpeedTable
 L	0x083D2B6B	gMapArea
 L	0x083F7D80	sRandomAdvanceTable
 L	0x083F7E80	Overworld_Sprites
@@ -2993,22 +3002,41 @@ L	0x0847DF24	gTextPointerTable
 L	0x0847E388	get_item_text
 L	0x0847E644	gMapMusic
 L	0x08483234	gMapEntityPtrTable
+L	0x08483614	SAVE_HANDLER_InitScreen
 L	0x08483634	StateTable_CB50
+L	0x08483688	SAVE_HANDLER_StepThenFlashOp
+L	0x084836B4	SAVE_SIGNATURE_ROM
+L	0x084836C5	SAVE_ERASE_HEADER_ROM
+L	0x08483724	SAVE_HANDLER_FinishFlashStep
+L	0x08483770	SAVE_HANDLER_WriteEepromAndFinish
 L	0x08483774	gMapAreaB
 L	0x084838E4	gShops
 L	0x08483ED8	gTextKeyItems
 L	0x0848521C	gTextShopDialogue
 L	0x08485F88	gTextTournamentMessages
 L	0x0848698C	gTextRaceMessages
+L	0x084881E0	gGfx_Battle_BotTiles_B
+L	0x08488240	gGfx_Battle_BotTiles_C
+L	0x08488290	gGfx_Battle_BotTiles_D
+L	0x084882CC	gGfx_Battle_BotTiles_A
 L	0x084BFC6C	gFont
 L	0x084C29D8	gMedalSprites
+L	0x084C3A24	gGfx_PartsGrid_Tiles_Bg1
+L	0x084C3BF8	gGfx_PartsGrid_Tiles_Bg2
 L	0x084C4BDC	sPartDetailTileSheetA
 L	0x084C59AC	gItalicFont
-L	0x084C8034	sShopPartScreenUiTileSheet
+L	0x084C8034	gGfx_Obj_Malias_09C0
 L	0x084C8034	gObjTextFontGfx
+L	0x084C88B8	gGfx_PartsGrid_Tiles_Bg3
 L	0x084E43D8	gFontPalette
 L	0x084E43F8	sPartScreenObjPaletteBlockC
+L	0x084E9650	gGfx_PartsGrid_Tiles_Bg0
+L	0x084F0920	gGfx_PartsGrid_Map_Bg0
+L	0x084F1180	gGfx_PartsGrid_Map_Bg1
 L	0x084F1514	gPartListTilemap
+L	0x084F1C28	gGfx_PartsGrid_Map_Bg2
+L	0x084F2C88	gGfx_PartsGrid_Map_Bg3
+L	0x084F4300	gGfx_PartsGrid_Palette_Banks
 L	0x0850F2F8	sCompositeBattleSpritePaletteSet
 L	0x0850F318	sPartScreenObjPaletteBlockA
 L	0x0850F378	sPartScreenObjPaletteBlockB
@@ -3017,7 +3045,7 @@ L	0x08765EC0	gEventDb
 L	0x08765EC4	event_operation_list
 L	0x08769EC0	gEventPointerTable
 L	0x087852CF	gStarterData
-L	0x08785FB4	sSharedPartScreenTileSheet
+L	0x08785FB4	gGfx_Shop_PartSelect_Obj
 L	0x087F5500	gTextDump
 C	0x0801D6A4
 C	0x0801D878

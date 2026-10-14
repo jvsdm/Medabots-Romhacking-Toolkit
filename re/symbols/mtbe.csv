@@ -5,6 +5,7 @@ address,name,kind,count,comment
 0x020260D0,gBattlePartState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois; Simon: gSelectedMedabotPreviewTemplateTable
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
 0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
+0x02030000,SAVE_STAGING_EWRAM,data,,"[SV] [SV] buffer de staging do save (EWRAM), 0x1CC0 B (confirmado por literal)"
 0x03000440,gMessageCtx,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra (antes: gTextState)"
 0x03000448,current_dialog_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x0300044C,current_character_in_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
@@ -66,6 +67,7 @@ address,name,kind,count,comment
 0x03000659,battle_robot_1_status_effect,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000666,battle_robot_1_form,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000890,gEnemyBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
+0x03000B94,SAVE_OPT_C,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b3-4 (validado <3; nome nao confirmado)
 0x03000BE0,gBattleMedalStateTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleMedalStateRecord[30][1920]"
 0x03000BE1,first_medal_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BE4,first_medal_attribute,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -73,9 +75,11 @@ address,name,kind,count,comment
 0x03000BE6,first_medal_aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BE7,first_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BEA,first_medal_name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03001360,gMessageBusyFlag,data,,[A6] flag (byte) lido em Fight_TryUiActionByIndex; 0 = pode disparar; confirmado (literal)
+0x03001360,SAVE_OPT_B,data,,[A6] flag (byte) lido em Fight_TryUiActionByIndex; 0 = pode disparar; confirmado (literal) (antes: gMessageBusyFlag)
 0x0300137C,gamestate_subroutine,label,,"passo interno da cena atual (debug: 0 init, 1 menu, 2 sai, 3 opcao); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03001780,gFrameCount,label,,contador de frames (AgbMain)
+0x03001784,SAVE_FLAGS,data,,[SV] [SV] bit0 = salvando (ligado antes de salvar); bit1 = opcao salva em 0x1CB8 b5 (confirmado)
+0x03001788,SAVE_OPT_A,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b0-1 (validado <3; nome nao confirmado)
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state
 0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03001798,pressed_buttons_03001798,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
@@ -106,13 +110,18 @@ address,name,kind,count,comment
 0x03001968,won_bodypart_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03001969,won_bodypart_id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03002420,current_shop,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03002B64,held_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
-0x03002B88,gPlayTimeFrames,label,,tempo de jogo em frames; trava em 21599999 (99:59:59)
+0x03002B64,gKeysHeld,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: held_buttons)"
+0x03002B70,SAVE_HEADER_RAM,data,,"[SV] [SV] 28 B: money u32, nome 16 B em +4, total u16, vitorias u16, tempo u32 quadros (confirmado por literal; nomes provaveis)"
+0x03002B74,SAVE_PLAYER_NAME,data,,"[SV] [SV] nome 16 B, 0xFE = fim/vazio (confirmado pelo ReadVerify e ClearAndRetryLoad)"
+0x03002B84,SAVE_TOTAL_BATTLES,data,,[SV] [SV] u16 total de lutas (limite 9999; provavel)
+0x03002B86,SAVE_WINS,data,,[SV] [SV] u16 vitorias (<= total; provavel)
+0x03002B88,SAVE_GAME_TIME_FRAMES,label,,tempo de jogo em frames; trava em 21599999 (99:59:59) (antes: gPlayTimeFrames)
 0x03002B8C,gamestate_menu,label,,"u32: indice em menu_list executado pelo MainState0 (63 = menu de debug); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03002C30,gObjectSlots,label,,slots de objeto (0x40 B): +0x2B anim, +0x2C tipo de movimento/contador, +0x2D recarga, +0x2E repeticoes, +0x30 espera (s16); indice atual em 0x0300056F
+0x030037F0,gPlayerObject,data,,[OW] slot 0x2F de gObjectSlots (jogador)
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03004C40,gInventory,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory
+0x03004C40,SAVE_PARTS_INV_RAM,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory (antes: gInventory)
 0x03005310,gOverworldAffineState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300534C,gOverworldAffineFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005350,gOverworldUiState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -121,7 +130,7 @@ address,name,kind,count,comment
 0x030057A0,gMapTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo MapTransitionState[40]"
 0x030057D8,gEventFlagListPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x030057DC,gMapScratchBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
-0x030057E0,event_flag_list,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]; Simon: gEventFlagList"
+0x030057E0,EVENT_STATE_E,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]; Simon: gEventFlagList (antes: event_flag_list)"
 0x03005815,gEventModeFlag,label,,[EV] byte = 1 no início (gatilhos) e no fim (End): modo de evento (provável; nome a confirmar)
 0x03005DBC,gActiveMapObjectTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo ActiveMapObjectEntry[64][512]"
 0x03005DBD,first_event_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -131,25 +140,26 @@ address,name,kind,count,comment
 0x03005FE0,map_width,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03005FE2,map_height,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03005FF0,gMapCollisionOccupancyBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1024][1024]; Simon: map_data"
-0x03006409,gCurrentMapHasEncounters,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1]"
-0x0300640A,gCurrentBattleId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x0300640B,gRandomEncounterStepCounter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
-0x0300640C,gRandomEncounterModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x0300640D,gCurrentBattleSourceFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006409,gEncounterEnabledFlag,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo bool[1] (antes: gCurrentMapHasEncounters)"
+0x0300640A,gEncounterSlotIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentBattleId)"
+0x0300640B,gStepCounter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1] (antes: gRandomEncounterStepCounter)"
+0x0300640C,gEncounterBlockFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gRandomEncounterModeFlags)"
+0x0300640D,gEncounterRollSuppressed,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentBattleSourceFlag)"
 0x0300640E,gPostBattleModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300640F,gCurrentBattleModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006417,gRandomIndex,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300642A,gEventFlagList_selectedEncounterBattleId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006432,ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006434,ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
-0x03006436,ikki_tile_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03006437,gOverworldFacingDirection,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03006436,gPlayerTileX,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: ikki_tile_x)"
+0x03006437,gPlayerTileY,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gOverworldFacingDirection)"
 0x03006438,ikki_walk_cooldown,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006439,ikki_look_dir,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643B,gCurrentMapSceneVariant,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643D,gOverworldEventModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300643E,gOverworldEventModeFlagsBackup,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x0300643F,gEventRunSceneStepFlag,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável)
+0x0300643F,gEncounterSuppressB,label,,[EV] E+0xC5F: se != 0 o laço roda o passo da cena também no mesmo quadro (confirmado; nome provável) (antes: gEventRunSceneStepFlag)
+0x03006447,gLoadFacingSource,data,,[OW] RAM: facing inicial lido no load
 0x0300644E,str_ikki_x,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006450,str_ikki_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006463,dpad_input_3,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -182,6 +192,7 @@ address,name,kind,count,comment
 0x03006D14,gMapLayerBufferPtr,label,,ponteiro do buffer de camadas descomprimidas; Simon: gMapTilemapBufferPtr
 0x03006D20,gEventScriptArguments_03006D20,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03006D30,gOverworldAuxBufferPtr,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03006D3A,gWalkSpeedMul,data,,[OW] RAM byte: multiplicador do passo (provavel corrida)
 0x03006D40,gMapRenderScratch,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03007F00,sp_usr,label,,stack do modo System
@@ -278,6 +289,7 @@ address,name,kind,count,comment
 0x080013A8,PaletteBlendToColor,func_thumb,,[R0] mistura paleta com cor no peso 0..32 (provavel)
 0x08001454,Init_CopyStartupGraphicsToVram,func_thumb,,[confirmado] 2x CpuFastSet da ROM para paleta 0x05000000
 0x08001520,BuildShadowOamFromObjectState,func_thumb,,"Simon/Rokusho: Build shadow OAM from the engine's object state table. Scans active object entries, transforms them according to object mode/affine/visibility flags, emits OAM entries, and clears the unused tail of shadow OAM."
+0x08001A00,gMapState_base,data,,[OW] base 0x030057E0 da RAM do mapa (ver OW.md secao 1)
 0x08001CAC,SetObjectAffineMatrixFromAngleAndScale,func_thumb,,Simon/Rokusho: Compute and write an object's affine matrix entries from angle and scale inputs. Handles both fixed default-scale and externally supplied scale sources.
 0x08001EA8,SetObjectScaleVectorFromMode,func_thumb,,Simon/Rokusho: Set one object's scale vector entries according to the current object transform mode and scale source. Writes the two scale components used by affine OAM objects.
 0x08001FF8,RotateObjectOffsetByAffineAngle,func_thumb,,"Simon/Rokusho: Rotate an (x,y) object offset vector using the affine angle stored in the object state record."
@@ -524,10 +536,12 @@ address,name,kind,count,comment
 0x08010478,Screen_ScrollRevealRowsStep,func_thumb,,[FL10] revelação por linhas no mapa de fundo; contador +0x48; subsistema não confirmado
 0x0801053C,Fight_ResetTemplateAndPalette,func_thumb,,"zera estado +0x132, paleta e area; provavel"
 0x0801058C,Fight_InitBotPartSelectScreen,func_thumb,,"[provavel] tela de selecao de pecas do bot: decompress x5, desenha Fight_Draw*"
+0x08010814,Fight_ShowPreBattleTextForCharacter,func_thumb,,[TX] GH-TX: r0 = StateMachine_DispatchStep(gTextPreBattleMessage[byte 0x03001800 = FightTemplate.character_id]); se !=0 chama Fight_UpdateBotPartEntryMotion 0x08012098 e incrementa 0x0300137C. Sem funcao no Ghidra; nome provavel
 0x08010A20,Tile_ResetBlendAndClearSlots,func_thumb,,"[provavel] SetGpuBlendMode(0,0,0), 2x FillRect16, Tile_ClearSlots"
 0x08010A7C,Overworld_ReloadMapSceneAndAdvanceGameState,func_thumb,,"Simon/Rokusho: Reload the current map scene for a scripted/game-state transition, refresh map rendering, create the player object sprite, clear the transition latch, and advance the owning game-state subroutine."
 0x08010AC8,Gfx_PaletteFadeStep,func_thumb,,fade de paleta por contador ctx+0x84 (provavel)
 0x08010B54,Battle_GaugeTickStep,func_thumb,,barra que conta ate alvo + musica 0xE/0xF; provavel
+0x08010BD0,Fight_ShowPostBattleTextForCharacter,func_thumb,,"[TX] GH-TX: mesmo padrao do PRE, com gTextPostBattleMessage[character_id] e StateMachine_DispatchStep 0x0803FB3C. Sem funcao no Ghidra; nome provavel"
 0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,,Simon/Rokusho: Post-battle reward handler keyed by gPostBattleModeFlags low nibble. Low nibble 0 runs the normal reward grant path; nonzero clears the mode byte and jumps directly to subroutine 0x3E.
 0x08011344,Scene_InitBgAndLoadRecord,func_thumb,,reset de BG e cópia de registro de 4 bytes; provável (registro não identificado)
 0x08011500,Gfx_ResetBgLayersAndSong,func_thumb,,"pede musica 1, limpa tiles/slots e mapas BG0-BG3; provavel"
@@ -1619,7 +1633,7 @@ address,name,kind,count,comment
 0x0803496C,ActionScript_Op4A_AllySideLoop,func_thumb,,soma 10 em ctx+0x8C por peca zerada do lado; semantica do 10 chute; provavel (antes: Fight_AccumulatePartBonusForSide)
 0x080349D8,ActionScript_Op4B_FindBotWithPartAndPickPart,func_thumb,,Simon/Rokusho: Choose a target bot/part for reaction-driven targeting. Prefer an opponent that currently advertises a usable reaction source; otherwise fall back to a random active opponent and random target part. Writes selected_target_bot_id and selected_target_part_id. (antes: Fight_SelectReactionTargetFromOpponentState)
 0x08034A68,ActionScript_Op4C_CopyPartArmorToEC,func_thumb,,[confirmado] le halfword bot+0x59+0x18*parte para ctx+0xEC; chama Fight_AdvanceActionScriptCursor (antes: Fight_CopyBotPartWordAndAdvance)
-0x08034AA0,ActionScript_Op4D_RandomChance,func_thumb,,[AS2] GH-AS2: opcode 0x4D chama randbyte duas vezes; provavel
+0x08034AA0,Fight_RollDamageFromTwoDice,func_thumb,,[AS2] GH-AS2: opcode 0x4D chama randbyte duas vezes; provavel (antes: ActionScript_Op4D_RandomChance)
 0x08034AF4,ActionScript_Op4E_FindActiveBotWithGroupAndPickPart,func_thumb,,provável: escolhe alvo adversário e parte; avança script de ação (antes: Fight_PickOpponentTargetStep)
 0x08034B68,ActionScript_Op4F_FindActiveBotWithGroup,func_thumb,,"[FL10] +0x60 = lado adversario; FUN_08037830(base,side); 0xFF -> +0xEC=10; avanca cursor do roteiro (provável) (antes: Fight_SetOpponentBaseAndAdvanceScript)"
 0x08034BA0,ActionScript_Op50_CallAR,func_thumb,,[AS2] GH-AS2: opcode 0x50 (AR) dano em peca aleatoria dos adversarios; ver HN2.md
@@ -1871,9 +1885,11 @@ address,name,kind,count,comment
 0x0803D4EC,Fight_ScrollEntryCoords,func_thumb,,[R2] soma/subtrai delta em 20 entradas com mascara (chute)
 0x0803D5A0,Fight_ResetStateFlagsAndCounter,func_thumb,,"zera ctx+0x84/+0x86 e incrementa contador; lista diz 428 bytes, corpo real 48; provavel"
 0x0803D74C,Screen_InitOverlayAndLoadAssets,func_thumb,,[FN2] provavel: Init de tela: limpa; CpuFastSet; DISPCNT; 4x decompress_and_store; layout overlay; snd_song_request(8)
+0x0803D9A0,Fight_ShowPreBattleTextIndex1,func_thumb,,"[TX] GH-TX: StateMachine_DispatchStep(gTextPreBattleMessage[1]) (indice fixo, ldr [r0,#4]). Confirmado pelo corpo 0x0803D9A0..0x0803D9BD (sem funcao no Ghidra)"
 0x0803DA90,Fight_ClearBattleBgAndBlend,func_thumb,,"[provavel] SetGpuBlendMode(0,0,0), limpa 2 mapas de fundo 32x32 e 0x80 slots de tile"
 0x0803DAEC,Fight_InitSelectBlockA,func_thumb,,chute: zera bloco 0x14 e põe modo 1
 0x0803DB1C,Snd_RequestSongByFlag,func_thumb,,[FL10] pede musica 0x0E ou 0x0F conforme byte +0x9C==1; contador DB48++ (confirmado; evento não confirmado)
+0x0803DB4C,Fight_ShowPostBattleTextIndex1,func_thumb,,[TX] GH-TX: StateMachine_DispatchStep(gTextPostBattleMessage[1]) (indice fixo). Sem funcao no Ghidra
 0x0803DC8C,Screen_ResetAndSetSub4Mode,func_thumb,,"[provavel] limpa VRAM/slots, SetGpuBlendMode(5,0x3F,0x20), Dispatch_Sub4Mode(3)"
 0x0803DCDC,Overlay_InitScreenGraphics,func_thumb,,"init de tela do overlay: gfx, blend, paleta, OAM, musica 0x14; provavel"
 0x0803E4F4,Gfx_BlankSceneInit,func_thumb,,cena vazia: limpa mapas de BG e liga camadas (provavel)
@@ -2185,6 +2201,7 @@ address,name,kind,count,comment
 0x0804B2B0,Map_LoadCurrentMapLayers,func_thumb,,"Simon/Rokusho: Load the current map's visual and collision layers. Reads the current map id from the event/game-state blob, resolves compact width/height metadata, decompresses BG layers or falls back to a generated blank map path, copies the collision/metatile table, and refreshes the map rendering support tables."
 0x0804B6E0,Overworld_IsUiSceneStateComplete,func_thumb,,Simon/Rokusho
 0x0804B6F4,Script_DispatchHandler,func_thumb,,"Simon/Rokusho: Fetch the next event opcode byte from the script stream and dispatch it through the primary opcode table at 0x083D222C. This table is not init-only: it contains the first-phase handlers for the normal event VM, including immediate opcodes and setup handlers for deferred opcodes like 0x31, 0x32, and 0x33. (antes: EventScript_FetchAndRunPrimaryOpcodeHandler)"
+0x0804B738,Stub_ReturnZero_0804B738,func_thumb,,[FN2] confirmado: Funcao vazia: retorna 0
 0x0804B73C,Event_Op00_Nop,func_thumb,,Simon/Rokusho (antes: EventInitOpcode00_NoOp)
 0x0804B740,Event_Op01_ShowMessageA,func_thumb,,Simon/Rokusho (antes: EventInitOpcode01_Skip3BytesAndMarkInitialized)
 0x0804B74C,Event_Op02_ShowMessageB,func_thumb,,Simon/Rokusho (antes: EventInitOpcode02_Skip3BytesAndMarkInitialized)
@@ -2390,6 +2407,7 @@ address,name,kind,count,comment
 0x0804EFFC,EventOpcode40_RunPulsedScreenTransitionLoop,func_thumb,,Simon/Rokusho
 0x0804F0A4,Event_Op41_Cont_FlickerAllActors,func_thumb,,Simon/Rokusho: Tick flicker state for all active tracked actors and end the opcode when all participating actors are finished. (antes: EventOpcode41_FlickerAllActors)
 0x0804F110,EventOpcode42_MovePlayerOneStep,func_thumb,,"Simon/Rokusho: Perform a one-step forced player movement using the current facing/direction nibble, then wait for the movement helper to report completion before ending the opcode."
+0x0804F188,Map_CameraFollowStepByDir,func_thumb,,[FN2] provavel: Move alvo e camera (Map_AddCameraScrollX/Y) em 4 direcoes por arg 0..3; usa ikki_x/y_to_tile no fim
 0x0804F3F8,EventOpcode43_ShakeCamera,func_thumb,,"Simon/Rokusho: Run a timed camera shake on X or Y, updating map scroll and player/secondary markers each tick until the shake duration expires."
 0x0804F5C8,Event_Op51_Cont_NoOp,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub. (antes: NoOp_0804F5C8)"
 0x0804F5CC,Event_Op52_Cont_NoOp,func_thumb,,"Simon/Rokusho: Empty handler. Keep as NoOp; opcode-specific deferred/wait meaning belongs on the table entry, not this shared stub. (antes: NoOp_0804F5CC)"
@@ -3152,6 +3170,7 @@ address,name,kind,count,comment
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4]
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4]
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
+0x083AF380,gRollDieFaceTable,data,,[TX] GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable)"
 0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images
 0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes
@@ -3188,7 +3207,7 @@ address,name,kind,count,comment
 0x083BEB94,gPaletteFamily,data,122,familia de paleta = banco OBJ do mini sprite; Simon: sCompositeBattleSpritePaletteFamilyTable
 0x083BEC10,gMapEncounters,data,1536,encontros por mapa: 192 x 8 B; Simon: map_has_enemies_list
 0x083BF210,gMapEncountersExtra,data,768,encontros extra: 192 x 4 B; Simon: gMapEncounterBattleTable; Simon: map_encounters
-0x083C1B80,gBattlePointerTable,ptr,246,batalhas; Simon: list_of_all_fights
+0x083C1B80,gEncounterTemplatePtrs,ptr,246,batalhas; Simon: list_of_all_fights (antes: gBattlePointerTable)
 0x083C2D3C,gTextPreBattleMessage,ptr,96,tabela de texto: Diálogos antes das batalhas; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083C3B04,gTextPostBattleMessage,ptr,96,tabela de texto: Diálogos após as batalhas; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083C40B8,gTextCharacterNames,ptr,97,tabela de texto: Nomes dos personagens; fonte: dump_text_clean_v2.py (traducao PT-BR)
@@ -3207,6 +3226,7 @@ address,name,kind,count,comment
 0x083D212C,gSceneSubroutineTable,label,,[EV] tabela indexada por 0x0300137C (gamestate_subroutine); usada sem evento e após despacho com E+0xC5F (confirmado no literal)
 0x083D222C,gEventPrimaryOpcodeTable,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable (antes: gEventOpcodeTableA)
 0x083D2630,gEventContinuationOpcodeTable,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable (antes: gEventOpcodeTableB)
+0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
 0x083F7E80,Overworld_Sprites,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4]
@@ -3242,22 +3262,41 @@ address,name,kind,count,comment
 0x0847E388,get_item_text,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4]
 0x0847E644,gMapMusic,data,192,musica por mapa
 0x08483234,gMapEntityPtrTable,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople)
+0x08483614,SAVE_HANDLER_InitScreen,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar -> Save_InitScreen (confirmado)
 0x08483634,StateTable_CB50,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C"
+0x08483688,SAVE_HANDLER_StepThenFlashOp,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
+0x084836B4,SAVE_SIGNATURE_ROM,data,,[SV] [SV] 16 B 'MEDAROT2 Ver.KBT' copiados p/ save +0 (confirmado)
+0x084836C5,SAVE_ERASE_HEADER_ROM,data,,[SV] [SV] 16 B copiados p/ save +0 pelo apagar (op 2); comeca com 'MEDAROT2' mas nao e a assinatura (confirmado)
+0x08483724,SAVE_HANDLER_FinishFlashStep,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
+0x08483770,SAVE_HANDLER_WriteEepromAndFinish,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
 0x08483774,gMapAreaB,data,192,area/regiao por mapa (copia B)
 0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents
 0x08483ED8,gTextKeyItems,ptr,64,tabela de texto: Key Items; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0848521C,gTextShopDialogue,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x084881E0,gGfx_Battle_BotTiles_B,data,,[GF] Malias +2=0x0038; LoadTilesWithMalias bloco 0x11; Fight_LoadBattleBotTilesSet (GF)
+0x08488240,gGfx_Battle_BotTiles_C,data,,[GF] Malias +2=0x004C; LoadTilesWithMalias bloco 0x0F; Fight_LoadBattleBotTilesSet (GF)
+0x08488290,gGfx_Battle_BotTiles_D,data,,[GF] Malias +2=0x0060; LoadTilesWithMalias bloco 0x10; Fight_LoadBattleBotTilesSet (GF)
+0x084882CC,gGfx_Battle_BotTiles_A,data,,[GF] Malias +2=0x0070; LoadTilesWithMalias bloco 0x0D; Fight_LoadBattleBotTilesSet 0x08015A90 (GF)
 0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias)"
 0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
+0x084C3A24,gGfx_PartsGrid_Tiles_Bg1,data,,[GF] Malias 0x0340; grade 0x06006280; tambem Screen_LoadSceneWithSong 0x06000080 (GF)
+0x084C3BF8,gGfx_PartsGrid_Tiles_Bg2,data,,[GF] Malias 0x0580 -> VRAM 0x06006800; PartsGrid_InitScreen (GF)
 0x084C4BDC,sPartDetailTileSheetA,label,,Simon/Rokusho em 0x084C4C00
 0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
-0x084C8034,sShopPartScreenUiTileSheet,label,,Simon/Rokusho em 0x084C8058
+0x084C8034,gGfx_Obj_Malias_09C0,label,,Simon/Rokusho em 0x084C8058 (antes: sShopPartScreenUiTileSheet)
 0x084C8034,gObjTextFontGfx,data,,fonte 8x8 dos rotulos em sprite (comprimida, 0x9C0 B = 78 tiles 4bpp), carregada em OBJ tile 0x3A0 (0x06017400)
+0x084C88B8,gGfx_PartsGrid_Tiles_Bg3,data,,[GF] Malias 0x01C0 -> VRAM 0x06017E00; PartsGrid_InitScreen (GF)
 0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR)
 0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
+0x084E9650,gGfx_PartsGrid_Tiles_Bg0,data,,[GF] Malias 0x1CA0 -> VRAM 0x06004000; PartsGrid_InitScreen 0x08007A04 (GF)
+0x084F0920,gGfx_PartsGrid_Map_Bg0,data,,[GF] Malias tilemap 2048 B; BGCNT 0x0500; PartsGrid_InitScreen (GF)
+0x084F1180,gGfx_PartsGrid_Map_Bg1,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1801; PartsGrid_InitScreen (GF)
 0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
+0x084F1C28,gGfx_PartsGrid_Map_Bg2,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1902; PartsGrid_InitScreen (GF)
+0x084F2C88,gGfx_PartsGrid_Map_Bg3,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1A03; PartsGrid_InitScreen (GF)
+0x084F4300,gGfx_PartsGrid_Palette_Banks,data,,[GF] cru 0x70 words -> 0x05000000; PartsGrid_InitScreen (GF)
 0x0850F2F8,sCompositeBattleSpritePaletteSet,label,,Simon/Rokusho em 0x0850F31C
 0x0850F318,sPartScreenObjPaletteBlockA,label,,Simon/Rokusho em 0x0850F33C
 0x0850F378,sPartScreenObjPaletteBlockB,label,,Simon/Rokusho em 0x0850F39C
@@ -3266,5 +3305,5 @@ address,name,kind,count,comment
 0x08765EC4,event_operation_list,label,,Simon/Rokusho em 0x08765EE4
 0x08769EC0,gEventPointerTable,label,,tabela de ponteiros de eventos (base + 0x4000)
 0x087852CF,gStarterData,label,,dados do bot inicial
-0x08785FB4,sSharedPartScreenTileSheet,label,,Simon/Rokusho em 0x08785FD8
+0x08785FB4,gGfx_Shop_PartSelect_Obj,label,,Simon/Rokusho em 0x08785FD8 (antes: sSharedPartScreenTileSheet)
 0x087F5500,gTextDump,label,,inicio do texto
