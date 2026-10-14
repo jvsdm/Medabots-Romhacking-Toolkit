@@ -297,7 +297,7 @@ F	0x08012024	Fight_CreateBotPartEntrySprites
 F	0x08012098	Fight_UpdateBotPartEntryMotion
 F	0x080120C8	Fight_DrawBotPartIconRow
 F	0x0801214C	Fight_SetupFlagSprite
-F	0x080121A8	Fight_CopyBotLabelRecord
+F	0x080121A8	Fight_FormatBotLabelText
 F	0x080121CC	Fight_TryAssignBotPartByRoll
 F	0x080121F0	Fight_CountAvailableBotParts
 F	0x08012234	Fight_PickRandomAvailableBotPart
@@ -1455,7 +1455,7 @@ F	0x0803769C	Fight_RollPartValue
 F	0x080376F4	Fight_ComputeEffectValueFromRos
 F	0x08037728	FightPreview_ClampPartCountToLimit
 F	0x08037798	Fight_FindTargetBotWithPart
-F	0x08037830	Fight_FindActiveBotInSideWithGroup
+F	0x08037830	Fight_FindLiveSlotMatchingField91
 F	0x080378A8	Fight_TransitionNudgeCoordBy4
 F	0x080378F0	FightPreview_SpawnEffectSprite
 F	0x08037A94	FightPreview_SpawnEffectSpriteAlt
@@ -1852,6 +1852,8 @@ F	0x08048BB8	Map_ResetAffineScaleBlock
 F	0x08048CF0	Map_CopyTilemapToBgScreenblocks
 F	0x08048E24	Map_ExpandMetaTilemapToBgScreenblocks
 F	0x08049110	BgMap_WriteTileEntry
+F	0x080491B8	BgMap_FillRectTilePalette
+F	0x08049210	BgMap_CopyRectWithAttrs
 F	0x08049318	Map_ResetRenderAffineState
 F	0x08049374	Map_RecomputeRenderAffineEntry
 F	0x08049420	Map_SetObjectAnimationVariant

@@ -97,7 +97,7 @@ address,name,kind,comment
 0x08058208,Map_HandleMarkerCommandFromState,func_thumb,(mtbe) chama 0805821c com byte de estado | revisto CH3: confirmado - lê byte +0x14 de DAT_08058218 e chama Map_HandleMarkerCommand; nome bate com o corpo
 0x0805821c,Map_HandleMarkerCommand,func_thumb,(mtbe) comandos 0/1/5/6 do marcador
 0x080582b8,Map_SyncMarkerEventFields,func_thumb,(mtbe) sincroniza flag e campo 3 bits do marcador
-0x0805830c,Screen_UpdateByStep,func_thumb,(mtbe) tela com passos 0..7 (nome chute)
+0x0805830c,Screen_UpdateByStep,func_thumb,revisto CH4: mantido - único chamador Screen_UpdateStepWrap; decompile não refeito (função grande); nome da tela é chute
 0x080589a4,Screen_StepCyclicIndex,func_thumb,indice ciclico | revisto CH3: provável - bit 0x40 decrementa e volta a param-1; bit 0x80 incrementa e volta a 0; renomeado de ...StepCyclicIndexDown (faz as duas direções); passos 0/7 de Screen_UpdateByStep
 0x08058a10,Map_StepMarkerCounterUp,func_thumb,contador de marcador +1/+16 com sync de evento (provavel)
 0x08058ab8,Map_StepMarkerCounterNoSync,func_thumb,mesmo contador sem sync (provavel)
@@ -110,7 +110,7 @@ address,name,kind,comment
 0x08059578,Screen_ResetStateAndSelectMode,func_thumb,"zera estado e escolhe modo | revisto CH3: provável - se byte +0x11 é 0, zera +0x10 e chama Screen_ResetEntries40; zera +0x15; estado 0/2 ou 1 escreve modo 0x33 (em buffers diferentes), outros estados escrevem 5"
 0x08059734,Screen_DrawPackedNibbleRows,func_thumb,"desenha nibbles em linhas de tile (chute no nome) | revisto CH3: provável - copia 16 B de DAT_08059768 e, para cada linha de 8 px (ate 4), monta 2 entradas de render slot com cor do nibble; nome bate no geral"
 0x080598c0,Screen_AppendEntryList,func_thumb,"grava n entradas de lista (chute no nome) | revisto CH3: provável - para cada um dos n bytes de param_1 cria render slot (X a partir de param_3, passo 8; Y fixo de param_4); nome aproximado"
-0x08059960,Screen_BuildMainPanels,func_thumb,monta layout principal da tela de estado (chute)
+0x08059960,Screen_BuildMainPanels,func_thumb,revisto CH4: mantido - chamado por Map_CycleSlotIndex; decompile não refeito (função grande)
 0x08059e50,Screen_ClearHalfwordTable,func_thumb,zera tabela de halfwords
 0x08059f58,Screen_DrawDecimalNumber,func_thumb,escreve numero decimal no tilemap (0x06000000)
 0x0805a0cc,Screen_DrawDecimalNumberShadowed,func_thumb,numero decimal com sombra (provavel)
@@ -123,51 +123,51 @@ address,name,kind,comment
 0x0805b530,Screen_ClearTileRowHalfwords,func_thumb,zera halfwords de linha de tilemap
 0x0805b558,Shop_DrawPageNumbers,func_thumb,numeros de pagina da loja (provavel)
 0x0805b594,Shop_DrawSelectedNameText,func_thumb,nome do item selecionado (provavel)
-0x0805b5fc,Shop_IsEntryMarked,func_thumb,flag==1 da entrada (chute)
+0x0805b5fc,Shop_IsEntryMarked,func_thumb,revisto CH4: provável - retorna byte da entrada == 0x01; chamador Shop_DrawItemListPage; base de DAT_0805b610 não identificada
 0x0805b8ec,Shop_MoveCursorByDpad,func_thumb,cursor em grade com D-pad + SFX (provavel)
 0x0805b984,Shop_BlinkCursorAttr,func_thumb,pisca cursor pelo gFrameCount bit 8 (provavel)
-0x0805ba34,Screen_LoadLZ77TileBlock,func_thumb,descomprime LZ77 para VRAM (chute no nome)
+0x0805ba34,Screen_LoadLZ77TileBlock,func_thumb,revisto CH4: confirmado - LZ77 para buffer e cópia para VRAM; bit 14 escolhe 32 ou 64 linhas
 0x0805baa0,Screen_ShiftTileRowAttr,func_thumb,soma dx e paleta em linha de tilemap (provavel)
-0x0805bb0c,Screen_ReadTwoBitField,func_thumb,grava campo de 2 bits (chute)
-0x0805bc5c,Screen_DrawCellAdvance,func_thumb,escreve célula de tilemap e devolve idx+1 (chute)
+0x0805bb0c,Screen_ReadTwoBitField,func_thumb,revisto CH4: provável - grava bits 4-5 de um byte em ponteiro; destino não identificado
+0x0805bc5c,Screen_DrawCellAdvance,func_thumb,revisto CH4: confirmado - grava célula com |0x1000 e devolve idx+1; idx>0xA0 vira 0
 0x0805bcb0,Screen_HighlightGridRow,func_thumb,destaca linha/quantidade em 3x20 do tilemap (provavel)
 0x0805bd44,Screen_SetRowPalette3,func_thumb,"paleta 0x7000 na linha escolhida, 3x11 (provavel)"
 0x0805be0c,Screen_HighlightBitmaskGrid,func_thumb,grade 3x3 com máscara de ROM e paleta de seleção (provavel)
-0x0805bf14,Palette_FadeTo16,func_thumb,fade RGB de 16 cores (chute)
+0x0805bf14,Palette_FadeTo16,func_thumb,"revisto CH4: confirmado - interpola 16 cores RGB para o alvo, fator arg-16"
 0x0805bfec,Palette_FadeBlockUpload,func_thumb,fade de bloco de paleta e envio (provavel)
-0x0805cb90,Screen_SetSlotHighlight,func_thumb,flip de célula de slot por estado (chute)
+0x0805cb90,Shop_SetSlotHighlight,func_thumb,revisto CH4: provável - liga/desliga bit 0x4000 da célula do slot; só chamado pela loja; renomeado de Screen_ para Shop_
 0x0805d4a0,Slot_ActivateCursor,func_thumb,ativa cursor de slot (provavel)
 0x0805d6e4,Obj_SetAttrFromTable,func_thumb,atributo de objeto por tabela de 4 (provavel)
 0x0805dd88,Screen_InitBlendFade,func_thumb,reinicia blend e estado de tela (provavel)
-0x0805ddec,Site_RunSaveLoadOption,func_thumb,opções salvar/carregar do site (chute)
-0x0805deb0,Save_InvokeFlashOp,func_thumb,chama FUN_0807c918 (chute)
+0x0805ddec,Site_RunSaveLoadOption,func_thumb,"revisto CH4: confirmado - arg 0 salvar, 1 carregar, 2 apagar bloco de 16 bytes; nome mantido"
+0x0805deb0,Save_InvokeFlashOp,func_thumb,"revisto CH4: provável - chama bios_store_idx(2, ...) (operação de flash); FUN_0807c918 não lido"
 0x0805dec8,Save_ClearAndRetryLoad,func_thumb,para som e tenta carregar save 4x (provavel)
 0x0805df18,site_LoadGame,func_thumb,"carrega save: cabecalho, blocos e opções (confirmado)"
 0x0805e138,Save_ReadVerify,func_thumb,lê 0x398 blocos da EEPROM e valida save (provavel)
 0x0805e248,Save_WriteBlocksEeprom,func_thumb,"regrava blocos da EEPROM, diferencial ou total (confirmado)"
-0x0805e2d8,Obj_SetFieldFromTable4,func_thumb,campo de objeto por tabela de 4 (chute)
-0x0805e300,Table_SumIdsUntilEnd,func_thumb,soma valores de tabela por lista de ids (chute)
+0x0805e2d8,Obj_SetFieldFromTable4,func_thumb,revisto CH4: confirmado - grava meia-palavra de tabela de 4 entradas indexada por arg&3
+0x0805e300,Table_SumIdsUntilEnd,func_thumb,revisto CH4: confirmado - soma bytes de tabela por lista de ids até 0xFE (máx. 10)
 0x0805fb4c,Screen_ScrollTileBand,func_thumb,faixa de tiles deslocada (provavel)
 0x08060248,Anim_CycleTileFrame64,func_thumb,ciclo de frame de 64 (provavel)
 0x080605a0,Anim_UpdateSpritePosTable,func_thumb,atualiza posição de sprite por tabelas (provavel)
 0x08060620,Anim_LoadFrameEvery10,func_thumb,carrega tiles a cada 10 frames (provavel)
 0x08060be4,Screen_HighlightOption4,func_thumb,destaque de 4 opções no tilemap (provavel)
 0x08060d28,Text_CopyUntilFF,func_thumb,copia texto até 0xFF (provavel)
-0x08062a10,BattlePanel_InitOrRedraw,func_thumb,inicializa/redesenha painel de peça (chute)
-0x08062b48,BattlePanel_DrawSlotText,func_thumb,desenha texto de lado do painel (chute)
+0x08062a10,BattlePanel_InitOrRedraw,func_thumb,revisto CH4: confirmado - arg 0 zera buffers e carrega sprite; outro arg redesenha
+0x08062b48,BattlePanel_LoadSlotPartSprite,func_thumb,revisto CH4: provável - carrega sprite grande de peça no slot pela tabela de aparência; NÃO é texto; renomeado de BattlePanel_DrawSlotText
 0x08062bec,Text_CopyFEStringTo20,func_thumb,"copia string até 0xFE, max 0x14 (provavel)"
 0x08062c28,Sprite_LoadAndInitObj,func_thumb,descomprime asset e inicia objeto de sprite (provavel)
 0x08062c98,Anim_ScrollTileColumns,func_thumb,rolagem de colunas de tiles (provavel)
 0x08062d60,Anim_ScrollTileRows,func_thumb,rolagem de linhas de tiles (provavel)
 0x08062dfc,Anim_ScrollTileColumnsAlt,func_thumb,variante de rolagem de colunas (provavel)
 0x08062ed8,Anim_ScrollTileRowsAlt,func_thumb,variante de rolagem de linhas (provavel)
-0x08064bec,Battle_SetDefaultsA,func_thumb,grava 3 valores de estado iniciais (chute)
-0x08064c0c,Battle_SetDefaultsB,func_thumb,grava 3 valores de estado iniciais (chute)
-0x08064c2c,Battle_SetDefaultsC,func_thumb,grava 3 valores de estado iniciais (chute)
-0x08064c4c,Battle_SetDefaultsD,func_thumb,grava 3 valores de estado iniciais (chute)
+0x08064bec,Battle_SetDefaultsA,func_thumb,"revisto CH4: confirmado - grava 2, 0x1A, 0 em 3 ponteiros; 1 de 4 casos distintos (A chamada por Dispatch_Sub4Mode)"
+0x08064c0c,Battle_SetDefaultsB,func_thumb,"revisto CH4: confirmado - grava 2, 0x11, 0; caso distinto; chamada por Dispatch_Sub4Mode"
+0x08064c2c,Battle_SetDefaultsC,func_thumb,"revisto CH4: confirmado - grava 2, 0x10, 0; caso distinto (constante diferente); chamadores não conferidos"
+0x08064c4c,Battle_SetDefaultsD,func_thumb,"revisto CH4: confirmado - grava 2, 0x14, 0; caso distinto; chamadores não conferidos"
 0x08064c6c,Battle_DrawPartNameSprites,func_thumb,desenha até 4 nomes de peça com glifos (provavel)
-0x080656dc,Obj_InitTimerRecord,func_thumb,inicia registro de temporizador (chute)
-0x08065710,Anim_StepRecordCounter,func_thumb,"passo de contador de animação, devolve 1 ao fim (chute)"
+0x080656dc,Obj_InitTimerRecord,func_thumb,revisto CH4: provável - preenche registro de 6 bytes e arma timer (valor|0x3F); campos não nomeados
+0x08065710,Anim_StepRecordCounter,func_thumb,revisto CH4: confirmado - devolve 1 ao fim; contador em +2 com limite em +3
 0x08066870,Geom_SplitSegmentInThirds,func_thumb,pontos a 1/3 e 2/3 de um segmento (confirmado)
 0x080668d4,Ring_BuildPointsFromRadius,func_thumb,"18 pontos de um anel de raio r, gravados em registros de objeto (provavel)"
 0x080669ac,Byte_EaseTowardTarget,func_thumb,"move byte a em direcao ao alvo por (alvo-valor)/div, passo minimo 1 (provavel)"
@@ -175,5 +175,5 @@ address,name,kind,comment
 0x08066a14,Affine_LoadIdentityBuffer,func_thumb,identidade 4x4 em 8.8 copiada para o buffer +0x1F0 do estado (provavel)
 0x08066a48,Mat4_MultiplyFixed8,func_thumb,"multiplicacao 4x4 em 8.8, out=A*B (provavel)"
 0x08066b4c,Affine_ComposeThreeTransforms,func_thumb,tres matrizes por angulo (seno/cosseno) compostas sobre o buffer de matriz (provavel)
-0x08066d8c,FUN_08066d8c,func_thumb,passo de quadro de efeito de pontos (mecanica lida; uso chute; sem nome)
-0x080672f4,Str_LengthZeroIfOne,func_thumb,tamanho de string C; devolve 0 se o tamanho e 1 (confirmado; motivo chute)
+0x08066d8c,PointRing_StepFrame,func_thumb,"revisto CH4: provável - anel de 72 pontos (FR3); nome do Ghidra; chamador Text_TypewriterRowStep não bate, a conferir"
+0x080672f4,Str_LengthZeroIfOne,func_thumb,revisto CH4: confirmado - strlen que devolve 0 se tamanho 1; motivo do caso 1 não explicado

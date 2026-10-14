@@ -543,7 +543,7 @@ address,name,kind,count,comment
 0x08012098,Fight_UpdateBotPartEntryMotion,func_thumb,,[R0] tiles das entradas de peca do bot (chute) (antes: Fight_DrawBotPartEntryTiles)
 0x080120C8,Fight_DrawBotPartIconRow,func_thumb,,[R0] icone de peca por posicao 0..2 do bot (chute)
 0x0801214C,Fight_SetupFlagSprite,func_thumb,,[R0] sprite de marcador se flag 0x32 ativa (chute)
-0x080121A8,Fight_CopyBotLabelRecord,func_thumb,,[R0] texto de rotulo do bot (chute) (antes: Fight_FormatBotLabelText)
+0x080121A8,Fight_FormatBotLabelText,func_thumb,,[R0] texto de rotulo do bot (chute) (antes: Fight_FormatBotLabelText) (antes: Fight_CopyBotLabelRecord)
 0x080121CC,Fight_TryAssignBotPartByRoll,func_thumb,,[R0] sorteia atribuicao de peca do bot (provavel)
 0x080121F0,Fight_CountAvailableBotParts,func_thumb,,[R0] pontua vagas de peca do bot (provavel)
 0x08012234,Fight_PickRandomAvailableBotPart,func_thumb,,[R0] procura slot de peca do bot por sorteio (provavel)
@@ -1702,7 +1702,7 @@ address,name,kind,count,comment
 0x080376F4,Fight_ComputeEffectValueFromRos,func_thumb,,fi+0xEC = (fi+0xE8>>3) + bot+0xAC; 0 -> 1; era FUN_080376F4; confirmado (bot+0xAC provavel)
 0x08037728,FightPreview_ClampPartCountToLimit,func_thumb,,[R2] clamp de contagem com flag +0xd2
 0x08037798,Fight_FindTargetBotWithPart,func_thumb,,Simon/Rokusho: Search a side's three bots for a live bot that currently exposes a usable reaction source. Requires the reaction-status bits (0x08 or 0x10) and a still-intact reaction_source_part_id. Returns 0xFF if none are available. (antes: Fight_FindBotWithReactionSource)
-0x08037830,Fight_FindActiveBotInSideWithGroup,func_thumb,,[FR3] [FR3] busca bot ativo (+0x40) do lado com +0x91 igual ao atacante; 3 tentativas a partir de slot aleatorio; 0xFF = nenhum (provavel)
+0x08037830,Fight_FindLiveSlotMatchingField91,func_thumb,,[FR3] [FR3] busca bot ativo (+0x40) do lado com +0x91 igual ao atacante; 3 tentativas a partir de slot aleatorio; 0xFF = nenhum (provavel) (antes: Fight_FindActiveBotInSideWithGroup)
 0x080378A8,Fight_TransitionNudgeCoordBy4,func_thumb,,"[R2] revisto CH2: provável; soma ou subtrai 4 em halfword de coordenada conforme bit1 de ctx+0xF8, com máscara; chamado nas rotinas de transição AR (fade)"
 0x080378F0,FightPreview_SpawnEffectSprite,func_thumb,,[R2] aloca sprite de efeito e despacha por tipo +0x51
 0x08037A94,FightPreview_SpawnEffectSpriteAlt,func_thumb,,[R2] variante de SpawnEffectSprite com tiles 0x30/0x34
@@ -2099,6 +2099,8 @@ address,name,kind,count,comment
 0x08048CF0,Map_CopyTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Copy a decompressed 16-bit tilemap into the four BG screenblock quadrants, applying a base tile offset."
 0x08048E24,Map_ExpandMetaTilemapToBgScreenblocks,func_thumb,,"Simon/Rokusho: Expand a compact metatile/attribute map into BG screenblock tile entries, handling quadrant selection within 2x2 metatiles."
 0x08049110,BgMap_WriteTileEntry,func_thumb,,[R3] entrada de tilemap BG: tile + paleta<<12 + flips
+0x080491B8,BgMap_FillRectTilePalette,func_thumb,,[FN2] provavel: Preenche retangulo w x h do tilemap (stride 0x20 ou 0x40) com tile + (paleta << 12)
+0x08049210,BgMap_CopyRectWithAttrs,func_thumb,,[FN2] provavel: Copia retangulo de array fonte para tilemap aplicando mascara e atributos (paleta << 12)
 0x08049318,Map_ResetRenderAffineState,func_thumb,,Simon/Rokusho: Reset the per-map affine/render scratch state before rebuilding visible map object and overlay transforms.
 0x08049374,Map_RecomputeRenderAffineEntry,func_thumb,,Simon/Rokusho: Recompute the affine/render coefficients for one map render entry from its angle/scale scratch values.
 0x08049420,Map_SetObjectAnimationVariant,func_thumb,,Simon/Rokusho: Set the active animation variant for one map/object render slot and reset its local frame timers.

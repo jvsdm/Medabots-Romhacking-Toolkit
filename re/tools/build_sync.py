@@ -76,10 +76,11 @@ def main():
     cand = {}
     for path in glob.glob(os.path.join(FUNC_DIR, "*_simbolos.csv")):
         prefix = os.path.basename(path)[: -len("_simbolos.csv")]
-        t = tier_of(prefix)
-        if t is None:
+        base_tier = tier_of(prefix)
+        if base_tier is None:
             continue
         for a, name, kind, comment, *_ in read_csv(path):
+            t = base_tier
             if not IDENT.match(name) or GENERIC.match(name):
                 continue
             kind = kind.lower()
@@ -87,6 +88,8 @@ def main():
             if k == "data" and kind != "data":
                 k = kind
             key = norm(a, k == "func_thumb")
+            if "revisto CH" in comment:
+                t = len(TIERS)  # revisão de chute é a palavra mais nova sobre o endereço
             old = cand.get(key)
             if old is None or t >= old[0]:
                 cand[key] = (t, name, k, comment, prefix)
