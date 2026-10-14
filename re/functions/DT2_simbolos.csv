@@ -1,0 +1,7 @@
+address,name,kind,comment
+0x083AF8C0,gObjectOpcodeHandlerTable,data,"GH-DT2: ponteiros thumb u32; 0x50 entradas (0x00..0x4F); validos 0x01..0x3A; 0x00 e 0x3B..0x4F = sentinela 0x08000841; leitor ObjectScript_OpcodeDispatch 0x080393EC (confirmado)"
+0x083AF180,gActionScriptOpcodeHandlerTable,data,"GH-DT2: ponteiros thumb u32; 0x80 entradas; validos 0x01..0x6A (106); 0x6B..0x7F sentinela; bytes a partir de 0x083AF380; leitor Fight_RunActionScriptLoop 0x08033840 (confirmado)"
+0x083D222C,gEventOpcodeTableA,data,"GH-DT2: ponteiros thumb u32; 256 entradas (0x400 B); 0x00..0x88 handlers (137); 0x89..0xFF zero; leitores EventScript_FetchAndRunPrimaryOpcodeHandler 0x0804B6F4 (confirmado) e Event_RunEmbeddedInitOpcode / EventOpcode80 (literal confirmado)"
+0x083D2630,gEventOpcodeTableB,data,"GH-DT2: ponteiros thumb u32; 256 entradas (0x400 B); 0x00..0x88 (137); 0x89..0xFF zero; leitor Event_DispatchContinuation 0x0804DC0C (confirmado)"
+0x083C2D3C,gTextPreBattleMessage,data,"GH-DT2: 96 ponteiros u32 para strings ROM antes da tabela (0x083C1F58..0x083C2D3B); seguida de gTextPostBattle strings em 0x083C2EBC; leitor provavel Fight_InitBotPartSelectScreen 0x0801058C (corpo confirmado); segundo leitor em aberto (0x0803D9A6)"
+0x083C3B04,gTextPostBattleMessage,data,"GH-DT2: 96 ponteiros u32 para strings ROM 0x083C2EBC..0x083C3AE9; leitores (literal 0x08010C14 em 0x08010BDA e literal 0x0803DB84 em 0x0803DB52): funcao que contem nao confirmada"
