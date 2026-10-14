@@ -9,3 +9,4 @@
 0x080196C0   chamada antes da escolha da CPU no driver 0x08012B94 (nao lida)
 0x08073AB8	SN2: configura DMA de FIFO PCM (0x040000B0+12*(n-1))
 0x0807C92C	SN2: unico uso de TM0CNT (timer PCM)
+0x080332EC	TQ: handler de validacao de tecnica (11 tecnicas), zera +0x0F do registro da peca

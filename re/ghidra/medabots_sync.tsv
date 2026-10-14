@@ -314,7 +314,9 @@ F	0x080121A8	Fight_FormatBotLabelText
 F	0x080121CC	Fight_TryAssignBotPartByRoll
 F	0x080121F0	Fight_CountAvailableBotParts
 F	0x08012234	Fight_PickRandomAvailableBotPart
+F	0x080122A4	Fight_PickRandomAvailableBotPart_080122A4
 F	0x080122F4	Fight_AssignRandomBotPartSlot
+F	0x08012344	Fight_AssignRandomBotPartSlot_08012344
 F	0x080123A0	Fight_DrawBotPartSprite
 F	0x08012468	Fight_UpdateIndicatorOscillation
 F	0x080124B8	Fight_DrawBotPartSpriteBig
@@ -1879,6 +1881,8 @@ F	0x08047574	EventScript_ClearGlobals
 F	0x0804763C	MainState1
 F	0x080476E8	MainState_RequestModeTransition
 F	0x08047878	GameState_StartFlowByCommand
+F	0x080479A0	GameState_StartFlowByCommand_080479A0
+F	0x08047B98	GameState_StartFlowByCommand_store_tail
 F	0x08047BA8	Snd_SfxRequestWrapper
 F	0x08047BB4	Sound_RequestSong
 F	0x08047BC0	Sound_RequestFade
@@ -2166,6 +2170,7 @@ F	0x0804EA18	EventOpcode37_LoseItem
 F	0x0804EB0C	EventOpcode38_GetPart
 F	0x0804EC38	EventOpcode39_LosePart
 F	0x0804ED88	EventOpcode3A_GetMoney
+F	0x0804EDC6	EventOpcode3A_GetMoney_0804EDC6
 F	0x0804EE00	EventOpcode3B_LoseMoney
 F	0x0804EE8C	EventOpcode3C_GetMedal
 F	0x0804EF5C	EventOpcode3D_GetTinpet
@@ -2967,6 +2972,8 @@ L	0x083ACC2C	debug_item_grant_names
 L	0x083ACE14	gSceneStepTable_ACE14
 L	0x083ACE54	gSceneStepTable_ACE14_PreBattle
 L	0x083ACEF8	gSceneStepTable_ACE14_PostBattle
+L	0x083ACF00	gRewardStateTable
+L	0x083AD070	gBattlePartSlotPickTable
 L	0x083AD080	Battle_FrameDispatchTable
 L	0x083AD0F0	table_medabot_screen_states
 L	0x083AD10C	Battle_SceneInitTable
@@ -3213,6 +3220,7 @@ C	0x0801EBB8
 C	0x0801EBD4
 C	0x0801EBF8
 C	0x0801EC3C
+C	0x080332EC
 C	0x08033A78
 C	0x08033A94
 C	0x08033AB0

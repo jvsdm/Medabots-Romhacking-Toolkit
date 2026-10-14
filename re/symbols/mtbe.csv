@@ -84,7 +84,7 @@ address,name,kind,count,comment
 0x03000BE7,first_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BEA,object_slot_records,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_name)"
 0x03001360,SAVE_OPT_B,data,,[A6] flag (byte) lido em Fight_TryUiActionByIndex; 0 = pode disparar; confirmado (literal) (antes: gMessageBusyFlag)
-0x0300137C,gamestate_subroutine,label,,"passo interno da cena atual (debug: 0 init, 1 menu, 2 sai, 3 opcao); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x0300137C,gMainSubStateCounter,label,,"passo interno da cena atual (debug: 0 init, 1 menu, 2 sai, 3 opcao); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: gamestate_subroutine)"
 0x03001780,gFrameCount,label,,contador de frames (AgbMain)
 0x03001784,SAVE_FLAGS,data,,[SV] [SV] bit0 = salvando (ligado antes de salvar); bit1 = opcao salva em 0x1CB8 b5 (confirmado)
 0x03001788,SAVE_OPT_A,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b0-1 (validado <3; nome nao confirmado)
@@ -119,6 +119,9 @@ address,name,kind,count,comment
 0x030018F2,ROS_after_defense_calc,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001968,won_bodypart_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03001969,won_bodypart_id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x0300196A,won_bodypart_is_new,label,,"[RW] GH-RW confirmado: 1 se Inv_ReadCounter16 da peca == 0 (peca nova), senao nibble de E+0xC2E"
+0x0300196C,fight_post_battle_xp,label,,"[RW] GH-RW confirmado: u16 XP do fim da luta (somado por Battle_SumPartBytesToCtx16C, lido por Fight_AwardPartExperience)"
+0x03001987,won_bodypart_slot,label,,[RW] GH-RW confirmado: slot do bot inimigo (3..5) de onde saiu a peca sorteada
 0x03001C00,keys_released,label,,[MN] [MN] u16: teclas soltas neste quadro (prev & ~held); confirmado (get_player_inputs)
 0x03002410,gFrameFlagClear,label,,[MN] [MN] byte zerado por AgbMain a cada quadro antes de get_player_inputs; confirmado escrita; sem funcao clara
 0x03002418,keys_repeat_timer,label,,"[MN] [MN] byte: contador da repeticao (16 no aperto novo, depois 3..0); confirmado"
@@ -130,7 +133,7 @@ address,name,kind,count,comment
 0x03002B84,SAVE_TOTAL_BATTLES,data,,[SV] [SV] u16 total de lutas (limite 9999; provavel)
 0x03002B86,SAVE_WINS,data,,[SV] [SV] u16 vitorias (<= total; provavel)
 0x03002B88,SAVE_GAME_TIME_FRAMES,label,,tempo de jogo em frames; trava em 21599999 (99:59:59) (antes: gPlayTimeFrames)
-0x03002B8C,gamestate_menu,label,,"u32: indice em menu_list executado pelo MainState0 (63 = menu de debug); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
+0x03002B8C,gGameStateMenu,label,,"u32: indice em menu_list executado pelo MainState0 (63 = menu de debug); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: gamestate_menu)"
 0x03002BA0,gItemInventory,label,,"[IN] [IN] 64 pares [0x80|id, qtd] (Map64)"
 0x03002C30,gObjectSlots,label,,slots de objeto (0x40 B): +0x2B anim, +0x2C tipo de movimento/contador, +0x2D recarga, +0x2E repeticoes, +0x30 espera (s16); indice atual em 0x0300056F
 0x030037F0,gPlayerObject,data,,[OW] slot 0x2F de gObjectSlots (jogador)
@@ -595,7 +598,9 @@ address,name,kind,count,comment
 0x080121CC,Fight_TryAssignBotPartByRoll,func_thumb,,[R0] sorteia atribuicao de peca do bot (provavel)
 0x080121F0,Fight_CountAvailableBotParts,func_thumb,,[R0] pontua vagas de peca do bot (provavel)
 0x08012234,Fight_PickRandomAvailableBotPart,func_thumb,,[R0] procura slot de peca do bot por sorteio (provavel)
+0x080122A4,Fight_PickRandomAvailableBotPart,func_thumb,,[RW] GH-RW confirmado: slot=3+tab 0x083AD070[rand&F]; kind=rand&3; 1a peca que o jogador nao tem; grava 0x03001968/69/87
 0x080122F4,Fight_AssignRandomBotPartSlot,func_thumb,,[R0] grava slot e id da peca do bot (provavel)
+0x08012344,Fight_AssignRandomBotPartSlot,func_thumb,,[RW] GH-RW confirmado: sorteio cego de slot/kind (sem checar posse); grava 0x03001968/69/87
 0x080123A0,Fight_DrawBotPartSprite,func_thumb,,[R0] sprite da peca do bot por slot 0..3 (provavel)
 0x08012468,Fight_UpdateIndicatorOscillation,func_thumb,,[R0] oscila contador de indicador (chute)
 0x080124B8,Fight_DrawBotPartSpriteBig,func_thumb,,[R0] sprite da peca do bot em tamanho grande (provavel)
@@ -2161,6 +2166,8 @@ address,name,kind,count,comment
 0x0804763C,MainState1,func_thumb,,estado 1
 0x080476E8,MainState_RequestModeTransition,func_thumb,,[FN2] provavel: Switch de modo 0..0xC: grava gMainState=1 e flags de init; limpa globais em 10 e 0xB
 0x08047878,GameState_StartFlowByCommand,func_thumb,,Simon/Rokusho: Start a top-level flow selected by a command id. Important confirmed cases: command 0x20 starts a scripted/forced battle flow (sets gCurrentBattleSourceFlag = 1); command 0x21 starts the random encounter battle flow (sets gCurrentBattleSourceFlag = 0); command 3 opens a shop using param_2 as shop id.
+0x080479A0,GameState_StartFlowByCommand,func_thumb,,"[RW] GH-RW confirmado: caso 0x20 grava E+0xC2D=1, 0x0300178C=0, 0x03002B8C=6, 0x0300137C=0; caso 0x21 grava E+0xC2D=0"
+0x08047B98,GameState_StartFlowByCommand_store_tail,func_thumb,,[RW] GH-RW: cauda compartilhada de GameState_StartFlowByCommand (sem nome confirmado; NAO renomeado)
 0x08047BA8,Snd_SfxRequestWrapper,func_thumb,,Simon/Rokusho: Start the map-transition effect selected by the current warp/event transition state. Commonly triggered when a matched MapWarpRecord requests a non-zero transition kind. (antes: Overworld_StartMapTransitionEffect; decisao CF)
 0x08047BB4,Sound_RequestSong,func_thumb,,[R2b] Wrapper de snd_song_request
 0x08047BC0,Sound_RequestFade,func_thumb,,[R2b] Wrapper de snd_fade_request
@@ -2448,6 +2455,7 @@ address,name,kind,count,comment
 0x0804EB0C,EventOpcode38_GetPart,func_thumb,,Simon/Rokusho
 0x0804EC38,EventOpcode39_LosePart,func_thumb,,Simon/Rokusho
 0x0804ED88,EventOpcode3A_GetMoney,func_thumb,,Simon/Rokusho
+0x0804EDC6,EventOpcode3A_GetMoney,func_thumb,,[RW] GH-RW: unico chamador visto de AddClampedCounter (dinheiro ganho so por evento)
 0x0804EE00,EventOpcode3B_LoseMoney,func_thumb,,Simon/Rokusho
 0x0804EE8C,EventOpcode3C_GetMedal,func_thumb,,Simon/Rokusho
 0x0804EF5C,EventOpcode3D_GetTinpet,func_thumb,,Simon/Rokusho
@@ -3249,6 +3257,8 @@ address,name,kind,count,comment
 0x083ACE14,gSceneStepTable_ACE14,data,,[ST] [ST] bloco de 148 ponteiros Thumb (0x08000841 = vazio); lido por 0x0801013C com indice = byte 0x03002D59; confirmado no codigo; significado da cena pendente
 0x083ACE54,gSceneStepTable_ACE14_PreBattle,data,,"[ST] [ST] = ACE14+0x40 (indice 16); entrada 0 = 0x08010815 (site PRE principal, TX); provavel"
 0x083ACEF8,gSceneStepTable_ACE14_PostBattle,data,,"[ST] [ST] = ACE14+0xE4 (indice 57); entrada 0 = 0x08010BD1 (site POST principal, TX); provavel"
+0x083ACF00,gRewardStateTable,data,,[RW] GH-RW: tabela de estados que chama Fight_HandleRewardGrantOrSkipByPostBattleFlags (xref DATA; nome provavel)
+0x083AD070,gBattlePartSlotPickTable,data,,"[RW] GH-RW confirmado: 16 B, indice rand&F -> slot inimigo 0..2 (0,1,2 ciclico)"
 0x083AD080,Battle_FrameDispatchTable,data,,"[BT] tabela de 4+ ponteiros indexada por GS (usada por Battle_FrameDispatchOrExit); conteudo lido: 0x08012A20.., confirmado (ponteiros)"
 0x083AD0F0,table_medabot_screen_states,label,,[PS] [PS] tabela de estados da tela do Medabot (stride 4); entrada 9 = UpdateSelectedMedabotPreviewScreen
 0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA

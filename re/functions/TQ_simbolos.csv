@@ -1,0 +1,24 @@
+# address,name,kind,comment
+0x083AEEA0,gTechniqueActionSetupHandlerTable,table,60 ponteiros thumb; indice = id da tecnica; chamada em Fight_DispatchPartPreparation 0x08031A70 (GH-TQ)
+0x083AEF90,gTechniqueActionValidationHandlerTable,table,60 ponteiros thumb; indice = id da tecnica; chamada em Fight_DispatchPartExecution 0x08031ABC (GH-TQ)
+0x083BE868,gTechniqueNames,table,60 ponteiros para nome da tecnica (ja no Ghidra)
+0x083C6CA8,gTechniqueActionScriptPtrTable,table,ponteiro de roteiro por indice F+0xA8 (tecnica 0..59; medaforca 0x50+id); lido por FUN_08034e94 (GH-TQ)
+0x083C6A04,gTechniqueScriptStream_Generic,label,inicio de roteiro compartilhado por 20 tecnicas (0..9 13..20 34 35); conflito em TQ.md sec 5
+0x08031A70,Fight_DispatchPartPreparation,func_thumb,despacha setup pela tecnica da peca (byte 0x49+0x18k do bot); GH-TQ
+0x08031ABC,Fight_DispatchPartExecution,func_thumb,despacha validacao/execucao pela tecnica da peca; GH-TQ
+0x08034E94,Fight_LookupActionScriptByte,func_thumb,le byte do roteiro = ROM[ptr(0x083C6CA8)[F+0xA8] + F+0xBC]; era FUN_08034e94 (chute FN2 do GH-AS2); GH-TQ
+0x08000840,NoOpActionHandler,func_thumb,handler vazio (sentinela de setup/validacao); ja no Ghidra
+0x08031AFC,Fight_SetupTargetSelectionBySpeciality,func_thumb,setup tecnicas 2..9 42 49 52; alvo com especialidade igual
+0x08031BCC,Fight_SetupTargetSelectionRequireStatus64,func_thumb,setup tecnica 34 (anti-ar); alvo com perna 'd'
+0x08031D7C,Fight_SetupTargetSelectionRequireStatus6A,func_thumb,setup tecnica 35 (anti-mar); alvo com perna 'j'
+0x08031F2C,Fight_SetupTargetSelectionRequirePendingEffect,func_thumb,setup tecnica 22; alvo vivo sem tecnica 16 e com efeito pendente +0xC9
+0x08032100,Fight_SetupTargetSelectionRequireDamagedPart,func_thumb,setup tecnica 30; alvo com peca danificada
+0x080322C8,Fight_ChooseActionTargetSlot,func_thumb,setup tecnicas 31 38; escolhe slot do alvo
+0x08032478,Fight_SetupTargetSelectionRequireBrokenPart,func_thumb,setup tecnica 32; alvo com peca quebrada
+0x08032640,Fight_SetupTargetSelectionRequireStateBA2,func_thumb,setup tecnica 33; filtro de estado BA2 (a confirmar)
+0x0803279C,Fight_SetupTargetSelectionExcludeSelf,func_thumb,setup tecnica 39; exclui o proprio bot
+0x080328B8,Fight_SetupTargetSelectionRequireNoTechnique16AndClearPending,func_thumb,setup tecnicas 41 44 46 47; sem tecnica 16 e limpa pendencia
+0x08032A68,Fight_SetupTargetSelectionRequireUsableHeadAction,func_thumb,setup tecnica 45; acao de cabeca utilizavel
+0x08032C08,Fight_SetupTargetSelectionRequireMedaforceToken,func_thumb,setup tecnica 50 (forcedrain); filtro de token de medaforca (a confirmar)
+0x08032DA0,Fight_SetupPartTargetSelectionRequireNoTechnique16AndClearPending,func_thumb,setup tecnica 43; como 41 mas escolhe peca
+0x080332EC,Fight_ValidatePart_ClearPartByte0F,label,validacao das tecnicas 22 31 33 38 39 41 42 44 46 47 50; zera byte +0x57 Ghidra (= registro+0x0F); SEM funcao no Ghidra; nome sugerido nao aplicado
