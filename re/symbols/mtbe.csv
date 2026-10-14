@@ -6,6 +6,7 @@ address,name,kind,count,comment
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
 0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
 0x02030000,SAVE_STAGING_EWRAM,data,,"[SV] [SV] buffer de staging do save (EWRAM), 0x1CC0 B (confirmado por literal)"
+0x03000430,debug_motion_mode_flag,label,,[DB] GH-DB provavel: zerado ao sair do Motion (B); mesmo byte do CpuFastSet em JT3 (==2)
 0x03000440,ctx_team_screen,label,,"estado do texto do dialogo: +0x14 caneta x (u8), +0x15 largura restante da palavra, +0x19 flag de quebra (antes: gTextState) (antes: gMessageCtx)"
 0x03000448,current_dialog_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x0300044C,current_character_in_text,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
@@ -13,8 +14,12 @@ address,name,kind,count,comment
 0x03000470,gDebugReturnScene,label,,u8: cena para onde o menu de debug volta ao sair (passo 2)
 0x03000471,gDebugReturnStep,label,,u8: passo da cena de retorno do menu de debug
 0x03000472,gDebugMenuOption,label,,u8: opcao do menu de debug (0-10)
-0x03000474,gDebugMotionCursor,label,,u8: indice do tipo no visualizador Motion
-0x03000475,gDebugMotionKinds,label,,u8[]: tipo de movimento tocado pelo visualizador Motion (direita/esquerda)
+0x03000473,gDebugSubstate,label,,[DB] GH-DB confirmado: byte de estado dos despachantes de opcao (ctx+0x33); tabela 0x083ACAC0
+0x03000474,gDebugRowCursor,label,,u8: indice do tipo no visualizador Motion (antes: gDebugMotionCursor)
+0x03000475,gDebugRowValue0,label,,u8[]: tipo de movimento tocado pelo visualizador Motion (direita/esquerda) (antes: gDebugMotionKinds)
+0x03000476,gDebugRowValue1,label,,[DB] GH-DB confirmado: valor da linha 1 (ctx+0x36)
+0x03000477,gDebugRowValue2,label,,[DB] GH-DB confirmado: valor da linha 2 (ctx+0x37)
+0x03000479,gDebugBotIndex,label,,[DB] GH-DB confirmado: bot 0..121 do visualizador Motion (ctx+0x39)
 0x0300047D,currently_selected_medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03000491,selected_tinpet_in_menu,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03000493,selected_tinpet_has_all_parts,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
@@ -77,7 +82,7 @@ address,name,kind,count,comment
 0x03000BE5,first_medal_level,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BE6,first_medal_aim,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000BE7,first_medal_compatibility,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
-0x03000BEA,first_medal_name,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03000BEA,object_slot_records,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: first_medal_name)"
 0x03001360,SAVE_OPT_B,data,,[A6] flag (byte) lido em Fight_TryUiActionByIndex; 0 = pode disparar; confirmado (literal) (antes: gMessageBusyFlag)
 0x0300137C,gamestate_subroutine,label,,"passo interno da cena atual (debug: 0 init, 1 menu, 2 sai, 3 opcao); Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4]"
 0x03001780,gFrameCount,label,,contador de frames (AgbMain)
@@ -490,16 +495,18 @@ address,name,kind,count,comment
 0x0800BA74,DebugMenu_Exit,func_thumb,,passo 2: volta para gDebugReturnScene/gDebugReturnStep
 0x0800BAB8,DebugMenu_RunOption,func_thumb,,passo 3: chama a tabela 0x083ACA80 [gDebugMenuOption]
 0x0800BAD8,Dispatch_StateHandlerTable,func_thumb,,despacho por byte de estado +0x33 via CallViaR0; provável
-0x0800BAF8,debug_process,func_thumb,,Simon/Rokusho
+0x0800BAF8,Debug_ProcessJumpScreen,func_thumb,,Simon/Rokusho (antes: debug_process)
 0x0800BE6C,Dispatch_CallHandlerByByte33,func_thumb,,[confirmado] CallViaR0(tabela[ctx+0x33*4]); tabela em DAT_0800BE84
 0x0800BE8C,Debug_PartsSpawnScreen,func_thumb,,[R0] tela de 3 opcoes que cria/remove pecas com contador 0..0x1D (provavel)
-0x0800C29C,Dispatch_CallHandlerByByte33,func_thumb,,despachante por tabela indexada pelo byte ctx+0x33; provavel; subsistema chute
-0x0800C2BC,Menu_TickCountEditorAndGrant,func_thumb,,[provavel] quadro do menu de contador: input bits 0x40/0x80 mudam indice 0..2; Inv_Add/SubCount; modo 2 concede itens (cheat? confirmar)
+0x0800C29C,Dispatch_CallHandlerByByte33_0800C29C,func_thumb,,despachante por tabela indexada pelo byte ctx+0x33; provavel; subsistema chute (antes: Dispatch_CallHandlerByByte33)
+0x0800C2BC,Debug_ItemCountGrantScreen,func_thumb,,[provavel] quadro do menu de contador: input bits 0x40/0x80 mudam indice 0..2; Inv_Add/SubCount; modo 2 concede itens (cheat? confirmar) (antes: Menu_TickCountEditorAndGrant)
 0x0800C6D8,Dispatch_CallHandlerByMode_A,func_thumb,,wrapper: CallViaR0(tabela[ctx+0x33])
 0x0800C6F8,PartsBuild_UpdateStatusPanel,func_thumb,,"[FL10] painel de status da montagem: número 6 dígitos, cria Medabot se pool não cheio (provável)"
+0x0800C7E4,debug_option4_item_entry,label,,[DB] GH-DB pendente: opcao Item (tabela 0x083ACA80 idx 4); nao e funcao no Ghidra
 0x0800C804,Shop_HandleItemListAndCounts,func_thumb,,tela de loja: cursor 0..2 e contagens; provavel
 0x0800CBA8,Gfx_DispatchStateHandler,func_thumb,,trampolim: tabela indexada por ctx+0x33 (provavel)
 0x0800CBC8,Menu_UpdateDetailPage,func_thumb,,"[provavel] per-frame detail page: 2 text lines, cursor, two 6-digit numbers, portrait"
+0x0800CE70,debug_option6_mdlpic_entry,label,,[DB] GH-DB pendente: opcao Mdlpic (tabela 0x083ACA80 idx 6); nao e funcao no Ghidra
 0x0800CE90,Menu_InfoPanelStep,func_thumb,,tela de selecao com painel e 2 numeros de 6 digitos; provavel
 0x0800D168,Dispatch_StateHandlerTable_B,func_thumb,,despacho por byte +0x33 via CallViaR0 (2a tabela); provável
 0x0800D188,Hud_DrawLabelAndDecimal6,func_thumb,,[provavel] rotulo de 8 chars + numero de 6 digitos (Num_FormatDecimal6Glyphs); toggle de byte com mascara 0x30
@@ -507,6 +514,7 @@ address,name,kind,count,comment
 0x0800D27C,Menu_TickSingleCountSelector,func_thumb,,[provavel] versao de uma linha de Menu_TickCountEditorAndGrant; bits 0x10/0x20 mudam indice; botao 1 grava valor
 0x0800D3C4,Dispatch_CallHandlerByMode_B,func_thumb,,wrapper igual ao _A com outra tabela
 0x0800D3E4,PartsBuild_UpdateEditPanel,func_thumb,,"[FL10] irmão do painel de status: seleção de 2 textos, dígitos com volta, sfx/música (provável)"
+0x0800D664,Debug_MotionDispatch,func_thumb,,"[DB] GH-DB RENOMEADA (era FUN_0800d664): opcao Motion; CallViaR0(0x083ACB38[byte 0x03000473]); base idx 30 (k0 clear OAM, k1 FightPreview_BuildLayers, k2 Main, k3 PlayKind)"
 0x0800D684,Menu_ClearObjectAttrsAndAdvance,func_thumb,,"[N1] JT3 idx 30 tabela 0x083ACAC0; ClearObjectAttributeEntries(0,0x80); bloco 0x0800D6A4 +0x39=0, +0x33++"
 0x0800D6A8,FightPreview_BuildLayers,func_thumb,,monta 2 camadas de sprite do preview de luta (provavel)
 0x0800D710,DebugMotion_Main,func_thumb,,"opcao Motion do debug: monta 2 bots (BuildCompositePreviewSpriteLayerWithOffset), START/SELECT trocam o bot (0-121), A avanca"
@@ -3209,9 +3217,12 @@ address,name,kind,count,comment
 0x083ACA80,debug_menu_option_table,ptr,11,rotinas das 11 opcoes (debug_menu_subroutines a partir do indice 9)
 0x083ACAC0,StateHandlerTable_BAD8,data,,"[JT3] 34 ponteiros, idx byte 0x03000473; BE6C = +0x0C, D168 = +0x54"
 0x083ACAE0,table_partsbuild_states,label,,"[PS] [PS] tabela de estados da montagem (stride 0xC; coluna do meio = tick): linha0 PartsBuild_UpdateStatusPanel, linha6 PartsBuild_UpdateEditPanel"
+0x083ACB38,debug_motion_table_base,data,,[DB] GH-DB: base da tabela de estados para Motion (= 0x083ACAC0 + 30*4)
 0x083ACB48,gTextProcessStrings,ptr,11,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]"
 0x083ACBCC,gTextProcessStrings3,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083ACC08,debug_parts_spawn_names,data,,[DB] GH-DB: ponteiros de nome das linhas de Debug_PartsSpawnScreen
+0x083ACC2C,debug_item_grant_names,data,,[DB] GH-DB: ponteiros de nome das linhas de Debug_ItemCountGrantScreen
 0x083ACE14,gSceneStepTable_ACE14,data,,[ST] [ST] bloco de 148 ponteiros Thumb (0x08000841 = vazio); lido por 0x0801013C com indice = byte 0x03002D59; confirmado no codigo; significado da cena pendente
 0x083ACE54,gSceneStepTable_ACE14_PreBattle,data,,"[ST] [ST] = ACE14+0x40 (indice 16); entrada 0 = 0x08010815 (site PRE principal, TX); provavel"
 0x083ACEF8,gSceneStepTable_ACE14_PostBattle,data,,"[ST] [ST] = ACE14+0xE4 (indice 57); entrada 0 = 0x08010BD1 (site POST principal, TX); provavel"
@@ -3244,7 +3255,7 @@ address,name,kind,count,comment
 0x083B5578,gTextDialogue_083B5578,ptr,23,tabela de texto: Diálogo inicial; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B6100,SlotScriptPtrTable,data,,[JT3] ponteiros para scripts de animacao (Anim_RunSlotScript 0x08040BD8); idx = byte slot+0x2D; fim nao determinado (>= 80)
 0x083B62D8,gMedals,data,480,medalhas: 16 B cada (27 ou 30 entradas - confirmar); Simon: rom_medal_information
-0x083B6590,gTextMedalNames,ptr,34,tabela de texto: Nomes das Medalhas; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083B6590,debug_parts_record_table,ptr,34,tabela de texto: Nomes das Medalhas; fonte: dump_text_clean_v2.py (traducao PT-BR) (antes: gTextMedalNames)
 0x083B66EC,gPartAttributeNamePointerTable,label,,Simon/Rokusho em 0x083B670C; tipo undefined *32[4]
 0x083B6B48,gTextMedalAbilityDesc1,ptr,27,tabela de texto: Compatibilidade peça→medalha; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083B6FA4,gTextMedalAbilityDesc2,ptr,26,tabela de texto: Compatibilidade medalha→peça; fonte: dump_text_clean_v2.py (traducao PT-BR)
