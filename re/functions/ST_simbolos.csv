@@ -1,0 +1,8 @@
+# address,name,kind,comment
+0x083ACE14,gSceneStepTable_ACE14,data,"[ST] bloco de 148 ponteiros Thumb (0x08000841 = vazio); lido por 0x0801013C com indice = byte 0x03002D59; confirmado no codigo; significado da cena pendente"
+0x083ACE54,gSceneStepTable_ACE14_PreBattle,data,"[ST] = ACE14+0x40 (indice 16); entrada 0 = 0x08010815 (site PRE principal, TX); provavel"
+0x083ACEF8,gSceneStepTable_ACE14_PostBattle,data,"[ST] = ACE14+0xE4 (indice 57); entrada 0 = 0x08010BD1 (site POST principal, TX); provavel"
+0x083AFCA0,gSceneStepTable_AFC78_A,data,"[ST] = bloco AFC78 + 0x28 (indice 10); entrada 0 = 0x0803D9A1 (PRE fixo); fim do bloco 0x083AFDF8 = 03020100; dono nao identificado"
+0x083AFD08,gSceneStepTable_AFC78_B,data,"[ST] = bloco AFC78 + 0x90 (indice 36); entrada 0 = 0x0803DB4D (POST fixo); dono nao identificado"
+0x0801013C,Fight_CallSceneStepFromTable_ACE14,func_thumb,"[ST] passo = gSceneStepTable_ACE14[byte 0x03002D59]; chamado por 0x0800EB34 (BL 0x0801013D); confirmado no codigo; sem funcao no Ghidra"
+0x0800EB34,SceneStep_Caller_ACE14,func_thumb,"[ST] chama 0x0800EBFD, 0x0800F441, 0x0801013D; corpo nao lido em detalhe; provavel"

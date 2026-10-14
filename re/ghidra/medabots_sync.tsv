@@ -239,6 +239,7 @@ F	0x0800DA34	PartsGrid_InitScreen_0800DA34
 F	0x0800E020	PartDetailScreen_Init
 F	0x0800E4F8	Menu_PartsDetailDispatch
 F	0x0800EA2C	PartDetail_SceneStep
+F	0x0800EB34	SceneStep_Caller_ACE14
 F	0x0800EBFC	Sprite_IncrementXYIfFlag
 F	0x0800EC20	PartsGrid_SplitCursorIndexRowCol
 F	0x0800EC44	PartsGrid_DrawFourEntryText
@@ -495,7 +496,7 @@ F	0x08019544	Fight_UpdateBotMeterDisplayObject
 F	0x080195C0	Fight_DrawActiveBotsOverlay
 F	0x08019600	Fight_DrawSecondaryEffectIcon
 F	0x08019720	Fight_DrawPendingEffectIcon
-F	0x08019B40	Fight_DrawPartStatusIcon
+F	0x08019B40	Hud_PartStatusIconAlias
 F	0x08019D9C	Fight_PlaceBotStatusIconObject
 F	0x08019EF0	Fight_UpdateBotPositionEvents
 F	0x08019FBC	Fight_CheckBotYAtRestPos
@@ -1352,6 +1353,7 @@ F	0x08033ACC	Fight_CommitSelectedReferencedBotGraphics
 F	0x08033B7C	Fight_ApplySpecialityDamageFlags
 F	0x08033C00	Fight_ComputeTotalRosPhase
 F	0x08033C20	Fight_ApplyPendingEffectStatusFlags
+F	0x08033CD0	Fight_ResolveDefenderRosPhase
 F	0x08033CE0	Fight_UpdateActionArgSelectorPhase
 F	0x08033D10	Fight_SeedPreDamageFromTotalRos
 F	0x08033D30	Fight_AccumulateBaseDamage
@@ -1413,7 +1415,7 @@ F	0x08034E40	ActionScript_Op68_CallBP
 F	0x08034E5C	ActionScript_Op69_CallBQ
 F	0x08034E78	ActionScript_Op6A_CallBR
 F	0x08034EB8	Fight_ReadActionScriptInlineArgs
-F	0x08034F08	ActionScript_Advance
+F	0x08034F08	Fight_AdvanceActionScriptCursor
 F	0x08034F44	Fight_SideHasPartCode15
 F	0x08034F68	Fight_ApplyDamageToPart
 F	0x08034FC8	Fight_SetBotSlotPosFromDirection
@@ -1444,7 +1446,7 @@ F	0x08035754	safe_subtract
 F	0x0803576C	Fight_GetMedalPartCompatibilityBonus
 F	0x0803579C	Fight_AccumRosPart
 F	0x08035814	Fight_ApplyVirusBugRosPenalty
-F	0x08035844	Fight_AccumRosBase
+F	0x08035844	Fight_AccumDefenderLevelRosBase
 F	0x08035880	Fight_IsAntiAirAgainstAirTarget
 F	0x080358B8	Fight_IsAntiSeaAgainstSeaTarget
 F	0x080358F0	Fight_AddStrengthenRosBonus
@@ -2925,6 +2927,9 @@ L	0x083ACAE0	table_partsbuild_states
 L	0x083ACB48	gTextProcessStrings
 L	0x083ACBA0	debug_menu_text
 L	0x083ACBCC	gTextProcessStrings3
+L	0x083ACE14	gSceneStepTable_ACE14
+L	0x083ACE54	gSceneStepTable_ACE14_PreBattle
+L	0x083ACEF8	gSceneStepTable_ACE14_PostBattle
 L	0x083AD080	Battle_FrameDispatchTable
 L	0x083AD0F0	table_medabot_screen_states
 L	0x083AD10C	Battle_SceneInitTable
@@ -2939,6 +2944,8 @@ L	0x083AF080	gFightSlotRandomTable16
 L	0x083AF180	gActionScriptOpcodeHandlerTable
 L	0x083AF380	gRollDieFaceTable
 L	0x083AF8C0	gObjectOpcodeHandlerTable
+L	0x083AFCA0	gSceneStepTable_AFC78_A
+L	0x083AFD08	gSceneStepTable_AFC78_B
 L	0x083AFE88	gPortraitImages
 L	0x083B1748	gPortraitPalettes
 L	0x083B1A08	gBattleSprites
@@ -3056,20 +3063,57 @@ L	0x084BFC6C	gFont
 L	0x084C29D8	gMedalSprites
 L	0x084C3A24	gGfx_PartsGrid_Tiles_Bg1
 L	0x084C3BF8	gGfx_PartsGrid_Tiles_Bg2
-L	0x084C4BDC	sPartDetailTileSheetA
+L	0x084C3E64	gGfx_PartDetail_Tiles_Bg6
+L	0x084C3F0C	gGfx_FightScene_Tiles_Bg2
+L	0x084C4B4C	gGfx_PartDetail_Tiles_Bg3
+L	0x084C4BDC	gGfx_PartDetail_Tiles_Bg1
+L	0x084C4FBC	gGfx_PartDetail_Tiles_Bg2
+L	0x084C4FFC	gGfx_PartDetail_Tiles_Bg4
+L	0x084C50D0	gGfx_BattleScene_Tiles_Bg1a
+L	0x084C5250	gGfx_BattleScene_Tiles_Bg1b
+L	0x084C53C8	gGfx_PartDetail_Tiles_Bg5
+L	0x084C55CC	gGfx_BattleScene_Tiles_Bg3
+L	0x084C58D8	gGfx_FightScene_Tiles_Bg3
+L	0x084C58F4	gGfx_FightScene_Tiles_Bg1
 L	0x084C59AC	gItalicFont
+L	0x084C7C54	gGfx_Overlay_Tiles_Bg1
+L	0x084C7E7C	gGfx_Overlay_Tiles_Bg2
 L	0x084C8034	gGfx_Obj_Malias_09C0
 L	0x084C8034	gObjTextFontGfx
 L	0x084C88B8	gGfx_PartsGrid_Tiles_Bg3
+L	0x084E3698	gGfx_Overlay_Obj_Sprites
 L	0x084E43D8	gFontPalette
 L	0x084E43F8	sPartScreenObjPaletteBlockC
+L	0x084E776C	gGfx_BattleScene_Tiles_Bg0
 L	0x084E9650	gGfx_PartsGrid_Tiles_Bg0
+L	0x084EE0DC	gGfx_PartDetail_Tiles_Bg0
+L	0x084EEA64	gGfx_FightScene_Tiles_Bg0
+L	0x084EF490	gGfx_Overlay_Tiles_Bg0
+L	0x084F08B0	gGfx_BattleScene_Map_Bg0
 L	0x084F0920	gGfx_PartsGrid_Map_Bg0
+L	0x084F0B44	gGfx_PartDetail_Map_Bg0
+L	0x084F0B7C	gGfx_FightScene_Map_Bg0
+L	0x084F0C08	gGfx_Overlay_Map_Bg0
+L	0x084F0F68	gGfx_BattleScene_Map_Bg1
 L	0x084F1180	gGfx_PartsGrid_Map_Bg1
 L	0x084F1514	gPartListTilemap
+L	0x084F1608	gGfx_PartDetail_Map_Bg1
+L	0x084F16C8	gGfx_FightScene_Map_Bg1
+L	0x084F1734	gGfx_Overlay_Map_Bg1
+L	0x084F198C	gGfx_BattleScene_Map_Bg2
 L	0x084F1C28	gGfx_PartsGrid_Map_Bg2
+L	0x084F2244	gGfx_PartDetail_Map_Bg2
+L	0x084F22C4	gGfx_FightScene_Map_Bg2
+L	0x084F233C	gGfx_Overlay_Map_Bg2
+L	0x084F2960	gGfx_BattleScene_Map_Bg3
 L	0x084F2C88	gGfx_PartsGrid_Map_Bg3
+L	0x084F3468	gGfx_PartDetail_Map_Bg3
+L	0x084F35FC	gGfx_FightScene_Map_Bg3
+L	0x084F3788	gGfx_Overlay_Map_Bg3
 L	0x084F4300	gGfx_PartsGrid_Palette_Banks
+L	0x084F4BC0	gGfx_PartDetail_Palette_Bg
+L	0x084F4D80	gGfx_FightScene_Palette_Bg
+L	0x084F4F40	gGfx_Overlay_Palette_Bg
 L	0x0850F2F8	sCompositeBattleSpritePaletteSet
 L	0x0850F318	sPartScreenObjPaletteBlockA
 L	0x0850F378	sPartScreenObjPaletteBlockB
@@ -3125,7 +3169,6 @@ C	0x08033A78
 C	0x08033A94
 C	0x08033AB0
 C	0x08033C10
-C	0x08033CD0
 C	0x08033CF0
 C	0x08033D00
 C	0x08034008

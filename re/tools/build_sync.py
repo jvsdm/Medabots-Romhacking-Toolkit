@@ -32,7 +32,7 @@ TIERS = [
 # MERGE_NOTAS: aqui o nome do mtbe é o correto.
 KEEP_MTBE = {"0x08035754", "0x08035814", "0x08035880", "0x08035740"}
 # Listas de endereços que devem virar função (alvos de tabela de ponteiros).
-CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt"]
+CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt"]
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 GENERIC = re.compile(r"^(FUN|sub|DAT|LAB|PTR|thunk_FUN)_", re.I)
@@ -50,6 +50,8 @@ def tier_of(prefix):
     for i, pat in enumerate(TIERS):
         if re.fullmatch(pat, prefix):
             return i + 1
+    if re.fullmatch(r"[A-Z]{2,3}\d*", prefix):
+        return len(TIERS) - 1  # agente novo: mesma camada das rodadas recentes
     return None
 
 

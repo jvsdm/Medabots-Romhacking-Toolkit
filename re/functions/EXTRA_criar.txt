@@ -1,0 +1,2 @@
+# Enderecos avulsos que devem virar funcao (achados por agentes)
+0x0801013C	ST: leitor do bloco de passos 0x083ACE14 (chamado por 0x0800EB34)

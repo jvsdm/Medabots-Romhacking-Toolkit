@@ -1,6 +1,6 @@
 address,name,kind,count,comment
 0x02000000,gShopItems,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000"
-0x02023000,gShopQuantities,label,,quantidade por item na loja (1 byte por bot)
+0x02023000,EWRAM_LevelSortScratch,label,,quantidade por item na loja (1 byte por bot) (antes: gShopQuantities)
 0x02024B84,gBattlePreviewCachedOamList,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x020260D0,gBattlePartState,label,,estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois; Simon: gSelectedMedabotPreviewTemplateTable
 0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
@@ -30,6 +30,7 @@ address,name,kind,count,comment
 0x030004DB,selected_tinpet_legs,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
+0x03000536,IWRAM_PlayerSpecialtyBase,func_thumb,,[DM] [aberto] 7 bytes 0x03000537..0x0300053D = 0x03000440+0xF7..0xFD; origem nao achada; usados por Medabot_SpawnFromRecord
 0x0300056F,gCurrentObjectSlot,label,,u8: slot de gObjectSlots em uso
 0x03000584,gFlowVariant,label,,[MN] [MN] byte escrito por GameState_StartFlowByCommand cmd 0/1/2 (valor 0/1/2); provavel
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
@@ -86,7 +87,7 @@ address,name,kind,count,comment
 0x03001790,keys_prev,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: pressed_buttons)"
 0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798)"
 0x030017A0,team_records_9x8,label,,"[PS] [PS] time: 9 registros de 8 B [estado, genero, medalha, cabeca, braco D, braco E, pernas, indice]; confirmado pela troca"
-0x03001800,fight_information_template,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information)"
+0x03001800,gFightInformation,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information) (antes: fight_information_template)"
 0x03001802,amount_of_enemy_bots,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001804,bot_one_in_fight_information,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001806,bot_1_head,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -513,6 +514,7 @@ address,name,kind,count,comment
 0x0800E020,PartDetailScreen_Init,func_thumb,,"Simon/Rokusho: Initialize the part detail/equip preview screen. Copies the selected RomPartRecord into scratch, then draws the part name, part Attribute name, description, slot-specific stat labels, stat values, and filter state for cycling through owned replacement parts."
 0x0800E4F8,Menu_PartsDetailDispatch,func_thumb,,dispatcher de 5 estados (+0x3C) da tela de pecas; provavel
 0x0800EA2C,PartDetail_SceneStep,func_thumb,,passo por frame da tela de detalhe da peça; provável
+0x0800EB34,SceneStep_Caller_ACE14,func_thumb,,"[ST] [ST] chama 0x0800EBFD, 0x0800F441, 0x0801013D; corpo nao lido em detalhe; provavel"
 0x0800EBFC,Sprite_IncrementXYIfFlag,func_thumb,,[R0] soma 1 em X e Y se bit da flag (provavel)
 0x0800EC20,PartsGrid_SplitCursorIndexRowCol,func_thumb,,[R0] separa indice em linha (>>2) e coluna (&3) (provavel)
 0x0800EC44,PartsGrid_DrawFourEntryText,func_thumb,,[R0] desenha 4 entradas de texto da celula (provavel)
@@ -769,7 +771,7 @@ address,name,kind,count,comment
 0x080195C0,Fight_DrawActiveBotsOverlay,func_thumb,,[R1] Laco 6 bots ativos desenha icones de status; provavel
 0x08019600,Fight_DrawSecondaryEffectIcon,func_thumb,,"Simon/Rokusho: Update indicator objects for the secondary long-lived effect block. Current confirmed kinds are AutoRecover (0x1F), Boost_Chrg (0x26), and Drain_Chrg (0x29). (antes: Fight_UpdateSecondaryEffectIndicatorObjects)"
 0x08019720,Fight_DrawPendingEffectIcon,func_thumb,,[R1] Despachante de icone por tipo pendente (+0xC9); confirmado
-0x08019B40,Fight_DrawPartStatusIcon,func_thumb,,"Simon/Rokusho: Render the small reaction-source icon for a bot. Uses reaction_status_flags, reaction_source_part_id, and reaction_source_action_kind to choose the icon and sprite frame. (antes: Fight_DrawReactionSourceIcon)"
+0x08019B40,Hud_PartStatusIconAlias,func_thumb,,"Simon/Rokusho: Render the small reaction-source icon for a bot. Uses reaction_status_flags, reaction_source_part_id, and reaction_source_action_kind to choose the icon and sprite frame. (antes: Fight_DrawReactionSourceIcon) (antes: Fight_DrawPartStatusIcon)"
 0x08019D9C,Fight_PlaceBotStatusIconObject,func_thumb,,[R1] Preenche objeto de tela do icone de status (x/y/tile/paleta); provavel
 0x08019EF0,Fight_UpdateBotPositionEvents,func_thumb,,[R1] Varre bots ativos e soma eventos de posicao (Y de descanso/fora da tela); provavel
 0x08019FBC,Fight_CheckBotYAtRestPos,func_thumb,,[R1] Checa bot sem bit 04 com Y 68/88; enfileira evento se bate; confirmado
@@ -1626,6 +1628,7 @@ address,name,kind,count,comment
 0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,,Simon/Rokusho: Apply battle-status / damage flags based on the selected part's SpecialityId. Proximity-class specialities set one flag family; remoteness-class specialities set another.
 0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,,Simon/Rokusho: Action-script phase: compute total ROS for the current action and store it in fight_information.combat_resolution.total_ros.
 0x08033C20,Fight_ApplyPendingEffectStatusFlags,func_thumb,,"Simon/Rokusho: Apply pending-effect and speciality-derived defender-resolution flags. No_Escape (0x2E) forces BYPASS_EVASION, No_Defense (0x2F) forces BYPASS_DEFENSE, and Thunder/Freeze (0x0F/0x10) force both. SPECIALITY_FLAG_0/1 are also promoted into those bypass bits."
+0x08033CD0,Fight_ResolveDefenderRosPhase,func_thumb,,"[DM] [confirmado bytes, sem funcao no Ghidra] bl 0x08038E54 + bl 0x08034F08; nome provavel"
 0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,,Simon/Rokusho: Action-script phase: update the current action argument selector from defender state before later conditional action-script checks.
 0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,,Simon/Rokusho: Action-script phase: seed the pre-damage value from total ROS by taking total_ros >> 2 before later damage accumulation and modifiers.
 0x08033D30,Fight_AccumulateBaseDamage,func_thumb,,Simon/Rokusho: Accumulate final damage into fight_information.combat_resolution.accumulated_damage (+0xEC). | Formula skeleton: | 1. damage = pre_damage_value (+0xEA) | 2. + selected_part.power_or_evasion | 3. + attacker.flat_damage_bonus | 4. + close-range or long-range attacker bonus based on part.skill_id | 5. + extra half of attacker.effective_charge_or_defense for Berserk skill | 6. + selected_part.power_or_evasion again for Laser/Beam actions | 7. + selected_part.power_or_evasion again if optic/bomb/grav affinity bonus flag bit 0x01 is set | 8. + special action-script additive case for action kind 0x34 | 9. + strengthen damage bonus from active Strengthen parts | 10. - defender flat damage reduction byte at bot +0xD1 | 11. - extra pending-effect reduction when follow-up effect kind 0x1B is active | Result stays in +0xEC before clamp-to-armor/application.
@@ -1688,7 +1691,7 @@ address,name,kind,count,comment
 0x08034E5C,ActionScript_Op69_CallBQ,func_thumb,,[AS2] GH-AS2: opcode 0x69 -> Fight_DispatchOnSubstateAA_BQ (0x0802F990)
 0x08034E78,ActionScript_Op6A_CallBR,func_thumb,,[AS2] GH-AS2: opcode 0x6A -> Fight_DispatchOnSubstateAA_BR (0x0802FE50)
 0x08034EB8,Fight_ReadActionScriptInlineArgs,func_thumb,,Simon/Rokusho: Decode the current action-script opcode's inline argument payload into fight_information.action_script_inline_args[0..].
-0x08034F08,ActionScript_Advance,func_thumb,,Simon/Rokusho: Advance fight_information.action_script_cursor past the current opcode byte and its inline argument payload length. Also clears the action-script repeat/continue byte at +0xAA. (antes: Fight_AdvanceActionScriptCursor)
+0x08034F08,Fight_AdvanceActionScriptCursor,func_thumb,,Simon/Rokusho: Advance fight_information.action_script_cursor past the current opcode byte and its inline argument payload length. Also clears the action-script repeat/continue byte at +0xAA. (antes: Fight_AdvanceActionScriptCursor) (antes: ActionScript_Advance)
 0x08034F44,Fight_SideHasPartCode15,func_thumb,,[R1b] provavel na estrutura; significado do 0x15 chute
 0x08034F68,Fight_ApplyDamageToPart,func_thumb,,Simon/Rokusho (antes: do_damage_on_part; decisao CF)
 0x08034FC8,Fight_SetBotSlotPosFromDirection,func_thumb,,[R1b] provavel: move slot de objeto do bot por direcao
@@ -1719,7 +1722,7 @@ address,name,kind,count,comment
 0x0803576C,Fight_GetMedalPartCompatibilityBonus,func_thumb,,Simon/Rokusho: Sum the part_compatibility_bonus of all equipped parts whose BattlePartState.medal_compatibility matches the bot's medal class.
 0x0803579C,Fight_AccumRosPart,func_thumb,,Simon/Rokusho: Base ROS term for a selected part. | Formula: | base = part.success_or_propulsion |      + Fight_GetMedalPartCompatibilityBonus(attacker) |      + rand(0..7) |      + attacker.skill_level[part.skill_id] |      + attacker.legs_range_bonus(part.skill_id) | where legs_range_bonus picks effective_proximity_or_uses for close-range skills and effective_remoteness_or_cooldown for ranged skills. (antes: Fight_GetPartProficiencyBase; decisao CF)
 0x08035814,Fight_ApplyVirusBugRosPenalty,func_thumb,,"Simon/Rokusho: Apply the ROS penalty from Bug/Virus pending effects. When pending_effect_kind is Bug (0x0D) or Virus (0x0E), subtract pending_effect_value_1 from total ROS."
-0x08035844,Fight_AccumRosBase,func_thumb,,Simon/Rokusho: Base defender ROS reduction term. | Formula: | reduction = defender.legs.success_or_propulsion |           + Fight_GetMedalPartCompatibilityBonus(defender) |           + rand(0..7) | This scratch term is then extended by Fight_ApplyEvasionReductionToRos or Fight_ApplyDefenseReductionToRos. (antes: Fight_GetBaseDefenderRosReduction)
+0x08035844,Fight_AccumDefenderLevelRosBase,func_thumb,,Simon/Rokusho: Base defender ROS reduction term. | Formula: | reduction = defender.legs.success_or_propulsion |           + Fight_GetMedalPartCompatibilityBonus(defender) |           + rand(0..7) | This scratch term is then extended by Fight_ApplyEvasionReductionToRos or Fight_ApplyDefenseReductionToRos. (antes: Fight_GetBaseDefenderRosReduction) (antes: Fight_AccumRosBase)
 0x08035880,Fight_IsAntiAirAgainstAirTarget,func_thumb,,Simon/Rokusho: True when the current selected part uses the Anti-Air technique and the defender is in the air movement state.
 0x080358B8,Fight_IsAntiSeaAgainstSeaTarget,func_thumb,,Simon/Rokusho: True when the current selected part uses the Anti-Sea technique and the defender is in the sea movement state.
 0x080358F0,Fight_AddStrengthenRosBonus,func_thumb,,Simon/Rokusho
@@ -3200,6 +3203,9 @@ address,name,kind,count,comment
 0x083ACB48,gTextProcessStrings,ptr,11,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x083ACBA0,debug_menu_text,ptr,11,"nomes: Process, Medal, Parts, Tinpet, Item, Face, Mdlpic, Rnd-tk, Battle, Sound, Motion; Simon/Rokusho em 0x083ACBC0; tipo undefined *32[4]"
 0x083ACBCC,gTextProcessStrings3,ptr,22,tabela de texto: Strings de processo; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x083ACE14,gSceneStepTable_ACE14,data,,[ST] [ST] bloco de 148 ponteiros Thumb (0x08000841 = vazio); lido por 0x0801013C com indice = byte 0x03002D59; confirmado no codigo; significado da cena pendente
+0x083ACE54,gSceneStepTable_ACE14_PreBattle,data,,"[ST] [ST] = ACE14+0x40 (indice 16); entrada 0 = 0x08010815 (site PRE principal, TX); provavel"
+0x083ACEF8,gSceneStepTable_ACE14_PostBattle,data,,"[ST] [ST] = ACE14+0xE4 (indice 57); entrada 0 = 0x08010BD1 (site POST principal, TX); provavel"
 0x083AD080,Battle_FrameDispatchTable,data,,"[BT] tabela de 4+ ponteiros indexada por GS (usada por Battle_FrameDispatchOrExit); conteudo lido: 0x08012A20.., confirmado (ponteiros)"
 0x083AD0F0,table_medabot_screen_states,label,,[PS] [PS] tabela de estados da tela do Medabot (stride 4); entrada 9 = UpdateSelectedMedabotPreviewScreen
 0x083AD10C,Battle_SceneInitTable,data,,[BT] tabela de modos da luta; entrada 0 = Fight_BattleSceneInit; quem indexa: LACUNA
@@ -3214,6 +3220,8 @@ address,name,kind,count,comment
 0x083AF180,gActionScriptOpcodeHandlerTable,label,,Simon/Rokusho em 0x083AF1A0; tipo undefined *32[4]
 0x083AF380,gRollDieFaceTable,data,,[TX] GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable)"
+0x083AFCA0,gSceneStepTable_AFC78_A,data,,[ST] [ST] = bloco AFC78 + 0x28 (indice 10); entrada 0 = 0x0803D9A1 (PRE fixo); fim do bloco 0x083AFDF8 = 03020100; dono nao identificado
+0x083AFD08,gSceneStepTable_AFC78_B,data,,[ST] [ST] = bloco AFC78 + 0x90 (indice 36); entrada 0 = 0x0803DB4D (POST fixo); dono nao identificado
 0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images
 0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes
 0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable
@@ -3331,20 +3339,57 @@ address,name,kind,count,comment
 0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
 0x084C3A24,gGfx_PartsGrid_Tiles_Bg1,data,,[GF] Malias 0x0340; grade 0x06006280; tambem Screen_LoadSceneWithSong 0x06000080 (GF)
 0x084C3BF8,gGfx_PartsGrid_Tiles_Bg2,data,,[GF] Malias 0x0580 -> VRAM 0x06006800; PartsGrid_InitScreen (GF)
-0x084C4BDC,sPartDetailTileSheetA,label,,Simon/Rokusho em 0x084C4C00
+0x084C3E64,gGfx_PartDetail_Tiles_Bg6,data,,[GF2] Malias 0x0140 -> VRAM 0x06007880; PartDetailScreen_Init (GF2)
+0x084C3F0C,gGfx_FightScene_Tiles_Bg2,data,,[GF2] Malias 0x0280 -> VRAM 0x06007200; Fight_BattleSceneInit (GF2)
+0x084C4B4C,gGfx_PartDetail_Tiles_Bg3,data,,[GF2] Malias 0x0100 -> VRAM 0x06007100; PartDetailScreen_Init (GF2)
+0x084C4BDC,gGfx_PartDetail_Tiles_Bg1,label,,Simon/Rokusho em 0x084C4C00 (antes: sPartDetailTileSheetA)
+0x084C4FBC,gGfx_PartDetail_Tiles_Bg2,data,,[GF2] Malias 0x0040 -> VRAM 0x06007080; PartDetailScreen_Init (GF2)
+0x084C4FFC,gGfx_PartDetail_Tiles_Bg4,data,,[GF2] Malias 0x0100 -> VRAM 0x06007200; PartDetailScreen_Init (GF2)
+0x084C50D0,gGfx_BattleScene_Tiles_Bg1a,data,,[GF2] Malias 0x0200 -> VRAM 0x06006000; InitializeBattleSceneScreen (GF2)
+0x084C5250,gGfx_BattleScene_Tiles_Bg1b,data,,[GF2] Malias 0x0200 -> VRAM 0x06006200; InitializeBattleSceneScreen (GF2)
+0x084C53C8,gGfx_PartDetail_Tiles_Bg5,data,,[GF2] Malias 0x0380 -> VRAM 0x06007300; PartDetailScreen_Init (GF2)
+0x084C55CC,gGfx_BattleScene_Tiles_Bg3,data,,[GF2] Malias 0x0380 -> VRAM 0x06006E00; InitializeBattleSceneScreen e Fight_BattleSceneInit (GF2)
+0x084C58D8,gGfx_FightScene_Tiles_Bg3,data,,[GF2] Malias 0x0040 -> VRAM 0x06007480; Fight_BattleSceneInit (GF2)
+0x084C58F4,gGfx_FightScene_Tiles_Bg1,data,,[GF2] Malias 0x0100 -> VRAM 0x06006000; Fight_BattleSceneInit (GF2)
 0x084C59AC,gItalicFont,label,,fonte italica 128 glifos 8x16 (danificada na ROM EU)
+0x084C7C54,gGfx_Overlay_Tiles_Bg1,data,,[GF2] Malias 0x08C0 -> VRAM 0x06007000; Overlay_InitScreenGraphics (GF2)
+0x084C7E7C,gGfx_Overlay_Tiles_Bg2,data,,[GF2] Malias 0x0120 -> VRAM 0x06007A00; Overlay_InitScreenGraphics (GF2)
 0x084C8034,gGfx_Obj_Malias_09C0,label,,Simon/Rokusho em 0x084C8058 (antes: sShopPartScreenUiTileSheet)
 0x084C8034,gObjTextFontGfx,data,,fonte 8x8 dos rotulos em sprite (comprimida, 0x9C0 B = 78 tiles 4bpp), carregada em OBJ tile 0x3A0 (0x06017400)
 0x084C88B8,gGfx_PartsGrid_Tiles_Bg3,data,,[GF] Malias 0x01C0 -> VRAM 0x06017E00; PartsGrid_InitScreen (GF)
+0x084E3698,gGfx_Overlay_Obj_Sprites,data,,[GF2] Malias 0x2580 -> OBJ 0x06010000; Overlay_InitScreenGraphics (GF2)
 0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR)
 0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
+0x084E776C,gGfx_BattleScene_Tiles_Bg0,data,,[GF2] Malias 0x11A0 -> VRAM 0x06004000; InitializeBattleSceneScreen 0x080040BC (GF2)
 0x084E9650,gGfx_PartsGrid_Tiles_Bg0,data,,[GF] Malias 0x1CA0 -> VRAM 0x06004000; PartsGrid_InitScreen 0x08007A04 (GF)
+0x084EE0DC,gGfx_PartDetail_Tiles_Bg0,data,,[GF2] Malias 0x0FE0 -> VRAM 0x06004000; PartDetailScreen_Init 0x0800E0BC (GF2)
+0x084EEA64,gGfx_FightScene_Tiles_Bg0,data,,[GF2] Malias 0x10A0 -> VRAM 0x06004000; Fight_BattleSceneInit 0x08013C14 (GF2)
+0x084EF490,gGfx_Overlay_Tiles_Bg0,data,,[GF2] Malias 0x2F40 -> VRAM 0x06004000; Overlay_InitScreenGraphics 0x0803DD60 (GF2)
+0x084F08B0,gGfx_BattleScene_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
 0x084F0920,gGfx_PartsGrid_Map_Bg0,data,,[GF] Malias tilemap 2048 B; BGCNT 0x0500; PartsGrid_InitScreen (GF)
+0x084F0B44,gGfx_PartDetail_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
+0x084F0B7C,gGfx_FightScene_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
+0x084F0C08,gGfx_Overlay_Map_Bg0,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
+0x084F0F68,gGfx_BattleScene_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
 0x084F1180,gGfx_PartsGrid_Map_Bg1,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1801; PartsGrid_InitScreen (GF)
 0x084F1514,gPartListTilemap,label,,tilemap Malias da lista de pecas (contem o '/30')
+0x084F1608,gGfx_PartDetail_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
+0x084F16C8,gGfx_FightScene_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
+0x084F1734,gGfx_Overlay_Map_Bg1,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
+0x084F198C,gGfx_BattleScene_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
 0x084F1C28,gGfx_PartsGrid_Map_Bg2,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1902; PartsGrid_InitScreen (GF)
+0x084F2244,gGfx_PartDetail_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
+0x084F22C4,gGfx_FightScene_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
+0x084F233C,gGfx_Overlay_Map_Bg2,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
+0x084F2960,gGfx_BattleScene_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; InitializeBattleSceneScreen (GF2)
 0x084F2C88,gGfx_PartsGrid_Map_Bg3,data,,[GF] Malias tilemap 2048 B; BGCNT 0x1A03; PartsGrid_InitScreen (GF)
+0x084F3468,gGfx_PartDetail_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; PartDetailScreen_Init (GF2)
+0x084F35FC,gGfx_FightScene_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Fight_BattleSceneInit (GF2)
+0x084F3788,gGfx_Overlay_Map_Bg3,data,,[GF2] Malias tilemap 2048 B; Overlay_InitScreenGraphics (GF2)
 0x084F4300,gGfx_PartsGrid_Palette_Banks,data,,[GF] cru 0x70 words -> 0x05000000; PartsGrid_InitScreen (GF)
+0x084F4BC0,gGfx_PartDetail_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; PartDetailScreen_Init (GF2)
+0x084F4D80,gGfx_FightScene_Palette_Bg,data,,[GF2] cru 0x70 words -> 0x05000000; Fight_BattleSceneInit (GF2)
+0x084F4F40,gGfx_Overlay_Palette_Bg,data,,[GF2] cru 0x60 words -> 0x05000000; Overlay_InitScreenGraphics (GF2)
 0x0850F2F8,sCompositeBattleSpritePaletteSet,label,,Simon/Rokusho em 0x0850F31C
 0x0850F318,sPartScreenObjPaletteBlockA,label,,Simon/Rokusho em 0x0850F33C
 0x0850F378,sPartScreenObjPaletteBlockB,label,,Simon/Rokusho em 0x0850F39C
