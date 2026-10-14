@@ -86,6 +86,7 @@ F	0x080038CC	PartScreen_WaitBlendThenResetStep
 F	0x080038F0	PartScreen_SetNextStateStep
 F	0x08003904	Screen_DecompressRowImageByIndex
 F	0x080039BC	Pair_TickDownCounterIfFlag
+F	0x080039E0	Scene_FrameTickSubstateDispatch
 F	0x08003A38	BattleStatusScreen_InitStep
 F	0x08003D4C	PartSlots_UpdateAndFadeStep
 F	0x08003DE0	PartSlots_HandleInputStep
@@ -143,7 +144,7 @@ F	0x080054C0	BattlePreview_BuildLargeCompositeLayer5
 F	0x08005588	PartSelect_HandleDirectionInput
 F	0x08005628	ObjectSlots_Init4Overlay
 F	0x080056A4	ObjectSlot_UpdatePositionOverlay
-F	0x08005798	aplica_mascara_slots_b
+F	0x08005798	ObjectSlots_ApplyMaskOverlay4to7
 F	0x080058A4	Parts_HandleSlotSwapInput
 F	0x08005948	Parts_CheckSpriteIdsSetSpeed
 F	0x0800598C	Parts_CheckSpriteIdsUpdateMotion
@@ -248,12 +249,12 @@ F	0x08008D00	PartsGrid_SubStateA1_DispatchCtx1C
 F	0x08008D0C	PartsGrid_SubStateA2_CellLookup
 F	0x08008D30	PartsGrid_SubStateA3_CellLookupB
 F	0x08008D54	PartsGrid_SubStateA4_DispatchCtx20
-F	0x08008D90	PartsGrid_SubStateB0_CellOrTable
-F	0x08008E08	PartsGrid_SubStateB1_CellOrTable
-F	0x08008E80	PartsGrid_SubStateB2_CellOrTable
-F	0x08008EF8	PartsGrid_SubStateB3_DispatchCtx24
-F	0x08008F04	PartsGrid_SubStateB4_DispatchCtx28
-F	0x08008F10	PartsGrid_SubStateB5_SwitchOn46
+L	0x08008D90	PartsGrid_SubStateB0_CellOrTable
+L	0x08008E08	PartsGrid_SubStateB1_CellOrTable
+L	0x08008E80	PartsGrid_SubStateB2_CellOrTable
+L	0x08008EF8	PartsGrid_SubStateB3_DispatchCtx24
+L	0x08008F04	PartsGrid_SubStateB4_DispatchCtx28
+L	0x08008F10	PartsGrid_SubStateB5_SwitchOn46
 F	0x080090D0	PartsGrid_SpritePairStep
 F	0x08009174	PartsGrid_ReloadRowTilesAndSetup
 F	0x080091E0	PartsGrid_OptionRowStep
@@ -744,7 +745,7 @@ F	0x080182AC	Preview_NudgeOffsetIfFlag
 F	0x080182D0	AdvanceSelectedMedabotPreviewAnimationSlot
 F	0x0801830C	Fight_DrawRowBotSlotsExceptSelected
 F	0x080183A4	HandleSelectedMedabotPreviewCursorInput
-F	0x080185A8	Fight_SlotConfirmStartSlide
+F	0x080185A8	Fight_SlotConfirmRedrawAndBlink
 F	0x080185E8	Fight_SlideSideTransitionStep
 F	0x080187A8	Fight_ToggleActiveSideAndRedraw
 F	0x080187D4	Fight_SlideSideBackStep
@@ -1056,7 +1057,7 @@ F	0x080209D8	Fight_DispatchOnSubstateAA_Q_00_PenaltyIfFlagClearOrMsg
 F	0x08020A68	Fight_DispatchOnSubstateAA_R
 F	0x08020A90	Fight_DispatchOnSubstateAA_R_01_ClearTilesSplitCount
 F	0x08020AD0	Fight_DispatchOnSubstateAA_R_0C_SplitCountOrSkip
-F	0x08020B4C	Fight_DispatchOnSubstateAA_R_08
+F	0x08020B4C	Fight_DispatchOnSubstateAA_R_08_RepairTickDrawComposite
 F	0x08020CEC	Fight_DispatchOnSubstateAA_R_12_JumpTo02
 F	0x08020CFC	Fight_DispatchOnSubstateAA_S
 F	0x08020D24	Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart
@@ -1757,13 +1758,13 @@ F	0x08034D60	ActionScript_Op60_CallBH
 F	0x08034D7C	ActionScript_Op61_CallBI
 F	0x08034D98	ActionScript_Op62_CallBJ
 F	0x08034DB4	ActionScript_Op63_CallBK
-F	0x08034DD0	ActionScript_Op64_pendente
-F	0x08034DEC	ActionScript_Op65_pendente
-F	0x08034E08	ActionScript_Op66_pendente
-F	0x08034E24	ActionScript_Op67_pendente
-F	0x08034E40	ActionScript_Op68_pendente
-F	0x08034E5C	ActionScript_Op69_pendente
-F	0x08034E78	ActionScript_Op6A_BR
+F	0x08034DD0	ActionScript_Op64_CallBL
+F	0x08034DEC	ActionScript_Op65_CallBM
+F	0x08034E08	ActionScript_Op66_CallBN
+F	0x08034E24	ActionScript_Op67_CallBO
+F	0x08034E40	ActionScript_Op68_CallBP
+F	0x08034E5C	ActionScript_Op69_CallBQ
+F	0x08034E78	ActionScript_Op6A_CallBR
 F	0x08034E94	Fight_LookupActionScriptByte
 F	0x08034EB8	Fight_ReadActionScriptInlineArgs
 F	0x08034F08	Fight_AdvanceActionScriptCursor
@@ -2281,7 +2282,7 @@ F	0x08045D34	BuildCompositePreviewOamTemplate
 F	0x08045E6C	PartPreviewPiece
 F	0x08046034	CopyCompositePreviewDescriptorGraphics
 F	0x080465B8	RenderCompositePreviewDescriptorRecursive
-F	0x08046A60	LoadPartLargeDisplaySpriteFromAppearanceTable
+F	0x08046A60	Parts_SetupLargeDisplaySprite
 F	0x08046CC8	FlipSyntheticCompositePreviewDescriptorOffsets
 F	0x08046D1C	BuildFourPartLargePreviewComposite
 F	0x08047204	UpdateTwoCompositePreviewSlotFlags
@@ -2376,6 +2377,8 @@ L	0x0804A3B6	lit_EventDbBase0
 F	0x0804A4A2	new_game_start_0804A4A2
 L	0x0804A584	lit_EventDbBase1
 F	0x0804A60C	Map_InitScreenAndTransition
+F	0x0804A6E0	Map_TickSceneStateMachine
+F	0x0804A6F8	Map_ResetOamAndRenderSlotsStep
 F	0x0804A764	Overworld_InitMapScene
 L	0x0804A7A0	Overworld_InitMapScene_0804A7A0
 L	0x0804A8C8	lit_EventDbBase2
@@ -3608,6 +3611,7 @@ L	0x083ABFB0	gSpriteSetTable0
 L	0x083AC2C8	gMenuList0Table
 L	0x083AC404	MainState0_Menu1_SubTable
 L	0x083AC454	MainState0_Menu2_SubTable
+L	0x083AC4A0	gMenu3SubTable
 L	0x083AC560	BattleStepTable_Base_Unresolved
 L	0x083AC568	BattleStepTable_Unknown
 L	0x083AC614	debug_mdlpic_model_ptrs
@@ -3826,7 +3830,7 @@ L	0x084835A4	KeyItemBag_MenuTable4
 L	0x0848360C	gTitleMenuSubStateTable
 L	0x08483614	SAVE_HANDLER_InitScreen
 L	0x08483634	KeyItemBag_SubStateTable
-L	0x08483670	MainState2_Menu5_SubTable
+L	0x08483670	gMainState2_Menu5SubTable
 L	0x08483688	SAVE_HANDLER_StepThenFlashOp
 L	0x084836B4	SAVE_SIGNATURE_ROM
 L	0x084836C5	SAVE_ERASE_HEADER_ROM
@@ -3942,7 +3946,6 @@ L	0x087F5500	gTextDump
 C	0x08001278
 C	0x08002574
 C	0x0800275C
-C	0x080039E0
 C	0x08004A40
 C	0x08004A78
 C	0x080140B0
@@ -3979,9 +3982,7 @@ C	0x0803D71C
 C	0x0804A6A0
 C	0x0804A6BC
 C	0x0804A6C8
-C	0x0804A6E0
 C	0x0804A6EC
-C	0x0804A6F8
 C	0x0804A724
 C	0x0804A734
 C	0x0804AA04
