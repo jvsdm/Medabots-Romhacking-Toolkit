@@ -1,0 +1,38 @@
+addr,nome,kind,comentario
+0x08031A3C,Fight_RunAllPartActionPhases,func_thumb,provavel (antes: Fight_BuildPartActionMetadataForAllParts) - laco de 3 partes chamando DispatchPartPreparation e DispatchPartExecution; nao monta metadata
+0x08031AFC,Fight_SetupTargetSelectionBySpeciality,func_thumb,confirmado - filtra bots por especialidade (Fight_HasActivePartWithSpeciality), fallback aleatorio, depois rola status
+0x08031BCC,Fight_SetupTargetSelectionRequireStatus64,func_thumb,confirmado - filtro byte +0x91 == 0x64 ('d') com cadeia de fallbacks
+0x08031F2C,Fight_SetupTargetSelectionRequirePendingEffect,func_thumb,confirmado - filtro +0xC9 != 0 (efeito pendente) + NoTechnique16Part
+0x08032100,Fight_SetupTargetSelectionRequireDamagedPart,func_thumb,confirmado - usa Fight_PickMostDamagedRepairablePart1Based
+0x08032478,Fight_SetupTargetSelectionRequireBrokenPart,func_thumb,confirmado - usa Fight_PickRandomBrokenOrMissingPart1Based
+0x08032640,Fight_SetupTargetSelectionRequireStateBA2,func_thumb,confirmado - filtro bot+0xBA == 2
+0x0803279C,Fight_SetupTargetSelectionExcludeSelf,func_thumb,confirmado - filtro uVar8 != ctx+0x5c (exclui o proprio bot)
+0x080328B8,Fight_SetupTargetSelectionRequireNoTechnique16AndClearPending,func_thumb,confirmado - NoTechnique16Part + Fight_IsBotPendingActionClear + especialidade
+0x08032A68,Fight_SetupTargetSelectionRequireUsableHeadAction,func_thumb,confirmado - usa Fight_IsHeadActionUsable
+0x08032C08,Fight_SetupTargetSelectionRequireMedaforceToken,func_thumb,confirmado - usa Fight_IsBotMedaforceTokenActive
+0x08032DA0,Fight_SetupPartTargetSelectionRequireNoTechnique16AndClearPending,func_thumb,confirmado - variante que escolhe parte com Fight_PickRandomIntactPart
+0x08032F64,Fight_ClearPartActionMetadata,func_thumb,confirmado - zera ctx+0x5e/0x5f e os bytes +0x56/+0x57 da parte
+0x08032FB8,Fight_GetOpponentSideBaseIndex,func_thumb,confirmado - retorna 3 se lado 0..2 senao 0
+0x08032FC4,Fight_GetAllySideBaseIndex,func_thumb,confirmado - retorna 0 se lado 0..2 senao 3
+0x08032FD0,Fight_HasActivePartWithSpeciality,func_thumb,confirmado - varre 3 partes com +0x4A e +0x4A+0x0F != 0
+0x08032FFC,Fight_HasAnyCandidateTarget,func_thumb,confirmado - algum dos 3 bytes de candidato != 0
+0x08033090,Fight_PickRandomActiveBotInSide,func_thumb,confirmado - sorteia slot 0..2 com +0x40 != 0 (andando em volta)
+0x080330F4,Fight_PickRandomIntactPart,func_thumb,confirmado - parte com atual +0x59 != 0 (nao quebrada)
+0x08033154,Fight_SetPartActionMetadata,func_thumb,confirmado - grava ctx+0x5e/0x5f nos bytes +0x56/+0x57 da parte
+0x08033184,Fight_PickMostDamagedRepairablePart1Based,func_thumb,confirmado - maior diferenca max(+0x4C)-atual(+0x59); retorna indice 1-based
+0x080331F8,Fight_HasNoTechnique16Part,func_thumb,confirmado - retorna 1 se nenhuma parte com tecnica 0x16 ativa
+0x08033224,Fight_IsBotAutoRecoverInactive,func_thumb,provavel (antes: Fight_IsBotMedaforceInactive) - testa bot+0xC4 == 0 (AutoRecover segundo README)
+0x08033240,Fight_IsBotPendingStatusClear,func_thumb,provavel (antes: Fight_IsBotPendingActionClear) - testa bot+0xC9 == 0 (tipo de status pendente)
+0x0803325C,Fight_PickRandomBrokenOrMissingPart1Based,func_thumb,confirmado - parte com atual +0x59 == 0 (quebrada); retorna 1-based
+0x080332B4,Fight_IsHeadActionUsable,func_thumb,provavel - testa bot+0x58 != 0 (cabeca/acao de cabeca)
+0x080332D0,Fight_IsBotMedaforceTokenActive,func_thumb,confirmado - testa bot+0xC1 != 0 (medidor de Medaforce, MF4)
+0x08033318,Fight_BeginPartActionValidation,func_thumb,provavel - zera fi+0x51, grava ctx+0x5c/0x5d e chama validador da parte pela tabela (+0x49 kind)
+0x08033364,Fight_ValidateActionRequiresMedaforceState,func_thumb,provavel - se fi+0x2A+8*slot0 == 0 marca fi+0x51=1 (falha da validacao)
+0x080333E4,Fight_ValidateActionRequiresMultipleActiveBots,func_thumb,confirmado - conta bots ativos do lado aliado; < 2 marca fi+0x51=1
+0x08033490,Fight_ValidateReferencedActionBot,func_thumb,provavel - bot referenciado com +0xC4 != 0 ou sem tecnica 0x16 marca fi+0x51=1
+0x080334E0,Fight_ValidateReferencedActionBotPendingState,func_thumb,confirmado - falha se bot referenciado tem +0xC9 != 0 ou sem tecnica 0x16
+0x08033698,Fight_ValidateActionRequiresSpecificMedalState,func_thumb,provavel - slot 1 de fi+0x2A: falha se +0x2A == 0 ou +0x2B != '3'
+0x080336DC,Fight_ValidateActionRequiresEnemyPartSpeciality,func_thumb,provavel - inimigo com parte ativa de kind 0 ou 1 (senao fi+0x51=1); nome sugere especialidade, o teste e de kind
+0x08033754,Fight_ValidateEnemyHasPartWithSpeciality23,func_thumb,confirmado - inimigo com parte ativa de kind 2 ou 3 (senao fi+0x51=1)
+0x080337CC,Fight_ValidateAllyHasTechnique4Part,func_thumb,confirmado - aliado com parte de tecnica '4' (0x34) em +0x49 (senao fi+0x51=1)
+0x08033840,Fight_RunActionScriptLoop,func_thumb,confirmado - laco do roteiro de acao: le opcode, pula >=0x80, despacha gActionScriptOpcodeHandlerTable, para com flag +0xB5
