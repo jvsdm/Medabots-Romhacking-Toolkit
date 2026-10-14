@@ -1,0 +1,5 @@
+0x08010814	Fight_ShowPreBattleTextForCharacter (PRE principal; sem funcao no Ghidra)
+0x08010BD0	Fight_ShowPostBattleTextForCharacter (POST principal; sem funcao no Ghidra)
+0x0803D9A0	Fight_ShowPreBattleTextIndex1 (PRE fixo; sem funcao no Ghidra)
+0x0803DB4C	Fight_ShowPostBattleTextIndex1 (POST fixo; sem funcao no Ghidra)
+0x08034AA0	Fight_RollDamageFromTwoDice (sem funcao no Ghidra)

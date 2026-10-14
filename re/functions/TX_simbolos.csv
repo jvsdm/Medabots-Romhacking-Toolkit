@@ -1,0 +1,7 @@
+# address,name,kind,comment
+0x083AF380,gRollDieFaceTable,data,"GH-TX: 16 bytes usados (index = randbyte & 15); faces 1..6 em ciclo (i%6+1); leitor unico Fight_RollDamageFromTwoDice 0x08034AA0 (literal 0x08034AEC em 0x08034AA8). Bytes apos 0x083AF390 nao sao lidos por esse leitor. Confirmado"
+0x08010814,Fight_ShowPreBattleTextForCharacter,func_thumb,"GH-TX: r0 = StateMachine_DispatchStep(gTextPreBattleMessage[byte 0x03001800 = FightTemplate.character_id]); se !=0 chama Fight_UpdateBotPartEntryMotion 0x08012098 e incrementa 0x0300137C. Sem funcao no Ghidra; nome provavel"
+0x08010BD0,Fight_ShowPostBattleTextForCharacter,func_thumb,"GH-TX: mesmo padrao do PRE, com gTextPostBattleMessage[character_id] e StateMachine_DispatchStep 0x0803FB3C. Sem funcao no Ghidra; nome provavel"
+0x0803D9A0,Fight_ShowPreBattleTextIndex1,func_thumb,"GH-TX: StateMachine_DispatchStep(gTextPreBattleMessage[1]) (indice fixo, ldr [r0,#4]). Confirmado pelo corpo 0x0803D9A0..0x0803D9BD (sem funcao no Ghidra)"
+0x0803DB4C,Fight_ShowPostBattleTextIndex1,func_thumb,"GH-TX: StateMachine_DispatchStep(gTextPostBattleMessage[1]) (indice fixo). Sem funcao no Ghidra"
+0x08034AA0,Fight_RollDamageFromTwoDice,func_thumb,"GH-TX: duas chamadas randbyte 0x080424B8; v = gRollDieFaceTable[r & 15] (duas vezes); ctx+0xEC (halfword, provavel dano base) = (v1+v2)*10. Confirmado no corpo; sem funcao no Ghidra"
