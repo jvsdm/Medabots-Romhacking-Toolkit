@@ -2993,14 +2993,14 @@ L	0x083AF380	gRollDieFaceTable
 L	0x083AF8C0	gObjectOpcodeHandlerTable
 L	0x083AFCA0	gSceneStepTable_AFC78_A
 L	0x083AFD08	gSceneStepTable_AFC78_B
-L	0x083AFE88	gPortraitImages
-L	0x083B1748	gPortraitPalettes
+L	0x083AFE88	gGfx_Portrait_PonteirosImagens
+L	0x083B1748	gGfx_Portrait_Paleta
 L	0x083B1A08	gBattleSprites
 L	0x083B291C	gMessageStateHandlerTable
 L	0x083B2940	MsgState6_DispatchTable
 L	0x083B2990	Dispatch_CallHandlerByByteAt1B_Table
 L	0x083B29EC	gRandomLUT
-L	0x083B4C60	Fight_AnimSlot_TableB
+L	0x083B4C60	gGfx_Portrait_PonteirosLayout
 L	0x083B4E08	gFontWidths
 L	0x083B5008	gItalicFontWidths
 L	0x083B5578	gTextDialogue_083B5578
@@ -3054,13 +3054,13 @@ L	0x083D2630	gEventContinuationOpcodeTable
 L	0x083D2A40	gWalkSpeedTable
 L	0x083D2B6B	gMapArea
 L	0x083F7D80	sRandomAdvanceTable
-L	0x083F7E80	Overworld_Sprites
+L	0x083F7E80	gGfx_Overworld_PonteirosSprite
 L	0x083F8900	gMapDimensions
-L	0x083F8A80	gMapTilesetGfx
+L	0x083F8A80	gGfx_Overworld_PonteirosTileB
 L	0x083F8D80	gMapColorAttr
-L	0x083F9080	gMapLayers
+L	0x083F9080	gGfx_Overworld_PonteirosTileA
 L	0x083F9980	gMapTilesetPal
-L	0x08404334	gMapCollision
+L	0x08404334	gGfx_Overworld_PonteirosCamada
 L	0x08409480	gMapBlockA
 L	0x0840F880	gMapBlockB
 L	0x08411AE0	gTextDialogue_08411AE0
@@ -3107,12 +3107,15 @@ L	0x08485F88	gTextTournamentMessages
 L	0x0848698C	gTextRaceMessages
 L	0x08486E54	SND_LitFifoA
 L	0x08486E58	SND_LitFifoB
+L	0x08486E6C	gGfx_Dialog_Moldura
 L	0x084881E0	gGfx_Battle_BotTiles_B
 L	0x08488240	gGfx_Battle_BotTiles_C
 L	0x08488290	gGfx_Battle_BotTiles_D
 L	0x084882CC	gGfx_Battle_BotTiles_A
+L	0x08488520	gGfx_Dialog_PaletaOrnamento
 L	0x084BFC6C	gFont
 L	0x084C29D8	gMedalSprites
+L	0x084C39D8	gGfx_Dialog_Tiles2
 L	0x084C3A24	gGfx_PartsGrid_Tiles_Bg1
 L	0x084C3BF8	gGfx_PartsGrid_Tiles_Bg2
 L	0x084C3E64	gGfx_PartDetail_Tiles_Bg6
@@ -3136,8 +3139,10 @@ L	0x084C88B8	gGfx_PartsGrid_Tiles_Bg3
 L	0x084E3698	gGfx_Overlay_Obj_Sprites
 L	0x084E43D8	gFontPalette
 L	0x084E43F8	sPartScreenObjPaletteBlockC
+L	0x084E6BF0	gGfx_BattleStatus_Char
 L	0x084E776C	gGfx_BattleScene_Tiles_Bg0
 L	0x084E9650	gGfx_PartsGrid_Tiles_Bg0
+L	0x084EC1F8	gGfx_PartsGrid_CharEntrada
 L	0x084EE0DC	gGfx_PartDetail_Tiles_Bg0
 L	0x084EEA64	gGfx_FightScene_Tiles_Bg0
 L	0x084EF490	gGfx_Overlay_Tiles_Bg0
@@ -3174,7 +3179,12 @@ L	0x08765EC0	gEventDb
 L	0x08765EC4	event_operation_list
 L	0x08769EC0	gEventPointerTable
 L	0x087852CF	gStarterData
+L	0x08785EC0	gGfx_BattlePanel_Char
 L	0x08785FB4	gGfx_Shop_PartSelect_Obj
+L	0x0878F7E8	gGfx_TitleMenu_Char
+L	0x087AEFD0	gGfx_Title_OBJ
+L	0x087B67B0	gGfx_Title_BG0
+L	0x087F314C	gGfx_Logo_Char
 L	0x087F5500	gTextDump
 C	0x0800C7E4
 C	0x0800CE70

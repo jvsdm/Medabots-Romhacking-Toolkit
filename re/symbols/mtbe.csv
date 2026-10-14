@@ -3278,14 +3278,14 @@ address,name,kind,count,comment
 0x083AF8C0,gObjectOpcodeHandlerTable,label,,"A3: ponteiros thumb (u32), tabela de varios handlers. Indice = opcode em gObjectSlots+0x29. Entrada 0 = 0x08000841 (nao e handler). Opcodes vistos em rec_2: 1, 12, 25, 2. (antes: ObjectOpcodeHandlerTable)"
 0x083AFCA0,gSceneStepTable_AFC78_A,data,,[ST] [ST] = bloco AFC78 + 0x28 (indice 10); entrada 0 = 0x0803D9A1 (PRE fixo); fim do bloco 0x083AFDF8 = 03020100; dono nao identificado
 0x083AFD08,gSceneStepTable_AFC78_B,data,,[ST] [ST] = bloco AFC78 + 0x90 (indice 36); entrada 0 = 0x0803DB4D (POST fixo); dono nao identificado
-0x083AFE88,gPortraitImages,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images
-0x083B1748,gPortraitPalettes,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes
+0x083AFE88,gGfx_Portrait_PonteirosImagens,ptr,1584,retratos: 176 personagens x 9 expressoes (Malias2); sem checagem de limite; Simon: Portrait_Images (antes: gPortraitImages)
+0x083B1748,gGfx_Portrait_Paleta,ptr,176,paleta de 32 B por personagem de retrato (imagem 64x64 = 64 tiles 4bpp Malias2; provavel: BG VRAM 0x06000F80); Simon: Portrait_Pallettes (antes: gPortraitPalettes)
 0x083B1A08,gBattleSprites,ptr,732,sprites de batalha Malias: 122 x 6 ponteiros; Simon: sCompositeBattleSpriteGraphicsPointerTable
 0x083B291C,gMessageStateHandlerTable,data,,"[A6] tabela de handlers de estado do motor de mensagem (ctx 0x03000440 +4); 0 = Gfx_PaletteFlushStep, 5 = ScriptVM_RunOpcodes; confirmado (literal + decompile)"
 0x083B2940,MsgState6_DispatchTable,data,,[MS] tabela indexada pelo byte do roteiro (estado 6); literal confirmado; numero de entradas aberto
 0x083B2990,Dispatch_CallHandlerByByteAt1B_Table,data,,[JT2] [GH-JT2] 23 ponteiros de handler (indices 0..22) chamados via CallViaR0 (0x0807CCF0) por 0x08040974; indice = byte 0x0300045B (0x03000440+0x1B); sem limite no codigo; 0x083B29EC nao e ponteiro
 0x083B29EC,gRandomLUT,label,,Simon/Rokusho em 0x083B2A0C
-0x083B4C60,Fight_AnimSlot_TableB,data,,"[JT2] [GH-JT2] dados (nao codigo) indexados por slot+0x2C em 0x0803C7DC; passada a 0x0803F15C; passo 0x80; 8 entradas lidas, fim nao achado"
+0x083B4C60,gGfx_Portrait_PonteirosLayout,data,,"[JT2] [GH-JT2] dados (nao codigo) indexados por slot+0x2C em 0x0803C7DC; passada a 0x0803F15C; passo 0x80; 8 entradas lidas, fim nao achado (antes: Fight_AnimSlot_TableB)"
 0x083B4E08,gFontWidths,data,512,larguras da fonte do dialogo: 2 B por glifo (o 1o e o avanco)
 0x083B5008,gItalicFontWidths,data,512,larguras da fonte italica
 0x083B5578,gTextDialogue_083B5578,ptr,23,tabela de texto: Diálogo inicial; fonte: dump_text_clean_v2.py (traducao PT-BR)
@@ -3339,13 +3339,13 @@ address,name,kind,count,comment
 0x083D2A40,gWalkSpeedTable,data,,[OW] 1 B por indice de velocidade (+0x2A do objeto); significado nao confirmado
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa
 0x083F7D80,sRandomAdvanceTable,label,,Simon/Rokusho em 0x083F7DA0
-0x083F7E80,Overworld_Sprites,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4]
+0x083F7E80,gGfx_Overworld_PonteirosSprite,label,,Simon/Rokusho em 0x083F7EA0; tipo pointer[4] (antes: Overworld_Sprites)
 0x083F8900,gMapDimensions,data,384,largura/altura em tiles: 192 x 2 B; Simon: sMapDimensionsInMetaTilesTable
-0x083F8A80,gMapTilesetGfx,ptr,192,graficos do tileset (LZ77); Simon: sMapTilesetGraphicsPointerTable
+0x083F8A80,gGfx_Overworld_PonteirosTileB,ptr,192,graficos do tileset (LZ77); Simon: sMapTilesetGraphicsPointerTable (antes: gMapTilesetGfx)
 0x083F8D80,gMapColorAttr,ptr,192,atributos de cor; Simon: sMapColorAttributePointerTable
-0x083F9080,gMapLayers,ptr,576,camadas: 192 x 3 ponteiros LZ77; Simon: sMapLayerTilemapPointerTable
+0x083F9080,gGfx_Overworld_PonteirosTileA,ptr,576,camadas: 192 x 3 ponteiros LZ77; Simon: sMapLayerTilemapPointerTable (antes: gMapLayers)
 0x083F9980,gMapTilesetPal,ptr,192,paletas do tileset (0x200 B); Simon: sMapTilesetPaletteDataPointerTable
-0x08404334,gMapCollision,ptr,192,colisao (1 B por metatile 16x16); Simon: collision_table
+0x08404334,gGfx_Overworld_PonteirosCamada,ptr,192,colisao (1 B por metatile 16x16); Simon: collision_table (antes: gMapCollision)
 0x08409480,gMapBlockA,ptr,192,bloco por mapa A; Simon: sMapBackgroundAnimationPointerTable
 0x0840F880,gMapBlockB,ptr,192,bloco por mapa B (0x80 B)
 0x08411AE0,gTextDialogue_08411AE0,ptr,202,tabela de texto: Diálogo de NPCs (2); fonte: dump_text_clean_v2.py (traducao PT-BR)
@@ -3392,12 +3392,15 @@ address,name,kind,count,comment
 0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08486E54,SND_LitFifoA,data,,[SN] literal 0x040000A0 (FIFO A do DMA de PCM)
 0x08486E58,SND_LitFifoB,data,,[SN] literal 0x040000A4 (FIFO B do DMA de PCM)
+0x08486E6C,gGfx_Dialog_Moldura,data,,[GF3] Moldura da caixa de dialogo (Malias +2 0x0220); GF3
 0x084881E0,gGfx_Battle_BotTiles_B,data,,[GF] Malias +2=0x0038; LoadTilesWithMalias bloco 0x11; Fight_LoadBattleBotTilesSet (GF)
 0x08488240,gGfx_Battle_BotTiles_C,data,,[GF] Malias +2=0x004C; LoadTilesWithMalias bloco 0x0F; Fight_LoadBattleBotTilesSet (GF)
 0x08488290,gGfx_Battle_BotTiles_D,data,,[GF] Malias +2=0x0060; LoadTilesWithMalias bloco 0x10; Fight_LoadBattleBotTilesSet (GF)
 0x084882CC,gGfx_Battle_BotTiles_A,data,,[GF] Malias +2=0x0070; LoadTilesWithMalias bloco 0x0D; Fight_LoadBattleBotTilesSet 0x08015A90 (GF)
+0x08488520,gGfx_Dialog_PaletaOrnamento,data,,[GF3] Paleta banco 15 da caixa de dialogo (cru); GF3
 0x084BFC6C,gFont,label,,"fonte do dialogo: 128 glifos 8x16 4bpp (cor 1 = fundo, 2-F = antialias)"
 0x084C29D8,gMedalSprites,label,,sprites de medalha: 2x64 tiles 4bpp
+0x084C39D8,gGfx_Dialog_Tiles2,data,,[GF3] Tiles auxiliares da caixa de dialogo/escolha (Malias +2 0x0040); GF3
 0x084C3A24,gGfx_PartsGrid_Tiles_Bg1,data,,[GF] Malias 0x0340; grade 0x06006280; tambem Screen_LoadSceneWithSong 0x06000080 (GF)
 0x084C3BF8,gGfx_PartsGrid_Tiles_Bg2,data,,[GF] Malias 0x0580 -> VRAM 0x06006800; PartsGrid_InitScreen (GF)
 0x084C3E64,gGfx_PartDetail_Tiles_Bg6,data,,[GF2] Malias 0x0140 -> VRAM 0x06007880; PartDetailScreen_Init (GF2)
@@ -3421,8 +3424,10 @@ address,name,kind,count,comment
 0x084E3698,gGfx_Overlay_Obj_Sprites,data,,[GF2] Malias 0x2580 -> OBJ 0x06010000; Overlay_InitScreenGraphics (GF2)
 0x084E43D8,gFontPalette,label,,paleta de 16 cores usada pela fonte do dialogo (0x084BFC6C); fonte: insert_font.py (traducao PT-BR)
 0x084E43F8,sPartScreenObjPaletteBlockC,label,,Simon/Rokusho em 0x084E441C
+0x084E6BF0,gGfx_BattleStatus_Char,data,,[GF3] Char principal do status de batalha (Malias +2 0x1320 -> VRAM 0x06004000); GF3
 0x084E776C,gGfx_BattleScene_Tiles_Bg0,data,,[GF2] Malias 0x11A0 -> VRAM 0x06004000; InitializeBattleSceneScreen 0x080040BC (GF2)
 0x084E9650,gGfx_PartsGrid_Tiles_Bg0,data,,[GF] Malias 0x1CA0 -> VRAM 0x06004000; PartsGrid_InitScreen 0x08007A04 (GF)
+0x084EC1F8,gGfx_PartsGrid_CharEntrada,data,,[GF3] Char principal da grade de pecas na entrada (Malias +2 0x2B00 -> VRAM 0x06004000); GF3
 0x084EE0DC,gGfx_PartDetail_Tiles_Bg0,data,,[GF2] Malias 0x0FE0 -> VRAM 0x06004000; PartDetailScreen_Init 0x0800E0BC (GF2)
 0x084EEA64,gGfx_FightScene_Tiles_Bg0,data,,[GF2] Malias 0x10A0 -> VRAM 0x06004000; Fight_BattleSceneInit 0x08013C14 (GF2)
 0x084EF490,gGfx_Overlay_Tiles_Bg0,data,,[GF2] Malias 0x2F40 -> VRAM 0x06004000; Overlay_InitScreenGraphics 0x0803DD60 (GF2)
@@ -3459,5 +3464,10 @@ address,name,kind,count,comment
 0x08765EC4,event_operation_list,label,,Simon/Rokusho em 0x08765EE4
 0x08769EC0,gEventPointerTable,label,,tabela de ponteiros de eventos (base + 0x4000)
 0x087852CF,gStarterData,label,,dados do bot inicial
+0x08785EC0,gGfx_BattlePanel_Char,data,,[GF3] Asset Malias +2 0x03E0 do painel de batalha; GF3
 0x08785FB4,gGfx_Shop_PartSelect_Obj,label,,Simon/Rokusho em 0x08785FD8 (antes: sSharedPartScreenTileSheet)
+0x0878F7E8,gGfx_TitleMenu_Char,data,,[GF3] Char do menu do titulo (LZ77 0x3880 -> VRAM 0x06004000); GF3
+0x087AEFD0,gGfx_Title_OBJ,data,,[GF3] Sprites OBJ do titulo (LZ77 0x5060 -> VRAM 0x06010000); GF3
+0x087B67B0,gGfx_Title_BG0,data,,[GF3] Char BG0 do titulo (LZ77 0x61C0 -> VRAM 0x06008000); GF3
+0x087F314C,gGfx_Logo_Char,data,,[GF3] Char do logo NATSUME (LZ77 0x0DE0 -> VRAM 0x06000000); GF3
 0x087F5500,gTextDump,label,,inicio do texto
