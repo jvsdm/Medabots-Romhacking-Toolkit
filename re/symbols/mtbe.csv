@@ -31,6 +31,7 @@ address,name,kind,count,comment
 0x030004DE,text_ram_access,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x0300052E,gBattleScratchBuffer,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo byte[1]"
 0x0300056F,gCurrentObjectSlot,label,,u8: slot de gObjectSlots em uso
+0x03000584,gFlowVariant,label,,[MN] [MN] byte escrito por GameState_StartFlowByCommand cmd 0/1/2 (valor 0/1/2); provavel
 0x03000588,gPlayTimeRunning,label,,flag do relogio de jogo
 0x0300058C,keys_pressed_edge,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: just_pressed_buttons)"
 0x03000590,battle_bot_blocks,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768] (antes: gPlayerBattleSideState)"
@@ -67,6 +68,7 @@ address,name,kind,count,comment
 0x03000659,battle_robot_1_status_effect,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000666,battle_robot_1_form,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03000890,gEnemyBattleSideState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleSideState[768]"
+0x03000B90,gLinkLocalSlotIndex,label,,[MN] [MN] byte: indice do slot local usado no teste de reset por link (0 -> le halfword em +8 e +0xC conforme); provavel
 0x03000B94,SAVE_OPT_C,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b3-4 (validado <3; nome nao confirmado)
 0x03000BE0,gBattleMedalStateTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo BattleMedalStateRecord[30][1920]"
 0x03000BE1,first_medal_Id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -81,7 +83,7 @@ address,name,kind,count,comment
 0x03001784,SAVE_FLAGS,data,,[SV] [SV] bit0 = salvando (ligado antes de salvar); bit1 = opcao salva em 0x1CB8 b5 (confirmado)
 0x03001788,SAVE_OPT_A,data,,[SV] [SV] opcao 2 bits -> save 0x1CB8 b0-1 (validado <3; nome nao confirmado)
 0x0300178C,gMainState,label,,indice em gMainStateTable; boot = 3; soft reset = 0; Simon: main_state
-0x03001790,pressed_buttons,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
+0x03001790,keys_prev,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2] (antes: pressed_buttons)"
 0x03001798,keys_held,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: pressed_buttons_03001798)"
 0x030017A0,team_records_9x8,label,,"[PS] [PS] time: 9 registros de 8 B [estado, genero, medalha, cabeca, braco D, braco E, pernas, indice]; confirmado pela troca"
 0x03001800,fight_information_template,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo FightInformation[356] (antes: fight_information) (antes: gFightInformation) (antes: fight_information)"
@@ -111,7 +113,10 @@ address,name,kind,count,comment
 0x030018F2,ROS_after_defense_calc,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03001968,won_bodypart_type,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03001969,won_bodypart_id,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
-0x03002420,current_shop,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
+0x03001C00,keys_released,label,,[MN] [MN] u16: teclas soltas neste quadro (prev & ~held); confirmado (get_player_inputs)
+0x03002410,gFrameFlagClear,label,,[MN] [MN] byte zerado por AgbMain a cada quadro antes de get_player_inputs; confirmado escrita; sem funcao clara
+0x03002418,keys_repeat_timer,label,,"[MN] [MN] byte: contador da repeticao (16 no aperto novo, depois 3..0); confirmado"
+0x03002420,gFlowParam,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: current_shop)"
 0x03002430,SND_Driver,data,,[SN] estado do driver de som (apontado por [0x03007014]); trilhas em +k*0x74
 0x03002B64,gKeysHeld,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined4[4] (antes: held_buttons)"
 0x03002B70,SAVE_HEADER_RAM,data,,"[SV] [SV] 28 B: money u32, nome 16 B em +4, total u16, vitorias u16, tempo u32 quadros (confirmado por literal; nomes provaveis)"
@@ -126,6 +131,10 @@ address,name,kind,count,comment
 0x03003810,dpad_input,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03003811,dpad_input_2,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03004C40,SAVE_PARTS_INV_RAM,label,,inventario original: 4 x 0xF0 (tipo*240 + bot*2); Simon: parts_in_inventory (antes: gInventory)
+0x03005010,gLinkStateBlock,label,,[MN] [MN] bloco de estado do link (bitfield de slots conectados em +0; contadores +0x18..+0x1B; flags +0x1D/+0x1E); provavel
+0x03005014,gLinkPacketOut,label,,[MN] [MN] pacote de saida enfileirado por QueueLinkTransferPacket; provavel
+0x03005030,gLinkActiveFlag,label,,[MN] [MN] byte: flag de link; testada em AgbMain e MainState2; provavel
+0x03005170,gLinkSlotInput,label,,[MN] [MN] bloco de entrada de link por slot; +2 = byte de teclas do slot; provavel
 0x03005310,gOverworldAffineState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x0300534C,gOverworldAffineFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005350,gOverworldUiState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
@@ -139,6 +148,7 @@ address,name,kind,count,comment
 0x03005DBC,gActiveMapObjectTable,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo ActiveMapObjectEntry[64][512]"
 0x03005DBD,first_event_y,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
 0x03005DBE,first_event_eventId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x03005E0D,gBattleEncounterFlag,label,,"[MN] [MN] byte: 1 quando StartFlow 0x20 (encontro por evento), 0 quando 0x21 (encontro aleatorio); provavel"
 0x03005FDE,gCurrentMapId,label,,ID do mapa atual (base 0x030057E0 + 0x7FE)
 0x03005FDF,gCurrentChapter,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1]"
 0x03005FE0,map_width,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined2[2]"
@@ -305,6 +315,7 @@ address,name,kind,count,comment
 0x080023D8,SwapDisplayBuffersOnVBlank,func_thumb,,[R0] troca buffers duplos (chute)
 0x08002534,MainState0,func_thumb,,estado 0 (soft reset volta para ca)
 0x08002554,Dispatch_CallIndexedHandler,func_thumb,,chama table[idx] via CallViaR0; confirmado (tabela nao identificada)
+0x0800256C,gMenuListSubStepTable,table,,[MN] [MN] ponteiro usado por Dispatch_CallIndexedHandler (menu_list[0]); indexa por byte 0x03000584?? nao confirmado (ler literal 0x08002570)
 0x080025B4,Menu_ReadPadMoveCursor,func_thumb,,le estado de entrada e move cursor; provável
 0x080026A4,Portrait_TickMoveAndFlagDone,func_thumb,,"[provavel] chama Move_Character_Portraits(0,1,8,4,..); quando retorna 1 grava 1 em *DAT_080026DC"
 0x080026E0,StateMachine_InitTableAndStep,func_thumb,,grava tabela de 10 bytes; passo de maquina de estados; provavel
@@ -3255,6 +3266,7 @@ address,name,kind,count,comment
 0x083D1E40,gMotionAngleTable,ptr,59,roteiro -> s16 angulo [molde 1..49][N quadros-chave] (1/65536 volta); o tocador le 63 moldes; provavel: ponteiros de animacao de batalha por molde (lida perto de 0x08044A3C); confirmar tamanho
 0x083D1F2C,gMotionOffsetTable,ptr,59,"roteiro -> (s8 x, s8 y) [molde 1..49][N]"
 0x083D2018,gMotionDurationTable,ptr,59,"roteiro -> duracao (quadros) de cada quadro-chave, fim 0; N = tamanho"
+0x083D2104,gMainState1MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState1; [1]=EventScript_RunCurrent (mapa); [2]=0x0805716C (provavel); provavel
 0x083D212C,gSceneSubroutineTable,label,,[EV] tabela indexada por 0x0300137C (gamestate_subroutine); usada sem evento e após despacho com E+0xC5F (confirmado no literal)
 0x083D222C,gEventPrimaryOpcodeTable,label,,uma das duas tabelas dos 137 opcodes de evento (confirmar qual e handler); Simon: sEventPrimaryOpcodeHandlerTable (antes: gEventOpcodeTableA)
 0x083D2630,gEventContinuationOpcodeTable,label,,a outra tabela dos 137 opcodes de evento; Simon: sEventContinuationOpcodeHandlerTable (antes: gEventOpcodeTableB)
@@ -3294,6 +3306,7 @@ address,name,kind,count,comment
 0x0847E388,get_item_text,label,,Simon/Rokusho em 0x0847E3A8; tipo pointer[4]
 0x0847E644,gMapMusic,data,192,musica por mapa
 0x08483234,gMapEntityPtrTable,ptr,192,pessoas/gatilhos (8 B cada; fim 0xFF); Simon: sMapEntitySpawnPointerTable; Simon: sMapEntityStatePointerTable (antes: gMapPeople)
+0x08483594,gMainState2MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel
 0x08483614,SAVE_HANDLER_InitScreen,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar -> Save_InitScreen (confirmado)
 0x08483634,StateTable_CB50,data,,"[JT3] 30 ponteiros (idx 0..29), idx word 0x0300137C"
 0x08483688,SAVE_HANDLER_StepThenFlashOp,data,,[SV] [SV] ponteiro na tabela do fluxo de salvar (confirmado)
@@ -3305,6 +3318,7 @@ address,name,kind,count,comment
 0x084838E4,gShops,data,60,15 lojas x 4 slots (ID de bot; 0xFF vazio); Simon: shop_contents
 0x08483ED8,gTextKeyItems,ptr,64,tabela de texto: Key Items; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0848521C,gTextShopDialogue,ptr,19,tabela de texto: Diálogo de loja; fonte: dump_text_clean_v2.py (traducao PT-BR)
+0x084856E8,gMainState3MenuTable,table,,[MN] [MN] tabela indexada por gamestate_menu sob MainState3; [0]=boot (0x0806E460); [3..6] handlers; provavel
 0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR)
 0x08486E54,SND_LitFifoA,data,,[SN] literal 0x040000A0 (FIFO A do DMA de PCM)

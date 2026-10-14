@@ -41,6 +41,7 @@ F	0x080022DC	QueueLinkTransferPacket
 F	0x080023D8	SwapDisplayBuffersOnVBlank
 F	0x08002534	MainState0
 F	0x08002554	Dispatch_CallIndexedHandler
+L	0x0800256C	gMenuListSubStepTable
 F	0x080025B4	Menu_ReadPadMoveCursor
 F	0x080026A4	Portrait_TickMoveAndFlagDone
 F	0x080026E0	StateMachine_InitTableAndStep
@@ -2990,6 +2991,7 @@ L	0x083D1D78	gMoldTable
 L	0x083D1E40	gMotionAngleTable
 L	0x083D1F2C	gMotionOffsetTable
 L	0x083D2018	gMotionDurationTable
+L	0x083D2104	gMainState1MenuTable
 L	0x083D212C	gSceneSubroutineTable
 L	0x083D222C	gEventPrimaryOpcodeTable
 L	0x083D2630	gEventContinuationOpcodeTable
@@ -3029,6 +3031,7 @@ L	0x0847DF24	gTextPointerTable
 L	0x0847E388	get_item_text
 L	0x0847E644	gMapMusic
 L	0x08483234	gMapEntityPtrTable
+L	0x08483594	gMainState2MenuTable
 L	0x08483614	SAVE_HANDLER_InitScreen
 L	0x08483634	StateTable_CB50
 L	0x08483688	SAVE_HANDLER_StepThenFlashOp
@@ -3040,6 +3043,7 @@ L	0x08483774	gMapAreaB
 L	0x084838E4	gShops
 L	0x08483ED8	gTextKeyItems
 L	0x0848521C	gTextShopDialogue
+L	0x084856E8	gMainState3MenuTable
 L	0x08485F88	gTextTournamentMessages
 L	0x0848698C	gTextRaceMessages
 L	0x08486E54	SND_LitFifoA
