@@ -1342,6 +1342,7 @@ F	0x08033240	Fight_IsBotPendingActionClear
 F	0x0803325C	Fight_PickRandomBrokenOrMissingPart1Based
 F	0x080332B4	Fight_IsHeadActionUsable
 F	0x080332D0	Fight_IsBotMedaforceTokenActive
+L	0x080332EC	Fight_ValidatePart_ClearPartByte0F
 F	0x08033318	Fight_BeginPartActionValidation
 F	0x08033364	Fight_ValidateActionRequiresMedaforceState
 F	0x080333E4	Fight_ValidateActionRequiresMultipleActiveBots
@@ -1423,6 +1424,7 @@ F	0x08034E24	ActionScript_Op67_CallBO
 F	0x08034E40	ActionScript_Op68_CallBP
 F	0x08034E5C	ActionScript_Op69_CallBQ
 F	0x08034E78	ActionScript_Op6A_CallBR
+F	0x08034E94	Fight_LookupActionScriptByte
 F	0x08034EB8	Fight_ReadActionScriptInlineArgs
 F	0x08034F08	Fight_AdvanceActionScriptCursor
 F	0x08034F44	Fight_SideHasPartCode15
@@ -2350,6 +2352,7 @@ F	0x0805BA34	Screen_LoadLZ77TileBlock
 F	0x0805BAA0	Screen_ShiftTileRowAttr
 F	0x0805BB0C	Screen_ReadTwoBitField
 F	0x0805BBE0	MainState2
+L	0x0805BC54	Unnamed_ShopTableBaseRef
 F	0x0805BC5C	Screen_DrawCellAdvance
 F	0x0805BCB0	Screen_HighlightGridRow
 F	0x0805BD44	Screen_SetRowPalette3
@@ -2371,11 +2374,19 @@ F	0x0805CB50	Dispatch_StateTableFrameCount
 F	0x0805CB90	Shop_SetSlotHighlight
 F	0x0805CBFC	Screen_ResetLayersAndCounter
 F	0x0805CC3C	Screen_InitSpritesAndLoadTiles
-F	0x0805CDAC	Shop_InitItemListScreen
+F	0x0805CDAC	KeyItemBag_InitListScreen
 F	0x0805CED0	Screen_FadeStepThenLoadObj
 F	0x0805CF58	Shop_UpdateSlotAndDispatchState
 F	0x0805CFB4	Shop_ItemListInputStep
+L	0x0805D2C8	KeyItemBag_DispatchTable
 L	0x0805D36C	ItemListSwitch_Table
+L	0x0805D384	KeyItemBag_Case_Id1
+L	0x0805D398	KeyItemBag_Case_Id5
+L	0x0805D3AC	KeyItemBag_Case_Id12
+L	0x0805D3C0	KeyItemBag_Case_Id13
+L	0x0805D3D4	KeyItemBag_Case_Id19
+L	0x0805D3E8	KeyItemBag_Case_Id39
+L	0x0805D410	KeyItemBag_Case_Default
 F	0x0805D4A0	Slot_ActivateCursor
 F	0x0805D4E0	StateTable_WaitSubThenAdvance
 F	0x0805D4FC	Gfx_FadeOutThenClear
@@ -3018,6 +3029,8 @@ L	0x083C40B8	gTextCharacterNames
 L	0x083C47EC	gTextMenuLabels
 L	0x083C4B90	gTextStatusStrings
 L	0x083C6744	gTextGameMessages
+L	0x083C6A04	gTechniqueScriptStream_Generic
+L	0x083C6CA8	gTechniqueActionScriptPtrTable
 L	0x083CAD78	gMoveStyle
 L	0x083CE164	FightPreview_SceneRowPointerTable
 L	0x083CE374	ObjectScript_ArgCountTable
@@ -3070,6 +3083,7 @@ L	0x0847E388	get_item_text
 L	0x0847E644	gMapMusic
 L	0x08483234	gMapEntityPtrTable
 L	0x08483594	gMainState2MenuTable
+L	0x084835A4	ScreenFrameTable_Entry0
 L	0x08483614	SAVE_HANDLER_InitScreen
 L	0x08483634	StateTable_CB50
 L	0x08483688	SAVE_HANDLER_StepThenFlashOp
