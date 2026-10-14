@@ -1,0 +1,30 @@
+addr,nome,kind,comentario
+0x0803D15C,Anim_StepSlotScriptAndPosition,func_thumb,"provavel; revisto CH; roda Anim_RunSlotScript do slot, +8/+9 sobem 8 ate limite, reposiciona via CompositeSprite_ComputeOffsetWord (antes: FUN_0803D15C); ptr 083AFBC4"
+0x0803D928,Link_StepPaletteFadeDown,func_thumb,"provavel; revisto CH; fade de linhas de paleta (0x20-4*n) ate estado 9, depois contador; prefixo Link_ duvidoso; ptr 083AFC98/083AFD00"
+0x0803E374,Anim_PickSlotActivateEntryCopy,func_thumb,"provavel; revisto CH; gauge + contador, sorteia slot (Overlay_PickRandomSlotAndDrawCursor), Inv_AddCountClamp99 ou Tinpet_ActivateMatchingEntry, copia 15 bytes; prefixo Anim_ fraco; ptr 083AFD98"
+0x08048000,Fx_SetupLayersAndInitRecord8,func_thumb,"provavel; revisto CH; grava 0x500/0x1F60 em regs de display, Fx_InitRecord8(arg,0x16,7), zera +100; sem ptr de tabela"
+0x08060A54,Menu_CursorStepSfxAdvance,func_thumb,provavel; revisto CH; Shop_MoveCursorByDpad; sem input: SFX 4/5 + flag +0x48 + estado+1; senao reset e estado 4; entrada 08483848
+0x080617E0,Fx_StepCounterResetAtZero,func_thumb,"provavel; revisto CH; (FS9 FUN_080617E0) contador 16 bits +step, rampa +0x208 ate 0x40, ao zerar byte baixo: Obj_ResetStateFields e estado 4; tabela 084838D0"
+0x08064A08,Obj_BuildActiveSlotMaskAndReset,func_thumb,"confirmado; revisto CH; varre 0x1D entradas de 0x40 com bit7 montando mascara, zera +0x48..4B, grava +0x1C, contador++; mesmo endereco de FS9 FUN_08064A08 (nome Ghidra ja Obj_*); ptr 080AFC58"
+0x08064BBC,Obj_CheckReachedTargetSetState14,func_thumb,confirmado; revisto CH; grava +6 = alvo; se +0xA e +0xE == alvo: estado 0x14 e zera byte; ptr 084835FC
+0x0806B134,BotAnim_StepMoveByPhase,func_thumb,provavel; revisto CH; (antes: FUN_0806b134) passo de posicao por fase do bot (+2/+4) + jump table nao recuperada; ptr 084857D0
+0x0806B1FC,BotAnim_StepOffsetByPhaseB,func_thumb,"provavel; revisto CH; (antes: FUN_0806b1fc) +4 +=2 se fase<0x10, -2 se fase 0xD2..0xE1, Obj_SetupSlotPtr se >0xE1; ptr 084857E0"
+0x0806B248,BotAnim_StepColorByPhase,func_thumb,provavel; revisto CH; (antes: FUN_0806b248) escreve registrador de cor por fase (0x1000 ou (0x20-x)*0x100); ptr 084857E4
+0x0806B3D8,BotAnim_StageWalkStep,func_thumb,"provavel; revisto CH; nome Ghidra ja existia; corpo confere (+4 clamp 200, X +-1 por flag, bit 0x1000 em OAM); ptr 084857F0"
+0x0806BB24,Scene_StepFxSongAdvance,func_thumb,confirmado; revisto CH; fx_step_table_a()!=0 -> snd_song_request(0x14) e contador++; ptr 08485904
+0x0806BB44,Scene_DispatchState8Anim,func_thumb,confirmado; revisto CH; dispatch_state_8()!=0 -> contador++; anim_dispatch_state; ptr 08485908
+0x0806BB64,Fx_StepRowCells3State,func_thumb,"provavel; revisto CH; (antes: FUN_0806bb64) automato de linha de 0xC celulas (valores 0..2), mod 3 na 1a, mod 7 nas demais; contador++; ptr 0848590C"
+0x0806DBFC,Battle_WaitTransitionA,func_thumb,"provavel; revisto CH; bit 0x8 de *DAT_0806dc2c: battle_slot_init(6,2)+sfx 3; senao espera > limite e estado 3 com fx_screen_setup_b; ptr 08485984"
+0x0806DC7C,Battle_TimedTransition41,func_thumb,"provavel; revisto CH; conta ate 0x29, depois Obj_SetupSlotPtr(2), fx_screen_setup_b e estado 2; ptr 08485988"
+0x0806E038,BotAnim_SetTimerByFlagAndAdvance,func_thumb,provavel; revisto CH; (antes: FUN_0806e038) +4 = 0x73 ou 200 por bit0 de +0x22; +0x22++; jump; ptr 084859A4
+0x0806E074,BotAnim_StepWaitBlinkCycle,func_thumb,"provavel; revisto CH; (antes: FUN_0806e074) espera/piscar com rand_scaled; estado <8 avanca, senao +2=300 e reinicia; ptr 084859AC"
+0x0806E3F8,Scene_SetSubstate2Wrapper,func_thumb,confirmado (wrapper); revisto CH; corpo so chama Sel_RequestIfIndexBelow4(2); significado chute; ptr 084859D0
+0x080705E0,ObjSlot_AdvanceFadeLevelA,func_thumb,"provavel; revisto CH; slot +8/+9 sobem 8 ate 0x40, +0x21++; ptr 08485B4C"
+0x08070648,ObjSlot_AdvanceFadeLevelB,func_thumb,"provavel; revisto CH; variante: +8 primeiro, depois +9 ate 0x40; ptr 08485B50"
+0x0807DD58,FUN_0807dd58,label,"chute; revisto CH; bytes 30 B5 (push {r4,r5,lr}) = inicio real de funcao; Ghidra para em dado (halt_baddata); BL vindo de 08053708 nao analisado"
+0x080EC9EE,FUN_080ec9ee,label,chute; revisto CH; bytes EB B5 (push) seguidos de literais; corpo nao recuperado; BL de 080FC3F6 nao confere
+0x08068924,FUN_08068924,func_thumb,chute; revisto CH; se X%B==0 grava 16-X/B em *ptr; retorna X==16*B; ptr 0848570C/08485710
+0x08068978,FUN_08068978,func_thumb,"chute; revisto CH; liga BG0 (DISPCNT|=0x100), 4 escritas de tabela por X/B, desliga BG0 ao fim; ptr 08485714"
+0x080692EC,FUN_080692EC,func_thumb,"chute; revisto CH; gfx_clear_regs_init, snd_song_request(0), byte de modo +0x39 (1/2), Sel_RequestIfIndexBelow4(0); ptr 08485760"
+0x0806E9C0,FUN_0806E9C0,func_thumb,"chute; revisto CH; grava 3, 1, 0 em tres enderecos (reset de flags); ptr 08485A00"
+0x08073B2C,FUN_08073B2C,func_thumb,chute; revisto CH; halfword em ponteiro indexado (param-1) com OR 0x440 (bits de atributo OAM); sem ptr de tabela achado na ROM
