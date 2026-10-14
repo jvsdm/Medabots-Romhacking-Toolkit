@@ -22,7 +22,7 @@ Fontes: `SaveLoad_SaveGame` 0x0805E010 e `SaveLoad_LoadGame` 0x0805DF18 (decompi
 |---|---|---|---|---|
 | 0x000 | 16 | ROM 0x084836B4 (não é RAM) | assinatura "MEDAROT2 Ver.KBT" (ReadVerify valida 13 B: 0..12) | SaveGame: loop 0x10 bytes de pool 0x0805E0F0; ReadVerify: loop `cmp r6,#0xc` (0x0805E188) |
 | 0x010 | 4 | 0x03002B70 | dinheiro u32 (limite validado ≤ 99999 = 0x1869F) | SaveGame: 7 words de pool 0x0805E0EC -> +0x10..+0x27; ReadVerify `ldr r1,[r7,#0x10]` vs 0x1869F |
-| 0x014 | 16 | 0x03002B74 | nome do jogador (0xFE = fim; 0 = vazio aceito) | idem (word +0x14..+0x23); ReadVerify checa [0x14..0x23] com 0xFE/0 |
+| 0x014 | 16 | 0x03002B74 | nome do jogador (CORRIGIDO na retomada: 0xFE no início ou só zeros = inválido) | idem (word +0x14..+0x23); ReadVerify checa [0x14..0x23] com 0xFE/0 |
 | 0x024 | 2 | 0x03002B84 | total de lutas u16 (≤ 9999 = 0x270F) | idem (+0x24); ReadVerify `ldrh r1,[r7,#0x24]` vs 0x270F |
 | 0x026 | 2 | 0x03002B86 | vitórias u16 (≤ total) | idem (+0x26); ReadVerify `cmp r1,r0; bcc` (wins ≤ total) |
 | 0x028 | 4 | 0x03002B88 | tempo de jogo u32 em quadros (≤ 0x14996FF = 21.599.999) | idem (+0x28); ReadVerify `ldr r1,[r7,#0x28]` vs 0x14996FF |
@@ -106,3 +106,65 @@ antes do `strh`. SV.md já tinha esse aviso.
   memória (ainda consistente, porque o lixo vai para a EEPROM). Não verificado.
 - Nomes de opção (0x03001788, 0x03001360, 0x03000B94) continuam provisórios (ver OP.md).
 - Savestate não usado. Os valores do mapa são confirmados pelo código, não medidos.
+
+## Retomada GH-SV2 (2026-10-14, 2a rodada): verificações no código
+
+Decompile + disassembly de `SaveLoad_SaveGame`, `SaveLoad_LoadGame`, `Save_ReadVerify` (asm 0x0805E138..0x0805E246) e
+`Save_WriteBlocksEeprom`. Literal pools lidos direto da ROM (python -I, só leitura).
+
+Confirmado por pool (todas as cópias usam estes ponteiros):
+- SaveGame: 0805E0EC=0x03002B70 (28 B de dinheiro..tempo, lido como 7 words = RAM 1:1 em save+0x10..0x2B);
+  0805E0F4=0x03000BE0 (medalhas); 0805E0F8=0x3BF (960 bytes); 0805E0FC=0x03002BA0 (itens);
+  0805E100=0x03004C40 (inventário); 0805E104=0x7AC; 0805E108=0x030017A0 (equipe); 0805E10C=0xF2C; 0805E110=0xF74;
+  0805E114=0x030057E0 (E); 0805E118=0xFF8; 0805E11C=0x03001788; 0805E120=0x03001360; 0805E124=0x03000B94;
+  0805E128=0x03001784; 0805E12C=0x1CB8; 0805E130=0xFF4; 0805E134=0x1CBB.
+- LoadGame: mesmos ponteiros em 0805DFD0..0805E00C (inverso). Simétrico, confirmado.
+- ReadVerify: 0805E218 = assinatura ROM; 0805E21C=0x1869F; 0805E220=0x270F; 0805E224=0x14996FF; 0805E228=0x1CB8; 0805E22C=0xFF4; 0805E230=0x1CBB.
+
+Mapa linear confirmado: em 0x10..0x2B o save é a RAM 0x03002B70 deslocada (save = RAM - 0x03002B60).
+Medalhas: `lib_memcpy(save, RAM, 0x40)` x30 (dst = save em SaveGame; dst = RAM em LoadGame).
+Inventário: SaveGame grava `(ushort)byte` (cada byte da RAM vira u16 no save); LoadGame grava `(char)u16`.
+  Então o inventário ocupa 960 u16 = 0x780 B em save+0x7AC. CONFIRMADO. Estrutura por tipo (hipótese forte, pelo
+  "4 blocos de 0xF0" de SV.md): RAM 0x03004C40 + tipo*0xF0 + bot*2 + {0: qty, 1: eq}, 120 bots/tipo; no save,
+  qty = 0x7AC + tipo*0x1E0 + bot*4 e eq = qty+2 (u16).
+Itens: `bios_cpuset(0x03002BA0 <- save+0xF74, 0x40)` = 64 pares; ocupa F74..FF3.
+Checksum: SaveGame zera FF4..FF5 e soma 0..0x1CBB. ReadVerify (asm 0x0805E1F0): `ldrh r4,[r1]` lê o gravado ANTES do
+  `strh r0,[r1]`, depois compara r2==r4. CONFIRMADO no asm (o decompile engana).
+Opções 0x1CB8: SaveGame = (B1360<<2)|B1788|(B0B94<<3)|(((B1784&3)>>1)<<5); LoadGame = B1788&3; B1360 = (b>>2)&1;
+  B0B94 = (b>>3)&3; B1784 bit1 = (b>>5)&1. CONFIRMADO. Obs: SaveGame não mascara B1360 nem B1788 (ver acima).
+
+### Correções ao SV2 (achadas nesta rodada)
+
+1. **Regra do nome (+0x14) estava errada no SV2.** Asm 0x0805E190..0x0805E1B4: o nome só passa se o 1º byte for
+   diferente de 0 e de 0xFE, ou se houver zeros seguidos de um byte diferente de 0 e de 0xFE (dentro de 16 bytes).
+   Nome começando com 0xFE falha (retorno -1). Nome só de zeros falha. "0 aceito como vazio" do SV2 não vale.
+   Reforço: Save_ClearAndRetryLoad (SV.md) põe 0xFE no nome e recarrega; isso bate com o comportamento de falha.
+   Confiança: alta pelo asm; a validação real precisa de savestate (não feito).
+2. **FF0..FF7 (o que é cada byte):**
+   - FF0..FF3 = itens 62 e 63 (o último par de [0x80|id, qty]; o bloco de itens é F74..FF3).
+   - FF4..FF5 = checksum u16.
+   - FF6..FF7 = não copiados por SaveGame nem LoadGame. São padding interno da faixa FF4..FF7, entram na soma
+     (0..0x1CBB) mas com o valor que estiver no staging EWRAM 0x02030000 (não zerado pelo código). Como o staging
+     inteiro vai para a EEPROM, o checksum confere na leitura: não causa falha de validação. CONFIRMADO no código.
+3. **0x1CB9..0x1CBB** (também do staging, não escritos por SaveGame): mesma situação. Vão para a EEPROM e entram
+   na soma, então a validação é consistente. Lacuna da SV2 resolvida como "não afeta a validação".
+4. **Gravação diferencial (Save_WriteBlocksEeprom, param 0):** o flag "bloco mudou" é reaproveitado do retorno de
+   `lib_eeprom_read64` (sVar1). Se esse retorno for != 0, o bloco é regravado mesmo sem mudança. Só um detalhe:
+   confirmar no asm se o retorno é 0 em leitura normal (não lido nesta rodada; baixo impacto).
+
+### Veredito da lacuna 0x030057D8..0x030057DF (ids 0..15)
+
+- SaveGame e LoadGame copiam E a partir de 0x030057E0 (pools 0805E114 e 0805DFF8). Os 8 bytes 0x030057D8..DF
+  (= idx 0..7 do array de flags, ids 0..15) **não estão em nenhuma faixa do save**. Não são salvos nem carregados.
+  CONFIRMADO no código. O que não está confirmado é se algum script depende deles: evento 0 usa Op2F (lê o campo do
+  próprio evento, idx 0). Se o jogador mudar um campo de id < 16 e salvar, ele volta ao carregar. Para medir:
+  savestate, executar Op17 com id < 16, salvar, recarregar.
+- O mapeamento save <- E é: save(0xFF8 + k) = RAM(0x030057E0 + k) para k = 0..0xCBF. Logo o idx de flag i (>= 8)
+  está no save em 0xFF0 + i (já dito antes, agora com a cópia confirmada).
+
+### Ferramentas e símbolos
+
+- SV2_simbolos.csv escrito nesta pasta (nomes das funções e dos ponteiros usados).
+- Nenhum nome novo foi aplicado no Ghidra, nenhum comentário novo. Ghidra não foi salvo nem fechado.
+- extract_save.py: ver §Divergências do extrator (inventário: o extrator lê 2 bytes por bot de 240 bots/tipo, o
+  correto é 4 bytes por bot de 120 bots/tipo). Não editado.
