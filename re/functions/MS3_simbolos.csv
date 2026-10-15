@@ -1,0 +1,6 @@
+addr,nome,kind,comentario
+0x083B2940,MsgByteDispatchTable,table,confirmado: base de DAT_080408EC; indice = byte do roteiro*4; sentinela 0x08000841 no indice 34
+0x083B2954,MsgJT2_CtxB1BTable,table,confirmado: base de DAT_0804090C; indice = ctx(0x03000440)+0x1B *4; NAO e 0x083B2990 (antes: MS.md)
+0x08040994,MsgJT2_PortraitRectFillStep,func_thumb,confirmado: le ctx 0x03000440; move retrato ou preenche retangulo; ctx+0x1B++ (antes: BgMap_TickRectFillState)
+0x080408F4,MsgState9_CtxB1BDispatch,func_thumb,confirmado: despacha JT2[ctx+0x1B]
+0x08040974,MsgState13_CtxB1BDispatch,func_thumb,confirmado: despacha JT2[ctx+0x1B]
