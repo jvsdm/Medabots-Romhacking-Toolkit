@@ -1,0 +1,12 @@
+addr,nome,kind,comentario
+0x08053D78,Viewport_WorldToScreenXY,func_thumb,"provavel (antes: Viewport_AxisHelperD): x,y -> tela por float: X=x*0x03005350+30/38 + base+8; Y=base+0xC - (y*34/3C). Chamadores: 0x08053C00 (wrapper ClampAxisA) e Viewport_CheckBoundsSetState"
+0x08053DE0,Viewport_CheckBoundsSetState,func_thumb,"provavel (antes: Viewport_AxisHelperE): chama Viewport_WorldToScreenXY, grava pos de sprites e, se valor cai na faixa [min,max] do slot (bytes +0x7C/+0x7D e shorts +0x78..+0x7A), seta estado=2 e zera +0xAC/+0x1C. Chamador: 0x08053C14 (ClampAxisB)"
+0x08054014,Viewport_UpdateEdgesAndStore,func_thumb,"confirmado (decompile): grava 0xF0 e 0xA0 (240x160 = tela GBA) em 0x03005350+0/+4; chama ComputeRectEdgeA/B; loop 16 bots (stride 0x300 em 0x03006D30) gravando 4 cantos e chamando Unk_080534C4. Chamador: 0x08054D5A (funcao sem definicao no Ghidra)"
+0x080569E4,Viewport_TweenStepByMode,func_thumb,"provavel (antes: Viewport_ScaleStep): interpolacao por modo (cases 0x10..0x17) sobre struct float de 0x44 B com tabela de seno short; grava posicao/alvo. Chamador: 0x08055580 (sem funcao definida)"
+0x08056F24,Viewport_TweenAdvanceCheckDone,func_thumb,"provavel (antes: Viewport_CompareAndClampFloat): avanca posicao (+0x14 do struct) por modo com tabela de seno, +0x1C += 1 por quadro; retorna 1 e zera +0xC quando chega ao limite. Chamador: 0x0805473A (sem funcao definida)"
+0x0806B130,BotAnim_StageDone11,func_thumb,"confirmado (bytes mov r0,#0; bx lr): estagio 11 retorna 0 (antes: FUN_0806b130). Igual a BA3"
+0x0806B1A8,BotAnim_StageSlideDown2,func_thumb,"confirmado (decompile): estagio 2; short +2 += 2; retorna slot+0x1A <= byte+0x22 (antes: FUN_0806b1a8). Igual a BA3"
+0x0806B1D0,BotAnim_StageSlideUp3,func_thumb,"confirmado (decompile): estagio 3; short +2 -= 2; mesma regra de fim (antes: FUN_0806b1d0). Igual a BA3"
+0x0806B1F8,BotAnim_StageHold4,func_thumb,"confirmado (bytes mov r0,#1; bx lr): estagio 4 retorna 1 (antes: FUN_0806b1f8). Igual a BA3"
+0x0806B2B8,BotAnim_StageWobbleTimed7,func_thumb,"confirmado (decompile): estagio 7; fase impar decrementa bytes +8/+9; +0x18 += 0x40; retorna 0 quando +0x1A > 0x8F (antes: FUN_0806b2b8). Igual a BA3"
+0x0806B484,BotAnim_StageWaitTimer10,func_thumb,"confirmado (decompile): estagio 10; decrementa byte +0x27 ate 0; retorna 1 (antes: FUN_0806b484). Igual a BA3"

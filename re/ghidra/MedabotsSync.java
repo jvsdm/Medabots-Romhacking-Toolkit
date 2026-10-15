@@ -1,6 +1,7 @@
 // Deixa o Ghidra igual ao repositório: lê medabots_sync.tsv (mesma pasta deste script), cria as funções que
 // faltam e aplica os nomes de re/symbols/mtbe.csv. Linhas S separam uma função que o Ghidra engoliu dentro de
-// outra (remove a hospedeira, cria a nova, recria a hospedeira com o mesmo nome). Fora isso não apaga nada.
+// outra (remove a hospedeira, cria a nova, recria a hospedeira com o mesmo nome). Linhas D só desmontam (caso de
+// switch sem prólogo). Fora isso não apaga nada.
 // Grava o que mudou em medabots_sync_log.txt (mesma pasta). Depois salve o projeto (Ctrl+S).
 // @category Medabots
 // @menupath Tools.Medabots.Sync
@@ -49,7 +50,7 @@ public class MedabotsSync extends GhidraScript {
         List<String> lines = Files.readAllLines(tsv.toPath(), StandardCharsets.UTF_8);
         log = new PrintWriter(new File(dir, "medabots_sync_log.txt"), "UTF-8");
 
-        int created = 0, renamed = 0, same = 0, labels = 0, inside = 0, failed = 0;
+        int created = 0, renamed = 0, same = 0, labels = 0, inside = 0, failed = 0, disasm = 0;
         monitor.initialize(lines.size());
         for (String line : lines) {
             monitor.checkCanceled();
@@ -58,6 +59,18 @@ public class MedabotsSync extends GhidraScript {
             String[] p = line.split("\t");
             Address a = toAddr(Long.decode(p[1]));
             try {
+                if (p[0].equals("D")) {
+                    // Caso de switch sem prólogo: só desmonta como Thumb para o Ghidra mostrar o código.
+                    if (getInstructionAt(a) != null) continue;
+                    Data d = getDataContaining(a);
+                    if (d != null && !d.isDefined()) clearListing(d.getMinAddress(), d.getMaxAddress());
+                    Register t = currentProgram.getRegister("TMode");
+                    if (t != null) currentProgram.getProgramContext().setValue(t, a, a, BigInteger.ONE);
+                    disassemble(a);
+                    if (getInstructionAt(a) != null) { disasm++; log.println("desmontada " + a); }
+                    else { failed++; log.println("falhou desmontar " + a); }
+                    continue;
+                }
                 if (p[0].equals("S")) {
                     // Função engolida por outra: tira a hospedeira, cria esta, recria a hospedeira com o mesmo nome.
                     if (getFunctionAt(a) != null) continue;
@@ -116,7 +129,7 @@ public class MedabotsSync extends GhidraScript {
             }
         }
         String sum = "criadas " + created + ", renomeadas " + renamed + ", ja certas " + same
-            + ", rotulos " + labels + ", miolo de outra funcao " + inside + ", reparadas " + repaired + ", falharam " + failed;
+            + ", rotulos " + labels + ", miolo de outra funcao " + inside + ", reparadas " + repaired + ", desmontadas " + disasm + ", falharam " + failed;
         log.println(sum);
         log.close();
         println(sum);

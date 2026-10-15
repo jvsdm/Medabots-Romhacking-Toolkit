@@ -37,9 +37,11 @@ NEVER_FUNC = {0x08000000}
 CODE_END = 0x08080000  # acima disto a ROM é dado (gráficos, texto, música); nunca vira função
 KEEP_MTBE = {"0x08035754", "0x08035814", "0x08035880", "0x08035740"}
 # Listas de endereços que devem virar função (alvos de tabela de ponteiros).
-CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt", "JT6_criar.txt", "JT7_criar.txt", "JT8_criar.txt", "BA2_criar.txt", "IN3_criar.txt", "BT3_criar.txt", "BT4_criar.txt", "SC3_criar.txt"]
+CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "MS_lista.txt", "TX_lista.txt", "EXTRA_criar.txt", "FS_lista.txt", "JT6_criar.txt", "JT7_criar.txt", "JT8_criar.txt", "BA2_criar.txt", "IN3_criar.txt", "BT3_criar.txt", "BT4_criar.txt"]
 # Funções que o Ghidra engoliu dentro de outra (QA5): o sync tira a hospedeira, cria estas e recria a hospedeira.
 SPLIT_LISTS = ["QA5_criar.txt"]
+# Casos de switch sem prólogo (usam registradores do chamador): só desmontar como Thumb, sem criar função.
+DISASM_LISTS = ["SC3_desmontar.txt"]
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 GENERIC = re.compile(r"^(FUN|sub|DAT|LAB|PTR|thunk_FUN)_", re.I)
@@ -214,7 +216,9 @@ def main():
     splits = sorted({k for fn in SPLIT_LISTS for k in read_list(fn)})
     creates = {k for fn in CREATE_LISTS for k in read_list(fn)} - named_funcs - set(splits)
     # S vem antes de tudo: o F com o nome destas só acha a função depois de separar.
-    lines = ["S\t%s" % a for a in splits] + lines + ["C\t%s" % a for a in sorted(creates)]
+    disasm = sorted({k for fn in DISASM_LISTS for k in read_list(fn)} - named_funcs)
+    lines = ["S\t%s" % a for a in splits] + lines + ["C\t%s" % a for a in sorted(creates)] \
+        + ["D\t%s" % a for a in disasm]
 
     with open(SYNC, "w", encoding="utf-8", newline="\n") as f:
         f.write("# gerado por re/tools/build_sync.py; nao editar a mao\n")
