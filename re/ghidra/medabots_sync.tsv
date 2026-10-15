@@ -35,6 +35,7 @@ F	0x08000E94	WriteTilemapToScreenBlock
 F	0x08000F1C	CopyTileRowsToVram
 F	0x08000F78	WriteTilemapWideMap
 F	0x080010B4	Gfx_AffineMatrixFromAngle
+F	0x08001278	Gfx_VBlankDmaAlternatingRow
 F	0x080012F0	rand_scaled
 F	0x08001380	CopyPaletteBuffersToHardware
 F	0x080013A8	PaletteBlendToColor
@@ -4036,7 +4037,6 @@ L	0x087BB2A0	gGfx_Title_Map_Bg1
 L	0x087BB7E0	gGfx_Title_Map_Bg2_ANOMALIA
 L	0x087F314C	gGfx_Logo_Char
 L	0x087F5500	gTextDump
-C	0x08001278
 C	0x08002574
 C	0x0800275C
 C	0x08033C10

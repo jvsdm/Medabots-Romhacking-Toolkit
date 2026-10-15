@@ -1,0 +1,11 @@
+addr,nome,kind,comentario
+0x080688E0,Fx_StepTableBUntilDone,func_thumb,"OB2 (antes: fx_step_table_b): chama handler da tabela B pelo byte DAT_08068908; devolve !=0 quando termina (zera 0x0806891C), senao incrementa 0x0806890C. Confirmado (decompile). Renomeado."
+0x0801C525,Fight_HandleRangeMismatchFailure,func_thumb,"OB2: é o A/00 (tabela A idx 0x00), não só 'falha'. Escolhe familia por +0x89/+0x2B: grava +0xA6 em 0x0E/0x0F/0x10/0x11 e +0x51 em 0..3, +0xAA+=1; senão +0xAA=0x2D. Confirmado (decompile)."
+0x0801CD29,Fight_DispatchOnSubstateAA_A_15_SetMsg15Advance,func_thumb,"OB2: A/15 grava +0xA6=0x15 e +0xAA+=1 (-> 0x16). Confirmado."
+0x0801CD41,Fight_DispatchOnSubstateAA_A_17_JumpTo20,func_thumb,"OB2: A/17 grava +0xAA=0x20 (fixo). Unico escritor literal de 0x20 achado. Confirmado."
+0x0801CDB5,Fight_DispatchOnSubstateAA_A_1B_WaitSlotCheckAdvance,func_thumb,"OB2: A/1B espera Fight_TickSlotScriptsUntilDone(0x21,4) e so ai +0xAA+=1. Confirmado."
+0x0801CDD5,Fight_DispatchOnSubstateAA_LoadTilesSetupSlot,func_thumb,"OB2: A/1C (LZ + CpuSet + sprite slot 0x21); +0xAA+=1 (-> 0x1D). Confirmado."
+0x0801CE95,Fight_DispatchOnSubstateAA_FinishAndLoadSideTiles,func_thumb,"OB2: A/1D roda slot 0x21; se fim: +0xAA = 0x0E (fixo, volta ao ramo 0x0E). Confirmado."
+0x0801CF79,Fight_DispatchOnSubstateAA_A_20_DrainTargetValueStep,func_thumb,"OB2: A/20. Se +0x51==2 decrementa contador; ao zerar +0xAA+=1 (-> 0x21), senao fica. Else: se (+0xA2 >>1) < valor: subtrai e +0xAA=0x2D; senao +0xAA+=1 (-> 0x21). Obs: codigo '.' = 0x2E tambem aparece. Confirmado (decompile)."
+0x0801CFFD,Fight_DispatchOnSubstateAA_LoadSideTilesThenJump,func_thumb,"OB2: A/21. Carrega LZ/CpuSet por +0x51 (0..3), +0xAA+=1 (-> 0x22 = A/22 SetupBotAndSprites), depois tail-call por jump table nao recuperada. Confirmado no +1; destino da jump table em aberto."
+0x080305E1,ActionFamily_StatusCheckFamily_Handler,func_thumb,"OB2: NAO e placeholder. Chama Fight_RunSubstateDispatch(+0xA6); se !=0 +0xAA+=1. Usada em A/01,0B,0E,16,27. Confirmado."

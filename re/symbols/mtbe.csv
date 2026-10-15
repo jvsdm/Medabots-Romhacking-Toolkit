@@ -419,6 +419,7 @@ address,name,kind,count,comment
 0x08000F1C,CopyTileRowsToVram,func_thumb,,[R0] copia linhas de tiles por CpuSet (provavel)
 0x08000F78,WriteTilemapWideMap,func_thumb,,[R0] tilemap > 32 tiles (provavel)
 0x080010B4,Gfx_AffineMatrixFromAngle,func_thumb,,matriz afim 2x2 via tabela seno + bios_div; provavel
+0x08001278,Gfx_VBlankDmaAlternatingRow,func_thumb,,[NX2] provavel (antes: FUN_08001278): copia 8 hw da linha par/impar (gFrameCount&1) para buffer 0x..(PTR_DAT_080012cc) e arma DMA0 (SAD/DAR/CNT) com a proxima linha; zera byte 0x..(DAT_080012dc); ponteiro addr|1 0x08001279 em 0x08001274 carregado por ldr em 0x08001246 (sem funcao no Ghidra; provavel instalador de callback VBlank); destino exato chute
 0x080012F0,rand_scaled,func_thumb,,[R0] RNG do jogo (n*r>>16) (provavel)
 0x08001380,CopyPaletteBuffersToHardware,func_thumb,,[R0] copia buffers de paleta para 0x05000000 (provavel)
 0x080013A8,PaletteBlendToColor,func_thumb,,[R0] mistura paleta com cor no peso 0..32 (provavel)
@@ -3198,14 +3199,14 @@ address,name,kind,count,comment
 0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
-0x08053360,Viewport_ReplaceZeroWithDefault,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute (antes: Unk_08053360)
+0x08053360,Viewport_ReplaceZeroWithDefault,func_thumb,,"[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute (antes: Unk_08053360) [NX3] provavel (antes: Unk_08053360): se x == DAT_08053378 devolve DAT_0805337c, senao x. Guarda de divisor zero. Chamadores: Viewport_ScaleStep (5x BL)."
 0x08053380,Unk_08053380,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL + literal 1.0f; precisa re-disassemble; chute
-0x080533A4,Viewport_ScaleIfNegative,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute (antes: Unk_080533A4)
+0x080533A4,Viewport_ScaleIfNegative,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute (antes: Unk_080533A4) [NX3] provavel (antes: Unk_080533A4): se x < DAT_080533c4 multiplica por DAT_080533c8. Chamadores: Viewport_ScaleStep (11x BL).
 0x080533E4,Overworld_BeginUiSceneState,func_thumb,,"Simon/Rokusho: Begin an overworld UI/scene-state sequence with the supplied state id, optional position parameters, and extra mode argument. [R3] (mtbe) reseta estado de objeto (nome chute) | revisto CH3: provável - zera bloco de estado de 0x240 B, recalcula 32 entradas de affine e grava flags (+0x1D4) e parâmetros (+0x1D8/+0x1DC/+0x1E0); flag 0x40 lê pares de ushort de tabela; 'cena de UI' é o nome, não confirmado"
-0x080534C4,Viewport_ComputeTriNormalAndUpdate,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute (antes: Unk_080534C4)
-0x080535C8,Viewport_ComputeNormalAndDistance,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute (antes: Unk_080535C8)
-0x080537BC,Viewport_GetCenter,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute (antes: Unk_080537BC)
-0x080537D8,Viewport_CallSetFloatBounds,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute (antes: Unk_080537D8)
+0x080534C4,Viewport_ComputeTriNormalAndUpdate,func_thumb,,"[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute (antes: Unk_080534C4) [NX3] provavel (antes: Unk_080534C4): distancia/normalizacao de 3 vetores (soft-float), chama Viewport_UpdateFromCamera se comprimento < limite. Chamador: Viewport_UpdateEdgesAndStore (0x080541fc)."
+0x080535C8,Viewport_ComputeNormalAndDistance,func_thumb,,"[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute (antes: Unk_080535C8) [NX3] provavel (antes: Unk_080535C8): produto vetorial dos 3 componentes, normaliza e grava 3 saidas + distancia (param_7). Chamador: Viewport_ComputeTriNormalAndUpdate (0x080534e6)."
+0x080537BC,Viewport_GetCenter,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute (antes: Unk_080537BC) [NX3] provavel (antes: Unk_080537BC): le 3 words da struct global +0x40/+0x44/+0x48 para as saidas. Chamador: Viewport_ComputeTriNormalAndUpdate (0x080534fc).
+0x080537D8,Viewport_CallSetFloatBounds,func_thumb,,"[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute (antes: Unk_080537D8) [NX3] confirmado (antes: Unk_080537D8): so chama Viewport_SetFloatBounds (0x080537E4). Chamador: 0x08053466, funcao que contem esse endereco nao foi localizada."
 0x080537E4,Viewport_SetFloatBounds,func_thumb,,[FS8] [FS8] provavel: monta 0x03005350 com floats +-120.5/+-80.5 e chama 0x08053858/0x0805390C; corpo bad no Ghidra (bytes lidos da ROM)
 0x08053858,Viewport_ComputeRectEdgeA,func_thumb,,"[FS8] [FS8] chute: helper float sobre 0x03005350; corpo bad no Ghidra [NX3] confirmado: grava 4 params em +0x10..+0x1C da struct global e 4 coeficientes (div) em +0x30..+0x3C. Chamadores: Viewport_SetFloatBounds (0x08053818), FUN_08053fbc (0x08053fe6), Viewport_UpdateEdgesAndStore (0x0805403c)."
 0x0805390C,Viewport_ComputeRectEdgeB,func_thumb,,"[FS8] [FS8] chute: como 0x08053858 + trunc para tabelas 0x083D6F2C/0x083D732C; corpo bad [NX3] confirmado: versao B, grava em +0x20..+0x2C e coeficientes em +0x30..+0x3C. Chamadores: Viewport_SetFloatBounds (0x08053824), FUN_08053fbc (0x08053ff2), Viewport_UpdateEdgesAndStore (0x08054048)."
@@ -3213,7 +3214,7 @@ address,name,kind,count,comment
 0x08053BE0,Viewport_ComputeOffsetA,func_thumb,,[FS8] [FS8] chute: helper float; le 0x03005404 0x03002C30
 0x08053C00,Viewport_ClampAxisA,func_thumb,,[FS8] [FS8] chute: teste NaN + int->float + div; corpo bad
 0x08053C14,Viewport_ClampAxisB,func_thumb,,[FS8] [FS8] chute: mesmo padrao de 0x08053C00; corpo bad
-0x08053C7C,Viewport_ProjectToScreen,func_thumb,,[FS8] [FS8] chute: helper float (mul add neg sub div trunc); corpo bad (antes: Viewport_AxisHelperC)
+0x08053C7C,Viewport_ProjectToScreen,func_thumb,,"[FS8] [FS8] chute: helper float (mul add neg sub div trunc); corpo bad (antes: Viewport_AxisHelperC) [NX3] provavel (antes: Viewport_AxisHelperC): projecao 3D->tela com struct global (+0x4c..+0x5c, +0xa0), divide pelo w. Chamadores: Viewport_ComputeOffsetA (0x08053bee), Viewport_ClampAxisB (0x08053c22)."
 0x08053D78,Viewport_AxisHelperD,func_thumb,,[FS8] [FS8] chute: trunc e laco recursivo pelos bytes; le 0x03005404 0x03002C30
 0x08053DE0,Viewport_AxisHelperE,func_thumb,,[FS8] [FS8] chute: usa mascara 0x1FF e 0x03006D30
 0x08054014,Viewport_UpdateEdgesAndStore,func_thumb,,[FS8] [FS8] chute: chama 0x08053858 0x0805390C 0x08053FBC; le 0x083D2F30 0x030053F0
