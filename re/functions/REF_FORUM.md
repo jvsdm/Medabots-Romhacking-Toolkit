@@ -38,10 +38,10 @@ git). Paráfrase apenas. Status: **bate** = já temos no código/emulador; **div
 | Scout sobe o ROS do time pela Poder do scout, **acumula**, teto ~200 | TR6 (emulador): acumula, teto **160** (0xA0) | **bate** (teto exato = 160) |
 | Conceal sobe a evasão só de quem usou | TR6: bot+0xB9 do usuário, teto 120, subtrai do ROS do atacante | **bate** |
 | Cada bot só tem **um** debuff; aplicar outro apaga o anterior | slot único +0xC9 (SS.md) | **bate** |
-| "Flow" = dano periódico igual à metade do golpe inicial | Melt (id 20) tick = +0xCC, não quebra a peça (SS3, emulador) | **bate em parte**: conferir se +0xCC = metade do golpe |
+| "Flow" = dano periódico igual à metade do golpe inicial | Melt (id 20) tick = +0xCC, não quebra a peça (SS3, emulador) | **bate** (código: Fire/Melt +0xCC = dano/2; BB.md) |
 | "Movement" baixa muito o ROS | Bug (13): penalidade de ROS (SS3, DM) | **bate** (Bug = Movement) |
-| "Bind" (andar 2× mais lento) e "Stop" (para de andar) | Wave/Hold 17/18, Thunder/Freeze 15/16 (SS.md) | **aberto** — ligar nomes |
-| Debuff de golpe com dano acaba muito rápido se a defesa de perna ativar | não documentado | **novo** |
+| "Bind" (andar 2× mais lento) e "Stop" (para de andar) | Wave/Hold 17/18, Thunder/Freeze 15/16 (SS.md) | **bate** (Stop = 15/16, Bind = 17/18; BB.md, REF_MEDAPEDIA) |
+| Debuff de golpe com dano acaba muito rápido se a defesa de perna ativar | duração = ROS final (fi+0xE8); rec_28/29: defesa zerou o ROS → duração 1 (BB.md) | **bate (emulador)** |
 | Destroy (berserk) destrói 1 peça sem errar, mas **sempre erra se o alvo não estiver no turno de recuo**; Sacrifice ignora guarda | DS (emulador): peça do atacante sempre quebra; alvo zera no acerto; ss2 errou | **bate** + regra do recuo **confirmada** (mensagem no jogo, SK.md) |
 | Guardas (Defense / Half Block / Full Block) só protegem de golpes com dano; podem falhar com ROS baixo | não documentado | **novo** |
 | Medaforce: poder base + 1/8 da proficiência + 1/8 da compatibilidade; ignora esquiva, defesa e guarda | MF.md (medidor, custo); fórmula não documentada | **novo** — conferir no código |
