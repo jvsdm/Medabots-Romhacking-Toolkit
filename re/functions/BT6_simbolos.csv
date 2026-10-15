@@ -1,0 +1,7 @@
+addr,nome,kind,comentario
+0x08010B24,Fight_ResetPartStateBlock,func_thumb,"confirmado (decompile): zera bloco de 0x14 bytes e grava 2,3,0. Passo 35 (GS 0x23) do menu 6; nao grava GS nem menu."
+0x0806D588,Battle_TickEffectsAndTransition,func_thumb,"confirmado (decompile do corpo): entrada real 0x0806D588 (push lr). Chama battle_effect_affine_lines, CallViaR0 (tabela DAT_0806D5AC), BattleFx_TickTimedStages5, MainState_KeyComboStateTransition. Sem BL direto; ponteiro 0x0806D589 em 0x084856F0 (base da tabela nao confirmada)."
+0x084856F0,tabela_tick_batalha_ponteiro,table,"provavel: entrada que contem 0x0806D589 (Battle_TickEffectsAndTransition). Base e indice nao confirmados."
+0x0806D41C,MainState_KeyComboStateTransition,func_thumb,"confirmado: chamador = Battle_TickEffectsAndTransition (0x0806D588) (antes: 'chamador nao achado' em BT5). Ramos e constantes como em BT5."
+0x08010A7C,Overworld_ReloadMapSceneAndAdvanceGameState,func_thumb,"provavel: menu 6 idx 21; candidato a retorno ao mapa; caminho de vitoria nao fechado."
+0x08010264,Scene_GsDispatch_Menu6_Encounter,func_thumb,"confirmado: despachante GS da tabela 0x083ACE24; tabela lida em BT6 (idx 0-39)."

@@ -2234,7 +2234,7 @@ F	0x08042CA0	CompositeSprite_ComputeClampedOffsetWord
 F	0x08042D94	LoadCompositeBattleSpriteTiles
 F	0x08042E58	CreateCompositeBattleSpriteObjects
 F	0x0804305C	Sprite_WriteComposite4Objects
-F	0x08043240	SetCompositeBattleSpriteAnimationSpeed
+F	0x08043240	Obj_SetCompositeGroupField24
 F	0x080432A0	Sprite_UpdateComposite4Motion
 F	0x08043560	AdjustInventoryPartCount
 F	0x080435B0	DrawPartIconTileBlock
@@ -2246,8 +2246,8 @@ L	0x08043820	AreBattleSpritePartIdsValid_08043820
 F	0x0804384C	Lookup_FindPartIndexById
 F	0x0804387C	Overworld_ResetEncounterStepState
 F	0x080438C4	Overworld_ShouldTriggerRandomEncounter
-F	0x08043AE0	Unk_08043AE0
-F	0x08043B58	Unk_08043B58
+F	0x08043AE0	Gfx_VBlankBgScrollDmaPingPong
+F	0x08043B58	Gfx_VBlankStopDma0AndResetHandler
 F	0x08043B7C	GfxBankA_LoadTilesAndPalette
 F	0x08043C08	GfxBankB_LoadTilesAndPalette
 F	0x08043C94	Encounter_RollPercent0To99
@@ -3942,6 +3942,7 @@ L	0x08483ED8	gTextKeyItems
 L	0x084850CA	KeyItemBag_MsgScript
 L	0x0848521C	gTextShopDialogue
 L	0x084856E8	gMainState3MenuTable
+L	0x084856F0	tabela_tick_batalha_ponteiro
 L	0x08485708	FxStepHandlerTable
 L	0x084857D0	BotAnim_StageTable
 L	0x08485988	BattleTimedTableB
