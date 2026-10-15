@@ -17,7 +17,7 @@ F	0x08000540	ClearOamAndVramShadow
 F	0x0800058C	Scene_InitSoundAndStartSong0
 F	0x080005D0	Gfx_VBlankIrq
 F	0x0800065C	VBlankIrqHandler
-F	0x080007E0	VBlankIrqHandler_080007E0
+L	0x080007E0	VBlankIrqHandler_080007E0
 L	0x080007FC	Snd_VBlankCallSite
 F	0x08000824	Irq_Slot3_CallHandlerAndAck
 F	0x08000840	NoOpActionHandler
@@ -54,7 +54,7 @@ F	0x08002328	Link_CollectReceivedPackets
 F	0x080023D8	SwapDisplayBuffersOnVBlank
 F	0x08002438	Link_SerialIrqTransferStep
 F	0x08002534	MainState0
-F	0x08002536	MainState0_08002536
+L	0x08002536	MainState0_08002536
 F	0x08002554	Dispatch_CallIndexedHandler
 L	0x0800256C	gMenuList0SubTablePtr
 F	0x080025B4	Menu_ReadPadMoveCursor
@@ -250,11 +250,11 @@ F	0x08008B80	PartsGrid_ClearAndInitStep
 F	0x08008BB8	PartsGrid_DispatchStepC
 F	0x08008BE0	PartsGrid_SlotScriptInputStep
 F	0x08008CA0	PartsGrid_SubStateSwitchStep
-F	0x08008CF4	PartsGrid_SubStateA0_DispatchCtx18
-F	0x08008D00	PartsGrid_SubStateA1_DispatchCtx1C
-F	0x08008D0C	PartsGrid_SubStateA2_CellLookup
-F	0x08008D30	PartsGrid_SubStateA3_CellLookupB
-F	0x08008D54	PartsGrid_SubStateA4_DispatchCtx20
+L	0x08008CF4	PartsGrid_SubStateA0_DispatchCtx18
+L	0x08008D00	PartsGrid_SubStateA1_DispatchCtx1C
+L	0x08008D0C	PartsGrid_SubStateA2_CellLookup
+L	0x08008D30	PartsGrid_SubStateA3_CellLookupB
+L	0x08008D54	PartsGrid_SubStateA4_DispatchCtx20
 L	0x08008D90	PartsGrid_SubStateB0_CellOrTable
 L	0x08008E08	PartsGrid_SubStateB1_CellOrTable
 L	0x08008E80	PartsGrid_SubStateB2_CellOrTable
@@ -512,7 +512,7 @@ F	0x080115B4	Fight_CommitPaletteOscStep
 F	0x080115E8	Fight_FadeRowsUpStep
 F	0x08011644	Fx_InitBlendTableAndTick
 F	0x080116C4	Fight_InitPartStateSetGS10
-F	0x08011720	Fight_InitPartStateSetGS10_08011720
+L	0x08011720	Fight_InitPartStateSetGS10_08011720
 F	0x08011764	Fight_InitBotPartPanel
 F	0x08011A58	Fight_FadeRowsDownStep
 F	0x08011ABC	Fight_DrawOscSetGS3D
@@ -924,7 +924,7 @@ F	0x0801CE94	Fight_DispatchOnSubstateAA_FinishAndLoadSideTiles
 F	0x0801CF78	Fight_DispatchOnSubstateAA_A_20_DrainTargetValueStep
 F	0x0801CFFC	Fight_DispatchOnSubstateAA_LoadSideTilesThenJump
 F	0x0801D06C	Fight_DispatchOnSubstateAA_SetupBotAndSprites
-F	0x0801D0A8	Fight_DispatchOnSubstateAA_SetupBotAndSprites_0801D0A8
+L	0x0801D0A8	Fight_DispatchOnSubstateAA_SetupBotAndSprites_0801D0A8
 F	0x0801D174	Fight_DispatchOnSubstateAA_ClearFlagsSfx
 F	0x0801D1AC	Fight_DispatchOnSubstateAA_A_25_SlideSlotUntilAnimEnds
 F	0x0801D244	Fight_DispatchOnSubstateAA_A_28_BranchBySideTwo
@@ -1593,7 +1593,7 @@ F	0x080305E0	ActionFamily_StatusCheckFamily_Handler
 F	0x08030608	ActionFamily_TrapFamily_Handler
 F	0x08030624	Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10
 F	0x08030674	Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip
-F	0x08030680	Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip_08030680
+L	0x08030680	Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip_08030680
 F	0x080306B8	Fight_DispatchOnSubstateAA_H_0F_WaitTimerClearSlots
 F	0x08030780	Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer
 F	0x0803080C	Fight_DispatchOnSubstateAA_Shared_SetDone
@@ -2260,7 +2260,7 @@ F	0x08043E78	Obj_StepAccumMoveB
 F	0x08043F9C	FxBlend_ApplyFromObjB
 F	0x08043FEC	Anim_AdvanceRingFrameEvery3
 F	0x08044094	Anim_SetDefaultTimers
-F	0x08044098	Anim_SetDefaultTimers_08044098
+L	0x08044098	Anim_SetDefaultTimers_08044098
 F	0x080440B4	Count_Entries3InTable9
 F	0x080440D4	Check_PairsAllEqual
 F	0x08044100	Fight_StepAccumMoveBThenRingFrame
@@ -2280,7 +2280,7 @@ F	0x08044B28	Gfx_LoadDefaultAsset
 F	0x08044B34	Roster_ResolveIdIfZero
 L	0x08044B58	Bot_InitStarterRecord
 F	0x08044BA8	FightPreview_InitSideState
-F	0x08044BF0	PartDetail_InitWithMode
+L	0x08044BF0	PartDetail_InitWithMode
 F	0x08044C38	FightPreview_SetSceneMode
 F	0x08044CDC	Dispatch_Sub4Mode
 F	0x08044D0C	Asset_UnpackOrCopyBlock
@@ -2412,7 +2412,7 @@ F	0x0804A210	GameState_AdvanceSubroutine
 F	0x0804A220	EventScript_RunCurrent
 F	0x0804A2F0	new_game_start
 L	0x0804A3B6	lit_EventDbBase0
-F	0x0804A4A2	new_game_start_0804A4A2
+L	0x0804A4A2	new_game_start_0804A4A2
 L	0x0804A584	lit_EventDbBase1
 F	0x0804A60C	Map_InitScreenAndTransition
 F	0x0804A6E0	Map_TickSceneStateMachine
@@ -2765,7 +2765,7 @@ F	0x08052400	Map_CheckWalkOverTrigger
 F	0x080524C8	Map_GetAdjacentCollisionTileByDirection
 F	0x080525BC	Overworld_CheckMovementObjectBlocker
 L	0x080525D0	Overworld_CheckMovementObjectBlocker_080525D0
-F	0x080525E6	Overworld_CheckMovementObjectBlocker_080525E6
+L	0x080525E6	Overworld_CheckMovementObjectBlocker_080525E6
 F	0x08052624	Map_FindDirectionalTriggerAtAdjacentTile
 F	0x0805273C	Map_PixelXToTileX
 F	0x08052760	Map_PixelYToTileY

@@ -1,0 +1,7 @@
+0x0805390C	Viewport_ComputeRectEdgeB
+0x08053B04	Viewport_UpdateFromCamera
+0x08053C7C	Viewport_AxisHelperC
+0x08053D78	Viewport_AxisHelperD
+0x08053DE0	Viewport_AxisHelperE
+0x08054014	Viewport_UpdateEdgesAndStore
+0x080569E4	Viewport_ScaleStep

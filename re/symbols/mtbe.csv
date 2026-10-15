@@ -401,7 +401,7 @@ address,name,kind,count,comment
 0x0800058C,Scene_InitSoundAndStartSong0,func_thumb,,[FN1] provável: init de cena + tabela de sons + música 0
 0x080005D0,Gfx_VBlankIrq,func_thumb,,"VBlank IRQ handler: ack IF, swap buffers, frame counter (confirmado)"
 0x0800065C,VBlankIrqHandler,func_thumb,,"[R0] handler de VBlank: scroll, OAM, callbacks (G8) [RV1] confirmado: scroll do shadow"
-0x080007E0,VBlankIrqHandler,func_thumb,,[BI] BI: no VBlank chama CallViaR0(*0x030017F0) e repõe 0x030017F0 com DAT_08000818. Provável.
+0x080007E0,VBlankIrqHandler,label,,[BI] BI: no VBlank chama CallViaR0(*0x030017F0) e repõe 0x030017F0 com DAT_08000818. Provável.
 0x080007FC,Snd_VBlankCallSite,label,,[SN2] SN2: chamada de snd_frame_tick no VBlank (confirmado)
 0x08000824,Irq_Slot3_CallHandlerAndAck,func_thumb,,[FN4] provavel: chama ponteiro de *DAT_08000838 via r0 e grava 2 em *DAT_0800083c; ptr em 0807E86C = tabela IRQ 0x0807E860 idx 3 (antes: FUN_08000824)
 0x08000840,NoOpActionHandler,func_thumb,,"Simon/Rokusho: First-stage action-family placeholder. In the ActionId dispatch table, many actions map here, meaning this specific phase does nothing for them and their real behavior is implemented in later shared state machines, generic attack resolution, or other action-sequence tables."
@@ -438,7 +438,7 @@ address,name,kind,count,comment
 0x080023D8,SwapDisplayBuffersOnVBlank,func_thumb,,[R0] troca buffers duplos (chute)
 0x08002438,Link_SerialIrqTransferStep,func_thumb,,"[LK] [GH-LK] rodada SIO multiplayer: le SIOMULTI0-3, escreve SIOMLT_SEND, sentinela 0xFEFE, liga bit 7 no IntrCheck; confirmado (ex FUN_08002438)"
 0x08002534,MainState0,func_thumb,,"estado 0 (soft reset volta para ca) [MU] [MU] gMainStateTable[0]; cena do jogo, indexa menu_list 0x083AC2C8 (confirmado)"
-0x08002536,MainState0,func_thumb,,[OB] OB: estado 0 (soft reset). Chama table(0x083AC2C8)[byte 0x03002B8C]. Pool confirmado. Confirmado.
+0x08002536,MainState0,label,,[OB] OB: estado 0 (soft reset). Chama table(0x083AC2C8)[byte 0x03002B8C]. Pool confirmado. Confirmado.
 0x08002554,Dispatch_CallIndexedHandler,func_thumb,,chama table[idx] via CallViaR0; confirmado (tabela nao identificada)
 0x0800256C,gMenuList0SubTablePtr,table,,[MN] [MN] ponteiro usado por Dispatch_CallIndexedHandler (menu_list[0]); indexa por byte 0x03000584?? nao confirmado (ler literal 0x08002570) (antes: gMenuListSubStepTable)
 0x080025B4,Menu_ReadPadMoveCursor,func_thumb,,le estado de entrada e move cursor; provável
@@ -634,11 +634,11 @@ address,name,kind,count,comment
 0x08008BB8,PartsGrid_DispatchStepC,func_thumb,,[FS2] provavel: StateMachine_DispatchStep(obj+0x14) + contador; entrada 73 de 0x083AC86C; renomeado
 0x08008BE0,PartsGrid_SlotScriptInputStep,func_thumb,,"[FS2] provavel: Anim_RunSlotScript(...,6) + leitura de entrada (SFX 4/5, estados 0x4E e 0x40+); entrada 74 de 0x083AC86C; renomeado"
 0x08008CA0,PartsGrid_SubStateSwitchStep,func_thumb,,[FS2] provavel: switch por +0x42 (0..2) e +0x44 com jump table nao recuperada pelo Ghidra; entrada 75 de 0x083AC86C; renomeado
-0x08008CF4,PartsGrid_SubStateA0_DispatchCtx18,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x18)); sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 0 de PartsGrid_SubStateSwitchStep (0x08008CA0); nao e funcao no Ghidra (Ghidra devolve o switch pai)
-0x08008D00,PartsGrid_SubStateA1_DispatchCtx1C,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x1C)); sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 1 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
-0x08008D0C,PartsGrid_SubStateA2_CellLookup,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: lookup de celula (+0x3D*0x40 + base 0x03000BE0 + 4) -> ponteiro -> DispatchStep; sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 2 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
-0x08008D30,PartsGrid_SubStateA3_CellLookupB,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: lookup de celula (+6) -> ponteiro -> DispatchStep; sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 3 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
-0x08008D54,PartsGrid_SubStateA4_DispatchCtx20,func_thumb,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x20)); sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 4 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08008CF4,PartsGrid_SubStateA0_DispatchCtx18,label,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x18)); sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 0 de PartsGrid_SubStateSwitchStep (0x08008CA0); nao e funcao no Ghidra (Ghidra devolve o switch pai)
+0x08008D00,PartsGrid_SubStateA1_DispatchCtx1C,label,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x1C)); sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 1 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08008D0C,PartsGrid_SubStateA2_CellLookup,label,,[PG] [PG] alvo de jump table em 0x08008CA0: lookup de celula (+0x3D*0x40 + base 0x03000BE0 + 4) -> ponteiro -> DispatchStep; sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 2 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08008D30,PartsGrid_SubStateA3_CellLookupB,label,,[PG] [PG] alvo de jump table em 0x08008CA0: lookup de celula (+6) -> ponteiro -> DispatchStep; sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 3 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
+0x08008D54,PartsGrid_SubStateA4_DispatchCtx20,label,,[PG] [PG] alvo de jump table em 0x08008CA0: DispatchStep(*(ctx+0x20)); sem funcao no Ghidra (criar) [RV1] provavel: alvo do caso 4 do switch 0x08008CA0; nao e funcao no Ghidra; nome segue PG.md
 0x08008D90,PartsGrid_SubStateB0_CellOrTable,label,,[PG] [PG] alvo de jump table em 0x08008CA0: se byte celula+5 <= 9: DispatchStep(*(ctx+0x10)); senao copia 3+6 bytes e DispatchStep da tabela por ctx+0xF0; sem funcao no Ghidra (criar) [RV2] chute (nao e inicio de funcao; bloco de jump-table dentro de PartsGrid_SubStateSwitchStep 0x08008CA0-0x080090C7; nome nao verificado)
 0x08008E08,PartsGrid_SubStateB1_CellOrTable,label,,"[PG] [PG] alvo de jump table em 0x08008CA0: igual B0, limiar 0x1D, ramo DispatchStep(*(ctx+0x10)); senao copia e tabela por ctx+0xF0; sem funcao no Ghidra (criar) [RV2] chute (nao e inicio de funcao; bloco dentro de PartsGrid_SubStateSwitchStep; nome nao verificado)"
 0x08008E80,PartsGrid_SubStateB2_CellOrTable,label,,"[PG] [PG] alvo de jump table em 0x08008CA0: igual B0, limiar 0x3B, ramo DispatchStep(*(ctx+0x10)); senao copia e tabela por ctx+0xF0; sem funcao no Ghidra (criar) [RV2] chute (nao e inicio de funcao; bloco dentro de PartsGrid_SubStateSwitchStep; nome nao verificado)"
@@ -896,7 +896,7 @@ address,name,kind,count,comment
 0x080115E8,Fight_FadeRowsUpStep,func_thumb,,[FS4] [FS4] fade A/B cor 0xFFFF ate 9 com draw; GS+1; tabela 0x083ACFA8; provavel (antes sem funcao no FS.md)
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
 0x080116C4,Fight_InitPartStateSetGS10,func_thumb,,"[FS4] [FS4] clear slots/objetos, fight+0x3C 0x14B, cena 0x03002B8C=5, GS=0x10; tabela 0x083ACFB0; provavel"
-0x08011720,Fight_InitPartStateSetGS10,func_thumb,,"[PD2] confirmado: grava ctx+0x3E = byte [struct+0x168] (struct em DAT_08011700, nao resolvido), ctx+0x3C=2, ctx+0x3D=tabela; sem xref direto (tabela de estados); provavel batalha"
+0x08011720,Fight_InitPartStateSetGS10,label,,"[PD2] confirmado: grava ctx+0x3E = byte [struct+0x168] (struct em DAT_08011700, nao resolvido), ctx+0x3C=2, ctx+0x3D=tabela; sem xref direto (tabela de estados); provavel batalha"
 0x08011764,Fight_InitBotPartPanel,func_thumb,,provável: monta painel de peças do bot na luta
 0x08011A58,Fight_FadeRowsDownStep,func_thumb,,"[FS4] [FS4] fade inverso linhas 0x20-4*cnt, cor 0xFFFF; GS+1; tabela 0x083ACFBC; provavel"
 0x08011ABC,Fight_DrawOscSetGS3D,func_thumb,,[FS4] [FS4] draw+osc; GS=0x3D; tabela 0x083ACFC0; provavel
@@ -1308,7 +1308,7 @@ address,name,kind,count,comment
 0x0801CF78,Fight_DispatchOnSubstateAA_A_20_DrainTargetValueStep,func_thumb,,A/20; provavel
 0x0801CFFC,Fight_DispatchOnSubstateAA_LoadSideTilesThenJump,func_thumb,,[HA1] A/21; provável
 0x0801D06C,Fight_DispatchOnSubstateAA_SetupBotAndSprites,func_thumb,,[HA1] A/22; provável
-0x0801D0A8,Fight_DispatchOnSubstateAA_SetupBotAndSprites,func_thumb,,"[BI] BI: grava 0x03003478=8 (contador do E08), 0x03003479=0x40, 0x0300347A=6, 0x0300347B=0xF0; +AA+=1. Chamador não identificado. Confirmado."
+0x0801D0A8,Fight_DispatchOnSubstateAA_SetupBotAndSprites,label,,"[BI] BI: grava 0x03003478=8 (contador do E08), 0x03003479=0x40, 0x0300347A=6, 0x0300347B=0xF0; +AA+=1. Chamador não identificado. Confirmado."
 0x0801D174,Fight_DispatchOnSubstateAA_ClearFlagsSfx,func_thumb,,[HA1] A/24; confirmado
 0x0801D1AC,Fight_DispatchOnSubstateAA_A_25_SlideSlotUntilAnimEnds,func_thumb,,A/25; provavel
 0x0801D244,Fight_DispatchOnSubstateAA_A_28_BranchBySideTwo,func_thumb,,A/28; confirmado (tabela guarda 0x0801D245)
@@ -1977,7 +1977,7 @@ address,name,kind,count,comment
 0x08030608,ActionFamily_TrapFamily_Handler,func_thumb,,Simon/Rokusho
 0x08030624,Fight_DispatchOnSubstateAA_H_19_WaitTimer60ClearSlot10,func_thumb,,"Simon/Rokusho: Action-family entry for Heal Change. Waits on either a button press or a countdown, clears the temporary object slot when done, and advances the action state. (antes: ActionFamily_HealChange_Handler) [BI] BI: H19. Espera timer 0x030004C6 (0x03000440+0x86) chegar a 0; ClearObjectAttributeEntries(10,1); +AA+=1. Antes ActionFamily_HealChange_Handler. Confirmado."
 0x08030674,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[HN5] indice 0x0E de 19 despachantes: espera +86 ou avanco rapido (confirmado) (antes: Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip) (antes: Fight_DispatchOnSubstateAA_U_09_WaitTimerOrSkip)
-0x08030680,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,func_thumb,,[BI] BI: mesmo padrão de timer 0x030004C6; decrementa e +AA+=1 ao zerar. Confirmado (decompile).
+0x08030680,Fight_DispatchOnSubstateAA_Shared_WaitTimerOrSkip,label,,[BI] BI: mesmo padrão de timer 0x030004C6; decrementa e +AA+=1 ao zerar. Confirmado (decompile).
 0x080306B8,Fight_DispatchOnSubstateAA_H_0F_WaitTimerClearSlots,func_thumb,,"Simon/Rokusho: Action-family entry for Change. Waits for either a confirm-button press or a countdown, then clears all active temporary object slots in the tracked range and advances the action state. (antes: ActionFamily_Change_Handler) [BI2] BI2: H0F (tabela H 0x083AD790, idx 0x0F = 0x080306B9). Limpa slots 10..29 com bit 0x8000 e espera timer +0x86. Renomeado (antes ActionFamily_Change_Handler). Provável."
 0x08030780,Fight_DispatchOnSubstateAA_AG_09_ScrollSlotWaitTimer,func_thumb,,[HN6] AG 0x09: slot 0x21 +0x18 +-0x40/frame (&0x3FF); timer 0x03000440+0x86 (A pula); +0xAA++ (confirmado; renomeado no Ghidra) (antes: Fight_DispatchOnSubstateAA_AG_ScrollSlotWaitTimer)
 0x0803080C,Fight_DispatchOnSubstateAA_Shared_SetDone,func_thumb,,"[HN6] terminal compartilhado (48 tabelas, J 0x04, AG 0x03): +0xB5 = 1 (confirmado; renomeado no Ghidra)"
@@ -2645,7 +2645,7 @@ address,name,kind,count,comment
 0x08043F9C,FxBlend_ApplyFromObjB,func_thumb,,[R2a] R2a: igual a FxBlend_ApplyFromObjA para o objeto B (+0x77..+0x79) [RV12] confirmado: igual ao ObjA mas com campos do objeto B (+0x77..0x79); mantem nome
 0x08043FEC,Anim_AdvanceRingFrameEvery3,func_thumb,,[AN2] [AN2] renomeada de FUN_08043FEC; streaming de quadros de tile por anel da ROM para VRAM 0x06008020; chamada por Obj_StepAccumMoveBThenSync; provavel
 0x08044094,Anim_SetDefaultTimers,func_thumb,,"[R2a] R2a: grava 1,1,7 em tres bytes globais de animacao [RV12] confirmado: grava 1"
-0x08044098,Anim_SetDefaultTimers,func_thumb,,[FM5] gMainState=1 menu=1 sub=7; chamado no fim do sub 3 da tela de B (confirmado)
+0x08044098,Anim_SetDefaultTimers,label,,[FM5] gMainState=1 menu=1 sub=7; chamado no fim do sub 3 da tela de B (confirmado)
 0x080440B4,Count_Entries3InTable9,func_thumb,,"[R2a] R2a: conta entradas com byte 3 em 9 registros de 8 bytes [LK3] [GH-LK3] conta bytes==3 em 9 registros de 8 B a partir de 0x030017A0 (BLOCO DE TIME, nao inventario); confirmado pelo literal"
 0x080440D4,Check_PairsAllEqual,func_thumb,,[R2a] R2a: 1 se todos os pares de bytes consecutivos sao iguais [LK3] [GH-LK3] varre 0x1E0 pares de bytes a partir de 0x03004C40 (inventario) e retorna 1 se byte0==byte1 em todos; confirmado (codigo); papel provavel
 0x08044100,Fight_StepAccumMoveBThenRingFrame,func_thumb,,[FS7] [FS7] Obj_StepAccumMoveB (0x08043E78) e FUN_08043FEC com byte +0x38; provavel (antes: Obj_StepAccumMoveBThenSync)
@@ -2665,7 +2665,7 @@ address,name,kind,count,comment
 0x08044B34,Roster_ResolveIdIfZero,func_thumb,,[R2a] R2a: id 0 vira byte da tabela de roster atual; senao devolve o id [RV12] confirmado: se id==0 busca id na tabela de roster; senao devolve o id; mantem nome
 0x08044B58,Bot_InitStarterRecord,label,,rotina do bot inicial (antes: site_StarterBot)
 0x08044BA8,FightPreview_InitSideState,func_thumb,,[R2a] R2a: zera estado de um lado da previa; grava modo e lado [RV12] confirmado: limpa slots/atributos e estado do lado da preview; grava modo e parametro; mantem nome
-0x08044BF0,PartDetail_InitWithMode,func_thumb,,"[PD2] confirmado: grava ctx+0x3E=param (0..3, 0 forca 0) e ctx+0x3C=3; chamada por Gfx_FadeThenPreviewInit 0x080627A0 (loja, byte struct+0x19) e Fight_PreviewFadeThenInit. (antes: FightPreview_InitSideState) RENOMEADO no Ghidra"
+0x08044BF0,PartDetail_InitWithMode,label,,"[PD2] confirmado: grava ctx+0x3E=param (0..3, 0 forca 0) e ctx+0x3C=3; chamada por Gfx_FadeThenPreviewInit 0x080627A0 (loja, byte struct+0x19) e Fight_PreviewFadeThenInit. (antes: FightPreview_InitSideState) RENOMEADO no Ghidra"
 0x08044C38,FightPreview_SetSceneMode,func_thumb,,[R2a] R2a: configura tipos e contadores da cena de previa conforme modo 0..3 [LK2] [GH-LK2] grava gMainState e gamestate_menu; chamado pelo handler de comando 6; confirmado (nome do Ghidra)
 0x08044CDC,Dispatch_Sub4Mode,func_thumb,,[R2a] R2a: despacha modo 0..3 para FUN_08064BEC/0C/2C/4C [RV12] confirmado: despacha para Battle_SetDefaultsA..D conforme modo 0..3; mantem nome
 0x08044D0C,Asset_UnpackOrCopyBlock,func_thumb,,[R2a] R2a: tipo 1 = LZ77 para WRAM; senao bios_cpuset com registro em DAT_08044D60 [RV12] confirmado: LZ77 para WRAM se nibble=1
@@ -2797,7 +2797,7 @@ address,name,kind,count,comment
 0x0804A220,EventScript_RunCurrent,func_thumb,,"Simon/Rokusho: Main overworld event VM tick. |  | State model: | - gCurrentEventPendingFlag == 0: run overworld startup/map-scene subroutine table | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte == 0: run one event-initialization opcode | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte != 0: dispatch the current normal event opcode |  | The VM is two-level: | - gCurrentEventOpcodeByte selects the current opcode handler | - gCurrentEventOpcodeSubstate is per-opcode local state used by multi-step normal opcode handlers |  | The event script stream is addressed through the installed event database, gCurrentEventId, and gCurrentEventScriptCursor. [EV] laço por quadro da VM de eventos; sem evento chama 0x083D212C[0x0300137C]; com evento despacha primária/continuação (confirmado)"
 0x0804A2F0,new_game_start,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported. (antes: new_game_start) (antes: Menu_NewGame_Main)
 0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos
-0x0804A4A2,new_game_start,func_thumb,,[VA3] grava E+0xC5C=0 e E+0xC5B=1. confirmado
+0x0804A4A2,new_game_start,label,,[VA3] grava E+0xC5C=0 e E+0xC5B=1. confirmado
 0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
 0x0804A6E0,Map_TickSceneStateMachine,func_thumb,,[FM6] [FM6] sub 5 de gEventSubTable (0x083D212C): so chama Overworld_UpdateMapSceneStateMachine; confirmado
@@ -3150,7 +3150,7 @@ address,name,kind,count,comment
 0x080524C8,Map_GetAdjacentCollisionTileByDirection,func_thumb,,Simon/Rokusho: Return the collision/metatile byte for the tile adjacent to the player in the requested direction using the current map collision layer. [RV18] confirmado: devolve byte de colisao do tile vizinho na direcao 0-3
 0x080525BC,Overworld_CheckMovementObjectBlocker,func_thumb,,Simon/Rokusho [RV18] provavel: se estado pendente==2 e vizinho livre
 0x080525D0,Overworld_CheckMovementObjectBlocker,label,,[MP2] bloqueio por tabela 0x030063F0[v] (v = colisao 0..3) e estado 0x0300643C
-0x080525E6,Overworld_CheckMovementObjectBlocker,func_thumb,,[VA3] se C5C==2 e tile 0/2: C5C = C69. confirmado
+0x080525E6,Overworld_CheckMovementObjectBlocker,label,,[VA3] se C5C==2 e tile 0/2: C5C = C69. confirmado
 0x08052624,Map_FindDirectionalTriggerAtAdjacentTile,func_thumb,,"Simon/Rokusho: Compute the tile immediately in front of the player, clamp it against the current map bounds, then scan a per-map list of 4-byte directional trigger records {x, y, allowed_direction_mask, trigger_id}. Returns the matching trigger id or -1 when no directional trigger is active for the current facing. [RV18] confirmado: calcula tile vizinho pelo facing"
 0x0805273C,Map_PixelXToTileX,func_thumb,,Simon/Rokusho (antes: ikki_x_to_tile) [OW2] renomeado de ikki_x_to_tile: tile = (px - origem) >> 4 com correcao de negativo (confirmado)
 0x08052760,Map_PixelYToTileY,func_thumb,,Simon/Rokusho (antes: ikki_y_to_tile) [RV18] confirmado: converte Y em pixel para tile (subtrai origem
