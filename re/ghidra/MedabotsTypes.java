@@ -1,6 +1,7 @@
 // Cria os structs do jogo (categoria /Medabots) a partir de medabots_types.tsv (mesma pasta deste script, gerado
 // por re/tools/build_types.py) e aplica os tipos nos globais da RAM/ROM. Recria o struct inteiro a cada execução
-// (os campos vêm só do repositório). Não mexe em funções nem em nomes.
+// (os campos vêm só do repositório) e tipa como ponteiro os literais de código que guardam esses endereços
+// (o decompilador passa a mostrar fi->campo). Não mexe em funções nem em nomes.
 // Linhas do tsv:
 //   T <nome> <tamanho>                         struct
 //   M <struct> <offset> <tipo> <nome> <coment> campo; tipo = u8|u16|u32|s8|s16|s32|bytes:N|<Struct>|<Struct>:N
@@ -13,6 +14,7 @@
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.address.Address;
 import ghidra.program.model.data.*;
+import ghidra.program.model.listing.Data;
 import ghidra.program.model.mem.MemoryBlock;
 import ghidra.program.model.symbol.SourceType;
 import java.io.File;
@@ -102,7 +104,35 @@ public class MedabotsTypes extends GhidraScript {
                 applied++;
             } catch (Exception e) { failed++; log.println("aplicar falhou " + line + " : " + e.getMessage()); }
         }
-        String msg = "structs " + structs.size() + ", campos " + fields + ", globais " + applied + ", falhas " + failed;
+        // 4) literais de código (ldr rX,=0x03001800 etc.) viram ponteiro para o struct; assim o decompilador mostra
+        //    fi->campo e bots[i].campo em vez de *(byte *)(DAT_xxx + 0xNN). Só palavras alinhadas fora de instrução.
+        int literals = 0;
+        Map<Long, DataType> want = new LinkedHashMap<>();
+        for (String line : lines) {
+            String[] p = line.split("\t", -1);
+            if (!p[0].equals("A")) continue;
+            long v = Long.decode(p[1]);
+            DataType t = base(p[2]);
+            if (t != null && (v >>> 24) != 0x08) want.put(v, new PointerDataType(t, 4, dtm));
+        }
+        ghidra.program.model.mem.Memory mem = currentProgram.getMemory();
+        Address lo = toAddr(0x08000000L), hi = toAddr(0x08080000L);
+        for (Address a = lo; a.compareTo(hi) < 0; a = a.add(4)) {
+            monitor.checkCanceled();
+            long v;
+            try { v = mem.getInt(a) & 0xFFFFFFFFL; } catch (Exception e) { continue; }
+            DataType pt = want.get(v);
+            if (pt == null) continue;
+            if (getInstructionContaining(a) != null || getInstructionContaining(a.add(3)) != null) continue;
+            Data d = getDataAt(a);
+            if (d != null && d.getDataType().getName().equals(pt.getName())) continue;
+            try {
+                clearListing(a, a.add(3));
+                createData(a, pt);
+                literals++;
+            } catch (Exception e) { failed++; log.println("literal falhou " + a + " : " + e.getMessage()); }
+        }
+        String msg = "structs " + structs.size() + ", campos " + fields + ", globais " + applied + ", literais " + literals + ", falhas " + failed;
         log.println(msg);
         log.close();
         println(msg + " (detalhes em medabots_types_log.txt)");
