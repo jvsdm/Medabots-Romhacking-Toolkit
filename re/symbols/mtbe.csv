@@ -839,6 +839,7 @@ address,name,kind,count,comment
 0x08010040,PartDetail_SetupAttributeCursorSprite,func_thumb,,[R0] cursor da lista de atributos linha 0..2 (provavel)
 0x080100BC,PartDetail_MoveAttributeCursor,func_thumb,,[R0] move cursor de atributo 0..2 (provavel)
 0x0801013C,PartDetail_DispatchModeHandler,func_thumb,,[R0] dispatch por modo; retorna modo==3 (chute)
+0x08010146,ObjSlot_DispatchState129Handler,func_thumb,,[PD3] provavel (antes: PartDetail_DispatchModeHandler). Le gObjectSlots+0x129 (0x03002D59) e despacha tabela 0x083ACE14[byte*4]; retorna byte==3. NAO e modo da tela de detalhe
 0x08010170,PartsBuild_SetOrClearSlotShapeAndAdvance,func_thumb,,[FS3] FS3 chute: marca bit 0x4000 em flags de bot; significado de negocio aberto (antes: PartsBuild_MarkSlotFlagStep) [RV2] provavel (antes: PartsBuild_MarkSlotFlagStep; liga/desliga 0x4000 em attr0 do slot conforme bit 4 do flag; caso especial 0x1E; incrementa estado)
 0x080101E8,Slot_CountdownStepAndClear,func_thumb,,"contagem regressiva de byte de contexto +0x108; limpa slot (4,1) ao zerar; provavel"
 0x0801022C,BgMap_FillRectTickCounter,func_thumb,,"[provavel] BgMap_FillRect16(12,8,18,5,tile) + contador de byte++"
@@ -896,7 +897,7 @@ address,name,kind,count,comment
 0x080115B4,Fight_CommitPaletteOscStep,func_thumb,,[FS4] [FS4] draw+osc+CopyPalette; fight+0x84=0; GS+1; tabela 0x083ACFA4; confirmado fluxo
 0x080115E8,Fight_FadeRowsUpStep,func_thumb,,[FS4] [FS4] fade A/B cor 0xFFFF ate 9 com draw; GS+1; tabela 0x083ACFA8; provavel (antes sem funcao no FS.md)
 0x08011644,Fx_InitBlendTableAndTick,func_thumb,,"[provavel] escreve tabela 3x3 de words em buffer, SetGpuBlendMode(5,0x3F,0x20), contador++"
-0x080116C4,Fight_InitPartStateSetGS10,func_thumb,,"[FS4] [FS4] clear slots/objetos, fight+0x3C 0x14B, cena 0x03002B8C=5, GS=0x10; tabela 0x083ACFB0; provavel"
+0x080116C4,Fight_InitPartDetailFromBattleMode,func_thumb,,"[FS4] [FS4] clear slots/objetos, fight+0x3C 0x14B, cena 0x03002B8C=5, GS=0x10; tabela 0x083ACFB0; provavel (antes: Fight_InitPartStateSetGS10)"
 0x08011720,Fight_InitPartStateSetGS10,label,,"[PD2] confirmado: grava ctx+0x3E = byte [struct+0x168] (struct em DAT_08011700, nao resolvido), ctx+0x3C=2, ctx+0x3D=tabela; sem xref direto (tabela de estados); provavel batalha"
 0x08011764,Fight_InitBotPartPanel,func_thumb,,provável: monta painel de peças do bot na luta
 0x08011A58,Fight_FadeRowsDownStep,func_thumb,,"[FS4] [FS4] fade inverso linhas 0x20-4*cnt, cor 0xFFFF; GS+1; tabela 0x083ACFBC; provavel"
@@ -1991,9 +1992,11 @@ address,name,kind,count,comment
 0x080309C8,Fight_DispatchOnSubstateAA_BR_13_ActionSelectCheckPart,func_thumb,,[HN9] Cena 8 GS 0x03: +0xBD bit0 -> A6=4 GS=0x20; +0xDD==0 -> GS=0x10; senao GS++ (confirmado por bytes; decompile quebrado; renomeado)
 0x08030A24,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,func_thumb,,"[HN9] Cena 8 GS 0x04: valida peca/medaforce; erro A6=4..0x0C GS=0x20; medaforce GS=0x30; ok F+0xA8=tecnica, GM=9 GS=0 (confirmado; renomeado)"
 0x08030C64,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,label,,[TA] grava fight+0xA8 (id do roteiro) em 0x08030C68
+0x08030C7C,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,func_thumb,,[BT5] confirmado: grava menu 9.
 0x08030C94,Fight_DispatchOnSubstateAA_BR_23_GotoEndCheck,func_thumb,,[HN9] Cena 8 GS 0x13/0x18/0x22/0x33: GS=0x40 (confirmado; renomeado)
 0x08030CA0,Fight_SceneStep45_GotoEndBattle,func_thumb,,[HN10] passos 0x45 e 0x4D (BR 0x55/0x5D): sub = 0x50 (confirmado; renomeado)
 0x08030CAC,Fight_SceneStep4F_ReturnToTurnScene,func_thumb,,"[HN10] passo 0x4F (BR 0x5F): 3 paletas OBJ; gamestate_menu=7, sub=0x46 (confirmado; cena 7 = turno provavel; renomeado)"
+0x08030CCC,Fight_SceneStep4F_ReturnToTurnScene,func_thumb,,[BT5] confirmado (sem nome novo): grava menu 7; volta ao turno.
 0x08030CFC,Fight_DispatchOnSubstateAA_BR_20_NoPartCheckMedaforceFull,func_thumb,,[HN9] Cena 8 GS 0x10: bot+0xC1==0x50 -> GS++ senao GS=0x14 (confirmado; renomeado)
 0x08030D3C,Fight_DispatchOnSubstateAA_BR_21_RunDispatchBThenNext,func_thumb,,[HN9] Cena 8 GS 0x11/0x20/0x31: Fight_RunSubstateDispatchB ate !=0; GS++ (confirmado; renomeado)
 0x08030D58,Fight_DispatchOnSubstateAA_BR_22_RunDispatch0ThenNext,func_thumb,,[HN9] Cena 8 GS 0x12: Fight_RunSubstateDispatch(0) ate !=0; GS++ (confirmado; renomeado)
@@ -2032,6 +2035,7 @@ address,name,kind,count,comment
 0x080318E0,Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName,label,,[TA2] copia nome por ptr[B+0xA8] (tabela 0x08031904); fight+0xA6=0x38
 0x08031918,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,func_thumb,,"[HN9] Cena 8 GS 0x39: F+0xA8=bot+0xA8+0x50, zera alvos, GM=9 GS=0 (confirmado; renomeado)"
 0x08031938,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,label,,[TA2] fight+0xA8 = B+0xA8+0x50; fight+0x164=1 (medaforca)
+0x08031956,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,func_thumb,,[BT5] confirmado: grava menu 9.
 0x08031978,Fight_SceneStep58_InitLinkTextBox,func_thumb,,"[HN10] passo 0x58 (BR 0x68): Obj_InitSlotAndLoad(1,0,0); sub++ (confirmado; renomeado)"
 0x08031994,Fight_SceneStep59_ShowCheckingConnection,func_thumb,,[HN10] passo 0x59 (BR 0x69): SystemMessages[1] 'Checking connection!'; sub++ (confirmado; renomeado)
 0x080319B8,Fight_SceneStep5A_WaitOverlayTarget,func_thumb,,[HN10] passo 0x5A (BR 0x6A): espera 0x0803E79C != 0; T+0x86=0; sub++ (confirmado; renomeado)
@@ -3700,7 +3704,7 @@ address,name,kind,count,comment
 0x0806D138,battle_anim_trajectory,func_thumb,,"[R4] R4: trajetoria por fases do contador, usa 0807CD2C; provavel"
 0x0806D398,battle_spawn_two_effects,func_thumb,,[R4] R4: cria sprites 0xB e 0xC por seno/cosseno de +0xE; provavel
 0x0806D3EC,battle_mark_active_slots,func_thumb,,"[R4] R4: x=0x78 p/ slots ativos, 0xC8 p/ inativos (3 objetos); confirmado"
-0x0806D41C,battle_transition_main_state,func_thumb,,[R4] R4: transicao de estado principal por botao; provavel
+0x0806D41C,MainState_KeyComboStateTransition,func_thumb,,[R4] R4: transicao de estado principal por botao; provavel (antes: battle_transition_main_state)
 0x0806D4A4,battle_effect_affine_lines,func_thumb,,"[R4] R4: deslocamento por linha (0xA0 linhas, perfil affine/HDMA); provavel"
 0x0806D588,Battle_TickEffectsAndTransition,func_thumb,,"[FN6] provavel: battle_effect_affine_lines, CallViaR0(tabela), battle_effects_5_slots_update, battle_transition_main_state; ponteiro 0x084856F0"
 0x0806D600,Fx_StepTableBThenEnterScene,func_thumb,,"chama fx_step_table_b, ajusta gMainState e pede musica 0; provavel"
