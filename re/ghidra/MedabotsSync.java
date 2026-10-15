@@ -30,7 +30,7 @@ public class MedabotsSync extends GhidraScript {
     // modo ficou ARM. Tira o dado do ponto de entrada, marca Thumb, desmonta e recalcula o corpo.
     private void ensureCode(Function fn) throws Exception {
         Address a = fn.getEntryPoint();
-        if (getInstructionAt(a) != null && fn.getBody().getNumAddresses() > 2) return;
+        if (getInstructionAt(a) != null) return;  // já tem código (funções folha de 1 instrução têm corpo de 2 bytes)
         Data d = getDataContaining(a);
         if (d != null) clearListing(d.getMinAddress(), d.getMaxAddress());
         Register t = currentProgram.getRegister("TMode");
