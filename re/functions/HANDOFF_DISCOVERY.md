@@ -87,6 +87,18 @@ All of them finished: CS2, JT5, SV2, DC4, DC5, FM3, FS, VA, MF3, TR, TP2 (+ MF4,
   extract_events.py 0x7D=2 bytes (E2F), save does not cover event flags 0..15 (SV2, possible game bug).
 - Validation in the emulator: list in INDEX.md "Abertos importantes".
 
+## State on 2026-10-14 (night, after the review round)
+- Agents now read ONLY `re/functions/AGENTE.md` (short primer); the `medabots` agent definition skips the 93 KB
+  research README when the task says so. Prompts: see RV*/RM*/RD* launches (review lists of ~60).
+- Review done: RV1..RV23 (all 1212 unconfirmed functions), RM1..RM6 (RAM), RD1..RD8 (ROM data), CH6/CH7, FN4..FN6.
+  Functions now ~45% confirmado, ~45% provavel, ~9% chute/sem tag, ~2% untouched.
+- build_sync: S lines (split a function swallowed by another; QA5_criar), repair of empty-body functions (Thumb +
+  body fixup in MedabotsSync), CODE_END 0x08080000 (no functions above), NEVER_FUNC 0x08000000, review rows that
+  only confirm a name add the confidence to mtbe.
+- **PENDING ON THE USER:** run MedabotsSync (creates ~56, splits 5, repairs empty-body ones, pushes renamed names).
+- Open: Conceal/Scout writer (emulator watch, INDEX.md); who sets GS=35 (enter Robattle) and the normal battle
+  exit (BT4); +0xAA=0x22 setter (OB); 0x0806DE0C consumer of 0x08485988 (BA2_criar).
+
 ## Key facts (don't rediscover)
 - New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
   0x03000440+0x86. Bot part flag at bot+0x59+0x18*i (i=0..3). gObjectSlots 0x03002C30. Effect mode fi+0x51 (0..3)
