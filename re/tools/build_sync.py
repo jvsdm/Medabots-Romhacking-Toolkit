@@ -68,8 +68,8 @@ def tier_of(prefix):
 def read_csv(path):
     rows = []
     for r in csv.reader(open(path, encoding="utf-8")):
-        if not r or not r[0].strip().lower().startswith("0x"):
-            continue
+        if not r or not re.fullmatch(r"0[xX][0-9A-Fa-f]{1,8}", r[0].strip()):
+            continue  # cabeçalho ou endereço inválido escrito por agente
         rows.append([c.strip() for c in r] + [""] * 4)
     return rows
 
