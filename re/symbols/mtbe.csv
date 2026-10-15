@@ -404,6 +404,7 @@ address,name,kind,count,comment
 0x080007FC,Snd_VBlankCallSite,label,,[SN2] SN2: chamada de snd_frame_tick no VBlank (confirmado)
 0x08000824,Irq_Slot3_CallHandlerAndAck,func_thumb,,[FN4] provavel: chama ponteiro de *DAT_08000838 via r0 e grava 2 em *DAT_0800083c; ptr em 0807E86C = tabela IRQ 0x0807E860 idx 3 (antes: FUN_08000824)
 0x08000840,NoOpActionHandler,func_thumb,,"Simon/Rokusho: First-stage action-family placeholder. In the ActionId dispatch table, many actions map here, meaning this specific phase does nothing for them and their real behavior is implemented in later shared state machines, generic attack resolution, or other action-sequence tables. [RV1] confirmado: corpo vazio (return); placeholder de handler"
+0x08000841,SENTINEL_T1_34,label,,"[MS4] confirmado: entrada 34 da T1 (e 29 da T2) = 0x08000841, sem handler; tambem estados 7 e 8"
 0x08000844,get_player_inputs,func_thumb,,Simon/Rokusho [RV1] confirmado: le KEYINPUT
 0x080008C0,SoftResetSequence,func_thumb,,[R0] reinicio de hardware (provavel)
 0x08000964,SoftReset_CheckComboAndRun,func_thumb,,Simon/Rokusho [R0] combinacao de 4 botoes -> reinicia (provavel) (antes: is_input_soft_reset)
@@ -2561,17 +2562,17 @@ address,name,kind,count,comment
 0x080408BC,Script_OpSubcommandOrNextState_AltEntry_80408bc,label,,"[MS] FF n=1,4: estado++ de outro objeto (r3), sem SFX; provavel; alvo nao identificado (antes: MsgFF_AdvanceOtherObj)"
 0x080408D0,MsgState_DispatchByScriptByte,func_thumb,,"[MS] estado 6: byte do roteiro em pc+1, indice byte*4 sobre tabela 0x083B2940, chama via 0807CCF0; provavel (faixa do indice aberta)"
 0x080408F4,MsgState9_CtxB1BDispatch,func_thumb,,[confirmado] CallViaR0(tabela[ctx+0x1B*4]); tabela em DAT_0804090C (antes: Dispatch_CallHandlerByByte1B)
-0x08040914,MsgState10_CtxB1BDispatch,func_thumb,,despachante por tabela indexada por ctx+0x1B; provavel; subsistema chute (antes: Dispatch_CallHandlerByByte1B) [MS2] [MS2] estado 10: CallViaR0(tabela 0x083B296C[ctx+1B]). Confirmado
+0x08040914,MsgState10_CtxB1BDispatch,func_thumb,,despachante por tabela indexada por ctx+0x1B; provavel; subsistema chute (antes: Dispatch_CallHandlerByByte1B) [MS2] [MS2] estado 10: CallViaR0(tabela 0x083B296C[ctx+1B]). Confirmado [MS4] provavel: igual ao 9 (corpo nao relido); T1[1]
 0x08040934,MsgState11_CtxB1BDispatch,func_thumb,,"[confirmado] CallViaR0(tabela[byte+0x1B]); trampolim, alvo depende da tabela (antes: Fight_CallHandlerByIndex)"
 0x08040954,MsgState12_CtxB1BDispatch,func_thumb,,wrapper: CallViaR0(tabela[ctx+0x1B]) (antes: Dispatch_CallHandlerByIdx1B) [MS2] [MS2] estado 12: CallViaR0(tabela 0x083B2988[ctx+1B]). Confirmado
 0x08040974,MsgState13_CtxB1BDispatch,func_thumb,,[FL10] trampolim: CallViaR0(tabela[byte +0x1B]) (provável) (antes: Dispatch_CallHandlerByByteAt1B)
 0x08040994,MsgJT2_PortraitRectFillStep,func_thumb,,[provavel] preenche retangulo do mapa de fundo; contador +0x1B (antes: BgMap_TickRectFillState)
-0x08040A00,BgMap_TickFlashStep,func_thumb,,"[provavel] passo de efeito: FillRect16 se +2==1, soma 2 ou 1 ao +0x1B"
+0x08040A00,MsgJT2_FlashRectStep,func_thumb,,"[provavel] passo de efeito: FillRect16 se +2==1, soma 2 ou 1 ao +0x1B (antes: BgMap_TickFlashStep)"
 0x08040A40,BgMap_LoadTileStageStep,func_thumb,,[N1] JT2 idx 17 tabela 0x083B2990; estados 1..3 (fill rect / decompress+LoadTilesWithMalias); bloco +0x26 [RV11] confirmado: estagio em +0x26: 1 preenche retangulo do mapa
 0x08040AF0,Slot_AdvanceStepByFlag,func_thumb,,[N1] JT2 idx 18 (0x08040AF1); bloco *blk==0 ? +0x1B+=1 : +=2 [RV11] confirmado: +0x1B += 1
 0x08040B0C,Palette_FadeStepAndDispatch,func_thumb,,[N1] JT2 idx 19 (0x08040B0D); fade de paleta A/B; termina em salto indireto nao recuperado (0x08040B4C) [RV11] confirmado: aplica Palette_FadeRowsToColorA e B com o passo de +0x1C; decrementa passo ou avanca +0x1B; despacha ponteiro
 0x08040B50,Slot_SetTimer8,func_thumb,,[N1] JT2 idx 0/20/22; escreve 8 em DAT_08040B58+4 [RV11] confirmado: +0x04 = 8
-0x08040B5C,Gfx_CpuSetCopy52Blocks,func_thumb,,[FS7] [FS7] 52 blocos bios_cpuset de 0x20 palavras; byte +0x1B; handler da gMessageDispatch12Table (0x083B2988); provavel
+0x08040B5C,MsgJT2_CopyTiles52Step,func_thumb,,[FS7] [FS7] 52 blocos bios_cpuset de 0x20 palavras; byte +0x1B; handler da gMessageDispatch12Table (0x083B2988); provavel (antes: Gfx_CpuSetCopy52Blocks)
 0x08040B90,Slot_SetupFromRecordList,func_thumb,,[R2] le lista de registros de 3 bytes ate terminador >0xFA e grava halfword no slot (provavel)
 0x08040BD8,Anim_RunSlotScript,func_thumb,,[R2] interpretador de animacao por slot: duracao; quadro; salto; fim (confirmado lógica)
 0x08040CD0,ClearObjectAttributeEntries,func_thumb,,Simon/Rokusho [CF] decisao CF: zera N blocos de 0x40 bytes; mantido mtbe (provavel)
@@ -2588,7 +2589,7 @@ address,name,kind,count,comment
 0x080415BC,Clear4PairsHalfwords,func_thumb,,[R2] zera 4 pares de halfwords por ponteiros globais (confirmado)
 0x080415E8,Fx_InitRecord8,func_thumb,,[R2] zera bloco de 8 bytes e grava a;0x7F;b;c (confirmado; papel chute) [RV24] confirmado: zera 8 bytes e grava campos +2 a +5 (+3=0x7F)
 0x08041674,StateTable_DispatchByIndex,func_thumb,,[R2] despacha handler por indice +0x29 e retorna estado +0x28 (confirmado)
-0x0804169C,Overlay_LoadTileSetsAndAdvance,func_thumb,,carrega 3 conjuntos de tiles e avanca estado; provavel
+0x0804169C,MsgT1_LoadTileSetsStep,func_thumb,,carrega 3 conjuntos de tiles e avanca estado; provavel (antes: Overlay_LoadTileSetsAndAdvance)
 0x0804172C,Gfx_ClearTwoRectsStep,func_thumb,,apaga dois retangulos de mapa 8x6 por passo (provavel)
 0x0804177C,BgMap_ClearCopyRowsStep,func_thumb,,[JT2] [GH-JT2] renomeado de FUN_0804177c: zera 2 linhas e copia 2 padroes de 8 halfwords para o mapa BG; +0x29 += 1 [RV11] confirmado: limpa 2 linhas
 0x08041818,BgMap_CopyTwoRowsStep,func_thumb,,[JT2] [GH-JT2] renomeado de FUN_08041818: zera 1 linha e copia 2 linhas 8x8 da ROM para o mapa; +0x29 += 1 [RV11] confirmado: limpa 1 linha

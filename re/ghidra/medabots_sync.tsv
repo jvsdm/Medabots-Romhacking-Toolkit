@@ -16,6 +16,7 @@ L	0x080007E0	VBlankIrqHandler_080007E0
 L	0x080007FC	Snd_VBlankCallSite
 F	0x08000824	Irq_Slot3_CallHandlerAndAck
 F	0x08000840	NoOpActionHandler
+L	0x08000841	SENTINEL_T1_34
 F	0x08000844	get_player_inputs
 F	0x080008C0	SoftResetSequence
 F	0x08000964	SoftReset_CheckComboAndRun
@@ -2177,12 +2178,12 @@ F	0x08040934	MsgState11_CtxB1BDispatch
 F	0x08040954	MsgState12_CtxB1BDispatch
 F	0x08040974	MsgState13_CtxB1BDispatch
 F	0x08040994	MsgJT2_PortraitRectFillStep
-F	0x08040A00	BgMap_TickFlashStep
+F	0x08040A00	MsgJT2_FlashRectStep
 F	0x08040A40	BgMap_LoadTileStageStep
 F	0x08040AF0	Slot_AdvanceStepByFlag
 F	0x08040B0C	Palette_FadeStepAndDispatch
 F	0x08040B50	Slot_SetTimer8
-F	0x08040B5C	Gfx_CpuSetCopy52Blocks
+F	0x08040B5C	MsgJT2_CopyTiles52Step
 F	0x08040B90	Slot_SetupFromRecordList
 F	0x08040BD8	Anim_RunSlotScript
 F	0x08040CD0	ClearObjectAttributeEntries
@@ -2199,7 +2200,7 @@ F	0x08041490	Num_FormatDecimal6GlyphsBase
 F	0x080415BC	Clear4PairsHalfwords
 F	0x080415E8	Fx_InitRecord8
 F	0x08041674	StateTable_DispatchByIndex
-F	0x0804169C	Overlay_LoadTileSetsAndAdvance
+F	0x0804169C	MsgT1_LoadTileSetsStep
 F	0x0804172C	Gfx_ClearTwoRectsStep
 F	0x0804177C	BgMap_ClearCopyRowsStep
 F	0x08041818	BgMap_CopyTwoRowsStep
