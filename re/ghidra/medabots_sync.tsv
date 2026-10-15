@@ -2864,6 +2864,51 @@ F	0x0805424C	Scene_DispatchStateHandler
 L	0x08054280	Scene_DispatchStateHandlerTail
 L	0x080542A2	Scene_DispatchStateHandlerTail_Jump
 L	0x080542B0	Scene_DispatchStateHandler_CodeTable
+L	0x080544E0	SceneState_01_SetViewParams
+L	0x080545B4	SceneState_02_UpdateActorLoop
+L	0x080550E4	SceneState_03_SetActorRecord
+L	0x0805513C	SceneState_05_CondSetPos
+L	0x08055150	SceneState_06_CondSetPos
+L	0x080551D4	SceneState_07_CondSetPos
+L	0x08055258	SceneState_08_CondSetPos
+L	0x080552F0	SceneState_09_SetFieldSf32
+L	0x0805531C	SceneState_0A_SetFieldSf32
+L	0x0805534C	SceneState_0B_SetMapScratch
+L	0x080553D8	SceneState_0C_SetMapScratch
+L	0x08055464	SceneState_0D_SetFieldSf32Off
+L	0x08055494	SceneState_0E_SetFieldSf32
+L	0x080554C4	SceneState_0F_SetSf32Finish
+L	0x08055508	SceneState_10_12_Branch
+L	0x08055590	SceneState_17_DivSf32
+L	0x08055618	SceneState_18_DivSf32
+L	0x080556A0	SceneState_19_DivSf32
+L	0x08055724	SceneState_13_ScaleMul
+L	0x0805579C	SceneState_14_ScaleMul
+L	0x08055824	SceneState_15_ScaleMulChain
+L	0x080558D4	SceneState_16_ScaleMulChain
+L	0x08055994	SceneState_1A_MulSf32
+L	0x08055A28	SceneState_1B_SetMultiWords
+L	0x08055BB4	SceneState_86_SetAuxRecord
+L	0x08055C90	SceneState_1C_SetAuxRecord
+L	0x08055CF8	SceneState_1D_SetAuxWord
+L	0x08055D68	SceneState_1E_SetAuxRecord
+L	0x08055DD0	SceneState_1F_StoreWordCall
+L	0x08055E24	SceneState_20_StoreWordCall
+L	0x08055E7C	SceneState_21_StoreWordCall
+L	0x08055ED4	SceneState_22_SetWordReg
+L	0x08055F40	SceneState_23_Sync
+L	0x08055F8C	SceneState_24_SetAuxRecord
+L	0x080560BC	SceneState_80_FadeReset
+L	0x0805612C	SceneState_81_FadeStart
+L	0x0805619C	SceneState_82_SetFadeParams
+L	0x08056280	SceneState_83_SetParams
+L	0x080563CC	SceneState_84_RebuildObjects
+L	0x080565B8	SceneState_85_StoreWord
+L	0x08056604	SceneState_87_StoreTwoWords
+L	0x08056660	SceneState_89_SwitchMode
+L	0x08056724	SceneState_8A_SetAuxRecord
+L	0x080567A4	SceneState_88_UpdateEventObjects
+L	0x080567D4	SceneState_8B_InitPlayerSprites
 F	0x080567F0	Overworld_EnterSceneState
 F	0x080569E4	Viewport_TweenStepByMode
 F	0x08056F24	Viewport_TweenAdvanceCheckDone
@@ -4130,48 +4175,3 @@ C	0x08068978
 C	0x080692EC
 C	0x0806E9C0
 C	0x0807DD58
-D	0x080544E0
-D	0x080545B4
-D	0x080550E4
-D	0x0805513C
-D	0x08055150
-D	0x080551D4
-D	0x08055258
-D	0x080552F0
-D	0x0805531C
-D	0x0805534C
-D	0x080553D8
-D	0x08055464
-D	0x08055494
-D	0x080554C4
-D	0x08055508
-D	0x08055590
-D	0x08055618
-D	0x080556A0
-D	0x08055724
-D	0x0805579C
-D	0x08055824
-D	0x080558D4
-D	0x08055994
-D	0x08055A28
-D	0x08055BB4
-D	0x08055C90
-D	0x08055CF8
-D	0x08055D68
-D	0x08055DD0
-D	0x08055E24
-D	0x08055E7C
-D	0x08055ED4
-D	0x08055F40
-D	0x08055F8C
-D	0x080560BC
-D	0x0805612C
-D	0x0805619C
-D	0x08056280
-D	0x080563CC
-D	0x080565B8
-D	0x08056604
-D	0x08056660
-D	0x08056724
-D	0x080567A4
-D	0x080567D4

@@ -3253,6 +3253,51 @@ address,name,kind,count,comment
 0x08054280,Scene_DispatchStateHandlerTail,label,,[R3] (mtbe) entrada alternativa do despacho
 0x080542A2,Scene_DispatchStateHandlerTail_Jump,label,,[JT5] mov pc: tabela real 0x8C ptrs em 0x080542B0 (literal 0x080542AC); JT5
 0x080542B0,Scene_DispatchStateHandler_CodeTable,data,,[JT5] tabela real 0x8C ptrs (codigo 0..0x8B); JT5 [RD2] confirmado: 140 x 4 B ponteiros de codigo (0x8C); tabela termina em 0x080544E0; xref DATA em Scene_DispatchStateHandlerTail
+0x080544E0,SceneState_01_SetViewParams,label,,[SC4] [SC4] provavel (estado 0x01): le 4 palavras para gOverworldUiState+0x9C..0xA8 e 2 valores sf32 em +0x90/+0x94; escreve +0x214=0x80. Parametros de camera/vista. Corpo sem fim lido (45 linhas).
+0x080545B4,SceneState_02_UpdateActorLoop,label,,"[SC4] [SC4] chute (estado 0x02): laco sobre buffer de atores (ptr 0x03006D30, stride 0x300) com tabelas 0x03005490/0x030054D4; zera locais de pilha. Nao lido ate o fim."
+0x080550E4,SceneState_03_SetActorRecord,label,,"[SC4] [SC4] provavel (estado 0x03): grava 4 palavras do stream no registro do ator (ptr 0x03006D30 + idx*0x300 + 0x...), depois chama 0x08056796 (consome 1 palavra e avanca)."
+0x0805513C,SceneState_05_CondSetPos,label,,[SC4] [SC4] chute (estado 0x05): cadeia condicional (bne 0x080551A0) com sf32_from_i32 e 0x080567FE. Escrita de posicao/param de ator.
+0x08055150,SceneState_06_CondSetPos,label,,"[SC4] [SC4] chute (estado 0x06): mesmo padrao do 05 (bne, sf32_from_i32, 0x080567FE)."
+0x080551D4,SceneState_07_CondSetPos,label,,"[SC4] [SC4] chute (estado 0x07): mesmo padrao do 05 (bne 0x0805521C, sf32, b 0x08055298)."
+0x08055258,SceneState_08_CondSetPos,label,,"[SC4] [SC4] chute (estado 0x08): mesmo padrao do 05 (bne 0x080552AC, sf32, 0x080567FE)."
+0x080552F0,SceneState_09_SetFieldSf32,label,,"[SC4] [SC4] provavel (estado 0x09): usa a cauda 0x080554EA (le palavra, sf32_from_i32, grava em campo, avanca, 0x080567FE)."
+0x0805531C,SceneState_0A_SetFieldSf32,label,,[SC4] [SC4] provavel (estado 0x0A): mesma cauda 0x080554EA que o 09.
+0x0805534C,SceneState_0B_SetMapScratch,label,,"[SC4] [SC4] chute (estado 0x0B): sf32_from_i32, bne 0x080553A4, 0x080567FE, usa gMapRenderScratch 0x03006D40."
+0x080553D8,SceneState_0C_SetMapScratch,label,,"[SC4] [SC4] chute (estado 0x0C): igual ao 0x0B (bne 0x08055430, gMapRenderScratch)."
+0x08055464,SceneState_0D_SetFieldSf32Off,label,,[SC4] [SC4] chute (estado 0x0D): entra em 0x080554E8 (soma r4+=r7 e cauda sf32 de campo).
+0x08055494,SceneState_0E_SetFieldSf32,label,,"[SC4] [SC4] provavel (estado 0x0E): cauda 0x080554EA (sf32 em campo, 0x080567FE)."
+0x080554C4,SceneState_0F_SetSf32Finish,label,,[SC4] [SC4] chute (estado 0x0F): sf32_from_i32 e 0x080567FE; le aux buffer e gOverworldUiState.
+0x08055508,SceneState_10_12_Branch,label,,"[SC4] [SC4] chute (estados 0x10..0x12, mesmo alvo): bne 0x08055538 / b 0x08055562; testa [+0xF4]==0x10 na cauda."
+0x08055590,SceneState_17_DivSf32,label,,[SC4] [SC4] chute (estado 0x17): sf32_from_i32 + sf32_div (0x0807E210): razao/interpolacao.
+0x08055618,SceneState_18_DivSf32,label,,[SC4] [SC4] chute (estado 0x18): sf32 + sf32_div.
+0x080556A0,SceneState_19_DivSf32,label,,[SC4] [SC4] chute (estado 0x19): sf32 + sf32_div.
+0x08055724,SceneState_13_ScaleMul,label,,"[SC4] [SC4] chute (estado 0x13): sf32_from_i32 seguido de sf32_mul (0x0807E0AC), escala de valor."
+0x0805579C,SceneState_14_ScaleMul,label,,[SC4] [SC4] chute (estado 0x14): sf32_from_i32 + sf32_mul.
+0x08055824,SceneState_15_ScaleMulChain,label,,[SC4] [SC4] chute (estado 0x15): sf32 + sf32_mul + sf32.
+0x080558D4,SceneState_16_ScaleMulChain,label,,[SC4] [SC4] chute (estado 0x16): sf32 + sf32_mul + sf32.
+0x08055994,SceneState_1A_MulSf32,label,,[SC4] [SC4] chute (estado 0x1A): sf32 + sf32_mul.
+0x08055A28,SceneState_1B_SetMultiWords,label,,"[SC4] [SC4] chute (estado 0x1B): consome varias palavras, usa 0x03005448 e aux buffer."
+0x08055BB4,SceneState_86_SetAuxRecord,label,,[SC4] [SC4] chute (estado 0x86): acessa aux buffer (0x03006D30).
+0x08055C90,SceneState_1C_SetAuxRecord,label,,[SC4] [SC4] chute (estado 0x1C): escreve no registro do aux buffer (0x03006D30).
+0x08055CF8,SceneState_1D_SetAuxWord,label,,"[SC4] [SC4] provavel (estado 0x1D): avanca +0xFC em 2, grava palavra do stream no aux buffer (+0x208 do registro)."
+0x08055D68,SceneState_1E_SetAuxRecord,label,,[SC4] [SC4] chute (estado 0x1E): escreve no registro do aux buffer.
+0x08055DD0,SceneState_1F_StoreWordCall,label,,[SC4] [SC4] chute (estado 0x1F): chama 0x0805678C (grava 1 palavra em [r4+r7]) e reabre gOverworldUiState.
+0x08055E24,SceneState_20_StoreWordCall,label,,[SC4] [SC4] chute (estado 0x20): chama 0x0805678E (grava palavra).
+0x08055E7C,SceneState_21_StoreWordCall,label,,[SC4] [SC4] chute (estado 0x21): chama 0x0805678E (grava palavra).
+0x08055ED4,SceneState_22_SetWordReg,label,,[SC4] [SC4] chute (estado 0x22): so carrega gOverworldUiState em r7; corpo nao lido.
+0x08055F40,SceneState_23_Sync,label,,[SC4] [SC4] chute (estado 0x23): chama 0x080567FE (fim de passo).
+0x08055F8C,SceneState_24_SetAuxRecord,label,,[SC4] [SC4] chute (estado 0x24): acessa aux buffer (0x03006D30).
+0x080560BC,SceneState_80_FadeReset,label,,[SC4] [SC4] confirmado (estado 0x80): chama Overworld_ResetAndStartScreenTransitionEffect (0x08049D90) e termina em 0x080567FE. Fade/transicao: reset e inicio.
+0x0805612C,SceneState_81_FadeStart,label,,[SC4] [SC4] confirmado (estado 0x81): chama Overworld_StartScreenTransitionEffect (0x08049D18) e termina em 0x080567FE. Inicia fade/transicao.
+0x0805619C,SceneState_82_SetFadeParams,label,,[SC4] [SC4] provavel (estado 0x82): grava byte do stream em gOverworldUiState+0x208 e halfword em +0x20A (parametros de fade/timer).
+0x08056280,SceneState_83_SetParams,label,,[SC4] [SC4] chute (estado 0x83): so carrega gOverworldUiState; corpo nao lido.
+0x080563CC,SceneState_84_RebuildObjects,label,,"[SC4] [SC4] provavel (estado 0x84): chama Overworld_BuildEncounterNpcSnapshot (0x080505FC), zera gObjectSlots (0x03002C30, 0x2000 B) e gTrackedActorHalfwords (0x030055A0, 0x200 B), chama Overworld_RebuildActiveObjectRenderSlots (0x080506BC), limpa via DMA3. Reconstroi objetos da cena."
+0x080565B8,SceneState_85_StoreWord,label,,[SC4] [SC4] provavel (estado 0x85): cauda para 0x0805678E (grava 1 palavra do stream).
+0x08056604,SceneState_87_StoreTwoWords,label,,[SC4] [SC4] chute (estado 0x87): cauda para 0x0805676C (grava 2 palavras do stream).
+0x08056660,SceneState_89_SwitchMode,label,,"[SC4] [SC4] chute (estado 0x89): le 3 palavras do stream e faz switch no valor (0, 1, >1) antes de 0x080567FE."
+0x08056724,SceneState_8A_SetAuxRecord,label,,"[SC4] [SC4] chute (estado 0x8A): acessa aux buffer (0x03006D30), sem chamada."
+0x080567A4,SceneState_88_UpdateEventObjects,label,,"[SC4] [SC4] provavel (estado 0x88): chama Map_UpdateEventObjectDepthAndMarkerState (0x0804B1B0) com EVENT_STATE_E (0x030057E0), termina em 0x080567FE."
+0x080567D4,SceneState_8B_InitPlayerSprites,label,,"[SC4] [SC4] provavel (estado 0x8B): chama Overworld_InitPlayerSprites (0x080517F0) e Overworld_SetActorAnimFrameByTable (0x08051E38), termina em 0x080567FE."
 0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador [RV24] provavel: zera campos de estado (+0xF4/+0xFC/+0xF0); recalcula 32 entradas affine; despacha tabela de estado (jumptable nao recuperada)
 0x080569E4,Viewport_TweenStepByMode,func_thumb,,[FS8] [FS8] chute: float mul/div/add/trunc; chama 0x080533A4 0x08053360 0x08053380; literal 0x3B800000 (antes: Viewport_ScaleStep) [NX4] provavel (antes: Viewport_ScaleStep): interpolacao por modo (cases 0x10..0x17) sobre struct float de 0x44 B com tabela de seno short; grava posicao/alvo. Chamador: 0x08055580 (sem funcao definida)
 0x08056F24,Viewport_TweenAdvanceCheckDone,func_thumb,,"[FS8] [FS8] chute: compara floats com constantes da ROM 0x08056F70 0x080AE8F4 (antes: Viewport_CompareAndClampFloat) [NX4] provavel (antes: Viewport_CompareAndClampFloat): avanca posicao (+0x14 do struct) por modo com tabela de seno, +0x1C += 1 por quadro; retorna 1 e zera +0xC quando chega ao limite. Chamador: 0x0805473A (sem funcao definida)"
