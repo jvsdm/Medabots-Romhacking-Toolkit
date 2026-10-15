@@ -34,3 +34,15 @@ o que falta é ver o efeito no jogo. Cada item abaixo = 1 gravação (ou 1 saves
 - ROM original só leitura; savestates do usuário copiados para o scratchpad antes de carregar.
 - mGBA sempre mudo, sem janela de Scripting; nada salvo sobre os arquivos do usuário.
 - Nada de texto do jogo nos documentos (só ids).
+
+## Do manual oficial (REF_MANUAL.md), a validar
+| Alvo | Pergunta |
+|---|---|
+| MF cheio | Medaforce só pode ser usada com o medidor cheio, mesmo custando menos? (MF4 diz gasto = min(custo, medidor)) |
+| Usos da cabeça | recarregam no fim da batalha? onde? |
+| Radiação | campo de resfriamento do braço: qual offset, quem decrementa |
+| Propulsão | reduz a carga dos braços? (hoje só a vemos no dano) |
+| Peça perdida | atacar com peça quebrada antes do turno = "miss" |
+| Rubberobo Medal | id do item e a rotina de fuga |
+| Troca por link | precisa de 2 emuladores ligados; por enquanto só estático (passo 72 da tela LINK) |
+| Protect Select Corps | mini-jogo de botões: onde fica |
