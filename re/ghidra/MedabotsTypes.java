@@ -104,6 +104,14 @@ public class MedabotsTypes extends GhidraScript {
                 applied++;
             } catch (Exception e) { failed++; log.println("aplicar falhou " + line + " : " + e.getMessage()); }
         }
+        // 3b) ROM só-leitura: o decompilador passa a usar o valor das constantes da ROM (ex.: offset 0xC5C guardado
+        //     num literal porque não cabe na instrução Thumb) e mostra E->walkMode em vez de E[DAT_xxx].
+        int romro = 0;
+        for (MemoryBlock b : currentProgram.getMemory().getBlocks()) {
+            if (b.getStart().getOffset() >= 0x08000000L && b.getStart().getOffset() < 0x0A000000L && b.isWrite()) {
+                b.setWrite(false); romro++; log.println("bloco só-leitura: " + b.getName());
+            }
+        }
         // 4) literais de código (ldr rX,=0x03001800 etc.) viram ponteiro para o struct; assim o decompilador mostra
         //    fi->campo e bots[i].campo em vez de *(byte *)(DAT_xxx + 0xNN). Só palavras alinhadas fora de instrução.
         int literals = 0;
@@ -132,7 +140,7 @@ public class MedabotsTypes extends GhidraScript {
                 literals++;
             } catch (Exception e) { failed++; log.println("literal falhou " + a + " : " + e.getMessage()); }
         }
-        String msg = "structs " + structs.size() + ", campos " + fields + ", globais " + applied + ", literais " + literals + ", falhas " + failed;
+        String msg = "structs " + structs.size() + ", campos " + fields + ", globais " + applied + ", literais " + literals + ", ROM só-leitura " + romro + ", falhas " + failed;
         log.println(msg);
         log.close();
         println(msg + " (detalhes em medabots_types_log.txt)");
