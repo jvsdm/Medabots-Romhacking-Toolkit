@@ -112,6 +112,33 @@ public class MedabotsTypes extends GhidraScript {
                 b.setWrite(false); romro++; log.println("bloco só-leitura: " + b.getName());
             }
         }
+        // 3c) literais pequenos (offsets > 0xFF que não cabem na instrução Thumb, ex. E+0xC5C) lidos por ldr:
+        //     marcados como constantes para o decompilador somar o valor e mostrar o campo do struct.
+        int consts = 0;
+        ghidra.program.model.listing.InstructionIterator it =
+            currentProgram.getListing().getInstructions(currentProgram.getAddressFactory()
+                .getAddressSet(toAddr(0x08000000L), toAddr(0x0807FFFFL)), true);
+        while (it.hasNext()) {
+            monitor.checkCanceled();
+            ghidra.program.model.listing.Instruction ins = it.next();
+            if (!ins.getMnemonicString().startsWith("ldr")) continue;
+            for (ghidra.program.model.symbol.Reference ref : ins.getReferencesFrom()) {
+                Address t = ref.getToAddress();
+                if (!ref.getReferenceType().isRead() || t.getOffset() < 0x08000000L || t.getOffset() >= 0x08080000L
+                        || (t.getOffset() & 3) != 0) continue;
+                long v;
+                try { v = currentProgram.getMemory().getInt(t) & 0xFFFFFFFFL; } catch (Exception e) { continue; }
+                if (v >= 0x4000) continue;
+                Data d = getDataAt(t);
+                if (d == null && getInstructionContaining(t) == null) {
+                    try { d = createDWord(t); } catch (Exception e) { continue; }
+                }
+                if (d == null || d.getLength() != 4 || d.isPointer() || d.isStructure() || d.isArray()) continue;
+                if (MutabilitySettingsDefinition.DEF.getChoice(d) == MutabilitySettingsDefinition.CONSTANT) continue;
+                MutabilitySettingsDefinition.DEF.setChoice(d, MutabilitySettingsDefinition.CONSTANT);
+                consts++;
+            }
+        }
         // 4) literais de código (ldr rX,=0x03001800 etc.) viram ponteiro para o struct; assim o decompilador mostra
         //    fi->campo e bots[i].campo em vez de *(byte *)(DAT_xxx + 0xNN). Só palavras alinhadas fora de instrução.
         int literals = 0;
@@ -140,7 +167,7 @@ public class MedabotsTypes extends GhidraScript {
                 literals++;
             } catch (Exception e) { failed++; log.println("literal falhou " + a + " : " + e.getMessage()); }
         }
-        String msg = "structs " + structs.size() + ", campos " + fields + ", globais " + applied + ", literais " + literals + ", ROM só-leitura " + romro + ", falhas " + failed;
+        String msg = "structs " + structs.size() + ", campos " + fields + ", globais " + applied + ", literais " + literals + ", ROM só-leitura " + romro + ", constantes " + consts + ", falhas " + failed;
         log.println(msg);
         log.close();
         println(msg + " (detalhes em medabots_types_log.txt)");
