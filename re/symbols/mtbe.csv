@@ -875,6 +875,7 @@ address,name,kind,count,comment
 0x08010BD0,Fight_ShowPostBattleTextForCharacter,func_thumb,,"[TX] GH-TX: mesmo padrao do PRE, com gTextPostBattleMessage[character_id] e StateMachine_DispatchStep 0x0803FB3C. Sem funcao no Ghidra; nome provavel"
 0x08010C28,Fight_WaitSubBThenAdvanceGS,func_thumb,,[FS4] [FS4] DispatchSubB; ao terminar GS+1; tabela 0x083ACEFC; confirmado fluxo
 0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,,"Simon/Rokusho: Post-battle reward handler keyed by gPostBattleModeFlags low nibble. Low nibble 0 runs the normal reward grant path; nonzero clears the mode byte and jumps directly to subroutine 0x3E. [RW] GH-RW confirmado: nibble baixo de E+0xC2E == 0 -> sorteia peca (TryAssign), Inv_AddCountClamp99(bot,kind,1); senao zera e 0x0300137C=0x3E"
+0x08010C60,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,,[EV4] confirmado: le nibble baixo de C2E; 0 = sorteia peca de bot; senao zera e pula para GS 0x3E (EV4.md)
 0x08010CCA,Fight_RewardAddsPartToInventory_Call,label,,[IN] [IN] chamada Inv_AddCountClamp99 no fim da recompensa de batalha
 0x08010CE8,Fight_CopyPartGfxPtrsThenAdvanceGS,func_thumb,,[FS4] [FS4] copia 14B/15B de tabelas ROM por ctx+0x168/169; tabelas 0x083ACF04 e 0x083AD004; provavel
 0x08010D58,Fight_RunSubStep1ACTimer,func_thumb,,[FS4] [FS4] DispatchStep ROM 0x083C6744+0x1AC; ctx+0x16A==0 -> GS=0x3C senao GS+1; tabela 0x083ACF08; provavel
@@ -910,10 +911,12 @@ address,name,kind,count,comment
 0x08011ABC,Fight_DrawOscSetGS3D,func_thumb,,[FS4] [FS4] draw+osc; GS=0x3D; tabela 0x083ACFC0; provavel
 0x08011ADC,Fight_RunSubStep1B8ThenAdvance,func_thumb,,[FS4] [FS4] DispatchStep ROM+0x1B8; fight+0x1B=0; GS+1; tabela 0x083ACFE4; provavel
 0x08011B18,Fight_WaitSubBFlagOrJumpGS77,func_thumb,,[FS4] [FS4] DispatchSubB; byte 0x030057E0+0xC2F==0 -> GS=0x77 senao GS+1; tabela 0x083ACFE8; provavel
+0x08011B30,Fight_WaitSubBFlagOrJumpGS77,func_thumb,,[EV4] confirmado: le C2F; se 0 vai para GS 0x77; senao avanca estado (EV4.md)
 0x08011B5C,Fight_FadeRowsToWhiteStep,func_thumb,,"[FS4] [FS4] fade A/B com 0x7FFF/0xFFFF, fight+0x84 ate 9; GS+1; tabela 0x083ACFF4; provavel (0x7FFF=branco e inferencia)"
 0x08011BB8,Gfx_ResetScreenBgAndBlend,func_thumb,,"[FL10] reset de tela: limpa slots, 4 mapas BG, SetGpuBlendMode(3,0x3F,0x20) [RV2] confirmado (limpa OAM e slots"
 0x08011C44,Gfx_ResetScreenBgAndBlend,label,,"[BT2] [GH-BT2] grava gamestate_menu=8 (literal 0x08011C80) e 2 em 0x08011C7C; escritor provavel de menu=8, chamador nao achado"
 0x08011C88,Fight_AssignRandomPartSlotStep,func_thumb,,"[FS4] [FS4] se byte 0x030057E0+0xC2E&0xF==0: slot aleatorio + Tinpet_ActivateMatchingEntry, GS+1; senao GS=0x40; tabela 0x083AD000; provavel"
+0x08011C98,Fight_AssignRandomPartSlotStep,func_thumb,,[EV4] confirmado: le nibble baixo de C2E; 0 = sorteia slot de peca; senao zera e pula para GS 0x40 (EV4.md)
 0x08011CFC,Fight_RunSubStep1B0ThenAdvance,func_thumb,,"[FS4] [FS4] DispatchStep ROM+0x1B0; (0x0300058C&3) -> zera 0x03000430, sfx 0xD, GS+1; tabela 0x083AD008; provavel"
 0x08011D50,Fight_CheckPartTableEmptyStep,func_thumb,,[FS4] [FS4] Count_Entries3InTable9==0 -> reset+GS+1 senao GS=0x40; tabela 0x083AD00C; provavel
 0x08011D80,Fight_RunSubStep1BCSetGS72,func_thumb,,[FS4] [FS4] DispatchStep ROM+0x1BC; GS=0x72; tabela 0x083AD010; provavel
@@ -1163,7 +1166,9 @@ address,name,kind,count,comment
 0x08018900,Fight_IncrementActionUsageCounter,func_thumb,,"Simon/Rokusho: Increment a per-technique / per-medaforce usage counter for the acting bot's current action source. For part actions, indexes by the selected part's technique_or_leg_type. [R1] Incrementa contador de uso de tecnica ou medaforce do bot; confirmado"
 0x080189EC,Fight_IncrementUsageForActiveBots,func_thumb,,[R1] Loop de 3 bots chamando o contador de uso; confirmado
 0x08018A18,Fight_ApplyPostBattleMode20PlayerSideState,func_thumb,,"Simon/Rokusho: Special post-battle mode hook. If gPostBattleModeFlags high nibble is 0x20, seed the three player-side battle state entries with 0x50 before the result flow continues. [R1] Modo 0x20 de pos-batalha: seta 0x50 nos 3 bots do lado do jogador; confirmado"
+0x08018A1E,Fight_ApplyPostBattleMode20PlayerSideState,func_thumb,,[EV4] confirmado: se nibble alto de C2E == 0x20 escreve 0x50 em 3 bytes (EV4.md)
 0x08018A54,Fight_PlayResultCueByState,func_thumb,,"Simon/Rokusho: Select battle-result music/scene family from gPostBattleModeFlags. High nibble 0x00 uses the default per-battle mapping, 0x10 forces family 0x0C, and 0x20+ falls into family 0x0D. (antes: Fight_PlayBattleResultMusicByPostBattleMode) [OP] [OP] le 0x03000B94 (cue da musica de resultado); confirmado"
+0x08018A72,Fight_PlayResultCueByState,func_thumb,,"[EV4] confirmado: le nibble alto de C2E (0x00 tabela, 0x10 trilha C, outro trilha D); ctx+0x89==1 -> trilha 9 (EV4.md)"
 0x08018AB4,Fight_InitOrRefreshCounterSprites,func_thumb,,[R1] Monta/refaz sprites do contador de dois digitos; provavel
 0x08018BD4,Fight_SetCounterTimerByState,func_thumb,,[R1] Define valor inicial do contador +0x57 conforme estado; provavel
 0x08018C38,Fight_TickSecondaryEffectTimers,func_thumb,,Simon/Rokusho: Tick the secondary long-lived battle effect block on a slower timer. This is separate from pending_effect_kind and currently feeds the repair-over-time style handler at +0xC4..+0xC7. [R1] Divisor de 32 frames que decrementa contador +0x57 e chama atualizacao; provavel

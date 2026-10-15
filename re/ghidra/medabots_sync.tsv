@@ -487,6 +487,7 @@ F	0x08010BA0	Fight_BranchFlagAdvanceGS
 F	0x08010BD0	Fight_ShowPostBattleTextForCharacter
 F	0x08010C28	Fight_WaitSubBThenAdvanceGS
 F	0x08010C50	Fight_HandleRewardGrantOrSkipByPostBattleFlags
+F	0x08010C60	Fight_HandleRewardGrantOrSkipByPostBattleFlags_08010C60
 L	0x08010CCA	Fight_RewardAddsPartToInventory_Call
 F	0x08010CE8	Fight_CopyPartGfxPtrsThenAdvanceGS
 F	0x08010D58	Fight_RunSubStep1ACTimer
@@ -522,10 +523,12 @@ F	0x08011A58	Fight_FadeRowsDownStep
 F	0x08011ABC	Fight_DrawOscSetGS3D
 F	0x08011ADC	Fight_RunSubStep1B8ThenAdvance
 F	0x08011B18	Fight_WaitSubBFlagOrJumpGS77
+F	0x08011B30	Fight_WaitSubBFlagOrJumpGS77_08011B30
 F	0x08011B5C	Fight_FadeRowsToWhiteStep
 F	0x08011BB8	Gfx_ResetScreenBgAndBlend
 L	0x08011C44	Gfx_ResetScreenBgAndBlend_08011C44
 F	0x08011C88	Fight_AssignRandomPartSlotStep
+F	0x08011C98	Fight_AssignRandomPartSlotStep_08011C98
 F	0x08011CFC	Fight_RunSubStep1B0ThenAdvance
 F	0x08011D50	Fight_CheckPartTableEmptyStep
 F	0x08011D80	Fight_RunSubStep1BCSetGS72
@@ -775,7 +778,9 @@ F	0x080187D4	Fight_SlideSideBackStep
 F	0x08018900	Fight_IncrementActionUsageCounter
 F	0x080189EC	Fight_IncrementUsageForActiveBots
 F	0x08018A18	Fight_ApplyPostBattleMode20PlayerSideState
+F	0x08018A1E	Fight_ApplyPostBattleMode20PlayerSideState_08018A1E
 F	0x08018A54	Fight_PlayResultCueByState
+F	0x08018A72	Fight_PlayResultCueByState_08018A72
 F	0x08018AB4	Fight_InitOrRefreshCounterSprites
 F	0x08018BD4	Fight_SetCounterTimerByState
 F	0x08018C38	Fight_TickSecondaryEffectTimers
