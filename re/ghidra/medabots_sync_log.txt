@@ -1,105 +1,20 @@
-reparada 08000258 corpo 2
-reparada 08000840 corpo 2
-rotulo 0800e23e PartDetailScreen_Init_0800E23E
-rotulo 0800e400 PartDetail_HandleSelectionConfirm_0800E400
-rotulo 0800e560 Menu_PartsDetailDispatch_0800E560
-rotulo 0800ead2 PartDetail_HandleAttributeCursorInput_0800EAD2
-rotulo 0800f7da PartDetail_DrawCurrentSelectionSpecialityBadge_0800F7DA
-rotulo 0800f860 PartDetail_DrawCurrentSelectionDescription_0800F860
-rotulo 0800fa86 PartDetail_DrawCurrentSelectionStats_0800FA86
-rotulo 08010146 ObjSlot_DispatchState129Handler
-rotulo 08010c60 Fight_HandleRewardGrantOrSkipByPostBattleFlags_08010C60
-rotulo 08011b30 Fight_WaitSubBFlagOrJumpGS77_08011B30
-rotulo 08011c98 Fight_AssignRandomPartSlotStep_08011C98
-rotulo 08018a1e Fight_ApplyPostBattleMode20PlayerSideState_08018A1E
-rotulo 08018a72 Fight_PlayResultCueByState_08018A72
-nome 08020728 Fight_DispatchOnSubstateAA_M_04_ApplyPartDamage -> Fight_DispatchOnSubstateAA_M_04_BreakActorUsedPart
-nome 080233e0 Fight_DispatchOnSubstateAA_Z_AddGaugeMax160 -> Fight_DispatchOnSubstateAA_Z_0E_AddScoutBonus
-nome 080236e0 Fight_DispatchOnSubstateAA_AA_AddGaugeMax120 -> Fight_DispatchOnSubstateAA_AA_0A_AddConceal
-rotulo 08030c7c Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart_08030C7C
-rotulo 08030ccc Fight_SceneStep4F_ReturnToTurnScene_08030CCC
-rotulo 08031956 Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction_08031956
-reparada 08047e4c corpo 2
-reparada 0804b15c corpo 2
-reparada 0804b73c corpo 2
-reparada 0804c928 corpo 2
-reparada 0804cd60 corpo 2
-reparada 0804cd64 corpo 2
-reparada 0804cd7c corpo 2
-reparada 0804cd80 corpo 2
-reparada 0804d090 corpo 2
-reparada 0804d204 corpo 2
-reparada 0804d37c corpo 2
-reparada 0804d380 corpo 2
-reparada 0804d398 corpo 2
-reparada 0804d48c corpo 2
-reparada 0804dc34 corpo 2
-reparada 0804e7dc corpo 2
-reparada 0804e7e0 corpo 2
-reparada 0804e7e4 corpo 2
-reparada 0804f5c8 corpo 2
-reparada 0804f5cc corpo 2
-reparada 0804f5d0 corpo 2
-reparada 0804f5d4 corpo 2
-reparada 0804f5d8 corpo 2
-reparada 0804f674 corpo 2
-reparada 0804f678 corpo 2
-reparada 0804f6c4 corpo 2
-reparada 0804f6c8 corpo 2
-reparada 0804f6cc corpo 2
-reparada 0804f6d0 corpo 2
-reparada 0804f6d4 corpo 2
-reparada 0804f6d8 corpo 2
-reparada 0804f6dc corpo 2
-reparada 0804f860 corpo 2
-rotulo 080544e0 SceneState_01_SetViewParams
-rotulo 080545b4 SceneState_02_UpdateActorLoop
-rotulo 080550e4 SceneState_03_SetActorRecord
-rotulo 0805513c SceneState_05_CondSetPos
-rotulo 08055150 SceneState_06_CondSetPos
-rotulo 080551d4 SceneState_07_CondSetPos
-rotulo 08055258 SceneState_08_CondSetPos
-rotulo 080552f0 SceneState_09_SetFieldSf32
-rotulo 0805531c SceneState_0A_SetFieldSf32
-rotulo 0805534c SceneState_0B_SetMapScratch
-rotulo 080553d8 SceneState_0C_SetMapScratch
-rotulo 08055464 SceneState_0D_SetFieldSf32Off
-rotulo 08055494 SceneState_0E_SetFieldSf32
-rotulo 080554c4 SceneState_0F_SetSf32Finish
-rotulo 08055508 SceneState_10_12_Branch
-rotulo 08055590 SceneState_17_DivSf32
-rotulo 08055618 SceneState_18_DivSf32
-rotulo 080556a0 SceneState_19_DivSf32
-rotulo 08055724 SceneState_13_ScaleMul
-rotulo 0805579c SceneState_14_ScaleMul
-rotulo 08055824 SceneState_15_ScaleMulChain
-rotulo 080558d4 SceneState_16_ScaleMulChain
-rotulo 08055994 SceneState_1A_MulSf32
-rotulo 08055a28 SceneState_1B_SetMultiWords
-rotulo 08055bb4 SceneState_86_SetAuxRecord
-rotulo 08055c90 SceneState_1C_SetAuxRecord
-rotulo 08055cf8 SceneState_1D_SetAuxWord
-rotulo 08055d68 SceneState_1E_SetAuxRecord
-rotulo 08055dd0 SceneState_1F_StoreWordCall
-rotulo 08055e24 SceneState_20_StoreWordCall
-rotulo 08055e7c SceneState_21_StoreWordCall
-rotulo 08055ed4 SceneState_22_SetWordReg
-rotulo 08055f40 SceneState_23_Sync
-rotulo 08055f8c SceneState_24_SetAuxRecord
-rotulo 080560bc SceneState_80_FadeReset
-rotulo 0805612c SceneState_81_FadeStart
-rotulo 0805619c SceneState_82_SetFadeParams
-rotulo 08056280 SceneState_83_SetParams
-rotulo 080563cc SceneState_84_RebuildObjects
-rotulo 080565b8 SceneState_85_StoreWord
-rotulo 08056604 SceneState_87_StoreTwoWords
-rotulo 08056660 SceneState_89_SwitchMode
-rotulo 08056724 SceneState_8A_SetAuxRecord
-rotulo 080567a4 SceneState_88_UpdateEventObjects
-rotulo 080567d4 SceneState_8B_InitPlayerSprites
-nome 080567f0 Overworld_ClearStateThenFinish -> Overworld_EnterSceneState
-reparada 08074024 corpo 2
-reparada 0807ccf0 corpo 2
-reparada 0807ccf4 corpo 2
-reparada 0807cdc0 corpo 2
-criadas 0, renomeadas 4, ja certas 3353, rotulos 61, miolo de outra funcao 0, reparadas 39, desmontadas 0, falharam 0
+nome 0801e9fc Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows -> Fight_DispatchOnSubstateAA_H_11_DrainPartArmorAndDrawIcons
+rotulo 08027a34 Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_JumpTable
+rotulo 08028534 Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_JumpTable
+rotulo 08028854 Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents_Table
+rotulo 08028ad8 Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_JumpTable
+rotulo 080340f6 ActionScript_Op1B_LoadPaletteAndSetTechniqueId_080340F6
+rotulo 080341de ActionScript_Op1E_CallSubstateH_080341DE
+nome 08036bb8 FightPreview_ConsumePartCount -> Fight_DrainPartArmorOneStep
+rotulo 08043818 Table_BattleSpritePartPairs
+rotulo 08043820 Table_BattleSpritePartPairs_Entry2
+nome 08053c00 Viewport_WorldToScreenWrapA -> Viewport_ClampAxisA
+nome 08053c14 Viewport_CheckBoundsWrapB -> Viewport_ClampAxisB
+rotulo 083d6298 unknown_ChapterLiteralPool
+rotulo 084850ca Shop_RefusalMsgScript
+refeita 08053380 corpo 22
+refeita 08053be0 corpo 32
+refeita 08053c00 corpo 14
+refeita 08053c14 corpo 92
+refeita 0807dd58 corpo 64
+criadas 0, renomeadas 4, ja certas 3404, rotulos 10, miolo de outra funcao 0, reparadas 5, desmontadas 0, falharam 0
