@@ -1001,22 +1001,22 @@ address,name,kind,count,comment
 0x08014A44,Fight_LoadObjSlot0Step,func_thumb,,"[FS5] [FS5] i=144; Obj_InitSlotAndLoad(1,0,0); provavel"
 0x08014A60,StateMachine_TickStepCounter,func_thumb,,[provavel] chama StateMachine_DispatchStep; conta retorno != 0
 0x08014A84,Fight_WaitOverlayTargetStep,func_thumb,,[FS5] [FS5] i=146; espera overlay chegar ao alvo; provavel
-0x08014AB4,Fight_CountWaitTimerUp16ThenAdvanceStep,label,,[BT4] confirmado: sem prologo push (leaf
+0x08014AB4,Fight_CountWaitTimerUp16ThenAdvanceStep,func_thumb,,[BT4] confirmado: sem prologo push (leaf
 0x08014ADC,Fight_ResetBattleFieldsStep,func_thumb,,[FS5] [FS5] i=148; zera campos do contexto de batalha; provavel
 0x08014B34,Fight_TickPartGaugePhases,func_thumb,,"[provavel] fases 0..3 de ctx+0x51 e +0x53; copia halfword de struct do bot (passo 0x100, off 0xDD)"
 0x08014C30,Fight_SelectThreeActionSources,func_thumb,,"chama Fight_SelectActionSource para indices 3,4,5; provavel"
 0x08014C84,Fight_SelectEnemyMedaforceStep,func_thumb,,[FS5] [FS5] i=151; bots 3..5 escolhem Medaforca quando estado>3; provavel
 0x08014CC8,Fight_DispatchSubStateMachineAltStep,func_thumb,,[FS5] [FS5] i=152; StateMachine_DispatchSub; provavel
-0x08014CE4,Fight_SetGsTo40Step,label,,[BT4] confirmado: sem prologo push (leaf). Grava GS=0x40 (0x0300137C) e retorna. idx 153.
+0x08014CE4,Fight_SetGsTo40Step,func_thumb,,[BT4] confirmado: sem prologo push (leaf). Grava GS=0x40 (0x0300137C) e retorna. idx 153.
 0x08014CF0,Fight_SyncBotStatusFromPart,func_thumb,,[provavel] sincroniza byte de status do bot (bot+0xDD) com registro de display; bit 0x8000 chute [FL8] [provavel] sincroniza byte de status do bot (bot+0xDD) com registro de display; bit 0x8000 chute
-0x08014D84,Fight_IncrementGsStep,label,,[BT4] confirmado: sem prologo push (leaf). GS+=1 e retorna. idx 169.
+0x08014D84,Fight_IncrementGsStep,func_thumb,,[BT4] confirmado: sem prologo push (leaf). GS+=1 e retorna. idx 169.
 0x08014D94,Fight_SelectActionSourceStep,func_thumb,,provável: chama Fight_SelectActionSource para bots > 2
 0x08014DA2,Fight_SelectActionSourceStep,label,,[TA3] chama Fight_SelectActionSource para a acao normal (TA3)
 0x08014DC8,Fight_SelectMedaforceSourceStep,func_thumb,,"[FL10] lado >2 e byte +0xDD>3 -> Fight_SelectMedaforceActionSource(side, v-4); contador E04 (provável)"
 0x08014DEC,Fight_SelectMedaforceSourceStep,label,,[TA3] chama Fight_SelectMedaforceActionSource com slot = bot+0xDD-4 (TA3)
-0x08014E08,Fight_ClearLinkStateField6SetGs45Step,label,,[BT4] confirmado: sem prologo push (leaf). Zera u16 0x03005016 (gLinkStateBlock 0x03005010 +6) e grava GS=0x45. idx 175.
+0x08014E08,Fight_ClearLinkStateField6SetGs45Step,func_thumb,,[BT4] confirmado: sem prologo push (leaf). Zera u16 0x03005016 (gLinkStateBlock 0x03005010 +6) e grava GS=0x45. idx 175.
 0x08014E20,Fight_OverlayTimerAdvance,func_thumb,,timer +0x86 e espera do overlay; provavel
-0x08014E54,Fight_WaitTimerDownThenAdvanceStep,label,,[BT4] confirmado: sem prologo push (leaf). Se gCtx_WaitTimer==0 faz GS+=1; senao timer-=1. idx 174.
+0x08014E54,Fight_WaitTimerDownThenAdvanceStep,func_thumb,,[BT4] confirmado: sem prologo push (leaf). Se gCtx_WaitTimer==0 faz GS+=1; senao timer-=1. idx 174.
 0x08014E7C,Fight_ClearBattleBuffer,func_thumb,,[R0a] zera 0x600 bytes de buffer de luta (chute; destino nao identificado)
 0x08014E94,Fight_UpdateBotActiveFlagCount,func_thumb,,[R0a] conta flags +0x41..+0x43 em +0x5A (provavel)
 0x08014EC8,Fight_RefreshBotPartRecords,func_thumb,,[R0a] agregador de atualizacao dos registros de peca (provavel)

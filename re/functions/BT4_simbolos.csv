@@ -1,6 +1,6 @@
 addr,nome,kind,comentario
-0x08014AB4,Fight_CountWaitTimerUp16ThenAdvanceStep,label,confirmado: sem prologo push (leaf, Ghidra sem funcao). Le u16 gCtx_WaitTimer 0x030004C6; se ==0x10 faz GS+=1, senao timer+=1. Usado por idx 147/163/166/168.
-0x08014CE4,Fight_SetGsTo40Step,label,confirmado: sem prologo push (leaf). Grava GS=0x40 (0x0300137C) e retorna. idx 153.
-0x08014D84,Fight_IncrementGsStep,label,confirmado: sem prologo push (leaf). GS+=1 e retorna. idx 169.
-0x08014E08,Fight_ClearLinkStateField6SetGs45Step,label,confirmado: sem prologo push (leaf). Zera u16 0x03005016 (gLinkStateBlock 0x03005010 +6) e grava GS=0x45. idx 175.
-0x08014E54,Fight_WaitTimerDownThenAdvanceStep,label,confirmado: sem prologo push (leaf). Se gCtx_WaitTimer==0 faz GS+=1; senao timer-=1. idx 174.
+0x08014AB4,Fight_CountWaitTimerUp16ThenAdvanceStep,func_thumb,confirmado: sem prologo push (leaf, Ghidra sem funcao). Le u16 gCtx_WaitTimer 0x030004C6; se ==0x10 faz GS+=1, senao timer+=1. Usado por idx 147/163/166/168.
+0x08014CE4,Fight_SetGsTo40Step,func_thumb,confirmado: sem prologo push (leaf). Grava GS=0x40 (0x0300137C) e retorna. idx 153.
+0x08014D84,Fight_IncrementGsStep,func_thumb,confirmado: sem prologo push (leaf). GS+=1 e retorna. idx 169.
+0x08014E08,Fight_ClearLinkStateField6SetGs45Step,func_thumb,confirmado: sem prologo push (leaf). Zera u16 0x03005016 (gLinkStateBlock 0x03005010 +6) e grava GS=0x45. idx 175.
+0x08014E54,Fight_WaitTimerDownThenAdvanceStep,func_thumb,confirmado: sem prologo push (leaf). Se gCtx_WaitTimer==0 faz GS+=1; senao timer-=1. idx 174.
