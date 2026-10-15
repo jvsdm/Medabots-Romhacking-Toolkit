@@ -216,3 +216,4 @@ Observação: SN.md (timer PCM e DMA) e MN/TL (GS 0x0805C8EC, 0x0805C950) ficara
 
 - (2026-10-14) Emulador: watch de escrita em 0x03000649 (Conceal, bot 0) durante a técnica 37 e em 0x03001828 (Scout) durante a 36; TR2..TR5 esgotaram a análise estática.
 - (2026-10-14) Emulador: watch de escrita em GS 0x0300137C ao entrar numa Robattle (quem grava 0x23) e ao sair dela (volta ao mapa); BT3..BT6 esgotaram a analise estatica.
+- (2026-10-14) Conceal/Scout: escritores achados no AS6 (Medaforces 0x22/0x24 gravam bot+0xB9 e fight+0x28). Falta ver se as tecnicas 36/37 tambem gravam (emulador ainda util para duracao/limpeza).

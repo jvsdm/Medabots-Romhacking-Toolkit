@@ -4161,6 +4161,22 @@ address,name,kind,count,comment
 0x083AD380,gSpeciality8ByteTable,data,,[AI] [GH-AI] provavel: linhas de 8 B por atributo da medalha (bot+4); peso[k] usado em bot+0x20+k; linhas nao lidas (antes: gSpecialityWeightTable)
 0x083AD470,gFightFallbackPriorityRows,data,,[AI] [GH-AI] 32 x 4 B na ROM; sorteadas por Fight_RandomizePriorityListSlot; valores nao batem com ids de peca (provavel nome)
 0x083AD524,cursor_cell_xy_table,data,,"[PS] [PS] 9 celulas x 2 B (x,y) do cursor 3x3 do Medabot selecionado [RD4] provavel: pares x,y de celula; bytes batem so para 6 pares (12 B); HD2 diz 9 celulas. Revisar"
+0x083AE800,table_BC,table,,[AS6] tabela de passos BC (ponteiros thumb); NoOp 0x08000840 aparece como 0x08000841
+0x083AE840,table_BD,table,,[AS6] tabela de passos BD
+0x083AE880,table_BE,table,,[AS6] tabela de passos BE
+0x083AE8D0,table_BF,table,,[AS6] tabela de passos BF
+0x083AE910,table_BG,table,,[AS6] tabela de passos BG
+0x083AE954,table_BH,table,,[AS6] tabela de passos BH
+0x083AE994,table_BI,table,,[AS6] tabela de passos BI
+0x083AE9D4,table_BJ,table,,[AS6] tabela de passos BJ
+0x083AEA30,table_BK,table,,[AS6] tabela de passos BK
+0x083AEA88,table_BL,table,,[AS6] tabela de passos BL
+0x083AEB1C,table_BM,table,,[AS6] tabela de passos BM
+0x083AEB88,table_BN,table,,[AS6] tabela de passos BN
+0x083AEBC4,table_BO,table,,[AS6] tabela de passos BO
+0x083AEC04,table_BP,table,,[AS6] tabela de passos BP
+0x083AEC58,table_BQ,table,,[AS6] tabela de passos BQ
+0x083AEC98,table_BR,table,,[AS6] tabela de passos BR
 0x083AECD8,gFightSceneMainSubTable,ptr,,[HN10] tabela de passos da cena 8 indexada por 0x0300137C (confirmado) (antes: gFightSceneSteps)
 0x083AEEA0,gTechniqueActionSetupHandlerTable,label,,Simon/Rokusho em 0x083AEEC0; tipo undefined *32[4] [RD4] confirmado DT: 60 x 4 (EEA0..EF8F)
 0x083AEF90,gTechniqueActionValidationHandlerTable,label,,Simon/Rokusho em 0x083AEFB0; tipo undefined *32[4] [RD4] confirmado DT: 60 x 4 (EF90..F07F)
