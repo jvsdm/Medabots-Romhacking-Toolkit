@@ -3198,22 +3198,22 @@ address,name,kind,count,comment
 0x080532F0,lit_EventFlagArrayBase_OddGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (impar) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x08053308,lit_EventFlagArrayBase_EvenGet,data,,[EF] [EF] literal de pool de EventField3Bit_GetByPackedId (par) -> 0x030057D8 [RD2] confirmado: 1 word 0x030057D8 (4 B); nome mantido
 0x0805330C,Map_LoadSecondaryMarkerRecord,func_thumb,,[R3] (mtbe) copia registro de 8 B para o estado do marcador (nome chute)
-0x08053360,Unk_08053360,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute
+0x08053360,Viewport_ReplaceZeroWithDefault,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim (pop r1; bx r1); precisa re-disassemble; chute (antes: Unk_08053360)
 0x08053380,Unk_08053380,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push lr + BL + literal 1.0f; precisa re-disassemble; chute
-0x080533A4,Unk_080533A4,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute
+0x080533A4,Viewport_ScaleIfNegative,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4 lr + BL; precisa re-disassemble; chute (antes: Unk_080533A4)
 0x080533E4,Overworld_BeginUiSceneState,func_thumb,,"Simon/Rokusho: Begin an overworld UI/scene-state sequence with the supplied state id, optional position parameters, and extra mode argument. [R3] (mtbe) reseta estado de objeto (nome chute) | revisto CH3: provável - zera bloco de estado de 0x240 B, recalcula 32 entradas de affine e grava flags (+0x1D4) e parâmetros (+0x1D8/+0x1DC/+0x1E0); flag 0x40 lê pares de ushort de tabela; 'cena de UI' é o nome, não confirmado"
-0x080534C4,Unk_080534C4,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute
-0x080535C8,Unk_080535C8,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute
-0x080537BC,Unk_080537BC,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute
-0x080537D8,Unk_080537D8,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute
+0x080534C4,Viewport_ComputeTriNormalAndUpdate,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame grande; precisa re-disassemble; chute (antes: Unk_080534C4)
+0x080535C8,Viewport_ComputeNormalAndDistance,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = push r4-r7 lr com frame; precisa re-disassemble; chute (antes: Unk_080535C8)
+0x080537BC,Viewport_GetCenter,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = grava 4 campos de 16 bits; precisa re-disassemble; chute (antes: Unk_080537BC)
+0x080537D8,Viewport_CallSetFloatBounds,func_thumb,,[FS7] [FS7] Ghidra halt_baddata; bytes = trampolim curto (bl); precisa re-disassemble; chute (antes: Unk_080537D8)
 0x080537E4,Viewport_SetFloatBounds,func_thumb,,[FS8] [FS8] provavel: monta 0x03005350 com floats +-120.5/+-80.5 e chama 0x08053858/0x0805390C; corpo bad no Ghidra (bytes lidos da ROM)
-0x08053858,Viewport_ComputeRectEdgeA,func_thumb,,[FS8] [FS8] chute: helper float sobre 0x03005350; corpo bad no Ghidra
-0x0805390C,Viewport_ComputeRectEdgeB,func_thumb,,[FS8] [FS8] chute: como 0x08053858 + trunc para tabelas 0x083D6F2C/0x083D732C; corpo bad
-0x08053B04,Viewport_UpdateFromCamera,func_thumb,,[FS8] [FS8] chute: chama 6 helpers 0x08053BE0..0x08053DE0; le 0x03006D30 0x03005520 0x03005404 0x03002C30
+0x08053858,Viewport_ComputeRectEdgeA,func_thumb,,"[FS8] [FS8] chute: helper float sobre 0x03005350; corpo bad no Ghidra [NX3] confirmado: grava 4 params em +0x10..+0x1C da struct global e 4 coeficientes (div) em +0x30..+0x3C. Chamadores: Viewport_SetFloatBounds (0x08053818), FUN_08053fbc (0x08053fe6), Viewport_UpdateEdgesAndStore (0x0805403c)."
+0x0805390C,Viewport_ComputeRectEdgeB,func_thumb,,"[FS8] [FS8] chute: como 0x08053858 + trunc para tabelas 0x083D6F2C/0x083D732C; corpo bad [NX3] confirmado: versao B, grava em +0x20..+0x2C e coeficientes em +0x30..+0x3C. Chamadores: Viewport_SetFloatBounds (0x08053824), FUN_08053fbc (0x08053ff2), Viewport_UpdateEdgesAndStore (0x08054048)."
+0x08053B04,Viewport_UpdateFromCamera,func_thumb,,"[FS8] [FS8] chute: chama 6 helpers 0x08053BE0..0x08053DE0; le 0x03006D30 0x03005520 0x03005404 0x03002C30 [NX3] confirmado: chama Viewport_ComputeOffsetA, loop de Viewport_ClampAxisB sobre contagem (+0x1d0) e ClampAxisB final. Chamador: Viewport_ComputeTriNormalAndUpdate (0x080535a8)."
 0x08053BE0,Viewport_ComputeOffsetA,func_thumb,,[FS8] [FS8] chute: helper float; le 0x03005404 0x03002C30
 0x08053C00,Viewport_ClampAxisA,func_thumb,,[FS8] [FS8] chute: teste NaN + int->float + div; corpo bad
 0x08053C14,Viewport_ClampAxisB,func_thumb,,[FS8] [FS8] chute: mesmo padrao de 0x08053C00; corpo bad
-0x08053C7C,Viewport_AxisHelperC,func_thumb,,[FS8] [FS8] chute: helper float (mul add neg sub div trunc); corpo bad
+0x08053C7C,Viewport_ProjectToScreen,func_thumb,,[FS8] [FS8] chute: helper float (mul add neg sub div trunc); corpo bad (antes: Viewport_AxisHelperC)
 0x08053D78,Viewport_AxisHelperD,func_thumb,,[FS8] [FS8] chute: trunc e laco recursivo pelos bytes; le 0x03005404 0x03002C30
 0x08053DE0,Viewport_AxisHelperE,func_thumb,,[FS8] [FS8] chute: usa mascara 0x1FF e 0x03006D30
 0x08054014,Viewport_UpdateEdgesAndStore,func_thumb,,[FS8] [FS8] chute: chama 0x08053858 0x0805390C 0x08053FBC; le 0x083D2F30 0x030053F0
@@ -3595,7 +3595,7 @@ address,name,kind,count,comment
 0x08068460,fx_screen_setup_a,func_thumb,,[R4] R4: setup de efeito de tela por modo 1-4; provavel
 0x08068684,fx_screen_setup_b,func_thumb,,[R4] R4: variante de fx_screen_setup_a com fade de paleta; provavel
 0x08068888,fx_step_table_a,func_thumb,,[R4] R4: maquina de estados com handler por CallViaR0; provavel
-0x080688E0,fx_step_table_b,func_thumb,,[R4] R4: idem fx_step_table_a sem DISPCNT; provavel
+0x080688E0,Fx_StepTableBUntilDone,func_thumb,,[R4] R4: idem fx_step_table_a sem DISPCNT; provavel (antes: fx_step_table_b)
 0x08068920,Stub_ReturnTrue_08068920,func_thumb,,[FN5] retorna 1 (confirmado)
 0x08068A84,Palette_CrossfadeStep,func_thumb,,[FR3] [FR3] crossfade de paleta em 32 passos (progresso/divisor); retorna 1 ao fim (provavel)
 0x08068B74,Scene_ProgressIndex16,func_thumb,,[FN6] provavel: se X%B==0 grava X/B em *ptr e retorna X==16*B; ponteiros 0x08485720/0x08485724
