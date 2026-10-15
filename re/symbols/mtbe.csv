@@ -1,13 +1,13 @@
 address,name,kind,count,comment
 0x02000000,gGfxDefaultAssetBuffer,label,,"itens da loja: 8 B (bot, qtd, preco*100); o codigo usa o espelho 0x02040000 (antes: gShopItems) [RM5] destino de Gfx_LoadDefaultAsset HO1.md provavel; 219 refs na ROM (antes: gShopItems)"
 0x02023000,EWRAM_LevelSortScratch,label,,"quantidade por item na loja (1 byte por bot) (antes: gShopQuantities) [DM] [confirmado] 30 registros de 8 B (chave u16 em +0), limpos por CpuFastSet em Level_ComputeReferenceFromSlots"
-0x02024B84,gBattlePreviewCachedOamList,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual)"
+0x02024B84,gBattlePreviewCachedOamList,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) [RF1] provavel: so mtbe (Simon/Rokusho); sem literal nem doc proprio (RM5/RM7)"
 0x02026000,CompositePreviewContext,data,,"[IC2] [GH-IC2] contexto EWRAM do sprite grande: +0 estado, +4 vetor de tipos 0x083D1D78, +8 OAM (0x020260D0 + slot*0x410) [RM5] IC2.md confirmado (CompositePreviewContext_Init)"
 0x020260CC,gMotionCounter,label,,[AN] GH-AN: contador de quadro do lado 0 (+1 por lado) [RM5] quadro do lado s = +s AN.md s24 confirmado
 0x020260CE,gMotionKeyframe,label,,[AN] GH-AN: keyframe atual do lado 0 (+1 por lado) [RM5] keyframe do lado s = +s AN.md s24 confirmado
 0x020260D0,gMotionState,label,,"estado das pecas em batalha: 50 x 16 B indexado por molde; inimigo logo depois; Simon: gSelectedMedabotPreviewTemplateTable (antes: gBattlePartState) [RM5] base dos moldes, s*0x410 AN.md s25 confirmado"
-0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8)
-0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem
+0x020260E8,gBattleRootY,label,,posicao Y da raiz da montagem (8.8) [RF1] provavel: mtbe 'posicao Y da raiz da montagem'; EWRAM sem literal
+0x020260EA,gBattleRootX,label,,posicao X da raiz da montagem [RF1] provavel: mtbe 'posicao X da raiz da montagem'; EWRAM sem literal
 0x0202FA00,gPaletteShadowBuffer,data,,[MP2] buffer de paleta EWRAM (0x200 B) enviado por CopyPaletteBuffersToHardware [RM5] buffer CpuFastSet de paleta/fundo GF2.md/GF3.md provavel
 0x02030000,SAVE_STAGING_EWRAM,data,,"[SV] [SV] buffer de staging do save (EWRAM), 0x1CC0 B (confirmado por literal)"
 0x03000430,debug_motion_mode_flag,label,,[DB] GH-DB provavel: zerado ao sair do Motion (B); mesmo byte do CpuFastSet em JT3 (==2)
@@ -75,7 +75,7 @@ address,name,kind,count,comment
 0x0300059A,gBattleBotHeadRecord,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_name) [RM5] +0x0A do bot; sem doc, chute (antes: battle_robot_1_name) (antes: BattleBot_Name) [RM7] confirmado no decompile 0x080150FC: copia 14 B do registro de cabeca para bot+0x0A..+0x17 (antes: BattleBot_Name)"
 0x030005A8,BattleBot_SpecialityCycle,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_autobattle_rotation) [RM5] +0x18..+0x1F do bot; ciclo de especialidade 8 passos AI.md confirmado (antes: battle_robot_1_autobattle_rotation)"
 0x030005B0,BattleBot_SpecialityCycleWeights,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_medal_stats) [RM5] +0x20..+0x27 do bot; pesos por passo do ciclo AI.md provavel (antes: battle_robot_1_medal_stats)"
-0x030005D0,gBotBlock0Ident,data,,[PB] [GH-PB] = bloco do bot 0 +0x40 (destino de Fight_CopyBotIdentityRecords)
+0x030005D0,gBotBlock0Ident,data,,[PB] [GH-PB] = bloco do bot 0 +0x40 (destino de Fight_CopyBotIdentityRecords) [RF1] provavel: bloco do bot 0 (0x03000590) +0x40; destino de Fight_CopyBotIdentityRecords (PB)
 0x030005D3,BattleBot_Head_PartId,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_partId) [RM5] +0x43 do bot; antes do bloco da cabeca, sem doc, chute (antes: battle_robot_1_head_partId)"
 0x030005D8,BattleBot_Head_Medal,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_medal_compatibility) [RM5] P0 da cabeca (+0x48) byte 0 = medalha DM.md s0 provavel (antes: battle_robot_1_head_medal_compatibility)"
 0x030005D9,BattleBot_Head_Technique,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_head_animation) [RM5] P0+1 da cabeca = tecnica DM.md s7.1 confirmado (antes: battle_robot_1_head_animation)"
@@ -323,17 +323,17 @@ address,name,kind,count,comment
 0x03006F40,gScreenTransitionState,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] [RM3] provavel; gravado em Overworld_SetTransitionStepAndDispatch; lido em Anim_UpdateSoftFloatStep"
 0x03006F74,gSaveScreenCtxPtr,label,,"[IN3] [IN3] ponteiro para struct do cursor da bolsa; +0x0C = indice (gShopItems/lista), +0x10 = 0 libera recusa 'cancelar'. Antes: nome Shop-like nao usado [RM3] chute; gravado em MainState_Dispatch2 e lido em hud_draw_row_tiles (antes: gKeyItemBagCursorPtr) [RM7] provavel: FM6.md:4 ponteiro do contexto da tela de salvar, +2 = cursor (antes: gKeyItemBagCursorPtr)"
 0x03007014,SND_DriverPtr,data,,[SN] ponteiro para o driver de som [RM3] confirmado; driver=[0x03007014] segundo pc/research/README.md (SND8)
-0x03007F00,sp_usr,label,,stack do modo System
-0x03007FA0,sp_irq,label,,stack do modo IRQ
+0x03007F00,sp_usr,label,,stack do modo System [RF1] confirmado: ponteiro de pilha do modo System (crt0; MN.md)
+0x03007FA0,sp_irq,label,,stack do modo IRQ [RF1] confirmado: ponteiro de pilha do modo IRQ (crt0; MN.md)
 0x03007FF8,gIntrCheck_BIOS,label,,[LK] [GH-LK] flags de IRQ do BIOS; FUN_08002438 liga bit 7 (Serial); confirmado
-0x03007FFC,INTR_VECTOR,label,,endereco do IntrMain
-0x04000000,REG_DISPCNT,label,,
-0x04000004,REG_DISPSTAT,label,,
-0x04000006,REG_VCOUNT,label,,
-0x04000008,REG_BG0CNT,label,,
-0x0400000A,REG_BG1CNT,label,,
-0x0400000C,REG_BG2CNT,label,,
-0x0400000E,REG_BG3CNT,label,,
+0x03007FFC,INTR_VECTOR,label,,endereco do IntrMain [RF1] confirmado: vetor de interrupcao -> IntrMain (MN.md)
+0x04000000,REG_DISPCNT,label,,[RF1] confirmado: registrador de I/O GBA
+0x04000004,REG_DISPSTAT,label,,[RF1] confirmado: registrador de I/O GBA
+0x04000006,REG_VCOUNT,label,,[RF1] confirmado: registrador de I/O GBA
+0x04000008,REG_BG0CNT,label,,[RF1] confirmado: registrador de I/O GBA
+0x0400000A,REG_BG1CNT,label,,[RF1] confirmado: registrador de I/O GBA
+0x0400000C,REG_BG2CNT,label,,[RF1] confirmado: registrador de I/O GBA
+0x0400000E,REG_BG3CNT,label,,[RF1] confirmado: registrador de I/O GBA
 0x04000010,REG_BG0HOFS,label,,
 0x04000012,REG_BG0VOFS,label,,
 0x04000014,REG_BG1HOFS,label,,
@@ -3307,9 +3307,9 @@ address,name,kind,count,comment
 0x08057440,Map_TickChoiceListOpen,func_thumb,,"[provavel] abre lista de escolha em 0x10 passos (FUN_080492A8 + Map_CreateChoiceSprites); ao fim, GameState_AdvanceSubroutine"
 0x080574D4,FieldMenu_ChoiceSub2_SelectRow,func_thumb,,"[FM2] [FM2] sub 2 do menu de escolha 0x083D5FF4 (Thumb, sem funcao no Ghidra); linha ativa via Overworld_CheckStepAllowed; switch 0..5 pela tabela 0x08057534 [RV18] provavel: menu de escolha: move cursor (wrap 4 linhas); A checa passo permitido via Overworld_CheckStepAllowed; B fecha"
 0x08057534,FieldMenu_RowActionTable,table,,"[FM2] [FM2] tabela do switch de linha: idx0=0x080575D4, idx1=0x0805754C (sub 0x0B), idx2=0x08057564 (sub 0x0D), idx3..5=0x08057570 (sub 0x0F) [RD2] confirmado: 6 x 4 B ponteiros (0x080575D4, 0x0805754C, 0x08057564, 0x08057570 x3); termina em 0x0805754C; xref DATA em FieldMenu_ChoiceSub2_SelectRow"
-0x0805754C,FieldMenu_RowAction1_Sub0B,label,,[FM2] [FM2] idx 1 do switch: gamestate_subroutine=0x0B (lido); mapeamento de opcao pendente
-0x08057564,FieldMenu_RowAction2_Sub0D,label,,[FM2] [FM2] idx 2 do switch: gamestate_subroutine=0x0D (lido); mapeamento pendente
-0x08057570,FieldMenu_RowAction3_Sub0F,label,,[FM2] [FM2] idx 3..5 do switch: gamestate_subroutine=0x0F (lido); mapeamento pendente
+0x0805754C,FieldMenu_RowAction1_Sub0B,label,,"[FM2] [FM2] idx 1 do switch: gamestate_subroutine=0x0B (lido); mapeamento de opcao pendente [RF8] confirmado: idx1 de FieldMenu_RowActionTable 0x08057534 (6 x 4, ROM lida); grava gamestate_subroutine 0x0B (FM2 leu o codigo). Tipo dado->label"
+0x08057564,FieldMenu_RowAction2_Sub0D,label,,[FM2] [FM2] idx 2 do switch: gamestate_subroutine=0x0D (lido); mapeamento pendente [RF8] confirmado: idx2 da tabela 0x08057534; grava gamestate_subroutine 0x0D. Tipo dado->label
+0x08057570,FieldMenu_RowAction3_Sub0F,label,,[FM2] [FM2] idx 3..5 do switch: gamestate_subroutine=0x0F (lido); mapeamento pendente [RF8] confirmado: idx3..5 da tabela 0x08057534; grava gamestate_subroutine 0x0F. Tipo dado->label
 0x080575DC,Menu_ChoiceCountdownStep,func_thumb,,provável: contagem regressiva que abre janelas de escolha; jump table final não recuperada
 0x08057688,Screen_StartFlowCmd40,func_thumb,,[FS8] [FS8] confirmado (decompile): GameState_StartFlowByCommand(0x40 0). Nome provavel. Tabela 0x083D6004
 0x08057698,Screen_TransitionEnterAndAdvance,func_thumb,,[FS8] [FS8] provavel: Overworld_ResetAndStartScreenTransitionEffect(32.0 8.0) + GameState_AdvanceSubroutine. Tabela 0x083D6008
@@ -3329,25 +3329,25 @@ address,name,kind,count,comment
 0x08057FB4,Map_ReleaseMarkerRenderSlots,func_thumb,,[R3] (mtbe) libera slots de render 0x20..0x23 [RV19] confirmado: reseta render slots 0x20-0x23
 0x08057FD4,Map_UpdateCursorSpritePosition,func_thumb,,[R3] (mtbe) posiciona sprite do cursor [RV19] confirmado: calcula X/Y de cursor a partir de campos do estado (+0x67 +0x6C +0x6D) e grava registro do sprite
 0x08058070,Map_CreateChoiceSprites,func_thumb,,[R3] (mtbe) cria 4 sprites de opcao (slots 0x20..0x23) [RV19] confirmado: cria 4 slots 0x20-0x23 com X=param*8+0x90 e Y em passos de 0x10
-0x08058080,Map_CreateChoiceSprites,label,,[OW2] chama CheckStepAllowed com kinds 0..3 (nome de caller)
+0x08058080,Map_CreateChoiceSprites,label,,[OW2] chama CheckStepAllowed com kinds 0..3 (nome de caller) [RF8] provavel: NAO e inicio de funcao (sem push; BL + movs; Ghidra sem funcao aqui). Chama CheckStepAllowed com kinds 0..3. Nome e de caller; dono ainda nao achado
 0x080581C8,Map_DrawChoiceBackgroundRow,func_thumb,,[R3] (mtbe) desenha linha de fundo do painel (nome chute) [RV19] provavel: copia uma linha de fundo do mapa (BgMap_CopyRectWithAttrs) em linha param*2+1; nome mantido
 0x08058208,Map_HandleMarkerCommandFromState,func_thumb,,[R3] (mtbe) chama 0805821c com byte de estado (nome chute) [RV19] confirmado: le comando do estado (+0x14) e chama Map_HandleMarkerCommand
 0x0805821C,Map_HandleMarkerCommand,func_thumb,,[R3] (mtbe) comandos 0/1/5/6 do marcador [RV19] confirmado: switch sobre comando 0/1/5/6 que grava campos do marcador e le flag/campo 3 bits
 0x080582B8,Map_SyncMarkerEventFields,func_thumb,,[R3] (mtbe) sincroniza flag e campo 3 bits do marcador [RV19] confirmado: modo 1 le flag e campo 3 bits do evento para os campos ou grava de volta
 0x0805830C,Screen_UpdateByStep,func_thumb,,[R3] (mtbe) tela com passos 0..7 (nome chute) [RV19] provavel: despacho por passo (0-7) com input que move camera/cursor e toca som; nome generico mantido
-0x08058328,Screen_UpdateByStep_JumpStep,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058334 (step 0..7); JT5
+0x08058328,Screen_UpdateByStep_JumpStep,label,,"[JT5] mov pc: tabela real 8 ptrs em 0x08058334 (step 0..7); JT5 [RF8] confirmado: mov pc,r0 (0x4687); tabela 8 x 4 em 0x08058334 (ROM lida, ptrs validos). Tipo dado->label"
 0x08058334,Screen_UpdateByStep_TableStep,data,,[JT5] tabela 8 ptrs; JT5 [RD3] confirmado: 8 x 4 (ptrs Thumb) lidos na ROM; JT5
-0x08058378,Screen_UpdateByStep_JumpState6,label,,[JT5] mov pc: tabela real 6 ptrs em 0x08058384; JT5
-0x08058572,Screen_UpdateByStep_JumpState5,label,,[JT5] mov pc: tabela real 6 ptrs em 0x0805857C; JT5
-0x08058716,Screen_UpdateByStep_JumpState4,label,,[JT5] mov pc: tabela real 5 ptrs em 0x08058720; JT5
-0x08058858,Screen_UpdateByStep_JumpState7,label,,[JT5] mov pc: tabela real 7 ptrs em 0x0805886C; JT5
+0x08058378,Screen_UpdateByStep_JumpState6,label,,"[JT5] mov pc: tabela real 6 ptrs em 0x08058384; JT5 [RF8] confirmado: mov pc,r0; tabela 6 x 4 em 0x08058384 (ROM lida). Tipo dado->label"
+0x08058572,Screen_UpdateByStep_JumpState5,label,,"[JT5] mov pc: tabela real 6 ptrs em 0x0805857C; JT5 [RF8] confirmado: mov pc,r0; tabela 6 x 4 em 0x0805857C (ROM lida). Tipo dado->label"
+0x08058716,Screen_UpdateByStep_JumpState4,label,,"[JT5] mov pc: tabela real 5 ptrs em 0x08058720; JT5 [RF8] confirmado: mov pc,r0; tabela 5 x 4 em 0x08058720 (ROM lida). Tipo dado->label"
+0x08058858,Screen_UpdateByStep_JumpState7,label,,"[JT5] mov pc: tabela real 7 ptrs em 0x0805886C; JT5 [RF8] confirmado: mov pc,r0; tabela 7 x 4 em 0x0805886C (ROM lida). Tipo dado->label"
 0x080589A4,Screen_StepCyclicIndex,func_thumb,,[R3] indice ciclico (chute); passos 0/7 de Screen_UpdateByStep (antes: Screen_StepCyclicIndexDown) [RV19] confirmado: avanca indice ciclico de um campo (+0x16) com botoes 0x40/0x80 e limite param
 0x08058A10,Map_StepMarkerCounterUp,func_thumb,,[R3] contador de marcador +1/+16 com sync de evento (provavel)
 0x08058AB8,Map_StepMarkerCounterNoSync,func_thumb,,[R3] mesmo contador sem sync (provavel)
 0x08058B28,Map_StepSlotCounterUp,func_thumb,,[R3] contador por slot 0x10/0x20 (provavel)
 0x08058B90,Map_CycleSlotIndex,func_thumb,,[R3] ciclo de opcao; table==5 chama Screen_BuildMainPanels (chute no nome) [RV19] confirmado: incrementa/decrementa valor ciclico (botoes 0x10/0x20) com limite param3; param1==5 reconstroi paineis
 0x08058C0C,Screen_RedrawAndDispatchStep,func_thumb,,[R3] redesenha e despacha passo por tabela (chute no nome) [RV19] confirmado: redesenha marcador/lista/nibbles e despacha por tabela de passo (>7 vai para Screen_NoopReturn)
-0x08058C44,Screen_RedrawAndDispatchStep_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x08058C54 (step 0..7); JT5
+0x08058C44,Screen_RedrawAndDispatchStep_Jump,label,,"[JT5] mov pc: tabela real 8 ptrs em 0x08058C54 (step 0..7); JT5 [RF8] confirmado: mov pc,r0; tabela 8 x 4 em 0x08058C54 (ROM lida). Tipo dado->label"
 0x08058C54,Screen_RedrawAndDispatchStep_Table,data,,[JT5] tabela 8 ptrs; JT5 [RD3] confirmado: 8 x 4 (ptrs Thumb) lidos na ROM; JT5
 0x080593FA,Screen_ReturnEpilogue,func_thumb,,"[R3] retorno sem efeito (antes: Screen_NoopReturn) [RV19] confirmado: epilogo add sp,4; pop r4-r5; pop r0; bx r0 (sem corpo; nao e noop nem tabela) (antes: Screen_NoopReturn)"
 0x08059434,Screen_PrepareNibbleRowsAndReset,func_thumb,,[FS8] [FS8] provavel: chama Screen_DrawPackedNibbleRows (0x08059734) e Map_ResetObjectRenderSlot; RAM 0x030057A0
@@ -3414,7 +3414,7 @@ address,name,kind,count,comment
 0x0805CF58,KeyItemBag_UpdateSlotAndDispatchState,func_thumb,,"[FL10] loja: destaque do slot, id de gShopItems ou 0x3F, StateMachine_DispatchStep (provável) (antes: Shop_UpdateSlotAndDispatchState)"
 0x0805CFB4,Shop_ItemListInputStep,func_thumb,,"entrada da lista de itens da loja (paginas de 5, gShopItems); provavel"
 0x0805D262,KeyItemBag_Result2to4_Message,label,,"[IN3] [IN3] retornos 2..4: SFX 6, limpa bit 0x4000 de 0x03004070 e 0x030040B0 (provavel), GS=9. Id da mensagem NAO confirmado (r0 nao vai para 0x0803FB0C)"
-0x0805D2A0,KeyItemBag_UseItem,label,,"[IN3] [IN3] retorno 1: SFX 4, depois le id de 0x02040000+idx*4 e cmp #0x28"
+0x0805D2A0,KeyItemBag_UseItem,label,,"[IN3] [IN3] retorno 1: SFX 4, depois le id de 0x02040000+idx*4 e cmp #0x28 [RF8] provavel: NAO e inicio de funcao (movs r0,#4 + BL = SFX do retorno 1). Nome do bloco de uso; funcao dona nao achada"
 0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,,[JT5] mov pc: tabela real 41 ptrs em 0x0805D2C8 (halfword EWRAM 0x02040000+id*4); JT5
 0x0805D2C8,KeyItemBag_DispatchTable,data,,"[IN2] [IN2] 0x28 entradas de alvo por id de key item (<=0x28); alvos especiais 0,1,5,12,13,19,39; resto 0x0805D410 [RD3] confirmado: 41 x 4 (ids 0..0x28"
 0x0805D36C,KeyItemBag_Case_Id0,label,,[IN] [IN] ponto de tabela 0x28 entradas de despacho (pendente) (antes: ItemListSwitch_Table) [RD3] (antes: ItemListSwitch_Table) confirmado: e codigo (Thumb)
