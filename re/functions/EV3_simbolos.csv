@@ -1,0 +1,11 @@
+# address,name,kind,comment
+0x0804E8C4,Event_Op33_Cont_StartBattle,func_thumb,"(antes: EventOpcode33_StartBattle_Continuation) confirmado: continuacao 0x33 reseta passo e roda Event_RunSceneCommandSequence(0x20); ao retornar, copia E+0xC4F para 0x03005310+0x39 se for 1 ou 2. Quem grava E+0xC4F nao confirmado (aberto)"
+0x0804EA18,Event_Op37_Cont_LoseItem,func_thumb,"(antes: EventOpcode37_LoseItem) confirmado: subtrai qtd (min com contagem) via Map64_SubDefault1_Wrapper -> Map64_SubRemoveIfZero no mapa 0x03002BA0; contagem 0 = mensagem de falta"
+0x0804EB0C,Event_Op38_Cont_GetPart,func_thumb,"(antes: EventOpcode38_GetPart) confirmado: soma qtd com teto 99 via Inv_AddCountClamp99_Wrapper no inventario de pecas 0x03004C40 (slot*0xF0 + bot*2)"
+0x0804EC38,Event_Op39_Cont_LosePart,func_thumb,"(antes: EventOpcode39_LosePart) confirmado: subtrai qtd (piso 0) via Inv_SubCountClampZeroTail -> Inv_SubCountClampZero em 0x03004C40; contador 0 = mensagem de falta"
+0x0804ED88,Event_Op3A_Cont_GetMoney,func_thumb,"(antes: EventOpcode3A_GetMoney) confirmado: valor = u16 BE de 2 bytes do script x10, soma via AddClampedCounter em 0x03002B70 com teto 0x1869F (99999)"
+0x0804EE00,Event_Op3B_Cont_LoseMoney,func_thumb,"(antes: EventOpcode3B_LoseMoney) confirmado: valor = u16 BE x10, limitado ao saldo (Save_GetMoney), subtrai via SubClampedCounter em 0x03002B70 com piso 0"
+0x0804E928,Event_Op36_Cont_GetItem,func_thumb,"confirmado (ja nomeado): soma qtd com teto 99 via Map64_AddCountDefault1_Wrapper em 0x03002BA0; contagem 99 = mensagem cheio"
+0x0804DC34,Event_Op00_Cont_NoOp,func_thumb,"confirmado: corpo vazio (return). Continuacao de 0x1B, 0x1C, 0x88 e 0x00 (tabela 0x083D2630 aponta aqui)"
+0x0804BE50,Event_Op1B_EventNpcFacePlayer,func_thumb,"(primario, nome mantido) confirmado: direcao vem do JOGADOR (gPlayerFaceDirection 0x03003811) mapeada por tabela ROM 0x083D262C[dir] -> Map_SetEventMarkerFacingVariant. So escreve se (u16 E+idx*8+0x5DE & 0xFFF) == u16 E+0xC8E. Continuacao = Event_Op00_Cont_NoOp (sem efeito)"
+0x0804D7F8,Event_Op88_Jump_If_Flag_C76_Clear,func_thumb,"(primario, nome mantido) confirmado: flag C76 testada NO PRIMARIO (E+0xC76 == 0 -> salto). Offset BE16 em E+0xC94; ponteiro E+0xC8A += offset. Continuacao = Event_Op00_Cont_NoOp (sem teste)"
