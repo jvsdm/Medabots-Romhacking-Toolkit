@@ -218,3 +218,4 @@ Observação: SN.md (timer PCM e DMA) e MN/TL (GS 0x0805C8EC, 0x0805C950) ficara
 - (2026-10-14) Emulador: watch de escrita em GS 0x0300137C ao entrar numa Robattle (quem grava 0x23) e ao sair dela (volta ao mapa); BT3..BT6 esgotaram a analise estatica.
 - (2026-10-14) Conceal/Scout: escritores achados no AS6 (Medaforces 0x22/0x24 gravam bot+0xB9 e fight+0x28). Falta ver se as tecnicas 36/37 tambem gravam (emulador ainda util para duracao/limpeza).
 - (2026-10-14) RESOLVIDO no emulador (BT7.md): entrada e saida da Robattle; GS e por menu. Falta so Scout/Conceal (precisa gravacao com tecnicas 36/37).
+- (2026-10-14) RESOLVIDO no emulador (TR6.md, rec_8): Conceal = AA_0A, Scout = Z_0E, ambos acumulam com teto 120/160.

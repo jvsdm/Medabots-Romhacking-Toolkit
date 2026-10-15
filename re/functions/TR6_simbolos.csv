@@ -1,0 +1,3 @@
+addr,nome,kind,comentario
+0x080236E0,Fight_DispatchOnSubstateAA_AA_0A_AddConceal,func_thumb,"confirmado (emulador rec_8): soma valor da peça em bot+0xB9 (Conceal) com teto 0x78 via Util_AddByteClampToMax (antes: Fight_DispatchOnSubstateAA_AA_AddGaugeMax120)"
+0x080233E0,Fight_DispatchOnSubstateAA_Z_0E_AddScoutBonus,func_thumb,"confirmado (emulador rec_8): soma valor da peça em fight+0x28+8*lado (Scout) com teto 0xA0 via Util_AddByteClampToMax (antes: Fight_DispatchOnSubstateAA_Z_AddGaugeMax160)"

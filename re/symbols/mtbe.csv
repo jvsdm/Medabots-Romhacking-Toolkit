@@ -1558,7 +1558,7 @@ address,name,kind,count,comment
 0x08023274,Fight_DispatchOnSubstateAA_Z_0A_SetupAllySlotsFromBots,func_thumb,,"Z 0x0A: slots 0x21..0x23 para bots ligados do lado, sfx 0x2E (confirmado)"
 0x08023328,Fight_DispatchOnSubstateAA_Z_WaitAndDecaySlots,func_thumb,,[HA6] HA6 Z/0B: timer 0x03000440+0x86 (0x14 -> 0x3C) e decaimento de slots; +0xAA. Confirmado.
 0x08023384,Fight_DispatchOnSubstateAA_Z_0D_SlotBitStepClearTiles,func_thumb,,Z 0x0D: passo de bytes +0x08/+0x09 com bit 0x8000; Tile_ClearSlots (confirmado)
-0x080233E0,Fight_DispatchOnSubstateAA_Z_AddGaugeMax160,func_thumb,,[HA6] HA6 Z/0E: Fight_AddByteClampToMax teto 0xA0; +0xAA. Confirmado.
+0x080233E0,Fight_DispatchOnSubstateAA_Z_0E_AddScoutBonus,func_thumb,,[HA6] HA6 Z/0E: Fight_AddByteClampToMax teto 0xA0; +0xAA. Confirmado. (antes: Fight_DispatchOnSubstateAA_Z_AddGaugeMax160)
 0x08023414,Fight_DispatchOnSubstateAA_Z_0F_SetStepCode1C,func_thumb,,Z 0x0F: grava 0x1C em +0xA6 (confirmado; sentido chute) [TR4] [TR4] confirmado: grava fi+0xA6=0x1C (Scout
 0x0802342C,Fight_DispatchOnSubstateAA_AA,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08023454,Fight_DispatchOnSubstateAA_AA_00_RosCalcPart,func_thumb,,"AA 0x00: ROS da peca; ok -> 4, falha -> +0xA6=0x1A (confirmado)"
@@ -1567,7 +1567,7 @@ address,name,kind,count,comment
 0x080235AC,Fight_DispatchOnSubstateAA_AA_SetupSlotSfx4D,func_thumb,,[HA6] HA6 AA/07: Slot_SetupFromRecordList; sfx 0x4D; +0xAA. Confirmado.
 0x080235E8,Fight_DispatchOnSubstateAA_AA_AnimCounterStep,func_thumb,,[HA6] HA6 AA/08: contador 0x84 +1; FightPreview_SetGroupActive4; fim de script -> Tile_ClearSlots; +0xAA. Confirmado.
 0x08023658,Fight_DispatchOnSubstateAA_AA_WaitPreviewShowGroup,func_thumb,,[HA6] HA6 AA/09: espera preview e FightPreview_ShowGroup4; +0xAA. Confirmado.
-0x080236E0,Fight_DispatchOnSubstateAA_AA_AddGaugeMax120,func_thumb,,[HA6] HA6 AA/0A: Fight_AddByteClampToMax teto 0x78; +0xAA. Confirmado.
+0x080236E0,Fight_DispatchOnSubstateAA_AA_0A_AddConceal,func_thumb,,[HA6] HA6 AA/0A: Fight_AddByteClampToMax teto 0x78; +0xAA. Confirmado. (antes: Fight_DispatchOnSubstateAA_AA_AddGaugeMax120)
 0x08023718,Fight_DispatchOnSubstateAA_AA_0B_SetStepCode1D,func_thumb,,AA 0x0B: grava 0x1D em +0xA6 (confirmado; sentido chute) [TR4] [TR4] confirmado: grava fi+0xA6=0x1D e fi+0xAA++; nao grava +0xB9
 0x08023730,Fight_DispatchOnSubstateAA_AB,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08023758,Fight_DispatchOnSubstateAA_AB_00_RosCalcPartNoTech16,func_thumb,,AB 0x00: ROS; sem tecnica 16 -> +0xA6=0x39 (confirmado)
