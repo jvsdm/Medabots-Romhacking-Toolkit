@@ -2211,8 +2211,8 @@ address,name,kind,count,comment
 0x080356B4,Fight_HideObjectSlot,func_thumb,,Simon/Rokusho [R1b] provavel: limpa bits do slot
 0x080356CC,Fight_UpdateFollowerObjectSlot,func_thumb,,Simon/Rokusho: Keep one follower/linked object slot visually attached to another object slot while it remains within the visible range; otherwise hide the follower slot. [R1b] provavel: mantem slot seguidor preso ao lider na faixa visivel
 0x0803572C,Fight_SubClampZeroByte,func_thumb,,[R1b] confirmado: subtrai byte sem ir abaixo de 0
-0x08035740,Util_AddByteClampToMax,func_thumb,,Simon/Rokusho (antes: safe_add)
-0x08035754,Util_SubtractShortClampZero,func_thumb,,Simon/Rokusho (antes: safe_subtract)
+0x08035740,Util_AddByteClampToMax,func_thumb,,Simon/Rokusho (antes: safe_add) [RV8] confirmado: *p = min(*p+add
+0x08035754,Util_SubtractShortClampZero,func_thumb,,Simon/Rokusho (antes: safe_subtract) [RV8] confirmado: *p = max(*p-n
 0x0803576C,Fight_GetMedalPartCompatibilityBonus,func_thumb,,Simon/Rokusho: Sum the part_compatibility_bonus of all equipped parts whose BattlePartState.medal_compatibility matches the bot's medal class. [RV8] confirmado: soma bot+7 para cada uma das 4 pecas cujo byte 0 bate com bot+4
 0x0803579C,Fight_AccumRosPart,func_thumb,,Simon/Rokusho: Base ROS term for a selected part. | Formula: | base = part.success_or_propulsion |      + Fight_GetMedalPartCompatibilityBonus(attacker) |      + rand(0..7) |      + attacker.skill_level[part.skill_id] |      + attacker.legs_range_bonus(part.skill_id) | where legs_range_bonus picks effective_proximity_or_uses for close-range skills and effective_remoteness_or_cooldown for ranged skills. (antes: Fight_GetPartProficiencyBase; decisao CF) [RV9] confirmado
 0x08035814,Fight_ApplyVirusBugRosPenalty,func_thumb,,"Simon/Rokusho: Apply the ROS penalty from Bug/Virus pending effects. When pending_effect_kind is Bug (0x0D) or Virus (0x0E), subtract pending_effect_value_1 from total ROS. [RV9] confirmado"
@@ -2434,8 +2434,8 @@ address,name,kind,count,comment
 0x0803D5A0,Fight_ResetStateFlagsAndCounter,func_thumb,,"zera ctx+0x84/+0x86 e incrementa contador; lista diz 428 bytes, corpo real 48; provavel"
 0x0803D5E0,Link_StepAdvanceWhenReached,func_thumb,,"[FN4] provavel: Overlay_SetTargetAndCheckReached; ao atingir zera +0x86 e incrementa contador; ptrs em 083AFC7C/083AFDC0 (tabela de passos da tela Link, AN2) (antes: FUN_0803d5e0)"
 0x0803D608,Link_StepCycle8AndAdvance,func_thumb,,[FN4] provavel: conta +0x86 de 0 a 8 e ao chegar em 8 zera e incrementa contador; ptrs 083AFC80/083AFDBC/083AFDC4/083AFDCC (antes: FUN_0803d608)
-0x0803D634,LinkTick_MenuStep3,func_thumb,,[LK2] [GH-LK2] passo 3 do menu 10: se slot local==0 escreve 0x8000|byte em 0x03005016 e conta gFrameCount; confirmado
-0x0803D674,LinkTick_MenuStep4,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 10: tick de link semelhante ao passo 3; provavel
+0x0803D634,LinkTick_SetScreenByteFromFrameThenAdvance,func_thumb,,[LK2] [GH-LK2] passo 3 do menu 10: se slot local==0 escreve 0x8000|byte em 0x03005016 e conta gFrameCount; confirmado (antes: LinkTick_MenuStep3)
+0x0803D674,LinkTick_WaitTopBitThenCopyScreenByte,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 10: tick de link semelhante ao passo 3; provavel (antes: LinkTick_MenuStep4)
 0x0803D6AC,Link_ResetFieldsAndSetGs50,func_thumb,,"[FN4] confirmado no decompile: zera byte +0x84 do ator, campos +0x51..+0x54, +0x1A6..+0x1AC e +0x1B0=1, +0x86=0 e grava 0x50 no GS; ptr 083AFC8C (antes: FUN_0803d6ac)"
 0x0803D71C,Link_RollTableEntryAndAdvance,func_thumb,,"[FN4] confirmado no decompile: randbyte() & 0x1F indexa tabela e grava em +0x38, incrementa contador; ptr 083AFC90 (antes: FUN_0803d71c)"
 0x0803D74C,Screen_InitOverlayAndLoadAssets,func_thumb,,[FN2] provavel: Init de tela: limpa; CpuFastSet; DISPCNT; 4x decompress_and_store; layout overlay; snd_song_request(8)
@@ -2461,8 +2461,8 @@ address,name,kind,count,comment
 0x0803DE70,Link_StepGpuBlendTick,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 49
 0x0803DE90,Link_StepLoadSlotAndAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 50
 0x0803DEB0,Link_StepDispatchByFlag,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 51
-0x0803DEF0,LinkSync_MenuStep52,func_thumb,,[LK2] [GH-LK2] passo 0x34 do menu 10 le 0x03005010 (sincronia); provavel
-0x0803DF98,LinkSync_MenuStep53,func_thumb,,[LK2] [GH-LK2] passo 0x35 do menu 10 le 0x03005010; provavel
+0x0803DEF0,LinkSync_ChoiceWaitAPressThenAdvance,func_thumb,,[LK2] [GH-LK2] passo 0x34 do menu 10 le 0x03005010 (sincronia); provavel (antes: LinkSync_MenuStep52)
+0x0803DF98,LinkSync_GaugeTo60ThenSfx39,func_thumb,,[LK2] [GH-LK2] passo 0x35 do menu 10 le 0x03005010; provavel (antes: LinkSync_MenuStep53)
 0x0803E018,Link_StepGaugeAndTween,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 54
 0x0803E03C,Anim_RunSlotScriptThenSfx54,func_thumb,,[FS7] [FS7] passo por quadro; roda script de slot; SFX 0x54 ao fim; provavel
 0x0803E098,Anim_TweenUntilDoneThenReset,func_thumb,,[FS7] [FS7] tween ate alvo; som de barra cheia; reseta direcao; provavel
@@ -2480,13 +2480,13 @@ address,name,kind,count,comment
 0x0803E374,Anim_PickSlotActivateEntryCopy,func_thumb,,"[FS7] [FS7] sorteia slot; inventario ou Tinpet_ActivateMatchingEntry; copia 15 bytes; provavel (escolha chute) [CH7] provavel; revisto CH; gauge + contador, sorteia slot (Overlay_PickRandomSlotAndDrawCursor), Inv_AddCountClamp99 ou Tinpet_ActivateMatchingEntry, copia 15 bytes; prefixo Anim_ fraco; ptr 083AFD98"
 0x0803E434,Anim_DrawSegmentThenDispatchLoadAlt,func_thumb,,[FS7] [FS7] variante de Anim_DrawSegmentThenDispatchLoad com campos +0x18/+0x1C; provavel
 0x0803E48C,Anim_DrawSetValue3E,func_thumb,,[FS7] [FS7] desenha segmento; grava 0x3E em ponteiro fixo; provavel
-0x0803E4B4,PeerLost_MenuStep16,func_thumb,,[LK2] [GH-LK2] passo 0x10 do menu 10: entrada do peer sumiu (MS2 seta sub 0x10); provavel
+0x0803E4B4,PeerLost_FadeSfx8BlendThenAdvance,func_thumb,,[LK2] [GH-LK2] passo 0x10 do menu 10: entrada do peer sumiu (MS2 seta sub 0x10); provavel (antes: PeerLost_MenuStep16)
 0x0803E4D8,Anim_GpuBlendTickThenCount,func_thumb,,[FS7] [FS7] avanca GpuBlend_TickStep e conta; provavel
 0x0803E4F4,Gfx_BlankSceneInit,func_thumb,,cena vazia: limpa mapas de BG e liga camadas (provavel)
 0x0803E618,Anim_InitSlotAndLoadCount,func_thumb,,"[FS7] [FS7] Obj_InitSlotAndLoad(1 [RV10] confirmado: Obj_InitSlotAndLoad(1,0,0) e incrementa contador; nome ok"
 0x0803E634,Flow_StepCounterTickA,func_thumb,,[FR1] StateMachine_DispatchStep on object +0x30 then counter++ on done [RV10] provavel: StateMachine_DispatchStep(ctx+0x30) e incrementa contador se retorno != 0; nome ok (sufixo A fraco)
 0x0803E674,Boot_ResetSystemWrapper,func_thumb,,[FS7] [FS7] wrapper de Boot_ResetSystemAndState (0x0803EF20); confirmado
-0x0803E680,LinkSync_MenuStep80,func_thumb,,[LK2] [GH-LK2] passo 0x50 do menu 10 le 0x03005010 e 0x03002B70; provavel. Sem funcao no Ghidra
+0x0803E680,LinkSync_ExchangeRecordsThenAdvance,func_thumb,,[LK2] [GH-LK2] passo 0x50 do menu 10 le 0x03005010 e 0x03002B70; provavel. Sem funcao no Ghidra (antes: LinkSync_MenuStep80)
 0x0803E780,Overlay_ClearTimerIfFlag,func_thumb,,[R2] zera timer se flag +0x89 == 1 (chute) [RV10] confirmado: se byte +0x89 == 1 zera halfword +6 do ctx; nome ok
 0x0803E79C,Overlay_SetTargetAndCheckReached,func_thumb,,[R2] grava alvo e testa se chegou (chute) [RV10] confirmado: grava alvo em ctx+6 e retorna 1 se ctx+10 e ctx+0xE == alvo; nome ok
 0x0803E7C0,Overlay_LayoutFixedTextBlock,func_thumb,,[R2] chama desenho de bloco com parametros fixos (chute) (antes: Overlay_DrawFixedBlock) [RV10] confirmado: chama Text_LayoutGlyphSpritesOffset com parametros fixos; nome ok
@@ -3744,7 +3744,7 @@ address,name,kind,count,comment
 0x0806E184,Boot_SubState2_WaitFxStep,func_thumb,,[TL] boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
 0x0806E2A0,Screen_InitRowBufferAndFx,func_thumb,,"descomprime tiles, copia 20 linhas para buffer, liga BG1 e fx; provavel"
 0x0806E3C4,Fx_TickStepTableEntry,func_thumb,,[provavel] StateMachine_DispatchStep(tabela[+0xC]); ao terminar grava ctx+4=5 e estado global=2
-0x0806E3F8,Scene_RequestSelIfIndexBelow4_2,func_thumb,,"[FS10] FS10 chama FUN_08047850(2); ptr 0x084859D0; confianca confirmado (codigo), significado chute [CH7] confirmado (wrapper); revisto CH; corpo so chama Sel_RequestIfIndexBelow4(2); significado chute; ptr 084859D0 (antes: Scene_SetSubstate2Wrapper)"
+0x0806E3F8,Scene_RequestSelIfIndexBelow4_2,func_thumb,,"[FS10] FS10 chama FUN_08047850(2); ptr 0x084859D0; confianca confirmado (codigo), significado chute [CH7] confirmado (wrapper); revisto CH; corpo so chama Sel_RequestIfIndexBelow4(2); significado chute; ptr 084859D0 (antes: Scene_SetSubstate2Wrapper) [RV24] confirmado: wrapper que chama Sel_RequestIfIndexBelow4(2) (antes: Scene_SetSubstate2Wrapper)"
 0x0806E404,battle_timer_end_transition,func_thumb,,[R4] R4: timer de fim e saida de batalha por botao bit 3; provavel
 0x0806E460,Boot_DispatchSubState,func_thumb,,provável: CallViaR0 de tabela indexada e fim de transição (antes: Battle_DispatchThenEndTransition)
 0x0806E484,fade_step_bld,func_thumb,,[R4] R4: fade 0..16 por 4 quadros grava registro BLD; provavel

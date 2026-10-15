@@ -2045,8 +2045,8 @@ F	0x0803D538	Scene_GsDispatch_Menu10_Link
 F	0x0803D5A0	Fight_ResetStateFlagsAndCounter
 F	0x0803D5E0	Link_StepAdvanceWhenReached
 F	0x0803D608	Link_StepCycle8AndAdvance
-F	0x0803D634	LinkTick_MenuStep3
-F	0x0803D674	LinkTick_MenuStep4
+F	0x0803D634	LinkTick_SetScreenByteFromFrameThenAdvance
+F	0x0803D674	LinkTick_WaitTopBitThenCopyScreenByte
 F	0x0803D6AC	Link_ResetFieldsAndSetGs50
 F	0x0803D71C	Link_RollTableEntryAndAdvance
 F	0x0803D74C	Screen_InitOverlayAndLoadAssets
@@ -2072,8 +2072,8 @@ L	0x0803DDC6	Overlay_InitScreenGraphics_AltEntry_803ddc6
 F	0x0803DE70	Link_StepGpuBlendTick
 F	0x0803DE90	Link_StepLoadSlotAndAdvance
 F	0x0803DEB0	Link_StepDispatchByFlag
-F	0x0803DEF0	LinkSync_MenuStep52
-F	0x0803DF98	LinkSync_MenuStep53
+F	0x0803DEF0	LinkSync_ChoiceWaitAPressThenAdvance
+F	0x0803DF98	LinkSync_GaugeTo60ThenSfx39
 F	0x0803E018	Link_StepGaugeAndTween
 F	0x0803E03C	Anim_RunSlotScriptThenSfx54
 F	0x0803E098	Anim_TweenUntilDoneThenReset
@@ -2091,13 +2091,13 @@ F	0x0803E314	Anim_DrawFadeRowsStep
 F	0x0803E374	Anim_PickSlotActivateEntryCopy
 F	0x0803E434	Anim_DrawSegmentThenDispatchLoadAlt
 F	0x0803E48C	Anim_DrawSetValue3E
-F	0x0803E4B4	PeerLost_MenuStep16
+F	0x0803E4B4	PeerLost_FadeSfx8BlendThenAdvance
 F	0x0803E4D8	Anim_GpuBlendTickThenCount
 F	0x0803E4F4	Gfx_BlankSceneInit
 F	0x0803E618	Anim_InitSlotAndLoadCount
 F	0x0803E634	Flow_StepCounterTickA
 F	0x0803E674	Boot_ResetSystemWrapper
-F	0x0803E680	LinkSync_MenuStep80
+F	0x0803E680	LinkSync_ExchangeRecordsThenAdvance
 F	0x0803E780	Overlay_ClearTimerIfFlag
 F	0x0803E79C	Overlay_SetTargetAndCheckReached
 F	0x0803E7C0	Overlay_LayoutFixedTextBlock
