@@ -1244,7 +1244,7 @@ address,name,kind,count,comment
 0x0801AE70,Fight_AnimateSideEffectSprites8,func_thumb,,[R1] Ciclo de 4 quadros nos 8 objetos de lado; confirmado
 0x0801AEB4,Fight_ResetBotVisualCounters,func_thumb,,[R1] Zera 5 contadores de animacao do bot (+9C..A0); confirmado
 0x0801AEF4,Fight_InitBattleSprites,func_thumb,,[R1] Inicializa sprites de batalha (FUN_0803ef8c x4 e FUN_08040cd0 x3); provavel
-0x0801AF6C,Fight_StepBotVisualUp,func_thumb,,[R1] Rampa +0xC1 do bot ate 'P' com contador; retorna 1 ao concluir; confirmado
+0x0801AF6C,Fight_StepMedaforceGaugeFill,func_thumb,,[R1] Rampa +0xC1 do bot ate 'P' com contador; retorna 1 ao concluir; confirmado (antes: Fight_StepBotVisualUp)
 0x0801AF84,Fight_StepBotVisualUp_AltEntry_801af84,label,,[MG3] B+0xC1 += 1 ate 0x50 ('P') enquanto fight+0x51 != 0; confirmado (decompile) (antes: Fight_StepBotVisualUp)
 0x0801AFB8,Fight_StepBotVisualDown,func_thumb,,[R1] Rampa -0xC1 do bot ate 0 com contador; retorna 1 ao concluir; confirmado
 0x0801B004,Fight_BuildBotPartObjects8,func_thumb,,[R1] Monta 8 objetos OAM de peca do bot (paleta +3C; posicao do bot); provavel
@@ -2281,7 +2281,7 @@ address,name,kind,count,comment
 0x080361F6,FightPreview_AdvanceLeftSideSequenceStep_AltEntry_80361f6,label,,"[AN] GH-AN: MotionPlayStep(0, fight+0x112, fight+0x67); bit 0x80 = tipo concluido (antes: FightPreview_AdvanceLeftSideSequenceStep) [RF5] provavel: bytes 0E F0 21 FC (bl no meio); continuacao de FightPreview_AdvanceLeftSideSequenceStep (AN); bit 0x80 = concluido"
 0x08036218,FightPreview_AdvanceRightSideSequenceStep,func_thumb,,Simon/Rokusho [RV9] confirmado
 0x08036270,Fight_IncrementActionUsageCounter,func_thumb,,Simon/Rokusho: Increment the action usage counter for the currently active action entry in fight_information. Used after a successful action base step. (antes: Fight_IncrementActionUsageCounter_08036270) [RV9] confirmado (Ghidra tem sufixo _08036270; so incrementa contador de uso)
-0x0803628C,Fight_AddMedaforceChargeFromAction,func_thumb,,"Simon/Rokusho: Add Medaforce charge/token progress for the acting bot after a successful action. Uses a larger gain when the relevant battle-status bit is set and clamps the total at 0x50. [MF] [MF] confirmado: B+0xC1 += 0x14 (0x28 se B+0xC0&8), teto 0x50"
+0x0803628C,Fight_AddMedaforceOnTargeted,func_thumb,,"Simon/Rokusho: Add Medaforce charge/token progress for the acting bot after a successful action. Uses a larger gain when the relevant battle-status bit is set and clamps the total at 0x50. [MF] [MF] confirmado: B+0xC1 += 0x14 (0x28 se B+0xC0&8), teto 0x50 (antes: Fight_AddMedaforceChargeFromAction)"
 0x080362AC,Fight_AddMedaforceChargeFromAction_store,label,,[MG3] STRB do medidor dentro de Fight_AddMedaforceChargeFromAction 0x0803628C; confirmado
 0x080362C4,FightPreview_LoadSideTileSlots,func_thumb,,[R2] carrega 4 blocos de tiles do lado (prévia) [RV9] confirmado
 0x08036340,FightPreview_LoadSideTiles,func_thumb,,[R2] LoadTilesWithMalias do lado (prévia) [RV9] confirmado

@@ -856,7 +856,7 @@ F	0x0801ADE8	Fight_StepSideEffectSprites8
 F	0x0801AE70	Fight_AnimateSideEffectSprites8
 F	0x0801AEB4	Fight_ResetBotVisualCounters
 F	0x0801AEF4	Fight_InitBattleSprites
-F	0x0801AF6C	Fight_StepBotVisualUp
+F	0x0801AF6C	Fight_StepMedaforceGaugeFill
 L	0x0801AF84	Fight_StepBotVisualUp_AltEntry_801af84
 F	0x0801AFB8	Fight_StepBotVisualDown
 F	0x0801B004	Fight_BuildBotPartObjects8
@@ -1892,7 +1892,7 @@ F	0x080361C4	FightPreview_AdvanceLeftSideSequenceStep
 L	0x080361F6	FightPreview_AdvanceLeftSideSequenceStep_AltEntry_80361f6
 F	0x08036218	FightPreview_AdvanceRightSideSequenceStep
 F	0x08036270	Fight_IncrementActionUsageCounter_08036270
-F	0x0803628C	Fight_AddMedaforceChargeFromAction
+F	0x0803628C	Fight_AddMedaforceOnTargeted
 L	0x080362AC	Fight_AddMedaforceChargeFromAction_store
 F	0x080362C4	FightPreview_LoadSideTileSlots
 F	0x08036340	FightPreview_LoadSideTiles
