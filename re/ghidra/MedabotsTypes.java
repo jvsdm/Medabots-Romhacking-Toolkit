@@ -62,7 +62,9 @@ public class MedabotsTypes extends GhidraScript {
             StructureDataType s = new StructureDataType(cat, p[1], Integer.decode(p[2]), dtm);
             Structure r = (Structure) dtm.addDataType(s, DataTypeConflictHandler.REPLACE_HANDLER);
             r.deleteAll();
-            r.growStructure(Integer.decode(p[2]) - r.getLength());
+            // struct vazio informa getLength() == 1 sem ocupar byte nenhum
+            int have = r.isZeroLength() ? 0 : r.getLength();
+            r.growStructure(Integer.decode(p[2]) - have);
             structs.put(p[1], r);
         }
         // 2) campos
