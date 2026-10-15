@@ -99,6 +99,15 @@ All of them finished: CS2, JT5, SV2, DC4, DC5, FM3, FS, VA, MF3, TR, TP2 (+ MF4,
 - Open: Conceal/Scout writer (emulator watch, INDEX.md); who sets GS=35 (enter Robattle) and the normal battle
   exit (BT4); +0xAA=0x22 setter (OB); 0x0806DE0C consumer of 0x08485988 (BA2_criar).
 
+## State on 2026-10-15 (emulator validation round)
+- Validated in mGBA with the user's recordings (data/records/rec_7..rec_14, see its INDEX.md) and savestates .ss2/.ss3:
+  BT7 (battle entry/exit; GS is per menu), TR6 (Scout = Z_0E, Conceal = AA_0A, cap 160/120, accumulate),
+  SS3 (Melt ticks but never breaks a part; Bug no damage; encounter 17..32 steps), DS (Sacrifice: M_04 breaks the
+  actor's used part even on a miss). Rows with "emulador ... confirmado" now win every tier in build_sync.
+- Emulator tips: replay_record.py takes ONE --watch, needs a window @A-B and LEN 4 (1-byte watch never fires);
+  recordings where the user reloaded a state mid-way (rec_14) are not reproducible.
+- Ghidra is in sync (last MedabotsSync: 0 failed). Open: the step that zeroes the target part on a Sacrifice hit.
+
 ## Key facts (don't rediscover)
 - New on 2026-10-13: battle animation context 0x083B6100 (+0x8C list, +0xEC slot table). The T/H handlers' timer is
   0x03000440+0x86. Bot part flag at bot+0x59+0x18*i (i=0..3). gObjectSlots 0x03002C30. Effect mode fi+0x51 (0..3)
