@@ -14,7 +14,7 @@ address,name,kind,comment
 0x080209A0,Fight_DispatchOnSubstateAA_P_11_JumpTo02,func_thumb,Despachante P idx 0x11; escreve 2 em +0xAA; confirmado
 0x080209D8,Fight_DispatchOnSubstateAA_Q_00_PenaltyIfFlagClearOrMsg,func_thumb,"Despachante Q idx 0x00; penalidade se flag +0x59 == 0, senao msg 0x27; confirmado"
 0x08020A90,Fight_DispatchOnSubstateAA_R_01_ClearTilesSplitCount,func_thumb,Despachante R idx 0x01; limpa tiles e divide contagem pela peca; proximo 0x02; confirmado
-0x08020AD0,Fight_DispatchOnSubstateAA_R_0C_SplitCountOrSkip,func_thumb,Despachante R idx 0x0C; divide contagem na peca ou pula ->0x0D; ->0x0F (confirmado)
+0x08020AD0,Fight_DispatchOnSubstateAA_R_0C_ChainRepairToBrokenPart,func_thumb,Despachante R idx 0x0C; divide contagem na peca ou pula ->0x0D; ->0x0F (confirmado)
 0x08020B4C,Fight_DispatchOnSubstateAA_R_08_LoadPartIconsAndJump,func_thumb,Despachante R idx 0x08; icones das pecas do lado; ->0x09 + salto por tabela nao recuperada (confirmado)
 0x08020CEC,Fight_DispatchOnSubstateAA_R_12_JumpTo02,func_thumb,Despachante R idx 0x12; escreve 2 em +0xAA; confirmado
 0x08020D24,Fight_DispatchOnSubstateAA_S_00_PenaltyComputeModeCopyPart,func_thumb,Despachante S idx 0x00; penalidade + modo fi+0x51 pelo byte +0x49 da peca; proximo 0x04; confirmado
