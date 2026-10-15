@@ -1,0 +1,2 @@
+addr,nome,kind,comentario
+0x08020728,Fight_DispatchOnSubstateAA_M_04_BreakActorUsedPart,func_thumb,"confirmado (emulador rec_12 e ss2): quebra a peça usada pelo atacante (fi+0x87 bot, fi+0xA7 peça) com 0xFF, mesmo se o golpe errou; cabeça -> bot cai (Sacrifice/Destroy) (antes: Fight_DispatchOnSubstateAA_M_04_ApplyPartDamage)"
