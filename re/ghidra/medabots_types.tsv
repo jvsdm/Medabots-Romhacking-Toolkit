@@ -209,6 +209,7 @@ M	FightInfo	0x15F	u8	sideWaitFlagA	provavel; FI.md:78
 M	FightInfo	0x160	u8	sideWaitFlagB	provavel; FI.md:78
 M	FightInfo	0x164	u8	medaforceOk	provavel; FI.md:79
 M	FightInfo	0x165	u8	levelUpFlag	provavel; FI.md:80
+M	FightInfo	0x166	u8	skillRaisedSpeciality	confirmado; SK.md (Fight_AwardSpecialitySkillUse 0x0801BE48)
 M	FightInfo	0x16C	u16	xpRemaining	provavel; FI.md:83
 M	FightInfo	0x170	u8	medaforceIdA	provavel; FI.md:85 (doc diz tamanho 1-2; usado 1)
 M	FightInfo	0x172	u8	medaforceIdB	provavel; FI.md:85 (doc diz tamanho 1-2; usado 1)
