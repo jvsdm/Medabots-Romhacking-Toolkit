@@ -1,0 +1,4 @@
+addr,nome,kind,comentario
+0x0804213C,Inv_AddCountClamp99,func_thumb,"confirmado (emulador rec_26): soma à quantidade da peça (0x03004C40 + tipo*0xF0 + bot*2), teto 99; usada na recompensa da batalha"
+0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,func_thumb,"confirmado (emulador rec_26): na tela de resultado concede a peça ganha via Inv_AddCountClamp99"
+0x08062614,Shop_CommitBuySellTransaction,func_thumb,"confirmado (emulador rec_26): venda grava dinheiro 0x03002B70 (centavos) e baixa a quantidade da peça no inventário"

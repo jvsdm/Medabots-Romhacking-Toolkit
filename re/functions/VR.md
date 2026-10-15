@@ -21,5 +21,10 @@ Fontes: `rec_20`..`rec_25` (usuário), dumps de IWRAM a cada 4 quadros. E = 0x03
 ## Recompensa (rec_20/21 + usuário)
 - Vencer dá **peças**, não dinheiro; dinheiro só vendendo peças na loja (usuário). Medido: dinheiro 0x03002B70 fixo
   (30680) nas gravações.
-- **Aberto:** a escrita da peça ganha no inventário 0x03004C40 não aparece entre o primeiro e o último quadro da rec_20
-  (talvez antes do início da gravação). Próximo passo: gravar do fim do último golpe até voltar ao mapa.
+- **Peça ganha (rec_26, emulador):** na tela de resultado (menu 6), f4193: `Inv_AddCountClamp99` 0x0804213C
+  (pc 0x0804216C) soma 1 na quantidade da peça (tipo 1, bot 61: 4→5; endereço 0x03004C40 + tipo*0xF0 + bot*2),
+  chamado por `Fight_HandleRewardGrantOrSkipByPostBattleFlags` 0x08010C50 (lr 0x08010CCF). Teto 99.
+- **Venda na loja (rec_26, emulador):** f6354, `Shop_CommitBuySellTransaction` 0x08062614 grava o dinheiro
+  (pc 0x080626AE: 30680 → 32130 = +1450, ou seja $14,50 guardado em centavos) e o inventário (pc 0x080626EC; a peça
+  vendida tipo 1 bot 44: 3→2). Teto do dinheiro comparado com 0x1869E/0x1869F (99999).
+- rec_20/21 não pegaram o momento (a peça já tinha sido creditada antes do início).
