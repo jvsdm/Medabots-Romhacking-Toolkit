@@ -64,7 +64,7 @@ M	BattlePart	0x3	u8	gender	provavel; DM.md:15
 M	BattlePart	0x4	u8	armorMax	confirmado; DF2.md:38 (+0x4C = max(stat+4))
 M	BattlePart	0x5	u8	successBonus	provavel; DM.md:15; DF.md:91-95 (campo +0x4D)
 M	BattlePart	0x6	u8	power	confirmado; OP.md (emulador rec_27: Poder 20); FH.md:33 (byte part+0x4E = poder)
-M	BattlePart	0x7	u8	chainReaction	confirmado; CR.md (H_1D 0x0801EC94 e R_0C 0x08020AE0 leem B+0x4F; editor WPF; ROM: Missile 13/13 = 1
+M	BattlePart	0x7	u8	chainReaction	confirmado; CR.md (H_1D 0x0801EC3C e R_0C 0x08020AD0 leem B+0x4F; editor WPF; ROM: Missile 13/13 = 1
 M	BattlePart	0x8	u8	usesOrCharge	provavel; CR.md (editor WPF: cabeça = usos
 M	BattlePart	0x9	u8	radiationOrRemoteness	provavel; CR.md (editor WPF: braço = radiação
 M	BattlePart	0xA	u8	sharedValue0A	provavel; TSV:210 (set_shared_value_0A; uso aberto)
