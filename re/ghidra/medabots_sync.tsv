@@ -2098,6 +2098,8 @@ F	0x0803E618	Anim_InitSlotAndLoadCount
 F	0x0803E634	Flow_StepCounterTickA
 F	0x0803E674	Boot_ResetSystemWrapper
 F	0x0803E680	LinkSync_ExchangeRecordsThenAdvance
+F	0x0803E768	LinkMenu_SetGs6Step
+F	0x0803E774	LinkMenu_SetGs5Step
 F	0x0803E780	Overlay_ClearTimerIfFlag
 F	0x0803E79C	Overlay_SetTargetAndCheckReached
 F	0x0803E7C0	Overlay_LayoutFixedTextBlock

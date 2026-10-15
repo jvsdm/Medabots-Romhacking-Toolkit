@@ -1,0 +1,52 @@
+addr,nome,kind,comentario
+0x0803D5A1,Fight_ResetStateFlagsAndCounter,func_thumb,"confirmado: CpuFastSet zera, ctx+0x86=0, ctx+0x84=0, GS+1 (idx 0)"
+0x0803D5E1,Link_StepAdvanceWhenReached,func_thumb,"confirmado: Overlay_SetTargetAndCheckReached; ao chegar ctx+0x86=0 e GS+1 (idx 1,82)"
+0x0803D609,Link_StepCycle8AndAdvance,func_thumb,"confirmado: ctx+0x86 cicla 0..8; ao virar 8 GS+1 (idx 2,81,83,85)"
+0x0803D635,LinkTick_SetScreenByteFromFrameThenAdvance,func_thumb,provavel (antes: LinkTick_MenuStep3): grava byte de tela = frame; GS+1 (idx 3)
+0x0803D675,LinkTick_WaitTopBitThenCopyScreenByte,func_thumb,provavel (antes: LinkTick_MenuStep4): espera bit 0x8000 de halfword do link; copia byte; GS+1 (idx 4)
+0x0803D6AD,Link_ResetFieldsAndSetGs50,func_thumb,"confirmado: zera campos de link, ctx+0x86=0 e GS=0x50 (idx 5)"
+0x0803D71D,Link_RollTableEntryAndAdvance,func_thumb,confirmado: rand&0x1F indexa tabela de bytes em 0x083AFDF8 -> obj+0x38; GS+1 (idx 6)
+0x0803D74D,Screen_InitOverlayAndLoadAssets,func_thumb,"confirmado: limpa slots, LZ77 de 4 fundos, tiles, paleta, snd_song 8; GS+1 (idx 7,32)"
+0x0803D929,Link_StepPaletteFadeDown,func_thumb,"confirmado: Obj_StepAccumMoveA + fade de linhas para 0x20->0; 9 passos; GS+1 (idx 8,34)"
+0x0803D981,Link_StepLoadObjAndAdvance,func_thumb,"confirmado: Obj_StepAccumMoveA + Obj_InitSlotAndLoad; GS+1 (idx 9,35)"
+0x0803D9A1,Fight_ShowPreBattleTextIndex1,func_thumb,confirmado: StateMachine_DispatchStep(obj+4); GS+1 ao terminar (idx 10)
+0x0803D9C9,Link_StepCopyPaletteAndAdvance,func_thumb,"confirmado: CopyPaletteBuffersToHardware; GS+1 (idx 11,42)"
+0x0803D9F1,Link_StepPaletteFadeUp,func_thumb,confirmado: fade de linhas 0->0x20; GS+1 (idx 12)
+0x0803DA41,Link_StepPaletteFadeUp_B,func_thumb,confirmado: fade de linhas 0->0x20; GS+1 (idx 43)
+0x0803DA91,Fight_ClearBattleBgAndBlend,func_thumb,"confirmado: SetGpuBlendMode, limpa BG e OAM; GS+1 (idx 13)"
+0x0803DAED,Fight_InitSelectBlockA,func_thumb,"confirmado: zera 0x14 bytes de estado; grava 1, 3 e 0 em ponteiros de IWRAM (ver decompile)"
+0x0803DB1D,Snd_RequestSongByFlag,func_thumb,confirmado: musica 0xE se obj+0x9c==1 senao 0xF; GS+1 (idx 33)
+0x0803DB4D,Fight_ShowPostBattleTextIndex1,func_thumb,confirmado (ver divergencia: CSV antigo = Fight_StepMessageAdvanceSfx): SM step; sfx 0xD quando (flag&3); GS+1 (idx 36)
+0x0803DB95,Link_StepDispatchSubB_ThenAdvance,func_thumb,confirmado: StateMachine_DispatchSubB; Obj_ResetStateFields; GS+1 (idx 37)
+0x0803DBB9,Link_StepDispatchStateMachine,func_thumb,confirmado: StateMachine_DispatchStep(obj+4); GS+1 (idx 38)
+0x0803DBE1,Link_StepWaitOverlayTarget,func_thumb,confirmado: espera overlay; ctx+0x86=0; GS+1 (idx 39)
+0x0803DC0D,Link_StepCycleTimer9,func_thumb,confirmado: cicla ctx+0x86 0..8; GS+1 (idx 40)
+0x0803DC3D,Link_StepSoundFadeOut,func_thumb,confirmado: snd_fade_request(8); GS+1 (idx 41)
+0x0803DC59,Link_StepSetStateWordByFlag,func_thumb,confirmado: se obj+0x138==0 GS=GS+1 senao GS=0x30 (idx 44)
+0x0803DC8D,Screen_ResetAndSetSub4Mode,func_thumb,"confirmado: limpa OAM/paletas, SetGpuBlendMode, Dispatch_Sub4Mode(3); NAO avanca GS = saida (idx 45,68)"
+0x0803DCDD,Overlay_InitScreenGraphics,func_thumb,"confirmado: carrega 4 fundos LZ77, OAM, snd_song 0x14; GS+1 (idx 48)"
+0x0803DE71,Link_StepGpuBlendTick,func_thumb,confirmado: Counter_IncIfFlagBit0 + GpuBlend_TickStep; GS+1 (idx 49)
+0x0803DE91,Link_StepLoadSlotAndAdvance,func_thumb,confirmado: Obj_InitSlotAndLoad; GS+1 (idx 50)
+0x0803DEB1,Link_StepDispatchByFlag,func_thumb,confirmado: StateMachine_DispatchStep (ponteiro por obj+0x9c); GS+1 (idx 51)
+0x0803DEF1,LinkSync_ChoiceWaitAPressThenAdvance,func_thumb,provavel (antes: LinkSync_MenuStep52): escolha com A (flag) ou halfword do link; sfx 4; grava ctx+0x1A0; ctx+0x86=0; GS+1 (idx 52)
+0x0803DF99,LinkSync_GaugeTo60ThenSfx39,func_thumb,provavel (antes: LinkSync_MenuStep53): barra ate ctx+0x86==0x3C; sfx 0x39; GS+1 (idx 53)
+0x0803E019,Link_StepGaugeAndTween,func_thumb,"confirmado: Gauge_SetCounterFrom0x68, Gauge_DispatchByStepIndex, Tween; GS+1 (idx 54)"
+0x0803E171,Anim_DrawSegmentThenLoadSlot,func_thumb,"confirmado: Gauge_DrawTwoTileSegment + Obj_InitSlotAndLoad; GS+1 (idx 60,73)"
+0x0803E1A5,Anim_DrawSegmentThenDispatchLoad,func_thumb,confirmado: desenha; SM step (tabela 083CF530+0x10 ou +0x14 por obj+0x9c); GS+1 se terminou (idx 61)
+0x0803E1FD,Anim_DrawSegmentThenDispatchStep,func_thumb,confirmado: desenha; SM step (083CF530+4); GS+1 se terminou (idx 62)
+0x0803E235,Anim_DrawSegmentUntilOverlayReached,func_thumb,confirmado: desenha; Overlay_SetTargetAndCheckReached; estado+0x84=0; GS+1 (idx 63)
+0x0803E2AD,Anim_DrawFadeSfx8Step,func_thumb,confirmado: desenha; snd_fade_request(8); GS+1 (idx 65)
+0x0803E2DD,Anim_DrawFlushPaletteThenReset,func_thumb,confirmado: desenha; CopyPaletteBuffersToHardware; estado+0x84=0; GS+1 (idx 66)
+0x0803E315,Anim_DrawFadeRowsStep,func_thumb,confirmado: desenha; fade de linhas por estado (<9) senao GS+1 (idx 67)
+0x0803E375,Anim_PickSlotActivateEntryCopy,func_thumb,"provavel: escolhe slot; obj+0x9c==1 -> Inv_AddCountClamp99 (soma item no inventario), senao Tinpet_ActivateMatchingEntry; copia 0x0F entradas p/ 0x030004DE; GS+1 (idx 72). Candidato a troca de peca por link (README diz: nao achada)"
+0x0803E435,Anim_DrawSegmentThenDispatchLoadAlt,func_thumb,"confirmado: como 61, tabela 083CF530+0x18/+0x1C; GS+1 se terminou (idx 74)"
+0x0803E48D,Anim_DrawSetValue3E,func_thumb,confirmado (AN2): desenha; grava 0x3E; GS+1 (idx 75)
+0x0803E4B5,PeerLost_FadeSfx8BlendThenAdvance,func_thumb,"provavel (antes: PeerLost_MenuStep16): snd_fade(8); SetGpuBlendMode(6,0x3F,0x20); GS+1 (idx 16,22)"
+0x0803E4D9,Anim_GpuBlendTickThenCount,func_thumb,"confirmado (AN2) (idx 17,19,23)"
+0x0803E4F5,Gfx_BlankSceneInit,func_thumb,"confirmado: limpa slots, BG, blend 5; GS+1 (idx 18)"
+0x0803E619,Anim_InitSlotAndLoadCount,func_thumb,"confirmado: Obj_InitSlotAndLoad(1,0,0); GS+1 (idx 20)"
+0x0803E635,Flow_StepCounterTickA,func_thumb,confirmado: SM step(obj+0x30); GS+1 (idx 21)
+0x0803E675,Boot_ResetSystemWrapper,func_thumb,confirmado: chama Boot_ResetSystemAndState; sem GS+1 = reset/saida (idx 24)
+0x0803E681,LinkSync_ExchangeRecordsThenAdvance,func_thumb,"provavel (antes: LinkSync_MenuStep80): troca 10 registros pelo buffer de link (0x0803E760 -> 0x03000B90, chute); ao fim ctx+0x86=0, GS+1 (idx 80)"
+0x0803E768,LinkMenu_SetGs6Step,func_thumb,confirmado (bytes): GS=6 (idx 84)
+0x0803E774,LinkMenu_SetGs5Step,func_thumb,confirmado (bytes): GS=5 (idx 86)
