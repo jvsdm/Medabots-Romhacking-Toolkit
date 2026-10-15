@@ -3262,11 +3262,17 @@ F	0x0806AAA4	Fight_TickSlotMotionPhases
 F	0x0806ADB0	Battle_UpdateCompositeBotMotion
 F	0x0806B01C	slots_move_group3
 F	0x0806B0D4	BotAnim_TickStageCallbacksAll
+F	0x0806B130	BotAnim_StageDone11
 F	0x0806B134	BotAnim_StepMoveByPhase
+F	0x0806B1A8	BotAnim_StageSlideDown2
+F	0x0806B1D0	BotAnim_StageSlideUp3
+F	0x0806B1F8	BotAnim_StageHold4
 F	0x0806B1FC	BotAnim_StepOffsetByPhaseB
 F	0x0806B248	BotAnim_StepColorByPhase
+F	0x0806B2B8	BotAnim_StageWobbleTimed7
 F	0x0806B2F4	Obj_UpdateSlotPosition
 F	0x0806B3D8	BotAnim_StageWalkStep
+F	0x0806B484	BotAnim_StageWaitTimer10
 F	0x0806B4A4	scroll_tick_flag
 F	0x0806B4C8	slots_advance_anim
 F	0x0806B530	slot_spawn
@@ -3319,7 +3325,7 @@ F	0x0806DAA4	Screen_IntroTimeline
 F	0x0806DBFC	Battle_WaitTransitionA
 F	0x0806DC7C	Battle_TimedTransition41
 F	0x0806DCC0	Battle_InitScreenAndSlots
-F	0x0806DE0C	battle_effects_5_slots_update
+F	0x0806DE0C	BattleFx_TickTimedStages5
 F	0x0806DE9C	Battle_BuildBotSpriteOam
 F	0x0806E038	BotAnim_SetTimerByFlagAndAdvance
 F	0x0806E074	BotAnim_StepWaitBlinkCycle
@@ -3927,6 +3933,8 @@ L	0x084856E8	gMainState3MenuTable
 L	0x08485708	FxStepHandlerTable
 L	0x084857D0	BotAnim_StageTable
 L	0x08485988	BattleTimedTableB
+L	0x08485994	BattleFxTimedPtrTable
+L	0x084859B4	BattleFxTimedPeriodTable
 L	0x084859D8	gBootSubStateTable
 L	0x08485F88	gTextTournamentMessages
 L	0x0848698C	gTextRaceMessages
@@ -4076,11 +4084,5 @@ C	0x08063948
 C	0x08068924
 C	0x08068978
 C	0x080692EC
-C	0x0806B130
-C	0x0806B1A8
-C	0x0806B1D0
-C	0x0806B1F8
-C	0x0806B2B8
-C	0x0806B484
 C	0x0806E9C0
 C	0x0807DD58

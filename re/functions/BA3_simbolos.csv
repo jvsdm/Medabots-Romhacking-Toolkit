@@ -1,0 +1,11 @@
+addr,nome,kind,comentario
+0x0806B1A8,BotAnim_StageSlideDown2,func_thumb,"confirmado (decompile): estagio 2 da tabela 0x084857D0; short +2 += 2 por quadro; continua enquanto fase <= byte +0x22 (antes: FUN_0806b1a8)"
+0x0806B1D0,BotAnim_StageSlideUp3,func_thumb,"confirmado (decompile): estagio 3; short +2 -= 2; mesma regra de fim do estagio 2 (antes: FUN_0806b1d0)"
+0x0806B1F8,BotAnim_StageHold4,func_thumb,"confirmado (bytes mov r0,#1; bx lr): estagio 4 retorna 1 sempre (espera) (antes: FUN_0806b1f8)"
+0x0806B2B8,BotAnim_StageWobbleTimed7,func_thumb,"confirmado (decompile): estagio 7; fase impar decrementa bytes +8/+9; acumulador +0x18 += 0x40; retorno 0 quando fase > 0x8F (antes: FUN_0806b2b8)"
+0x0806B484,BotAnim_StageWaitTimer10,func_thumb,"confirmado (decompile): estagio 10; decrementa byte +0x27 ate 0; retorna 1 sempre (so sai por escrita externa em +0x20). BA2 dizia incremento: errado (antes: FUN_0806b484)"
+0x0806B130,BotAnim_StageDone11,func_thumb,"confirmado (bytes mov r0,#0; bx lr): estagio 11 retorna 0 -> reset via slot_spawn(i,0) (antes: FUN_0806b130)"
+0x0806DE0C,BattleFx_TickTimedStages5,func_thumb,"confirmado corpo: loop 5 slots de gObjectSlots (0x03002C30); fase +0x1A++; se fase % periodo==0 chama call_r1(i, ptr[estagio-1]); periodo em 0x084859B4 (bytes), ptrs em 0x08485994 (estagios 1..8); chamador Battle_TickEffectsAndTransition 0x0806D59E (antes: battle_effects_5_slots_update)"
+0x08485994,BattleFxTimedPtrTable,table,"confirmado: 8 ptrs usados por BattleFx_TickTimedStages5 (0x0806DE9C, DFC0, DFF0, E014, E038, E038, E074, E074 Thumb); base literal 0x0806DE68; faz parte da tabela de 11 ptrs 0x08485988 (3 primeiros nao usados aqui)"
+0x084859B4,BattleFxTimedPeriodTable,table,"confirmado: 8 bytes de periodo (02 02 01 01 1D 04 03 02) indexados por estagio-1; literal 0x0806DE64"
+0x0806B530,slot_spawn,func_thumb,"confirmado (decompile, sem rename): param2==0 zera +0x20..+0x22 e +0x1A e copia +0x30 para +0x6 (reset); kinds 1..10 ligam estagio/sprite; chamado em BotAnim_TickStageCallbacksAll 0x0806B11A quando estagio retorna 0"

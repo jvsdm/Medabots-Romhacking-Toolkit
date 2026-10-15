@@ -3647,11 +3647,17 @@ address,name,kind,count,comment
 0x0806ADB0,Battle_UpdateCompositeBotMotion,func_thumb,,[FN3] renomeado; provavel; ver FN3.md
 0x0806B01C,slots_move_group3,func_thumb,,"[R4] R4: move 3 slots grupo, limite -15 em y; provavel"
 0x0806B0D4,BotAnim_TickStageCallbacksAll,func_thumb,,[R4] R4: loop de 20 slots com frame e reinicio; provavel (antes: slots_update_anim)
+0x0806B130,BotAnim_StageDone11,func_thumb,,"[BA3] confirmado (bytes mov r0,#0; bx lr): estagio 11 retorna 0 -> reset via slot_spawn(i,0) (antes: FUN_0806b130)"
 0x0806B134,BotAnim_StepMoveByPhase,func_thumb,,[CH7] provavel; revisto CH; (antes: FUN_0806b134) passo de posicao por fase do bot (+2/+4) + jump table nao recuperada; ptr 084857D0
+0x0806B1A8,BotAnim_StageSlideDown2,func_thumb,,[BA3] confirmado (decompile): estagio 2 da tabela 0x084857D0; short +2 += 2 por quadro; continua enquanto fase <= byte +0x22 (antes: FUN_0806b1a8)
+0x0806B1D0,BotAnim_StageSlideUp3,func_thumb,,[BA3] confirmado (decompile): estagio 3; short +2 -= 2; mesma regra de fim do estagio 2 (antes: FUN_0806b1d0)
+0x0806B1F8,BotAnim_StageHold4,func_thumb,,"[BA3] confirmado (bytes mov r0,#1; bx lr): estagio 4 retorna 1 sempre (espera) (antes: FUN_0806b1f8)"
 0x0806B1FC,BotAnim_StepOffsetByPhaseB,func_thumb,,"[CH7] provavel; revisto CH; (antes: FUN_0806b1fc) +4 +=2 se fase<0x10, -2 se fase 0xD2..0xE1, Obj_SetupSlotPtr se >0xE1; ptr 084857E0"
 0x0806B248,BotAnim_StepColorByPhase,func_thumb,,[CH7] provavel; revisto CH; (antes: FUN_0806b248) escreve registrador de cor por fase (0x1000 ou (0x20-x)*0x100); ptr 084857E4
+0x0806B2B8,BotAnim_StageWobbleTimed7,func_thumb,,[BA3] confirmado (decompile): estagio 7; fase impar decrementa bytes +8/+9; acumulador +0x18 += 0x40; retorno 0 quando fase > 0x8F (antes: FUN_0806b2b8)
 0x0806B2F4,Obj_UpdateSlotPosition,func_thumb,,[provavel] object slot velocity and screen position update
 0x0806B3D8,BotAnim_StageWalkStep,func_thumb,,"[FN6] confirmado (ponteiro) provavel (nome): callback de estagio, param=bot; tabela 0x084857D0 indice 9 (chamado via BotAnim_TickStageCallbacksAll 0x0806B0D4); anda X +-1 conforme flag"
+0x0806B484,BotAnim_StageWaitTimer10,func_thumb,,[BA3] confirmado (decompile): estagio 10; decrementa byte +0x27 ate 0; retorna 1 sempre (so sai por escrita externa em +0x20). BA2 dizia incremento: errado (antes: FUN_0806b484)
 0x0806B4A4,scroll_tick_flag,func_thumb,,[R4] R4: contador de rolagem por bit 0; chute
 0x0806B4C8,slots_advance_anim,func_thumb,,"[R4] R4: animacao de slot por tabela (duracao,proximo,frame); provavel"
 0x0806B530,slot_spawn,func_thumb,,[R4] R4: cria/limpa slot de sprite kind 1..10; provavel
@@ -3704,7 +3710,7 @@ address,name,kind,count,comment
 0x0806DBFC,Battle_WaitTransitionA,func_thumb,,"[FN6] provavel: se bit 8 de *DAT_0806dc2c: battle_slot_init(6,2) e snd_sfx 3; senao espera contador > limite e vai para estado 3 com fx_screen_setup_b; ponteiro 0x08485984"
 0x0806DC7C,Battle_TimedTransition41,func_thumb,,"[FN6] provavel: conta ate 0x29 (41 quadros), depois slot_ptr_stub(2), fx_screen_setup_b e estado 2; ponteiro 0x08485988"
 0x0806DCC0,Battle_InitScreenAndSlots,func_thumb,,"[FS9] provavel: init da tela de batalha (fx_screen_setup_a, 5 slots, DISPCNT |= 0x1300); tabela 0x0848598C"
-0x0806DE0C,battle_effects_5_slots_update,func_thumb,,[R4] R4: update de 5 efeitos com timer e liberacao via 0806B718; provavel
+0x0806DE0C,BattleFx_TickTimedStages5,func_thumb,,[R4] R4: update de 5 efeitos com timer e liberacao via 0806B718; provavel (antes: battle_effects_5_slots_update)
 0x0806DE9C,Battle_BuildBotSpriteOam,func_thumb,,[FS9] provavel: monta atributos de OAM do bot (contador +0x22 0..0x1E); tabela 0x08485994
 0x0806E038,BotAnim_SetTimerByFlagAndAdvance,func_thumb,,[CH7] provavel; revisto CH; (antes: FUN_0806e038) +4 = 0x73 ou 200 por bit0 de +0x22; +0x22++; jump; ptr 084859A4
 0x0806E074,BotAnim_StepWaitBlinkCycle,func_thumb,,"[CH7] provavel; revisto CH; (antes: FUN_0806e074) espera/piscar com rand_scaled; estado <8 avanca, senao +2=300 e reinicia; ptr 084859AC"
@@ -4312,6 +4318,8 @@ address,name,kind,count,comment
 0x08485708,FxStepHandlerTable,table,,[BA2] confirmado: base usada por fx_step_table_a (literal 0x080688BC); indice = byte de estado em RAM; entradas 0x08068920..0x080692ED; 0x08485700 e 0x08485704 nao sao handlers
 0x084857D0,BotAnim_StageTable,table,,[BA2] confirmado: 11 ptrs de estagio (0x0806B134..0x0806B130); literal 0x0806B104 em BotAnim_TickStageCallbacksAll
 0x08485988,BattleTimedTableB,table,,[BA2] provavel: 11 ptrs (0x0806DC7C..0x0806E074); sem literal de base na ROM; consumidor provavel 0x0806DE20 (nao confirmado)
+0x08485994,BattleFxTimedPtrTable,table,,"[BA3] confirmado: 8 ptrs usados por BattleFx_TickTimedStages5 (0x0806DE9C, DFC0, DFF0, E014, E038, E038, E074, E074 Thumb); base literal 0x0806DE68; faz parte da tabela de 11 ptrs 0x08485988 (3 primeiros nao usados aqui)"
+0x084859B4,BattleFxTimedPeriodTable,table,,[BA3] confirmado: 8 bytes de periodo (02 02 01 01 1D 04 03 02) indexados por estagio-1; literal 0x0806DE64
 0x084859D8,gBootSubStateTable,data,,[TL] tabela de ponteiros do boot (GS 0..10)
 0x08485F88,gTextTournamentMessages,ptr,31,tabela de texto: Mensagens de torneio; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: 31 x 4 B ponteiros de texto (dump)
 0x0848698C,gTextRaceMessages,ptr,12,tabela de texto: Mensagens de corrida; fonte: dump_text_clean_v2.py (traducao PT-BR) [RD6] provavel: 12 x 4 B ponteiros de texto (dump)
