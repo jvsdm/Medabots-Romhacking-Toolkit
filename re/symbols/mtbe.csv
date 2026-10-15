@@ -1272,7 +1272,7 @@ address,name,kind,count,comment
 0x0801BCE4,Fight_CopyPaletteRowFromTable,func_thumb,,[R1] Copia 8 words de paleta para 05000000+slot*10; provavel
 0x0801BD1C,Fight_InitAnimScriptSlot,func_thumb,,[R1] Inicializa slot do interpretador de animacao (8 bytes); provavel
 0x0801BD58,Fight_StepAnimScriptSlot,func_thumb,,"[R1] Interpretador de script de animacao (-1 fim -2 volta -3 som, frames VRAM); provavel"
-0x0801BE48,Fight_StepBotPartTimer,func_thumb,,"Simon/Rokusho: Award speciality experience for the bot's current action category. The 8 speciality experience bytes correspond to Strike, Berserk, Shoot, Aim Shot, Defend, Heal, Support, and Interrupt. On overflow, increment the matching speciality level and sync both blocks back into medal state. (antes: Fight_GainPartProficiencyExperience) [R1] Temporiza fases de peca do bot (8 passos por fase); provavel"
+0x0801BE48,Fight_AwardSpecialitySkillUse,func_thumb,,"Simon/Rokusho: Award speciality experience for the bot's current action category. The 8 speciality experience bytes correspond to Strike, Berserk, Shoot, Aim Shot, Defend, Heal, Support, and Interrupt. On overflow, increment the matching speciality level and sync both blocks back into medal state. (antes: Fight_GainPartProficiencyExperience) [R1] Temporiza fases de peca do bot (8 passos por fase); provavel (antes: Fight_StepBotPartTimer)"
 0x0801BF14,Fight_SyncBotPartTimerToSlot,func_thumb,,Simon/Rokusho (antes: Fight_SyncBotProficienciesToMedalState) [R1] Copia temporizacao do bot para o slot de sprite; provavel
 0x0801BF64,Fight_IncrementToTarget16,func_thumb,,[R1] Soma 1 se valor diferente do alvo; confirmado
 0x0801BF78,Fight_InitAnimScriptSlotB,func_thumb,,[R1] Igual a InitAnimScriptSlot com outra tabela; provavel

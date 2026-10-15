@@ -42,7 +42,7 @@ git). Paráfrase apenas. Status: **bate** = já temos no código/emulador; **div
 | "Movement" baixa muito o ROS | Bug (13): penalidade de ROS (SS3, DM) | **bate** (Bug = Movement) |
 | "Bind" (andar 2× mais lento) e "Stop" (para de andar) | Wave/Hold 17/18, Thunder/Freeze 15/16 (SS.md) | **aberto** — ligar nomes |
 | Debuff de golpe com dano acaba muito rápido se a defesa de perna ativar | não documentado | **novo** |
-| Destroy (berserk) destrói 1 peça sem errar, mas **sempre erra se o alvo não estiver no turno de recuo**; Sacrifice ignora guarda | DS (emulador): peça do atacante sempre quebra; alvo zera no acerto; ss2 errou | **bate** + regra do recuo é nova |
+| Destroy (berserk) destrói 1 peça sem errar, mas **sempre erra se o alvo não estiver no turno de recuo**; Sacrifice ignora guarda | DS (emulador): peça do atacante sempre quebra; alvo zera no acerto; ss2 errou | **bate** + regra do recuo **confirmada** (mensagem no jogo, SK.md) |
 | Guardas (Defense / Half Block / Full Block) só protegem de golpes com dano; podem falhar com ROS baixo | não documentado | **novo** |
 | Medaforce: poder base + 1/8 da proficiência + 1/8 da compatibilidade; ignora esquiva, defesa e guarda | MF.md (medidor, custo); fórmula não documentada | **novo** — conferir no código |
 

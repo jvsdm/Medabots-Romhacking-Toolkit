@@ -54,7 +54,7 @@ ordem própria (por grupo); **não** é o id interno. Id interno = byte +1 da pe
 | 42 | Pushover | 50 | inimigo esquece a próxima ação | aberto |
 | 43 / 44 / 46 / 47 | Impair / Confusion / No Escape / No Defense | 42 / 43 / 44 / 45 | trava uma peça / ação e alvo aleatórios / não esquiva / não defende | SS.md (parcial) |
 | 45 | Use Drain | 47 | tira usos da cabeça do inimigo e soma aos seus | aberto |
-| 48 | Destroy | 11 | destrói a peça **só se o alvo estiver no resfriamento** | DS: hipótese do erro no ss2 → confirmar |
+| 48 | Destroy | 11 | destrói a peça **só se o alvo estiver no resfriamento** | **bate** (mensagem vista pelo usuário na gravação; SK.md) |
 | 49 | Sacrifice | 22 | golpe forte que destrói a própria peça | **bate (emulador, DS)** |
 | 50 | Forcedrain | 48 | tira MF do inimigo e soma ao seu | aberto |
 | 51 / 52 | Team Form / TeamAttack | 33 / 34 | prepara / dispara o ataque cruzado | bate (código: 52 + ramo 51 soma F.rec+0x2C/+0x2D) |

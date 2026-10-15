@@ -884,7 +884,7 @@ F	0x0801BCA0	Fight_LoadFixedGfxListToObjVram
 F	0x0801BCE4	Fight_CopyPaletteRowFromTable
 F	0x0801BD1C	Fight_InitAnimScriptSlot
 F	0x0801BD58	Fight_StepAnimScriptSlot
-F	0x0801BE48	Fight_StepBotPartTimer
+F	0x0801BE48	Fight_AwardSpecialitySkillUse
 F	0x0801BF14	Fight_SyncBotPartTimerToSlot
 F	0x0801BF64	Fight_IncrementToTarget16
 F	0x0801BF78	Fight_InitAnimScriptSlotB

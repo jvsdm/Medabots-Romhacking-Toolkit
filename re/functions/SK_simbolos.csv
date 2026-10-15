@@ -1,0 +1,2 @@
+addr,nome,kind,comentario
+0x0801BE48,Fight_AwardSpecialitySkillUse,func_thumb,"revisto CH (decompile): só bots 0..2; sai se fi+0x89==1, se o nível da medalha bot+5 == 100 ou se fi+0x164 == 0. Especialidade = byte +2 da peça usada (bot+0xDD 1..3) ou bot+0xA9. Contador bot+0x28+esp +1; ao chegar a 8 zera e sobe a habilidade bot+0x20+esp, grava fi+0x166 = esp e liga a flag de 'subiu'. Com habilidade 100 o contador para em 7 (antes: Fight_StepBotPartTimer)"

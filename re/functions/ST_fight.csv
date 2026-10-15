@@ -74,3 +74,4 @@ FightInfo,0x1A0,1,barValue,provavel,FI.md:88 (0..0x60)
 FightInfo,0x1AE,1,flag1AE,provavel,FI.md:89
 FightInfo,0x1B0,1,sideState,provavel,FI.md:90 (bit8)
 FightInfo,0x840,2,gfxHalfword,provavel,FI.md:91; FI_simbolos.csv (0x03002040 = fi+0x840)
+FightInfo,0x166,1,skillRaisedSpeciality,confirmado,SK.md (Fight_AwardSpecialitySkillUse 0x0801BE48)
