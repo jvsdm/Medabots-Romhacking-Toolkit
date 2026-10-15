@@ -42,6 +42,8 @@ CREATE_LISTS = ["H_lista.txt", "HC_lista.txt", "JT_criar.txt", "AS_criar.txt", "
 SPLIT_LISTS = ["QA5_criar.txt"]
 # Casos de switch sem prólogo (usam registradores do chamador): só desmontar como Thumb, sem criar função.
 DISASM_LISTS = ["SC3_desmontar.txt"]
+# Funções com prólogo mas corpo truncado (halt_baddata depois da 1ª instrução): limpar até a próxima função e refazer.
+REDO_LISTS = ["R_refazer.txt"]
 
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 GENERIC = re.compile(r"^(FUN|sub|DAT|LAB|PTR|thunk_FUN)_", re.I)
@@ -222,8 +224,14 @@ def main():
     creates = {k for fn in CREATE_LISTS for k in read_list(fn)} - named_funcs - set(splits)
     # S vem antes de tudo: o F com o nome destas só acha a função depois de separar.
     disasm = sorted({k for fn in DISASM_LISTS for k in read_list(fn)} - named_funcs)
+    starts = sorted(int(r[0], 16) & ~1 for r in body if len(r) > 2 and r[2].startswith("func"))
+    redo = []
+    for k in sorted({k for fn in REDO_LISTS for k in read_list(fn)}):
+        a = int(k, 16)
+        nxt = next((x for x in starts if x > a), a + 0x40)
+        redo.append("R\t%s\t0x%08X" % (k, min(nxt, a + 0x200)))
     lines = ["S\t%s" % a for a in splits] + lines + ["C\t%s" % a for a in sorted(creates)] \
-        + ["D\t%s" % a for a in disasm]
+        + ["D\t%s" % a for a in disasm] + redo
 
     with open(SYNC, "w", encoding="utf-8", newline="\n") as f:
         f.write("# gerado por re/tools/build_sync.py; nao editar a mao\n")

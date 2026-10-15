@@ -1,0 +1,39 @@
+addr,nome,kind,comentario
+0x0801FD10,Fight_J02_Step3_CopyObjSlots,label,"provavel: entrada 3 da tabela J_02 (0x0801FBEC, ptr 0x0801FBF8 confirmado nos bytes); CpuFastSet 0x800 -> gObjectSlots (JT.md)"
+0x0801FD3C,Fight_J02_Step4_FinishSetCallbackAndAdvance,label,provavel: entrada 4 da tabela J_02 (ptr 0x0801FBFC confirmado nos bytes); grava 0x08044101 em 0x030017F0; fi+0xAA += 1
+0x0801FD70,Fight_J02_ReturnCommon,label,"confirmado: bytes 4700 = bx r0 (retorno comum, nao alvo de tabela; JT.md); nome provavel"
+0x0802040C,Fight_DispatchOnSubstateAA_L_0B_ReturnTail,label,"confirmado: bytes 4700 = bx r0 (retorno normal, nao tabela; JT.md/HA3)"
+0x08026838,Fight_DispatchOnSubstateAA_AN_07_ClearSlotsCopyPartBlobs,label,provavel: copia blobs de peca (TA3); nao grava A8
+0x08027044,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam_AltEntry_8027044,label,"provavel: entrada alternativa no meio de AR_00 (op 0x50, MD2): dano em pecas com F+0xEC; F+0xAA++"
+0x08027974,Fight_DispatchOnSubstateAA_AS_SelectVariantByTechnique,label,provavel: bytes ldrb/sub 4/cmp 4/bhi (7808 3804 2804 D829); TA2 diz inicio real 0x08027964 (label no meio)
+0x08027A04,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor,label,"provavel: bytes add #A8, ldrb, sub 4, cmp 4 (TA): v=B+0xA8-4; <5 -> tabela"
+0x08027A16,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_Jump,label,"confirmado: mov pc,r0 (4687) nos bytes; tabela 0x08027A34 (5 ptrs x4)"
+0x08027E30,Fight_DispatchOnSubstateAA_AS_SetStatusFlagByTechnique,label,provavel: bytes ldrb/sub 4/cmp 4 (TA2); inicio real 0x08027E1C
+0x08027EEC,Fight_DispatchOnSubstateAA_AS_SetStepCodeByTechnique,label,provavel: bytes ldrb/sub 4/cmp 4 (TA2); inicio real 0x08027EDC
+0x0802843C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,label,provavel: bytes ldrb/sub #0xC/cmp #0x1C (7808 380C 281C D859) (TA2); inicio real 0x0802842C; tabela 0x0802845C
+0x0802844C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_Jump,label,"confirmado: mov pc,r0 (4687) + literal 0x03000590 em 0x08028450; tabela 0x0802845C (29 ptrs x4)"
+0x08028512,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,label,"provavel: bytes add #A8, ldrb, sub #0xC, cmp #0x1C (30A8 7800 380C 281C) (TA); > 0x1C -> efeito padrao"
+0x08028526,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_Jump,label,"confirmado: mov pc,r0 (4687) + literal pool; tabela 0x08028534 (29 ptrs x4)"
+0x08028834,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,label,provavel: miolo do host 0x080287DC (TA2 2b); bytes sub #0xC/cmp #0x1C/bls; tabela de status 0x08028854 (29 x4)
+0x080288C8,Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked,label,"confirmado: ptr idx 0 da tabela 0x08028854 (tec 12); teste mascara 0x01 (NX2/SS2 decompile). Candidato a funcao (QA5_criar), nao criado"
+0x08028908,Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked,label,confirmado: ptr idx 2 da tabela 0x08028854 (tec 14); mascara 0x08 (NX2/SS2). Candidato a funcao (QA5_criar)
+0x08028944,Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked,label,confirmado: ptr idx 4 da tabela 0x08028854 (tec 16); mascara 0x02 (NX2/SS2). Candidato a funcao (QA5_criar)
+0x08028980,Fight_DispatchOnSubstateAA_AV_13_ApplyFireUnlessMasked,label,confirmado: ptr idx 6 da tabela 0x08028854 (tec 18); mascara 0x04 (NX2/SS2). Candidato a funcao (QA5_criar)
+0x080289BC,Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion,label,confirmado: ptr idx 28 (0x080288C4 -> tabela) (tec 40); aplica sem teste de mascara (NX2/SS2). Candidato a funcao (QA5_criar)
+0x08028AB4,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump,label,"confirmado: mov pc,r0 (4687) em 0x08028AB4; tabela 0x08028AD8 (6 ptrs x4)"
+0x08028C78,Fight_DispatchOnSubstateAA_AW_00_SelectStatusTypeFromTechnique,label,provavel: fight+0x51 = 0/1/2/3 para tec 13/15/17/19 (TA2 2c)
+0x0802B0FC,Fight_DispatchOnSubstateAA_BE_LoadEffectGfx,label,provavel: cmp #0x1E em B+0xA8 (30A8 7800 281E D129) escolhe variante; som 0x4C (TA)
+0x0802B1DA,Fight_DispatchOnSubstateAA_BE_SelectTargets,label,provavel: cmp #0x1E em B+0xA8 (30A8 7800 281E D112); +0xD2 = 1 (perna d) ou 2 (perna j) (TA)
+0x0802B550,Fight_DispatchOnSubstateAA_BE_RollRandomStatus,label,"confirmado como label: 3 desvios internos (0x0802B532, B53C, B546) (QA5); nome provavel: rand&7 em fi+0xD6+2k (SS2)"
+0x0802B7BC,Fight_DispatchOnSubstateAA_BE_SetResultMessage,label,"provavel: cmp #0x1E (tec 30 Recovery -> fight+0xA6=0x4D, senao 0x4E) (TA2 2e)"
+0x0802B868,Fight_DispatchOnSubstateAA_BF_SelectAlliesAndStat,label,provavel: cmp #0x21 duas vezes (tec 31/33/35/37); fight+0xD2+k=1 para aliados vivos (TA2 2d)
+0x080308BC,Fight_DispatchOnSubstateAA_BR_10_ActionSelectLoadGfx,label,"provavel: passo 0 chama Fight_ResetBotPartFlags (TR.md, 0x0801B60C); bl nos bytes nao conferido"
+0x08030C64,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,label,"confirmado: add #A8 + strb r1,[r0] em 0x08030C68 (grava fight+0xA8, id do roteiro) (TA)"
+0x08030E8C,Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated,label,"chute: nome nao verificado; corpo chama Fight_SelectBotActivePart (bl em 0x08030E8E, TR); nome pode nao descrever o passo"
+0x080318DE,Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName_Entry,label,"provavel: (antes: Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction). Meio do host BR_47 (push em 0x080318CC, QA5); bytes add #A8 + ldrb (so leitura, sem store)"
+0x080318E0,Fight_DispatchOnSubstateAA_BR_47_LoadMedaforceName,label,"confirmado: copia nome por ptr[B+0xA8] (tabela 0x08031904); fight+0xA6=0x38 (TA2 2f, asm/decompile)"
+0x08031938,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,label,"confirmado: fight+0xA8 = B+0xA8+0x50; fight+0x164=1 (TA2 2g, asm); bytes 7800 3050 4661 31A8"
+0x08027A34,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_JumpTable,table,confirmado: 5 ptrs x4 (bytes lidos); indexado B+0xA8-4 (JT5)
+0x08028534,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_JumpTable,table,confirmado: 29 ptrs x4 (bytes lidos); indexado B+0xA8-0x0C (JT5)
+0x08028854,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents_Table,table,"confirmado: 29 ptrs x4 (tec 12..40, bytes lidos); idx0 AV_0D, idx2 AV_10, idx4 AV_12, idx6 AV_13, idx28 AV_2C; default 0x080289E4"
+0x08028AD8,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_JumpTable,table,confirmado: 6 ptrs x4 (bytes lidos); indexado fi+0x51 <=5 (JT5)

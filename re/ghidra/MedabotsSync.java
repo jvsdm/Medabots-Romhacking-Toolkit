@@ -59,6 +59,23 @@ public class MedabotsSync extends GhidraScript {
             String[] p = line.split("\t");
             Address a = toAddr(Long.decode(p[1]));
             try {
+                if (p[0].equals("R")) {
+                    // Prólogo certo mas corpo truncado: limpa [a, fim) (fim = próxima função conhecida), desmonta como Thumb
+                    // e refaz o corpo. Só age se o corpo atual tiver no máximo 8 bytes.
+                    Address end = toAddr(Long.decode(p[2]));
+                    Function fn = getFunctionAt(a);
+                    if (fn != null && fn.getBody().getNumAddresses() > 8) continue;
+                    if (fn != null) removeFunction(fn);
+                    clearListing(a, end.subtract(1));
+                    Register t = currentProgram.getRegister("TMode");
+                    if (t != null) currentProgram.getProgramContext().setValue(t, a, end.subtract(1), BigInteger.ONE);
+                    disassemble(a);
+                    Function nf = createFunction(a, null);
+                    if (nf == null) { failed++; log.println("falhou refazer " + a); continue; }
+                    repaired++;
+                    log.println("refeita " + a + " corpo " + nf.getBody().getNumAddresses());
+                    continue;
+                }
                 if (p[0].equals("D")) {
                     // Caso de switch sem prólogo: só desmonta como Thumb para o Ghidra mostrar o código.
                     if (getInstructionAt(a) != null) continue;

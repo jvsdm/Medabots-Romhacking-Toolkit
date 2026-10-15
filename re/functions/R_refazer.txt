@@ -1,0 +1,5 @@
+0x08053380	Unk_08053380 (corpo de 4 B; push lr)
+0x08053BE0	Viewport_ComputeOffsetA
+0x08053C00	Viewport_ClampAxisA
+0x08053C14	Viewport_ClampAxisB
+0x0807DD58	FUN_0807dd58 (push r4,r5,lr)

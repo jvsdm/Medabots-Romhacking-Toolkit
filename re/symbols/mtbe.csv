@@ -1432,9 +1432,9 @@ address,name,kind,count,comment
 0x0801FC00,Fight_J02_Step0_SetupDisplayAndAdvance,label,,"case 0 de J_02 (tabela 0x0801FBEC); bl 0x0801A788(1); avança seletor 0x03000579 [RF3] confirmado: case 0 de Fight_J02_StepTable 0x0801FBEC (5 ponteiros x 4 B, RD1)"
 0x0801FC78,Fight_J02_Step1_SetupFromBotTable,label,,"case 1 de J_02; lê fi+0x38 -> tabela 0x083B2628 (nao decodificada); avança seletor [RF3] confirmado: case 1 de Fight_J02_StepTable 0x0801FBEC (5 x 4 B, RD1)"
 0x0801FCC4,Fight_J02_Step2_CopyBgTiles,label,,"case 2 de J_02; 3x CpuFastSet 0x200 -> VRAM 0x0600C800/0x0600D000/0x0600D800; avança seletor [RF3] confirmado: case 2 de Fight_J02_StepTable 0x0801FBEC (5 x 4 B, RD1)"
-0x0801FD10,Fight_J02_Step3_CopyObjSlots,label,,case 3 de J_02; CpuFastSet 0x800 -> gObjectSlots 0x03002C30; avança seletor
-0x0801FD3C,Fight_J02_Step4_FinishSetCallbackAndAdvance,label,,case 4 de J_02; grava 0x08044101 em 0x030017F0; fi+0xAA += 1; zera seletor
-0x0801FD70,Fight_J02_ReturnCommon,label,,bx r0 de retorno (pop r0). NAO e alvo de salto; fallback de J_02 para seletor > 4
+0x0801FD10,Fight_J02_Step3_CopyObjSlots,label,,"case 3 de J_02; CpuFastSet 0x800 -> gObjectSlots 0x03002C30; avança seletor [RF4] provavel: entrada 3 da tabela J_02 (0x0801FBEC, ptr 0x0801FBF8 confirmado nos bytes); CpuFastSet 0x800 -> gObjectSlots (JT.md)"
+0x0801FD3C,Fight_J02_Step4_FinishSetCallbackAndAdvance,label,,case 4 de J_02; grava 0x08044101 em 0x030017F0; fi+0xAA += 1; zera seletor [RF4] provavel: entrada 4 da tabela J_02 (ptr 0x0801FBFC confirmado nos bytes); grava 0x08044101 em 0x030017F0; fi+0xAA += 1
+0x0801FD70,Fight_J02_ReturnCommon,label,,"bx r0 de retorno (pop r0). NAO e alvo de salto; fallback de J_02 para seletor > 4 [RF4] confirmado: bytes 4700 = bx r0 (retorno comum, nao alvo de tabela; JT.md); nome provavel"
 0x0801FD88,Fight_DispatchOnSubstateAA_J_03_PreviewSideStepCounter,func_thumb,,[HA3] despachante J[0x03] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_J_Substate03)
 0x0801FDEC,Fight_DispatchOnSubstateAA_K,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0801FE14,Fight_DispatchOnSubstateAA_K_00_ConsumePendingBotRefresh,func_thumb,,[HA3] despachante K[0x00] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_K_Substate00)
@@ -1453,7 +1453,7 @@ address,name,kind,count,comment
 0x080202E0,Fight_DispatchOnSubstateAA_L_07_SlideUntilMarker0x28ThenTimer60,func_thumb,,"Simon/Rokusho: Per-frame action-sequence animation step. Advance a countdown/position accumulator until the local animation reaches state 0x28, then reset action_arg_selector and advance action_sequence_state. (antes: Fight_AdvanceActionSequenceAnimationStep) [HA3] despachante L[0x07]; desliza sprite ate marca 0x28, timer 60, +0xAB=0; confirmado (corpo); passo provavel"
 0x08020340,Fight_DispatchOnSubstateAA_L_09_BranchOnB8Value,func_thumb,,[HA3] despachante L[0x09] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_L_Substate09)
 0x0802036C,Fight_DispatchOnSubstateAA_L_0B_LoadGfxSetupSlot10ThenJump,func_thumb,,[HA3] despachante L[0x0B] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_L_Substate0B)
-0x0802040C,Fight_DispatchOnSubstateAA_L_0B_ReturnTail,label,,"bx r0 = retorno normal (pop r0), nao tabela; fi+0xAA += 1 (L:0B -> L:0C)"
+0x0802040C,Fight_DispatchOnSubstateAA_L_0B_ReturnTail,label,,"bx r0 = retorno normal (pop r0), nao tabela; fi+0xAA += 1 (L:0B -> L:0C) [RF4] confirmado: bytes 4700 = bx r0 (retorno normal, nao tabela; JT.md/HA3)"
 0x08020428,Fight_DispatchOnSubstateAA_L_0C_WaitSlot10AnimThenTimer60,func_thumb,,[HA3] despachante L[0x0C] (+0xAA); conferido na tabela da ROM; passo da Robattle nao confirmado (antes: Fight_DispatchOnSubstateAA_L_Substate0C)
 0x08020474,Fight_DispatchOnSubstateAA_L_0F_LoadGfxAndSlots,func_thumb,,[HA4] Despachante L idx 0x0F; graficos + slot 10; SFX 0x2B; +AA->0x10 (confirmado)
 0x08020530,Fight_DispatchOnSubstateAA_L_10_WaitSlotAnim,func_thumb,,[HA4] Despachante L idx 0x10; espera anim slot 10; timer 0x3C; +AA->0x11 (confirmado)
@@ -1705,7 +1705,7 @@ address,name,kind,count,comment
 0x08026FC0,Fight_DispatchOnSubstateAA_AQ_13_JumpToStep04,func_thumb,,[HN1] Handler AQ idx 0x13; ver HN1.md [RV6] confirmado: passo = 4
 0x08026FD0,Fight_DispatchOnSubstateAA_AR,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x08026FF8,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam,func_thumb,,[HN1] Handler AR idx 0x00; ver HN1.md [RV6] confirmado: zera 3 slots; para cada bot oponente vivo rola entrada aleatoria e aplica dano (+0xEC); passo++
-0x08027044,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam_AltEntry_8027044,label,,[MD2] op 0x50: dano em pecas com F+0xEC; F+0xAA++; nao le B+0xA9..AD (antes: Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam)
+0x08027044,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam_AltEntry_8027044,label,,"[MD2] op 0x50: dano em pecas com F+0xEC; F+0xAA++; nao le B+0xA9..AD (antes: Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam) [RF4] provavel: entrada alternativa no meio de AR_00 (op 0x50, MD2): dano em pecas com F+0xEC; F+0xAA++"
 0x080270BC,Fight_DispatchOnSubstateAA_AR_LoadGfxAndTwoSprites,func_thumb,,"[HN2] HN2 AR(op 0x50) 0x01: gfx 0x084DCD28, slots 0x21/0x22 escala 0x80; confirmado"
 0x080271C4,Fight_DispatchOnSubstateAA_AR_ShrinkTwoSprites,func_thumb,,"[HN2] HN2 AR 0x02: escala -8 ate 0x40, sfx 0x30, timer 0x3C; confirmado"
 0x0802724C,Fight_DispatchOnSubstateAA_AR_SetupEffectSlot,func_thumb,,[HN2] HN2 AR 0x04: slot 0x21 OBJ 0xC624 + record list 0x083B6100+0x168; confirmado
@@ -1727,7 +1727,8 @@ address,name,kind,count,comment
 0x08027974,Fight_DispatchOnSubstateAA_AS_SelectVariantByTechnique,label,,"[TA2] inicio real 0x08027964; fight+0x51 = tec-4 para 4..8, senao 5; fight+0xAA++"
 0x080279E4,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor,func_thumb,,"[HN2] HN2 AS 0x01: gfx por tecnica, icone sobre o bot, sfx 0x33; provavel"
 0x08027A04,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor,label,,[TA] B+0xA8-4 <5 -> jump table; senao sprite e som 0x33
-0x08027A16,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_Jump,label,,[JT5] mov pc: tabela real 5 entradas em 0x08027A34 (idx +0xA8-4); JT5
+0x08027A16,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_Jump,label,,"[JT5] mov pc: tabela real 5 entradas em 0x08027A34 (idx +0xA8-4); JT5 [RF4] confirmado: mov pc,r0 (4687) nos bytes; tabela 0x08027A34 (5 ptrs x4)"
+0x08027A34,Fight_DispatchOnSubstateAA_AS_LoadIconAtActor_JumpTable,table,,[RF4] confirmado: 5 ptrs x4 (bytes lidos); indexado B+0xA8-4 (JT5)
 0x08027BA0,Fight_DispatchOnSubstateAA_AS_SpinIcon,func_thumb,,[HN2] HN2 AS 0x02: gira slot 0x21 por 0x3C frames; confirmado
 0x08027BEC,Fight_DispatchOnSubstateAA_AS_SetupSecondSprite,func_thumb,,[HN2] HN2 AS 0x03: slot 0x22 escala 0x80 tile 0x6700; confirmado
 0x08027CB0,Fight_DispatchOnSubstateAA_AS_ShrinkSecondSprite,func_thumb,,"[HN2] HN2 AS 0x04: escala 0x22 ate 0x40, sfx 0x30; confirmado"
@@ -1753,14 +1754,16 @@ address,name,kind,count,comment
 0x08028404,Fight_DispatchOnSubstateAA_AV,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0802842C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,func_thumb,,[HN2] HN2 AV(op 0x54) 0x00: +0x51 = 0..4 para tec 0x0C/0E/10/12/28; confirmado
 0x0802843C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,label,,[TA2] inicio real 0x0802842C; fight+0x51 = 0/1/2/3/4 para tec 12/14/16/18/40; outras so +0xAA++
-0x0802844C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_Jump,label,,[JT5] mov pc: tabela real 29 entradas em 0x0802845C (tecnica 12..40); JT5
+0x0802844C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique_Jump,label,,"[JT5] mov pc: tabela real 29 entradas em 0x0802845C (tecnica 12..40); JT5 [RF4] confirmado: mov pc,r0 (4687) + literal 0x03000590 em 0x08028450; tabela 0x0802845C (29 ptrs x4)"
 0x0802845C,Fight_SelectVariantByTechnique_JumpTable,data,,[JT5] tabela real 29 ponteiros (tecnica 12..40); JT5 [RD1] confirmado 29 x 4 (tecnica 12..40): todos ponteiros 0x080284xx; xref de Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique
 0x08028504,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,func_thumb,,[HN2] HN2 AV 0x01: gfx por tecnica e slot 0x21; provavel
 0x08028512,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx,label,,[TA] B+0xA8-0x0C >0x1C -> efeito padrao; senao jump table de 29 variantes
-0x08028526,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_Jump,label,,[JT5] mov pc: tabela real 29 entradas em 0x08028534 (idx +0xA8-0xC); JT5
+0x08028526,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_Jump,label,,"[JT5] mov pc: tabela real 29 entradas em 0x08028534 (idx +0xA8-0xC); JT5 [RF4] confirmado: mov pc,r0 (4687) + literal pool; tabela 0x08028534 (29 ptrs x4)"
+0x08028534,Fight_DispatchOnSubstateAA_AV_LoadEffectGfx_JumpTable,table,,[RF4] confirmado: 29 ptrs x4 (bytes lidos); indexado B+0xA8-0x0C (JT5)
 0x080287C0,Fight_DispatchOnSubstateAA_AV_WaitEffectSlots,func_thumb,,[HN2] HN2 AV/AX/AY/AZ 0x02: espera FightPreview_DispatchEffectSlots; confirmado
 0x080287DC,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,func_thumb,,"[HN2] HN2 AV 0x03: Fight_SetPendingActionEffect nos adversarios (0x0D/10/12/13/2C), imunes c/ tec 0x16; confirmado"
 0x08028834,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,label,,[TA2] inicio real 0x080287DC; 3 slots adversarios; status 0D/10/12/13/2C para tec 12/14/16/18/40; tabela 0x08028854
+0x08028854,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents_Table,table,,"[RF4] confirmado: 29 ptrs x4 (tec 12..40, bytes lidos); idx0 AV_0D, idx2 AV_10, idx4 AV_12, idx6 AV_13, idx28 AV_2C; default 0x080289E4"
 0x080288C8,Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked,label,,"[SS2] handler AV tipo 0x0D: se mascara 0x01 livre, fi+0xD2+k=1 e SetPending(alvo,0x0D) (C, SS2)"
 0x08028908,Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked,label,,"[SS2] handler AV tipo 0x10: mascara 0x08 (C, SS2)"
 0x08028944,Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked,label,,"[SS2] handler AV tipo 0x12: mascara 0x02 (C, SS2)"
@@ -1769,7 +1772,8 @@ address,name,kind,count,comment
 0x080289E4,Fight_DispatchOnSubstateAA_AV_SkipToNextOpponent,label,,[AS5] confirmado (bytes): entrada da tabela AV para ids sem status; so r5++ e fim (fight+0xAA++ quando r5>2). Nao renomeado no Ghidra (sem funcao propria)
 0x08028A00,Fight_DispatchOnSubstateAA_AV_04_BranchOnFlaggedTargets,func_thumb,,"[HN3] HN3 AV 04: se alguma flag +0xD2..+0xD4 está ligada, +0xAA += 2; senão +0xAA += 1. (confirmado)"
 0x08028A38,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots,func_thumb,,"[HN3] HN3 AV 06: LZ77 + cpufastset 8 (gráfico do efeito); para cada aliado marcado em +0xD2+i, monta o slot 0x21+i na posição do bot (+0x1742/+0x1744 do registro de ob (provável)"
-0x08028AB4,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump,label,,[JT5] mov pc em 0x08028AB4: tabela 6 ponteiros em 0x08028AD8 (idx +0x51 <=5); JT5
+0x08028AB4,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump,label,,"[JT5] mov pc em 0x08028AB4: tabela 6 ponteiros em 0x08028AD8 (idx +0x51 <=5); JT5 [RF4] confirmado: mov pc,r0 (4687) em 0x08028AB4; tabela 0x08028AD8 (6 ptrs x4)"
+0x08028AD8,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_JumpTable,table,,[RF4] confirmado: 6 ptrs x4 (bytes lidos); indexado fi+0x51 <=5 (JT5)
 0x08028B58,Fight_DispatchOnSubstateAA_AV_07_WaitFlaggedSlotsArrived,func_thumb,,"[HN3] HN3 AV 07: para cada aliado marcado, `FightPreview_AdvanceSlotX(0x21+i, 0)`; quando algum termina, timer +0x86 = 0x3C, +0xAA += 1. (confirmado)"
 0x08028BA8,Fight_DispatchOnSubstateAA_AV_09_ClearSlotsDispatchByType,func_thumb,,"[HN3] HN3 AV 09: `Tile_ClearSlots(0x21, 3)`; se +0x51 < 6, salta pela tabela de +0x51 (alvo não lido); senão +0xAA += 1. (provável)"
 0x08028C40,Fight_DispatchOnSubstateAA_AW,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
@@ -2116,21 +2120,46 @@ address,name,kind,count,comment
 0x08033ACC,Fight_CommitSelectedReferencedBotGraphics,func_thumb,,"Simon/Rokusho: When a referenced target bot id is stored in the acting bot's selected action state, copy that bot's graphics/state blocks into the UI/work area and refresh battle presentation. [RV22] confirmado: se fi+0xDE nao zero copia 4 blocos de 0x40 de graficos do bot"
 0x08033B7C,Fight_ApplySpecialityDamageFlags,func_thumb,,Simon/Rokusho: Apply battle-status / damage flags based on the selected part's SpecialityId. Proximity-class specialities set one flag family; remoteness-class specialities set another. [RV22] provavel: marca bits 1 e 2 de bot+0xBC conforme status (0/1/3) da parte e do lado oposto
 0x08033C00,Fight_ComputeTotalRosPhase,func_thumb,,Simon/Rokusho: Action-script phase: compute total ROS for the current action and store it in fight_information.combat_resolution.total_ros. [RV22] confirmado: wrapper de Fight_ComputeTotalRos com avanco do cursor
+0x08033C10,ActionScript_Op0D_HandleDefenderFollowupFlags,func_thumb,,"[RF5] confirmado: prologo 00 B5; wrapper (AS3a): chama Fight_HandleDefenderFollowupFlags, avanca"
 0x08033C20,Fight_ApplyPendingEffectStatusFlags,func_thumb,,"Simon/Rokusho: Apply pending-effect and speciality-derived defender-resolution flags. No_Escape (0x2E) forces BYPASS_EVASION, No_Defense (0x2F) forces BYPASS_DEFENSE, and Thunder/Freeze (0x0F/0x10) force both. SPECIALITY_FLAG_0/1 are also promoted into those bypass bits. [TR] [TR] opcode 0x0E do roteiro; grava bot+0xBC bits 0x04/0x08/0x0C (alvo e ator); confirmado"
 0x08033CD0,Fight_ResolveDefenderRosPhase,func_thumb,,"[DM] [confirmado bytes, sem funcao no Ghidra] bl 0x08038E54 + bl 0x08034F08; nome provavel"
 0x08033CE0,Fight_UpdateActionArgSelectorPhase,func_thumb,,Simon/Rokusho: Action-script phase: update the current action argument selector from defender state before later conditional action-script checks. [RV22] provavel: wrapper de Fight_UpdateActionArgSelectorFromDefenderState com avanco do cursor
+0x08033CF0,ActionScript_Op11_SetAttackerAffinityResult,func_thumb,,[RF5] confirmado: prologo; wrapper (AS3a) para Fight_SetAttackerAffinityResultFromSelectedAction
+0x08033D00,ActionScript_Op12_SetDefenderAffinityResult,func_thumb,,[RF5] confirmado: prologo; wrapper (AS3a) para Fight_SetDefenderAffinityResultFromSelectedAction
 0x08033D10,Fight_SeedPreDamageFromTotalRos,func_thumb,,Simon/Rokusho: Action-script phase: seed the pre-damage value from total ROS by taking total_ros >> 2 before later damage accumulation and modifiers. [RV22] confirmado: fi+0xEA = fi+0xE8 >> 2 (semente do dano)
 0x08033D30,Fight_AccumulateBaseDamage,func_thumb,,Simon/Rokusho: Accumulate final damage into fight_information.combat_resolution.accumulated_damage (+0xEC). | Formula skeleton: | 1. damage = pre_damage_value (+0xEA) | 2. + selected_part.power_or_evasion | 3. + attacker.flat_damage_bonus | 4. + close-range or long-range attacker bonus based on part.skill_id | 5. + extra half of attacker.effective_charge_or_defense for Berserk skill | 6. + selected_part.power_or_evasion again for Laser/Beam actions | 7. + selected_part.power_or_evasion again if optic/bomb/grav affinity bonus flag bit 0x01 is set | 8. + special action-script additive case for action kind 0x34 | 9. + strengthen damage bonus from active Strengthen parts | 10. - defender flat damage reduction byte at bot +0xD1 | 11. - extra pending-effect reduction when follow-up effect kind 0x1B is active | Result stays in +0xEC before clamp-to-armor/application. [RV22] confirmado: monta dano base em fi+0xEC somando pecas (+0x4E/+0xD0/+0xD3/+0xD4/+0xD6 e efeitos) e subtrai reducoes
 0x08033F04,ActionScript_Op15_MarkStateFromDamageBelowThreshold,func_thumb,,Simon/Rokusho: Action-script opcode 0x1D handler. Uses current damage/ROS scratch and defender threshold data to set a small action-script result code in fight_information. (antes: Fight_HandleActionScriptOpcode1D) [RV22] confirmado: se fi+0xDF==0x1D e dano < bot+0xD8 seta bot+0xB8=2 e +0xBE=1
 0x08033F64,ActionScript_Op16_SetStateFromPartFlag1C,func_thumb,,Simon/Rokusho: Action-script opcode 0x1C handler. Sets a small action-script result code in fight_information when the currently referenced action matches the expected state. (antes: Fight_HandleActionScriptOpcode1C) [RV22] provavel: se fi+0xDF==0x1C seta bot+0xB8=2 e +0xBE=5 (nome do flag 0x1C nao confirmado)
 0x08033F9C,Fight_MarkDefenderFollowupFromDamageThreshold,func_thumb,,"Simon/Rokusho: If the defender has the required status bit and the currently referenced part is still active, compare current damage scratch against the defender threshold and raise defender_followup_flags when the threshold condition is met. [RV22] provavel: se defensor tem bit 0x10 de +0xBD e dano > bot+0xD8 marca B7=3"
+0x08034008,ActionScript_Op18_AddRandomBonusAndScaleByPart,func_thumb,,[RF5] confirmado: chama Fight_AddRandomBonusUpTo3 e Fight_ScaleDamageByPartScalar (AS3a)
 0x0803402C,ActionScript_Op19_DispatchOnSubstateAA_F,func_thumb,,[AB] AB; despachante F (0x083AD730); copia dados da peca (2 x 14) [RV22] confirmado: wrapper do despachante _F com avanco por +0xB5
 0x08034048,ActionScript_Op1A_DispatchOnSubstateAA_G,func_thumb,,A5 (rec_2 f1445): seta fight_information+0xF9 (scene selector) = byte action_or_leg_type (+0x49 do registro de peca) da peca k = byte +0xA7 (ramo com +0xDD<=3; store 0x080340E0). Depois 0x0803D450 le a linha 0x083CE164[sel]. (antes: FightPreview_SetupSceneFromPartTechnique) [RV22] confirmado: seta bot+0x130=1 e chama despachante _G com avanco por +0xB5
 0x08034056,ActionScript_Op1A_DispatchOnSubstateAA_G,label,,"[BI2] BI2: op de script G (endereço = ponto de chamada do stub G; entrada da função não conferida). Seta byte+0x130=1, chama stub G, se +0xB5!=0 avança cursor. Confirmado (decompile)."
-0x080340A4,FightPreview_CursorReset,code_pc,,A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864
+0x08034074,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,func_thumb,,[RF5] confirmado: CpuFastSet 16 cores ROM -> OBJ 0x05000380; grava +0xF9 (AS3b)
+0x080340A4,FightPreview_CursorReset,code_pc,,"A6 (rec_2): zera fight_information+0x100 (cursor) ao montar a cena; em f1445 e f2864 [RF5] provavel: bytes FB 30 01 70 (meio de funcao); zera fight_information+0x100 (cursor), mtbe A6"
 0x080340F6,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA2] LE B+0xA8 (paleta +0x50) e grava +0xF9/+0x69/+0xA9; NAO grava B+0xA8 (corrige TA.md)
 0x080340F8,ActionScript_Op1B_LoadPaletteAndSetTechniqueId,label,,[TA] grava B+0xA8 (tecnica ativa do bot); funcao que contem o endereco
+0x08034120,ActionScript_Op1C_RunObjectScriptUntilYield,func_thumb,,"[RF5] confirmado: prologo 30 B5; AS3b: zera +0xB5, ObjectScript_RunUntilYield"
+0x08034170,ActionScript_Op1D_ApplyDamageToTargetPart,func_thumb,,[RF5] confirmado (AS3b): fight+0xD0 = fight[0x8B]; Fight_ApplyDamageToPart
+0x080341C0,ActionScript_Op1E_CallSubstateH,func_thumb,,"[RF5] confirmado: decompile (prologo 10 B5): sprites, avanco dos lados, Fight_DispatchOnSubstateAA_H_stub, +0xB5 -> Fight_AdvanceActionScriptCursor"
 0x080341DE,ActionScript_Op1E_CallSubstateH,label,,"[BI2] BI2: op de script H (endereço = ponto de chamada do stub H; entrada não conferida). Atualiza side sprites e sequências laterais, chama stub H, se +0xB5!=0 avança cursor. Confirmado (decompile)."
+0x08034200,ActionScript_Op1F_CallSubstateI,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_I
+0x08034240,ActionScript_Op20_CallSubstateJ_ClearObjectWait,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_J
+0x0803426C,ActionScript_Op21_CallSubstateK,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_K
+0x08034288,ActionScript_Op22_CallSubstateL,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_L
+0x080342C8,ActionScript_Op23_CallSubstateM,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_M
+0x080342E4,ActionScript_Op24_CallSubstateN,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_N
+0x08034300,ActionScript_Op25_CallSubstateO,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_O
+0x0803431C,ActionScript_Op26_CallSubstateP,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_P
+0x0803435C,ActionScript_Op27_CallSubstateQ,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_Q
+0x08034378,ActionScript_Op28_CallSubstateR,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_R
+0x080343B8,ActionScript_Op29_CallSubstateS,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_S
+0x080343D4,ActionScript_Op2A_CallSubstateT,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_T
+0x080343F0,ActionScript_Op2B_CallSubstateU,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_U
+0x0803440C,ActionScript_Op2C_CallSubstateV,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_V
+0x08034428,ActionScript_Op2D_CallSubstateW,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_W
+0x08034444,ActionScript_Op2E_CallSubstateX,func_thumb,,[RF5] confirmado (AS3b): wrapper de Fight_DispatchOnSubstateAA_X
+0x08034460,ActionScript_Op2F_CallSubstateY,func_thumb,,"[RF5] confirmado: decompile; chama Fight_DispatchOnSubstateAA_Y, +0xB5 -> Fight_AdvanceActionScriptCursor"
 0x0803447C,ActionScript_Op30_DispatchOnSubstateAA_Z,func_thumb,,[TR4] [TR4] opcode 0x30 do roteiro de Scout (0x083C6AA2) chama Fight_DispatchOnSubstateAA_Z (antes: ActionScript_Op30_CallSubstateZ) [RV22] confirmado: wrapper do despachante _Z com avanco por +0xB5 (antes: ActionScript_Op30_CallSubstateZ)
 0x08034498,ActionScript_Op31_CallSubstateAA,func_thumb,,[TR2] [TR2] opcode 0x31 do roteiro de Conceal (0x083C6AA4): chama Fight_DispatchOnSubstateAA_AA e avanca o roteiro (C) [RV8] confirmado: chama Fight_DispatchOnSubstateAA_AA; avança cursor se +0xB5
 0x080344B4,ActionScript_Op32_CallSubstateAB,func_thumb,,[TR5] GH-TR5 confirmado: Fight_DispatchOnSubstateAA_AB + avanço se +0xB5 (ja nomeado no Ghidra)
@@ -2249,7 +2278,7 @@ address,name,kind,count,comment
 0x08036120,FightPreview_LoadDisplayedPartIdsForSide,func_thumb,,Simon/Rokusho: Load the displayed part ids or broken-part glyph ids for the requested preview side into fight_information. Which bot is sampled depends on preview_orientation_flags and whether a mirrored/follow-up presentation flag is active. [RV9] confirmado
 0x080361A8,FightPreview_ResetSequenceStepFlags,func_thumb,,Simon/Rokusho: Reset the left and right preview step-flag bytes in fight_information.preview_sequence_state to 0x29 before beginning a fresh side-preview sequence. [RV9] confirmado
 0x080361C4,FightPreview_AdvanceLeftSideSequenceStep,func_thumb,,Simon/Rokusho [RV9] confirmado
-0x080361F6,FightPreview_AdvanceLeftSideSequenceStep_AltEntry_80361f6,label,,"[AN] GH-AN: MotionPlayStep(0, fight+0x112, fight+0x67); bit 0x80 = tipo concluido (antes: FightPreview_AdvanceLeftSideSequenceStep)"
+0x080361F6,FightPreview_AdvanceLeftSideSequenceStep_AltEntry_80361f6,label,,"[AN] GH-AN: MotionPlayStep(0, fight+0x112, fight+0x67); bit 0x80 = tipo concluido (antes: FightPreview_AdvanceLeftSideSequenceStep) [RF5] provavel: bytes 0E F0 21 FC (bl no meio); continuacao de FightPreview_AdvanceLeftSideSequenceStep (AN); bit 0x80 = concluido"
 0x08036218,FightPreview_AdvanceRightSideSequenceStep,func_thumb,,Simon/Rokusho [RV9] confirmado
 0x08036270,Fight_IncrementActionUsageCounter,func_thumb,,Simon/Rokusho: Increment the action usage counter for the currently active action entry in fight_information. Used after a successful action base step. (antes: Fight_IncrementActionUsageCounter_08036270) [RV9] confirmado (Ghidra tem sufixo _08036270; so incrementa contador de uso)
 0x0803628C,Fight_AddMedaforceChargeFromAction,func_thumb,,"Simon/Rokusho: Add Medaforce charge/token progress for the acting bot after a successful action. Uses a larger gain when the relevant battle-status bit is set and clamps the total at 0x50. [MF] [MF] confirmado: B+0xC1 += 0x14 (0x28 se B+0xC0&8), teto 0x50"
@@ -2465,7 +2494,7 @@ address,name,kind,count,comment
 0x0803DC58,Link_StepSetStateWordByFlag,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 44
 0x0803DC8C,Screen_ResetAndSetSub4Mode,func_thumb,,"[provavel] limpa VRAM/slots, SetGpuBlendMode(5,0x3F,0x20), Dispatch_Sub4Mode(3)"
 0x0803DCDC,Overlay_InitScreenGraphics,func_thumb,,"init de tela do overlay: gfx, blend, paleta, OAM, musica 0x14; provavel"
-0x0803DDC6,Overlay_InitScreenGraphics_AltEntry_803ddc6,label,,[HD2] [HD2] Chama Overlay_DrawSixDigitRow (0x0803E8EC) na inicializacao (antes: Overlay_InitScreenGraphics)
+0x0803DDC6,Overlay_InitScreenGraphics_AltEntry_803ddc6,label,,[HD2] [HD2] Chama Overlay_DrawSixDigitRow (0x0803E8EC) na inicializacao (antes: Overlay_InitScreenGraphics) [RF6] provavel: entrada alternativa dentro de Overlay_InitScreenGraphics (cadeia de bl); nome ok
 0x0803DE70,Link_StepGpuBlendTick,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 49
 0x0803DE90,Link_StepLoadSlotAndAdvance,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 50
 0x0803DEB0,Link_StepDispatchByFlag,func_thumb,,[FS6] [FS6] provavel; tabela menu 10 idx 51
@@ -2552,7 +2581,7 @@ address,name,kind,count,comment
 0x0803FEA8,Script_OpAdvanceStep,func_thumb,,[R2] avanca pc do script em 1 (confirmado)
 0x0803FEB8,Script_OpShowPortrait,func_thumb,,[R2] opcode de script que mostra retrato do personagem (provavel)
 0x08040038,Text_RenderGlyphStep,func_thumb,,[R2] passo de texto por coluna com quebra em 0xD1 px (provavel)
-0x08040144,TextItalicFont_Use,label,,codigo de texto que le a fonte italica (0x40144-0x40504)
+0x08040144,TextItalicFont_Use,label,,codigo de texto que le a fonte italica (0x40144-0x40504) [RF6] chute: bytes sao literal 0x084C59A4 (ponteiro); mtbe diz codigo de texto da fonte italica; nome nao confirmado
 0x080402B4,Text_RenderGlyphStepVariant,func_thumb,,mede a proxima palavra ate o espaco inclusive; se x + largura > 208 (0xD0) marca quebra (linha 2 ou caixa nova) (antes: TextMeasureWord) [MS] glifo variante (rota do F9 e subcoluna); provavel
 0x0804056C,Text_FlushAndNextLine,func_thumb,,[R2] fecha coluna pendente; linha 1 -> 2; linha 2 -> fim (provavel)
 0x080405D0,Text_WaitKeyOrClearBox,func_thumb,,[R2] fim de pagina: indicador e espera de A/B; limpa caixa (provavel)
@@ -2649,7 +2678,8 @@ address,name,kind,count,comment
 0x080436AC,PartSelect_CycleNextValid,func_thumb,,"ciclo de pecas (cmp #0x78 = Tinpet macho); antes site_PartCycle; Simon/Rokusho: Cycle through owned part-set ids for equip/detail UI. Hardcoded boundary values 0x78/0x79 define the end/sentinel behavior for the current 120-family set, and the function also indexes the 0xF0-stride inventory block. (antes: Part_FindNextOwnedPartWithMatchingGender) (antes: site_PartCycle) [RV12] confirmado: avanca/recua id de peca pulando invalidos (0x78/0x79 e pares iguais); mantem nome"
 0x080437E0,Util_Are4ByteFieldsEqual,func_thumb,,[G] 1 se 4 bytes +0x98..+0x9B sao iguais (confirmado)
 0x08043814,AreBattleSpritePartIdsValid,func_thumb,,"Simon/Rokusho: Validate composite battle sprite family ids. Rejects ids above 0x77 (119), so adding battle sprites for new Medabot families requires patching this guard plus expanding the composite sprite pointer/palette tables. [R2] valida ids 0..0x77 e exclui 0x1E (confirmado)"
-0x08043820,AreBattleSpritePartIdsValid,label,,imediato do validador de Medabot (BotCount) (antes: site_BotCountValidator)
+0x08043818,Table_BattleSpritePartPairs,table,,[RF6] provavel: 5 x 4 B (dois u16 por entrada) de 0x08043818 a 0x08043827; inicio da tabela deduzido pelo padrao (0x0600/0x0609/0x0612/0x061B/0x0624); leitor nao achado
+0x08043820,Table_BattleSpritePartPairs_Entry2,label,,imediato do validador de Medabot (BotCount) (antes: site_BotCountValidator) (antes: AreBattleSpritePartIdsValid) [RF6] provavel: entrada 2 (de 5) da tabela 0x08043818; (antes: AreBattleSpritePartIdsValid) nome de funcao nao se sustenta
 0x0804384C,Lookup_FindPartIndexById,func_thumb,,[G] Indice na tabela de 9 registros pelo id; 0xFF se nao acha (provavel)
 0x0804387C,Overworld_ResetEncounterStepState,func_thumb,,Simon/Rokusho [R2] zera contador de passos (provavel) (antes: reset_step_and_get_encounter_flag)
 0x080438C4,Overworld_ShouldTriggerRandomEncounter,func_thumb,,"Simon/Rokusho: Return whether the current landing tile should trigger a random encounter. Random encounters are blocked when gRandomEncounterModeFlags bit 0 is set, when encounter disable bytes are nonzero, or when the map's encounter enable byte is zero. [RV12] confirmado: checa 3 flags"
@@ -2769,7 +2799,7 @@ address,name,kind,count,comment
 0x080480D4,Table_GetWordByIndex_080480e0,func_thumb,,[FN2] confirmado: Retorna palavra da tabela 0x080480E0 [arg]
 0x080480E4,Map_LoadCurrentMapAndEntities,func_thumb,,"Simon/Rokusho: High-level current-map load path. Preserve camera/affine state, rebuild map rendering support, load the current map layers, reset map animation state, load entities/NPCs for the current map, then rebuild the interactive map systems before resuming play. [RV23] confirmado: copia cabecalho do mapa (coords/ptrs) carrega paleta camadas animacoes spawns e sprites; nome mantido"
 0x08048174,Map_UpdateBackgroundAnimations,func_thumb,,"Simon/Rokusho: Advance map background animation frames for the current map. Uses a small per-map animation descriptor table plus a frame delay and frame index stored in the event/game-state blob, then DMA-copies the next animated tile chunk into VRAM. [RV23] confirmado: avanca frame de animacao de tile e grava descritor de copia (bit 31) para VRAM; nome mantido"
-0x080481D8,Map_UpdateBackgroundAnimations_AltEntry_80481d8,label,,[MP2] animacao de tiles do mapa: DMA3 de [0x030057DC]+idx*T*0x20 para 0x06009020; descritor ROM 0x08409480[m] (antes: Map_UpdateBackgroundAnimations)
+0x080481D8,Map_UpdateBackgroundAnimations_AltEntry_80481d8,label,,[MP2] animacao de tiles do mapa: DMA3 de [0x030057DC]+idx*T*0x20 para 0x06009020; descritor ROM 0x08409480[m] (antes: Map_UpdateBackgroundAnimations) [RF6] provavel: entrada alternativa dentro de animacao de tiles (DMA3); nome ok
 0x08048210,Map_PoseIdToTileIndex,func_thumb,,[CS] CONFIRMADO decompile: id 0 -> byte por 0x03006418/0x0300643C; >=0xD0 -> lista RAM 0x03006418+k; >=0xC0 -> (id-0xC0)*2+IWRAM[0x03006D3E]+0x28 (antes: Map_ResolveSpriteId)
 0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area. [RV23] confirmado: laco por grupo de pose descompacta LZ77 para VRAM com passo 0x900; nome mantido"
 0x080482CC,Gfx_LoadLz77Table12ByIndex,func_thumb,,[FN4] provavel (hint FN2 aceito): Map_PoseIdToTileIndex(0x08048210) e 12 bios_lz77_vram com passo 0x900 a partir de tabela de ponteiros; chamador 08059970 (antes: FUN_080482cc)
@@ -2818,21 +2848,35 @@ address,name,kind,count,comment
 0x0804A210,GameState_AdvanceSubroutine,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: incrementa subrotina do estado
 0x0804A220,EventScript_RunCurrent,func_thumb,,"Simon/Rokusho: Main overworld event VM tick. |  | State model: | - gCurrentEventPendingFlag == 0: run overworld startup/map-scene subroutine table | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte == 0: run one event-initialization opcode | - gCurrentEventPendingFlag != 0 and gCurrentEventStateByte != 0: dispatch the current normal event opcode |  | The VM is two-level: | - gCurrentEventOpcodeByte selects the current opcode handler | - gCurrentEventOpcodeSubstate is per-opcode local state used by multi-step normal opcode handlers |  | The event script stream is addressed through the installed event database, gCurrentEventId, and gCurrentEventScriptCursor. [EV] laço por quadro da VM de eventos; sem evento chama 0x083D212C[0x0300137C]; com evento despacha primária/continuação (confirmado)"
 0x0804A2F0,Overworld_StartNewGame,func_thumb,,limpeza do inventario no new game; antes site_NewGameClear; Simon/Rokusho: New-game initialization clears parts_in_inventory with size 0x3C0 = 4 slots * 0xF0 bytes. This is the save/RAM allocation that must grow if more than 120 part-set families are supported. (antes: new_game_start) (antes: Menu_NewGame_Main) (antes: new_game_start) [RV23] confirmado: limpa RAM inteira inicializa ids ctx e marcadores dispara transicao e GameState_AdvanceSubroutine (antes: new_game_start)
-0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos
+0x0804A3B6,lit_EventDbBase0,label,,literal da base do banco de eventos [RF6] provavel: bytes sao codigo (ldr/str de ponteiros do banco de eventos)
 0x0804A4A2,new_game_start,label,,[VA3] grava E+0xC5C=0 e E+0xC5B=1. confirmado
-0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos
+0x0804A584,lit_EventDbBase1,label,,literal da base do banco de eventos [RF6] provavel: literal pool 0x08765EC0 (base do banco de eventos) seguido de 0x030057D8; nome ok
 0x0804A60C,Map_InitScreenAndTransition,func_thumb,,provável: zera VRAM/OAM e inicia transição de tela
+0x0804A6A0,Map_LoadEntitiesAndAdvance,func_thumb,,[RF6] confirmado: decompile carrega mapa e entidades
+0x0804A6BC,Map_AdvanceSubroutineStep_A,func_thumb,,[RF6] confirmado: wrapper so de GameState_AdvanceSubroutine (corpo identico a B C D E); prefixo Map_ provavel
+0x0804A6C8,Overworld_TransitionStepThenAdvance,func_thumb,,[RF6] confirmado: decompile roda transicao e avanca se terminou; nome ok
 0x0804A6E0,Map_TickSceneStateMachine,func_thumb,,[FM6] [FM6] sub 5 de gEventSubTable (0x083D212C): so chama Overworld_UpdateMapSceneStateMachine; confirmado
+0x0804A6EC,Map_AdvanceSubroutineStep_B,func_thumb,,[RF6] confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
 0x0804A6F8,Map_ResetOamAndRenderSlotsStep,func_thumb,,"[FM6] [FM6] sub 7 de gEventSubTable: limpa OAM por DMA, reconstroi slots, SND_PolicyRequest(5,0), GS=5 (retomada do mapa); confirmado"
+0x0804A724,Map_ClearMenuPairsAndAdvance,func_thumb,,[RF6] confirmado: FieldMenu_ClearTwoSlotPairs + avanca; nome ok
+0x0804A734,Map_DirectionalTriggerStepThenState5,func_thumb,,[RF6] confirmado: acha trigger no tile adjacente
 0x0804A764,Overworld_InitMapScene,func_thumb,,"Simon/Rokusho: Primary overworld map-scene initialization. Clears OAM/VRAM shadow state, resets event/object work areas, installs the core overworld/map/event pointers, loads the current map and entities, clamps the camera, and enables the main overworld rendering path. [RV23] confirmado: limpa buffers carrega mapa atual reseta encontro pede som e inicia transicao; nome mantido"
 0x0804A7A0,Overworld_InitMapScene,label,,"[EV] entrada de cena do mapa: zera Pendente (C88), StateByte (C89), cursor (C8A); carrega mapa e entidades (confirmado)"
-0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos
+0x0804A8C8,lit_EventDbBase2,label,,literal da base do banco de eventos [RF6] provavel: mesmo literal 0x08765EC0 + 0x030057D8 do pool de 0x0804A584; nome ok
 0x0804A900,Overworld_FinishTransitionInitPlayer,func_thumb,,"[FL10] fim da transição: sprites do jogador, marcador, direção; estado=5 (provável)"
 0x0804A944,Overworld_ReloadMapSceneAfterReset,func_thumb,,"Simon/Rokusho: Reload the current map scene after a heavier display/reset step. Clears OAM/object state, resets blend state, rebuilds the current map scene, reclamps the camera, restores the main display configuration, and resumes the overworld scene loop. [FM6] [FM6] sub 0x0D de gEventSubTable: recarrega mapa (DISPCNT 0x1E40, Map_LoadCurrentMapAndEntities, transicao), GS++ (-> 0x0E); NAO chama Menu_SetStateByArg01; confirmado"
+0x0804AA04,Overworld_TransitionEndInitPlayerThenState5,func_thumb,,[RF6] confirmado: fim de transicao
 0x0804AA44,GameState_ToggleAndAdvance,func_thumb,,[VA3] C5C = C69 (ou 0 se igual; zera C69). confirmado
 0x0804AA74,Overworld_ReloadCurrentMapScene,func_thumb,,Simon/Rokusho: Lighter-weight current-map scene reload. Rebuilds map/object rendering state and reloads the current map scene without the full pointer-install / global reset path used by Overworld_InitMapScene. [RV23] confirmado: recarrega mapa atual sem reinicializar slots (limpa OAM pede som transicao); nome mantido
+0x0804AB04,Overworld_WaitTransitionThenAdvance,func_thumb,,[RF6] confirmado: espera transicao e avanca; nome ok
+0x0804AB18,Map_AdvanceSubroutineStep_C,func_thumb,,[RF6] confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
+0x0804AB24,Map_ResetSubstateAndSetState5_A,func_thumb,,[RF6] confirmado: zera byte+1 do ponteiro e seta state 5; nome ok
+0x0804AB3C,Map_AdvanceSubroutineStep_D,func_thumb,,[RF6] confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
 0x0804AB60,Overworld_WalkStateToggleTo1,func_thumb,,[VA3] C5C = C69 se C5C==1; senao C69=C5C e C5C=1. confirmado
+0x0804ABA8,Map_ResetSubstateAndSetState5_B,func_thumb,,[RF6] confirmado: zera byte+1 do ponteiro e seta state 5 (igual A); nome ok
+0x0804ABC0,Map_AdvanceSubroutineStep_E,func_thumb,,[RF6] confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
 0x0804ABCC,Overworld_WalkStateToggleTo2,func_thumb,,[VA3] C5C = C69 se C5C==2; senao C69=C5C e C5C=2. confirmado
+0x0804AC14,Overworld_InitFollowerFacingAndSfx57,func_thumb,,[RF6] confirmado: decompile escala passo
 0x0804ACC8,Map_AdvanceSubroutineStep_F,func_thumb,,[FN4] confirmado: so chama GameState_AdvanceSubroutine; mesmo padrao de Map_AdvanceSubroutineStep_A..E; ptr 083D21AC (antes: FUN_0804acc8)
 0x0804ACD4,Map_InitScreenAndStartTransition,func_thumb,,"[FN4] provavel: limpa OAM/paleta, DISPCNT=0x1E40, Map_LoadCurrentMapAndEntities, Overworld_ResetEncounterStepState, SND_PolicyRequest(0xB), efeito de transicao e avanca; ptr 083D21B0 (antes: FUN_0804acd4)"
 0x0804AD68,Overworld_TransitionDone_SetWalk0B,func_thumb,,[VA3] C5C = 0x0B quando a transicao termina. confirmado
