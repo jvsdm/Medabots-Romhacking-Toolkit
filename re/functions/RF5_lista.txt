@@ -1,0 +1,34 @@
+0x08031A84	Fight_DispatchPartPreparation	dado	semtag
+0x08031AC0	Fight_DispatchPartExecution	dado	semtag
+0x080332EC	Fight_ValidatePart_ClearPartByte0F	dado	semtag
+0x08033C10	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08033CF0	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08033D00	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034008	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034074	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080340A4	FightPreview_CursorReset	dado	semtag
+0x080340F6	ActionScript_Op1B_LoadPaletteAndSetTechniqueId	dado	semtag
+0x080340F8	ActionScript_Op1B_LoadPaletteAndSetTechniqueId	dado	semtag
+0x08034120	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034170	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080341C0	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034200	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034240	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0803426C	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034288	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080342C8	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080342E4	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034300	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0803431C	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0803435C	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034378	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080343B8	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080343D4	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080343F0	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0803440C	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034428	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034444	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034460	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08034E94	Fight_LookupActionScriptByte	funcao	chute
+0x080361F6	FightPreview_AdvanceLeftSideSequenceStep_AltEntry_80361f6	dado	semtag
+0x08036D64	Fight_IsPartStatusProtected	funcao	semtag

@@ -1,0 +1,34 @@
+0x08036FB0	Fight_ResetBotPartState	dado	semtag
+0x080398EC	ObjScript_Op0D_SpawnEffectSlot4PartPal	dado	semtag
+0x0803A4BA	ObjScript_Op1E_SpawnEffectSlot23PartPal	dado	semtag
+0x0803A60C	ObjScript_Op1F_SpawnEffectSlot4State12	dado	semtag
+0x0803AE3C	ObjScript_Op2C_SpawnEffectSlot4State13	dado	semtag
+0x0803B3B4	ObjScript_Op32_LoadGfxList	dado	semtag
+0x0803B794	ObjScript_Op39_SpawnEffectSlot4NoPrioShift	dado	semtag
+0x0803D4AC	FightPreview_AdvanceSequenceCursor	funcao	semtag
+0x0803DDC6	Overlay_InitScreenGraphics_AltEntry_803ddc6	dado	semtag
+0x08040144	TextItalicFont_Use	dado	semtag
+0x08043820	AreBattleSpritePartIdsValid	dado	semtag
+0x08044B58	Bot_InitStarterRecord	dado	semtag
+0x08045858	EmitCompositePreviewTemplateEntriesSortedByY	dado	chute
+0x08047414	CompositePreviewContext_Init	funcao	semtag
+0x08047574	EventScript_ClearGlobals	funcao	semtag
+0x08047878	GameState_StartFlowByCommand	funcao	semtag
+0x080481D8	Map_UpdateBackgroundAnimations_AltEntry_80481d8	dado	semtag
+0x0804A3B6	lit_EventDbBase0	dado	semtag
+0x0804A584	lit_EventDbBase1	dado	semtag
+0x0804A6A0	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804A6BC	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804A6C8	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804A6EC	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804A724	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804A734	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804A8C8	lit_EventDbBase2	dado	semtag
+0x0804AA04	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804AB04	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804AB18	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804AB24	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804AB3C	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804ABA8	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804ABC0	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0804AC14	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos

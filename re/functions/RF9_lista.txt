@@ -1,0 +1,34 @@
+0x0805D2C2	KeyItemBag_ListInputStep_Jump	dado	semtag
+0x0805D384	KeyItemBag_Case_Id1	dado	semtag
+0x0805D398	KeyItemBag_Case_Id5	dado	semtag
+0x0805D3AC	KeyItemBag_Case_Id12	dado	semtag
+0x0805D3C0	KeyItemBag_Case_Id13	dado	semtag
+0x0805D3D4	KeyItemBag_Case_Id19	dado	semtag
+0x0805D3E8	KeyItemBag_Case_Id39	dado	semtag
+0x0805D3FC	KeyItemBag_Case_Id40	dado	semtag
+0x0805D410	KeyItemBag_Case_Default	dado	semtag
+0x0805D418	KeyItemBag_CommonTail	dado	semtag
+0x0805D430	KeyItemBag_Result0_SfxOnly	dado	semtag
+0x08060688	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08061958	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08063948	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08065888	Sm_StepSfxRepeat3_Case0	dado	semtag
+0x080658DC	Sm_StepSfxRepeat3_Case1to3	dado	semtag
+0x08065970	Sm_StepSfxRepeat3_Case4	dado	semtag
+0x080659B0	Sm_StepSfxRepeat3_Case5	dado	semtag
+0x08065F1C	Screen_DispatchByState3A_A0	dado	semtag
+0x080660C4	Screen_DispatchByState3A_B0	dado	semtag
+0x08066860	Menu14_CallSubstateHandler_Pool	dado	semtag
+0x08067030	PointRing_StepFrame	dado	semtag
+0x08068924	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08068978	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x080692EC	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x0806A12A	dispatch_scene_state_Jump	dado	semtag
+0x0806B826	Screen_InitObjectSlotsLz77_AltEntry_806b826	dado	semtag
+0x0806BD8C	dispatch_state_8_Jump	dado	semtag
+0x0806CB58	anim_dispatch_state_Jump	dado	semtag
+0x0806E9C0	(sem nome no mtbe; ver Ghidra)	funcao	nemmexemos
+0x08071390	Screen_TableStepTimedSetup_Case0	dado	semtag
+0x0807139C	Screen_TableStepTimedSetup_CaseAdvance	dado	semtag
+0x080713A2	Screen_TableStepTimedSetup_CaseWaitData	dado	semtag
+0x080713CC	Screen_TableStepTimedSetup_Case25	dado	semtag
