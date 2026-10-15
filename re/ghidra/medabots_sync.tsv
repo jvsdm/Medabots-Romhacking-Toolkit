@@ -1370,6 +1370,7 @@ L	0x08028908	Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked
 L	0x08028944	Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked
 L	0x08028980	Fight_DispatchOnSubstateAA_AV_13_ApplyFireUnlessMasked
 L	0x080289BC	Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion
+L	0x080289E4	Fight_DispatchOnSubstateAA_AV_SkipToNextOpponent
 F	0x08028A00	Fight_DispatchOnSubstateAA_AV_04_BranchOnFlaggedTargets
 F	0x08028A38	Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots
 L	0x08028AB4	Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump
@@ -1821,8 +1822,8 @@ F	0x08035694	Fight_ShowObjectSlot
 F	0x080356B4	Fight_HideObjectSlot
 F	0x080356CC	Fight_UpdateFollowerObjectSlot
 F	0x0803572C	Fight_SubClampZeroByte
-F	0x08035740	safe_add
-F	0x08035754	safe_subtract
+F	0x08035740	Util_AddByteClampToMax
+F	0x08035754	Util_SubtractShortClampZero
 F	0x0803576C	Fight_GetMedalPartCompatibilityBonus
 F	0x0803579C	Fight_AccumRosPart
 F	0x08035814	Fight_ApplyVirusBugRosPenalty
@@ -3354,7 +3355,7 @@ F	0x0806E150	Scene_StepLoadStateTriple
 F	0x0806E184	Boot_SubState2_WaitFxStep
 F	0x0806E2A0	Screen_InitRowBufferAndFx
 F	0x0806E3C4	Fx_TickStepTableEntry
-F	0x0806E3F8	Scene_SetSubstate2Wrapper
+F	0x0806E3F8	Scene_RequestSelIfIndexBelow4_2
 F	0x0806E404	battle_timer_end_transition
 F	0x0806E460	Boot_DispatchSubState
 F	0x0806E484	fade_step_bld
@@ -3654,7 +3655,7 @@ F	0x0807D924	sf64_cmp_core
 F	0x0807DA24	Sf64_CmpWrapper
 F	0x0807DA50	SoftF64_Compare
 F	0x0807DA9C	Math_SoftF64Compare
-F	0x0807DAE8	SoftF64_CompareAlt3
+F	0x0807DAE8	SoftF64_CompareNegIfSpecial
 F	0x0807DB34	SoftF64_CompareAlt2
 F	0x0807DB80	Math_SoftFloat64Compare
 F	0x0807DBCC	SoftF64_CompareAlt1

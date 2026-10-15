@@ -1,0 +1,42 @@
+addr,nome,kind,comentario
+0x08001278,Gfx_VBlankDmaAlternatingRow,func_thumb,confirmado: escolhe buffer pela paridade de gFrameCount; copia 8 halfwords; configura DMA0
+0x0800C29C,Dispatch_CallHandlerByByte33_0800C29C,func_thumb,provavel: despacha via tabela de 4 bytes indexada pelo byte +0x33 (CallViaR0)
+0x0800F77C,PartDetail_DrawCurrentSelectionAttributeName,func_thumb,provavel: limpa mascara attr0; copia 14 bytes de tabela (indice byte +0xEE) e desenha glifos
+0x08014CF0,Fight_SyncBotStatusFromPart,func_thumb,provavel: le estado do bot (+0x87); grava status com bit 0x8000 e marca flag; nome deduzido
+0x08016E5C,Fight_IsPartTechniqueSupportUtilityClass,func_thumb,provavel: retorna 1 se byte de classe (+0x49) e 0x18-0x1A; 0x28 ou 0x35
+0x08019600,Fight_DrawSecondaryEffectIcon,func_thumb,provavel: por codigo de efeito (+0xC4: 0x1F/0x26/0x29) monta slot de icone de status e chama Fight_PlaceBotStatusIconObject
+0x08021DEC,Fight_DispatchOnSubstateAA_T_12_SetStepCode25,func_thumb,confirmado: grava 0x25 em +0xA6 e incrementa passo +0xAA
+0x08023AB0,Fight_DispatchOnSubstateAA_AB_0F_SetStepCode2C,func_thumb,confirmado: grava 0x2C em +0xA6 e incrementa passo +0xAA
+0x08023C78,Fight_DispatchOnSubstateAA_AC_0F_SetStepCode2B,func_thumb,confirmado: grava 0x2B em +0xA6 e incrementa passo +0xAA
+0x08024078,Fight_DispatchOnSubstateAA_AD_16_SetStepCode2D,func_thumb,confirmado: grava 0x2D em +0xA6 e incrementa passo +0xAA
+0x08031390,Fight_SceneStep60_LoadLevelUpBanner,func_thumb,provavel: Lz_DecodeIfMagic; ajusta posicao por bot (+0x1742/+0x1744); sfx 0x2A; nome deduzido do banner
+0x08034E94,Fight_LookupByteViaPtrTable_A8,func_thumb,confirmado: byte de tabela de ponteiros (indice +0xA8) + offset u16 (+0xBC) (antes: Fight_LookupActionScriptByte)
+0x08034F44,Fight_SideHasPartCode15,func_thumb,confirmado: varre 3 partes do lado (stride 0x18) e retorna 1 se codigo 0x15
+0x08035740,Math_AddByteClamped,func_thumb,confirmado: soma byte com teto (param_3) (antes: safe_add)
+0x08035754,Math_SubShortSaturateZero,func_thumb,confirmado: subtrai short com piso 0 (antes: safe_subtract)
+0x080415E8,Fx_InitRecord8,func_thumb,confirmado: zera 8 bytes e grava campos +2 a +5 (+3=0x7F)
+0x080421B4,Tinpet_ActivateMatchingEntry,func_thumb,confirmado: procura entrada com byte+7 igual ao parametro (9 entradas de 8 B); marca estado 2 e decrementa dois contadores
+0x08043240,Obj_SetCompositeGroupField24,func_thumb,provavel: seta flag 0x200 em 2 registros de 0x40 B e grava parametro em +0x24 de 4 registros (antes: SetCompositeBattleSpriteAnimationSpeed)
+0x08043AE0,Gfx_VBlankBgScrollDmaPingPong,func_thumb,provavel: escolhe buffer pela paridade (inversa a Gfx_VBlankDmaAlternatingRow); copia 8 halfwords e configura DMA0; 'scroll' deduzido (antes: Unk_08043AE0)
+0x08043B58,Gfx_VBlankStopDma0AndResetHandler,func_thumb,provavel: VBlankWait; zera flag e regrava handler; nome deduzido (antes: Unk_08043B58)
+0x08045858,EmitCompositePreviewTemplateEntriesSortedByY,label,chute: bytes 0A E0 nao e inicio de funcao; Ghidra so mostra fragmento; nome nao verificado
+0x080459A4,CompositePreview_SortOamRangeByY,func_thumb,confirmado: selection sort ascendente de registros de 8 B pela chave short +6 (antes: OffsetCompositePreviewTemplateEntry)
+0x08045A40,IsCompositePreviewPointOnScreen,func_thumb,confirmado: retorna 1 se -0x40<x<0xA0 e -0x20<y<0xF0
+0x08045AEC,QueueVisibleCompositePreviewTemplateEntry,func_thumb,confirmado: se ponto esta na tela chama LayoutCompositePreviewEntryOamGrid e QueueCompositePreviewTemplateEntryOam
+0x08045B68,CompositePreview_QueueEntryWithBounds,func_thumb,confirmado: como o anterior mais registro de limites (sinal de x; zeros; largura) se ponteiro nao nulo (antes: QueueVisibleCompositePreviewTemplateEntryWithBounds)
+0x08045C30,CompositePreview_QueueEntryWithAffineBounds,func_thumb,confirmado: como o anterior mais matriz afim 2x2 via bios_objaffineset (antes: QueueVisibleCompositePreviewTemplateEntryWithAffineBounds)
+0x08047414,CompositePreviewContext_Init,func_thumb,confirmado: grava 3 campos do contexto e zera byte de flag
+0x08047574,EventScript_ClearGlobals,func_thumb,confirmado: Mem_SetZeros em 15 blocos de globais
+0x08047878,GameState_StartFlowByCommand,func_thumb,confirmado: switch por comando; grava estado e proximo fluxo e retorna
+0x0804830C,Gfx_BuildDefaultOrEntryTileRecord,func_thumb,provavel: se a entrada da tabela e 0 grava 14 pares de constantes; senao grava 3 palavras (antes: Map_LoadMapPaletteToShadowBuffer; nao carrega paleta)
+0x08053380,Unk_08053380,func_thumb,chute: prologo 00 B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x08053BE0,Viewport_ComputeOffsetA,func_thumb,chute: prologo 00 B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x08053C00,Viewport_ClampAxisA,func_thumb,chute: prologo 00 B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x08053C14,Viewport_ClampAxisB,func_thumb,chute: prologo 10 B5 mas Ghidra so halt_baddata; corpo nao recuperado
+0x080567F0,Overworld_EnterSceneState,func_thumb,provavel: zera campos de estado (+0xF4/+0xFC/+0xF0); recalcula 32 entradas affine; despacha tabela de estado (jumptable nao recuperada)
+0x0806355C,Menu_SwapTileBlocksAndLabels,func_thumb,provavel: troca 4 blocos de tiles (cpufastset x3); limpa atributos; monta dois rotulos de texto e toca sfx 0x2A; 'labels' deduzido
+0x080672F4,Str_LengthZeroIfOne,func_thumb,confirmado: retorna strlen, mas 0 quando o tamanho e 1
+0x0806E3F8,Scene_RequestSelIfIndexBelow4_2,func_thumb,confirmado: wrapper que chama Sel_RequestIfIndexBelow4(2) (antes: Scene_SetSubstate2Wrapper)
+0x0807DAE8,SoftF64_CompareNegIfSpecial,func_thumb,confirmado: desempacota 2 valores; retorna -1 se algum tem classe <2; senao sf64_cmp_core (antes: SoftF64_CompareAlt3)
+0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,confirmado: avanca cursor u16 por 1 + byte lido da sequencia indexada por +0xF9
+0x08036D64,FightPreview_IsPartTypeFlagSet,func_thumb,confirmado: por faixa de codigo de parte testa bit (1/2/4/8) no byte +0xCF do registro; retorna 1 se setado (antes: Fight_IsPartStatusProtected)

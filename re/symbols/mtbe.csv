@@ -1758,6 +1758,7 @@ address,name,kind,count,comment
 0x08028944,Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked,label,,"[SS2] handler AV tipo 0x12: mascara 0x02 (C, SS2)"
 0x08028980,Fight_DispatchOnSubstateAA_AV_13_ApplyFireUnlessMasked,label,,"[SS2] handler AV tipo 0x13: mascara 0x04 (C, SS2)"
 0x080289BC,Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion,label,,"[SS2] handler AV tipo 0x2C (Confusion): aplica sem teste de mascara (C, SS2)"
+0x080289E4,Fight_DispatchOnSubstateAA_AV_SkipToNextOpponent,label,,[AS5] confirmado (bytes): entrada da tabela AV para ids sem status; so r5++ e fim (fight+0xAA++ quando r5>2). Nao renomeado no Ghidra (sem funcao propria)
 0x08028A00,Fight_DispatchOnSubstateAA_AV_04_BranchOnFlaggedTargets,func_thumb,,"[HN3] HN3 AV 04: se alguma flag +0xD2..+0xD4 está ligada, +0xAA += 2; senão +0xAA += 1. (confirmado)"
 0x08028A38,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots,func_thumb,,"[HN3] HN3 AV 06: LZ77 + cpufastset 8 (gráfico do efeito); para cada aliado marcado em +0xD2+i, monta o slot 0x21+i na posição do bot (+0x1742/+0x1744 do registro de ob (provável)"
 0x08028AB4,Fight_DispatchOnSubstateAA_AV_06_SpawnTargetEffectSlots_Jump,label,,[JT5] mov pc em 0x08028AB4: tabela 6 ponteiros em 0x08028AD8 (idx +0x51 <=5); JT5
@@ -2210,8 +2211,8 @@ address,name,kind,count,comment
 0x080356B4,Fight_HideObjectSlot,func_thumb,,Simon/Rokusho [R1b] provavel: limpa bits do slot
 0x080356CC,Fight_UpdateFollowerObjectSlot,func_thumb,,Simon/Rokusho: Keep one follower/linked object slot visually attached to another object slot while it remains within the visible range; otherwise hide the follower slot. [R1b] provavel: mantem slot seguidor preso ao lider na faixa visivel
 0x0803572C,Fight_SubClampZeroByte,func_thumb,,[R1b] confirmado: subtrai byte sem ir abaixo de 0
-0x08035740,safe_add,func_thumb,,Simon/Rokusho
-0x08035754,safe_subtract,func_thumb,,Simon/Rokusho
+0x08035740,Util_AddByteClampToMax,func_thumb,,Simon/Rokusho (antes: safe_add)
+0x08035754,Util_SubtractShortClampZero,func_thumb,,Simon/Rokusho (antes: safe_subtract)
 0x0803576C,Fight_GetMedalPartCompatibilityBonus,func_thumb,,Simon/Rokusho: Sum the part_compatibility_bonus of all equipped parts whose BattlePartState.medal_compatibility matches the bot's medal class. [RV8] confirmado: soma bot+7 para cada uma das 4 pecas cujo byte 0 bate com bot+4
 0x0803579C,Fight_AccumRosPart,func_thumb,,Simon/Rokusho: Base ROS term for a selected part. | Formula: | base = part.success_or_propulsion |      + Fight_GetMedalPartCompatibilityBonus(attacker) |      + rand(0..7) |      + attacker.skill_level[part.skill_id] |      + attacker.legs_range_bonus(part.skill_id) | where legs_range_bonus picks effective_proximity_or_uses for close-range skills and effective_remoteness_or_cooldown for ranged skills. (antes: Fight_GetPartProficiencyBase; decisao CF) [RV9] confirmado
 0x08035814,Fight_ApplyVirusBugRosPenalty,func_thumb,,"Simon/Rokusho: Apply the ROS penalty from Bug/Virus pending effects. When pending_effect_kind is Bug (0x0D) or Virus (0x0E), subtract pending_effect_value_1 from total ROS. [RV9] confirmado"
@@ -2697,13 +2698,13 @@ address,name,kind,count,comment
 0x0804589C,InitCompositePreviewTemplatePointerList,func_thumb,,Simon/Rokusho [RV12] provavel: leaf sem prologo; grava ponteiro da lista e zera contador (str r1
 0x080458A4,AppendCompositePreviewTemplatePointer,func_thumb,,Simon/Rokusho [RV12] provavel: grava 4 words de ponteiro de template no array se condicao (flags); corpo parcial
 0x080458B8,EmitCompositePreviewTemplatePointerListOam,func_thumb,,Simon/Rokusho [RV12] confirmado: percorre lista de ponteiros de template e copia OAM de cada um; mantem nome
-0x080459A4,CompositePreview_SortOamRangeByY,func_thumb,,Simon/Rokusho: Offsets one composite-preview template entry before ShiftCompositePreviewTemplateEntryX applies the X delta to every OAM record generated from that entry. Mode 1 derives position from the first OAM record; the alternate mode derives it from the auxiliary descriptor/anchor struct at entry+4. [RV12] chute: Ghidra so halt_baddata; nao verificado (antes: OffsetCompositePreviewTemplateEntry)
+0x080459A4,CompositePreview_SortOamRangeByY,func_thumb,,Simon/Rokusho: Offsets one composite-preview template entry before ShiftCompositePreviewTemplateEntryX applies the X delta to every OAM record generated from that entry. Mode 1 derives position from the first OAM record; the alternate mode derives it from the auxiliary descriptor/anchor struct at entry+4. [RV12] chute: Ghidra so halt_baddata; nao verificado (antes: OffsetCompositePreviewTemplateEntry) [RV24] confirmado: selection sort ascendente de registros de 8 B pela chave short +6 (antes: OffsetCompositePreviewTemplateEntry)
 0x08045A14,CopyObjAffineGroupsToShadowOam,func_thumb,,[R2b] Copia 32 grupos afim (pa..pd) para a OAM sombra; chamada no VBlank (G8) [RV12] confirmado: copia 32 grupos de afim (4 words) para shadow OAM; mantem nome
 0x08045A40,IsCompositePreviewPointOnScreen,func_thumb,,"Simon/Rokusho [QA1: funcao real, 3 BL em 0x08045B24/0x08045BB0/0x08045C70; CF estava errado] [RV12] chute: Ghidra so halt_baddata; bytes sem prologo (02 1C 00 23...) [RV24] confirmado: retorna 1 se -0x40<x<0xA0 e -0x20<y<0xF0"
 0x08045A60,Oam_QueuePreviewEntryWrapper,func_thumb,,"[confirmado] wrapper: QueueCompositePreviewTemplateEntryOam(...,0x80,...); corpo 0x29 bytes (lista dizia 7164)"
 0x08045AEC,QueueVisibleCompositePreviewTemplateEntry,func_thumb,,"Simon/Rokusho: Queues one composite-preview template entry only if the requested screen point is on-screen. Offsets the entry, emits its OAM via QueueCompositePreviewTemplateEntryOam, and optionally writes a 4-halfword bounds/attachment record for the caller. [RV12] chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado [RV24] confirmado: se ponto esta na tela chama LayoutCompositePreviewEntryOamGrid e QueueCompositePreviewTemplateEntryOam"
-0x08045B68,CompositePreview_QueueEntryWithBounds,func_thumb,,Simon/Rokusho [RV12] chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado (antes: QueueVisibleCompositePreviewTemplateEntryWithBounds)
-0x08045C30,CompositePreview_QueueEntryWithAffineBounds,func_thumb,,Simon/Rokusho [RV12] chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado (antes: QueueVisibleCompositePreviewTemplateEntryWithAffineBounds)
+0x08045B68,CompositePreview_QueueEntryWithBounds,func_thumb,,Simon/Rokusho [RV12] chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado (antes: QueueVisibleCompositePreviewTemplateEntryWithBounds) [RV24] confirmado: como o anterior mais registro de limites (sinal de x; zeros; largura) se ponteiro nao nulo (antes: QueueVisibleCompositePreviewTemplateEntryWithBounds)
+0x08045C30,CompositePreview_QueueEntryWithAffineBounds,func_thumb,,Simon/Rokusho [RV12] chute: prologo B5 mas Ghidra so halt_baddata; corpo nao recuperado (antes: QueueVisibleCompositePreviewTemplateEntryWithAffineBounds) [RV24] confirmado: como o anterior mais matriz afim 2x2 via bios_objaffineset (antes: QueueVisibleCompositePreviewTemplateEntryWithAffineBounds)
 0x08045D34,BuildCompositePreviewOamTemplate,func_thumb,,"Simon/Rokusho: Builds the per-descriptor OAM template record used by the composite-preview renderer. It converts descriptor size/divisor bits into GBA OBJ shape/size fields, writes tile base / palette-bank data, and stores the template that later drives final sprite placement in FUN_080465b8. [RV12] confirmado: monta atributos OAM do template (shape/size"
 0x08045E6C,PartPreviewPiece,func_thumb,,calcula seletor de imagem: ((entrada>>6)+variante)&0x7F; patch de 8 bits em 0x45ECC; Simon: LoadCompositePreviewDescriptorRecursive [RV12] provavel: desenha peca de preview (recursiva para subpecas +0x0F/+0x10); mantem nome
 0x08046034,CopyCompositePreviewDescriptorGraphics,func_thumb,,Simon/Rokusho [RV13] [RV13] confirmado: procura entrada no descritor composto com mesmo id de peca e copia grafico (Asset_UnpackOrCopyBlock + bios_cpuset)
@@ -2762,7 +2763,7 @@ address,name,kind,count,comment
 0x08048210,Map_PoseIdToTileIndex,func_thumb,,[CS] CONFIRMADO decompile: id 0 -> byte por 0x03006418/0x0300643C; >=0xD0 -> lista RAM 0x03006418+k; >=0xC0 -> (id-0xC0)*2+IWRAM[0x03006D3E]+0x28 (antes: Map_ResolveSpriteId)
 0x08048288,Map_LoadOverworldSpriteGraphicsForCurrentMap,func_thumb,,"Simon/Rokusho: Load the overworld sprite graphics needed by the current map. Iterates the current map's object sprite set ids, resolves each sprite resource, and decompresses the graphics into the per-slot overworld sprite VRAM staging area. [RV23] confirmado: laco por grupo de pose descompacta LZ77 para VRAM com passo 0x900; nome mantido"
 0x080482CC,Gfx_LoadLz77Table12ByIndex,func_thumb,,[FN4] provavel (hint FN2 aceito): Map_PoseIdToTileIndex(0x08048210) e 12 bios_lz77_vram com passo 0x900 a partir de tabela de ponteiros; chamador 08059970 (antes: FUN_080482cc)
-0x0804830C,Gfx_BuildDefaultOrEntryTileRecord,func_thumb,,[MP2] paleta do mapa ROM 0x083F9980[m] -> DMA3 para 0x0202FA00 (0x1A0 B) [RV23] chute: escreve registros de 3 palavras (entrada da tabela ou 14 pares default); nao ha copia de paleta visivel; nome mantido por falta de prova melhor (ver RV23.md) (antes: Map_LoadMapPaletteToShadowBuffer)
+0x0804830C,Gfx_BuildDefaultOrEntryTileRecord,func_thumb,,[MP2] paleta do mapa ROM 0x083F9980[m] -> DMA3 para 0x0202FA00 (0x1A0 B) [RV23] chute: escreve registros de 3 palavras (entrada da tabela ou 14 pares default); nao ha copia de paleta visivel; nome mantido por falta de prova melhor (ver RV23.md) (antes: Map_LoadMapPaletteToShadowBuffer) [RV24] provavel: se a entrada da tabela e 0 grava 14 pares de constantes; senao grava 3 palavras (antes: Map_LoadMapPaletteToShadowBuffer; nao carrega paleta)
 0x080483F8,Bot_ReadCurrentByteOrDefault,func_thumb,,[FN4] provavel (hint FN2 aceito): le 1 B de um de dois enderecos conforme byte +0xC30 == 0xFF; chamadores 080484CC/08048576/08048590/080485BA/08048664 (antes: FUN_080483f8)
 0x0804842C,SND_PolicyRequest,func_thumb,,Simon/Rokusho: Apply one of several overworld map-scene mode policies. The command id selects behavior families that update the persistent scene-mode byte at event_flag_list[0xC30] and trigger matching scene/audio handling. (antes: Overworld_ApplyMapSceneModePolicy) [RV23] provavel: switch por codigo de evento de som roteando pedido de musica/fade com estado por canal; nome mantido
 0x08048684,Map_GetObjectPoseByGroup,func_thumb,,[CS] CONFIRMADO disasm: le byte i da lista do mapa (0x08413160[gCurrentMapId]) e chama Map_ResolveSpriteId; 0xFF = fim (antes: Map_GetSpriteListEntry)
@@ -3244,7 +3245,7 @@ address,name,kind,count,comment
 0x08054280,Scene_DispatchStateHandlerTail,label,,[R3] (mtbe) entrada alternativa do despacho
 0x080542A2,Scene_DispatchStateHandlerTail_Jump,label,,[JT5] mov pc: tabela real 0x8C ptrs em 0x080542B0 (literal 0x080542AC); JT5
 0x080542B0,Scene_DispatchStateHandler_CodeTable,data,,[JT5] tabela real 0x8C ptrs (codigo 0..0x8B); JT5 [RD2] confirmado: 140 x 4 B ponteiros de codigo (0x8C); tabela termina em 0x080544E0; xref DATA em Scene_DispatchStateHandlerTail
-0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador
+0x080567F0,Overworld_EnterSceneState,func_thumb,,[R3] (mtbe) reseta cena; estados 0xE/0x12 posicionam jogador e marcador [RV24] provavel: zera campos de estado (+0xF4/+0xFC/+0xF0); recalcula 32 entradas affine; despacha tabela de estado (jumptable nao recuperada)
 0x080569E4,Viewport_TweenStepByMode,func_thumb,,[FS8] [FS8] chute: float mul/div/add/trunc; chama 0x080533A4 0x08053360 0x08053380; literal 0x3B800000 (antes: Viewport_ScaleStep) [NX4] provavel (antes: Viewport_ScaleStep): interpolacao por modo (cases 0x10..0x17) sobre struct float de 0x44 B com tabela de seno short; grava posicao/alvo. Chamador: 0x08055580 (sem funcao definida)
 0x08056F24,Viewport_TweenAdvanceCheckDone,func_thumb,,"[FS8] [FS8] chute: compara floats com constantes da ROM 0x08056F70 0x080AE8F4 (antes: Viewport_CompareAndClampFloat) [NX4] provavel (antes: Viewport_CompareAndClampFloat): avanca posicao (+0x14 do struct) por modo com tabela de seno, +0x1C += 1 por quadro; retorna 1 e zera +0xC quando chega ao limite. Chamador: 0x0805473A (sem funcao definida)"
 0x0805716C,FieldMenu_DispatchSubstate,func_thumb,,[FM] [FM] despachante do menu 2 de MainState1 (provavel); push lr; base 0x083D5FF4 + gamestate_subroutine*4; SEM funcao no Ghidra (nao renomeado no Ghidra)
@@ -3503,7 +3504,7 @@ address,name,kind,count,comment
 0x08063354,Shop_TickItemTransferAnim,func_thumb,,[provavel] anima troca de 1 item entre dois slots (Inv_SubCountClampZero + Inv_AddCountClamp99) ao zerar +0x3C; SFX 0x4B
 0x080633FC,BattlePanel_FadeAndScroll,func_thumb,,provável: fade 0..0x40 e texto dos slots do painel de batalha
 0x08063474,BattlePanel_RollSlotTextStep,func_thumb,,[FL10] rolagem de 2 paineis de texto em 16 passos; troca bytes +0x31..34 (provável)
-0x0806355C,Menu_SwapTileBlocksAndLabels,func_thumb,,"troca 3 pares de tiles e textos; mecanica provavel, subsistema chute [FL1] troca 3 pares de tiles e textos; mecanica provavel, subsistema chute"
+0x0806355C,Menu_SwapTileBlocksAndLabels,func_thumb,,"troca 3 pares de tiles e textos; mecanica provavel, subsistema chute [FL1] troca 3 pares de tiles e textos; mecanica provavel, subsistema chute [RV24] provavel: troca 4 blocos de tiles (cpufastset x3); limpa atributos; monta dois rotulos de texto e toca sfx 0x2A; 'labels' deduzido"
 0x08063644,Gfx_BlendStepBattlePanels,func_thumb,,transicao com blend e desenho dos paineis de texto (provavel)
 0x080636FC,Fight_PanelFadeStep,func_thumb,,[provavel] battle panel fade and per-frame slot text + tile scroll
 0x0806379C,BattlePanel_DrawSlotsStep,func_thumb,,[FR2] provável; texto de 2 slots do painel de batalha + objeto (FUN_0806379c)
@@ -3590,7 +3591,7 @@ address,name,kind,count,comment
 0x08066B4C,Affine_ComposeThreeTransforms,func_thumb,,[R3] tres matrizes por angulo (seno/cosseno) compostas sobre o buffer de matriz (provavel)
 0x08066D8C,PointRing_StepFrame,func_thumb,,"[FR3] [FR3] passo de frame de anel de 72 pontos (rotacao, sorteio de modo, projecao); NAO e impressora de texto (provavel)"
 0x08067030,PointRing_StepFrame,label,,"[TA2] falso positivo de B+0xA8: struct de anel, nao bot"
-0x080672F4,Str_LengthZeroIfOne,func_thumb,,[R3] tamanho de string C; devolve 0 se o tamanho e 1 (confirmado; motivo chute)
+0x080672F4,Str_LengthZeroIfOne,func_thumb,,[R3] tamanho de string C; devolve 0 se o tamanho e 1 (confirmado; motivo chute) [RV24] confirmado: retorna strlen
 0x08067314,bg_fill_row_tiles,func_thumb,,[R4] R4: monta/preenche linha de tilemap (CPUFastSet); provavel
 0x080673AC,hud_draw_row_tiles,func_thumb,,[R4] R4: copia linha de tiles com destaque; provavel
 0x080674BC,draw_text_rtl_tiles,func_thumb,,"[R4] R4: texto maiusculas->tiles, do fim p/ inicio; provavel"
@@ -3743,7 +3744,7 @@ address,name,kind,count,comment
 0x0806E184,Boot_SubState2_WaitFxStep,func_thumb,,[TL] boot GS 2: fx_step_table_b; ao terminar grava gMainState/estado pela tabela 0x0806E1E0 (provável)
 0x0806E2A0,Screen_InitRowBufferAndFx,func_thumb,,"descomprime tiles, copia 20 linhas para buffer, liga BG1 e fx; provavel"
 0x0806E3C4,Fx_TickStepTableEntry,func_thumb,,[provavel] StateMachine_DispatchStep(tabela[+0xC]); ao terminar grava ctx+4=5 e estado global=2
-0x0806E3F8,Scene_SetSubstate2Wrapper,func_thumb,,"[FS10] FS10 chama FUN_08047850(2); ptr 0x084859D0; confianca confirmado (codigo), significado chute [CH7] confirmado (wrapper); revisto CH; corpo so chama Sel_RequestIfIndexBelow4(2); significado chute; ptr 084859D0"
+0x0806E3F8,Scene_RequestSelIfIndexBelow4_2,func_thumb,,"[FS10] FS10 chama FUN_08047850(2); ptr 0x084859D0; confianca confirmado (codigo), significado chute [CH7] confirmado (wrapper); revisto CH; corpo so chama Sel_RequestIfIndexBelow4(2); significado chute; ptr 084859D0 (antes: Scene_SetSubstate2Wrapper)"
 0x0806E404,battle_timer_end_transition,func_thumb,,[R4] R4: timer de fim e saida de batalha por botao bit 3; provavel
 0x0806E460,Boot_DispatchSubState,func_thumb,,provável: CallViaR0 de tabela indexada e fim de transição (antes: Battle_DispatchThenEndTransition)
 0x0806E484,fade_step_bld,func_thumb,,[R4] R4: fade 0..16 por 4 quadros grava registro BLD; provavel
@@ -4043,7 +4044,7 @@ address,name,kind,count,comment
 0x0807DA24,Sf64_CmpWrapper,func_thumb,,provável: wrapper de comparação soft-float 64 bits
 0x0807DA50,SoftF64_Compare,func_thumb,,[FL10] compara dois double por software (sf_unpack + sf64_cmp_core); zero/especial retorna 1 (confirmado) (antes: SoftFloat64_Compare)
 0x0807DA9C,Math_SoftF64Compare,func_thumb,,comparacao de float 64 em software (sf_unpack + sf64_cmp_core); provavel
-0x0807DAE8,SoftF64_CompareAlt3,func_thumb,,[FR1] same body as Math_Sf64CompareSafe at 0x0807DB34 (confirmed by decompile) (antes: Math_Sf64CompareSafeAlt)
+0x0807DAE8,SoftF64_CompareNegIfSpecial,func_thumb,,[FR1] same body as Math_Sf64CompareSafe at 0x0807DB34 (confirmed by decompile) (antes: Math_Sf64CompareSafeAlt) (antes: SoftF64_CompareAlt3)
 0x0807DB34,SoftF64_CompareAlt2,func_thumb,,[provavel] soft-float 64-bit compare with class check (antes: Math_Sf64CompareSafe)
 0x0807DB80,Math_SoftFloat64Compare,func_thumb,,[FR2] provável; comparação de float 64 com sf_unpack e caso especial (FUN_0807db80)
 0x0807DBCC,SoftF64_CompareAlt1,func_thumb,,"[FR3] [FR3] classe<2 -> 1, senao sf64_cmp_core; igual a SoftFloat64_Compare 0x0807DA50 (provavel) (antes: SoftFloat64_CompareSafe)"
