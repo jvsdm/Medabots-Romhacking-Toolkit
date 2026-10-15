@@ -46,3 +46,16 @@ o que falta é ver o efeito no jogo. Cada item abaixo = 1 gravação (ou 1 saves
 | Rubberobo Medal | id do item e a rotina de fuga |
 | Troca por link | precisa de 2 emuladores ligados; por enquanto só estático (passo 72 da tela LINK) |
 | Protect Select Corps | mini-jogo de botões: onde fica |
+
+## Do fórum e dos FAQs (REF_FORUM.md, REF_FAQ.md), a validar
+| Alvo | Pergunta |
+|---|---|
+| Medidor de MF | FAQ: +40 ao carregar, +20 ao levar dano; código só mostra +20 em ação (+40 com B+0xC0&8). Watch em B+0xC1 numa batalha |
+| Destroy | sempre erra se o alvo não está no turno de recuo? (explica o erro no ss2) |
+| Flow (Melt) | tick = metade do golpe inicial? comparar +0xCC com o dano do golpe na rec_9 |
+| Laser/Beam e Break/Press | dobram Poder / ROS listado? comparar dano previsto × real |
+| Terreno × perna | tabela de velocidade por campo e tipo de perna; perna quebrada = atributos/2 |
+| Radiação | tempo de recuo do braço; cabeça fixa em 6 |
+| Guardas | Defense/Half/Full Block só contra dano; falham com ROS baixo |
+| Fórmula da MF | base + prof/8 + compat/8, ignora esquiva/defesa/guarda |
+| Tempo de batalha | opções 20/30/40 s; desempate por bots vivos e peças |
