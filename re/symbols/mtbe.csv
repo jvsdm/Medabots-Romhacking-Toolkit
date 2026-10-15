@@ -1387,7 +1387,7 @@ address,name,kind,count,comment
 0x0801E918,Fight_DispatchOnSubstateAA_H_0D_LoadNumberSpriteRow,func_thumb,,H idx0D; gfx VRAM 0x06010000; digitos de numero e linha de sprites; som 0x5B; +1; confirmado (significado: provavel)
 0x0801E9B0,Fight_DispatchOnSubstateAA_H_0E_WaitSpriteStep10,func_thumb,,timer 0x3C; +1; confirmado
 0x0801E9E0,Fight_DispatchOnSubstateAA_H_10_SfxStep2F,func_thumb,,Simon/Rokusho (antes: ActionFamily_InterruptChange_Handler_V2) [HA2] sfx 0x2F; +1; confirmado
-0x0801E9FC,Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows,func_thumb,,Simon/Rokusho (antes: ActionFamily_AttackChange_Handler_V2) [HA2] icones de parte; timer 0x3C; +1 ao fim; confirmado
+0x0801E9FC,Fight_DispatchOnSubstateAA_H_11_DrainPartArmorAndDrawIcons,func_thumb,,Simon/Rokusho (antes: ActionFamily_AttackChange_Handler_V2) [HA2] icones de parte; timer 0x3C; +1 ao fim; confirmado (antes: Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows)
 0x0801EA5C,Fight_DispatchOnSubstateAA_H_13_BackupStatsOrSkip,func_thumb,,+1 ou +3 (pula ate H16) conforme +D1; confirmado
 0x0801EA94,Fight_DispatchOnSubstateAA_H_14_StepByOrientation,func_thumb,,+1; confirmado
 0x0801EAC4,Fight_DispatchOnSubstateAA_H_15_HoldFlag,label,,H idx15; so +B5=1; hold; confirmado
@@ -2266,7 +2266,7 @@ address,name,kind,count,comment
 0x08036B1C,FightPreview_AdvanceRowSlotsMarked,func_thumb,,[R2] avanca ate 5 slots marcando +9 [RV9] confirmado
 0x08036B50,FightPreview_AdvanceRowSlots,func_thumb,,[R2] avanca ate 5 slots sem marcar +9 [RV9] confirmado
 0x08036B84,Fight_CopyPartArmorToDisplayValues,func_thumb,,[R2] copia id da peca do bot para o sprite (antes: FightPreview_SetPartSpriteId) [RV9] confirmado
-0x08036BB8,FightPreview_ConsumePartCount,func_thumb,,[R2] consome 1 unidade de peca do bot (retorna 0) ou retorna 1 se zero [RV9] confirmado
+0x08036BB8,Fight_DrainPartArmorOneStep,func_thumb,,[R2] consome 1 unidade de peca do bot (retorna 0) ou retorna 1 se zero [RV9] confirmado (antes: FightPreview_ConsumePartCount)
 0x08036BF4,Ui_FillRect12x13_ByFlag,func_thumb,,[FS6] [FS6] confirmado no corpo; largura 0x10 ou 2 conforme flag
 0x08036C20,FightPreview_SetupOneSprite,func_thumb,,[R2] configura 1 sprite com posicao tabela+x/y [RV9] confirmado
 0x08036CCC,FightPreview_SplitCountByCapacity,func_thumb,,Simon/Rokusho (antes: Fight_ClampRepairToMissingArmor) [RV9] confirmado

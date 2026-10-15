@@ -11,6 +11,10 @@ no início = Sacrifice, que erra). Watch de escrita na armadura (bot+0x59+0x18k)
   Fight_QueueBrokenBotForResolution (o bot cai). O nome/comentário antigo ("peça do defensor") estava errado.
 - O despachante M roda depois do resultado do golpe, por isso independe do acerto.
 
-Aberto: o passo que zera a peça do alvo no acerto (não capturado: o watch da rec_12 no alvo veio vazio) e o id de
-técnica do Sacrifice/Destroy.
+- Peça do alvo no acerto (rec_15/16/17, rec_16 f~1963-1990): a armadura desce 1 por quadro por
+  `Fight_DrainPartArmorOneStep` 0x08036BB8 (pc 0x08036BE6), chamada a cada quadro por H_11 0x0801E9FC: desconta 1 de um
+  contador de dano (fi) e 1 da armadura até um dos dois zerar. No Sacrifice o contador cobre a armadura inteira → 0.
+  É a mesma animação de dano de qualquer golpe; o que muda é o valor do contador.
+
+Aberto: o id de técnica do Sacrifice/Destroy e onde o contador de dano recebe "armadura inteira".
 Obs.: `rec_14` não é reproduzível (o usuário recarregou o estado durante a gravação; o braço "volta" de 0 para 15).

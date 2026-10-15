@@ -1,2 +1,4 @@
 addr,nome,kind,comentario
 0x08020728,Fight_DispatchOnSubstateAA_M_04_BreakActorUsedPart,func_thumb,"confirmado (emulador rec_12 e ss2): quebra a peça usada pelo atacante (fi+0x87 bot, fi+0xA7 peça) com 0xFF, mesmo se o golpe errou; cabeça -> bot cai (Sacrifice/Destroy) (antes: Fight_DispatchOnSubstateAA_M_04_ApplyPartDamage)"
+0x08036BB8,Fight_DrainPartArmorOneStep,func_thumb,"confirmado (emulador rec_16): desconta 1 do contador de dano (param1) e 1 da armadura bot+0x59+0x18k; retorna 1 quando um zera (antes: FightPreview_ConsumePartCount)"
+0x0801E9FC,Fight_DispatchOnSubstateAA_H_11_DrainPartArmorAndDrawIcons,func_thumb,"confirmado (emulador rec_16): chama Fight_DrainPartArmorOneStep por quadro e redesenha ícones; ao fim timer 0x3C e passo+1 (antes: Fight_DispatchOnSubstateAA_H_11_WaitPartIconRows)"
