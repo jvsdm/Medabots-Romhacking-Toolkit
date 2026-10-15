@@ -1,0 +1,35 @@
+addr,nome,kind,comentario
+0x08060688,Dispatch_CallTableEntryByByte,func_thumb,confirmado; CallViaR0(tabela[byte]); ja nomeado no Ghidra (sem nome no mtbe)
+0x08061958,Task_CallHandlerTableThenCount_B,func_thumb,confirmado; CallViaR0(tabela[idx]) e contador +1 se bit 1; ja nomeado no Ghidra (sem nome no mtbe)
+0x08063948,Task_CopyCallTableEntryThenCount,func_thumb,confirmado; copia 0x34 bytes p/ pilha; cpufastset se modo==2; CallViaR0 da entrada; contador se bit 1; ja nomeado no Ghidra (sem nome no mtbe)
+0x08068924,Tick_ModStepSetCountdown,func_thumb,provavel (antes: FUN_08068924); se valor%div==0 grava 0x10-valor/div; retorna valor==byte*0x10
+0x08068978,Gfx_ModStepFillTable4_DispCnt,func_thumb,provavel (antes: FUN_08068978); liga DISPCNT|0x100; se %div==0 preenche 4 entradas de tabela (u16); desliga bit por mascara se valor==byte*0x10
+0x080692EC,Menu_EnterClearGfxSndRequest,func_thumb,provavel (antes: FUN_080692ec); gfx_clear_regs_init + snd_song_request(0) + byte+0x39 = 1 ou 2 + Sel_RequestIfIndexBelow4(0)
+0x0806E9C0,Ctx_ResetModeFlags,func_thumb,chute (antes: FUN_0806e9c0); grava 3,1,0 em tres ponteiros globais; nome pelo conteudo
+0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,provavel; mov pc sobre tabela KeyItemBag_DispatchTable 0x0805D2C8 (41 x 4 bytes)
+0x0805D384,KeyItemBag_Case_Id1,label,provavel; alvo do switch de KeyItemBag (entrada id 1)
+0x0805D398,KeyItemBag_Case_Id5,label,provavel; alvo do switch de KeyItemBag (entrada id 5)
+0x0805D3AC,KeyItemBag_Case_Id12,label,provavel; alvo do switch de KeyItemBag (entrada id 12)
+0x0805D3C0,KeyItemBag_Case_Id13,label,provavel; alvo do switch de KeyItemBag (entrada id 13)
+0x0805D3D4,KeyItemBag_Case_Id19,label,provavel; alvo do switch de KeyItemBag (entrada id 19)
+0x0805D3E8,KeyItemBag_Case_Id39,label,provavel; alvo do switch de KeyItemBag (entrada id 39)
+0x0805D3FC,KeyItemBag_Case_Id40,label,provavel; alvo do switch de KeyItemBag (id 0x28 -> CommonTail)
+0x0805D410,KeyItemBag_Case_Default,label,provavel; alvo padrao das demais entradas da tabela 0x0805D2C8
+0x0805D418,KeyItemBag_CommonTail,label,provavel; cauda comum (ctx 0x030004C4=0; GS=0x0D)
+0x0805D430,KeyItemBag_Result0_SfxOnly,label,provavel; retorno 0 de CanUseHere: so SFX 6, sem troca de estado
+0x08065888,Sm_StepSfxRepeat3_Case0,label,provavel; caso 0 da tabela JT4 (SFX 0x0D)
+0x080658DC,Sm_StepSfxRepeat3_Case1to3,label,provavel; casos 1-3 da tabela JT4 (espera tecla A 3 vezes)
+0x08065970,Sm_StepSfxRepeat3_Case4,label,provavel; caso 4 da tabela JT4
+0x080659B0,Sm_StepSfxRepeat3_Case5,label,provavel; caso 5 da tabela JT4 (finaliza)
+0x08065F1C,Screen_DispatchByState3A_A0,label,provavel; caso A0 do corpo de 0x08065ED0 (JT3)
+0x080660C4,Screen_DispatchByState3A_B0,label,provavel; caso B0 do corpo de 0x08065ED0 (JT3)
+0x08066860,Menu14_CallSubstateHandler_Pool,data,provavel; pool de literais lido por LDR em 0x08066828 (bytes c0fc0a08=0x080AFCC0, 7c130003=0x0300137C); 0x34 bytes copiados por 0x08066824
+0x08067030,PointRing_StepFrame,label,chute; bytes a8 31 08 70 = codigo (add r1,#0xa8; strb), fora de funcao no Ghidra; mtbe marca falso positivo de bot B+0xA8 (struct de anel)
+0x0806A12A,dispatch_scene_state_Jump,label,provavel; mov pc sobre tabela 0x0806A134 (23 x 4 bytes); estado RAM 0x03006F88
+0x0806B826,Screen_InitObjectSlotsLz77_AltEntry_806b826,label,provavel; alvo de desvio dentro do host (sem BL/prologo PUSH)
+0x0806BD8C,dispatch_state_8_Jump,label,provavel; mov pc sobre tabela 0x0806BD98 (8 x 4 bytes); byte +0x20 de 0x03002C30
+0x0806CB58,anim_dispatch_state_Jump,label,provavel; mov pc sobre tabela 0x0806CB6C (7 x 4 bytes); indice (byte+0x20)-1
+0x08071390,Screen_TableStepTimedSetup_Case0,label,provavel; setup inicial do switch JT4
+0x0807139C,Screen_TableStepTimedSetup_CaseAdvance,label,provavel; casos 4/8/12/16/20/24 (JT4)
+0x080713A2,Screen_TableStepTimedSetup_CaseWaitData,label,provavel; casos 1/5/9/13/17/21 (JT4)
+0x080713CC,Screen_TableStepTimedSetup_Case25,label,provavel; caso 25 (JT4)

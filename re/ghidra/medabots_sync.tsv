@@ -54,10 +54,12 @@ F	0x08002534	MainState0
 L	0x08002536	MainState0_08002536
 F	0x08002554	Dispatch_CallIndexedHandler
 L	0x0800256C	gMenuList0SubTablePtr
+F	0x08002574	Scene_InitBg1AndAdvanceCounter
 F	0x080025B4	Menu_ReadPadMoveCursor
 F	0x080026A4	Portrait_TickMoveAndFlagDone
 F	0x080026E0	StateMachine_InitTableAndStep
 F	0x08002730	Fx_TickDispatchAndInitRecord
+F	0x0800275C	Obj_DispatchStateAndCountDone
 F	0x0800277C	Sm_RunSelectedDispatch_FlagDone
 F	0x080027BC	MainState0_Menu1_DispatchSub
 F	0x080027DC	MainState0_Menu1_Sub0_InitScreen
@@ -4133,8 +4135,6 @@ L	0x087BB2A0	gGfx_Title_Map_Bg1
 L	0x087BB7E0	gGfx_Title_Map_Bg2_ANOMALIA
 L	0x087F314C	gGfx_Logo_Char
 L	0x087F5500	gTextDump
-C	0x08002574
-C	0x0800275C
 C	0x08033C10
 C	0x08033CF0
 C	0x08033D00

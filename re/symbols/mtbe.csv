@@ -334,15 +334,15 @@ address,name,kind,count,comment
 0x0400000A,REG_BG1CNT,label,,[RF1] confirmado: registrador de I/O GBA
 0x0400000C,REG_BG2CNT,label,,[RF1] confirmado: registrador de I/O GBA
 0x0400000E,REG_BG3CNT,label,,[RF1] confirmado: registrador de I/O GBA
-0x04000010,REG_BG0HOFS,label,,
-0x04000012,REG_BG0VOFS,label,,
-0x04000014,REG_BG1HOFS,label,,
-0x04000016,REG_BG1VOFS,label,,
-0x04000018,REG_BG2HOFS,label,,
-0x0400001A,REG_BG2VOFS,label,,
-0x0400001C,REG_BG3HOFS,label,,
-0x0400001E,REG_BG3VOFS,label,,
-0x04000040,REG_WIN0H,label,,
+0x04000010,REG_BG0HOFS,label,,[RF2] confirmado: offset IO BG0HOFS confere com mapa GBA; 22 literais na ROM
+0x04000012,REG_BG0VOFS,label,,[RF2] confirmado: offset IO BG0VOFS; 2 literais na ROM
+0x04000014,REG_BG1HOFS,label,,[RF2] confirmado: offset IO BG1HOFS; 2 literais na ROM
+0x04000016,REG_BG1VOFS,label,,[RF2] confirmado: offset IO BG1VOFS; 1 literal na ROM
+0x04000018,REG_BG2HOFS,label,,[RF2] confirmado: offset IO BG2HOFS; 0 literal (acesso provavelmente por base de registro)
+0x0400001A,REG_BG2VOFS,label,,[RF2] confirmado: offset IO BG2VOFS; 3 literais na ROM
+0x0400001C,REG_BG3HOFS,label,,[RF2] confirmado: offset IO BG3HOFS; 1 literal na ROM
+0x0400001E,REG_BG3VOFS,label,,[RF2] confirmado: offset IO BG3VOFS; 0 literal
+0x04000040,REG_WIN0H,label,,[RF2] confirmado: offset IO WIN0H; 9 literais na ROM
 0x04000042,REG_WIN1H,label,,[RM4] confirmado: registrador de janela (GBA IO); gravado em Screen_InitRingSpritesSong5 (sem troca)
 0x04000044,REG_WIN0V,label,,[RM4] confirmado: IO janela; gravado em Screen_InitLoadBgAndObjTimer/Screen_InitClearAndStartSong (sem troca)
 0x04000046,REG_WIN1V,label,,[RM4] confirmado: IO janela; gravado em Screen_InitRingSpritesSong5 (sem troca)
@@ -388,8 +388,8 @@ address,name,kind,count,comment
 0x04000204,REG_WAITCNT,label,,[RM4] confirmado: wait states; gravado em SoftResetSequence/ResetHardwareAndMemory (sem troca)
 0x04000208,REG_IME,label,,[RM4] confirmado: master enable de interrupcao; gravado em IntrMain/InitializeInterruptsAndDefaultHandlers (sem troca)
 0x08000000,entry,label,,Simon/Rokusho [RV1] provavel: entrada da ROM (cabecalho que desvia para crt0); sem funcao no Ghidra
-0x080000A0,header_title,label,,MEDABOTSMTBV
-0x080000AC,header_gamecode,label,,A8BP
+0x080000A0,header_title,label,,MEDABOTSMTBV [RF2] confirmado: 12 bytes da ROM = MEDABOTSMTBV (cabecalho)
+0x080000AC,header_gamecode,label,,A8BP [RF2] confirmado: 4 bytes da ROM = A8BP (cabecalho)
 0x080000C0,crt0,func_arm,,inicializacao do SDK: stacks + INTR_VECTOR + AgbMain; Simon: RunMainLoopForever [RV1] confirmado: ponteiro de IRQ em 0x080000FC = IntrMain e chama AgbMain (DAT_08000100) em laco
 0x08000104,IntrMain,func_arm,,tratador de interrupcoes (le REG_IE/REG_IF) [RV1] confirmado: le REG_IE/REG_IF e despacha o handler pela tabela 0x08000214
 0x08000258,MainStateNop,func_thumb,,estados 4 e 5 de gMainStateTable [MN] [MN] confirmado: entradas 4 e 5 de gMainStateTable
@@ -442,10 +442,12 @@ address,name,kind,count,comment
 0x08002536,MainState0,label,,[OB] OB: estado 0 (soft reset). Chama table(0x083AC2C8)[byte 0x03002B8C]. Pool confirmado. Confirmado.
 0x08002554,Dispatch_CallIndexedHandler,func_thumb,,chama table[idx] via CallViaR0; confirmado (tabela nao identificada)
 0x0800256C,gMenuList0SubTablePtr,table,,[MN] [MN] ponteiro usado por Dispatch_CallIndexedHandler (menu_list[0]); indexa por byte 0x03000584?? nao confirmado (ler literal 0x08002570) (antes: gMenuListSubStepTable)
+0x08002574,Scene_InitBg1AndAdvanceCounter,func_thumb,,"[RF2] confirmado: DISPCNT=0x1260, BG1CNT, ctx+0x85=1, contador++; nome ja no Ghidra (mtbe sem nome)"
 0x080025B4,Menu_ReadPadMoveCursor,func_thumb,,le estado de entrada e move cursor; provável
 0x080026A4,Portrait_TickMoveAndFlagDone,func_thumb,,"[provavel] chama Move_Character_Portraits(0,1,8,4,..); quando retorna 1 grava 1 em *DAT_080026DC"
 0x080026E0,StateMachine_InitTableAndStep,func_thumb,,grava tabela de 10 bytes; passo de maquina de estados; provavel
 0x08002730,Fx_TickDispatchAndInitRecord,func_thumb,,"[provavel] StateMachine_DispatchStep; se !=0 Fx_InitRecord8(0,0x16,7) e contador++"
+0x0800275C,Obj_DispatchStateAndCountDone,func_thumb,,[RF2] confirmado: se StateTable_DispatchByIndex!=0 chama Obj_ResetStateFields e contador++; nome ja no Ghidra (mtbe sem nome)
 0x0800277C,Sm_RunSelectedDispatch_FlagDone,func_thumb,,provável: despacha StateMachine_DispatchStep e marca flag em DAT_080027b8
 0x080027BC,MainState0_Menu1_DispatchSub,func_thumb,,"[FM3] [FM3] menu_list[1] (gMainState=0, menu=1): wrapper que despacha por gamestate_subroutine na tabela 0x083AC404; SEM funcao no Ghidra (nao renomeado) [RV1] confirmado: CallViaR0 na tabela de sub-estados indexada por byte (menu 1)"
 0x080027DC,MainState0_Menu1_Sub0_InitScreen,func_thumb,,[FM3] [FM3] sub 0 de menu 1: carrega 6 conjuntos de graficos na VRAM e chama 0x08074B88(6); tela cheia (nao a faixa de 4 linhas); nome pendente [RV1] confirmado: DISPCNT 0x1F60
@@ -496,11 +498,11 @@ address,name,kind,count,comment
 0x08004610,PartEditor_WaitBlendStep,func_thumb,,[FS1] [confirmado] espera GpuBlend_TickStep; sub++
 0x08004644,PartEditor_DispatchSubmodeStep,func_thumb,,[FS1] [confirmado] jump table por byte +0x5A (<5); tabela em DAT_08004678 nao recuperada
 0x0800467C,PartEditor_SubmodeJumpTable,data,,[JT7] tabela real de 5 ponteiros (indice = byte ctx+0x5A [RD1] confirmado 5 x 4: ponteiros 0x08004690 0x080046C4 0x080046E8 0x08004708 0x08004728; xref de PartEditor_DispatchSubmodeStep
-0x08004690,PartEditor_SubmodeCase0_CountParts,label,,[JT7] caso 0 da tabela 0x0800467C: Mem_FillBytes + Parts_CountInventoryMatches; grava 4/8 nos estados; JT7
-0x080046C4,PartEditor_SubmodeCase1_Init,label,,[JT7] caso 1 da tabela 0x0800467C: init do sub-bloco com ctx+0x5C; r4[2]=0; cauda comum; JT7
-0x080046E8,PartEditor_SubmodeCase2_Init,label,,[JT7] caso 2 da tabela 0x0800467C: init do sub-bloco com ctx+0x5D; r4[2]=1; cauda comum; JT7
-0x08004708,PartEditor_SubmodeCase3_Init,label,,[JT7] caso 3 da tabela 0x0800467C: init do sub-bloco com ctx+0x5E; r4[2]=2; cauda comum; JT7
-0x08004728,PartEditor_SubmodeCase4_Init,label,,[JT7] caso 4 da tabela 0x0800467C: init do sub-bloco com ctx+0x5F; r4[2]=3; cauda comum; JT7
+0x08004690,PartEditor_SubmodeCase0_CountParts,label,,[JT7] caso 0 da tabela 0x0800467C: Mem_FillBytes + Parts_CountInventoryMatches; grava 4/8 nos estados; JT7 [RF2] provavel: alvo 0 da tabela 0x0800467C (5 x 4) em PartEditor_DispatchSubmodeStep 0x08004644
+0x080046C4,PartEditor_SubmodeCase1_Init,label,,[JT7] caso 1 da tabela 0x0800467C: init do sub-bloco com ctx+0x5C; r4[2]=0; cauda comum; JT7 [RF2] provavel: alvo 1 da tabela 0x0800467C (5 x 4) em PartEditor_DispatchSubmodeStep 0x08004644
+0x080046E8,PartEditor_SubmodeCase2_Init,label,,[JT7] caso 2 da tabela 0x0800467C: init do sub-bloco com ctx+0x5D; r4[2]=1; cauda comum; JT7 [RF2] provavel: alvo 2 da tabela 0x0800467C (5 x 4) em PartEditor_DispatchSubmodeStep 0x08004644
+0x08004708,PartEditor_SubmodeCase3_Init,label,,[JT7] caso 3 da tabela 0x0800467C: init do sub-bloco com ctx+0x5E; r4[2]=2; cauda comum; JT7 [RF2] provavel: alvo 3 da tabela 0x0800467C (5 x 4) em PartEditor_DispatchSubmodeStep 0x08004644
+0x08004728,PartEditor_SubmodeCase4_Init,label,,[JT7] caso 4 da tabela 0x0800467C: init do sub-bloco com ctx+0x5F; r4[2]=3; cauda comum; JT7 [RF2] provavel: alvo 4 da tabela 0x0800467C (5 x 4) em PartEditor_DispatchSubmodeStep 0x08004644
 0x08004764,BattlePreview_InitSlotSpritesStep,func_thumb,,"[FS1] [confirmado] CreateSlotSprites9, camada 5, Slot_ClearAttrMask(0,4); tabelas 0x083AC520/0x083AC540"
 0x08004798,BattlePreview_WaitTimerStep,func_thumb,,[FS1] [confirmado] timer > 0x3C -> sub 0x30 ou paleta; sem BL na ROM (FS1_lista dizia BL de 0x08003D6E: errado)
 0x080047EC,BattlePreview_FadeOutStep,func_thumb,,[FS1] [confirmado] fade 0x21 passos A/B
@@ -540,7 +542,7 @@ address,name,kind,count,comment
 0x08005948,Parts_CheckSpriteIdsSetSpeed,func_thumb,,Simon/Rokusho: Refresh the currently selected battle part preview sprite. Validates the selected part-id set and enables animation on the corresponding composite sprite if the ids are valid. (antes: RefreshBattlePartPreviewSprite) (antes: checa_parte_sinal) [RV1] confirmado: se AreBattleSpritePartIdsValid
 0x0800598C,Parts_CheckSpriteIdsUpdateMotion,func_thumb,,[R0] variante de checa_parte_sinal com FUN_080432A0 (chute) (antes: checa_parte_sinal_b) [RV1] confirmado: mesma validacao de ids; se valido chama Sprite_UpdateComposite4Motion
 0x080059D0,Parts_PrepareFourPartSlots,func_thumb,,[R0] copia 4 bytes de parte e chama FUN_08043560 (provavel) (antes: prepara_4_partes)
-0x08005A60,Parts_PrepareFourPartSlots_AltEntry_8005a60,label,,[IV] ao desmontar: equipadas (campo 1) -= 1 para cada slot com bot < 0x78 (IV) (antes: Parts_PrepareFourPartSlots)
+0x08005A60,Parts_PrepareFourPartSlots_AltEntry_8005a60,label,,[IV] ao desmontar: equipadas (campo 1) -= 1 para cada slot com bot < 0x78 (IV) (antes: Parts_PrepareFourPartSlots) [RF2] provavel: label interior sem push; sem funcao no Ghidra neste endereco; dono nao identificado
 0x08005AD0,PartSlot_DrawNameGlyphs,func_thumb,,[R0] limpa 10x10 e desenha icone de parte (provavel) (antes: desenha_icone_c)
 0x08005B44,PartSlot_LoadIconPalette,func_thumb,,[R0] copia paleta 0x20 B e FUN_08042698 (provavel) (antes: carrega_paleta_icone_b)
 0x08005BB4,PartSlot_DrawNumber3,func_thumb,,[R0] texto/rotulo de parte via FUN_080426F0 (provavel) (antes: desenha_texto_parte_a)
@@ -567,8 +569,8 @@ address,name,kind,count,comment
 0x0800667C,Battle_InitPartSpriteObj,func_thumb,,Simon/Rokusho (antes: RenderAlternateCompositePreviewFrame) [R0] objeto de sprite da parte na batalha (provavel)
 0x08006764,Parts_BuildLargeCompositePreview,func_thumb,,Simon/Rokusho (antes: RenderAlternateCompositePreviewLargeFrame) [R0] sprite de icone 60x50 da parte (provavel) (antes: Parts_CreateIconSprite)
 0x08006824,Parts_DispatchSlotHandler,func_thumb,,[R0] dispatch por jump table do slot de parte (chute) [RV1] confirmado: se flag 8 em um ponteiro
-0x08006844,Parts_DispatchSlotHandler_JumpA,label,,[JT5] mov pc (bit 8 ligado): tabela 0x08006854 (5 helpers 0x08006238/284/2D0/31C/368 com arg 0); JT5
-0x080068A2,Parts_DispatchSlotHandler_JumpB,label,,[JT5] mov pc (bit 8 desligado): tabela 0x080068AC (mesmos helpers com arg 1); JT5
+0x08006844,Parts_DispatchSlotHandler_JumpA,label,,"[JT5] mov pc (bit 8 ligado): tabela 0x08006854 (5 helpers 0x08006238/284/2D0/31C/368 com arg 0); JT5 [RF2] provavel: mov pc,r0 em Parts_DispatchSlotHandler 0x08006824; tabela 0x08006854 (5 x 4) aponta 0x08006868..0x08006888 (stride 8)"
+0x080068A2,Parts_DispatchSlotHandler_JumpB,label,,"[JT5] mov pc (bit 8 desligado): tabela 0x080068AC (mesmos helpers com arg 1); JT5 [RF2] provavel: mov pc,r0 em Parts_DispatchSlotHandler 0x08006824; tabela 0x080068AC (5 x 4) aponta 0x080068C0..0x080068E0 (stride 8)"
 0x080068EC,Parts_HandleSlotInput,func_thumb,,[R0] navegacao entre slots de parte pelos botoes (provavel)
 0x08006980,Parts_CycleValueSlot,func_thumb,,[R0] ciclo de valor do slot 0 (provavel)
 0x08006A00,Parts_CycleSlot1,func_thumb,,[R0] ciclo de troca de parte no slot 1 (provavel)
@@ -580,11 +582,11 @@ address,name,kind,count,comment
 0x08006E44,Parts_ValidateSet,func_thumb,,[R0] valida conjunto de 5 partes e redesenha painel (chute) [RV1] confirmado: valida ids das 5 pecas (AreBattleSpritePartIdsValid); se valido ajusta velocidade 8 e marca flag; senao recria objetos de sprite
 0x08006F14,Parts_RefreshPanelIfDirty,func_thumb,,[R0] atualiza painel se flag suja (provavel)
 0x08006F34,Parts_DispatchSlotAction,func_thumb,,[R0] dispatch por jump table de acao de slot (chute) [RV1] confirmado: se flag 1
-0x08006F44,Parts_DispatchSlotAction_ReadActionIndex,label,,Simon/Rokusho (antes: PartSet_UpdateFromCurrentLoadoutMaybe)
-0x08006F56,Parts_DispatchSlotAction_Jump,label,,[JT5] mov pc: tabela real 5 entradas em 0x08006F64 (idx +0x5A <=4); JT5
-0x08006FA0,Parts_DispatchSlotAction_CheckByte9B,label,,Simon/Rokusho (antes: PartSet_EquipCurrentLoadoutMaybe)
+0x08006F44,Parts_DispatchSlotAction_ReadActionIndex,label,,Simon/Rokusho (antes: PartSet_UpdateFromCurrentLoadoutMaybe) [RF2] provavel: miolo de Parts_DispatchSlotAction 0x08006F34; le byte +0x5A
+0x08006F56,Parts_DispatchSlotAction_Jump,label,,"[JT5] mov pc: tabela real 5 entradas em 0x08006F64 (idx +0x5A <=4); JT5 [RF2] provavel: mov pc,r0 em Parts_DispatchSlotAction; tabela 0x08006F64 (5 x 4): 0x08006F78, F84, F8A, F90, F9E"
+0x08006FA0,Parts_DispatchSlotAction_CheckByte9B,label,,Simon/Rokusho (antes: PartSet_EquipCurrentLoadoutMaybe) [RF2] provavel: miolo do caso 0x08006F9E de Parts_DispatchSlotAction; le byte +0x9B e compara com 0x77
 0x08006FB0,Parts_BuildEquipTable,func_thumb,,[R0] monta tabela de partes equipadas (provavel)
-0x08007034,Parts_BuildEquipTable_AltEntry_8007034,label,,[IV] ao montar: equipadas (campo 1) += 1 para cada slot com bot < 0x78 (IV) (antes: Parts_BuildEquipTable)
+0x08007034,Parts_BuildEquipTable_AltEntry_8007034,label,,[IV] ao montar: equipadas (campo 1) += 1 para cada slot com bot < 0x78 (IV) (antes: Parts_BuildEquipTable) [RF2] provavel: label interior sem push; sem funcao no Ghidra neste endereco; dono nao identificado
 0x080070F0,Parts_CountInventoryMatches,func_thumb,,[R0] conta partes disponiveis no inventario (provavel)
 0x0800712C,Parts_BuildSlotIcons,func_thumb,,[R0] monta sprites pequenos dos componentes (provavel)
 0x0800725C,Parts_HandleConfirmInput,func_thumb,,[R0] confirmacao na tela de slots de parte (provavel)
@@ -608,7 +610,7 @@ address,name,kind,count,comment
 0x08007C4C,PartsGrid_CursorInputStep,func_thumb,,"[FS2] provavel: navegacao do cursor (+0x42 & 3, sfx 2/4/5) e troca de estado; entrada 12 de 0x083AC86C; renomeado"
 0x08007D04,PartsGrid_BlendStartStep,func_thumb,,"[FS2] provavel: SetGpuBlendMode(6,0x3F,0x20) + contador; entradas 13 e 20 de 0x083AC86C; renomeado"
 0x08007D28,Tile_ClearSlotsAndDispatchState_JumpTable,data,,"[provavel] Tile_ClearSlots(0,0x80) + despacho por byte +0x3c (<5) (antes: Tile_ClearSlotsAndDispatchState)"
-0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,,[JT5] mov pc
+0x08007D46,Tile_ClearSlotsAndDispatchState_Jump,label,,"[JT5] mov pc [RF2] provavel: mov pc,r0 em Tile_ClearSlotsAndDispatchState 0x08007D28"
 0x08007DDC,PartsGrid_SelectNextStateByCursor,func_thumb,,"[PG] [PG] provavel: ClearObjectAttributeEntries(0,0x80); escreve 8/0x18/0x28/0x38 conforme byte +0x42 (0..3); eixo (X/Y) chute; entradas 22,38,54,70; renomeado no Ghidra (antes: PartsGrid_SetSelectorPosByIndex) [CH6] [CH6] revisto CH6: confirmado no efeito, nome provavel (antes: PartsGrid_SetSelectorPosByIndex). Limpa OAM (0,0x80); le ctx 0x03000440 +0x42 (cursor 0..3) e escreve em GS 0x0300137C o valor 8/0x18/0x28/0x38 (proximo estado). Nao escreve posicao. Entradas 22,38,54,70 da tabela 0x083AC86C"
 0x08007E38,PartsGrid_InitScreen,func_thumb,,"monta tela de grade de pecas (decompress, tiles, PartsGrid_Draw*); provavel"
 0x0800801C,PartsGrid_SlideDetailStep,func_thumb,,"[FS2] provavel: passo de posicao do painel de detalhe (modo 8) + blend; entradas 25, 31, 37 de 0x083AC86C; renomeado"
