@@ -102,6 +102,8 @@ def main():
             key = norm(a, k == "func_thumb")
             if "revisto CH" in comment or re.fullmatch(r"(RV|RM|RD|CH|NX)\d+", prefix):
                 t = len(TIERS)  # revisão de chute é a palavra mais nova sobre o endereço
+            if re.search(r"emulador", comment, re.I) and "confirmado" in comment.lower():
+                t = len(TIERS) + 1  # medido no jogo vence qualquer leitura estática
             old = cand.get(key)
             if old is None or t >= old[0]:
                 cand[key] = (t, name, k, comment, prefix)
