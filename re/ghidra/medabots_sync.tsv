@@ -3115,6 +3115,7 @@ F	0x080604C4	Anim_TileFrame64Cycle
 F	0x0806050C	Save_WriteEepromAndFinish
 F	0x080605A0	Anim_UpdateSpritePosTable
 F	0x08060620	Anim_LoadFrameEvery10
+F	0x08060688	Dispatch_CallTableEntryByByte
 F	0x080606A8	Screen_ResetClearTablesFade
 F	0x08060708	Screen_InitLz77TilesAndSprites
 F	0x0806096C	Screen_EnableBgLayersInit
@@ -3140,6 +3141,7 @@ F	0x080615D4	Menu_OptionCursorStep
 F	0x080617E0	Fx_StepCounterResetAtZero
 F	0x08061860	Menu_HighlightOptionStep
 F	0x080618B4	Screen_TickFadeOutAndReset
+F	0x08061958	Task_CallHandlerTableThenCount_B
 F	0x08061998	Screen_ClearPairsAndAdvance
 F	0x080619B0	Shop_InitPartSelectionScreen
 F	0x08061CE0	Shop_RefreshPartListScreen
@@ -3174,6 +3176,7 @@ F	0x080636FC	Fight_PanelFadeStep
 F	0x0806379C	BattlePanel_DrawSlotsStep
 F	0x08063840	BattlePanel_StepUpdate
 F	0x080638E8	Battle_TickPanelTextTwoSlots
+F	0x08063948	Task_CopyCallTableEntryThenCount
 F	0x080639C4	Screen_InitNumberRevealLayout
 F	0x08063EBC	Anim_FinishClearAndLoadSlot
 F	0x08063F08	Menu_CompareSelectionAndAdvance
@@ -3285,6 +3288,8 @@ F	0x08068684	fx_screen_setup_b
 F	0x08068888	fx_step_table_a
 F	0x080688E0	Fx_StepTableBUntilDone
 F	0x08068920	Stub_ReturnTrue_08068920
+F	0x08068924	Tick_ModStepSetCountdown
+F	0x08068978	Gfx_ModStepFillTable4_DispCnt
 F	0x08068A84	Palette_CrossfadeStep
 F	0x08068B74	Scene_ProgressIndex16
 F	0x08068BC4	Fx_PeriodicSineEmitStep
@@ -3302,6 +3307,7 @@ F	0x080691E0	Scene_AnimSeqStepAdvance9
 F	0x0806920C	Fight_FrameTickWaitGate10
 F	0x08069258	Scene_EnterSetupC
 F	0x080692A8	Scene_SequenceAFadeAdvance
+F	0x080692EC	Menu_EnterClearGfxSndRequest
 F	0x08069320	gfx_clear_regs_init
 F	0x0806938C	menu_draw_stats
 F	0x0806941C	panel_setup_tiles
@@ -3420,6 +3426,7 @@ F	0x0806E7EC	Screen_InitLZ77ToVram
 F	0x0806E90C	Scene_TimedWait61ThenAdvance2
 F	0x0806E93C	Scene_TimedWait60ThenAdvance8
 F	0x0806E96C	Screen_LayerHideTimedStep
+F	0x0806E9C0	Ctx_ResetModeFlags
 F	0x0806E9E0	Menu_SetupPreviewState2
 F	0x0806EA54	battle_exit_button
 F	0x0806EA98	Battle_MenuPhaseDispatch
@@ -4167,11 +4174,4 @@ C	0x0804AB3C
 C	0x0804ABA8
 C	0x0804ABC0
 C	0x0804AC14
-C	0x08060688
-C	0x08061958
-C	0x08063948
-C	0x08068924
-C	0x08068978
-C	0x080692EC
-C	0x0806E9C0
 C	0x0807DD58

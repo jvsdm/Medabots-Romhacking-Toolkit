@@ -3415,19 +3415,19 @@ address,name,kind,count,comment
 0x0805CFB4,Shop_ItemListInputStep,func_thumb,,"entrada da lista de itens da loja (paginas de 5, gShopItems); provavel"
 0x0805D262,KeyItemBag_Result2to4_Message,label,,"[IN3] [IN3] retornos 2..4: SFX 6, limpa bit 0x4000 de 0x03004070 e 0x030040B0 (provavel), GS=9. Id da mensagem NAO confirmado (r0 nao vai para 0x0803FB0C)"
 0x0805D2A0,KeyItemBag_UseItem,label,,"[IN3] [IN3] retorno 1: SFX 4, depois le id de 0x02040000+idx*4 e cmp #0x28 [RF8] provavel: NAO e inicio de funcao (movs r0,#4 + BL = SFX do retorno 1). Nome do bloco de uso; funcao dona nao achada"
-0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,,[JT5] mov pc: tabela real 41 ptrs em 0x0805D2C8 (halfword EWRAM 0x02040000+id*4); JT5
+0x0805D2C2,KeyItemBag_ListInputStep_Jump,label,,[JT5] mov pc: tabela real 41 ptrs em 0x0805D2C8 (halfword EWRAM 0x02040000+id*4); JT5 [RF9] provavel; mov pc sobre tabela KeyItemBag_DispatchTable 0x0805D2C8 (41 x 4 bytes)
 0x0805D2C8,KeyItemBag_DispatchTable,data,,"[IN2] [IN2] 0x28 entradas de alvo por id de key item (<=0x28); alvos especiais 0,1,5,12,13,19,39; resto 0x0805D410 [RD3] confirmado: 41 x 4 (ids 0..0x28"
 0x0805D36C,KeyItemBag_Case_Id0,label,,[IN] [IN] ponto de tabela 0x28 entradas de despacho (pendente) (antes: ItemListSwitch_Table) [RD3] (antes: ItemListSwitch_Table) confirmado: e codigo (Thumb)
-0x0805D384,KeyItemBag_Case_Id1,label,,[IN2] [IN2] alvo da entrada id 1
-0x0805D398,KeyItemBag_Case_Id5,label,,[IN2] [IN2] alvo da entrada id 5
-0x0805D3AC,KeyItemBag_Case_Id12,label,,[IN2] [IN2] alvo da entrada id 12
-0x0805D3C0,KeyItemBag_Case_Id13,label,,[IN2] [IN2] alvo da entrada id 13
-0x0805D3D4,KeyItemBag_Case_Id19,label,,[IN2] [IN2] alvo da entrada id 19
-0x0805D3E8,KeyItemBag_Case_Id39,label,,[IN2] [IN2] alvo da entrada id 39
-0x0805D3FC,KeyItemBag_Case_Id40,label,,[KI] [KI] id 40 (0x28): E+0xC5C=0x0D -> 0x0805D418
-0x0805D410,KeyItemBag_Case_Default,label,,[IN2] [IN2] alvo padrao das demais entradas 0..0x28 da tabela 0x0805D2C8
-0x0805D418,KeyItemBag_CommonTail,label,,[KI] [KI] ctx 0x030004C4 = 0 ; GS(0x0300137C)=0x0D
-0x0805D430,KeyItemBag_Result0_SfxOnly,label,,"[IN3] [IN3] retorno 0 de CanUseHere: so SFX 6, sem troca de estado"
+0x0805D384,KeyItemBag_Case_Id1,label,,[IN2] [IN2] alvo da entrada id 1 [RF9] provavel; alvo do switch de KeyItemBag (entrada id 1)
+0x0805D398,KeyItemBag_Case_Id5,label,,[IN2] [IN2] alvo da entrada id 5 [RF9] provavel; alvo do switch de KeyItemBag (entrada id 5)
+0x0805D3AC,KeyItemBag_Case_Id12,label,,[IN2] [IN2] alvo da entrada id 12 [RF9] provavel; alvo do switch de KeyItemBag (entrada id 12)
+0x0805D3C0,KeyItemBag_Case_Id13,label,,[IN2] [IN2] alvo da entrada id 13 [RF9] provavel; alvo do switch de KeyItemBag (entrada id 13)
+0x0805D3D4,KeyItemBag_Case_Id19,label,,[IN2] [IN2] alvo da entrada id 19 [RF9] provavel; alvo do switch de KeyItemBag (entrada id 19)
+0x0805D3E8,KeyItemBag_Case_Id39,label,,[IN2] [IN2] alvo da entrada id 39 [RF9] provavel; alvo do switch de KeyItemBag (entrada id 39)
+0x0805D3FC,KeyItemBag_Case_Id40,label,,[KI] [KI] id 40 (0x28): E+0xC5C=0x0D -> 0x0805D418 [RF9] provavel; alvo do switch de KeyItemBag (id 0x28 -> CommonTail)
+0x0805D410,KeyItemBag_Case_Default,label,,[IN2] [IN2] alvo padrao das demais entradas 0..0x28 da tabela 0x0805D2C8 [RF9] provavel; alvo padrao das demais entradas da tabela 0x0805D2C8
+0x0805D418,KeyItemBag_CommonTail,label,,[KI] [KI] ctx 0x030004C4 = 0 ; GS(0x0300137C)=0x0D [RF9] provavel; cauda comum (ctx 0x030004C4=0; GS=0x0D)
+0x0805D430,KeyItemBag_Result0_SfxOnly,label,,"[IN3] [IN3] retorno 0 de CanUseHere: so SFX 6, sem troca de estado [RF9] provavel; retorno 0 de CanUseHere: so SFX 6"
 0x0805D4A0,Slot_ActivateCursor,func_thumb,,[R3] ativa cursor de slot (provavel)
 0x0805D4E0,StateTable_WaitSubThenAdvance,func_thumb,,"[N2] [N2] tabela 0x08483634 idx 7: se StateMachine_DispatchSub != 0, ++0x0300137C (confirmado)"
 0x0805D4FC,Gfx_FadeOutThenClear,func_thumb,,"fade de saida das paletas, limpa REG_DISPCNT e tiles (provavel)"
@@ -3504,6 +3504,7 @@ address,name,kind,count,comment
 0x0806050C,Save_WriteEepromAndFinish,func_thumb,,grava EEPROM via lib_eeprom_write_verify (4 tentativas) e fixa gMainState=3; confirmado
 0x080605A0,Anim_UpdateSpritePosTable,func_thumb,,[R3] atualiza posição de sprite por tabelas (provavel)
 0x08060620,Anim_LoadFrameEvery10,func_thumb,,[R3] carrega tiles a cada 10 frames (provavel)
+0x08060688,Dispatch_CallTableEntryByByte,func_thumb,,[RF9] confirmado; CallViaR0(tabela[byte]); ja nomeado no Ghidra (sem nome no mtbe)
 0x080606A8,Screen_ResetClearTablesFade,func_thumb,,reset de cena com fade e tabelas limpas; provável
 0x08060708,Screen_InitLz77TilesAndSprites,func_thumb,,"[provavel] 3x LZ77 tile blocks, descompacta e preenche sprites"
 0x0806096C,Screen_EnableBgLayersInit,func_thumb,,[FS8] [FS8] confirmado (decompile): REG_DISPCNT |= BG1..BG3 e OBJ; marca estado 8. Entrada 0x0848383C
@@ -3529,6 +3530,7 @@ address,name,kind,count,comment
 0x080617E0,Fx_StepCounterResetAtZero,func_thumb,,"[CH7] provavel; revisto CH; (FS9 FUN_080617E0) contador 16 bits +step, rampa +0x208 ate 0x40, ao zerar byte baixo: Obj_ResetStateFields e estado 4; tabela 084838D0"
 0x08061860,Menu_HighlightOptionStep,func_thumb,,destaque de opção de menu com espera e avanço; provável
 0x080618B4,Screen_TickFadeOutAndReset,func_thumb,,[provavel] fade de 9 passos como Screen_TickFadeOutAndClear; limpa tilemap e variaveis
+0x08061958,Task_CallHandlerTableThenCount_B,func_thumb,,[RF9] confirmado; CallViaR0(tabela[idx]) e contador +1 se bit 1; ja nomeado no Ghidra (sem nome no mtbe)
 0x08061998,Screen_ClearPairsAndAdvance,func_thumb,,[FS9] provavel (trivial): Clear4PairsHalfwords + contador; tabela 0x080AFBA4
 0x080619B0,Shop_InitPartSelectionScreen,func_thumb,,"Simon/Rokusho: Initialize the shop part-selection screen. Builds either the sellable inventory list or the current shop stock list, and computes each listed part's displayed price as RomPartRecord.price_hundreds * 100. [RV19] confirmado: inicia tela de selecao de pecas da loja: LZ, sprites, Shop_BuildAvailablePartList, icones e totais"
 0x08061CE0,Shop_RefreshPartListScreen,func_thumb,,"[provavel] DISPCNT|=0x1000, desenha lista de pecas da loja e quantidades"
@@ -3563,6 +3565,7 @@ address,name,kind,count,comment
 0x0806379C,BattlePanel_DrawSlotsStep,func_thumb,,[FR2] provável; texto de 2 slots do painel de batalha + objeto (FUN_0806379c)
 0x08063840,BattlePanel_StepUpdate,func_thumb,,atualiza textos do painel e toca SFX ao fim de passo; provável
 0x080638E8,Battle_TickPanelTextTwoSlots,func_thumb,,[provavel] Anim_StepRecordCounter(ctx+0x50); desenha 2 textos de slot; senao limpa tiles e grava 0x14
+0x08063948,Task_CopyCallTableEntryThenCount,func_thumb,,[RF9] confirmado; copia 0x34 bytes p/ pilha; cpufastset se modo==2; CallViaR0 da entrada; contador se bit 1; ja nomeado no Ghidra (sem nome no mtbe)
 0x080639C4,Screen_InitNumberRevealLayout,func_thumb,,"[N2] [N2] copia 0x080AFC18 idx 0: setup da tela (musica 0x18, BG/OBJ, numero 2 digitos); ++0x0300137C (confirmado na estrutura)"
 0x08063EBC,Anim_FinishClearAndLoadSlot,func_thumb,,"ao fim do contador limpa 0x40 words, timer 600, Obj_InitSlotAndLoad; provavel"
 0x08063F08,Menu_CompareSelectionAndAdvance,func_thumb,,"[chute] compara halfword de selecao com constantes; 0x1A ou contador++ e Obj_InitSlotAndLoad [RV19] provavel: compara selecao com valores fixos, grava estado 0x1A ou avanca contador e limpa flag"
@@ -3605,10 +3608,10 @@ address,name,kind,count,comment
 0x08065790,LinkMenu15Step0,func_thumb,,[LK2] [GH-LK2] passo 0 do menu 0x15 (preparo); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step0)
 0x080657C4,Sm_StepSfxRepeat3,func_thumb,,repete passo com SFX até 3 vezes e depois avança; provável (jump table não recuperada)
 0x08065870,Sm_StepSfxRepeat3_JumpTable,data,,[JT4] tabela real de 6 ponteiros (indice = estado +8); JT4 [RD3] confirmado: 6 x 4 (ptrs Thumb); JT4
-0x08065888,Sm_StepSfxRepeat3_Case0,label,,[JT4] caso 0 da tabela; confere condicao e SFX 0x0D; JT4
-0x080658DC,Sm_StepSfxRepeat3_Case1to3,label,,[JT4] casos 1-3: espera tecla A 3 vezes; JT4
-0x08065970,Sm_StepSfxRepeat3_Case4,label,,[JT4] caso 4 da tabela; JT4
-0x080659B0,Sm_StepSfxRepeat3_Case5,label,,[JT4] caso 5 da tabela (finaliza); JT4
+0x08065888,Sm_StepSfxRepeat3_Case0,label,,[JT4] caso 0 da tabela; confere condicao e SFX 0x0D; JT4 [RF9] provavel; caso 0 da tabela JT4 (SFX 0x0D)
+0x080658DC,Sm_StepSfxRepeat3_Case1to3,label,,[JT4] casos 1-3: espera tecla A 3 vezes; JT4 [RF9] provavel; casos 1-3 da tabela JT4 (espera tecla A 3 vezes)
+0x08065970,Sm_StepSfxRepeat3_Case4,label,,[JT4] caso 4 da tabela; JT4 [RF9] provavel; caso 4 da tabela JT4
+0x080659B0,Sm_StepSfxRepeat3_Case5,label,,[JT4] caso 5 da tabela (finaliza); JT4 [RF9] provavel; caso 5 da tabela JT4 (finaliza)
 0x08065A0C,Battle_TickTwoStageSequence,func_thumb,,[provavel] StateMachine_DispatchStep(0x18 ou 0x1C); snd_sfx_request(0xD); 2 etapas
 0x08065A80,LinkMenu15Step2,func_thumb,,[LK2] [GH-LK2] passo 2 do menu 0x15 (espera de texto); sem funcao no Ghidra; provavel (antes: LinkMenu15_Step2)
 0x08065A94,Menu15_Sub4_WaitAThenAdvance,func_thumb,,[LK2] [GH-LK2] passo 4 do menu 0x15; provavel (antes: LinkMenu15_Step4)
@@ -3619,9 +3622,9 @@ address,name,kind,count,comment
 0x08065D44,LinkMenu14_InitScreen,func_thumb,,"[LK3] [GH-LK3] sub 0 do menu 0x14: sem funcao no Ghidra (code Thumb valido); pendente (antes: LinkMenu14Step0) [RV19] provavel: init do estado 14: limpa VRAM/OAM, carrega tiles LZ77, liga camadas DISPCNT, timer e musica 0x18 (antes: LinkMenu14Step0)"
 0x08065ED0,Screen_DispatchByState3A,func_thumb,,provável: despacho por estado ctx+0x3A (jump tables não recuperadas) (antes: Screen_DispatchByState3A) (antes: LinkCommand1_Handler)
 0x08065F04,Screen_DispatchByState3A_TableA,data,,"[JT3] tabela ramo A (6 ponteiros, idx = halfword 0x03006F74+0x3A) [RD3] confirmado: 6 x 4 (ptrs Thumb); ramo A; JT3"
-0x08065F1C,Screen_DispatchByState3A_A0,label,,"[JT3] caso A0 (corpo de 0x08065ED0), ver JT3_lista.txt"
+0x08065F1C,Screen_DispatchByState3A_A0,label,,"[JT3] caso A0 (corpo de 0x08065ED0), ver JT3_lista.txt [RF9] provavel; caso A0 do corpo de 0x08065ED0 (JT3)"
 0x080660AC,Screen_DispatchByState3A_TableB,data,,"[JT3] tabela ramo B (6 ponteiros, mesmo idx) [RD3] confirmado: 6 x 4 (ptrs Thumb); ramo B; JT3"
-0x080660C4,Screen_DispatchByState3A_B0,label,,"[JT3] caso B0 (corpo de 0x08065ED0), ver JT3_lista.txt"
+0x080660C4,Screen_DispatchByState3A_B0,label,,"[JT3] caso B0 (corpo de 0x08065ED0), ver JT3_lista.txt [RF9] provavel; caso B0 do corpo de 0x08065ED0 (JT3)"
 0x08066240,Anim_CounterDoneInitObjectSlot,func_thumb,,"[FL10] ao fim de Anim_StepRecordCounter: estado++, Obj_InitSlotAndLoad(1,0,1), flag 0x4000 (provável)"
 0x08066280,Link_SelectFiveOptionsStep,func_thumb,,menu de 5 opcoes com cursor +5 e marca 0xEF00; provavel (antes: Menu_SelectionFiveOptionsStep)
 0x08066460,Link_CommandExchangeStep,func_thumb,,"[LK2] [GH-LK2] comando 0xEF00|cmd: pai envia, filho guarda cmd em obj+5 e ecoa; timer 0xFE0F; confirmado (ex FUN_08066460)"
@@ -3634,7 +3637,7 @@ address,name,kind,count,comment
 0x080666F4,LinkMenu14_DispatchIndexCountReset,func_thumb,,[LK3] [GH-LK3] sub 11 do menu 0x14: sem funcao no Ghidra; pendente (antes: LinkMenu14Step11) [RV19] provavel: despacha por indice; se ok incrementa contador e chama Obj_ResetStateFields (antes: LinkMenu14Step11)
 0x08066714,Text_BuildMessageAndStep,func_thumb,,monta mensagem em ctx+0x270 (terminador 0xFF) e avanca state machine; provavel; codigos chute [LK3] [GH-LK3] sub 12 do menu 0x14: monta mensagem (2 bytes de fim -1) e avanca maquina; ao fim decide sub 5 ou sub 3 pelos halfwords de link; confirmado (codigo)
 0x08066824,Menu14_CallSubstateHandler,func_thumb,,[confirmado] copia 0x34 bytes de DAT_08066860 e CallViaR0(tabela[byte DAT_08066864]); contadores se bit 1 (antes: Fight_CallHandlerCopyArgs52)
-0x08066860,Menu14_CallSubstateHandler_Pool,label,,[QA5] DADO: pool de literais lido por LDR em 0x08066828 (1o palavra 0x080AFCC0); nao e funcao
+0x08066860,Menu14_CallSubstateHandler_Pool,label,,[QA5] DADO: pool de literais lido por LDR em 0x08066828 (1o palavra 0x080AFCC0); nao e funcao [RF9] provavel; pool de literais lido por LDR em 0x08066828 (bytes c0fc0a08=0x080AFCC0
 0x08066870,Geom_SplitSegmentInThirds,func_thumb,,[R3] pontos a 1/3 e 2/3 de um segmento (confirmado)
 0x080668D4,Ring_BuildPointsFromRadius,func_thumb,,"[R3] 18 pontos de um anel de raio r, gravados em registros de objeto (provavel)"
 0x080669AC,Byte_EaseTowardTarget,func_thumb,,"[R3] move byte a em direcao ao alvo por (alvo-valor)/div, passo minimo 1 (provavel)"
@@ -3674,6 +3677,8 @@ address,name,kind,count,comment
 0x08068888,fx_step_table_a,func_thumb,,[R4] R4: maquina de estados com handler por CallViaR0; provavel
 0x080688E0,Fx_StepTableBUntilDone,func_thumb,,[R4] R4: idem fx_step_table_a sem DISPCNT; provavel (antes: fx_step_table_b)
 0x08068920,Stub_ReturnTrue_08068920,func_thumb,,[FN5] retorna 1 (confirmado)
+0x08068924,Tick_ModStepSetCountdown,func_thumb,,[RF9] provavel (antes: FUN_08068924); se valor%div==0 grava 0x10-valor/div; retorna valor==byte*0x10
+0x08068978,Gfx_ModStepFillTable4_DispCnt,func_thumb,,[RF9] provavel (antes: FUN_08068978); liga DISPCNT|0x100; se %div==0 preenche 4 entradas de tabela (u16); desliga bit por mascara se valor==byte*0x10
 0x08068A84,Palette_CrossfadeStep,func_thumb,,[FR3] [FR3] crossfade de paleta em 32 passos (progresso/divisor); retorna 1 ao fim (provavel)
 0x08068B74,Scene_ProgressIndex16,func_thumb,,[FN6] provavel: se X%B==0 grava X/B em *ptr e retorna X==16*B; ponteiros 0x08485720/0x08485724
 0x08068BC4,Fx_PeriodicSineEmitStep,func_thumb,,provável: emite 4 entradas de efeito a cada período; handler indireto não recuperado
@@ -3691,6 +3696,7 @@ address,name,kind,count,comment
 0x0806920C,Fight_FrameTickWaitGate10,func_thumb,,"[FN6] provavel: quadro de batalha (chama 0x0806A860, 0x0806AAA4 por BL; Battle_*; BotAnim_TickStageCallbacksAll); se wait_gate_0xf1() != 0 vai para 10; ponteiro 0x08485754"
 0x08069258,Scene_EnterSetupC,func_thumb,,"[FN6] provavel: setup (gfx_clear, parts_gfx, menu_draw_stats, scene_init_e, snd 0 e 0x13; BG 0x1A00); estado 0xB; ponteiro 0x08485758"
 0x080692A8,Scene_SequenceAFadeAdvance,func_thumb,,"[FN6] provavel: se scene_sequence_a() != 0 zera BLDY, snd_fade_request(0x20), estado 0xC; ponteiro 0x0848575C"
+0x080692EC,Menu_EnterClearGfxSndRequest,func_thumb,,[RF9] provavel (antes: FUN_080692ec); gfx_clear_regs_init + snd_song_request(0) + byte+0x39 = 1 ou 2 + Sel_RequestIfIndexBelow4(0)
 0x08069320,gfx_clear_regs_init,func_thumb,,[R4] R4: DMA + DISPCNT=0x60 + zera 4 pares; provavel
 0x0806938C,menu_draw_stats,func_thumb,,[R4] R4: 3 textos/valores de status via 0803F41C; provavel
 0x0806941C,panel_setup_tiles,func_thumb,,[R4] R4: monta tiles de painel por linha; provavel
@@ -3712,7 +3718,7 @@ address,name,kind,count,comment
 0x0806A078,copy_str_until_ctrl,func_thumb,,[R4] R4: copia bytes ate >=0xF9 (controle); confirmado
 0x0806A08C,intro_scene_step,func_thumb,,[R4] R4: cena de dialogo 2 estados; provavel
 0x0806A114,dispatch_scene_state,func_thumb,,[R4] R4: despacho 0..0x16 por jumptable nao recuperada; provavel
-0x0806A12A,dispatch_scene_state_Jump,label,,[JT5] mov pc: tabela real 23 ptrs em 0x0806A134 (estado RAM 0x03006F88); JT5
+0x0806A12A,dispatch_scene_state_Jump,label,,[JT5] mov pc: tabela real 23 ptrs em 0x0806A134 (estado RAM 0x03006F88); JT5 [RF9] provavel; mov pc sobre tabela 0x0806A134 (23 x 4 bytes); estado RAM 0x03006F88
 0x0806A134,dispatch_scene_state_Table,data,,[JT5] tabela 23 ptrs; JT5 [RD3] confirmado: 23 x 4 (ptrs Thumb); JT5
 0x0806A3C4,scene_sequence_a,func_thumb,,[R4] R4: sequencia de cena por passos 0x96..6; provavel
 0x0806A654,scene_sequence_b,func_thumb,,[R4] R4: espera 0xB4 quadros e 3 sprites; provavel
@@ -3742,7 +3748,7 @@ address,name,kind,count,comment
 0x0806B744,Dispatch_CallHandlerByWordIndex,func_thumb,,[FR2] provável; trampolim CallViaR0 com índice de byte*4 (FUN_0806b744)
 0x0806B764,Screen_InitFxSetup,func_thumb,,init de cena com música 0 e fx_screen_setup_a; provável
 0x0806B820,Screen_InitObjectSlotsLz77,func_thumb,,[provavel] 4 LZ77 para VRAM; ~13 Map_InitializeObjectRenderSlot; REG_DISPCNT |= 0x1E00
-0x0806B826,Screen_InitObjectSlotsLz77_AltEntry_806b826,label,,[QA5] alvo de desvio/tabela dentro do host (Ghidra: corpo contém; sem BL/prologo PUSH); rotulo
+0x0806B826,Screen_InitObjectSlotsLz77_AltEntry_806b826,label,,[QA5] alvo de desvio/tabela dentro do host (Ghidra: corpo contém; sem BL/prologo PUSH); rotulo [RF9] provavel; alvo de desvio dentro do host (sem BL/prologo PUSH)
 0x0806B8CE,TeamSlots_WriteFi41_Candidate,label,,[TP] [GH-TP provavel] grava r3 em fi+0x41; escritor da escolha de time? valor/origem aberto
 0x0806BB24,Scene_StepFxSongAdvance,func_thumb,,[FN6] provavel: se fx_step_table_a() != 0 toca musica 0x14 e incrementa contador; ponteiro 0x08485904
 0x0806BB44,Scene_DispatchState8Anim,func_thumb,,[FN6] provavel: se dispatch_state_8() != 0 incrementa contador; chama anim_dispatch_state; ponteiro 0x08485908
@@ -3753,7 +3759,7 @@ address,name,kind,count,comment
 0x0806BCFC,Fx_StepTableB_Check,func_thumb,,provável: checa fx_step_table_b e grava registro de efeito
 0x0806BD3C,Screen_ResetDisplayAndStopSong,func_thumb,,"[FL10] entrada de tela: DAT_0806BD68=0xFF/0x10, REG_DISPCNT mask, snd_song_request(0) (provável)"
 0x0806BD70,dispatch_state_8,func_thumb,,[R4] R4: despacho 8 estados (jumptable nao recuperada); provavel
-0x0806BD8C,dispatch_state_8_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x0806BD98 (byte +0x20 de 0x03002C30); JT5
+0x0806BD8C,dispatch_state_8_Jump,label,,[JT5] mov pc: tabela real 8 ptrs em 0x0806BD98 (byte +0x20 de 0x03002C30); JT5 [RF9] provavel; mov pc sobre tabela 0x0806BD98 (8 x 4 bytes); byte +0x20 de 0x03002C30
 0x0806BD98,dispatch_state_8_Table,data,,[JT5] tabela 8 ptrs; JT5 [RD3] confirmado: 8 x 4 (ptrs Thumb); JT5
 0x0806BF18,Select_MaxActiveEntry,func_thumb,,[R4] R4: escolhe max entre 8 entidades; chute (antes: select_entity_max) [RV20] provavel (antes: select_entity_max): varre 8 entradas de 0x20 com flag ativo e pega a de maior valor; ramo alternativo escolhe valor por modo e sprite 0x47/0x49
 0x0806BFEC,counter_oscillate_x,func_thumb,,[R4] R4: oscila x em passos de 3; provavel
@@ -3766,7 +3772,7 @@ address,name,kind,count,comment
 0x0806C88C,effect_anim_fall,func_thumb,,"[R4] R4: animacao 2 estados (spawn 0x33/0x12, desce -2 a cada 8 quadros, sai em 0xEB ou tecla); provavel"
 0x0806C958,effect_anim_phase2,func_thumb,,[R4] R4: animacao 2 estados com 6 objetos a cada 4 quadros e som 0x3D; provavel
 0x0806CB28,anim_dispatch_state,func_thumb,,[R4] R4: despacho por tabela de saltos para 7 estados de animacao; confirmado
-0x0806CB58,anim_dispatch_state_Jump,label,,[JT5] mov pc: tabela real 7 ptrs em 0x0806CB6C ((byte +0x20)-1); JT5
+0x0806CB58,anim_dispatch_state_Jump,label,,[JT5] mov pc: tabela real 7 ptrs em 0x0806CB6C ((byte +0x20)-1); JT5 [RF9] provavel; mov pc sobre tabela 0x0806CB6C (7 x 4 bytes); indice (byte+0x20)-1
 0x0806CB6C,anim_dispatch_state_Table,data,,[JT5] tabela 7 ptrs; JT5 [RD3] confirmado: 7 x 4 (ptrs Thumb); JT5
 0x0806CC80,battle_frame_tile_state_a,func_thumb,,[R4] R4: seletor de tile de quadro por estado (0x1A..0x20); confirmado valores
 0x0806CD68,battle_frame_tile_target,func_thumb,,[R4] R4: seletor de tile 0-6 e 0x2B..0x2D pelo byte +0x41 do alvo; confirmado faixas
@@ -3809,6 +3815,7 @@ address,name,kind,count,comment
 0x0806E90C,Scene_TimedWait61ThenAdvance2,func_thumb,,"[FN6] provavel: conta ate 0x3D quadros, depois grava 6 e estado 2; ponteiro 0x084859EC"
 0x0806E93C,Scene_TimedWait60ThenAdvance8,func_thumb,,"[FN6] provavel: conta ate 0x3C quadros, marca flag e estado 8; ponteiro 0x084859F4"
 0x0806E96C,Screen_LayerHideTimedStep,func_thumb,,[FR2] provável; apaga camadas de REG_DISPCNT por 60 quadros; salto final não recuperado (FUN_0806e96c)
+0x0806E9C0,Ctx_ResetModeFlags,func_thumb,,[RF9] chute (antes: FUN_0806e9c0); grava 3
 0x0806E9E0,Menu_SetupPreviewState2,func_thumb,,[R4] R4: configuracao de menu no estado 2 (080446B4); chute (antes: menu_state2_setup) [RV20] provavel (antes: menu_state2_setup): no estado 2 monta struct de preview
 0x0806EA54,battle_exit_button,func_thumb,,[R4] R4: saida do estado por botao bit 3; confirmado
 0x0806EA98,Battle_MenuPhaseDispatch,func_thumb,,"[FN6] provavel: menu_state2_setup, CallViaR0 com tabela indexada por *DAT_0806eabc, battle_exit_button; ponteiro 0x084856EC"
@@ -3864,10 +3871,10 @@ address,name,kind,count,comment
 0x08071164,Anim_StageDispatch,func_thumb,,[provavel] animation stage dispatcher via jump table DAT_08071180
 0x08071304,Screen_TableStepTimedSetup,func_thumb,,[FR2] provável; passo de tabela com limite 0x19 e fx_screen_setup_b(4
 0x08071328,Screen_TableStepTimedSetup_JumpTable,data,,[JT4] tabela real de 26 ponteiros (indice = estado +8); JT4 [RD3] confirmado: 26 x 4 (ptrs Thumb; cmp #0x19); JT4
-0x08071390,Screen_TableStepTimedSetup_Case0,label,,[JT4] setup inicial; JT4
-0x0807139C,Screen_TableStepTimedSetup_CaseAdvance,label,,[JT4] casos 4/8/12/16/20/24; JT4
-0x080713A2,Screen_TableStepTimedSetup_CaseWaitData,label,,[JT4] casos 1/5/9/13/17/21; JT4
-0x080713CC,Screen_TableStepTimedSetup_Case25,label,,[JT4] caso 25; JT4
+0x08071390,Screen_TableStepTimedSetup_Case0,label,,[JT4] setup inicial; JT4 [RF9] provavel; setup inicial do switch JT4
+0x0807139C,Screen_TableStepTimedSetup_CaseAdvance,label,,[JT4] casos 4/8/12/16/20/24; JT4 [RF9] provavel; casos 4/8/12/16/20/24 (JT4)
+0x080713A2,Screen_TableStepTimedSetup_CaseWaitData,label,,[JT4] casos 1/5/9/13/17/21; JT4 [RF9] provavel; casos 1/5/9/13/17/21 (JT4)
+0x080713CC,Screen_TableStepTimedSetup_Case25,label,,[JT4] caso 25; JT4 [RF9] provavel; caso 25 (JT4)
 0x080713E2,Screen_TableStepTimedSetup_CaseTimer,label,,[JT4] casos 2/6/10/14/18; JT4
 0x080713F0,Screen_TableStepTimedSetup_Case22,label,,[JT4] caso 22 (gfx e paleta); JT4
 0x08071424,Screen_TableStepTimedSetup_CaseCall,label,,[JT4] casos 3/7/11/15/19/23; JT4
