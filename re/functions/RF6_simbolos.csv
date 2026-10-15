@@ -1,0 +1,36 @@
+addr,nome,kind,comentario
+0x08036FB0,Fight_ResetBotPartState,label,provavel: label dentro de codigo sem funcao no Ghidra; zera flags do bot +0x40 (TA3); lista marcava dado
+0x080398EC,ObjScript_Op0D_SpawnEffectSlot4PartPal,label,provavel: alvo de switch do ObjScript; nome do opcode mantido
+0x0803A4BA,ObjScript_Op1E_SpawnEffectSlot23PartPal,label,provavel: alvo de switch do ObjScript; nome do opcode mantido
+0x0803A60C,ObjScript_Op1F_SpawnEffectSlot4State12,label,provavel: alvo de switch do ObjScript; nome do opcode mantido
+0x0803AE3C,ObjScript_Op2C_SpawnEffectSlot4State13,label,provavel: alvo de switch do ObjScript; nome do opcode mantido
+0x0803B3B4,ObjScript_Op32_LoadGfxList,label,provavel: alvo de switch do ObjScript; nome do opcode mantido
+0x0803B794,ObjScript_Op39_SpawnEffectSlot4NoPrioShift,label,provavel: alvo de switch do ObjScript; nome do opcode mantido
+0x0803D4AC,FightPreview_AdvanceSequenceCursor,func_thumb,confirmado: decompile cursor +0x100 += 1 + byte da entrada; nome ok
+0x0803DDC6,Overlay_InitScreenGraphics_AltEntry_803ddc6,label,provavel: entrada alternativa dentro de Overlay_InitScreenGraphics (cadeia de bl); nome ok
+0x08040144,TextItalicFont_Use,data,chute: bytes sao literal 0x084C59A4 (ponteiro); mtbe diz codigo de texto da fonte italica; nome nao confirmado
+0x08043818,Table_BattleSpritePartPairs,table,provavel: 5 x 4 B (dois u16 por entrada) de 0x08043818 a 0x08043827; inicio da tabela deduzido pelo padrao (0x0600/0x0609/0x0612/0x061B/0x0624); leitor nao achado
+0x08043820,Table_BattleSpritePartPairs_Entry2,label,provavel: entrada 2 (de 5) da tabela 0x08043818; (antes: AreBattleSpritePartIdsValid) nome de funcao nao se sustenta, nao ha funcao aqui
+0x08044B58,Bot_InitStarterRecord,func_thumb,confirmado: decompile grava registro do bot inicial; nome ok (lista marcava dado)
+0x08045858,EmitCompositePreviewTemplateEntriesSortedByY,label,chute: shell de 12 B no Ghidra (b fwd + cmp 0xC8); corpo nao recuperado; lista marcava dado
+0x08047414,CompositePreviewContext_Init,func_thumb,confirmado: decompile grava 3 campos do contexto e zera byte em param_2+DAT; nome ok
+0x08047574,EventScript_ClearGlobals,func_thumb,confirmado: decompile 15 Mem_SetZeros nos blocos de evento; nome ok
+0x08047878,GameState_StartFlowByCommand,func_thumb,confirmado: decompile switch por comando (0x20 flag=1; 0x21 flag=0; 0x03 loja); nome ok
+0x080481D8,Map_UpdateBackgroundAnimations_AltEntry_80481d8,label,provavel: entrada alternativa dentro de animacao de tiles (DMA3); nome ok
+0x0804A3B6,lit_EventDbBase0,label,provavel: bytes sao codigo (ldr/str de ponteiros do banco de eventos), nao literal; nome lit_ impreciso, mantido
+0x0804A584,lit_EventDbBase1,data,provavel: literal pool 0x08765EC0 (base do banco de eventos) seguido de 0x030057D8; nome ok
+0x0804A6A0,Map_LoadEntitiesAndAdvance,func_thumb,confirmado: decompile carrega mapa e entidades, ResetEncounterStep, SND_PolicyRequest(0,0), avanca substate; nome ok
+0x0804A6BC,Map_AdvanceSubroutineStep_A,func_thumb,confirmado: wrapper so de GameState_AdvanceSubroutine (corpo identico a B C D E); prefixo Map_ provavel
+0x0804A6C8,Overworld_TransitionStepThenAdvance,func_thumb,confirmado: decompile roda transicao e avanca se terminou; nome ok
+0x0804A6EC,Map_AdvanceSubroutineStep_B,func_thumb,confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
+0x0804A724,Map_ClearMenuPairsAndAdvance,func_thumb,confirmado: FieldMenu_ClearTwoSlotPairs + avanca; nome ok
+0x0804A734,Map_DirectionalTriggerStepThenState5,func_thumb,confirmado: acha trigger no tile adjacente, Obj_TwoStageInitThenDispatch, se ok seta state 5; nome ok
+0x0804A8C8,lit_EventDbBase2,data,provavel: mesmo literal 0x08765EC0 + 0x030057D8 do pool de 0x0804A584; nome ok
+0x0804AA04,Overworld_TransitionEndInitPlayerThenState5,func_thumb,confirmado: fim de transicao, init sprites do jogador, facing, seta state 5; nome ok
+0x0804AB04,Overworld_WaitTransitionThenAdvance,func_thumb,confirmado: espera transicao e avanca; nome ok
+0x0804AB18,Map_AdvanceSubroutineStep_C,func_thumb,confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
+0x0804AB24,Map_ResetSubstateAndSetState5_A,func_thumb,confirmado: zera byte+1 do ponteiro e seta state 5; nome ok
+0x0804AB3C,Map_AdvanceSubroutineStep_D,func_thumb,confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
+0x0804ABA8,Map_ResetSubstateAndSetState5_B,func_thumb,confirmado: zera byte+1 do ponteiro e seta state 5 (igual A); nome ok
+0x0804ABC0,Map_AdvanceSubroutineStep_E,func_thumb,confirmado: wrapper so de GameState_AdvanceSubroutine; prefixo Map_ provavel
+0x0804AC14,Overworld_InitFollowerFacingAndSfx57,func_thumb,confirmado: decompile escala passo, facing do seguidor, anim 0x2F/0x30, toca SFX 0x57; nome ok
