@@ -1,0 +1,68 @@
+struct,offset,size,name,confidence,source
+BattleBot,0x01,1,medalId,confirmado,DF.md:84; TSV re/types/medabots_simon_types.tsv:113
+BattleBot,0x04,1,attributeId,confirmado,AI2_simbolos.csv:16 (bot+4 = atributo); TSV:115 chama medal_class_id
+BattleBot,0x05,1,level,confirmado,DF.md:85
+BattleBot,0x07,1,partCompatBonus,provavel,TSV:118; conflito: FH.md:55 usa bot+0xAB como base e compat separada
+BattleBot,0x09,1,specialityCycleReset,confirmado,AI.md:72
+BattleBot,0x0A,14,headPartCopy,confirmado,DF.md:87 (copia de gPartRecordPtrTable); TSV:121 reservado 14 B
+BattleBot,0x18,8,specialityCycleNibbles,confirmado,AI.md:44
+BattleBot,0x20,8,specialityLevel,confirmado,DF.md:89; FH.md:55
+BattleBot,0x28,8,specialityExperience,provavel,TSV:131-138
+BattleBot,0x3F,1,specialityCycleIndex,confirmado,AI_simbolos.csv:5
+BattleBot,0x40,1,presence,confirmado,DF.md:90 (Y_0E grava 3; leitura BR_50)
+BattleBot,0x41,1,gender,confirmado,DF2.md:32 (inimigos); conflito: TSV:142 diz broken_part_fallback_glyph_index
+BattleBot,0x42,1,medalIdCopy,confirmado,DF2.md:33
+BattleBot,0x43,4,partIds,confirmado,DF2.md:33 (inimigos); conflito: DF.md:76 e DC4 (DF_simbolos.csv:9) dizem destino bot+0x40/+0x00 para o jogador
+BattleBot,0x48,96,parts,confirmado,DF.md:91 (4 x BattlePart de 0x18; ver struct BattlePart)
+BattleBot,0xA8,1,medaforceId,confirmado,pc/research/README.md:112 (GH-TA3); TSV:145 diz reservado
+BattleBot,0xA9,1,rollSpecialityIndex,provavel,FH.md:56
+BattleBot,0xAA,1,medaforceCost,provavel,pc/research/README.md:114 (MF3, b2)
+BattleBot,0xAB,1,partRollBase,confirmado,FH.md:55; AI.md:133
+BattleBot,0xAC,1,effectValueBonus,provavel,FH.md:70 (corpo confirmado; nome provavel)
+BattleBot,0xB9,1,actionChargeMeter,confirmado,AS6_simbolos.csv:57; conflito: TSV:146 diz 0xBB
+BattleBot,0xBA,1,botStatus,confirmado,DF2.md:7 (escritor de 2 = Fight_ResetBotPartState); DF.md:97 (leitura)
+BattleBot,0xBC,1,defenderResolutionFlags,confirmado,DM.md:115-116; pc/research/README.md:73
+BattleBot,0xBD,1,reactionStatusFlags,provavel,BT.md:80
+BattleBot,0xC0,1,reactionStateFlags,confirmado,AS6_simbolos.csv:63; AS6.md:41
+BattleBot,0xC1,1,medaforceGauge,confirmado,pc/research/README.md:108 (GH-MG3); 0x50 = pronto
+BattleBot,0xC4,1,repairEffectA,provavel,DF.md:99
+BattleBot,0xC6,1,repairEffectB,provavel,DF.md:99
+BattleBot,0xC9,1,pendingStatusKind,confirmado,AS6_simbolos.csv:60; AI.md:32
+BattleBot,0xCA,1,pendingStatusPart,confirmado,AS6_simbolos.csv:60
+BattleBot,0xCB,1,pendingValueE8,confirmado,AS6_simbolos.csv:60
+BattleBot,0xCC,1,pendingValueEC,confirmado,AS6_simbolos.csv:60
+BattleBot,0xCE,1,statusFlags,provavel,DF.md:99
+BattleBot,0xD0,1,flatDamageBonus,provavel,DM.md:20-22 (campos do bot); conflito: AS6.md:22 diz contador de EC
+BattleBot,0xD1,1,defenseValue,provavel,DM.md:83; conflito: AS6.md:21 diz contador
+BattleBot,0xD3,1,proximityDamageBonus,provavel,DM.md:199; TSV:160
+BattleBot,0xD4,1,remotenessDamageBonus,provavel,DM.md:199; TSV:161
+BattleBot,0xD5,1,actionCounter,confirmado,AS6_simbolos.csv:64
+BattleBot,0xD6,1,attackerFlags,confirmado,AS4.md:38; AS6.md:73
+BattleBot,0xD8,2,extraPenalty,provavel,DM.md:84 (s16)
+BattleBot,0xDD,1,selectedActionSource,confirmado,AI.md:33; DF.md:101
+BattleBot,0xE0,1,selectedTargetBotId,provavel,AI.md:34; TSV:168
+BattleBot,0xE1,1,selectedTargetPartId,provavel,AI.md:34; TSV:169
+BattlePart,0x00,1,attributeId,provavel,TSV:200; conflito: DF.md:72 diz byte de fi+0x11C e DT.md:14 diz gPartStats+0 = medalha
+BattlePart,0x01,1,techniqueId,confirmado,OP.md (emulador rec_27: 4 = Laser); DF.md:92; DM.md:15 (id 0..59; em k=3 e tipo de perna 100..106, DM.md:17)
+BattlePart,0x02,1,specialtyId,confirmado,DM.md:248 (0..7)
+BattlePart,0x03,1,gender,provavel,DM.md:15
+BattlePart,0x04,1,armorMax,confirmado,DF2.md:38 (+0x4C = max(stat+4))
+BattlePart,0x05,1,successBonus,provavel,DM.md:15; DF.md:91-95 (campo +0x4D)
+BattlePart,0x06,1,power,confirmado,OP.md (emulador rec_27: Poder 20); FH.md:33 (byte part+0x4E = poder)
+BattlePart,0x07,1,chargeBonus,provavel,DM.md:15
+BattlePart,0x08,1,usesMax,provavel,DM.md:15
+BattlePart,0x09,1,proximityOrCooldown,provavel,DM.md:17 (k=3 proximidade); TSV:220 cooldown_or_remoteness
+BattlePart,0x0A,1,sharedValue0A,provavel,TSV:210 (set_shared_value_0A; uso aberto)
+BattlePart,0x0B,1,price,provavel,DT.md:144 (gPartStats +0x0B)
+BattlePart,0x0C,1,attackDamageScalar,provavel,FH.md:5; DF.md:94 (campo +0x54)
+BattlePart,0x0D,1,runtimeByte0D,provavel,TSV:213 (runtime_0D; fora da copia de gPartStats)
+BattlePart,0x0E,1,partTargetBotId,provavel,AI.md:29 (B+0x56 alvo da peca)
+BattlePart,0x0F,1,partTargetPartId,provavel,AI.md:29 (B+0x57 alvo da peca)
+BattlePart,0x10,1,headUsesSpent,confirmado,AI2_simbolos.csv:13 (bot+0x58 == 0 = cabeca indisponivel; so k=0)
+BattlePart,0x11,1,currentArmor,confirmado,DF.md:95; DF.md:33 (0 = quebrada; k=0 cabeca)
+BattlePart,0x12,1,effectiveSuccessOrPropulsion,provavel,TSV:218; DM.md:17 (k=3: B+0xA2 propulsao)
+BattlePart,0x13,1,effectiveEvasionOrPower,confirmado,DM_simbolos.csv:24 (k=3: B+0xA3 evasao)
+BattlePart,0x14,1,effectiveChargeOrDefense,confirmado,DM_simbolos.csv:25 (k=3: B+0xA4 defesa)
+BattlePart,0x15,1,effectiveProximityOrUses,provavel,TSV:221; DM.md:17 (k=3: B+0xA5 proximidade)
+BattlePart,0x16,1,effectiveRemotenessOrCooldown,provavel,TSV:222; DM.md:17 (k=3: B+0xA6 distancia)
+BattlePart,0x17,1,partId,confirmado,DF.md:96; DF2.md:39 (+0x5F = B+0x43+k)

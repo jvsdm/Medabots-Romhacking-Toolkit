@@ -1,0 +1,256 @@
+# gerado por re/tools/build_types.py a partir de re/functions/ST_*.csv
+T	ActiveMapObjectEntry	0x8
+T	BattlePart	0x18
+T	EnemyTemplate	0x28
+T	EnemyTemplateRec	0xC
+T	EventBlock	0xCC0
+T	EventVariantBlock	0x8
+T	FightInfo	0x200
+T	MedalRecord	0x40
+T	Money	0x4
+T	PartInventory	0x2
+T	PartStats	0x10
+T	PartStatsLeg	0x10
+T	BattleBot	0x100
+M	ActiveMapObjectEntry	0x2	u16	objectEventId	confirmado; EV.md:12
+M	ActiveMapObjectEntry	0x4	u8	renderSlot	confirmado; EV.md:12
+M	BattleBot	0x1	u8	medalId	confirmado; DF.md:84; TSV re/types/medabots_simon_types.tsv:113
+M	BattleBot	0x4	u8	attributeId	confirmado; AI2_simbolos.csv:16 (bot+4 = atributo); TSV:115 chama medal_class_id
+M	BattleBot	0x5	u8	level	confirmado; DF.md:85
+M	BattleBot	0x7	u8	partCompatBonus	provavel; TSV:118; conflito: FH.md:55 usa bot+0xAB como base e compat separada
+M	BattleBot	0x9	u8	specialityCycleReset	confirmado; AI.md:72
+M	BattleBot	0xA	bytes:14	headPartCopy	confirmado; DF.md:87 (copia de gPartRecordPtrTable); TSV:121 reservado 14 B
+M	BattleBot	0x18	bytes:8	specialityCycleNibbles	confirmado; AI.md:44
+M	BattleBot	0x20	bytes:8	specialityLevel	confirmado; DF.md:89; FH.md:55
+M	BattleBot	0x28	bytes:8	specialityExperience	provavel; TSV:131-138
+M	BattleBot	0x3F	u8	specialityCycleIndex	confirmado; AI_simbolos.csv:5
+M	BattleBot	0x40	u8	presence	confirmado; DF.md:90 (Y_0E grava 3; leitura BR_50)
+M	BattleBot	0x41	u8	gender	confirmado; DF2.md:32 (inimigos); conflito: TSV:142 diz broken_part_fallback_glyph_index
+M	BattleBot	0x42	u8	medalIdCopy	confirmado; DF2.md:33
+M	BattleBot	0x43	u32	partIds	confirmado; DF2.md:33 (inimigos); conflito: DF.md:76 e DC4 (DF_simbolos.csv:9) dizem destino bot+0x40/+0x00 para o jogador
+M	BattleBot	0x48	BattlePart:4	parts	peças k=0..3 (cabeça, braços, perna)
+M	BattleBot	0xA8	u8	medaforceId	confirmado; pc/research/README.md:112 (GH-TA3); TSV:145 diz reservado
+M	BattleBot	0xA9	u8	rollSpecialityIndex	provavel; FH.md:56
+M	BattleBot	0xAA	u8	medaforceCost	provavel; pc/research/README.md:114 (MF3
+M	BattleBot	0xAB	u8	partRollBase	confirmado; FH.md:55; AI.md:133
+M	BattleBot	0xAC	u8	effectValueBonus	provavel; FH.md:70 (corpo confirmado; nome provavel)
+M	BattleBot	0xB9	u8	actionChargeMeter	confirmado; AS6_simbolos.csv:57; conflito: TSV:146 diz 0xBB
+M	BattleBot	0xBA	u8	botStatus	confirmado; DF2.md:7 (escritor de 2 = Fight_ResetBotPartState); DF.md:97 (leitura)
+M	BattleBot	0xBC	u8	defenderResolutionFlags	confirmado; DM.md:115-116; pc/research/README.md:73
+M	BattleBot	0xBD	u8	reactionStatusFlags	provavel; BT.md:80
+M	BattleBot	0xC0	u8	reactionStateFlags	confirmado; AS6_simbolos.csv:63; AS6.md:41
+M	BattleBot	0xC1	u8	medaforceGauge	confirmado; pc/research/README.md:108 (GH-MG3); 0x50 = pronto
+M	BattleBot	0xC4	u8	repairEffectA	provavel; DF.md:99
+M	BattleBot	0xC6	u8	repairEffectB	provavel; DF.md:99
+M	BattleBot	0xC9	u8	pendingStatusKind	confirmado; AS6_simbolos.csv:60; AI.md:32
+M	BattleBot	0xCA	u8	pendingStatusPart	confirmado; AS6_simbolos.csv:60
+M	BattleBot	0xCB	u8	pendingValueE8	confirmado; AS6_simbolos.csv:60
+M	BattleBot	0xCC	u8	pendingValueEC	confirmado; AS6_simbolos.csv:60
+M	BattleBot	0xCE	u8	statusFlags	provavel; DF.md:99
+M	BattleBot	0xD0	u8	flatDamageBonus	provavel; DM.md:20-22 (campos do bot); conflito: AS6.md:22 diz contador de EC
+M	BattleBot	0xD1	u8	defenseValue	provavel; DM.md:83; conflito: AS6.md:21 diz contador
+M	BattleBot	0xD3	u8	proximityDamageBonus	provavel; DM.md:199; TSV:160
+M	BattleBot	0xD4	u8	remotenessDamageBonus	provavel; DM.md:199; TSV:161
+M	BattleBot	0xD5	u8	actionCounter	confirmado; AS6_simbolos.csv:64
+M	BattleBot	0xD6	u8	attackerFlags	confirmado; AS4.md:38; AS6.md:73
+M	BattleBot	0xD8	u16	extraPenalty	provavel; DM.md:84 (s16)
+M	BattleBot	0xDD	u8	selectedActionSource	confirmado; AI.md:33; DF.md:101
+M	BattleBot	0xE0	u8	selectedTargetBotId	provavel; AI.md:34; TSV:168
+M	BattleBot	0xE1	u8	selectedTargetPartId	provavel; AI.md:34; TSV:169
+M	BattlePart	0x0	u8	attributeId	provavel; TSV:200; conflito: DF.md:72 diz byte de fi+0x11C e DT.md:14 diz gPartStats+0 = medalha
+M	BattlePart	0x1	u8	techniqueId	confirmado; OP.md (emulador rec_27: 4 = Laser); DF.md:92; DM.md:15 (id 0..59; em k=3 e tipo de perna 100..106
+M	BattlePart	0x2	u8	specialtyId	confirmado; DM.md:248 (0..7)
+M	BattlePart	0x3	u8	gender	provavel; DM.md:15
+M	BattlePart	0x4	u8	armorMax	confirmado; DF2.md:38 (+0x4C = max(stat+4))
+M	BattlePart	0x5	u8	successBonus	provavel; DM.md:15; DF.md:91-95 (campo +0x4D)
+M	BattlePart	0x6	u8	power	confirmado; OP.md (emulador rec_27: Poder 20); FH.md:33 (byte part+0x4E = poder)
+M	BattlePart	0x7	u8	chargeBonus	provavel; DM.md:15
+M	BattlePart	0x8	u8	usesMax	provavel; DM.md:15
+M	BattlePart	0x9	u8	proximityOrCooldown	provavel; DM.md:17 (k=3 proximidade); TSV:220 cooldown_or_remoteness
+M	BattlePart	0xA	u8	sharedValue0A	provavel; TSV:210 (set_shared_value_0A; uso aberto)
+M	BattlePart	0xB	u8	price	provavel; DT.md:144 (gPartStats +0x0B)
+M	BattlePart	0xC	u8	attackDamageScalar	provavel; FH.md:5; DF.md:94 (campo +0x54)
+M	BattlePart	0xD	u8	runtimeByte0D	provavel; TSV:213 (runtime_0D; fora da copia de gPartStats)
+M	BattlePart	0xE	u8	partTargetBotId	provavel; AI.md:29 (B+0x56 alvo da peca)
+M	BattlePart	0xF	u8	partTargetPartId	provavel; AI.md:29 (B+0x57 alvo da peca)
+M	BattlePart	0x10	u8	headUsesSpent	confirmado; AI2_simbolos.csv:13 (bot+0x58 == 0 = cabeca indisponivel; so k=0)
+M	BattlePart	0x11	u8	currentArmor	confirmado; DF.md:95; DF.md:33 (0 = quebrada; k=0 cabeca)
+M	BattlePart	0x12	u8	effectiveSuccessOrPropulsion	provavel; TSV:218; DM.md:17 (k=3: B+0xA2 propulsao)
+M	BattlePart	0x13	u8	effectiveEvasionOrPower	confirmado; DM_simbolos.csv:24 (k=3: B+0xA3 evasao)
+M	BattlePart	0x14	u8	effectiveChargeOrDefense	confirmado; DM_simbolos.csv:25 (k=3: B+0xA4 defesa)
+M	BattlePart	0x15	u8	effectiveProximityOrUses	provavel; TSV:221; DM.md:17 (k=3: B+0xA5 proximidade)
+M	BattlePart	0x16	u8	effectiveRemotenessOrCooldown	provavel; TSV:222; DM.md:17 (k=3: B+0xA6 distancia)
+M	BattlePart	0x17	u8	partId	confirmado; DF.md:96; DF2.md:39 (+0x5F = B+0x43+k)
+M	EnemyTemplate	0x0	u8	characterId	provavel; EN.md:53
+M	EnemyTemplate	0x3	u8	templateFlags	confirmado; EN.md:54
+M	EnemyTemplateRec	0x0	u8	headPartId	provavel; DF2.md:33
+M	EnemyTemplateRec	0x1	u8	armDPartId	provavel; DF2.md:33
+M	EnemyTemplateRec	0x2	u8	armEPartId	provavel; DF2.md:33
+M	EnemyTemplateRec	0x3	u8	legPartId	provavel; DF2.md:33
+M	EnemyTemplateRec	0x4	u8	medalId	confirmado; EN.md:57
+M	EnemyTemplateRec	0x5	u8	level	confirmado; EN.md:58
+M	EnemyTemplateRec	0x6	u32	specialtyNibbles	confirmado; EN.md:59
+M	EventBlock	0x8A	u16	sceneInitCursor	provavel; EV.md:107
+M	EventBlock	0x7FE	u8	currentMapId	confirmado; OW.md:15
+M	EventBlock	0x7FF	u8	currentChapter	confirmado; PR.md:12
+M	EventBlock	0xC10	bytes:8	variantBlock	confirmado; VA.md:36
+M	EventBlock	0xC18	bytes:8	variantBlockBackup	confirmado; HE4.md:24
+M	EventBlock	0xC28	u8	variantIndex	confirmado; VA2.md:22
+M	EventBlock	0xC29	u8	encounterEnabled	confirmado; OW.md:16
+M	EventBlock	0xC2A	u8	encounterTemplateId	confirmado; OW.md:17
+M	EventBlock	0xC2B	u8	stepCounter	confirmado; OW.md:18
+M	EventBlock	0xC2C	u8	encounterBlockFlags	confirmado; OW.md:19
+M	EventBlock	0xC2D	u8	encounterRollSuppressed	confirmado; OW.md:20
+M	EventBlock	0xC2E	u8	postBattleModeFlags	confirmado; EV4.md:59
+M	EventBlock	0xC2F	u8	battleMode	confirmado; EV4.md:58
+M	EventBlock	0xC30	u8	currentSongId	provavel; HE2.md:217
+M	EventBlock	0xC32	u8	fieldC32	provavel; HE4.md:88
+M	EventBlock	0xC33	u8	menuEnabledFlag	confirmado; FM2.md:13
+M	EventBlock	0xC35	u8	mapLoadStateA	provavel; OW.md:23
+M	EventBlock	0xC36	u8	faceUpVariantGate	provavel; HE4.md:124
+M	EventBlock	0xC48	u16	mapOriginX	confirmado; CU.md:135
+M	EventBlock	0xC4A	u16	mapOriginY	confirmado; CU.md:135
+M	EventBlock	0xC4F	u8	sceneCommandResult	provavel; EV3.md:28
+M	EventBlock	0xC52	u16	playerPixelX	provavel; OW.md:26
+M	EventBlock	0xC54	u16	playerPixelY	provavel; pc/research/README.md:254
+M	EventBlock	0xC56	u8	playerTileX	confirmado; OW.md:27
+M	EventBlock	0xC57	u8	playerTileY	confirmado; OW.md:28
+M	EventBlock	0xC58	u8	tileStepCounter	provavel; EV4.md:10
+M	EventBlock	0xC5B	u8	mapSceneVariant	confirmado; HE4.md:11
+M	EventBlock	0xC5C	u8	walkMode	confirmado; VA2.md:18
+M	EventBlock	0xC5D	u8	stepKindFlags	provavel; OW.md:30
+M	EventBlock	0xC5F	u8	sceneRepeatFlag	confirmado; EV.md:13
+M	EventBlock	0xC60	u8	missingPartIndex	confirmado; FI2.md:86
+M	EventBlock	0xC67	u8	loadFacingSource	provavel; OW.md:32
+M	EventBlock	0xC69	u8	prevWalkMode	confirmado; VA2.md:23
+M	EventBlock	0xC6E	u16	companionSourceX	provavel; CU.md:122
+M	EventBlock	0xC70	u16	companionSourceY	provavel; CU.md:123
+M	EventBlock	0xC76	u8	jumpFlagC76	provavel; HE4.md:140
+M	EventBlock	0xC88	u8	eventPendingFlag	confirmado; EV.md:14
+M	EventBlock	0xC89	u8	eventStateByte	confirmado; EV.md:15
+M	EventBlock	0xC8A	u16	scriptCursor	confirmado; EV.md:16
+M	EventBlock	0xC8C	u16	savedScriptCursor	confirmado; FI2.md:90
+M	EventBlock	0xC8E	u16	eventId	confirmado; EV.md:17
+M	EventBlock	0xC92	u8	eventOpcode	confirmado; EV.md:18
+M	EventBlock	0xC93	u8	eventSubstate	confirmado; EV.md:19
+M	EventBlock	0xC94	u8	eventArgs	confirmado; EV.md:20
+M	EventBlock	0xCA4	u8	trackedActorSlots	confirmado; CU.md:45
+M	EventBlock	0xCB4	u8	eventObjectIndex	confirmado; EV.md:21
+M	EventBlock	0xCB5	u8	yesNoBoxMode	confirmado; FI2.md:96
+M	EventBlock	0xCBA	u8	mapEventMode	provavel; FI2.md:97
+M	EventBlock	0xCBC	u8	eventCounterA	provavel; FI2.md:98
+M	EventBlock	0xCBD	u8	eventCounterB	provavel; FI2.md:99
+M	EventVariantBlock	0x0	u8	passability0	confirmado; VA.md:36
+M	EventVariantBlock	0x1	u8	passability1	confirmado; VA.md:36
+M	EventVariantBlock	0x2	u8	passability2	confirmado; VA.md:36
+M	EventVariantBlock	0x3	u8	passability3	confirmado; VA.md:36
+M	FightInfo	0x8	u32	stepSceneIndex	provavel; FI.md:11; FI_simbolos.csv (0x03001808 u32)
+M	FightInfo	0x2A	u8	teamSupportRecords	confirmado; FI2.md:61 (decompile T_11 base 0x2A); FI2.md:59 (array 8 B fi+0x2A+8*k); FI.md:13. Conflito: README (GH-TP/Scout) e FI_simbolos usam base 0x28/0x2A (0x03001828); Scout (fi+0x28+8*lado) nao confirmado aqui. Doc antigo: fi+0x38 gfx (FI.md:16) fica dentro do array se N maior ou igual a 2; fora daqui. Registro: +0x2B marcador Z; +0x2C drenagem e +0x2D dano (HA1.md:111 e HA1.md:27) nao listados separados
+M	FightInfo	0x51	u8	partEffectMode	provavel; FI.md:18 (modo 0..3 do byte +0x49); conflito: MF4.md (GH-MF4; README:71) diz fi+0x51 = custo b2 do medidor; BT.md:125 diz valor de SFX
+M	FightInfo	0x52	u8	partModeCopy	provavel; FI.md:19
+M	FightInfo	0x53	u8	sideBPhase	provavel; FI.md:20
+M	FightInfo	0x55	u8	secondaryPhaseMask	provavel; FI.md:21
+M	FightInfo	0x57	u8	timeUp	provavel; FI.md:22
+M	FightInfo	0x58	u8	medaforceEligible	provavel; FI.md:23
+M	FightInfo	0x5B	u8	enemyBotCount	provavel; FI.md:24 (escritor nao confirmado)
+M	FightInfo	0x5C	u8	actionBot	provavel; FI.md:25
+M	FightInfo	0x5D	u8	actionPartMinus1	provavel; FI.md:26
+M	FightInfo	0x5E	u8	targetSlotPlus1	provavel; FI.md:27
+M	FightInfo	0x5F	u8	statusLineRoll	provavel; FI.md:28
+M	FightInfo	0x60	u8	opponentSideBase	confirmado; FI.md:29
+M	FightInfo	0x61	u8	targetSlotCandidates	provavel; FI.md:30 (3 bytes)
+M	FightInfo	0x64	u8	priorityListLine	provavel; FI.md:31 (4 bytes). Conflito: AI2.md (conteudo nao bate com ids de peca)
+M	FightInfo	0x87	u8	activeBot	confirmado; FI.md:34 (HANDOFF/DM)
+M	FightInfo	0x88	u8	targetBot	confirmado; OP.md (emulador rec_27); FI.md:35
+M	FightInfo	0x89	u8	targetSlotIndex	provavel; FI.md:36
+M	FightInfo	0x8A	u8	teamRecordBranch	provavel; FI.md:37; FI2.md:62 (+0x8A = checagem de suporte)
+M	FightInfo	0x8B	u8	chosenPart	provavel; FI.md:38
+M	FightInfo	0x9C	u8	tableCIndex	provavel; FI.md:39
+M	FightInfo	0x9D	u8	tableCArg	provavel; FI.md:40
+M	FightInfo	0x9E	u8	tableCExitFlag	provavel; FI.md:41
+M	FightInfo	0xA1	u8	tableAIndex	confirmado; FI.md:42
+M	FightInfo	0xA2	u8	tableACode	confirmado; FI.md:43
+M	FightInfo	0xA6	u8	messageCode	confirmado; FI.md:44 (exemplo do usuario)
+M	FightInfo	0xA7	u8	partIndex	confirmado; OP.md (emulador rec_27); FI.md:45 (0 cabeca 1 braco D 2 braco E 3 pernas)
+M	FightInfo	0xA8	u8	actionScriptId	confirmado; FI2.md:65-69 (decompile BR_14 grava byte bot+part+0x49; indice gTechniqueActionScriptPtrTable 0x083C6CA8); FI.md:46 conflito antigo (DM/AS1) resolvido
+M	FightInfo	0xAA	u8	actionSubstate	confirmado; FI.md:47 (passo; exemplo do usuario ja citado em AGENTE)
+M	FightInfo	0xAB	u8	scriptCompareIndex	provavel; FI.md:48
+M	FightInfo	0xAC	u8	scriptCompareByte	provavel; FI.md:49
+M	FightInfo	0xB5	u8	handlerDoneFlag	confirmado; FI.md:50
+M	FightInfo	0xB7	u8	conditionFlagA	provavel; FI.md:51
+M	FightInfo	0xB8	u8	conditionFlagB	provavel; FI.md:52
+M	FightInfo	0xBC	u16	scriptCursor	provavel; FI.md:53
+M	FightInfo	0xC8	u16	combatValue	provavel; FI.md:54. Conflito: CF.md diz armadura; MD/FH dizem dano
+M	FightInfo	0xCA	u8	belowArmorFlag	provavel; FI.md:55
+M	FightInfo	0xCC	u16	combatValueMirror	provavel; FI.md:56
+M	FightInfo	0xD0	u8	repairPart	provavel; FI.md:57
+M	FightInfo	0xD1	u8	partBreakFlag	provavel; FI.md:58
+M	FightInfo	0xD2	u8	targetPartFlags	confirmado; FI.md:59; FI_simbolos.csv:39 (decompile BP_08; 3 bytes por alvo). Mapeamento 1->2 2->3 do leitor BK_0E em QA3; bit7 = quebra
+M	FightInfo	0xD6	u8	targetDamage	confirmado; FI.md:60 (3 u16 por alvo; decompile BP_08). Conflito: AS2.md diz D6+2k = armadura>>1
+M	FightInfo	0xDE	u8	followUpBot	provavel; FI.md:61; FI.md:62 tambem da 0x0DF 1 byte tipo de follow-up (0x1B e 0x1C gfx); sobreposto; nao listado
+M	FightInfo	0xDF	u8	followUpKind	confirmado; Fight_AccumulateBaseDamage compara com 0x1B (decompile)
+M	FightInfo	0xE8	u16	rosTotal	provavel; FI.md:64
+M	FightInfo	0xEA	u16	preDamage	confirmado; OP.md (emulador rec_27); FI.md:65 (s16)
+M	FightInfo	0xEC	u16	attackAccum	confirmado; OP.md (emulador rec_27); FI.md:66
+M	FightInfo	0xEE	u16	defenderReduction	provavel; FI.md:67
+M	FightInfo	0xF2	u16	rosResolved	provavel; FI.md:68
+M	FightInfo	0xF6	u8	conditionFlagF6	provavel; FI.md:69
+M	FightInfo	0xF8	u8	moveDirectionFlags	provavel; FI.md:70 (bit0 sentido; bit1 usa 0x158)
+M	FightInfo	0xF9	u8	techBank	provavel; FI.md:71
+M	FightInfo	0xFD	u8	scriptCondFlag	provavel; FI.md:72 (texto; sem decompile)
+M	FightInfo	0x100	u16	objScriptCursor	provavel; FI.md:73
+M	FightInfo	0x102	u8	objOpcodeArgs	provavel; FI.md:74 (halfwords aN em 0x102+2N; tamanho exato nao dito)
+M	FightInfo	0x112	u8	motionCode	provavel; FI.md:75
+M	FightInfo	0x154	u16	side0X	provavel; FI.md:76
+M	FightInfo	0x156	u16	side0Y	provavel; FI.md:76
+M	FightInfo	0x158	u16	side1X	provavel; FI.md:77
+M	FightInfo	0x15A	u16	side1Y	provavel; FI.md:77
+M	FightInfo	0x15F	u8	sideWaitFlagA	provavel; FI.md:78
+M	FightInfo	0x160	u8	sideWaitFlagB	provavel; FI.md:78
+M	FightInfo	0x164	u8	medaforceOk	provavel; FI.md:79
+M	FightInfo	0x165	u8	levelUpFlag	provavel; FI.md:80
+M	FightInfo	0x16C	u16	xpRemaining	provavel; FI.md:83
+M	FightInfo	0x170	u8	medaforceIdA	provavel; FI.md:85 (doc diz tamanho 1-2; usado 1)
+M	FightInfo	0x172	u8	medaforceIdB	provavel; FI.md:85 (doc diz tamanho 1-2; usado 1)
+M	FightInfo	0x173	u8	medaforceIdC	provavel; FI.md:85 (doc diz tamanho 1-2; usado 1)
+M	FightInfo	0x174	u8	medaforceFlag	provavel; FI.md:86
+M	FightInfo	0x188	u8	effectValueSlots	provavel; FI.md:87 (slots 10 e 11; quantidade nao dita)
+M	FightInfo	0x1A0	u8	barValue	provavel; FI.md:88 (0..0x60)
+M	FightInfo	0x1AE	u8	flag1AE	provavel; FI.md:89
+M	FightInfo	0x1B0	u8	sideState	provavel; FI.md:90 (bit8)
+M	MedalRecord	0x0	u8	flags	confirmado; XP.md:57
+M	MedalRecord	0x1	u8	medalId	confirmado; XP.md:58
+M	MedalRecord	0x2	u16	xpRemaining	confirmado; XP.md:59
+M	MedalRecord	0x4	u8	medalCopyPlus1	provavel; XP.md:60
+M	MedalRecord	0x5	u8	level	confirmado; XP.md:61
+M	MedalRecord	0x6	u8	medalCopyPlus2	confirmado; XP.md:62
+M	MedalRecord	0x7	u8	compatBonus	confirmado; XP.md:63
+M	MedalRecord	0x8	u8	stage	confirmado; XP.md:64
+M	MedalRecord	0x20	bytes:8	specialties	confirmado; XP.md:65
+M	Money	0x0	u32	amount	provavel; IN.md:13
+M	PartInventory	0x0	u8	quantity	confirmado; IV.md:19
+M	PartInventory	0x1	u8	equippedCount	confirmado; IV.md:20
+M	PartStats	0x0	u8	medalId	confirmado; DT.md:14
+M	PartStats	0x1	u8	techniqueId	confirmado; DT.md:15
+M	PartStats	0x2	u8	specialtyId	confirmado; DT.md:16
+M	PartStats	0x3	u8	gender	confirmado; DT.md:17
+M	PartStats	0x4	u8	armorMax	confirmado; DT.md:18
+M	PartStats	0x5	u8	success	confirmado; DT.md:19
+M	PartStats	0x6	u8	power	confirmado; DT.md:20
+M	PartStats	0x7	u8	load	confirmado; DT.md:21
+M	PartStats	0x8	u8	uses	confirmado; DT.md:22
+M	PartStats	0xB	u8	priceUnits	confirmado; DT.md:23
+M	PartStatsLeg	0x1	u8	legType	confirmado; DM.md:17
+M	PartStatsLeg	0x6	u8	propulsion	provavel; DM.md:17
+M	PartStatsLeg	0x7	u8	evasion	provavel; DM.md:17
+M	PartStatsLeg	0x8	u8	defense	provavel; DM.md:17
+M	PartStatsLeg	0x9	u8	proximity	provavel; DM.md:17
+M	PartStatsLeg	0xA	u8	distance	provavel; DM.md:17
+A	0x03000590	BattleBot	6	gBattleBots
+A	0x03001800	FightInfo	1	gFightInfo
+A	0x030057E0	EventBlock	1	gEventBlock
+A	0x03000BE0	MedalRecord	30	gMedalRecord
+A	0x083B83FC	PartStats	480	gPartStats
+A	0x083BF510	EnemyTemplate	246	gEnemyTemplate
+A	0x03004C40	PartInventory	480	gPartInventory
+A	0x03002B70	Money	1	gMoney

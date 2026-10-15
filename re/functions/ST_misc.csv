@@ -1,0 +1,45 @@
+struct,offset,size,name,confidence,source
+MedalRecord,0x03000BE0,0x780,0x03000BE0 x30,confirmado,XP.md:53
+MedalRecord,0x00,1,flags,confirmado,XP.md:57
+MedalRecord,0x01,1,medalId,confirmado,XP.md:58
+MedalRecord,0x02,2,xpRemaining,confirmado,XP.md:59
+MedalRecord,0x04,1,medalCopyPlus1,provavel,XP.md:60
+MedalRecord,0x05,1,level,confirmado,XP.md:61
+MedalRecord,0x06,1,medalCopyPlus2,confirmado,XP.md:62
+MedalRecord,0x07,1,compatBonus,confirmado,XP.md:63
+MedalRecord,0x08,1,stage,confirmado,XP.md:64
+MedalRecord,0x20,8,specialties,confirmado,XP.md:65
+PartStats,0x083B83FC,0x1E00,0x083B83FC x480,confirmado,DT.md:8-11
+PartStats,0x00,1,medalId,confirmado,DT.md:14
+PartStats,0x01,1,techniqueId,confirmado,DT.md:15
+PartStats,0x02,1,specialtyId,confirmado,DT.md:16
+PartStats,0x03,1,gender,confirmado,DT.md:17
+PartStats,0x04,1,armorMax,confirmado,DT.md:18
+PartStats,0x05,1,success,confirmado,DT.md:19
+PartStats,0x06,1,power,confirmado,DT.md:20
+PartStats,0x07,1,load,confirmado,DT.md:21
+PartStats,0x08,1,uses,confirmado,DT.md:22
+PartStats,0x0B,1,priceUnits,confirmado,DT.md:23
+PartStatsLeg,0x083B83FC,0x1E00,0x083B83FC x480 (kind 3 = pernas),confirmado,DT.md:25
+PartStatsLeg,0x01,1,legType,confirmado,DM.md:17
+PartStatsLeg,0x06,1,propulsion,provavel,DM.md:17
+PartStatsLeg,0x07,1,evasion,provavel,DM.md:17
+PartStatsLeg,0x08,1,defense,provavel,DM.md:17
+PartStatsLeg,0x09,1,proximity,provavel,DM.md:17
+PartStatsLeg,0x0A,1,distance,provavel,DM.md:17
+EnemyTemplate,BASE,0x28,0x083BF510 x246,confirmado,EN.md:45-48; ponteiros em 0x083C1B80 (246*0x28 termina nela; conferido na ROM)
+EnemyTemplate,0x00,1,characterId,provavel,EN.md:53
+EnemyTemplate,0x03,1,templateFlags,confirmado,EN.md:54
+EnemyTemplateRec,0x03001804,0x24,0x03001804 x3,provavel,DF2.md:31
+EnemyTemplateRec,0x00,1,headPartId,provavel,DF2.md:33
+EnemyTemplateRec,0x01,1,armDPartId,provavel,DF2.md:33
+EnemyTemplateRec,0x02,1,armEPartId,provavel,DF2.md:33
+EnemyTemplateRec,0x03,1,legPartId,provavel,DF2.md:33
+EnemyTemplateRec,0x04,1,medalId,confirmado,EN.md:57
+EnemyTemplateRec,0x05,1,level,confirmado,EN.md:58
+EnemyTemplateRec,0x06,4,specialtyNibbles,confirmado,EN.md:59
+PartInventory,0x03004C40,0x3C0,0x03004C40 x480,confirmado,IV.md:18
+PartInventory,0x00,1,quantity,confirmado,IV.md:19
+PartInventory,0x01,1,equippedCount,confirmado,IV.md:20
+Money,0x03002B70,4,0x03002B70 x1,provavel,IN.md:13
+Money,0x00,4,amount,provavel,IN.md:13
