@@ -1,6 +1,5 @@
 struct,offset,size,name,confidence,source
 FightInfo,0x008,4,stepSceneIndex,provavel,FI.md:11; FI_simbolos.csv (0x03001808 u32)
-FightInfo,0x02A,N,teamSupportRecords,confirmado,FI2.md:61 (decompile T_11 base 0x2A); FI2.md:59 (array 8 B fi+0x2A+8*k); FI.md:13. Conflito: README (GH-TP/Scout) e FI_simbolos usam base 0x28/0x2A (0x03001828); Scout (fi+0x28+8*lado) nao confirmado aqui. Doc antigo: fi+0x38 gfx (FI.md:16) fica dentro do array se N maior ou igual a 2; fora daqui. Registro: +0x2B marcador Z; +0x2C drenagem e +0x2D dano (HA1.md:111 e HA1.md:27) nao listados separados
 FightInfo,0x051,1,partEffectMode,provavel,FI.md:18 (modo 0..3 do byte +0x49); conflito: MF4.md (GH-MF4; README:71) diz fi+0x51 = custo b2 do medidor; BT.md:125 diz valor de SFX
 FightInfo,0x052,1,partModeCopy,provavel,FI.md:19
 FightInfo,0x053,1,sideBPhase,provavel,FI.md:20
@@ -75,3 +74,9 @@ FightInfo,0x1AE,1,flag1AE,provavel,FI.md:89
 FightInfo,0x1B0,1,sideState,provavel,FI.md:90 (bit8)
 FightInfo,0x840,2,gfxHalfword,provavel,FI.md:91; FI_simbolos.csv (0x03002040 = fi+0x840)
 FightInfo,0x166,1,skillRaisedSpeciality,confirmado,SK.md (Fight_AwardSpecialitySkillUse 0x0801BE48)
+FightInfo,0x028,SideRecord:2,sideRecords,confirmado,"TR6 (emulador: Scout em fi+0x28+8*lado); FI2.md:59-61 (T_11 zera fi+8k+0x2A..0x2D); Fight_AccumulateBaseDamage le +0x2B/+0x2D por fi+0x8A"
+SideRecord,0x00,1,scoutBonus,confirmado,TR6.md (emulador; teto 160)
+SideRecord,0x02,1,supportFlag,provavel,FI2.md:60 (== 0 -> acao)
+SideRecord,0x03,1,trapTechnique,confirmado,Fight_AccumulateBaseDamage compara com 51 Team Form (decompile); HA1.md:111
+SideRecord,0x04,1,trapValue,provavel,HA1.md:27 (drenagem); Fight_ComputeTotalRos soma +0x2C (DM 7.1)
+SideRecord,0x05,1,trapPower,confirmado,Fight_AccumulateBaseDamage soma +0x2D ao dano com TeamAttack (decompile)

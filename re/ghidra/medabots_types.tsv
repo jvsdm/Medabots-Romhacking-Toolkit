@@ -11,6 +11,7 @@ T	Money	0x4
 T	PartInventory	0x2
 T	PartStats	0x10
 T	PartStatsLeg	0x10
+T	SideRecord	0x8
 T	BattleBot	0x100
 M	ActiveMapObjectEntry	0x2	u16	objectEventId	confirmado; EV.md:12
 M	ActiveMapObjectEntry	0x4	u8	renderSlot	confirmado; EV.md:12
@@ -145,7 +146,7 @@ M	EventVariantBlock	0x1	u8	passability1	confirmado; VA.md:36
 M	EventVariantBlock	0x2	u8	passability2	confirmado; VA.md:36
 M	EventVariantBlock	0x3	u8	passability3	confirmado; VA.md:36
 M	FightInfo	0x8	u32	stepSceneIndex	provavel; FI.md:11; FI_simbolos.csv (0x03001808 u32)
-M	FightInfo	0x2A	u8	teamSupportRecords	confirmado; FI2.md:61 (decompile T_11 base 0x2A); FI2.md:59 (array 8 B fi+0x2A+8*k); FI.md:13. Conflito: README (GH-TP/Scout) e FI_simbolos usam base 0x28/0x2A (0x03001828); Scout (fi+0x28+8*lado) nao confirmado aqui. Doc antigo: fi+0x38 gfx (FI.md:16) fica dentro do array se N maior ou igual a 2; fora daqui. Registro: +0x2B marcador Z; +0x2C drenagem e +0x2D dano (HA1.md:111 e HA1.md:27) nao listados separados
+M	FightInfo	0x28	SideRecord:2	sideRecords	confirmado; TR6 (emulador: Scout em fi+0x28+8*lado); FI2.md:59-61 (T_11 zera fi+8k+0x2A..0x2D); Fight_AccumulateBaseDamage le +0x2B/+0x2D por fi+0x8A
 M	FightInfo	0x51	u8	partEffectMode	provavel; FI.md:18 (modo 0..3 do byte +0x49); conflito: MF4.md (GH-MF4; README:71) diz fi+0x51 = custo b2 do medidor; BT.md:125 diz valor de SFX
 M	FightInfo	0x52	u8	partModeCopy	provavel; FI.md:19
 M	FightInfo	0x53	u8	sideBPhase	provavel; FI.md:20
@@ -247,6 +248,11 @@ M	PartStatsLeg	0x7	u8	evasion	provavel; DM.md:17
 M	PartStatsLeg	0x8	u8	defense	provavel; DM.md:17
 M	PartStatsLeg	0x9	u8	proximity	provavel; DM.md:17
 M	PartStatsLeg	0xA	u8	distance	provavel; DM.md:17
+M	SideRecord	0x0	u8	scoutBonus	confirmado; TR6.md (emulador; teto 160)
+M	SideRecord	0x2	u8	supportFlag	provavel; FI2.md:60 (== 0 -> acao)
+M	SideRecord	0x3	u8	trapTechnique	confirmado; Fight_AccumulateBaseDamage compara com 51 Team Form (decompile); HA1.md:111
+M	SideRecord	0x4	u8	trapValue	provavel; HA1.md:27 (drenagem); Fight_ComputeTotalRos soma +0x2C (DM 7.1)
+M	SideRecord	0x5	u8	trapPower	confirmado; Fight_AccumulateBaseDamage soma +0x2D ao dano com TeamAttack (decompile)
 A	0x03000590	BattleBot	6	gBattleBots
 A	0x03001800	FightInfo	1	gFightInfo
 A	0x030057E0	EventBlock	1	gEventBlock

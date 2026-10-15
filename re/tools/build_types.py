@@ -38,10 +38,12 @@ def main():
             for r in csv.DictReader(fh):
                 st = ident(r.get("struct") or "")
                 off = (r.get("offset") or "").strip()
+                raw = str(r.get("size") or "1").strip()
                 try:
-                    size = int(str(r.get("size") or "1").strip(), 0)
+                    size = int(raw, 0)
                 except ValueError:
-                    size = 1
+                    # "Struct" ou "Struct:N" = campo que é outro struct (array de N); tamanho resolvido abaixo
+                    size = raw if re.fullmatch(r"[A-Z][a-z]\w*(:\d+)?", raw) else 1
                 nm = (r.get("name") or "").strip()
                 m = re.match(r"(0x[0-9A-Fa-f]+) x(\d+)", nm)
                 if off.upper() == "BASE" or m:
@@ -61,7 +63,7 @@ def main():
                     if o + size > PART_SIZE:
                         size = 1
                 cmt = f"{conf}; {(r.get('source') or '').strip()}".replace("\t", " ")
-                rows.append((st, o, max(size, 1), ident(r.get("name") or ""), conf, cmt))
+                rows.append((st, o, size if isinstance(size, str) else max(size, 1), ident(r.get("name") or ""), conf, cmt))
 
     # tamanho e instâncias
     sizes, inst = {}, {}
@@ -75,10 +77,20 @@ def main():
             if a in {x[0] for l in inst.values() for x in l}:
                 continue  # mesmo endereço de outro struct (ex.: PartStatsLeg)
             inst[st] = [(a, int(m.group(2) or 1), "g" + st)]
-    # sem tamanho declarado: até o fim do último campo, alinhado a 4
-    for st in {r[0] for r in rows} | set(sizes):
+    # sem tamanho declarado: até o fim do último campo, alinhado a 4 (structs referenciados primeiro)
+    def span_of(sz):
+        if not isinstance(sz, str):
+            return sz
+        name, _, n = sz.partition(":")
+        return sizes[name] * int(n or 1)
+    for st in sorted({r[0] for r in rows} | set(sizes), key=lambda s: any(isinstance(r[2], str) for r in rows if r[0] == s)):
         if sizes.get(st) is None:
-            sizes[st] = (max([o + sz for s, o, sz, *_ in rows if s == st] or [4]) + 3) & ~3
+            sizes[st] = (max([o + span_of(sz) for s, o, sz, *_ in rows if s == st] or [4]) + 3) & ~3
+    typed = {}
+    for i, (st, o, sz, nm, conf, cmt) in enumerate(rows):
+        if isinstance(sz, str):
+            typed[(st, o)] = sz
+            rows[i] = (st, o, span_of(sz), nm, conf, cmt)
 
     # campos sem sobreposição; confirmado primeiro
     rows.sort(key=lambda r: (r[4] != "confirmado", r[0], r[1]))
@@ -98,7 +110,7 @@ def main():
             nm = f"{nm}_{o:02X}"
         n[nm] = 1
         occ |= span
-        fields.append((st, o, TYPES.get(sz, f"bytes:{sz}"), nm, cmt))
+        fields.append((st, o, typed.get((st, o)) or TYPES.get(sz, f"bytes:{sz}"), nm, cmt))
 
     # BattleBot recebe o array de peças
     fields.append(("BattleBot", PART_BASE, f"BattlePart:{PART_N}", "parts", "peças k=0..3 (cabeça, braços, perna)"))
@@ -106,7 +118,7 @@ def main():
 
     with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("# gerado por re/tools/build_types.py a partir de re/functions/ST_*.csv\n")
-        for st in sorted(sizes, key=lambda s: (s == "BattleBot", s)):  # BattlePart antes de BattleBot
+        for st in sorted(sizes, key=lambda s: (s == "BattleBot", s)):  # T só cria vazios; ordem livre
             fh.write(f"T\t{st}\t0x{sizes[st]:X}\n")
         for st, o, t, nm, cmt in fields:
             fh.write(f"M\t{st}\t0x{o:X}\t{t}\t{nm}\t{cmt}\n")
