@@ -1,0 +1,7 @@
+addr,nome,kind,comentario
+0x080116C4,Fight_InitPartDetailFromBattleMode,func_thumb,provavel (antes: Fight_InitPartStateSetGS10). Le fight_information+0x168 (modo) e +0x169 (indice -> ctx+0x3D); grava ctx+0x3E=modo, ctx+0x3C=2, gs=0x10. Sem xref direto; entra por tabela de estado (base nao achada)
+0x08010146,ObjSlot_DispatchState129Handler,func_thumb,provavel (antes: PartDetail_DispatchModeHandler). Le gObjectSlots+0x129 (0x03002D59) e despacha tabela 0x083ACE14[byte*4]; retorna byte==3. NAO e modo da tela de detalhe
+0x03002D59,gObjectSlots_State129,data,provavel (ST2 dizia gPartDetailMode; proposta NAO aplicada no Ghidra). Byte de estado do slot de objeto; escrito por ObjScript SpawnEffectSlot e Slot_CountdownStepAndClear
+0x0300047E,PartDetail_Mode (ctx+0x3E),data,confirmado: modo da tela de detalhe; lido por PartDetail_DispatchSubstate 0x0800E78C (modo0=JT_Mode0, modo1/2=JT_Mode12, modo3=JT_Mode3). Sem rename aplicado
+0x0800E78C,PartDetail_DispatchSubstate,func_thumb,confirmado (ja existente): ramos por ctx+0x3E
+0x02023000,EWRAM_LevelSortScratch (buffer 8B),data,provavel: scratch compartilhado por Sort_Records8Descending, Level_ComputeReferenceFromSlots, Fight_PickMostDamagedRepairablePart1Based e loja; quem preenche a quantidade antes da copia: aberto

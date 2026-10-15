@@ -1,0 +1,11 @@
+addr,nome,kind,comentario
+0x0806D41C,MainState_KeyComboStateTransition,func_thumb,"provavel (antes: battle_transition_main_state): se gKeysHeld&4 e keys_edge&8 -> gMainState=2, menu 7, GS 0. Senao com fight_info+4==5 e (held&8 ou 0x03007008) -> gMainState=3, menu 2, GS 10. Chamador nao achado."
+0x0804C53C,Event_Op33_StartBattle,func_thumb,"confirmado: le 3 bytes -> E+0xC2A (id), E+0xC2E, E+0xC2F (modo); se Stub_ReturnZero_0804B738==0 grava E+0xC89=1. Nao grava menu/GS."
+0x08047878,GameState_StartFlowByCommand,func_thumb,"confirmado: cmd 0x20 (historia) e 0x21 (aleatorio): E+0xC2D=1/0, gMainState=0, gGameStateMenu=6, GS=0."
+0x08010264,Scene_GsDispatch_Menu6_Encounter,func_thumb,confirmado: despachante GS da tabela 0x083ACE24 (menu 6 = encontro/preparo da luta).
+0x08010A7C,Overworld_ReloadMapSceneAndAdvanceGameState,func_thumb,"confirmado (decompile): Map_LoadCurrentMapAndEntities + transicao 0x40. Candidato a retorno ao mapa, nao confirmado."
+0x08004840,BattlePreview_ClearStateStep,func_thumb,"confirmado: grava menu 7 e GS 0 (0x03000430=0). Ponto de tabela 0x083AC520 idx 3. Candidato a entrada da luta, nao fechado."
+0x08030CCC,Fight_SceneStep4F_ReturnToTurnScene,func_thumb,confirmado (sem nome novo): grava menu 7; volta ao turno.
+0x08030C7C,Fight_DispatchOnSubstateAA_BR_14_ActionSelectValidatePart,func_thumb,confirmado: grava menu 9.
+0x08031956,Fight_DispatchOnSubstateAA_BR_49_StartMedaforceAction,func_thumb,confirmado: grava menu 9.
+0x0300640D,gEncounterRollSuppressed,label,"confirmado por BT5: flag story(1)/random(0) gravado por cmd 0x20/0x21 em GameState_StartFlowByCommand. Antes de corrigir o mtbe, ver linha de 0x03005E0D."

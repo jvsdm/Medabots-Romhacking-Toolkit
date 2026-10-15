@@ -98,7 +98,7 @@ def main():
             if k == "data" and kind != "data":
                 k = kind
             key = norm(a, k == "func_thumb")
-            if "revisto CH" in comment:
+            if "revisto CH" in comment or re.fullmatch(r"(RV|RM|RD|CH|NX)\d+", prefix):
                 t = len(TIERS)  # revisão de chute é a palavra mais nova sobre o endereço
             old = cand.get(key)
             if old is None or t >= old[0]:

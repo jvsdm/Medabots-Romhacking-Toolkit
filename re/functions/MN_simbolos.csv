@@ -1,23 +1,22 @@
 # address,name,kind,comment
-0x083D2104,gMainState1MenuTable,table,"[MN] tabela indexada por gamestate_menu sob MainState1; [1]=EventScript_RunCurrent (mapa); [2]=0x0805716C (provavel); provavel"
-0x08483594,gMainState2MenuTable,table,"[MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel"
-0x084856E8,gMainState3MenuTable,table,"[MN] tabela indexada por gamestate_menu sob MainState3; [0]=boot (0x0806E460); [3..6] handlers; provavel"
+0x083D2104,gMainState1MenuTable,table,[MN] tabela indexada por gamestate_menu sob MainState1; [1]=EventScript_RunCurrent (mapa); [2]=0x0805716C (provavel); provavel
+0x08483594,gMainState2MenuTable,table,[MN] tabela indexada por gamestate_menu sob MainState2 (3..12 handlers); nao identificada; provavel
+0x084856E8,gMainState3MenuTable,table,[MN] tabela indexada por gamestate_menu sob MainState3; [0]=boot (0x0806E460); [3..6] handlers; provavel
 0x0800256C,gMenuList0SubTablePtr,ptr,"[MN] literal de Dispatch_CallIndexedHandler (menu_list[0]): ponteiro para a tabela de sub-passos, indexada por gamestate_subroutine; tabela nao identificada"
-0x03000584,gFlowVariant,label,"[MN] byte escrito por GameState_StartFlowByCommand cmd 0/1/2 (valor 0/1/2); provavel"
-0x03005E0D,gBattleEncounterFlag,label,"[MN] byte: 1 quando StartFlow 0x20 (encontro por evento), 0 quando 0x21 (encontro aleatorio); provavel"
-0x03002410,gFrameFlagClear,label,"[MN] byte zerado por AgbMain a cada quadro antes de get_player_inputs; confirmado escrita; sem funcao clara"
-0x03001C00,keys_released,label,"[MN] u16: teclas soltas neste quadro (prev & ~held); confirmado (get_player_inputs)"
-0x03001790,keys_prev,label,"[MN] u16: teclas do quadro anterior; confirmado (get_player_inputs)"
-0x03001798,keys_repeat,label,"[MN] u16: aperto novo ou segurada com repeticao; confirmado (get_player_inputs)"
+0x03000584,gFlowVariant,label,[MN] byte escrito por GameState_StartFlowByCommand cmd 0/1/2 (valor 0/1/2); provavel
+0x03002410,gFrameFlagClear,label,[MN] byte zerado por AgbMain a cada quadro antes de get_player_inputs; confirmado escrita; sem funcao clara
+0x03001C00,keys_released,label,[MN] u16: teclas soltas neste quadro (prev & ~held); confirmado (get_player_inputs)
+0x03001790,keys_prev,label,[MN] u16: teclas do quadro anterior; confirmado (get_player_inputs)
+0x03001798,keys_repeat,label,[MN] u16: aperto novo ou segurada com repeticao; confirmado (get_player_inputs)
 0x03002418,keys_repeat_timer,label,"[MN] byte: contador da repeticao (16 no aperto novo, depois 3..0); confirmado"
-0x03005030,gLinkActiveFlag,label,"[MN] byte: flag de link; testada em AgbMain e MainState2; provavel"
-0x03005010,gLinkStateBlock,label,"[MN] bloco de estado do link (bitfield de slots conectados em +0; contadores +0x18..+0x1B; flags +0x1D/+0x1E); provavel"
-0x03005014,gLinkPacketOut,label,"[MN] pacote de saida enfileirado por QueueLinkTransferPacket; provavel"
-0x03005170,gLinkSlotInput,label,"[MN] bloco de entrada de link por slot; +2 = byte de teclas do slot; provavel"
-0x03000B90,gLinkLocalSlotIndex,label,"[MN] byte: indice do slot local usado no teste de reset por link (0 -> le halfword em +8 e +0xC conforme); provavel"
-0x080005D0,Gfx_VBlankIrq,func_thumb,"[MN] confirmado (FL2.md); sem alteracao"
-0x08000258,MainStateNop,func_thumb,"[MN] confirmado: entradas 4 e 5 de gMainStateTable"
-0x0800BA74,DebugMenu_Exit,func_thumb,"[MN] confirmado (ja no CSV); sem alteracao"
+0x03005030,gLinkActiveFlag,label,[MN] byte: flag de link; testada em AgbMain e MainState2; provavel
+0x03005010,gLinkStateBlock,label,[MN] bloco de estado do link (bitfield de slots conectados em +0; contadores +0x18..+0x1B; flags +0x1D/+0x1E); provavel
+0x03005014,gLinkPacketOut,label,[MN] pacote de saida enfileirado por QueueLinkTransferPacket; provavel
+0x03005170,gLinkSlotInput,label,[MN] bloco de entrada de link por slot; +2 = byte de teclas do slot; provavel
+0x03000B90,gLinkLocalSlotIndex,label,[MN] byte: indice do slot local usado no teste de reset por link (0 -> le halfword em +8 e +0xC conforme); provavel
+0x080005D0,Gfx_VBlankIrq,func_thumb,[MN] confirmado (FL2.md); sem alteracao
+0x08000258,MainStateNop,func_thumb,[MN] confirmado: entradas 4 e 5 de gMainStateTable
+0x0800BA74,DebugMenu_Exit,func_thumb,[MN] confirmado (ja no CSV); sem alteracao
 0x08057B0C,Map_ExitStateDispatchFlow,func_thumb,"[MN] confirmado: ctx+0x65 (0x03006505) 0 -> cmd 0x41, 1 -> 0x43, 3 -> 0x42, 2 -> sub=5"
-0x08051988,Overworld_WalkStepByDirection,func_thumb,"[MN] confirmado: encontro aleatorio -> Overworld_BuildEncounterNpcSnapshot + StartFlow(0x21); warp -> transicao"
-0x0804E8C4,EventOpcode33_StartBattle_Continuation,func_thumb,"[MN] confirmado: roda Event_RunSceneCommandSequence(0x20) e ao fim Event_EndOpcode; 0x20 = StartFlow 0x20 (MainState0 menu 6)"
+0x08051988,Overworld_WalkStepByDirection,func_thumb,[MN] confirmado: encontro aleatorio -> Overworld_BuildEncounterNpcSnapshot + StartFlow(0x21); warp -> transicao
+0x0804E8C4,EventOpcode33_StartBattle_Continuation,func_thumb,[MN] confirmado: roda Event_RunSceneCommandSequence(0x20) e ao fim Event_EndOpcode; 0x20 = StartFlow 0x20 (MainState0 menu 6)
