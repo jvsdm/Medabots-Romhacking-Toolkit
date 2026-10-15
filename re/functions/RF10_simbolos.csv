@@ -1,0 +1,30 @@
+addr,nome,kind,comentario
+0x080713E2,Screen_TableStepTimedSetup_CaseTimer,label,provavel: rotulo de caso do switch em Screen_TableStepTimedSetup (JT4: casos 2/6/10/14/18); era dado semtag
+0x080713F0,Screen_TableStepTimedSetup_Case22,label,provavel: rotulo do caso 22 (carrega gfx/paleta 0x08048864) em Screen_TableStepTimedSetup (JT4); era dado semtag
+0x08071424,Screen_TableStepTimedSetup_CaseCall,label,provavel: rotulo dos casos 3/7/11/15/19/23 que chamam 0x08071DDC (JT4); era dado semtag
+0x08072E14,Snd_OpE1_Entry,label,provavel: entrada do opcode E1 na tabela de sons (SN2); sem funcao no Ghidra; era dado semtag
+0x0807DAE8,SoftF64_CompareNegIfSpecial,func_thumb,confirmado: decompile mostra sf_unpack dos dois operandos; se classe<2 retorna -1 senao sf64_cmp_core; mesmo corpo de 0x0807DB34 (SoftF64_CompareAlt2 no Ghidra); NM.md usa Math_Sf64CompareSafeAlt - divergencia de doc, nome mantido
+0x0807DD58,FUN_0807dd58,func_thumb,chute: prologo thumb real (30 B5 = push {r4,r5,lr}; 87 B0; 05 90) mas Ghidra so disassembla 4 bytes (lixo ARM); precisa refazer a disassembly; nome FUN_ mantido
+0x080A89F2,Data_080A89F2,dado,chute: nao e codigo confirmado (SN3/RD3); Ghidra disassembly devolve lixo; bytes 94 B4 F4 BF B4 D6 4C F0... ambiguos; nome automatico mantido
+0x083ABD60,ObjTbl_SndChannelTick,table,provavel: 13 registros x 12 B {update_fn, tick_fn, tag} (SN4); conferido bytes das 2 primeiras linhas (0x080746C1/0x08072FF5/0; 0x080746E1/0x08072FF5/0x101)
+0x083AE800,table_BC,table,provavel: 16 x 4 B (ponteiros thumb; limite pelo inicio de table_BD; AS6)
+0x083AE840,table_BD,table,provavel: 16 x 4 B (limite pelo inicio de table_BE; AS6)
+0x083AE880,table_BE,table,provavel: 20 x 4 B (limite pelo inicio de table_BF; AS6)
+0x083AE8D0,table_BF,table,provavel: 16 x 4 B (limite pelo inicio de table_BG; AS6)
+0x083AE910,table_BG,table,provavel: 17 x 4 B (limite pelo inicio de table_BH; AS6; pode ter 1 slot de padding)
+0x083AE954,table_BH,table,provavel: 16 x 4 B (limite pelo inicio de table_BI; AS6/HN4)
+0x083AE994,table_BI,table,provavel: 16 x 4 B (limite pelo inicio de table_BJ; handler de Fight_DispatchOnSubstateAA_BI)
+0x083AE9D4,table_BJ,table,provavel: 23 x 4 B (limite pelo inicio de table_BK; AS6)
+0x083AEA30,table_BK,table,provavel: 22 x 4 B slots, 18 reais + padding 0x08000840 (HN7)
+0x083AEA88,table_BL,table,provavel: 32 x 4 B = 0x20 entradas reais (HN7); entradas a partir do idx 0x20 sao dados, nao handlers
+0x083AEB1C,table_BM,table,provavel: 27 x 4 B (limite pelo inicio de table_BN; AS6)
+0x083AEB88,table_BN,table,provavel: 15 x 4 B (limite pelo inicio de table_BO; AS6)
+0x083AEBC4,table_BO,table,provavel: 16 x 4 B (limite pelo inicio de table_BP; AS6)
+0x083AEC04,table_BP,table,provavel: 21 x 4 B (limite pelo inicio de table_BQ; HN9 confere)
+0x083AEC58,table_BQ,table,provavel: 16 x 4 B (limite pelo inicio de table_BR; HN9 diz 40 entradas entre BQ e BR)
+0x083AEC98,table_BR,table,chute: 4 B por slot; ~24 entradas pela conta de HN9 (40 - 16 de BQ); fim da tabela nao fechado
+0x083D6298,RamPtrPool_Chapter,table,provavel: pool de ponteiros RAM 4 B (0x03005FDF 0x03006413 0x030057B1 0x03006D3A 0x0300642E ...); sem leitor de funcao (PR/RD5); N nao fechado (antes: unknown_ChapterLiteralPool)
+0x084850CA,Shop_RefusalMsgScript,data,provavel: bytecode do script de recusa do objeto 0x0848521C (+0x20) (IN3); id de mensagem ainda nao decodificado (antes: KeyItemBag_MsgScript)
+0x084C8034,gObjTextFontGfx,data,confirmado: 0x9C0 B LZ77 = 78 tiles 4bpp, carregados em OBJ 0x06017400 (RD7/GF.md); nome mantido
+0x087852CF,gStarterData,data,chute: dados do bot inicial em grupos de 4 B; nenhum leitor encontrado (RD7); Bot_InitStarterRecord (0x08044B58) nao le daqui
+0x087BB7E0,gGfx_Title_Map_Bg2_Raw,data,provavel: sem cabecalho LZ77 em +0; primeiro byte nao-zero em +0x20 (padrao 01 01 01...), provavelmente dado cru; nao confirmado no emulador (antes: gGfx_Title_Map_Bg2_ANOMALIA)

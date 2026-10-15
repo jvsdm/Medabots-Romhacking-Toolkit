@@ -86,6 +86,7 @@ def main():
 
     # Candidatos dos CSVs, por camada.
     cand = {}
+    func_claims = set()  # endereços que algum CSV chama de função (o prólogo push na ROM decide)
     for path in glob.glob(os.path.join(FUNC_DIR, "*_simbolos.csv")):
         prefix = os.path.basename(path)[: -len("_simbolos.csv")]
         base_tier = tier_of(prefix)
@@ -97,6 +98,8 @@ def main():
                 continue
             kind = kind.lower()
             k = "data" if kind in DATA_KINDS else "func_thumb"
+            if k == "func_thumb":
+                func_claims.add(int(a, 16) & ~1)
             if k == "data" and kind != "data":
                 k = kind
             key = norm(a, k == "func_thumb")
@@ -155,7 +158,7 @@ def main():
     # Agente marcou como dado um alvo das listas de criação só porque o Ghidra mostrava "halt_baddata" (bytes não
     # desmontados). Se a ROM tem push {..., lr} ali ou o comentário cita halt_baddata, é função: o sync repara.
     rom = open(ROM, "rb").read() if os.path.exists(ROM) else b""
-    wanted = set()
+    wanted = set(func_claims)
     for fn in CREATE_LISTS + SPLIT_LISTS:
         p = os.path.join(FUNC_DIR, fn)
         if os.path.exists(p):

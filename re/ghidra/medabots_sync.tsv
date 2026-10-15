@@ -221,7 +221,7 @@ F	0x08007BFC	PartsGrid_LoadSlotStep
 F	0x08007C20	PartsGrid_DispatchSubStep
 F	0x08007C4C	PartsGrid_CursorInputStep
 F	0x08007D04	PartsGrid_BlendStartStep
-L	0x08007D28	Tile_ClearSlotsAndDispatchState_JumpTable
+F	0x08007D28	Tile_ClearSlotsAndDispatchState_JumpTable
 L	0x08007D46	Tile_ClearSlotsAndDispatchState_Jump
 F	0x08007DDC	PartsGrid_SelectNextStateByCursor
 F	0x08007E38	PartsGrid_InitScreen
@@ -2315,7 +2315,7 @@ F	0x080454F0	FindCompositePreviewOamInsertionIndex
 F	0x08045588	InsertCompositePreviewOamSpanBySortKey
 F	0x080455E0	CopyCompositePreviewTemplateEntryOam
 F	0x08045680	QueueCompositePreviewTemplateEntryOam
-L	0x08045858	EmitCompositePreviewTemplateEntriesSortedByY
+F	0x08045858	EmitCompositePreviewTemplateEntriesSortedByY
 F	0x0804589C	InitCompositePreviewTemplatePointerList
 F	0x080458A4	AppendCompositePreviewTemplatePointer
 F	0x080458B8	EmitCompositePreviewTemplatePointerListOam
@@ -3366,7 +3366,7 @@ L	0x0806B8CE	TeamSlots_WriteFi41_Candidate
 F	0x0806BB24	Scene_StepFxSongAdvance
 F	0x0806BB44	Scene_DispatchState8Anim
 F	0x0806BB64	Fx_StepRowCells3State
-L	0x0806BC48	Fight_TickBattleFrame
+F	0x0806BC48	Fight_TickBattleFrame
 F	0x0806BC94	Battle_EffectFallPhase1Step
 F	0x0806BCC4	Battle_EffectPhase2Step
 F	0x0806BCFC	Fx_StepTableB_Check
@@ -4025,7 +4025,7 @@ L	0x08483770	SAVE_HANDLER_WriteEepromAndFinish
 L	0x08483774	gMapAreaB
 L	0x084838E4	gShops
 L	0x08483ED8	gTextKeyItems
-L	0x084850CA	KeyItemBag_MsgScript
+L	0x084850CA	Shop_RefusalMsgScript
 L	0x0848521C	gTextShopDialogue
 L	0x084856E8	gMainState3MenuTable
 L	0x084856F0	tabela_tick_batalha_ponteiro
