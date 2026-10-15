@@ -62,7 +62,7 @@ Literais conferidos (valor na ROM): 0x0803C734 = 0x083AFC38 (NÃO é AFC78; é o
 
 - **0x083AFC78 (96 palavras)** = tabela de passos do menu 10 (Link): função **0x0803D538** (`Scene_GsDispatch_Menu10_Link`,
   menu_list[10] = 0x0803D539). Ldr em 0x0803D570: `CallViaR0( table[ *(0x0300137C) ] )` (r4 = 0x0300137C, literal
-  em 0x0803D588). Ghidra: sem função em 0x0803D538 (corpo: 0x0803D538..0x0803D584). Confirmado.
+  em 0x0803D588). Ghidra: função desde o sync de 2026-10-14 em 0x0803D538 (Scene_GsDispatch_Menu10_Link) (corpo: 0x0803D538..0x0803D584). Confirmado.
 - **0x083AFC2C (12 bytes, u8)** = tabela de bytes lida por três funções de combate/scroll, com índice
   `*(u8*)(0x03001800 + 0x38)` (gFightInformation +0x38). O resultado vira o slot de objeto usado (gObjectSlots +
   gCurrentObjectSlot*0x40, 0x0300056F). Donos:
@@ -82,7 +82,7 @@ Literais conferidos (valor na ROM): 0x0803C734 = 0x083AFC38 (NÃO é AFC78; é o
 
 - Quem grava 0x03002D59 (slot 4 +0x29) e qual evento põe 0x0300137C = 66 (entrada da tela de detalhe). Não lido;
   precisaria do script de objetos ou de um watch no emulador (fora deste passo).
-- 0x0800EB34 e 0x0803C0CC sem função no Ghidra: criar função no Ghidra fica para o MedabotsSync (ver MN.md).
+- 0x0800EB34 (SceneStep_Caller_ACE14) e 0x0803C0CC (Fight_ScrollSlotPhase_C0CC) são funções desde o sync de 2026-10-14: criar função no Ghidra fica para o MedabotsSync (ver MN.md).
 - Confirmar no emulador (rec de tela de detalhe de peça) que 0x0300137C = 66 corresponde à tela de detalhe.
 
 Símbolos: `ST2_simbolos.csv`. Lista de endereços sem função: `ST2_lista.txt`.

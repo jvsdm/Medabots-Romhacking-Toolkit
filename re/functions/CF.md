@@ -9,7 +9,7 @@ Ghidra: renames aplicados com rename_function_by_address (Ghidra nao foi salvo).
 | 0x08034F68 | do_damage_on_part | Fight_ApplyDamageToPart | Fight_ApplyDamageToPart | Nome generico no mtbe; corpo grava dano na armadura (+0x59), flag +0xD1 e devolve excedente. Renomeado. |
 | 0x080183A4 | HandleSelectedMedabotPreviewCursorInput | cursor 3x3 da luta (MERGE_NOTAS) | HandleSelectedMedabotPreviewCursorInput (mantido) | Unico chamador: UpdateSelectedMedabotPreviewScreen 0x08013E84. E o cursor 3x3 da tela de prévia (QA3). O corpo usa helpers Fight_* mas o chamador decide. |
 | 0x08047BA8 | Overworld_StartMapTransitionEffect | Snd_SfxRequestWrapper | Snd_SfxRequestWrapper | Corpo e so snd_sfx_request (r0 passa adiante). Muitos chamadores (eventos 0x28, 0x44, objetos de mapa) usam como som. Renomeado. |
-| 0x08045A40 | IsCompositePreviewPointOnScreen | (pool?) | sem funcao: remover a linha do mtbe | Ghidra nao tem funcao nem contem o endereco; zero xrefs de codigo. Dado/literal pool. Acao: retirar do mtbe (nao editei). |
+| 0x08045A40 | IsCompositePreviewPointOnScreen | (pool?) | função desde o sync de 2026-10-14 (nome: IsCompositePreviewPointOnScreen): remover a linha do mtbe | Ghidra tem funcao desde o sync de 2026-10-14 (corpo de 1 byte); zero xrefs de codigo. Dado/literal pool. Acao: retirar do mtbe (nao editei). |
 | 0x0804305C | BuildCompositeBattleSpriteObjects | Sprite_WriteComposite4Objects | Sprite_WriteComposite4Objects | Nao e o mesmo corpo de 0x08042E58: so escreve 4 objetos OAM, sem Tile_ClearSlots e sem gravar +8/+9/+0x18. Variante sem alocacao. Renomeado. |
 | 0x08042E58 | CreateCompositeBattleSpriteObjects | (mesmo corpo?) | CreateCompositeBattleSpriteObjects (mantido) | Chama Tile_ClearSlots antes de montar 4 objetos e grava campos extras. Ver 0x0804305C. |
 | 0x08037280 | Fight_ScaleAttackValueByPartScalar | Fight_ComputePartValue | Fight_ScaleAttackValueByPartScalar (mantido) | fi+0xEC = (fi+0xE8>>2) + byte +0x4E, depois divide pelo escalar +0x54, minimo 1. Ghidra ja. |
@@ -28,6 +28,6 @@ Ghidra: renames aplicados com rename_function_by_address (Ghidra nao foi salvo).
 | 0x08074118 (duplicado) | snd_track_step | snd_track_step | Snd_ChannelTickStep | Tick por canal: incrementa periodo, calcula freq (aux_div_u32), fim da sequencia chama snd_channel_reset. Renomeado. |
 
 ## Pendencias em aberto
-- 0x08045A40: remover do mtbe (nao e funcao). Nao editei o mtbe.
+- 0x08045A40: remover do mtbe (função desde o sync de 2026-10-14 (nome: IsCompositePreviewPointOnScreen)). Nao editei o mtbe.
 - 0x0804B758: decisao provavel; confirmar em Script_ReadBytes onde ficam os 3 bytes.
 - 0x08040CD0: confianca provavel (depende de DAT_08040D04 ser o mesmo bloco do OAM).

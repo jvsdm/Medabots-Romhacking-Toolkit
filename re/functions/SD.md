@@ -26,9 +26,9 @@ Nenhum limite no código: o despachante só lê `byte[fi+0x9C] * 4 + base` (sem 
 
 | Índice | Ponteiro | Função (endereço) | Nome |
 |---|---|---|---|
-| 0 | 0x0801C0F9 | 0x0801C0F8 (sem função no Ghidra) | Fight_SubstateA_0_StartUiActionAndAdvance |
+| 0 | 0x0801C0F9 | 0x0801C0F8 (função desde o sync de 2026-10-14 (nome: Fight_SubstateA_0_StartUiActionAndAdvance)) | Fight_SubstateA_0_StartUiActionAndAdvance |
 | 1 | 0x0801C111 | 0x0801C110 Fight_UiActionStep | (mantido) |
-| 2 | 0x0801C139 | 0x0801C138 (sem função no Ghidra) | Fight_SubstateA_2_TryUiActionDefaultAndAdvance |
+| 2 | 0x0801C139 | 0x0801C138 (função desde o sync de 2026-10-14 (nome: Fight_SubstateA_2_TryUiActionDefaultAndAdvance)) | Fight_SubstateA_2_TryUiActionDefaultAndAdvance |
 | 3 | 0x08000841 | 0x08000840 NoOpActionHandler | (mantido, stub compartilhado) |
 | 4 | 0x0801C189 | 0x0801C188 Gfx_LoadAssetAndAdvance | (mantido) |
 | 5 | 0x0801C1C1 | 0x0801C1C0 Fight_SpawnHitEffect | (mantido) |
@@ -40,11 +40,11 @@ Nenhum limite no código: o despachante só lê `byte[fi+0x9C] * 4 + base` (sem 
 
 | Índice | Ponteiro | Função (endereço) | Nome |
 |---|---|---|---|
-| 0 | 0x0801C32D | 0x0801C32C (sem função no Ghidra) | Fight_SubstateC_0_CpuCopyThenBotStep |
+| 0 | 0x0801C32D | 0x0801C32C (função desde o sync de 2026-10-14 (nome: Fight_SubstateC_0_CpuCopyThenBotStep)) | Fight_SubstateC_0_CpuCopyThenBotStep |
 | 1 | 0x0801C361 | 0x0801C360 Fight_StepSpriteGroupMoveAnim | (mantido) |
 | 2 | 0x0801C389 | 0x0801C388 Fight_TickEntryAnimAndLoadTiles | (mantido) |
 | 3 | 0x0801C3B1 | 0x0801C3B0 Fight_BotEntryAnimStep | (mantido) |
-| 4 | 0x0801C3F9 | 0x0801C3F8 (sem função no Ghidra) | Fight_SubstateC_4_AnimateEntryFramesOnly |
+| 4 | 0x0801C3F9 | 0x0801C3F8 (função desde o sync de 2026-10-14 (nome: Fight_SubstateC_4_AnimateEntryFramesOnly)) | Fight_SubstateC_4_AnimateEntryFramesOnly |
 | 5 | 0x0801C40D | 0x0801C40C Fight_RunEntryAnimStep | (mantido) |
 | 6 | 0x0801C445 | 0x0801C444 Fight_SideEffectStepAdvance | (mantido) |
 | 7 | 0x0801C471 | 0x0801C470 Fight_BotSideAnimStep | (mantido) |

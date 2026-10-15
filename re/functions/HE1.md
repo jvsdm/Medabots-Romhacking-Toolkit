@@ -19,7 +19,7 @@ e renomeados `Event_Op<XX>_<Nome>`. Literais do pool lidos na ROM EU (Medabots -
   00/06/0D/12..19/1B/1C/21/22 -> 0x0804DC34 (comum; provavelmente "sem continuacao"); 01 0x0804DC38, 02 0x0804DCF8,
   03 0x0804DD04, 04 0x0804DD18, 05 0x0804DD3C, 07 0x0804DD5C, 08 0x0804DD70, 09 0x0804DD84, 0A 0x0804DD9C, 0B 0x0804DDB4,
   0C 0x0804DDC0, 0E 0x0804DE74, 0F 0x0804DF40, 10 0x0804E134, 11 0x0804E370, 1A 0x0804E43C, 1D 0x0804E450, 1E 0x0804E464,
-  1F 0x0804E480, 20 0x0804E48C. Varios NAO sao funcoes no Ghidra (ex.: 0x0804DC34, 0x0804E480, 0x0804E48C: "No function found").
+  1F 0x0804E480, 20 0x0804E48C. Varios agora sao funcoes desde o sync de 2026-10-14 (ex.: 0x0804DC34 = Event_Op00_Cont_NoOp, 0x0804E480 = Event_Op1F_Cont_InitiateMovingActorA, 0x0804E48C = Event_Op20_Cont_InitiateMovingActorB).
 - Padrao: handler "imediato" nao mexe em +0xC89, entao o proximo opcode roda no tick seguinte. Handler "diferido" le os args
   para gEventScriptArguments e grava +0xC89 = 1; o efeito visivel (texto, fade, pulo, movimento) fica na continuacao.
 - `Script_ReadBytes(n)` 0x0804D8CC (mtbe EventScript_ReadBytes) le n bytes do script para 0x03006474[0..n-1].

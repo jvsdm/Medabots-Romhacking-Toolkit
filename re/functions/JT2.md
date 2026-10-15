@@ -71,7 +71,7 @@ são na verdade o `bx r0` de retorno da própria função; as tabelas reais est�
 
 | Índice | Alvo (sem bit thumb) | Nome atual no Ghidra | Papel |
 |---|---|---|---|
-| 0 | 0x08040B50 | sem função no Ghidra | `JT2_lista.txt` |
+| 0 | 0x08040B50 | função desde o sync de 2026-10-14 (nome: Slot_SetTimer8) | `JT2_lista.txt` |
 | 1 | 0x0804169C | Overlay_LoadTileSetsAndAdvance | (não lido) |
 | 2 | 0x0804177C | BgMap_ClearCopyRowsStep (era FUN_0804177c) | zera 2 linhas de 8 e copia 2 padrões de 8 halfwords para o mapa BG; +0x29 += 1 |
 | 3 | 0x08041818 | BgMap_CopyTwoRowsStep (era FUN_08041818) | zera 1 linha, copia 2 linhas de 8x8 da ROM para o mapa; +0x29 += 1 |
@@ -84,11 +84,11 @@ são na verdade o `bx r0` de retorno da própria função; as tabelas reais est�
 | 10 | 0x08041818 | = índice 3 | |
 | 11 | 0x0804177C | = índice 2 | |
 | 12 | 0x0804172C | Gfx_ClearTwoRectsStep | (não lido) |
-| 13 | 0x08041BF4 | sem função no Ghidra | `JT2_lista.txt` |
+| 13 | 0x08041BF4 | função desde o sync de 2026-10-14 (nome: Slot_SetFrameFromStepAndAdvance) | `JT2_lista.txt` |
 | 14 | 0x08000840 | NoOpActionHandler | não faz nada (1 instrução) |
 | 15 | 0x08040994 | BgMap_TickRectFillState | (não lido) |
 | 16 | 0x08040A00 | BgMap_TickFlashStep | (não lido) |
-| 17 | 0x08040A40 | sem função no Ghidra | `JT2_lista.txt` |
+| 17 | 0x08040A40 | função desde o sync de 2026-10-14 (nome: BgMap_LoadTileStageStep) | `JT2_lista.txt` |
 | 18 | 0x08040AF1 | sem função no Ghidra | `JT2_lista.txt` |
 | 19 | 0x08040B0D | sem função no Ghidra | `JT2_lista.txt` |
 | 20 | 0x08040B50 | = índice 0 | |
@@ -140,7 +140,7 @@ são na verdade o `bx r0` de retorno da própria função; as tabelas reais est�
 
 ## Pendências e itens para o usuário
 
-- Ponteiros thumb válidos sem função no Ghidra (criar a função e documentar): ver `JT2_lista.txt` (0x08040B50, 0x08041BF4,
+- Ponteiros thumb válidos (0x08040B50 = Slot_SetTimer8, 0x08041BF4 = Slot_SetFrameFromStepAndAdvance e 0x08040A40 = BgMap_LoadTileStageStep são funções desde o sync de 2026-10-14; 0x08040AF1 e 0x08040B0D seguem sem função): ver `JT2_lista.txt` (0x08040B50, 0x08041BF4,
   0x08040A40, 0x08040AF1, 0x08040B0D). Nenhum criado aqui.
 - Labels internos (miolo) de 0x0801387C e 0x08071630: estão em `JT2_lista.txt` só para referência; não são funções.
 - Tabela 0x083B2990 (0x08040974): quem grava 0x0300045B não foi rastreado; ver o valor máximo do índice antes de

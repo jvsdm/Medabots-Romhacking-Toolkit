@@ -19,7 +19,7 @@ Fluxo (lido no decompile do despachante e de `FightPreview_AdvanceSequenceCursor
 - Portanto o tamanho real é 0x3B (59 entradas), não 80. Os opcodes 0x3B+ estão "fora da tabela".
 
 ## 0x0803A474 (op 0x1E)
-- Não é código no Ghidra (sem função em 0x0803A474). Provável código não analisado ou dado. Não documentado.
+- Função desde o sync de 2026-10-14 (nome: ObjScript_Op1E_SpawnEffectSlot23PartPal). Não documentado.
 
 ## 0x0803A5CC (op 0x1F)
 - Não é código no Ghidra (sem função). Não documentado.

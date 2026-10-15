@@ -18,7 +18,7 @@ Regra: quando o mtbe.csv já tem um nome que descreve melhor, ele vence e o Ghid
 | 0x08043C94 | Encounter_RollPercent0To99 | generate_random__ | Ghidra (randbyte*100/0xFF) |
 | 0x0804538C | LayoutCompositePreviewEntryOamGrid | ShiftCompositePreviewTemplateEntryX | Ghidra (posiciona a grade de OAM) |
 | 0x08047BA8 | (FUN_) | Overworld_StartMapTransitionEffect | errado: só chama snd_sfx_request |
-| 0x08045A40 | sem função no Ghidra | IsCompositePreviewPointOnScreen | conferir endereço |
+| 0x08045A40 | função desde o sync de 2026-10-14 (nome: IsCompositePreviewPointOnScreen) | IsCompositePreviewPointOnScreen | conferir endereço |
 | 0x080156F8 | Fight_IsPartActionBlocked (só no CSV) | Fight_IsPartActionAvailable | retorno 1 = BLOQUEADA; renomear |
 | 0x0804305C vs 0x08042E58 | Sprite_WriteComposite4Objects | CreateCompositeBattleSpriteObjects | conferir se é o mesmo corpo |
 | tabela de opcodes de evento | — | base 0x083D224C | errado: 0x083D222C (literal 0x0804B734); 0x06 = end, 0x19 = goto (fora do C#) |

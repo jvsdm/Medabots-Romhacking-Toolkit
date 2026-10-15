@@ -22,7 +22,7 @@ que não é ponteiro.
 
 ## 2. Leitor do bloco ACE14 (confirmado no código, Thumb manual)
 
-Função em **0x0801013C** (push {r4,lr}; sem função no Ghidra; pool em 0x0801015C..0x08010164):
+Função em **0x0801013C** (push {r4,lr}; função desde o sync de 2026-10-14 (nome: PartDetail_DispatchModeHandler); pool em 0x0801015C..0x08010164):
 
     r1 = 0x083ACE14
     r4 = 0x03002C30 + 0x129 = 0x03002D59
@@ -37,7 +37,7 @@ Função em **0x0801013C** (push {r4,lr}; sem função no Ghidra; pool em 0x0801
 
 ## 3. Sites de texto (TX.md) — o que mudou
 
-Os sites de texto pré/pós (0x08010814, 0x08010BD0, 0x0803D9A0, 0x0803DB4C) continuam sem função no Ghidra. Seu
+Os sites de texto pré/pós (0x08010814, 0x08010BD0, 0x0803D9A0, 0x0803DB4C) passaram a ser funções desde o sync de 2026-10-14 (Fight_ShowPreBattleTextForCharacter, Fight_ShowPostBattleTextForCharacter, Fight_ShowPreBattleTextIndex1, Fight_ShowPostBattleTextIndex1). Seu
 endereço "+1" é entrada desses blocos, então são *passos* de cena (não despachados por BL). O que é tocado pelo
 passo (texto da tela) continua o mesmo de TX.md.
 

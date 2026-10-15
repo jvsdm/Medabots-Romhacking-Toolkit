@@ -43,14 +43,14 @@ Tabela 0x080AFC88 (confirmada):
 
 | sub | endereço | nome / função |
 |---|---|---|
-| 0 | 0x08065790 | sem função no Ghidra; chama 0x0803FAA0 e 0x08074CE0; toca `obj` 0x03006F74. Provável: preparo/início. |
+| 0 | 0x08065790 | função desde o sync de 2026-10-14 (nome: LinkMenu15Step0); chama 0x0803FAA0 e 0x08074CE0; toca `obj` 0x03006F74. Provável: preparo/início. |
 | 1 | 0x080657C4 | `Sm_StepSfxRepeat3` (provável: espera de som/mensagem). |
-| 2 | 0x08065A80 | sem função; chama `StateMachine_DispatchSub` (0x08041CA4) e 0x080476E8. Provável: espera de texto. |
+| 2 | 0x08065A80 | função desde o sync de 2026-10-14 (nome: LinkMenu15Step2); chama `StateMachine_DispatchSub` (0x08041CA4) e 0x080476E8. Provável: espera de texto. |
 | 3 | 0x08065A0C | `Battle_TickTwoStageSequence` (nome do Ghidra; provável: dois estágios de sequência). |
 | 4 | 0x08065A94 | `FUN_08065a94` (sem nome). |
 | 5 | 0x08065B0C | **`Link_HandshakeFrameStep`** (handshake por quadro, LK.md §4.1). Confirmado. |
-| 6 | 0x08065C98 | sem função; toca `0x03005010` e `0x03000B90`. Provável: troca de comandos (liga ao §3). |
-| 7 | 0x08065CFC | sem função; chama `StateMachine_DispatchSub` e 0x080476E8. Provável: fim da etapa. |
+| 6 | 0x08065C98 | função desde o sync de 2026-10-14 (nome: LinkMenu15Step6); toca `0x03005010` e `0x03000B90`. Provável: troca de comandos (liga ao §3). |
+| 7 | 0x08065CFC | função desde o sync de 2026-10-14 (nome: LinkMenu15Step7); chama `StateMachine_DispatchSub` e 0x080476E8. Provável: fim da etapa. |
 
 Ou seja, o menu 0x15 é a **tela de link iniciada pelo evento 0x76**: handshake (sub 5) e depois troca de comandos
 (sub 6). Confiança: confirmado a tabela e o sub 5; provável o papel dos demais.
@@ -92,7 +92,7 @@ Ou seja, o menu 0x15 é a **tela de link iniciada pelo evento 0x76**: handshake 
 ## 6. Pendente
 
 - Função do comando 0x080AFCC0: quem indexa (`obj+5`?) e o que fazem os handlers 2, 3, 5, 7..12. Não lido por completo.
-- Handlers sem função no Ghidra (0x08065790, 0x08065A80, 0x08065C98, 0x08065CFC, menu 10 passos 1..2,5..13 e outros em `LK2_lista.txt`):
+- Handlers (função desde o sync de 2026-10-14 nos casos 0x08065790 = LinkMenu15Step0, 0x08065A80 = LinkMenu15Step2, 0x08065C98 = LinkMenu15Step6, 0x08065CFC = LinkMenu15Step7; menu 10 passos 1..2,5..13 e outros em `LK2_lista.txt`, não conferidos):
   criar a função é trabalho do MedabotsSync (fora deste escopo).
 - Troca de peça/medalha: confirmar com emulador (handler 1 do comando, varrer 0x03004C40). Não feito, por regra.
 - Confirmar no emulador o significado de 0xFE0F e de cada passo do menu 10 (regra: sem emulador nesta rodada).

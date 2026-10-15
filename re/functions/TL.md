@@ -28,13 +28,13 @@ Entradas lidas (ponteiro Thumb - 1). Confiança do nome: **confirmado** só onde
 | GS | função | o que faz (lido) | confiança |
 |---|---|---|---|
 | 0 | 0x0806E504 `Gfx_ResetVramPaletteOamAndStopSong` | zera VRAM/paleta/OAM por DMA, `snd_song_request(0)` (para a música), DISPCNT=0x60, grava GS-setup, `fx_screen_setup_a(2,4,0)`, grava 4 no contador | confirmado |
-| 1 | 0x0806E150 | sem função no Ghidra | pendente (TL_lista.txt) |
+| 1 | 0x0806E150 | função desde o sync de 2026-10-14 (nome: Scene_StepLoadStateTriple) | pendente (TL_lista.txt) |
 | 2 | 0x0806E184 `FUN_0806E184` | `fx_step_table_b()`; se não zero, grava REG_DISPCNT, gMainState e 2 bytes de estado a partir da tabela 0x0806E1E0 (passo seguinte) | provável |
-| 3 | 0x0806E4CC | sem função no Ghidra | pendente |
+| 3 | 0x0806E4CC | função desde o sync de 2026-10-14 (nome: Scene_FadeStepLoadStateTriple) | pendente |
 | 4 | 0x0806E5E0 `Gfx_LoadLz77ScreenAndEnableBg0` | LZ77 -> VRAM 0x06000000 (`bios_lz77_vram`), monta 20 linhas de mapa (0x14 x 0x20 hwords) para a tela, paleta BG 0x05000000, DISPCNT |= 0x100 (BG0), passo do contador = 5 | confirmado (código) |
-| 5 | 0x0806E90C | sem função no Ghidra | pendente |
+| 5 | 0x0806E90C | função desde o sync de 2026-10-14 (nome: Scene_TimedWait61ThenAdvance2) | pendente |
 | 6 | 0x0806E6E4 `Gfx_LoadLz77RowsTable` | igual ao 4 mas com 0x34 no campo +0x10 e passo = 7 (rótulo do GF3 "logo", 0x0806E6E4 confere) | confirmado (código); papel exato na cena: provável (logo) |
-| 7 | 0x0806E93C | sem função no Ghidra | pendente |
+| 7 | 0x0806E93C | função desde o sync de 2026-10-14 (nome: Scene_TimedWait60ThenAdvance8) | pendente |
 | 8 | 0x0806E7EC | a ler | pendente |
 | 9 | 0x0806E96C | a ler | pendente |
 | 10 | 0x0806E9C0 | a ler | pendente |
@@ -66,8 +66,8 @@ Xrefs para 0x0805C17C: vazias (chamada só por tabela).
   - A (0x01), SFX 4: se cursor == 2 (OPTIONS): fade de 0x14 quadros, GS += 1 (vai para GS 5, não lido).
     Senão (cursor 0 ou 1): marca o item (+0x48 = 0x2D) e GS = 6 (fade de saída).
 - GS 6 = `Gfx_FadeTransitionStep` 0x0805C7F8 (confirmado): fade por 9 passos (`Palette_FadeRowsToColor*`). Ao acabar:
-  - cursor 0 = **CONTINUE**: grava 0x03001784 |= 1 e GS = 8 (`0x0805C950`, sem função no Ghidra).
-  - cursor 1 = **NEW GAME**: grava 0x03001784 &= ~2 e GS = 7 (`0x0805C8EC`, sem função no Ghidra).
+  - cursor 0 = **CONTINUE**: grava 0x03001784 |= 1 e GS = 8 (`0x0805C950`, função desde o sync de 2026-10-14 (nome: TitleMenu_SubState8_Continue)).
+  - cursor 1 = **NEW GAME**: grava 0x03001784 &= ~2 e GS = 7 (`0x0805C8EC`, função desde o sync de 2026-10-14 (nome: TitleMenu_SubState7_NameEntry)).
 
 Notas de nome: Ghidra chama o New Game de `new_game_start` (0x0804A2F0); o nome de README/MU é `site_NewGameClear`.
 
@@ -88,10 +88,10 @@ passo). Confiança: confirmado (leitura do decompile); nomes de campos: prováve
 
 ## 6. Continue e nome: o que sabemos e o que falta
 
-- Continue (GS 8, `0x0805C950`): sem função no Ghidra. Pelo SV.md, o caminho de leitura é `Site_RunSaveLoadOption(1)` ->
+- Continue (GS 8, `0x0805C950`): função desde o sync de 2026-10-14 (nome: TitleMenu_SubState8_Continue). Pelo SV.md, o caminho de leitura é `Site_RunSaveLoadOption(1)` ->
   `Save_ReadVerify` -> `site_LoadGame` 0x0805DF18 (confirmado no SV.md; chamador único: `Site_RunSaveLoadOption` 0x0805DDEC,
   o próprio GS 8 não foi lido). Pendente.
-- Nome (GS 7, `0x0805C8EC`): sem função no Ghidra. A tabela de sub-passos da tela de nome é **0x084836E8**:
+- Nome (GS 7, `0x0805C8EC`): função desde o sync de 2026-10-14 (nome: TitleMenu_SubState7_NameEntry). A tabela de sub-passos da tela de nome é **0x084836E8**:
   [0] = `Menu_TextEntryInput` 0x0805EA44 (confirmado: teclado em grade, até 10 caracteres, `linha*0x1A + coluna + 1`),
   [1] = 0x0805EFD4, [2] = 0x0805EFFC, depois dados (0x23252509 e 0xFE, não ponteiros) e ponteiros 0x0805F144, 0x0805F19C.
   Ligação GS 7 -> essa tabela: a fazer (precisa do corpo de 0x0805C8EC).
@@ -113,7 +113,7 @@ passo). Confiança: confirmado (leitura do decompile); nomes de campos: prováve
 
 ## 8. Pendente (resumo)
 
-- Corpo de GS 0x0805C8EC (nome) e GS 0x0805C950 (continue) e demais sub-passos sem função (TL_lista.txt).
+- Corpo de GS 0x0805C8EC (nome) e GS 0x0805C950 (continue): funções desde o sync de 2026-10-14 (TitleMenu_SubState7_NameEntry, TitleMenu_SubState8_Continue); demais sub-passos sem função (TL_lista.txt).
 - Ligação GS -> cena do boot (logo, demo, título): não feita.
 - Quem escreve gMainState=1/gamestate_menu=10 depois do nome: não achado.
 - Tela de OPTIONS (GS 5, 0x0805C574): não lida.

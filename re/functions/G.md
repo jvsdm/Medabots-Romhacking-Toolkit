@@ -144,4 +144,4 @@ Confiança segue o formato de R0.md. Nomes do mtbe.csv reaproveitados quando bat
 - 0x0805BB38: sem função (literal pool ou dado; não documentado).
 - 0x080736BC: sem função (literal pool ou dado; não documentado).
 - 0x080745DA: sem função (literal pool ou dado; não documentado).
-- 0x0807DD58: sem função (literal pool ou dado; não documentado).
+- 0x0807DD58: função desde o sync de 2026-10-14 (nome: FUN_0807dd58) (literal pool ou dado; não documentado).

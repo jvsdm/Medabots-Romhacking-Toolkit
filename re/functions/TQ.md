@@ -53,7 +53,7 @@ com regra da técnica; 2º sem ela; depois aleatório no lado oposto/aliado).
 | 0x08032C08 | Fight_SetupTargetSelectionRequireMedaforceToken | alvo com medaforça/token (`+0x..`, a confirmar) | 50 |
 | 0x08032DA0 | Fight_SetupPartTargetSelectionRequireNoTechnique16AndClearPending | como 41, mas escolhe peça | 43 |
 
-Validação (`gTechniqueActionValidationHandlerTable`): só **um** handler distinto, 0x080332EC (sem função no Ghidra;
+Validação (`gTechniqueActionValidationHandlerTable`): só **um** handler distinto, 0x080332EC (função desde o sync de 2026-10-14 (nome: Fight_ValidatePart_ClearPartByte0F);
 decodificado à mão, 0x080332EC..0x0803330C, 9 instruções, sem BL):
 - lê `k = fight[+0x5D]`, `b = fight[+0x5C]`, calcula `0x03000590 + b*0x100 + k*0x18` e **zera o byte +0x0F do registro**
   (endereço Ghidra `+0x57` da peça; campo não identificado, provavelmente contador/flag de uso). Retorna.

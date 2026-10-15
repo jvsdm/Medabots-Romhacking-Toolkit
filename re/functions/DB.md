@@ -40,9 +40,9 @@ lido no decompile + literal, "provável" = inferência de nome ou de fluxo.
 | 1 | Medal | BE6C 0x0800BE6C | 3 | estado 0 = `Debug_PartsSpawnScreen` |
 | 2 | Parts | C29C 0x0800C29C | 6 | estado 0 = `Debug_ItemCountGrantScreen` |
 | 3 | Tinpet | C6D8 0x0800C6D8 | 9 | não decompilado ainda |
-| 4 | Item | 0x0800C7E4 | — | **pendente**: não é função no Ghidra (miolo de 0x0800C6F8?) |
+| 4 | Item | 0x0800C7E4 | — | **pendente**: função desde o sync de 2026-10-14 (nome: DebugMenu_Option4_Dispatch) (miolo de 0x0800C6F8?) |
 | 5 | Face | CBA8 0x0800CBA8 | 15 | não decompilado ainda |
-| 6 | Mdlpic | 0x0800CE70 | — | **pendente**: não é função no Ghidra (miolo de 0x0800CBC8?) |
+| 6 | Mdlpic | 0x0800CE70 | — | **pendente**: função desde o sync de 2026-10-14 (nome: DebugMenu_Option6_Dispatch) (miolo de 0x0800CBC8?) |
 | 7 | Rnd-tk | D168 0x0800D168 | 21 | não decompilado ainda |
 | 8 | Battle | D25C 0x0800D25C | 24 | estado 0 = `Menu_TickSingleCountSelector` (0x0800D27C) |
 | 9 | Sound | D3C4 0x0800D3C4 | 27 | não decompilado ainda |
@@ -98,7 +98,7 @@ contador de itens): o rótulo pode estar deslocado; **confirmar no emulador**.
 
 ## Pendente
 
-- Opções Item (0x0800C7E4), Mdlpic (0x0800CE70): entradas Thumb na tabela, sem função no Ghidra. Decodificar a mão
+- Opções Item (0x0800C7E4), Mdlpic (0x0800CE70): entradas Thumb na tabela, função desde o sync de 2026-10-14 (nomes: Item = DebugMenu_Option4_Dispatch, Mdlpic = DebugMenu_Option6_Dispatch). Decodificar a mão
   ou testar no emulador.
 - Tinpet, Face, Rnd-tk, Sound: despachantes conhecidos (tabela de base acima), telas não decompiladas.
 - Fluxo entre estados da tabela 0x083ACAC0 (quem incrementa 0x03000473 e com qual passo, e o que é NoOp).

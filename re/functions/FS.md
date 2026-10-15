@@ -23,7 +23,7 @@ Arquivo gerado: `functions/FS_lista.txt` (endereço TAB origem). Nada renomeado;
 
 ## Amostras
 - Ghidra tem função (fora do TSV e do mtbe.csv): 0x08000824 (corpo 08000824-08000837), 0x08002EC4 (-08002F5D), 0x0800393C (-08003991), 0x0800994C (-0800999F), 0x0800B79C (-0800B80D), 0x080191E4 (-0801921B), 0x08041B1C (-08041B9F), 0x08048038 (-08048085), 0x0806A860 (-0806AA05). Estes saíram da lista.
-- Sem função no Ghidra (exemplos mantidos): 0x08007BD8, 0x0800E350, 0x080115E8, 0x08014C84, 0x0803E1A4, 0x08057698, 0x0806B134, 0x080EC9EE, 0x08003D4C, 0x080044F8, 0x08004874, 0x0800801C, 0x08010DAC, 0x0803CECC, 0x0805E450, 0x08071030, 0x08074780.
+- Função desde o sync de 2026-10-14 (exemplos mantidos; nomes: PartSlots_UpdateAndFadeStep, PartEditor_FinishPaletteStep, BattlePreview_FadeSoundStep, PartsGrid_BlendTickStep, PartsGrid_SlideDetailStep, PartDetail_DispatchLegIconStep, Fight_InitPartSpriteEntry, Fight_FadeRowsUpStep, Fight_SelectEnemyMedaforceStep, Fight_StepPaletteFadeToColor, Anim_DrawSegmentThenDispatchLoad, Screen_TransitionEnterAndAdvance, Screen_ClearOamAndAdvance, BotAnim_StepMoveByPhase, Scene_StartSong4AndSlots, snd_update_channel2_if_track_flag, Data_080EC9EE): 0x08007BD8, 0x0800E350, 0x080115E8, 0x08014C84, 0x0803E1A4, 0x08057698, 0x0806B134, 0x080EC9EE, 0x08003D4C, 0x080044F8, 0x08004874, 0x0800801C, 0x08010DAC, 0x0803CECC, 0x0805E450, 0x08071030, 0x08074780.
 
 ## Conclusões
 - O TSV de sincronização não cobre todas as funções que o Ghidra tem: pelo menos 9 entradas de amostra (cerca de 7% das verificadas) existem no Ghidra e faltam no TSV/mtbe.csv. Antes de tratar um endereço como novo, conferir no Ghidra.

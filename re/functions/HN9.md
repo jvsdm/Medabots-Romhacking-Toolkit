@@ -12,11 +12,11 @@ bot em `S+0x1742/0x1744 + bot*0x100`); `T` = `0x03000440` (+0x86 = timer do pass
 
 ## Achados gerais
 
-- Quem chama BP/BQ/BR: stubs em `0x08034E40`/`0x08034E5C`/`0x08034E78` (sem função no Ghidra), entradas 0xA4/0xA5/0xA6
+- Quem chama BP/BQ/BR: stubs em `0x08034E40`/`0x08034E5C`/`0x08034E78` (função desde o sync de 2026-10-14: ActionScript_Op68_CallBP, ActionScript_Op69_CallBQ, ActionScript_Op6A_CallBR), entradas 0xA4/0xA5/0xA6
   da tabela de 188 ponteiros `0x083AF090` (literal em `0x0803335C`, perto de Fight_BeginPartActionValidation
   0x08033318). Provável: tabela indexada pelo id da ação. Confiança: provável (ponteiros lidos na ROM, o uso não foi lido).
 - **BR 0x10..0x5x NÃO é passo +0xAA.** Esses handlers avançam `GS` (u32), não `F+0xAA`. Existe um 2º despachante
-  em `0x08030860` (sem função no Ghidra; `menu_list[8]`, ponteiro em `0x083AC2E8`): chama Battle_CheckExitShortcut
+  em `0x08030860` (função desde o sync de 2026-10-14 (nome: Fight_SceneMain); `menu_list[8]`, ponteiro em `0x083AC2E8`): chama Battle_CheckExitShortcut
   0x0803EED8, Overlay_ClearTimerIfFlag 0x0803E780 e Fight_DrawActiveBotsOverlay 0x080195C0, depois `table[GS]` via
   0x0807CCF0 com tabela `0x083AECD8` = BR+0x40. Então BR índice i (i >= 0x10) = cena 8, subestado `GS = i-0x10`.
   A cena 8 é a validação da ação escolhida (peça ou medaforce) antes da execução; ela termina com `GM = 9, GS = 0`

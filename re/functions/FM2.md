@@ -40,7 +40,7 @@ Observação: E+0xCBA é um byte de modo do mapa: o ramo B grava 2, o sub 4 grav
 - **Sub 1 = 0x08057440 Map_TickChoiceListOpen (confirmado no código)**: zera [0x030064A0+0x66]; se
   [0x030064A0+0x6F] <= 15 incrementa e desenha a janela (0x080492A8, altura 0x1E-contador); senão limpa
   [+0x65], chama 0x08048864(0x7F...), 0x08057FD4, 0x08047C00 e 0x0804A210 (fim de lista).
-- **Sub 2 = 0x080574D4 (sem função no Ghidra, lido em halfwords)**: incrementa [0x030064A0+0x67]; chama 0x08057FD4 e
+- **Sub 2 = 0x080574D4 (função desde o sync de 2026-10-14 (nome: FieldMenu_ChoiceSub2_SelectRow), lido em halfwords)**: incrementa [0x030064A0+0x67]; chama 0x08057FD4 e
   0x08057F1C; lê a linha selecionada [+0x65]; chama 0x08057D80(linha) (**Overworld_CheckStepAllowed**: 1 = ativa);
   se inativa, sai; se ativa, toca som 0x08047BA8(6) e faz um switch em `r4-1` (0..5) pela tabela 0x08057534.
 
@@ -74,7 +74,7 @@ A tabela 0x083D5FF4 só foi lida até sub 2; 0x0B, 0x0D e 0x0F estão além do q
 2. Significado de gMainState=0/gamestate_menu=1 do ramo B (§1): ver MS0[1] e 0x080505FC.
 3. Tabela 0x083D5FF4 além de sub 2 (valores 0x0B, 0x0D, 0x0F) e mapa linha -> opção.
 4. Gravador de gamestate_menu=4 (bolsa).
-5. Função de 0x0805716C (ainda sem função no Ghidra).
+5. Função de 0x0805716C (ainda função desde o sync de 2026-10-14 (nome: FieldMenu_DispatchSubstate)).
 
 ## 6. Renomeações
 

@@ -58,7 +58,7 @@ Entradas de BAD8 (índice: alvo, nome atual no Ghidra):
 | 21 | 0x0800D188 | Hud_DrawLabelAndDecimal6 |
 | 24 | 0x0800D27C | Menu_TickSingleCountSelector |
 | 27 | 0x0800D3E4 | PartsBuild_UpdateEditPanel |
-| 30 | 0x0800D684 | sem função no Ghidra (miolo; fora de 0x0800D3E4 e de 0x0800D6A8) |
+| 30 | 0x0800D684 | função desde o sync de 2026-10-14 (nome: Menu_ClearObjectAttrsAndAdvance) (miolo; fora de 0x0800D3E4 e de 0x0800D6A8) |
 | 31 | 0x0800D6A8 | FightPreview_BuildLayers |
 | 32 | 0x0800D710 | DebugMotion_Main |
 | 33 | 0x0800D90C | DebugMotion_PlayKind |
@@ -83,29 +83,29 @@ Função de chamada: `CallViaR0` 0x0807CCF0. As três tabelas são de menu de DE
 | 4 | 0x0805CF58 | Shop_UpdateSlotAndDispatchState |
 | 5 | 0x0805CFB4 | Shop_ItemListInputStep |
 | 6 | 0x0805D4A0 | Slot_ActivateCursor |
-| 7 | 0x0805D4E0 | sem função no Ghidra (miolo; em JT3_lista) |
+| 7 | 0x0805D4E0 | função desde o sync de 2026-10-14 (nome: StateTable_WaitSubThenAdvance) (miolo; em JT3_lista) |
 | 8 | 0x0805D4FC | Gfx_FadeOutThenClear |
 | 9 | 0x0805D580 | FUN_0805d580 (renomear não feito; ver corpo, 0x19 bytes) |
 | 10 | 0x0805D5A4 | Menu_ResetOnInput |
-| 11 | 0x0805D5D0 | sem função no Ghidra (miolo; em JT3_lista) |
+| 11 | 0x0805D5D0 | função desde o sync de 2026-10-14 (nome: Fx_SetBldcntAndAdvance) (miolo; em JT3_lista) |
 | 12 | 0x0805D5F0 | Screen_StepToBlank |
-| 13 | 0x0805D658 | sem função no Ghidra (miolo; em JT3_lista) |
+| 13 | 0x0805D658 | função desde o sync de 2026-10-14 (nome: StateTable_WaitSubThenAdvance_B) (miolo; em JT3_lista) |
 | 14 | 0x0805D674 | Screen_TickFadeOutAndClear |
 | 15 | 0x0805D750 | Screen_ClearBufferAndResetDispcnt |
 | 16 | 0x0805D790 | Screen_InitLZ77TileBlocks |
 | 17 | 0x0805D860 | Stats_DrawSummaryScreen |
 | 18 | 0x0805DA14 | Gfx_FadeInStepAndEnableBg |
 | 19 | 0x0805DAB0 | Flow_StepDispatchCounter |
-| 20 | 0x0805DAD4 | sem função no Ghidra (miolo; em JT3_lista) |
+| 20 | 0x0805DAD4 | função desde o sync de 2026-10-14 (nome: StateTable_JumpOnDone_6Or9Or13) (miolo; em JT3_lista) |
 | 21 | 0x0805DB84 | Save_StepThenFlashOp |
 | 22 | 0x0805DBC4 | Site_SaveLoadPromptStep |
 | 23 | 0x0805DC4C | StateMachine_TickWithFrameTimer |
-| 24 | 0x0805DC88 | sem função no Ghidra (miolo; em JT3_lista) |
-| 25 | 0x0805DCB0 | sem função no Ghidra (miolo; em JT3_lista) |
+| 24 | 0x0805DC88 | função desde o sync de 2026-10-14 (nome: Screen_ResetPalettesAndAdvance) (miolo; em JT3_lista) |
+| 25 | 0x0805DCB0 | função desde o sync de 2026-10-14 (nome: StateTable_WaitSubThenAdvance_C) (miolo; em JT3_lista) |
 | 26 | 0x0805DCCC | Palette_FadeStepThenClear |
 | 27 | 0x0805DD50 | Menu_TickDispatchWithTimeout |
 | 28 | 0x0805DB20 | FUN_0805db20: se 0x0803FB3C(ptr+0x48) != 0, chama 0x080415E8(1,0x16,7) e conta. Nome não trocado |
-| 29 | 0x0805DB4C | sem função no Ghidra (miolo; em JT3_lista) |
+| 29 | 0x0805DB4C | função desde o sync de 2026-10-14 (nome: StateTable_JumpOnDone_6Or9) (miolo; em JT3_lista) |
 
 Obs.: os alvos sem função ficam como casos sem nome; ler o ROM ou o Ghidra por faixa se for preciso.
 
@@ -132,15 +132,15 @@ Obs.: os alvos sem função ficam como casos sem nome; ler o ROM ou o Ghidra por
 
 | Idx | Alvo | Nome / papel |
 |---|---|---|
-| 0 | 0x080639C4 | sem função no Ghidra (miolo; em JT3_lista) |
+| 0 | 0x080639C4 | função desde o sync de 2026-10-14 (nome: Screen_InitNumberRevealLayout) (miolo; em JT3_lista) |
 | 1 | 0x08063EBC | Anim_FinishClearAndLoadSlot |
 | 2 | 0x08063F08 | Menu_CompareSelectionAndAdvance |
 | 3 | 0x08063FB0 | Sprite_ScriptRecordStep |
-| 4 | 0x080640DC | sem função no Ghidra (miolo; em JT3_lista) |
+| 4 | 0x080640DC | função desde o sync de 2026-10-14 (nome: StateTable_AdvanceIndex) (miolo; em JT3_lista) |
 | 5 | 0x080640EC | Anim_ScrollTileRowsThenCountdown |
 | 6 | 0x0806412C | Fx_NumberRevealStep |
-| 7 | 0x0806445C | sem função no Ghidra (miolo; em JT3_lista) |
-| 8 | 0x080644D8 | sem função no Ghidra (miolo; em JT3_lista) |
+| 7 | 0x0806445C | função desde o sync de 2026-10-14 (nome: Anim_ScrollCountdownSlide) (miolo; em JT3_lista) |
+| 8 | 0x080644D8 | função desde o sync de 2026-10-14 (nome: Anim_ScrollThenLoadSlotAndSfx) (miolo; em JT3_lista) |
 | 9 | 0x08064524 | Flow_StepSfxCommit |
 | 10 | 0x080645A0 | Obj_StepThenTimerOnMatch |
 | 11 | 0x08064610 | Anim_WaitCounterThenAdvance |
@@ -156,9 +156,9 @@ Obs.: os alvos sem função ficam como casos sem nome; ler o ROM ou o Ghidra por
 |---|---|---|
 | 0 | 0x08067D00 | Screen_LoadSceneWithSong |
 | 1 | 0x08067F64 | PartsInfo_InitScreen |
-| 2 | 0x08068238 | sem função no Ghidra (miolo; em JT3_lista) |
-| 3 | 0x08068298 | sem função no Ghidra (miolo; em JT3_lista) |
-| 4 | 0x08068328 | sem função no Ghidra (miolo; em JT3_lista) |
+| 2 | 0x08068238 | função desde o sync de 2026-10-14 (nome: Fx_WhiteFadeStepThenLoadSlot) (miolo; em JT3_lista) |
+| 3 | 0x08068298 | função desde o sync de 2026-10-14 (nome: Fx_BlendStepThenLoadMedalArt) (miolo; em JT3_lista) |
+| 4 | 0x08068328 | função desde o sync de 2026-10-14 (nome: Fx_FadeInStepThenAdvance) (miolo; em JT3_lista) |
 | 5 | 0x08068374 | Fx_BlendAndStateStep |
 | 6 | 0x080683C8 | Anim_WaitRecordThenSetState |
 
@@ -176,7 +176,7 @@ Resumo por caso em "0x08065ED0" acima. Lista completa com descrição: `JT3_list
 ## Pendências
 
 - 0x0805DB20 (FUN_0805db20) segue sem nome: não ficou claro o papel de 0x0803FB3C e 0x080415E8.
-- Entradas sem função no Ghidra (`JT3_lista.txt`): 0x0800D684, 0x0805D4E0, 0x0805D5D0, 0x0805D658, 0x0805DAD4,
+- Entradas de `JT3_lista.txt` (eram sem função; desde o sync de 2026-10-14 são funções): 0x0800D684, 0x0805D4E0, 0x0805D5D0, 0x0805D658, 0x0805DAD4,
   0x0805DC88, 0x0805DCB0, 0x0805DB4C, 0x080639C4, 0x080640DC, 0x0806445C, 0x080644D8, 0x08068238, 0x08068298,
   0x08068328. Descrição não feita (sem disassembly por função; a leitura em bloco no ROM fica para depois).
 - Tamanho da tabela 0x083ACAC0 (34 é o fim lido, sem bound check em nenhum dos três despachantes). Os índices

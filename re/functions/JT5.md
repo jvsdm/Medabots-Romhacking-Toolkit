@@ -145,7 +145,7 @@ original (python -I, só leitura), decisão por item: retorno (`pop {..}; pop {r
 - `mov pc` em 0x08058572: 6 ptrs em 0x0805857C (literal 0x08058578), idx <=5. Alvos: 0x080585CC, 0x08058594, 0x080585B0, 0x080585CC, 0x080585CC, 0x080585E8.
 - `mov pc` em 0x08058716: 5 ptrs em 0x08058720 (literal 0x0805871C), idx <=4. Alvos: 0x08058734 (x2), 0x08058750, 0x0805876C, 0x08058788.
 - `mov pc` em 0x08058858: 7 ptrs em 0x0805886C (literal 0x08058868), idx <=6. Alvos: 0x0805899E (0,1,2,5), 0x08058888, 0x0805894C, 0x08058954.
-- Comentários Ghidra nos 5 sítios. Lacunas (0x080589A4, 0x08058A10 ...) continuam sem função.
+- Comentários Ghidra nos 5 sítios. Lacunas (0x080589A4 = Screen_StepCyclicIndex, 0x08058A10 = Map_StepMarkerCounterUp ...) são funções desde o sync de 2026-10-14.
 
 ### 18. R3.md:1303 — Screen_RedrawAndDispatchStep (0x08058C0C) — TABELA REAL (8)
 - `mov pc` em 0x08058C44: 8 ptrs em 0x08058C54 (literal 0x08058C50), idx = step r5 (sem cmp: chamador passa 0..7; step > 7 chama 0x080593FA e lê fora da tabela).

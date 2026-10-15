@@ -300,7 +300,7 @@ Linhas lidas por arquivo: G=19, HA1=23, HA2=42, HA3=42, HA4=42, HA5=7, HA6=42, H
 | 0x08042E58 | CreateCompositeBattleSpriteObjects | CreateCompositeBattleSpriteObjects | MERGE_NOTAS: conferir se e o mesmo corpo de 0x0804305C; mantido mtbe |
 | 0x0804305C | BuildCompositeBattleSpriteObjects | BuildCompositeBattleSpriteObjects | MERGE_NOTAS: conferir se e o mesmo corpo de 0x08042E58; mantido mtbe |
 | 0x0804538C | ShiftCompositePreviewTemplateEntryX | LayoutCompositePreviewEntryOamGrid | MERGE_NOTAS: Ghidra (posiciona grade de OAM) |
-| 0x08045A40 | IsCompositePreviewPointOnScreen | IsCompositePreviewPointOnScreen | MERGE_NOTAS: "conferir endereco" (README: e pool, sem funcao no Ghidra); mantido mtbe |
+| 0x08045A40 | IsCompositePreviewPointOnScreen | IsCompositePreviewPointOnScreen | MERGE_NOTAS: "conferir endereco" (README: e pool, função desde o sync de 2026-10-14 (nome: IsCompositePreviewPointOnScreen)); mantido mtbe |
 | 0x08047BA8 | Overworld_StartMapTransitionEffect | Overworld_StartMapTransitionEffect | MERGE_NOTAS: nome errado (so chama snd_sfx_request); sem nome correto indicado |
 
 ## Correcoes de comentario (MERGE_NOTAS)

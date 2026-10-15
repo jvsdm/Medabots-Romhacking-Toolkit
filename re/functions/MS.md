@@ -32,7 +32,7 @@ Ctx `0x03000440` (gMessageCtx), campos usados (confirmados nos decompiles abaixo
 Nota: a tabela 0x083B291C só é usada com ctx+4 <= 8 pelo fluxo de mensagem; as entradas 9..22 pertencem à família
 de despacho por ctx+0x1B (JT2). Não confundir com a tabela 0x083B2990 (JT2, 23 entradas).
 
-Entradas sem função no Ghidra (listadas em `MS_lista.txt` para criar): 0x0803FB94, 0x0803FBDC, 0x0803FCC8,
+Entradas listadas em `MS_lista.txt` (função desde o sync de 2026-10-14 nos casos conferidos: 0x0803FB94 = MsgState_FadeToneStep, 0x0803FBDC = MsgState_BG0OnThenDispatch, 0x0803FCC8 = MsgState_ClearBoxAndRunScript; demais na linha 36): 0x0803FB94, 0x0803FBDC, 0x0803FCC8,
 0x080408D0, 0x08040898, 0x080408BC e as de 9..22 (+ 0x080408F4..0x08040B50).
 
 ## 2. Controle do texto: ScriptVM_RunOpcodes 0x0803FD28 (decompile confirmado)

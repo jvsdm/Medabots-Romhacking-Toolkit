@@ -54,7 +54,7 @@ tail-call); não foram decompiladas nesta passada. Os nomes do estágio 1..9 fic
   0x084859A4 e 0x084859A8 = 0x0806E038 (E038), 0x084859AC e 0x084859B0 = 0x0806E074 (E074).
 - Tabela 0x08485988 **não tem literal exato** no ROM (só endereços dentro dela: 0x08485994 no pool de 0x0806DE68,
   0x084859B4 em 0x0806DE64, 0x084859BC em 0x0806E148). O consumidor (hospedeiro) não foi achado:
-  o Ghidra não tem função em 0x0806DD80..0x0806DE9C nem em 0x0806DE20 e 0x0806E148 (região sem função definida).
+  o Ghidra não tem função em 0x0806DD80 nem em 0x0806DE20 e 0x0806E148 (região sem função definida); 0x0806DE9C é função desde o sync de 2026-10-14 (nome: Battle_BuildBotSpriteOam).
   **Em aberto.**
 - O estágio de E038/E074 é o byte +0x22 do bot (E038 incrementa, E074 incrementa e reseta), o que bate com
   o hospedeiro acima usar bot+0x20 como índice. Não confirmado.

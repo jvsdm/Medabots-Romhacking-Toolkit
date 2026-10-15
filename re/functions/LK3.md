@@ -32,18 +32,18 @@ Tabela 0x080AFCC0 (ponteiros Thumb; o byte baixo é +1 do endereço). **A tabela
 
 | sub | Thumb | Função (Ghidra) | Papel | Confiança |
 |---|---|---|---|---|
-| 0 | 0x08065D44 | sem função no Ghidra (código: push r4-r6,lr; começa com `mov r0,#0`, `mov r1,#0xC0`) | pendente | pendente |
+| 0 | 0x08065D44 | função desde o sync de 2026-10-14 (nome: LinkMenu14_InitScreen) (código: push r4-r6,lr; começa com `mov r0,#0`, `mov r1,#0xC0`) | pendente | pendente |
 | 1 | 0x08065ED0 | `Screen_DispatchByState3A` (0x08065ED0..0x0806622D) | despachante de 6 subestados por obj 0x03006F74+0x3A (JT3, ramo A se `0x03000B90 != 0`, ramo B se == 0). Lê ID do aparelho (0x03000B90) e slots (0x03005010). Chama `Count_Entries3InTable9` (time) e `Check_PairsAllEqual` (inventário 0x03004C40). Provável: checagem de sincronia antes da troca/comando. | confirmado (código); papel provável |
 | 2 | 0x08066240 | `Anim_CounterDoneInitObjectSlot` | se o contador de animação (0x03006F74+0x50) termina: `Obj_InitSlotAndLoad(1,0,1)`, sub++ (`0x03001C..`), liga bit 0x4000 | confirmado (código) |
 | 3 | 0x08066280 | `Menu_SelectionFiveOptionsStep` (renomeada aqui `Link_SelectFiveOptionsStep`) | menu de **5 opções** (cursor obj+5 = 0..4; sobe/desce com 0x40/0x80). Se entrada remota tem 0xEF00 no halfword recebido, copia o byte baixo para obj+5 e liga obj+0x7A (escolha do peer). Se o jogador confirma (A), grava **0xEF00 \| cursor** no halfword de envio, `snd_sfx 4`. | confirmado (código); significado das 5 opções: pendente |
 | 4 | 0x08066460 | `Link_CommandExchangeStep` (LK2 §4.2) | 0xEF00\|cmd, timer 0xFE0F, ecoa; se obj+5 == 4 vai ao estado 8 | confirmado (LK2) |
 | 5 | 0x08066534 | `Save_WaitSfxThenFlash` | espera SFX 4 terminar, `snd_song_request(0)`, `snd_sfx_request(0)`, `Save_InvokeFlashOp`, sub += 2 | confirmado (código): **é tela de SALVAR** |
-| 6 | 0x080665B0 | sem função no Ghidra (código: push lr; carrega ponteiro de objeto, soma 0x50 e chama uma função) | pendente | pendente (não lido por completo) |
+| 6 | 0x080665B0 | função desde o sync de 2026-10-14 (nome: LinkMenu14_WaitThenSetPreviewScene) (código: push lr; carrega ponteiro de objeto, soma 0x50 e chama uma função) | pendente | pendente (não lido por completo) |
 | 7 | 0x08066574 | `Save_RunOptionsThenBlendFade` | até 4x `Site_RunSaveLoadOption(0)`, depois `Screen_InitBlendFade` | confirmado (código): **SALVAR** |
 | 8 | 0x080665FC | `Fx_InitStringStateMachine` | monta string de 0x270 (0xFB... terminador -1), `StateMachine_DispatchStep`, `Fx_InitRecord8(1,0x16,7)` | confirmado (código): texto/efeito |
-| 9 | 0x0806668C | sem função no Ghidra (código: push lr; chama uma função e testa o resultado) | pendente | pendente |
+| 9 | 0x0806668C | função desde o sync de 2026-10-14 (nome: LinkMenu14_DispatchIndexCountOrSkip) (código: push lr; chama uma função e testa o resultado) | pendente | pendente |
 | 10 | 0x080666C8 | `Fx_TickStateThenInitRecord8` | tick de máquina de estado (0x48 do bloco 0x080666EC), depois `Fx_InitRecord8` | confirmado (código): efeito |
-| 11 | 0x080666F4 | sem função no Ghidra (código: push lr; chama uma função; se o resultado é 0, incrementa um contador e grava) | pendente | pendente |
+| 11 | 0x080666F4 | função desde o sync de 2026-10-14 (nome: LinkMenu14_DispatchIndexCountReset) (código: push lr; chama uma função; se o resultado é 0, incrementa um contador e grava) | pendente | pendente |
 | 12 | 0x08066714 | `Text_BuildMessageAndStep` | monta mensagem (ponteiro em 0x03000... +0x3C, terminador -1) e avança a máquina; ao fim: se `+0x2A` == 0 usa 0xFF00 senão 0x... ; se ambos halfwords 0xFFxx e iguais, `Obj_InitTimerRecord(...,0xC0)` e sub=5; senão sub=3 e +5=6 | confirmado (código): mensagem final (ex.: resultado/salvar) |
 
 **Leitura do item 2:** o menu 0x14 é a **sequência pós-link**: mensagens e efeitos (8, 10, 12), uma escolha de 5 opções
@@ -68,14 +68,14 @@ Tabela 0x080AFC88 (confirmada, `Fight_CallHandlerWithArgCopy` 0x08065D10 chama `
 
 | sub | Thumb | Função | Papel | Confiança |
 |---|---|---|---|---|
-| 0 | 0x08065790 | sem função (LK2: chama 0x0803FAA0 e 0x08074CE0, toca obj 0x03006F74) | preparo (provável) | pendente |
+| 0 | 0x08065790 | função desde o sync de 2026-10-14 (nome: LinkMenu15Step0) (LK2: chama 0x0803FAA0 e 0x08074CE0, toca obj 0x03006F74) | preparo (provável) | pendente |
 | 1 | 0x080657C4 | `Sm_StepSfxRepeat3` | máquina de estado com **3 confirmações (A)**; cada uma toca SFX 0xD e reinicia o passo; ao 3º, marca o bit 2 do byte de controle e avança | confirmado (código): espera de texto com A x3 |
-| 2 | 0x08065A80 | sem função (chama `StateMachine_DispatchSub` 0x08041CA4) | espera de texto (provável) | pendente |
+| 2 | 0x08065A80 | função desde o sync de 2026-10-14 (nome: LinkMenu15Step2) (chama `StateMachine_DispatchSub` 0x08041CA4) | espera de texto (provável) | pendente |
 | 3 | 0x08065A0C | `Battle_TickTwoStageSequence` | 2 estágios; A avança (SFX 0xD); no 2º fecha o objeto (`+0x84=0`, `+0x1B=0`) e decrementa `gamestate_subroutine` | confirmado (código): confirmação em duas etapas |
 | 4 | 0x08065A94 | `Menu15_Sub4_WaitAThenAdvance` (renomeada aqui) | passo de estado (0x10 ou 0x14 do bloco, conforme +8). Se +8 == 0: conta e zera +0x3A; senão, A: SFX 0xD, limpa flags e subtrai 2 do contador | confirmado (código); papel exato: provável |
 | 5 | 0x08065B0C | `Link_HandshakeFrameStep` | handshake por quadro com o peer (LK.md §4.1) | confirmado (LK.md) |
-| 6 | 0x08065C98 | sem função no Ghidra | troca de comandos (LK2): toca 0x03005010 e 0x03000B90 | provável (LK2); não lido aqui |
-| 7 | 0x08065CFC | sem função no Ghidra | fim da etapa (LK2: chama `StateMachine_DispatchSub` e 0x080476E8) | provável (LK2); não lido aqui |
+| 6 | 0x08065C98 | função desde o sync de 2026-10-14 (nome: LinkMenu15Step6) | troca de comandos (LK2): toca 0x03005010 e 0x03000B90 | provável (LK2); não lido aqui |
+| 7 | 0x08065CFC | função desde o sync de 2026-10-14 (nome: LinkMenu15Step7) | fim da etapa (LK2: chama `StateMachine_DispatchSub` e 0x080476E8) | provável (LK2); não lido aqui |
 
 **Leitura do item 4:** o menu 0x15 é a **sequência de conexão**: espera de texto (1), confirmação (3), passo de estado (4),
 handshake (5), depois comandos (6) e fim (7). O handshake é o único passo confirmado de link.

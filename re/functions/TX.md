@@ -33,7 +33,7 @@ Os quatro sites têm o mesmo padrão: `r0 = StateMachine_DispatchStep(tabela[ín
 
 ## 2. Tabela de bytes em 0x083AF380 (após gActionScriptOpcodeHandlerTable)
 
-- Leitor único: `Fight_RollDamageFromTwoDice` 0x08034AA0 (sem função no Ghidra; literal 0x08034AEC em 0x08034AA8).
+- Leitor único: `Fight_RollDamageFromTwoDice` 0x08034AA0 (função desde o sync de 2026-10-14 (nome: Fight_RollDamageFromTwoDice); literal 0x08034AEC em 0x08034AA8).
   Endereço 0x08034AA0: `push {r4-r7,lr}`, termina em `pop {r0}; bx r0` em 0x08034AE4.
 - Algoritmo lido no corpo:
   1. `r = randbyte()` (Ghidra: `randbyte` 0x080424B8); `v1 = tabela[r & 15]`; grava `ctx[0x188] = v1`.
@@ -50,7 +50,7 @@ Os quatro sites têm o mesmo padrão: `r0 = StateMachine_DispatchStep(tabela[ín
 
 ## 3. Pendências
 
-- Criar no Ghidra as funções de `TX_lista.txt` (5 endereços; sem função: 0x08010814, 0x08010BD0, 0x0803D9A0,
+- Funções de `TX_lista.txt` (5 endereços; criadas pelo sync de 2026-10-14, antes sem função: 0x08010814, 0x08010BD0, 0x0803D9A0,
   0x0803DB4C, 0x08034AA0). Depois repetir o `decompile` e confirmar os nomes.
 - Quem chama `Fight_RollDamageFromTwoDice` (despachante das tabelas 0x083ACE54 e vizinhas): não localizado.
 - Confirmar em runtime (mGBA, sem alterar a ROM) o valor de `0x03001800` no início de uma batalha: não feito

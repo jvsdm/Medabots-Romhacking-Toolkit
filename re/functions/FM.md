@@ -28,7 +28,7 @@ Confiança: **confirmado** (lido no código ou medido), **provável**, **pendent
 
 ## 3. Sub-estados do menu de escolha (confirmado no despacho, provável no conteúdo)
 
-- Despachante 0x0805716C (Thumb, bytes lidos; **sem função no Ghidra**): `push lr`; base = tabela 0x083D5FF4;
+- Despachante 0x0805716C (Thumb, bytes lidos; **função desde o sync de 2026-10-14 (nome: FieldMenu_DispatchSubstate)**): `push lr`; base = tabela 0x083D5FF4;
   índice = `gamestate_subroutine` (0x0300137C) × 4; chama o handler. Lacuna de Ghidra: 0x0805716C não tem função
   própria (nem o `disassemble`).
 - Tabela 0x083D5FF4 (lida; o literal do despachante aponta para ela): **sub 0 = 0x0805718D

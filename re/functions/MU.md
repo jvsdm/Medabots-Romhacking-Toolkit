@@ -27,10 +27,10 @@ Ponteiro 0x08000841 (ou 0x08000840 no Ghidra) = `NoOpActionHandler`: entrada vaz
 | estado | menu | função (Ghidra) | tela | confiança |
 |---|---|---|---|---|
 | 0 | 0 | Dispatch_CallIndexedHandler 0x08002554 (MN) | despachante por passo (não rechecado) | confirmado (MN) |
-| 0 | 1 | 0x080027BC, SEM função | cena do fluxo 0x40 (sub 0x10) | pendente |
-| 0 | 2 | 0x08003374, SEM função | pendente | pendente |
-| 0 | 3 | 0x080039E0, SEM função | pendente | pendente |
-| 0 | 4 | 0x08007584, SEM função | pendente | pendente |
+| 0 | 1 | 0x080027BC, Função desde o sync de 2026-10-14 (nome: MainState0_Menu1_DispatchSub) | cena do fluxo 0x40 (sub 0x10) | pendente |
+| 0 | 2 | 0x08003374, Função desde o sync de 2026-10-14 (nome: PartScreen_DispatchSubstate) | pendente | pendente |
+| 0 | 3 | 0x080039E0, Função desde o sync de 2026-10-14 (nome: Scene_FrameTickSubstateDispatch) | pendente | pendente |
+| 0 | 4 | 0x08007584, Função desde o sync de 2026-10-14 (nome: PartsGrid_DispatchStateTable) | pendente | pendente |
 | 0 | 5 | Menu5_Dispatch_PartsScreens 0x0800D9DC | MEDABOTS/peças: grade (passo 0 = MedabotGrid_InitScreen 0x0800DA34) e detalhe de peça (passo 66 = 0x0800EB34) | provável (ST2) |
 | 0 | 6 | Scene_GsDispatch_Menu6_Encounter 0x08010264 | encontro (batalha de história 0x20 e aleatória 0x21) | confirmado (ST2/MN) |
 | 0 | 7 | Battle_FrameDispatchOrExit 0x08012970 (BT) | batalha: quadro | confirmado (BT) |
@@ -47,18 +47,18 @@ Ponteiro 0x08000841 (ou 0x08000840 no Ghidra) = `NoOpActionHandler`: entrada vaz
 | 2 | 3 | FUN_0805c0d4 | pendente | provável só pelo nome |
 | 2 | 4 | Dispatch_StateTableFrameCount 0x0805CB50 | despachante | confirmado (nome) |
 | 2 | 6..9, 12, 24..28, 30..39 | 0x0805D704..0x0805C988 (não checados) | pendente | pendente |
-| 2 | 10, 23 | 0x08060688, SEM função | pendente | pendente |
-| 2 | 11 | 0x08060D6C, SEM função | LOJA (cmd 0x03, arg = id da loja, SC.md) | provável (SC) |
-| 2 | 16 | 0x08063948, SEM função | pendente | pendente |
+| 2 | 10, 23 | 0x08060688, Função desde o sync de 2026-10-14 (nome: Dispatch_CallTableEntryByByte) | pendente | pendente |
+| 2 | 11 | 0x08060D6C, Função desde o sync de 2026-10-14 (nome: Menu_Shop_Main) | LOJA (cmd 0x03, arg = id da loja, SC.md) | provável (SC) |
+| 2 | 16 | 0x08063948, Função desde o sync de 2026-10-14 (nome: Task_CopyCallTableEntryThenCount) | pendente | pendente |
 | 2 | 17 | Dispatch_StateTableWithCopy 0x0806463C | despachante | confirmado (nome) |
-| 2 | 18 (0x12) | 0x08064DB4, SEM função | flow 0x00/0x02 (cmd 0x71/0x72) | pendente |
+| 2 | 18 (0x12) | 0x08064DB4, Função desde o sync de 2026-10-14 (nome: Task_CallHandlerTableThenCountIfFlag_V2) | flow 0x00/0x02 (cmd 0x71/0x72) | pendente |
 | 2 | 19 | Dispatch_CallHandlerFromTable4 0x080649BC | despachante | confirmado (nome) |
 | 2 | 20 (0x14) | Fight_CallHandlerCopyArgs52 0x08066824 | flow cmd 0x05 (0x76); nome "Fight_" é suspeito | pendente |
 | 2 | 21 (0x15) | Fight_CallHandlerWithArgCopy 0x08065D10 | flow 0x04 = link Medabot (provável) | pendente (nome "Fight_" suspeito) |
 | 2 | 22 (0x16) | FUN_08067b9c | flow cmd 0x08 (0x73) | pendente |
 | 3 | 0 | Battle_DispatchThenEndTransition 0x0806E460 | boot/intro (nome suspeito, MN) | confirmado existe; tela pendente |
 | 3 | 1, 2 | 0x0806EA98, 0x0806D588 (não checados) | pendente | pendente |
-| 3 | 3 (0x12) | 0x0806E130, SEM função | flow cmd 0x12 (0x79) | pendente |
+| 3 | 3 (0x12) | 0x0806E130, Função desde o sync de 2026-10-14 (nome: Battle_DispatchPhaseTable) | flow cmd 0x12 (0x79) | pendente |
 | 3 | 4 (0x10) | Dispatch_ScrollTickThenHandler 0x08068DD0 | flow cmd 0x10 (0x78) | pendente (nome "Scroll" é só de nome) |
 | 3 | 5 (0x11) | Dispatch_CallHandlerByWordIndex 0x0806B744 | flow cmd 0x11 (0x7A) | pendente |
 | 3 | 6 (0x13) | Fx_FrameTickAndDispatch 0x080708D8 | flow cmd 0x13 (0x70), espera Map_ModeDispatch | pendente |

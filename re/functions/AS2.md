@@ -37,59 +37,59 @@ ver `R1.md`/`HN2.md`).
 
 | op | handler | Ghidra hoje | o que faz | confiança |
 |----|---------|-------------|-----------|-----------|
-| 0x36 | 0x08034524 | sem função | wrapper → `Fight_DispatchOnSubstateAA_AF` (0x08024998) | confirmado (código) |
-| 0x37 | 0x08034540 | sem função | wrapper → `..._AG` (0x08024E04); efeito da animação não lido | confirmado (wrapper) / efeito pendente |
-| 0x38 | 0x0803455C | sem função | wrapper → `..._AH` (0x0802518C); AH..AP em `HA8.md` | confirmado (wrapper) |
-| 0x39 | 0x08034578 | sem função | wrapper → `..._AI` (0x080257C0) | confirmado (wrapper) |
-| 0x3A | 0x08034594 | sem função | wrapper → `..._AJ` (0x08025AF8) | confirmado (wrapper) |
-| 0x3B | 0x080345B0 | sem função | wrapper → `..._AK` (0x08025F2C) | confirmado (wrapper) |
-| 0x3C | 0x080345CC | sem função | wrapper → `..._AL` (0x08025FA0) | confirmado (wrapper) |
-| 0x3D | 0x080345E8 | sem função | inline: zera os bytes +2..+5 do registro de suporte do time do bot ativo (`fight+0x2A + 8*fight[0x8A]`), depois avança | confirmado (disasm) |
-| 0x3E | 0x08034628 | sem função | wrapper → `..._AM` (0x08026108) | confirmado (wrapper) |
-| 0x3F | 0x08034644 | sem função | chama `..._AN` (0x0802645C); se `+0xB5` e `+0xAB != 1`, grava cena 8 em 0x03002B8C e 0 em 0x0300137C (saída do combate); se `+0xAB == 1`, avança | provável (disasm; cena 8 não validada no emulador) |
-| 0x40 | 0x08034684 | sem função | `FightPreview_UpdateSingleLayerSideSprites` (0x08035DE8), `FightPreview_AdvanceLeftSideSequenceStep` (0x080361C4) e `Right` (0x08036218) guardam resultados em fight, depois `Fight_DispatchOnSubstateAA_AO` (0x08026884); avança | confirmado (chamadas) / efeito fino provável |
-| 0x41 | 0x080346C4 | sem função | `Fight_GetOpponentSideBaseIndex` (0x08032FB8) → `Fight_PickRandomActiveBotInSide` (0x08033090) → `Fight_SelectRandomTargetPartForSelectedBot` (0x08035528) → `Fight_CopySelectedTargetToFightInfo` (0x080355C4); avança. **Escolhe alvo aleatório (bot + peça do lado adversário)** | confirmado (nomes + chamadas) |
-| 0x42 | 0x08034708 | sem função | `Fight_RollPartValue` (0x0803769C) e `Fight_ComputeEffectValueFromRos` (0x080376F4); avança. Sorteia valor de peça e calcula efeito pelo ROS | confirmado (nomes); detalhe provável |
-| 0x43 | 0x08034728 | sem função | inline: laço de 3 bots do lado escolhido (base por byte da RAM); soma o campo +4 (passo 0x18) nos registros com +15 != 0 e estado 2 ou 3, e acumula em u16 (alvo não identificado); avança | provável |
-| 0x44 | 0x0803476C | sem função | `UpdateSingleLayerSideSprites` + `AdvanceLeft/RightSideSequenceStep` (como 0x40) + `Fight_DispatchOnSubstateAA_AP` (0x08026CF4); avança | confirmado (chamadas) |
-| 0x45 | 0x080347AC | sem função | `Fight_IncrementActionUsageCounter` (0x08036270); avança | confirmado (nome + chamada) |
-| 0x46 | 0x080347BC | sem função | inline: soma, sobre as 4 peças do bot de índice `byte` (ver `R1.md`), `armadura máx − atual` e acumula em u16 de fight; avança | provável (disasm; leitura de `[+0]`/`[+13]` confirmada) |
-| 0x47 | 0x080347F8 | sem função | chamadas `UpdateSingleLayerSideSprites`, `AdvanceLeft/RightSideSequenceStep` e `Fight_CopySelectedTargetToFightInfo`; disasm truncado (60 instruções) | **pendente** (cauda não lida) |
-| 0x48 | 0x080348D0 | sem função | `UpdateSingleLayerSideSprites` + `AdvanceLeft/RightSideSequenceStep` + `Fight_DispatchOnSubstateAA_AQ` (0x08026ED0); avança | confirmado (chamadas) |
-| 0x49 | 0x08034910 | sem função | inline: para as 4 peças do bot ativo (`fight+0x87`): `fight+0xD6+2k = armadura_k >> 1` e `fight+0xEC += armadura_k >> 1` (metade da armadura e soma); avança | confirmado (disasm) |
-| 0x4A | 0x0803496C | sem função | `Fight_GetAllySideBaseIndex` (0x08032FC4) + laço inline de 45 instruções; avança | **pendente** (laço não decodificado) |
-| 0x4B | 0x080349D8 | sem função | `Fight_GetOpponentSideBaseIndex` + `Fight_FindTargetBotWithPart` (0x08037798) + `Fight_PickRandomActiveBotInSide` + `Fight_SelectRandomTargetPartForSelectedBot` + `Fight_CopySelectedTargetToFightInfo`; avança. Parecido com 0x41, mas com busca de bot que tenha a peça | provável (nomes) |
-| 0x4C | 0x08034A68 | sem função | inline: `fight+0xEC = armadura da peça fight[0x8B] do bot fight[0x88]` (u16); avança | confirmado (disasm) |
-| 0x4D | 0x08034AA0 | sem função | chama `randbyte` (0x080424B8) duas vezes (sorteio); avança | provável (sorteio; efeito do resultado não lido) |
-| 0x4E | 0x08034AF4 | sem função | `Fight_GetOpponentSideBaseIndex` + `Fight_FindActiveBotInSideWithGroup` (0x08037830) + escolha aleatória de bot e peça (como 0x41); avança | provável (nomes) |
-| 0x4F | 0x08034B68 | sem função | `Fight_GetOpponentSideBaseIndex` + `Fight_FindActiveBotInSideWithGroup`; avança | provável (nomes) |
-| 0x50 | 0x08034BA0 | sem função | wrapper → `Fight_DispatchOnSubstateAA_AR` (0x08026FD0): dano em peça aleatória dos adversários | confirmado (`HN2.md`) |
-| 0x51 | 0x08034BBC | sem função | wrapper → `..._AS` (0x0802793C): estado por técnica no próprio bot (4..8) | confirmado (`HN2.md`) |
-| 0x52 | 0x08034BD8 | sem função | wrapper → `..._AT` (0x08027F5C): bônus de suporte do time | confirmado (`HN2.md`) |
-| 0x53 | 0x08034BF4 | sem função | wrapper → `..._AU` (0x08028248): marca de reação no próprio bot | confirmado (`HN2.md`) |
-| 0x54 | 0x08034C10 | sem função | wrapper → `..._AV` (0x08028404): estado em todos os adversários | confirmado (`HN2.md`) |
-| 0x55 | 0x08034C2C | sem função | wrapper → `..._AW` (0x08028C40) — time: proteção contra status (`HANDOFF_DISCOVERY`) | provável (nome na nota) |
-| 0x56 | 0x08034C48 | sem função | wrapper → `..._AX` (0x080294B4) — time (curar) | provável |
-| 0x57 | 0x08034C64 | sem função | wrapper → `..._AY` (0x08029840) — time (reparar armadura) | provável |
-| 0x58 | 0x08034C80 | sem função | wrapper → `..._AZ` (0x08029E0C) — time (restaurar peças) | provável |
-| 0x59 | 0x08034C9C | sem função | wrapper → `..._BA` (0x0802A0E8) — time (gauge) | provável |
-| 0x5A | 0x08034CB8 | sem função | wrapper → `..._BB` (0x0802A6AC) — técnica sem dano | provável |
-| 0x5B | 0x08034CD4 | sem função | wrapper → `..._BC` (0x0802AAD0) | pendente |
-| 0x5C | 0x08034CF0 | sem função | wrapper → `..._BD` (0x0802ACCC) | pendente |
-| 0x5D | 0x08034D0C | sem função | wrapper → `..._BE` (0x0802B000) | pendente |
-| 0x5E | 0x08034D28 | sem função | wrapper → `..._BF` (0x0802B7E8) | pendente |
-| 0x5F | 0x08034D44 | sem função | wrapper → `..._BG` (0x0802BD6C) | pendente |
-| 0x60 | 0x08034D60 | sem função | wrapper → `..._BH` (0x0802C2AC) | pendente |
-| 0x61 | 0x08034D7C | sem função | wrapper → `..._BI` (0x0802C644) (tabela 0x083AE994) | pendente |
-| 0x62 | 0x08034D98 | sem função | wrapper → `..._BJ` (0x0802CBE8) (tabela 0x083AE9D4) | pendente |
-| 0x63 | 0x08034DB4 | sem função | wrapper → `..._BK` (0x0802D688) (tabela 0x083AEA30) | pendente |
-| 0x64 | 0x08034DD0 | sem função | wrapper → `..._BL` (0x0802DCB4) (tabela 0x083AEA88) | pendente |
-| 0x65 | 0x08034DEC | sem função | wrapper → `..._BM` (0x0802E424) (tabela 0x083AEB1C) | pendente |
-| 0x66 | 0x08034E08 | sem função | wrapper → `..._BN` (0x0802EBC0) (tabela 0x083AEB88) | pendente |
-| 0x67 | 0x08034E24 | sem função | wrapper → `..._BO` (0x0802F030) (tabela 0x083AEBC4) | pendente |
-| 0x68 | 0x08034E40 | sem função | wrapper → `..._BP` (0x0802F628) (tabela 0x083AEC04) | pendente |
-| 0x69 | 0x08034E5C | sem função | wrapper → `..._BQ` (0x0802F990) (tabela 0x083AEC58) | pendente |
-| 0x6A | 0x08034E78 | sem função | wrapper → `..._BR` (0x0802FE50) (tabela 0x083AEC98) | confirmado (wrapper; cauda truncada na leitura) |
+| 0x36 | 0x08034524 | função desde o sync de 2026-10-14 (nome: ActionScript_Op36_CallAF) | wrapper → `Fight_DispatchOnSubstateAA_AF` (0x08024998) | confirmado (código) |
+| 0x37 | 0x08034540 | função desde o sync de 2026-10-14 (nome: ActionScript_Op37_CallAG) | wrapper → `..._AG` (0x08024E04); efeito da animação não lido | confirmado (wrapper) / efeito pendente |
+| 0x38 | 0x0803455C | função desde o sync de 2026-10-14 (nome: ActionScript_Op38_CallAH) | wrapper → `..._AH` (0x0802518C); AH..AP em `HA8.md` | confirmado (wrapper) |
+| 0x39 | 0x08034578 | função desde o sync de 2026-10-14 (nome: ActionScript_Op39_CallAI) | wrapper → `..._AI` (0x080257C0) | confirmado (wrapper) |
+| 0x3A | 0x08034594 | função desde o sync de 2026-10-14 (nome: ActionScript_Op3A_CallAJ) | wrapper → `..._AJ` (0x08025AF8) | confirmado (wrapper) |
+| 0x3B | 0x080345B0 | função desde o sync de 2026-10-14 (nome: ActionScript_Op3B_CallAK) | wrapper → `..._AK` (0x08025F2C) | confirmado (wrapper) |
+| 0x3C | 0x080345CC | função desde o sync de 2026-10-14 (nome: ActionScript_Op3C_CallAL) | wrapper → `..._AL` (0x08025FA0) | confirmado (wrapper) |
+| 0x3D | 0x080345E8 | função desde o sync de 2026-10-14 (nome: ActionScript_Op3D_ClearSupportRecord) | inline: zera os bytes +2..+5 do registro de suporte do time do bot ativo (`fight+0x2A + 8*fight[0x8A]`), depois avança | confirmado (disasm) |
+| 0x3E | 0x08034628 | função desde o sync de 2026-10-14 (nome: ActionScript_Op3E_CallAM) | wrapper → `..._AM` (0x08026108) | confirmado (wrapper) |
+| 0x3F | 0x08034644 | função desde o sync de 2026-10-14 (nome: ActionScript_Op3F_CallAN_SceneExit) | chama `..._AN` (0x0802645C); se `+0xB5` e `+0xAB != 1`, grava cena 8 em 0x03002B8C e 0 em 0x0300137C (saída do combate); se `+0xAB == 1`, avança | provável (disasm; cena 8 não validada no emulador) |
+| 0x40 | 0x08034684 | função desde o sync de 2026-10-14 (nome: ActionScript_Op40_SideSpritesAO) | `FightPreview_UpdateSingleLayerSideSprites` (0x08035DE8), `FightPreview_AdvanceLeftSideSequenceStep` (0x080361C4) e `Right` (0x08036218) guardam resultados em fight, depois `Fight_DispatchOnSubstateAA_AO` (0x08026884); avança | confirmado (chamadas) / efeito fino provável |
+| 0x41 | 0x080346C4 | função desde o sync de 2026-10-14 (nome: ActionScript_Op41_PickRandomOpponentTargetPart) | `Fight_GetOpponentSideBaseIndex` (0x08032FB8) → `Fight_PickRandomActiveBotInSide` (0x08033090) → `Fight_SelectRandomTargetPartForSelectedBot` (0x08035528) → `Fight_CopySelectedTargetToFightInfo` (0x080355C4); avança. **Escolhe alvo aleatório (bot + peça do lado adversário)** | confirmado (nomes + chamadas) |
+| 0x42 | 0x08034708 | função desde o sync de 2026-10-14 (nome: ActionScript_Op42_RollPartValueAndEffect) | `Fight_RollPartValue` (0x0803769C) e `Fight_ComputeEffectValueFromRos` (0x080376F4); avança. Sorteia valor de peça e calcula efeito pelo ROS | confirmado (nomes); detalhe provável |
+| 0x43 | 0x08034728 | função desde o sync de 2026-10-14 (nome: ActionScript_Op43_AddActiveBotPartBonusToEC) | inline: laço de 3 bots do lado escolhido (base por byte da RAM); soma o campo +4 (passo 0x18) nos registros com +15 != 0 e estado 2 ou 3, e acumula em u16 (alvo não identificado); avança | provável |
+| 0x44 | 0x0803476C | função desde o sync de 2026-10-14 (nome: ActionScript_Op44_SideSpritesAP) | `UpdateSingleLayerSideSprites` + `AdvanceLeft/RightSideSequenceStep` (como 0x40) + `Fight_DispatchOnSubstateAA_AP` (0x08026CF4); avança | confirmado (chamadas) |
+| 0x45 | 0x080347AC | função desde o sync de 2026-10-14 (nome: ActionScript_Op45_IncrementUsageCounter) | `Fight_IncrementActionUsageCounter` (0x08036270); avança | confirmado (nome + chamada) |
+| 0x46 | 0x080347BC | função desde o sync de 2026-10-14 (nome: ActionScript_Op46_SumPartDamageOfTargetBot) | inline: soma, sobre as 4 peças do bot de índice `byte` (ver `R1.md`), `armadura máx − atual` e acumula em u16 de fight; avança | provável (disasm; leitura de `[+0]`/`[+13]` confirmada) |
+| 0x47 | 0x080347F8 | função desde o sync de 2026-10-14 (nome: ActionScript_Op47_SideSpritesCopyTarget) | chamadas `UpdateSingleLayerSideSprites`, `AdvanceLeft/RightSideSequenceStep` e `Fight_CopySelectedTargetToFightInfo`; disasm truncado (60 instruções) | **pendente** (cauda não lida) |
+| 0x48 | 0x080348D0 | função desde o sync de 2026-10-14 (nome: ActionScript_Op48_SideSpritesAQ) | `UpdateSingleLayerSideSprites` + `AdvanceLeft/RightSideSequenceStep` + `Fight_DispatchOnSubstateAA_AQ` (0x08026ED0); avança | confirmado (chamadas) |
+| 0x49 | 0x08034910 | função desde o sync de 2026-10-14 (nome: ActionScript_Op49_HalfArmorSelfBot) | inline: para as 4 peças do bot ativo (`fight+0x87`): `fight+0xD6+2k = armadura_k >> 1` e `fight+0xEC += armadura_k >> 1` (metade da armadura e soma); avança | confirmado (disasm) |
+| 0x4A | 0x0803496C | função desde o sync de 2026-10-14 (nome: ActionScript_Op4A_CountBrokenAllyParts) | `Fight_GetAllySideBaseIndex` (0x08032FC4) + laço inline de 45 instruções; avança | **pendente** (laço não decodificado) |
+| 0x4B | 0x080349D8 | função desde o sync de 2026-10-14 (nome: ActionScript_Op4B_FindBotWithPartAndPickPart) | `Fight_GetOpponentSideBaseIndex` + `Fight_FindTargetBotWithPart` (0x08037798) + `Fight_PickRandomActiveBotInSide` + `Fight_SelectRandomTargetPartForSelectedBot` + `Fight_CopySelectedTargetToFightInfo`; avança. Parecido com 0x41, mas com busca de bot que tenha a peça | provável (nomes) |
+| 0x4C | 0x08034A68 | função desde o sync de 2026-10-14 (nome: ActionScript_Op4C_ArmorOfTargetPart) | inline: `fight+0xEC = armadura da peça fight[0x8B] do bot fight[0x88]` (u16); avança | confirmado (disasm) |
+| 0x4D | 0x08034AA0 | função desde o sync de 2026-10-14 (nome: Fight_RollDamageFromTwoDice) | chama `randbyte` (0x080424B8) duas vezes (sorteio); avança | provável (sorteio; efeito do resultado não lido) |
+| 0x4E | 0x08034AF4 | função desde o sync de 2026-10-14 (nome: ActionScript_Op4E_FindActiveBotWithGroupAndPickPart) | `Fight_GetOpponentSideBaseIndex` + `Fight_FindActiveBotInSideWithGroup` (0x08037830) + escolha aleatória de bot e peça (como 0x41); avança | provável (nomes) |
+| 0x4F | 0x08034B68 | função desde o sync de 2026-10-14 (nome: ActionScript_Op4F_SetEffect10IfNoGroupMatch) | `Fight_GetOpponentSideBaseIndex` + `Fight_FindActiveBotInSideWithGroup`; avança | provável (nomes) |
+| 0x50 | 0x08034BA0 | função desde o sync de 2026-10-14 (nome: ActionScript_Op50_CallAR) | wrapper → `Fight_DispatchOnSubstateAA_AR` (0x08026FD0): dano em peça aleatória dos adversários | confirmado (`HN2.md`) |
+| 0x51 | 0x08034BBC | função desde o sync de 2026-10-14 (nome: ActionScript_Op51_StateByTechniqueSelf) | wrapper → `..._AS` (0x0802793C): estado por técnica no próprio bot (4..8) | confirmado (`HN2.md`) |
+| 0x52 | 0x08034BD8 | função desde o sync de 2026-10-14 (nome: ActionScript_Op52_TeamSupportBonus) | wrapper → `..._AT` (0x08027F5C): bônus de suporte do time | confirmado (`HN2.md`) |
+| 0x53 | 0x08034BF4 | função desde o sync de 2026-10-14 (nome: ActionScript_Op53_ReactionMarkSelf) | wrapper → `..._AU` (0x08028248): marca de reação no próprio bot | confirmado (`HN2.md`) |
+| 0x54 | 0x08034C10 | função desde o sync de 2026-10-14 (nome: ActionScript_Op54_StateAllOpponents) | wrapper → `..._AV` (0x08028404): estado em todos os adversários | confirmado (`HN2.md`) |
+| 0x55 | 0x08034C2C | função desde o sync de 2026-10-14 (nome: ActionScript_Op55_TeamProtectStatus) | wrapper → `..._AW` (0x08028C40) — time: proteção contra status (`HANDOFF_DISCOVERY`) | provável (nome na nota) |
+| 0x56 | 0x08034C48 | função desde o sync de 2026-10-14 (nome: ActionScript_Op56_TeamHeal) | wrapper → `..._AX` (0x080294B4) — time (curar) | provável |
+| 0x57 | 0x08034C64 | função desde o sync de 2026-10-14 (nome: ActionScript_Op57_TeamRepairArmor) | wrapper → `..._AY` (0x08029840) — time (reparar armadura) | provável |
+| 0x58 | 0x08034C80 | função desde o sync de 2026-10-14 (nome: ActionScript_Op58_TeamRestoreParts) | wrapper → `..._AZ` (0x08029E0C) — time (restaurar peças) | provável |
+| 0x59 | 0x08034C9C | função desde o sync de 2026-10-14 (nome: ActionScript_Op59_TeamGauge) | wrapper → `..._BA` (0x0802A0E8) — time (gauge) | provável |
+| 0x5A | 0x08034CB8 | função desde o sync de 2026-10-14 (nome: ActionScript_Op5A_TechniqueNoDamage) | wrapper → `..._BB` (0x0802A6AC) — técnica sem dano | provável |
+| 0x5B | 0x08034CD4 | função desde o sync de 2026-10-14 (nome: ActionScript_Op5B_CallBC) | wrapper → `..._BC` (0x0802AAD0) | pendente |
+| 0x5C | 0x08034CF0 | função desde o sync de 2026-10-14 (nome: ActionScript_Op5C_CallBD) | wrapper → `..._BD` (0x0802ACCC) | pendente |
+| 0x5D | 0x08034D0C | função desde o sync de 2026-10-14 (nome: ActionScript_Op5D_CallBE) | wrapper → `..._BE` (0x0802B000) | pendente |
+| 0x5E | 0x08034D28 | função desde o sync de 2026-10-14 (nome: ActionScript_Op5E_CallBF) | wrapper → `..._BF` (0x0802B7E8) | pendente |
+| 0x5F | 0x08034D44 | função desde o sync de 2026-10-14 (nome: ActionScript_Op5F_CallBG) | wrapper → `..._BG` (0x0802BD6C) | pendente |
+| 0x60 | 0x08034D60 | função desde o sync de 2026-10-14 (nome: ActionScript_Op60_CallBH) | wrapper → `..._BH` (0x0802C2AC) | pendente |
+| 0x61 | 0x08034D7C | função desde o sync de 2026-10-14 (nome: ActionScript_Op61_CallBI) | wrapper → `..._BI` (0x0802C644) (tabela 0x083AE994) | pendente |
+| 0x62 | 0x08034D98 | função desde o sync de 2026-10-14 (nome: ActionScript_Op62_CallBJ) | wrapper → `..._BJ` (0x0802CBE8) (tabela 0x083AE9D4) | pendente |
+| 0x63 | 0x08034DB4 | função desde o sync de 2026-10-14 (nome: ActionScript_Op63_CallBK) | wrapper → `..._BK` (0x0802D688) (tabela 0x083AEA30) | pendente |
+| 0x64 | 0x08034DD0 | função desde o sync de 2026-10-14 (nome: ActionScript_Op64_CallBL) | wrapper → `..._BL` (0x0802DCB4) (tabela 0x083AEA88) | pendente |
+| 0x65 | 0x08034DEC | função desde o sync de 2026-10-14 (nome: ActionScript_Op65_CallBM) | wrapper → `..._BM` (0x0802E424) (tabela 0x083AEB1C) | pendente |
+| 0x66 | 0x08034E08 | função desde o sync de 2026-10-14 (nome: ActionScript_Op66_CallBN) | wrapper → `..._BN` (0x0802EBC0) (tabela 0x083AEB88) | pendente |
+| 0x67 | 0x08034E24 | função desde o sync de 2026-10-14 (nome: ActionScript_Op67_CallBO) | wrapper → `..._BO` (0x0802F030) (tabela 0x083AEBC4) | pendente |
+| 0x68 | 0x08034E40 | função desde o sync de 2026-10-14 (nome: ActionScript_Op68_CallBP) | wrapper → `..._BP` (0x0802F628) (tabela 0x083AEC04) | pendente |
+| 0x69 | 0x08034E5C | função desde o sync de 2026-10-14 (nome: ActionScript_Op69_CallBQ) | wrapper → `..._BQ` (0x0802F990) (tabela 0x083AEC58) | pendente |
+| 0x6A | 0x08034E78 | função desde o sync de 2026-10-14 (nome: ActionScript_Op6A_CallBR) | wrapper → `..._BR` (0x0802FE50) (tabela 0x083AEC98) | confirmado (wrapper; cauda truncada na leitura) |
 
 Os despachantes AF..BR (0x08024998..0x0802FE50) estão no Ghidra com nome `Fight_DispatchOnSubstateAA_XX`
 (de R1/R1a). Só AR..AV têm efeito documentado (`HN2.md`); AH..AP em `HA8.md`.

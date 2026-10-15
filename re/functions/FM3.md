@@ -10,7 +10,7 @@ Continua de FM.md, FM2.md. Símbolos: FM3_simbolos.csv. Código sem função: FM
   - sub 0 = 0x0805718C (Overworld_InitChoiceMenuScreen)
   - sub 1 = 0x08057440 (Map_TickChoiceListOpen)
   - sub 2 = 0x080574D4 (FieldMenu_ChoiceSub2_SelectRow)
-  - sub 3 = 0x080575DC (sem função no Ghidra; a checar)
+  - sub 3 = 0x080575DC (função desde o sync de 2026-10-14 (nome: Menu_ChoiceCountdownStep); a checar)
   - sub 4 = 0x08057688 (idem)
   - sub 5 = 0x08057698 (idem)
 
@@ -34,20 +34,20 @@ Valor na ROM (bit Thumb) -> endereço real = valor - 1. Coluna Ghidra = o que o 
 |---|---|---|---|---|
 | 0 | 0x0805718D | 0x0805718C | Overworld_InitChoiceMenuScreen | monta o menu (passo 1) |
 | 1 | 0x08057441 | 0x08057440 | Map_TickChoiceListOpen | abertura |
-| 2 | 0x080574D5 | 0x080574D4 | sem função | seleção de linha (FM2 §3) |
-| 3 | 0x080575DD | 0x080575DC | sem função | a checar |
-| 4 | 0x08057689 | 0x08057688 | sem função | a checar |
-| 5 | 0x08057699 | 0x08057698 | sem função | a checar |
+| 2 | 0x080574D5 | 0x080574D4 | função desde o sync de 2026-10-14 (nome: FieldMenu_ChoiceSub2_SelectRow) | seleção de linha (FM2 §3) |
+| 3 | 0x080575DD | 0x080575DC | função desde o sync de 2026-10-14 (nome: Menu_ChoiceCountdownStep) | a checar |
+| 4 | 0x08057689 | 0x08057688 | função desde o sync de 2026-10-14 (nome: Screen_StartFlowCmd40) | a checar |
+| 5 | 0x08057699 | 0x08057698 | função desde o sync de 2026-10-14 (nome: Screen_TransitionEnterAndAdvance) | a checar |
 | 6 | 0x080576BD | 0x080576BC | ? | a checar |
 | 7 | 0x080576D1 | 0x080576D0 | ? | a checar |
 | 8 | 0x080576E1 | 0x080576E0 | ? | a checar |
 | 9 | 0x08057AD1 | 0x08057AD0 | ? | a checar |
 | 10 | 0x08057B0D | 0x08057B0C | ? | a checar |
-| 11 (0x0B) | 0x08057B6D | 0x08057B6C | SEM função | destino do switch idx1 |
+| 11 (0x0B) | 0x08057B6D | 0x08057B6C | Função desde o sync de 2026-10-14 (nome: FieldMenu_Sub0B_RowMachine) | destino do switch idx1 |
 | 12 | 0x08057CB1 | 0x08057CB0 | Flow_WaitObjectThenCount (nome existente) | não usado pelo switch |
 | 13 (0x0D) | 0x08057D05 | 0x08057D04 | a checar | destino do switch idx2 |
 | 14 | 0x08057D15 | 0x08057D14 | ? | a checar |
-| 15 (0x0F) | 0x08057D41 | 0x08057D40 | SEM função | destino do switch idx3..5 |
+| 15 (0x0F) | 0x08057D41 | 0x08057D40 | Função desde o sync de 2026-10-14 (nome: FieldMenu_Sub0F_Close) | destino do switch idx3..5 |
 
 Correção: a entrada de sub 0x0D é 0x08057D04, não 0x08057CB0 (o decompile de 0x08057CB0 é do sub 12, que o switch não usa).
 Ponteiros da tabela de switch 0x08057534 (32 bits): idx0 = 0x080575D4, idx1 = 0x0805754C, idx2 = 0x08057564, idx3..5 = 0x08057570.

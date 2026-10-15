@@ -116,8 +116,8 @@ MainState3 [menu 0] 0x0806E460  (boot / intro: função suspeita, ver lacunas)
   |-- cmd 0x40 --> MainState0 [menu 1] com sub=0x10
   '-- (título, menu inicial, save: NÃO ACHADO)
 
-MainState0 [menu 1] (cena 1, 0x080027BC, sem função no Ghidra)
-MainState0 [menu 6] (encontro, 0x08010264, sem função no Ghidra)
+MainState0 [menu 1] (cena 1, 0x080027BC, função desde o sync de 2026-10-14 (nome: MainState0_Menu1_DispatchSub))
+MainState0 [menu 6] (encontro, 0x08010264, função desde o sync de 2026-10-14 (nome: Scene_GsDispatch_Menu6_Encounter))
   <-- StartFlow 0x20 (evento op 0x33 "StartBattle", via Event_RunSceneCommandSequence(0x20))
   <-- StartFlow 0x21 (Overworld_WalkStepByDirection 0x08051988: passo sobre o mapa + Overworld_ShouldTriggerRandomEncounter)
   '--> sub=0 ... (passo seguinte da cena 6 não lido)
@@ -177,8 +177,8 @@ achadas por xref: para achar quem escreve `gamestate_menu=8` ou `=0x1B` precisa 
 
 ## 7. Lacunas
 
-1. **Cenas do `menu_list` 1..7, 9..10 e 64..70 sem função no Ghidra** (0x080027BC, 0x08003374, 0x080039E0,
-   0x08007584, 0x0800D9DC, 0x08010264, 0x0803D538, 0x08002574...): decompile dá "No function found". Só dá para
+1. **Cenas do `menu_list` 1..7, 9..10 e 64..70 (função desde o sync de 2026-10-14 nos casos conferidos: 0x080027BC = MainState0_Menu1_DispatchSub, 0x08003374 = PartScreen_DispatchSubstate, 0x080039E0 = Scene_FrameTickSubstateDispatch, 0x08007584 = PartsGrid_DispatchStateTable, 0x0800D9DC = Menu5_Dispatch_PartsScreens, 0x08010264 = Scene_GsDispatch_Menu6_Encounter, 0x0803D538 = Scene_GsDispatch_Menu10_Link, 0x08002574 = Scene_InitBg1AndAdvanceCounter)** (0x080027BC, 0x08003374, 0x080039E0,
+   0x08007584, 0x0800D9DC, 0x08010264, 0x0803D538, 0x08002574...): decompile (antes) dá "No function found"; desde o sync de 2026-10-14 os casos acima têm função. Só dá para
    descrever por literal. Precisa criar as funções (script do MedabotsSync, não eu).
 2. **Título, menu inicial, save, loja**: não achei qual `gamestate_menu`/`gMainState` cada uma usa. Suspeita: `MainState3`
    (cenas 0..6 da tabela 0x084856E8) ou `menu 0` com sub por `0x083AECD8`. Não confirmado.

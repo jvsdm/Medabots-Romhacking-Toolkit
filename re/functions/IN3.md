@@ -41,7 +41,7 @@ DAT_0805D59C+0x20). Id da mensagem: NAO CONFIRMADO.
 
 | id | Retorno que chega ao despacho | Efeito | RAM/flags tocados | Mensagem |
 |---|---|---|---|---|
-| 0 | 1 (usa) | NAO muda E+0xC5C. Zera o byte em [0x03006F74]->+0 (estado do cursor). GS=0x0B -> sub 0x0B = Fx_SetBldcntAndAdvance (REG_BLDCNT=0x2FF, avanca). Sub 0x0C = 0x0805D5F1, sem funcao no Ghidra: fim NAO confirmado. | 0x03006F74, GS 0x0300137C, REG_BLDCNT | — |
+| 0 | 1 (usa) | NAO muda E+0xC5C. Zera o byte em [0x03006F74]->+0 (estado do cursor). GS=0x0B -> sub 0x0B = Fx_SetBldcntAndAdvance (REG_BLDCNT=0x2FF, avanca). Sub 0x0C = 0x0805D5F1, função desde o sync de 2026-10-14 (nome: KeyItemBag_Sub0C_FadeToBlankSetMenu10): fim NAO confirmado. | 0x03006F74, GS 0x0300137C, REG_BLDCNT | — |
 | 0 | 2 | recusa: mapa com gMapArea==0x0A (SFX 6, GS=9) | ROM 0x083D2B6B | codigo 2 (nao e id) |
 | 0 | 3 | recusa: flag E+0xC5D bit 0x20 (SFX 6, GS=9) | 0x0300643D | codigo 3 |
 | 1 | 3 / 4 / 1 | 1: E+0xC5C=**3**. 3 se bit 0x01 de E+0xC5D; 4 se E+0xC5C in {1,2} (recusa) | E+0xC5C 0x0300643C; E+0xC5D; ctx+0x84 | nenhuma (1 nao mostra) |
@@ -94,7 +94,7 @@ Obs.: o buffer gShopItems (0x02000000, espelho 0x02040000) e reaproveitado pela 
 
 - Mensagens de recusa: nenhum id de mensagem confirmado (§3). Falta seguir StateMachine_DispatchStep no objeto
   DAT_0805D59C+0x20 ou a funcao que monta o texto no estado 9.
-- Sub 0x0C (0x0805D5F1, continuacao do id 0): sem funcao no Ghidra (ver IN3_criar.txt).
+- Sub 0x0C (0x0805D5F1, continuacao do id 0): função desde o sync de 2026-10-14 (nome: KeyItemBag_Sub0C_FadeToBlankSetMenu10) (ver IN3_criar.txt).
 - Significado de E+0xC5D bits 0x01 e 0x20 (flags de evento/mapa): so o uso foi mapeado, nao a origem.
 - Consumidor de E+0xC5C 3..8 e 0x0D (velocidade/animacao): confirmar com tabela A (§4).
 - Pedidos de correcao em mtbe.csv (nao editado): linha 3194/3195 (41 entradas, nao 0x28); linha 2682 (ordem id 0);
