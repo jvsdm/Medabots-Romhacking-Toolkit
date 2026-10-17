@@ -1,0 +1,15 @@
+addr,nome,kind,comentario
+0x080233E0,Fight_DispatchOnSubstateAA_Z_0E_AddScoutBonus,func_thumb,confirmado (TR6 emulador): soma ao lado fi+0x28+8*lado, teto 0xA0
+0x080236E0,Fight_DispatchOnSubstateAA_AA_0A_AddConceal,func_thumb,confirmado (TR6 emulador): soma ao bot+0xB9 do usuario, teto 0x78
+0x08022C28,Fight_DispatchOnSubstateAA_X_0E_InflictStatus1F,func_thumb,confirmado (HN1/SS): AutoRecover; +0xC6=clamp99(E8) +0xC7=clamp99(EC)
+0x08018D0C,Fight_TickSecondaryRepairEffectAndEmitResult,func_thumb,confirmado (SS/R1): tick do AutoRecover
+0x08018F0C,Fight_AddPartArmorClampOverflow,func_thumb,confirmado (R1): cura de peca com teto no maximo, devolve excedente
+0x08036E54,Fight_ClampDisplayValue1To99,func_thumb,confirmado (FH): >=100->99, 0->1
+0x08037280,Fight_ScaleAttackValueByPartScalar,func_thumb,confirmado (DM/FH): EC=(E8>>2+poder)/escala min 1; usado como valor de cura (provavel)
+0x08036CCC,Fight_ClampRepairToMissingArmor,func_thumb,provavel (HA4/HN1): reparo (bot peca EC); R2 descreve outra semantica (divergencia)
+0x08026EF8,Fight_DispatchOnSubstateAA_AQ_00_PickActorPartToRepair,func_thumb,confirmado (HN1): escolhe peca do ATOR (divergente do Recovery no contrato)
+0x08026F34,Fight_DispatchOnSubstateAA_AQ_02_RepairActorPart,func_thumb,confirmado (HN1): ClampRepairToMissingArmor(ator,+0xD0,+0xEC)
+0x08020928,Fight_DispatchOnSubstateAA_P_0B_RepairPartOrSkip,func_thumb,confirmado (HA4): reparo se flag da peca e +0xCA
+0x08022CD0,Fight_DispatchOnSubstateAA_Y_00_CheckRosAndTargetDown,func_thumb,confirmado (HN1): Reactivate so se cabeca +0x59==0
+0x08022F50,Fight_DispatchOnSubstateAA_Y_0E_ReviveTarget,func_thumb,confirmado (HN1): Reactivate: cabeca recebe clamp(EC); alvo +0x40=3
+0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,func_thumb,confirmado (CSV ja): familia Recovery (apresentacao)

@@ -99,6 +99,7 @@ address,name,kind,count,comment
 0x03000637,BattleBot_Legs_PartCosmetic,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_legs_part_cosmetic) [RM5] +0xA7 sem doc, chute (antes: battle_robot_1_legs_part_cosmetic)"
 0x03000638,BattleBot_ActiveTechnique,data,,[TA] B+0xA8 do bot 0 (bot base 0x03000590 + bot*0x100 + 0xA8); tecnica ativa do bot p/ efeitos; gravada por Op1B; bot k = 0x03000638 + k*0x100 (antes: bot0_active_technique) [RM5] +0xA8 tecnica ativa TA.md confirmado (antes: bot0_active_technique)
 0x03000649,BattleBot_TargetRosPenalty,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: player_1_conceal_value) (antes: battle_bot_conceal_value) [RM5] +0xB9 penalidade do alvo na ROS DM.md s0 provavel (antes: battle_bot_conceal_value)"
+0x0300064B,BattleBot_MeterBB_Bot0,data,,"[CHG] [CHG] confirmado: bot 0 +0xBB, medidor de carga 0..31 (teto 0x1F)"
 0x0300064C,BattleBot_DefenderFlags,label,,"[SS2] bot+0xBC: bits 01/02 (ator), 04 (bypass esquiva), 08 (bypass defesa), 10 (esquivou), 20 (defendeu), 40 (critico) (C, SS2) (antes: battle_bot0_flags_BC) [RM5] +0xBC flags do defensor DM.md s6.1 confirmado (antes: battle_bot0_flags_BC)"
 0x0300064D,BattleBot_StatusFlags,label,,"[SS2] bot+0xBD: 08 = carga (W_07, E00, icone modo A); 10 = icone modo B (AM_0A) (C, SS2) (antes: battle_bot0_flags_BD) [RM5] +0xBD flags; bit 0x10 e bit 4 em AS3a/A6 provavel (antes: battle_bot0_flags_BD)"
 0x0300064F,battle_bot0_affinity_BF,label,,"[SS2] bot+0xBF: codigo de afinidade do ataque (2 optico, 3 bomba, 4 gravidade) (P, R2.md; nao reconfirmado)"
@@ -106,6 +107,8 @@ address,name,kind,count,comment
 0x03000659,BattleBot_PendingEffect,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_status_effect) (antes: battle_bot0_status_C9) [RM5] +0xC9 efeito pendente AI.md confirmado (antes: battle_bot0_status_C9)"
 0x0300065F,battle_bot0_protect_mask_CF,label,,"[SS2] bot+0xCF mascara de protecao: 01 Bug/Virus, 08 Freeze, 02 Hold, 04 Fire (C, SS2 secao 1) [RM2] confirmado: mascara de protecao por parte lida em Fight_IsPartStatusProtected (bot+0xCF)"
 0x03000666,gFightBot0Flags_D6,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual) (antes: battle_robot_1_form) [RM2] provavel (antes: battle_robot_1_form): bot0+0xD6 bit0 testado em Fight_IsOpticClassAction; nome antigo errado"
+0x03000667,BattleBot_WalkAccum_Bot0,data,,"[CHG] [CHG] confirmado: bot 0 +0xD7, acumulador de passo (nibble baixo)"
+0x0300066A,BattleBot_WalkSteps_Bot0,data,,"[CHG] [CHG] confirmado: bot 0 +0xDA, passos de X no quadro (0..2)"
 0x0300066D,gFightBot0ChosenPartSlot_DD,label,,"[SS2] bot+0xDD peca escolhida 1..3 (DF.md, Fight_SelectActionSource) (C, SS2) (antes: battle_bot0_chosen_part_DD) [RM2] confirmado (antes: battle_bot0_chosen_part_DD): slot 1-3 escolhido"
 0x0300066E,gFightBot0ActivePartSlot_DE,label,,"[SS2] bot+0xDE indice 1-based da peca do icone de status; escritor nao achado (A, SS2) (antes: battle_bot0_part_icon_DE) [RM2] confirmado (antes: battle_bot0_part_icon_DE): copia de DD; indice 1-based da parte ativa"
 0x0300066F,battle_bot0_part_icon_type_DF,label,,"[SS2] bot+0xDF tipo de acao/tecnica do icone de peca (C, SS2) [RM2] confirmado: tipo da parte ativa (fight_information+0x49)"
