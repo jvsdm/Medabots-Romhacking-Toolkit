@@ -1766,6 +1766,7 @@ address,name,kind,count,comment
 0x080287C0,Fight_DispatchOnSubstateAA_AV_WaitEffectSlots,func_thumb,,[HN2] HN2 AV/AX/AY/AZ 0x02: espera FightPreview_DispatchEffectSlots; confirmado
 0x080287DC,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,func_thumb,,"[HN2] HN2 AV 0x03: Fight_SetPendingActionEffect nos adversarios (0x0D/10/12/13/2C), imunes c/ tec 0x16; confirmado"
 0x08028834,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,label,,[TA2] inicio real 0x080287DC; 3 slots adversarios; status 0D/10/12/13/2C para tec 12/14/16/18/40; tabela 0x08028854
+0x08028850,Fight_AV_VariantTable_MedaforceId,table,,"[MF6] confirmado (lido da ROM): indice = bot+0xA8 - 0x0C; i=1 AV_0D (Bug 13), i=3 AV_10 (Freeze 16), i=5 AV_12 (Hold 18), i=7 AV_13 (Fire 19); i=0 cabecalho lixo; resto SkipToNext"
 0x08028854,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents_Table,table,,"[RF4] confirmado: 29 ptrs x4 (tec 12..40, bytes lidos); idx0 AV_0D, idx2 AV_10, idx4 AV_12, idx6 AV_13, idx28 AV_2C; default 0x080289E4"
 0x080288C8,Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked,label,,"[SS2] handler AV tipo 0x0D: se mascara 0x01 livre, fi+0xD2+k=1 e SetPending(alvo,0x0D) (C, SS2)"
 0x08028908,Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked,label,,"[SS2] handler AV tipo 0x10: mascara 0x08 (C, SS2)"

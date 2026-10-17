@@ -1,9 +1,17 @@
 addr,nome,kind,comentario
-0x083C1B80,gEncounterTemplatePtrs,ptr,"confirmado (EN §4): 246 ponteiros u32 para templates de 0x28 B; indice = id de template"
+0x083C1B80,gEncounterTemplatePtrs,ptr,confirmado (EN §4): 246 ponteiros u32 para templates de 0x28 B; indice = id de template
 0x083BF210,gMapEncountersExtra,data,"confirmado (EN §2): 192 x 4 B (t0..t3, pesos 40/30/20/10); mapa 1 = 9B F5 9B A7"
-0x083BA658,gPartRecordPtrTable,ptr,"confirmado (EN §5): rec+4 do template indexa esta tabela (id de bot da cabeca)"
-0x080150FC,Fight_InitializeBotFromTemplate,func_thumb,"confirmado (EN §5): nao reabri o decompile nesta rodada (Ghidra offline)"
-0x08011F20,Fight_SelectTierPartId,func_thumb,"provavel (EN §4.1): sorteio 40/30/20/10 sobre rec+4..+7 so com flags == 0; nenhum template da ROM tem flags 0"
-0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,"confirmado (RV3 no README): acao = byte[bot+0x18 + byte(bot+0x3F)]"
-0x08015414,Fight_AdvanceSpecialityCycleIndex,func_thumb,"confirmado (RV3 no README): avanca bot+0x3F"
+0x083BA658,gPartRecordPtrTable,ptr,confirmado (EN §5): rec+4 do template indexa esta tabela (id de bot da cabeca)
+0x080150FC,Fight_InitializeBotFromTemplate,func_thumb,"confirmado (TPL2, decompile): medalha = byte+8 (indice de gMedals, bot+4 sem +1); nivel = +9; ciclo rec+0xA..+0xD -> bot+0x18..+0x1F; reset do ciclo = rec+0xE -> bot+9; so le rec+4 (cabeca); habilidade = 0x083AD380[attribute*8+k]"
+0x08011F20,Fight_SelectTierPartId,func_thumb,"confirmado (TPL2, decompile): 40/30/20/10 sobre 4 argumentos; chamado so por Fight_SelectTemplateForCurrentEncounter 0x08011E20 (flags == 0), 4x por registro. Sorteia peca, nao template"
+0x08015390,Fight_TrySelectActionFromSpecialityCycle,func_thumb,confirmado (RV3 no README): acao = byte[bot+0x18 + byte(bot+0x3F)]
+0x08015414,Fight_AdvanceSpecialityCycleIndex,func_thumb,confirmado (RV3 no README): avanca bot+0x3F
 0x03000590,BattleBot_Base,data,"provavel: bloco do bot 0x100 B (ciclo em +0x18..+0x1F, indice do ciclo em +0x3F)"
+0x08011E20,Fight_SelectTemplateForCurrentEncounter,func_thumb,"confirmado (TPL2, decompile): copia o template 0x28 B para fight_information 0x03001800; se fight+3 == 0, sorteia as 4 pecas de cada registro (rec+4..+7) via 0x08011F20 e grava de volta"
+0x080150C0,Fight_InitializeEnemyBotStates,func_thumb,"confirmado (TPL2, decompile): loop i < enemyBotCount -> Fight_InitializeBotFromTemplate(i); depois Fight_BuildBotPartDisplayStats e Fight_InitializePartStates(3, n)"
+0x0801520C,Fight_BuildBotPartDisplayStats,func_thumb,"confirmado (TPL2, decompile): ids de peca do bot (partIds) <- rec+4..+7 (cabeca, braco D, braco E, pernas); medalId copiado ao bot"
+0x08014F90,Fight_InitializePartStates,func_thumb,"confirmado (TPL2, decompile): parts[0..3] do bot slot 3+k <- partIds[0..3] via GetPartStats; cada peca tem id proprio"
+0x08015414,Fight_AdvanceSpecialityCycleIndex,func_thumb,"confirmado (TPL2, decompile): bot+0x3F += 1; ao chegar em 8 volta para bot+9 (specialityCycleReset = rec+0xE)"
+0x080151E8,gSpecialityTablePtr,ptr,"confirmado (TPL2, bytes da ROM): aponta para 0x083AD380"
+0x083AD380,gSpeciality8ByteTable,data,"confirmado (TPL2): linha = attribute da medalha (byte+1 do registro em gMedals), NAO medalha+1; linha 0 = medalha 0; medalhas 27..29 usam a linha 26"
+0x083B62D8,gMedals,data,"confirmado (TPL2, bytes da ROM): byte0 = byte1 = indice da medalha, exceto 27..29 (byte1 = 26)"

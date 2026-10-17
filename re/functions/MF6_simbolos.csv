@@ -1,0 +1,13 @@
+addr,nome,kind,comentario
+0x0802793C,Fight_DispatchOnSubstateAA_AS,func_thumb,"confirmado (decompile 2026-10-17): despachante de estado por tecnica do proprio bot (op 0x51); chama tabela 0x083AE580 indexada por fi+0xAA"
+0x08028850,Fight_AV_VariantTable_MedaforceId,table,"confirmado (lido da ROM): indice = bot+0xA8 - 0x0C; i=1 AV_0D (Bug 13), i=3 AV_10 (Freeze 16), i=5 AV_12 (Hold 18), i=7 AV_13 (Fire 19); i=0 cabecalho lixo; resto SkipToNext"
+0x080287DC,Fight_DispatchOnSubstateAA_AV_ApplyStatusToOpponents,func_thumb,"confirmado (decompile): acha 1o adversario vivo com bot+0xA8-0xC<0x1D e chama a variante da tabela 0x08028850 (op 0x54)"
+0x080288C8,Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked,func_thumb,"confirmado (decompile): por adversario sem protecao 0x0D: marca targetPartFlags e Fight_SetPendingPartStatus(bot,0x0D,fi+0xE8,fi+0xEC); nome Bug (tecnica 13)"
+0x08028908,Fight_DispatchOnSubstateAA_AV_10_ApplyFreezeUnlessMasked,func_thumb,"provavel (nome e entrada da tabela 0x08028850, i=3): status Freeze (tecnica 16); decompile nao lido"
+0x08028944,Fight_DispatchOnSubstateAA_AV_12_ApplyHoldUnlessMasked,func_thumb,"provavel (nome e entrada i=5): status Hold (tecnica 18); decompile nao lido"
+0x08028980,Fight_DispatchOnSubstateAA_AV_13_ApplyFireUnlessMasked,func_thumb,"provavel (nome e entrada i=7): status Fire (tecnica 19); decompile nao lido"
+0x080289BC,Fight_DispatchOnSubstateAA_AV_2C_ApplyConfusion,func_thumb,"provavel (nome): status Confusion (44); NAO esta na tabela 0x08028850; alcance aberto"
+0x080289E4,Fight_DispatchOnSubstateAA_AV_SkipToNextOpponent,func_thumb,"provavel (nome): destino de todas as entradas sem status da tabela 0x08028850"
+0x08030DB4,Fight_DispatchOnSubstateAA_BR_26_BuildPartObjects,func_thumb,"confirmado (decompile): grava fi+0x51 = 0x28, ou 0x50 se bot+0xC0&8; sobrescrito por BR_45 na medaforca (ver MF6 §1)"
+0x08031704,Fight_DispatchOnSubstateAA_BR_45_SetupMedaforceSlots,func_thumb,"confirmado (decompile): fi+0x51 = bot[activeBot].medaforceCost (= b2 do descritor); consumo da medaforca = min(b2, C1)"
+0x0801AFB8,Fight_StepBotVisualDown,func_thumb,"confirmado (decompile): por quadro, se fi+0x51!=0 e bot+0xC1!=0: bot+0xC1 -=1 e fi+0x51 -=1 (consumo do medidor)"

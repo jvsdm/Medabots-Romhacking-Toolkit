@@ -84,3 +84,80 @@ o bot não anda, não recalcula medidor e não atualiza exibição. É o "Stop" 
   `timing.cooldownFrames(bot, k)` (172 ABERTO).
 - `timing.isFrozen(bot)` = status 15/16 (congela carga).
 - Não integrado: `battle.lua` não foi editado.
+
+## 7. Rodada CHG2 (Ghidra, 2026-10-17)
+
+Endereços de entrada: ver `CHG_simbolos.csv` (linhas CHG2). Porte: `pc/game/src/fight/timing.lua` (`meterOfFrame`,
+`motionSpeed`, `isFrozen`) e testes `pc/game/tests/test_timing.lua` (OK 32).
+
+### 7.0 Correções ao texto acima
+- **A1 = bot+0xA1 = armadura atual da perna** (`parts[3].currentArmor`; 0x03000631 = bot+0xA1). "+6 se A1 == 0" =
+  **perna destruída** soma +6 ao medidor (0x080191C0). Confirmado (decompile).
+- Bases das peças (stride 0x18): cabeça bot+0x48, braço D +0x60, braço E +0x78, perna +0x90. Logo: +0x49 técnica,
+  +0x4E power, +0x50/+0x51 usos/radiação da **cabeça**; braço D +0x68/+0x69; braço E +0x80/+0x81.
+  A seleção só lê os bytes de **braço** (ver 7.2); a cabeça seleciona +6 fixo. Confiança: alta (bate com 0x03000631 e
+  0x03000651/0x0300064B).
+- **GS 76 (0x08014548, `Fight_UpdateBotMeterMotionStep`)**: para bot com presença e bot+0xBF != 0 faz **bot+0xBB = 8**
+  antes de `Fight_UpdateBotScreenXFromMeter`. Logo nesse estado o andar é **(0x20−8)/16 = 1,5 px/q**, sem depender do
+  medidor real. Confirmado (decompile). Que situações passam por GS 76 (ida/volta?) = ABERTO; a medida de volta (1,3–1,45
+  px/q) fica perto de 1,5.
+
+### 7.1 Espera em casa: +8/+9 da peça viram tempo? (1)
+- **Quem lê +8 (usos/carga) e +9 (radiação):** nos decompiles lidos, só `Fight_TickSelectedPartCue` (0x08019108). Para a
+  peça selecionada (braço) e viva, soma **+usos (+8)** ao medidor, ou **+radiação (+9)** se `reactionStatusFlags & 4`.
+  Confirmado (código). Não achei outro leitor desses bytes; a busca não foi exaustiva (só decompiles lidos).
+- **Como vira tempo:** +8/+9 entra no medidor do quadro → a velocidade de carga cai para (0x20 − medidor)/16 px/q. Ou seja,
+  cada ponto de medidor é uma parcela do tempo de carga, não o tempo da espera. Confirmado.
+- **Espera em casa (172 q): NÃO fechada.** O que foi lido:
+  - Chegada em casa: `Fight_CheckBotYAtRestPos` (0x08019FBC) → X = 0x68 (bots 0..2) ou 0x88 (3..5) e sem flag 4 →
+    `Fight_QueueBotEvent` com o **param = propulsão da perna**. A fila (`fi+0x45`, 6 pares) é **ordenada pelo param**
+    (`Fight_SortBotEventQueue` 0x0801A5D8) e consumida por `Fight_BotEventQueueStep` (0x08014314). Logo a propulsão aqui é
+    **chave de ordem**, não contador de tempo. Confirmado.
+  - Não é o medidor: quando o bot está em casa, X já está no limite e não anda.
+  - Contadores de espera achados: `Fight_CountWaitTimerUp16ThenAdvanceStep` (0x08014AB4, sobe até 0x10) e
+    `Fight_WaitTimerDownThenAdvanceStep` (0x08014E54, desce até 0). São de 16 q, não de 172. Quem carrega o valor de
+    struct+0x86 no caso de 172 = **ABERTO**.
+  - Hipótese da radiação: **não sustentada** pelo que foi lido (+9 só entra no medidor). Não testada.
+- Conclusão: a espera de 172 q segue como constante medida (`COOLDOWN_DEFAULT`). A fórmula não é do medidor.
+
+### 7.2 Termos positivos do medidor (+0xBB) (2)
+| Termo | Função | Peso | Confiança |
+|---|---|---|---|
+| zera | 0x080190B8 | BB = 0 a cada quadro | confirmado |
+| cabeça viva, selecionada (src 1) | 0x08019108 | +6 | confirmado |
+| braço D/E vivo, selecionado (src 2/3) | 0x08019108 | +usos (+8) ou +radiação (+9) se flag 4 | confirmado |
+| selecionado src ≥ 4 | 0x08019108 | +12 fixo (sem checar peça) | confirmado (quem é o id 4+ = ABERTO) |
+| perna destruída (A1 = 0) | 0x080191C0 | +6 | confirmado |
+| tabela `[(bot+0x91−100)*11 + fi+0x38 + k]` | 0x080191E4 | + byte da tabela | código confirmado; **tabela não lida, fi+0x38 ABERTO** |
+| pendente tipo 0x11/0x12/0x29 | 0x0801922C | +CC do pendente | confirmado |
+| nível (B+5) /10 | 0x08019264 | −(nível/10) | confirmado |
+| propulsão da perna /20 | 0x0801928C | −(propulsão/20) | confirmado |
+| Boost (C4 = 0x26 ou 0x29) | 0x080192B8 | −C7 | confirmado |
+| Accel (técnica 0x28 em parte 0..2 viva) | 0x080192E8 | −power da peça | confirmado (loop só cobre 0..2, não a perna) |
+| teto 0x1F | 0x0801932C | limite final | confirmado |
+Ordem: somas (cap 255) antes das subtrações (piso 0 em cada uma, equivale a clamp final). Porte: `M.meterOfFrame`.
+Sem data de tabela, o medidor não é exato: o termo 0x080191E4 fica em `bot.table_add` (default 0).
+
+### 7.3 Técnicas de carga 38, 39, 40 (3)
+- **38 Boost Chrg (0x26):** `Fight_CommitBoostChargeSecondaryEffectToMarkedTargets` (0x0802CB34) grava bot+0xC4 = 0x26,
+  +0xC5 = 0, **+0xC6 = clamp(ROS total fi+0xE8, 1..99) (duração)**, **+0xC7 = clamp(attackAccum fi+0xEC, 1..99) (valor)**.
+  Depois, a cada quadro, −C7 no medidor (0x080192B8). **Não zera a carga**. Confirmado (escrita e medidor). Onde C6 cai
+  a cada quadro = ABERTO (provável no tick de status).
+- **40 Accel Chrg (0x28):** passiva por peça. Se uma **cabeça ou braço** (partes 0..2) com técnica 0x28 está viva, −power a
+  cada quadro (0x080192E8). **Não mexe em C7 nem zera**. A perna não conta. Confirmado.
+- **39 Rapid Chrg (0x27):** **não achado**. Nenhuma função de medidor testa 0x27 (0x0801922C, 0x080192B8, 0x080192E8). Nome
+  "Charge/Chrg" só retorna Boost. 0x0802A824 (`MarkOpponentsSetGauge`) põe BB = 0x14 nos adversários, mas ligado ao 0x5A
+  (não 39). ABERTO. Hipótese: efeito fora do medidor (ROS/dano). Não confirmada.
+- **"Zera a carga"?** Nenhuma função lida zera BB além do início do quadro (0x080190B8) e de GS 76 (que põe 8). Confirmado.
+
+### 7.4 Propulsão: qual perna? (4)
+- 0x0801928C lê `parts[3].propulsion` (= bot+0xA2) **sem checar armadura**: é a propulsão da perna que está no slot
+  (a da perna atual). Perna destruída **continua** descontando (propulsão) e ainda soma +6 (A1 = 0). Confirmado.
+- Trocar a perna muda a propulsão a partir do próximo quadro (o byte é relido a cada quadro). Confirmado pelo código.
+  Confiança média em "trocar = relido": não testado no emulador.
+
+### 7.5 Para o Opus
+- `battle.lua` (não editado) passa `b.propulsion` e `b.pending_type`. Para a fórmula completa, o bot precisa de
+  `selected`, `reaction_flags`, `parts[k].hp/uses/radiation/power/technique`, `level` e `boost` (C4/C6/C7). Sem isso,
+  `meterOfFrame` cai para 0 nos termos de seleção.
+- `chargeSpeed` continua (0x20 − medidor)/16. `motionSpeed()` = 1,5 px/q (GS 76). `cooldownFrames` = 172 (ABERTO).

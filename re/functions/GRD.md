@@ -71,3 +71,44 @@ Proteção de aliado (Defence 27): DM §6.5 já registra "não encontrada"; cont
 4. Achar o limiar de Half Block e de CntrAttk.
 
 Arquivos: `re/functions/GRD_simbolos.csv`. Porte: `pc/game/src/fight/guard.lua`, testes `pc/game/tests/test_guard.lua`.
+
+## 6. Rodada 2 (Ghidra aberto, 2026-10-17)
+
+Decompile direto (sem salvar). Scripts de técnica lidos pelos primeiros 40 bytes de `gTechniqueActionScriptPtrTable`
+0x083C6CA8 (ponteiro = 4 B por id). Confiança por item abaixo.
+
+**(3) Strengthen na ROS: confirmado.** `Fight_AddStrengthenRosBonus` 0x080358F0 (literal 0x08035924 -> 0x030018E8,
+`gFight_RosTotal`): laço nas peças 0..2 do bot; se armadura atual (P+0x11) != 0 e técnica (P+1) == 0x35, soma **P+5
+(sucesso)** no ROS. Chamador: `Fight_ComputeTotalRos` 0x08038C84. Dano (0x08035B9C, literal 0x08035BD0 -> 0x030018EC)
+é igual mas soma **P+6 (poder)**, confirmando DM §3. Porte: `calc.lua` (`strengthenRosBonus`) e `guard.lua` (`strengthenRos`).
+
+**(1) Defence 27 / Full Block 28 / Half Block 29: aberto (efeito), com correção de rótulo.**
+- O que o código tem de "guarda" é **proteção contra status**, não guarda de dano: `AW_09` 0x08029354 liga bit 1/8/2/4
+  em `bot+0xCF` dos aliados marcados (variante = fight+0x51) e limpa o par de status pendente (0x0D/0E, 0F/10, 11/12,
+  13/14). `AW_0A` 0x08029464 grava a mensagem 0x55/0x58/0x56/0x57. Variante vem de `AW_00` 0x08028C68 pelo
+  `bot_ativo+0xA8` (0x0D->0, 0x0F->1, 0x11->2, 0x13->3). Chamado por Op55 (AS4). **Confirmado.**
+- Os scripts 27/28/29 **não** chamam Op55 (sem 0x55 nos 40 primeiros bytes). Bytes: 27 = `2D 01 2D 01 2D 01 06 08 25 03 ...`,
+  28 = `2D 01 2D 01 06 08 25 03 ...`, 29 = `2D 01 06 08 25 03 ...` (mesma cauda: 25, 19..1C, 26/20, 2E, 27, 28).
+  Portanto a guarda de dano 27–29 é outro caminho. Pista (provável): Op2D (AS6 `BN`) marca bit 0x08 em `bot+0xC0`
+  dos aliados vivos, mas o AS6 diz "só visual"; **não confirmado**. Próximo passo: decompile `Fight_DispatchOnSubstateAA_W`
+  0x080223BC e o leitor de `bot+0xC0`.
+- Limiar do Half Block e momento de disparo no fluxo DM §1: **aberto**.
+- Trap 10/11/12: script começa `29 01 29 01 29 01 ... 2A 01 06 08 2B 01 2C 01 ...` (armadilha = ops 29/2A/2B/2C,
+  não lidas). `ActionFamily_TrapFamily_Handler` 0x08030608 só chama `Fight_RunSubstateDispatchB` e avança +0xAA
+  (confirmado). Efeito da armadilha: aberto.
+
+**(2) CntrAttk 54: aberto.** Script de 54 começa `3E 01 3F 01 ... 42 50 45 21 01 41 42 43 ...` (roll de valor 0x42,
+alvo aleatório 0x41, dano em peça aleatória 0x50 = AR). Ou seja, usa o mesmo caminho de dano de 50/42, sem limiar
+próprio visível. Candidato a limiar (**provável, não ligado a 54**): `Fight_MarkDefenderFollowupFromDamageThreshold`
+0x08033F9C: se `bot_alvo+0xBC & 0x10`, peça alvo (`bot+0xDE-1`) com armadura != 0, `conditionFlagA == 0` e
+`bot+0xD8 (s16) < fight+0xEC (dano)`, grava `conditionFlagA = 3`. Dano devolvido: aberto.
+
+**(4) Passivos 24/25/26 (CancelOptic/Bomb/Grav): aberto.** Scripts começam com `01 01 01 2D ...` (24), `01 01 2D ...` (25),
+`01 2D ...` (26) e a cauda é comum; nenhum leitor do byte de técnica 0x18/0x19/0x1A foi achado (busca por literal
+não feita). Conjuntos do `guard.lua` continuam chute.
+
+**(5) Proteção de aliado (redirecionar golpe ao aliado): não encontrada.** A única proteção de time achada é o status
+do AW (item 1). Leg Defense (0x08039068) continua sendo a única redireção de alvo.
+
+Símbolos: `GRD_simbolos.csv` (linhas novas e atualizadas). Porte: `guard.lua` (`strengthenRos` confirmado),
+`calc.lua` (`strengthenRosBonus`); testes `lua pc/game/tests/test_calc.lua` = OK 49, `test_guard.lua` = OK 32.

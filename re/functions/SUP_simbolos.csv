@@ -13,3 +13,12 @@ addr,nome,kind,comentario
 0x08022CD0,Fight_DispatchOnSubstateAA_Y_00_CheckRosAndTargetDown,func_thumb,confirmado (HN1): Reactivate so se cabeca +0x59==0
 0x08022F50,Fight_DispatchOnSubstateAA_Y_0E_ReviveTarget,func_thumb,confirmado (HN1): Reactivate: cabeca recebe clamp(EC); alvo +0x40=3
 0x0801D9DC,Fight_DispatchOnSubstateAA_E_05_SlideBotIntoPlace,func_thumb,confirmado (CSV ja): familia Recovery (apresentacao)
+0x08035740,Util_AddByteClampToMax,func_thumb,confirmado (SUP2 decompile): se max < atual+v grava max; senao atual+v; usado por Scout/Conceal
+0x0803325C,Fight_PickRandomBrokenOrMissingPart1Based,func_thumb,confirmado (SUP2 decompile): 2 randbyte; inicio=b1&3; sentido=b2&1; 4 tentativas; primeira com hp==0; 1-based; usado por Repair (setup 0x08032478) e R_0C
+0x08031F2C,Fight_SetupTargetSelectionRequirePendingEffect,func_thumb,confirmado (SUP2 decompile): setup de Stability (22): aliados com pendingStatusKind!=0 e sem tecnica 16; 1a passada exige especialidade
+0x08026F6C,Fight_DispatchOnSubstateAA_AQ_0D_RepairPartByAmountCA,func_thumb,confirmado (SUP2 decompile): se sobra (fi+0xCA)!=0 escolhe peca pela mais danificada do ALVO e aplica o excedente no ATOR (indice do alvo)
+0x0801F1C8,Fight_DispatchOnSubstateAA_H_3B_PickRepairablePartOrSkip,func_thumb,confirmado (SUP2 decompile): mais danificada do ALVO (targetBot); SplitCount(alvo; peca; fi+0xEC); vai a 0x3E
+0x08020AD0,Fight_DispatchOnSubstateAA_R_0C_ChainRepairToBrokenPart,func_thumb,confirmado (SUP2 decompile): so com flag chain da peca do ATOR e sobra; quebrada aleatoria do alvo (PickRandomBroken); SplitCountByMax
+0x08034378,ActionScript_Op28_CallSubstateR,func_thumb,confirmado (SUP2): wrapper do despachante R (chamado pelo roteiro de Repair e Recovery)
+0x08034460,ActionScript_Op2F_CallSubstateY,func_thumb,confirmado (SUP2): wrapper do despachante Y (Reactivate 0x083C6A9C e a cauda de Repair)
+0x08023C78,Fight_DispatchOnSubstateAA_AC_0F_SetStepCode2B,func_thumb,confirmado (SUP2): grava messageCode=0x2B e avanca; sem mudanca de medidor (Rapid Chrg 39 chama AC)
