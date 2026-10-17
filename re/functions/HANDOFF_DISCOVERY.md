@@ -1,7 +1,7 @@
 # Handoff: function discovery (Medabots Metabee EU)
 
-Updated 2026-10-13. **Current focus: discovery and documentation of ROM functions.** Porting to Lua
-(`pc/game/src/script.lua`) is paused by the user's choice; don't start it without being asked.
+Updated 2026-10-17. Discovery continues, and **the user resumed the Lua port of the Robattle on 2026-10-17**:
+contract and module split in `D:/claude-brain/Medabots/pc/research/PORT_BATALHA.md` (modules in `pc/game/src/fight/`).
 
 ## How to resume (read in this order)
 0. **`INDEX.md`**: map of all the docs by subsystem + the big open issues (2026-10-14).
