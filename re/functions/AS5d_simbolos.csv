@@ -1,0 +1,8 @@
+addr,nome,kind,comentario
+0x083ADB40,Table_DispatchOnSubstateAA_S_Steps,table,"provavel: tabela de 19 entradas (4 B) do despachante S (0x29); indexada por +0xAA. Lida em AS4_tabela; sem nome no mtbe"
+0x083ADC6C,Table_DispatchOnSubstateAA_U_Steps,table,"provavel: tabela de 25 entradas do despachante U (0x2B)"
+0x083ADCAC,Table_DispatchOnSubstateAA_V_Steps,table,"provavel: tabela de 9 entradas do despachante V (0x2C)"
+0x083ADCEC,Table_DispatchOnSubstateAA_W_Steps,table,"provavel: tabela de 11 entradas do despachante W (0x2D)"
+0x083ADD2C,Table_DispatchOnSubstateAA_X_Steps,table,"provavel: tabela de 18 entradas do despachante X (0x2E)"
+0x083ADD8C,Table_DispatchOnSubstateAA_Y_Steps,table,"provavel: tabela de 18 entradas do despachante Y (0x2F)"
+0x0802155C,Fight_DispatchOnSubstateAA_S_0F_ContinueJumpTable,label,"confirmado: salto indireto nao recuperado do passo S_0F (depois do registro de dano); continuacao dos passos 0F/16/26 nao lida"
