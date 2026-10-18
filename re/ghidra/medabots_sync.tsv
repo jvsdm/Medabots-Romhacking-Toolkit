@@ -3448,6 +3448,7 @@ F	0x0806D7A0	Gfx_LoadScreenLZ77Assets
 F	0x0806D8AC	Battle_SetupRenderSlots
 F	0x0806D9A8	Battle_IntroSetupStep
 F	0x0806DAA4	Screen_IntroTimeline
+F	0x0806DAB4	Screen_IntroTimeline_0806DAB4
 F	0x0806DBFC	Battle_WaitTransitionA
 F	0x0806DC7C	Battle_TimedTransition41
 F	0x0806DCC0	Battle_InitScreenAndSlots

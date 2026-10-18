@@ -263,6 +263,7 @@ address,name,kind,count,comment
 0x0300640D,gEncounterRollSuppressed,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentBattleSourceFlag) [RW] GH-RW confirmado: 1 pelo flow 0x20 (historia), 0 pelo 0x21; faz Fight_SelectTemplateForCurrentEncounter usar id direto"
 0x0300640E,gPostBattleModeFlags,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] [RW] GH-RW confirmado: byte de controle da recompensa (E+0xC2E); nibble baixo 0 = concede peca; nao zero = pula"
 0x0300640F,gEvt_BattleMode,label,,"Simon/Rokusho (RAM, mesmo endereco: codigo igual); tipo undefined1[1] (antes: gCurrentBattleModeFlags) [FI2] E+0xC2F modo da batalha (byte 2 do Op33) provavel (HE2)"
+0x03006413,gEventModeByte_C33,data,,[GHX] provavel: E+0xC33; escrito por Event_Op5D (b&0xF quando bit 0x80=0); lido por Overworld_UpdateMapSceneStateMachine 0x08050F5C (0x08051212) (GHX)
 0x03006414,gMapAnimEnabled,data,,[MP2] base+0xC34: animacao de tiles ligada se != 0 [RM3] confirmado; flag ligada lida em Map_UpdateBackgroundAnimations 0x08048178
 0x03006415,gMapAnimFrameIndex,data,,[MP2] base+0xC35: indice atual na sequencia de quadros [RM3] confirmado; indice de quadro avancado em Map_UpdateBackgroundAnimations
 0x03006416,gMapAnimDelay,data,,[MP2] base+0xC36: contador (3 chamadas por quadro) [RM3] confirmado; contador regressivo (reset 2) em Map_UpdateBackgroundAnimations
@@ -3840,6 +3841,7 @@ address,name,kind,count,comment
 0x0806D8AC,Battle_SetupRenderSlots,func_thumb,,[provavel] battle render slot setup by state and REG_DISPCNT layers
 0x0806D9A8,Battle_IntroSetupStep,func_thumb,,[FR2] provável; música 0 + objetos e slots 3/4/7/8 da entrada da batalha (FUN_0806d9a8)
 0x0806DAA4,Screen_IntroTimeline,func_thumb,,linha do tempo de intro com curva de fade e jump table; provável
+0x0806DAB4,Screen_IntroTimeline,func_thumb,,[GHX] confirmado (decompile): passo 0 pede snd_song_request(2) = musica de luta provavel (stream id 2); passo 0x39 e 0x40 = intro da Robattle (GHX)
 0x0806DBFC,Battle_WaitTransitionA,func_thumb,,"[FN6] provavel: se bit 8 de *DAT_0806dc2c: battle_slot_init(6,2) e snd_sfx 3; senao espera contador > limite e vai para estado 3 com fx_screen_setup_b; ponteiro 0x08485984"
 0x0806DC7C,Battle_TimedTransition41,func_thumb,,"[FN6] provavel: conta ate 0x29 (41 quadros), depois slot_ptr_stub(2), fx_screen_setup_b e estado 2; ponteiro 0x08485988"
 0x0806DCC0,Battle_InitScreenAndSlots,func_thumb,,"[FS9] provavel: init da tela de batalha (fx_screen_setup_a, 5 slots, DISPCNT |= 0x1300); tabela 0x0848598C"
