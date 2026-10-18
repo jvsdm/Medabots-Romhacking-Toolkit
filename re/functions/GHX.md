@@ -90,3 +90,51 @@ EventScript_ReadNextByte), `E+0xC33` = 0x03006413, `E+0xC5D` = 0x0300643D (gOver
 - Valor exato de r4 em 0x080511C0 (gMainState que o 5D seta).
 - Leitor do bit 0x01 para ids 1,5,C,D,13h,27h,28h e do literal 0x0805942C (máscara 0x40).
 - Tabela 0x083D6284/0x083D629C (dados) — quem a lê.
+
+## 4. Fechamento do modo de campo (2026-10-18, Ghidra + ROM original, confirmado salvo onde marcado)
+
+Literais (lidos da ROM original, E = 0x030057E0): E+0xC33 = 0x03006413 (modeByte); E+0xC5C = 0x0300643C; E+0xC5D =
+0x0300643D (modeFlags); E+0xC5E = 0x0300643E (backup); E+0xC94 = 0x03006474 = byte de argumento de 5D/5E; E+0xCBA = 0x0300649A.
+
+**Correção de premissa**: `Overworld_CheckStepAllowed` 0x08057D80 NAO bloqueia o passo. Os callers são só de menu:
+`Overworld_InitChoiceMenuScreen` (0x08057244/..330), `Map_CreateChoiceSprites` (0x08058080..150),
+`FieldMenu_ChoiceSub2_SelectRow` (0x08057500) e `Screen_LoadTilesAndMapEntities` (0x0805782E..970). Retorna 0..6 por
+linha do menu de escolha (param 0..3 = linha; 1 = ativa, 4 = bloqueada por flag, 5/6 = alvo/condição de tile).
+
+- Param 0 (item 0x12, peça 0x55): bit 0x02 de 0x0300643D bloqueia (código 4); depois E+0xC5C == 2 → código 5.
+- Param 1 (item 0x18): bit 0x10 bloqueia (4); depois E+0xC5C em 1..2 → 5.
+- Param 2 (item 0x19, peça 0x0B, registro de encontro 1): bit 0x04 bloqueia (4); E+0xC5C em 1..2 → 5.
+- Param 3 (item 0x26, peça 0x6B): bit 0x08 bloqueia (4); tile adjacente (0x080524C8) != 3 → 6. Por isso o tile 3 da
+  colisão (W4) só passa com a ação de menu, não pelo passo.
+- Bits 0x01 e 0x20 NÃO são lidos aqui.
+- O passo do jogador (`tileBlocked` no porte; W2/W4 na ROM) só usa colisão de mapa. Nenhuma máscara de 0x0300643D
+  entra nele. Portanto "bloqueio de passo pelas máscaras" NÃO existe; o porte não foi alterado nesse ponto.
+
+**Leitor do bit 0x01** (confirmado no decompile de `Fight_ClassifyActionState` 0x08048960): itens-chave ids 1, 5,
+0xC, 0xD, 0x13, 0x27, 0x28. Com bit 0x01 ligado devolvem classe 3 (sem o teste de mapa/ID). Com bit 0 desligado
+devolvem 4 (se E+0xC5C-1 <= 1) ou 1. O id 0 com 0x20 ligado devolve 3 (já em 2).
+
+**5D e 5E** (decompile, confirmados; ver `EVENT` no porte):
+- 5D (0x0804CE90): arg b = `Script_ReadBytes(1)` gravado em E+0xC94. b & 0x80 == 0 → E+0xC33 = b & 0xF; b & 0x80 e
+  b & 0xF == 1 → 0x0300643D |= 0x20; outro → &= ~0x20.
+- 5E (0x0804CEF8): arg gravado em E+0xC94; arg == 1 → 0x0300643D |= 0x01; outro → &= ~0x01.
+
+**Map_FocusEventObjectRenderSlot** 0x0804D9F8: chamado pelos dois ramos do 0x60 (`Event_Op60_Focus_Event_Object`,
+0x0804CFD0 e 0x0804CFFE). Grava o byte original em E+0xC5E e depois 0xDF em 0x0300643D. Restaurado só pelo 0x61
+(`Event_Op61_Restore_Focused_Event_Mode_Flags`, 0x0804D00E → 0x0804DB80).
+
+**E+0xC33 != 0 (0x080511C0, `Overworld_UpdateMapSceneStateMachine` 0x08050F5C)** — corrigido: o r4 gravado em
+gMainState é 0, não "r4 vindo de [0x0300058C]". Condições, todas no mesmo quadro:
+- 0x0300058C bit 0x01 == 0 (senão o ramo vai para outra parte);
+- 0x0300058C bit 0x02 == 1;
+- E+0xC33 != 0.
+Efeito: NoOp 0x08047E4C; gMainState (0x0300178C) = 0 (estado de campo, MainState 0); [0x03002B8C] = 1;
+GS 0x0300137C = 0; E+0xCBA = 2; chamadas de cópia 0x080505FC. Ou seja, volta ao estado de campo e zera a
+sequência de GS. O sentido de 0x0300058C bits 0x01/0x02 NÃO foi decodificado (em aberto).
+
+**Porte (2026-10-18)**: `script.save.modeByte` (E+0xC33) e `script.save.modeFlags` (0x0300643D) gravados pelos ops
+`mode_set` (5D) e `mode_flag` (5E) do `script.lua`; o foco do 0x60 grava 0xDF e o 0x61 restaura o backup
+(`world.lua`). A reação do 0x0300058C (gMainState = 0) NÃO foi portada: o porte não tem 0x0300058C. Sem efeito visível
+confirmado no porte até agora; o modeByte fica salvo e aparece no log como "modo de campo 0x5D".
+
+E+0xCBA (0x0300649A) recebe 2 nesse ramo; nome não confirmado.
