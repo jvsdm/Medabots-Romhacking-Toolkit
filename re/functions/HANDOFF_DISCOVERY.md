@@ -1,6 +1,6 @@
 # Handoff: function discovery (Medabots Metabee EU)
 
-Updated 2026-10-17. Discovery continues, and **the user resumed the Lua port of the Robattle on 2026-10-17**:
+Updated 2026-10-17 (end of day). Discovery continues, and **the user resumed the Lua port of the Robattle on 2026-10-17**:
 contract and module split in `D:/claude-brain/Medabots/pc/research/PORT_BATALHA.md` (modules in `pc/game/src/fight/`).
 
 ## How to resume (read in this order)
@@ -42,7 +42,26 @@ contract and module split in `D:/claude-brain/Medabots/pc/research/PORT_BATALHA.
     E08, G00, G01, G03, G06, H00, H0D, F02, H15, H18).
   - HA9..HA13: already covered by HN1..HN10 (checked).
   - HC.md: the event continuation table 0x083D2630 (137 ops, 85 unique targets, 30 are already functions).
+- **2026-10-17 (Lua port rounds):** the port fed the discovery. New docs: CHG (charge/return speed, timing), SUP
+  (Scout/Conceal/Recovery/Repair/Reactivate), GRD (guards, traps, Strengthen ROS 0x080358F0 confirmed), TPL (enemy
+  template 0x28 B, CPU cycle), MF5/MF6 (Medaforce gauge gain, effect per id 0x00..0x33, cost), VAL (calc.lua matches
+  the game on rec_27: ROS/dodge/defence/damage), DIS (Pushover, Use Drain, Forcedrain, Change 55..59). Each has a
+  `*_simbolos.csv`. Port side: `pc/game/src/fight/*.lua` + `pc/game/tests/` (all green), see `pc/research/PORT_BATALHA.md`.
+  Also done on the PC side (docs in `pc/research/`): SHOP, SPAWN (loader 0x080513C8), EVT/EVT3, NAME, CRED, SCN, BMF, QA1.
 - Confidence across the CSVs: about 723 entries "provável" and 178 "chute"; the rest "confirmado".
+
+## Open after the 2026-10-17 port (do these first; each blocks a piece of the Lua port)
+- Guards 27-29 (Defence, Full Block, Half Block): effect and trigger point in the DM flow, Half Block threshold (GRD.md).
+- CntrAttk 54: returned damage and where the trap fires (GRD.md); Cancel* 24-26 (CancelOptic/Bomb/Grav): passive bodies unread.
+- Waiting at home before the next action: 172 frames measured, formula/source unknown (CHG.md section 4).
+- Bit 0x08 of B+0xBC turned on without a known cause; changes the Medaforce gauge gain (+40) and the VAL.md divergence.
+- Change table `Fight_SelectReplacementPartIdByIconFamily` 0x08037578 (per-side table + mask of field +0x8C); Change 56..59 scripts (DIS.md).
+- Interrupt hit chance (Pushover/Use Drain/Forcedrain accuracy) and drain/forcedrain amounts (DIS.md).
+- Stability immunity (SUP.md) and Break Form effect.
+- Scene commands 0x10..0x13 (RACE, minigame, fight scene, WEEKLY auditorium): only the screen was seen (SCN.md); logic unread.
+- Credits ring of objects (`Ring_BuildPointsFromRadius`, 72 objects, tile 0x116) and logo/background timing (CRED.md).
+- Name screen: where the name is written to the save and which medal cmd 0x02 receives (NAME.md).
+- Event opcodes the extractor still skips silently (0x56, 0x63, 0x29, 0x0E, 0x28...) and 0x51 (EVT.md).
 
 ## Next discovery tasks (updated 2026-10-14, after the 4th round)
 Single flow: agent writes `XX_simbolos.csv` (and `*_criar.txt`/`*_lista.txt` for addresses that must become

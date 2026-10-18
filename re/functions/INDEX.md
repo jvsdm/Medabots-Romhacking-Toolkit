@@ -154,6 +154,8 @@ Medaforça:
 - MD.md: medalhas (`gMedals` 0x083B62D8) e fórmula ROS -> dano (ler com DM). Nota: 0x35 confirmado no disasm; o mtbe diz 0x05 (errado).
 - MD2.md: significado dos bytes do descritor de Medaforça (`desc6` 0x083B7E54). PARCIAL.
 - MD3.md: leitores de bot+0xAA e bot+0xAD (ação normal x Medaforça). PARCIAL.
+- MF5.md: ganho do medidor medido no emulador (rec_18/19): +20 ao ser alvo, +40 no Charge, teto 80. CONFIRMADO; fecha a divergência do FAQ.
+- MF6.md: efeito de cada id de Medaforça 0x00..0x33, consumo do medidor (b2 do descritor) e versões de time. Ghidra; base de `fight/medaforce.lua`. Fecha pendentes de MF2.
 - EN.md: (ver seção 2) times inimigos e template da batalha.
 
 Estado, dano e peças:
@@ -161,6 +163,12 @@ Estado, dano e peças:
 - DF.md: derrota do jogador e bloco do bot (bot+0xBA = status). Corrige BT ("+0x40 = b...").
 - DF2.md: derrota de fato e peças dos inimigos; concluído com pendências.
 - R1.md: funções 0x08016288..0x08017F9C (PARCIAL, peças, medidor e reparo). Ver também R1a/R1b.
+- CHG.md: tempo da Robattle: quem anda o bot (laço 0x0801902C), velocidade de carga/volta = (0x20 - medidor)/16 px por quadro, status 15/16 e 38-41. Aberto: espera em casa (172 quadros medidos).
+- SUP.md: ações de Support/Heal (Scout, Conceal, Recovery, AutoRecover, Repair, Reactivate, Break Form, Stability) em tabela por técnica. Aberto: imunidade de Stability, efeito de Break Form.
+- GRD.md: guardas (Defence/Full/Half Block 27-29), armadilhas 10-12, CntrAttk 54, Cancel* 24-26 e Strengthen 53 (ROS confirmado). Abertos: efeito das guardas 27-29, CntrAttk, Cancel*.
+- TPL.md: template de encontro (0x28 B): 4 peças rec+4..+7, sorteio 40/30/20/10, ciclo da CPU rec+0xA..+0xE, linha de habilidade = atributo da medalha. Seção 8 (TPL2) corrige as anteriores.
+- VAL.md: validação do `calc.lua` contra o jogo (rec_27): ROS, esquiva, defesa e dano batem termo a termo. Aberto: bit 0x08 de B+0xBC ligado sem causa.
+- DIS.md: técnicas de interrupção e troca (Pushover 42, Use Drain 45, Forcedrain 50, ItrpChange/AttkChange/DEF Change/HealChange 56-59): roteiro, setup e efeito. Abertos: quantidades, tabela do Change (0x08037578), acerto das Interrupt.
 
 Recompensa e fim de batalha:
 - RW.md: recompensa, XP e fim de batalha (sorteio de peça, `Fight_TryAssignBotPartByRoll` 0x080121CC).
