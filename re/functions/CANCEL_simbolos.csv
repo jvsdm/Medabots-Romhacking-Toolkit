@@ -1,0 +1,14 @@
+addr,nome,kind,comentario
+0x0803440C,ActionScript_Op2C_CallSubstateV,func_thumb,[CANCEL] wrapper do opcode 0x2C (roteiro Force Bind 0x083C6A6B) -> despachante V; confirmado
+0x08022154,Fight_DispatchOnSubstateAA_V,func_thumb,[CANCEL] despachante da familia V: CallViaR0(tabela[+0xAA]); confirmado (decompile)
+0x0802217C,Fight_DispatchOnSubstateAA_V_00_CheckRos,func_thumb,[CANCEL] Force Bind passo 0: teste de ROS; falha +0xA6=0x1A; passa +0xAA=4; confirmado (HN1)
+0x080221C8,Fight_DispatchOnSubstateAA_V_04_SpawnFourOrbsOnActor,func_thumb,[CANCEL] Force Bind passo 4 (efeito visual); confirmado (HN1)
+0x080222A8,Fight_DispatchOnSubstateAA_V_05_SpiralOrbsAroundActor,func_thumb,[CANCEL] Force Bind passo 5 (efeito visual); confirmado (HN1)
+0x08022380,Fight_DispatchOnSubstateAA_V_06_ToggleFlag58Message,func_thumb,[CANCEL] Force Bind passo 6: alterna F+0x58 (medaforceEligible); msg 0x72 ligar / 0x73 desligar; confirmado (decompile)
+0x03001858,gFight_MedaforceEligible,data,[CANCEL] = F+0x58 da luta (0x03001800+0x58); != 0 bloqueia medaforca (MF.md s2); escrito so por V_06 (xrefs); confirmado
+0x08015648,Fight_IsMedaforceBlockedByChapter,func_thumb,[CANCEL] renomeado (era Fight_IsMedaforceSelectionBlockedByBattleState): retorna 1 se bot>=3 e capitulo<=2; confirmado (decompile)
+0x08031614,Fight_DispatchOnSubstateAA_BR_40_CheckMedaforceRequirements,func_thumb,[CANCEL] le F+0x58 (!=0 -> msg 0x79); confirmado (decompile)
+0x083C6A6B,gActionScript_ForceBind,data,[CANCEL] roteiro da tecnica 23: 2C 01 (um opcode); confirmado
+0x083C6A6D,gActionScript_CancelOptic,data,[CANCEL] roteiro da tecnica 24: so bytes 01 (sem script de acao; efeito nao achado); confirmado (bytes)
+0x083C6A6E,gActionScript_CancelBomb,data,[CANCEL] roteiro da tecnica 25: so bytes 01; confirmado (bytes)
+0x083C6A6F,gActionScript_CancelGrav,data,[CANCEL] roteiro da tecnica 26: so bytes 01; confirmado (bytes)
