@@ -1,4 +1,6 @@
-# DIS: técnicas de interrupção e troca ainda sem porte (Metabee EU), 2026-10-17
+# DIS: técnicas de interrupção e troca ainda sem porte (Metabee EU), 2026-10-17 (rev. DIS2, 2026-10-18)
+
+> **Correções DIS2 (bytes da ROM, lidos com `python -I`):** tec 41 = `06 08 34 01` (AD); tec 42 = `06 08 35 21` (AE, não AD); 43 = 36 (AF), 44 = 37 (AG), 45 = 38 (AH), 46 e 47 = 39 (AI), 50 = **3A** (AJ), 22 = 2B (U). O roteiro de Forcedrain NÃO chama op 0x50 (ver §6). Op 0x08 NÃO tem teste de acerto (ver §7).
 
 Fontes: `TQ.md`/`TQ2.md`/`TQ2_fluxo.txt` (roteiros por técnica), `AS2.md`, `AS3b.md`, `AS3c.md`, `AD.md`, `R2.md`,
 decompile Ghidra (sem salvar). Porte: `pc/game/src/fight/disrupt.lua`. Testes: `pc/game/tests/test_disrupt.lua` (OK 35).
@@ -7,9 +9,10 @@ decompile Ghidra (sem salvar). Porte: `pc/game/src/fight/disrupt.lua`. Testes: `
 
 | técnica | entrada no fluxo | setup (alvo) | ops do roteiro | confiança |
 |---|---|---|---|---|
-| 42 Pushover | 0x083C6AB3 | BySpeciality 0x08031AFC | 0x34 (AD) | confirmado (roteiro) |
+| 41 (AD, Pushover?) | 0x083C6AAF | BySpeciality 0x08031AFC (?) | 0x34 (AD) | confirmado (bytes) / nome a confirmar |
+| 42 Pushover? | 0x083C6AB3 | BySpeciality 0x08031AFC (?) | 0x35 (AE) + 0x21 | corrigido DIS2 (antes dizia 0x34) |
 | 45 Use Drain | 0x083C6AC0 | RequireUsableHeadAction 0x08032A68 | 0x08 (D), 0x38 (AH) | confirmado (roteiro) |
-| 50 Forcedrain | 0x083C6B2C | RequireMedaforceToken 0x08032C08 | ver §4 | confirmado (setup) / efeito aberto |
+| 50 Forcedrain | 0x083C6B2C | RequireMedaforceToken 0x08032C08 | 0x3A (AJ 0x08025AF8) | confirmado (bytes); efeito aberto (§6) |
 | 55 Change | 0x083C6B88 | nenhuma (0x08000840) | 0x3F (AN, cena) | confirmado (roteiro) |
 | 56..59 ItrpChange / AttkChange / DEF Change / HealChange | 0x083C6B8A / 8C / 8E / 90 | nenhuma | não lidos | aberto |
 | 43 Impair / 44 Confusion / 46 No Escape / 47 No Defense | 0x083C6AB8 / ABC / AC4 / AC8 | RequireNoTech16AndClearPending 0x080328B8 (43: 0x08032DA0 peça) | 0x08 (D) e depois 0x36 / 0x37 / 0x39 (43/44/46) | confirmado (roteiro) |
@@ -55,3 +58,38 @@ decompilar `Fight_DispatchOnSubstateAA_D` a partir de 0x08033A94.
   isso o porte NÃO roda esse roteiro para Change.
 - Forcedrain: decidir quantidade e a conciliação com op 0x50 (§2).
 - Tabela de peças por família (0x08037578): fonte dos sorteios de Change.
+
+## 5. Tabela de sorteio do Change (DIS2, 2026-10-18, Ghidra + ROM, confirmado)
+
+- Corpo de `Fight_SelectReplacementPartIdByIconFamily` 0x08037578 (param1 = família = techniqueId−0x37, **param2 = índice
+  da peça do ator (`partIndex`), NÃO lado do time**; confirmado no decompile de AN_06 0x08026678: `Fight_SelectReplacementPartIdByIconFamily(*pcVar7, *pbVar9)`).
+- Chama `randbyte()` e usa o último byte do RNG (ctx 0x03000440+0x8C, ver R2.md). Índice = byte & máscara.
+- Ponteiros (literais 0x08037600..0x08037694, lidos da ROM): família 0 → 0x083CEE88 / 0x083CEF08 / 0x083CEF88 (128 B cada, máscara 0x7F);
+  famílias 1..4 → 0x083CF008+0x40·k (peça 0,1,2 em +0,+0x40,+0x80 de cada base; bases 0x083CF008, 0x083CF0C8, 0x083CF188, 0x083CF248; 64 B, máscara 0x3F).
+- Peça 3 (ou índice fora de 0..2) → retorna 0 (sem tabela no código). **Pendente:** confirmar que índice 3 é a perna.
+- Valores são **ids de peça** (`parts[].partId`), não nomes. Exportados em `pc/cache/battle_tables.lua` como `change_table[familia] = {mask, sides[peca] = {ids}}`
+  (extrator `pc/extract/extract_battle_tables.py`, função `decode_change_table`). Ligação com o porte: `battle.lua` `replacementList`
+  deve ler `change_table` no lugar do chute por especialidade (não editado nesta tarefa).
+- Famílias: 0 = Change 55; 1..4 = 56..59 (rótulos ItrpChange/AttkChange/DEF Change/HealChange vindos de §1, nomes do Ghidra não lidos).
+- Efeito já confirmado: AN_06 troca a peça do PRÓPRIO ator pelo id sorteado, copia 0x18 B (`Mem_CopyBytes`) e roda as fases da peça.
+
+## 6. Use Drain 45 e Forcedrain 50 (DIS2, parcial)
+
+- Roteiros (bytes): 45 = `06 08 38 01` → op 0x38 = `ActionScript_Op38_CallAH` 0x0803455C → `_AH` 0x0802518C (formação/divisão: AH_Split, AH_Draw, AH_Form, AH_Accum; ver HA8.md).
+- 50 = `06 08 3A 01` → op 0x3A = `ActionScript_Op3A_CallAJ` 0x08034594 → `_AJ` 0x08025AF8 (AJ_Swap, AJ_0C/0D_R*, AJ_0E_S, AJ_Rest, AJ_13/14_S; AS3c).
+- **Correção:** nenhum roteiro de 45 ou 50 chama op 0x50 (AR 0x08026FD0 é só um despachante de substate). O 0x50 da nota anterior vinha de outra técnica.
+- Quantidade de usos tirada/dada (45) e medidor (50): **ABERTO**. Não decompilado: corpo de AH_Accum e de AJ_Swap/AJ_Rest. Próximo passo: decompilar esses passos.
+
+## 7. Teste de acerto das Interrupt 41, 43, 44, 46, 47 (DIS2, parcial)
+
+- Op 0x08 = `ActionScript_Op08_DispatchOnSubstateAA_D` 0x08033A94 → `Fight_DispatchOnSubstateAA_D` 0x0801D40C. Substates:
+  00 `CpuFastSet` (0x0801D434), 01 `ClearSlot9AndPlaceSprites` (0x0801D45C), 02 `WaitSlot9ReachTarget` (0x0801D524), `WaitAnimDone` (0x0801D544).
+  **Só animação e espera. NÃO é o teste de acerto.**
+- Roteiros: 41 → AD (0x34, 0x080344EC wrapper, `_AD` 0x08023C90); 43 → AF (0x36, `_AF` 0x08024998); 44 → AG (0x37, `_AG` 0x08024E04); 46/47 → AI (0x39, `_AI` 0x080257C0).
+- `_AF` (0x08024998) é só um despachante por substate; os passos são AF_00 `AccumPartAndCheckTech` 0x080249C0, AF_08 `SetupOverlay` 0x08024A30, AF_0B 0x08024AF4, AF_0C `WaitSlot22` 0x08024BCC, AF_0E 0x08024BF8, AF_0F 0x08024C44, AF_10 0x08024C94, AF_11 0x08024D18, AF_12 0x08024DA8 ...
+- A checagem de status ("StatusCheckFamily", AS3c) é o candidato a conter o acerto. **ABERTO**: decompilar AF_00 e a substate que chama o status (AF table em DAT_080249BC). Nada confirmado nesta rodada.
+
+## 8. Imunidade passiva de Stability 22 (DIS2, parcial)
+
+- Roteiro 22 = `06 08 2B 01 2C 01 01 01` → op 0x2B = U (0x080343F0 → `_U` 0x08021E04), sem passos documentados. A ação de Stability (setup 0x08031F2C) escolhe aliados com status pendente; não é a imunidade.
+- Leitor passivo (técnica 22 nas peças do defensor antes de aplicar status): **não encontrado**. Os trechos em `status.lua` e `ai.lua` que checam `parts[k].technique == 22` são uma suposição, não leitura da ROM.
