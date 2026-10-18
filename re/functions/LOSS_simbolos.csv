@@ -1,0 +1,15 @@
+# address,name,kind,comment
+0x0801B53C,Fight_EvaluateTeamWinState,function,grava T+0x9C (0x030004DC) = 1 venceu / 2 perdeu (ja conhecida, DF)
+0x030004DC,fight_result_T9C,data,resultado da luta 1 venceu / 2 perdeu; leitores SceneStep4C/44, GaugeTickStep, BranchFlagAdvanceGS
+0x08030E78,Fight_DispatchOnSubstateAA_BR_50_CheckLeadersDefeated,function,grava 2 se bot0+0x40==0; 1 se bot3+0x40==0
+0x08031120,Fight_SceneStep48_CheckTimeUpOrLevelUp,function,fim de tempo/nocaute: EvaluateTeamWinState ou 0x4F/0x60
+0x08031220,Fight_SceneStep4C_ShowTimeUpWinnerText,function,copia texto do vencedor (T+0x9C==1 / link / tabela)
+0x080310A8,Fight_SceneStep44_ShowLeaderDownWinnerText,function,copia texto do lider derrotado
+0x0803133C,Fight_SceneStep53_ExitBattleScene,function,saida: gMainState 6 (GS 0x30) ou 10 se link (GS 0x20)
+0x08036FA0,Fight_ResetBotPartState,function,derrota do bot (+0xBA=2, +0x40=0, +0x59=0); so estado de luta
+0x08010C50,Fight_HandleRewardGrantOrSkipByPostBattleFlags,function,recompensa de peca (so vitoria); nibble de E+0xC2E
+0x0300640D,event_result_C2D,data,E+0xC2D: 1 (flow 0x20) ou 0; copiado para prev_failed; nenhum escritor de 2 depois da luta
+0x0804E8C4,EventOpcode33_StartBattle_Continuation,function,copia E+0xC2D para o byte de resultado do script
+0x080479A0,GameState_StartFlowByCommand,function,grava E+0xC2D = 1 (caso 0x20) ou 0 (0x21)
+0x03002B70,save_money,data,dinheiro u32; sem leitor/escritor de luta achado
+0x08014F90,Fight_InitializePartStates,function,recopia armadura (gPartStats+4) para o bloco de luta no inicio

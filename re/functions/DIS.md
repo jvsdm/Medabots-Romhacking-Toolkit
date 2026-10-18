@@ -44,7 +44,7 @@ passo que pode ter o teste de acerto, mas o corpo de `..._D` NÃO foi lido (ver 
 - **Impair/Confusion/No Escape/No Defense:** o efeito de status é o que já existe em `status.setPending`
   (43 trava peça, 44 troca alvo, 46/47 bypass em calc.lua). O que faltava é o **teste de acerto**.
 
-## 3. Teste de acerto das Interrupt (41, 43, 44, 46, 47)
+## 3. Teste de acerto das Interrupt (41, 43, 44, 46, 47) (SUPERADO por §9: sem esquiva, limiar ROS > 0x20)
 
 Não localizado. O roteiro passa pelo op 0x08 (`..._D`, corpo não lido). No porte, `disrupt.hits` usa a mesma
 regra do golpe normal: `calc.totalRos` e depois `calc.evasion` (ROS zero depois da esquiva = erro; No Escape
@@ -93,3 +93,35 @@ decompilar `Fight_DispatchOnSubstateAA_D` a partir de 0x08033A94.
 
 - Roteiro 22 = `06 08 2B 01 2C 01 01 01` → op 0x2B = U (0x080343F0 → `_U` 0x08021E04), sem passos documentados. A ação de Stability (setup 0x08031F2C) escolhe aliados com status pendente; não é a imunidade.
 - Leitor passivo (técnica 22 nas peças do defensor antes de aplicar status): **não encontrado**. Os trechos em `status.lua` e `ai.lua` que checam `parts[k].technique == 22` são uma suposição, não leitura da ROM.
+
+## 9. DIS3 (2026-10-18, Ghidra + ROM, fecha §3, §6, §7, §8)
+
+**(a) Teste de acerto das Interrupt (41, 43, 44, 46, 47): ACHADO, sem esquiva.** Confirmado no decompile.
+- AF_00 0x080249C0 (43), AG_00 0x08024E2C (44), AI_00 0x080257E8 (46/47) e AD_00 0x08023CB8 (41) têm o mesmo começo:
+  1. `Fight_AccumRosPart` 0x0803579C: `fi+0xE8 += successBonus(peça ativa) + compat. de medalha + rand&7 + nível da especialidade + (perna parts[3]: proximidade/usos ou alcance/recarga)`.
+  2. `Fight_ApplyVirusBugRosPenalty` (ator).
+  3. `Fight_SpendRos20ReturnsExhausted` 0x0803725C: `ROS -= 0x20` com clamp em zero; se der 0 → erro, msg **0x1A** (ROS), substado+1.
+  4. `Fight_HasNoTechnique16Part(alvo)` 0x080331F8 (retorna 0 se o alvo TEM Stability): se tem → msg **0x39** (interferido por peça que remove status), substado+1. Se não tem → `Fight_IncrementActionUsageCounter` 0x08036270 + `Fight_ScaleAttackValueByPartScalar` 0x08037280 + substado 4 (efeito).
+- **Fórmula:** acerta se `ROS_acumulado > 0x20` e o alvo não tem Stability nas peças 0..2. **Limiar próprio = 32 (0x20)**, sem rolagem de esquiva. AD_00 (41) soma uma segunda checagem: o próprio ator também não pode ter Stability (msg 0x39).
+- Sem esquiva e sem `calc.evasion`. O porte (`disrupt.lua` M.hits) foi trocado. Confiança: confirmado (decompile); a fórmula de ROS do porte (`calc.totalRos`) não foi comparada com `Fight_AccumRosPart` número a número (provável).
+- Ponto em aberto: AF/AG/AI não chamam `setPending` diretamente; o status das Interrupt sai de outro passo (não localizado nesta rodada).
+
+**(b) Use Drain 45 (AH, op 0x38): confirmado parcialmente.** `_AH` 0x0802518C despacha pelo substado; o passo 0 é `Fight_DispatchOnSubstateAA_AH_AccumPartBranchOn58` 0x080251B4 (mesmo começo que AF_00, sem Stability).
+- Teste: `parts[0].headUsesSpent` **do alvo** (`PTR_gBattleBots[targetBot].parts[0]`). Se 0 → msg **0x34**, sem efeito. Se >0 → `Fight_IncrementActionUsageCounter` (soma 1 em `sideRecords[targetSlot].field_0x1`, NÃO é transferência de usos) e substado 4.
+- **Quantos usos saem da cabeça do alvo e entram na do ator: NÃO está em AH_00.** A quantidade continua chute (porte: 1, `tables.use_drain_amount`). Confiança do que foi lido: confirmado; da transferência: aberto.
+
+**(c) Forcedrain 50 (AJ, op 0x3A): confirmado parcialmente.** `_AJ` 0x08025AF8 → AJ_00 0x08025B20 (alvo `+0xC1` = medidor de Medaforce: se 0 → msg **0x74**, sem efeito) → … → `Fight_DispatchOnSubstateAA_AJ_SwapActorAndTarget` 0x08025C84 (idx 0x0B).
+- AJ_Swap: `FightPreview_SplitValueAgainstLimit(medidor do alvo, fi+0xEC)` (fi+0xEC = `fight.dmg` no porte, o valor de ataque). A parte que passa = `min(fi+0xEC, medidor do alvo)` → `partEffectMode`. Depois `FightPreview_SplitValueAgainstRange(medidor do ator, 0x50, parte)`: o ator recebe até `0x50 − medidor_ator`; se `reactionStateFlags & 8` o valor dobra antes. Depois troca ator/alvo (`+0x87 ↔ +0x88`) e `Fight_ResetBotVisualCounters`.
+- **O que move:** o medidor (`+0xC1`), quantidade = `min(valor de ataque, medidor do alvo)`, com teto no ator. **Ponto aberto:** o AJ_Swap não grava a subtração no medidor do alvo; o que sai do alvo fica chute (porte: sai o que passou). AJ_Rest 0x08025DD4 só restaura `+0x87 ← +0x64` e `+0x51 ← +0x52`. Confiança: confirmado (leitura), saída do alvo: aberto.
+
+**(d) Imunidade passiva de Stability 22: EXISTE.** Leitor: `Fight_HasNoTechnique16Part` 0x080331F8 (técnica 0x16 nas peças 0..2 do bot; peça 3 não conta; a checagem extra é o byte +0x10 da peça, ainda não mapeado no porte).
+- Quem lê (todos com cmp 0x16 nas peças do DEFENSOR, exceto onde indicado):
+  - Setup de alvo dos 43/44/46/47: `Fight_SetupTargetSelectionRequireNoTechnique16AndClearPending` 0x080328B8 só escolhe alvo SEM Stability e com pendência limpa (com retorno a outros lados se não houver).
+  - Interrupt AF_00/AG_00/AI_00/AD_00: msg 0x39 (ver (a)).
+  - Status em área: `Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked` 0x080288C8 (chamadas em 0x080288FC) (e AV_10/12/13/2C): só marca o alvo se `presence != 0`, `currentArmor != 0` **e** `HasNoTechnique16Part(alvo) != 0`. Depois `Fight_SetPendingPartStatus` (0x08036E64).
+  - `Fight_DispatchOnSubstateAA_BE_ApplyRandomStatus` (chamadas em 0x0802B622..68E) e `I_07` 0x0801FA24 chamam `setPending` SEM ler Stability: confiam no que a etapa anterior marcou (BE) ou não têm checagem (I_07, aberto).
+- Porte: `status.setPending` agora recusa se `status.hasStability(bot)` (peças 0..2 vivas com técnica 22), não só a peça `k`. Teste: `tests/test_status.lua` (OK 98).
+- Stability sobre as Interrupt: vale (msg 0x39). Sobre o status em área (AV): vale. Sobre I_07/BE: não confirmado.
+- Dado de `22 = 2B (U)` (§8 antigo) continua: o roteiro de 22 não tem passos de leitura; a imunidade vem do leitor acima, não do roteiro.
+
+**Símbolos novos (DIS3):** ver `DIS_simbolos.csv`. Mensagens: 0x1A = ROS zerado; 0x34 = cabeça do alvo sem uso gasto; 0x39 = Stability (A6.md); 0x74 = alvo sem medidor (AJ).

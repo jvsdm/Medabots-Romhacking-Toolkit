@@ -23,3 +23,16 @@ addr,nome,kind,comentario
 0x08025AF8,Fight_DispatchOnSubstateAA_AJ,func,Forcedrain 50 via op 0x3A (ABERTO, DIS2 §6)
 0x083CEE88,change_table_fam0_side0,data,tabela Change familia 0 (55), 128 B, mascara 0x7F (DIS2 §5)
 0x083CF008,change_table_fam1_side0,data,tabela Change familia 1 (56), 64 B, mascara 0x3F (DIS2 §5)
+0x080249C0,Fight_DispatchOnSubstateAA_AF_00_AccumPartAndCheckTech,function,"DIS3 confirmado: ROS acumulado > 0x20 e alvo sem Stability (pecas 0..2); senao msg 0x1A ou 0x39; sem esquiva"
+0x08024E2C,Fight_DispatchOnSubstateAA_AG_00_AccumPartAndCheckTech,function,"DIS3 confirmado: mesma regra de AF_00 (Confusion 44)"
+0x080257E8,Fight_DispatchOnSubstateAA_AI_00_AccumPartCheckCost,function,"DIS3 confirmado: mesma regra de AF_00 (No Escape/No Defense 46/47)"
+0x08023CB8,Fight_DispatchOnSubstateAA_AD_00_RosCalcPartNoTech16,function,"DIS3 confirmado: AF_00 mais Stability do ATOR (msg 0x39) (Drain Chrg 41)"
+0x080251B4,Fight_DispatchOnSubstateAA_AH_AccumPartBranchOn58,function,"DIS3 confirmado: Use Drain 45; alvo headUsesSpent==0 -> msg 0x34; senao usage counter + substado 4; transferencia de usos NAO aqui"
+0x08025B20,Fight_DispatchOnSubstateAA_AJ_00_AccumPartCheckTargetCost,function,"DIS3 confirmado: Forcedrain 50; medidor do alvo (+0xC1)==0 -> msg 0x74"
+0x08025C84,Fight_DispatchOnSubstateAA_AJ_SwapActorAndTarget,function,"DIS3 confirmado: parte = min(fi+0xEC, medidor alvo) -> ator limitado a 0x50-medidor (x2 com flag 8); alvo nao subtrai aqui (aberto)"
+0x080331F8,Fight_HasNoTechnique16Part,function,"DIS3 confirmado: retorna 1 se nenhuma peca 0..2 tem tecnica 0x16 (Stability) com byte +0x10 != 0; 0 se tem"
+0x0803725C,Fight_SpendRos20ReturnsExhausted,function,"DIS3 confirmado: ROS -= 0x20 (clamp 0); retorna 1 se zerou"
+0x0803579C,Fight_AccumRosPart,function,"DIS3 confirmado: soma successBonus + compat medalha + rand&7 + nivel especialidade + perna (parts[3]) em fi+0xE8"
+0x08036270,Fight_IncrementActionUsageCounter_08036270,function,"DIS3: soma 1 em sideRecords[targetSlot].field_0x1 (nao e uso de peca)"
+0x080288C8,Fight_DispatchOnSubstateAA_AV_0D_ApplyBugVirusUnlessMasked,function,"DIS3 confirmado: leitor de Stability no defensor antes de setPending (AV_0D/10/12/13/2C)"
+0x08036D64,FightPreview_IsPartTypeFlagSet,function,"nome do Toolkit (NX2/RF5 discutem Fight_IsPartStatusProtected); provavel guarda de protecao chamada por AV_0D (0x08028900); nao e o leitor de Stability"

@@ -161,3 +161,46 @@ Sem data de tabela, o medidor não é exato: o termo 0x080191E4 fica em `bot.tab
   `selected`, `reaction_flags`, `parts[k].hp/uses/radiation/power/technique`, `level` e `boost` (C4/C6/C7). Sem isso,
   `meterOfFrame` cai para 0 nos termos de seleção.
 - `chargeSpeed` continua (0x20 − medidor)/16. `motionSpeed()` = 1,5 px/q (GS 76). `cooldownFrames` = 172 (ABERTO).
+
+## 9. Rodada B4 WAIT (2026-10-18): espera em casa e ritmo do tick de status
+
+Método: Ghidra (leitura, sem salvar) + replay headless de rec_2 com watch em 0x0300137C (GS da frame de luta),
+0x03000440+0xC0 (ctx T), 0x03000590+0x1370 (bots + fight). Porte: `timing.lua` (`HOME_WAIT_REC2/REC5`), `status.lua`
+(`TICK_FRAMES`, `ticksToEnd`, `ticksInFrames`, `M.tick`), testes `test_timing` (OK 34) e `test_status` (OK 94).
+
+### 9.1 Ritmo do tick de status (confirmado no decompile + watch)
+- `Fight_StepBattleFrame` 0x0801427C: se fi+0x55 == 0 chama `Fight_TickSecondaryEffectTimers` 0x08018C58.
+- `Fight_TickSecondaryEffectTimers`: `fi+0x56 = (fi+0x56 + 1) & 0x1F`; quando vira 0, se `fi+0x57` (timeUp) != 0:
+  `timeUp -= 1`, sobe o relógio de exibição e chama `Fight_TickActiveBotStatusEffects` 0x08018CBC.
+- `Fight_TickActiveBotStatusEffects`: para cada bot com presença: reparo (se +0xC4 != 0), depois
+  `Fight_TickPendingEffectDurationAndEmitResult` 0x08018DF4 (se +0xC9 != 0). Não pula 0x0F/0x10 (Stop também leva tick).
+- 0x08018DF4: se `dur - 4 < 1` → limpa o pendente, **sem aplicar efeito neste tick**; senão `dur -= 4` e, só para
+  0x13/0x14 (Fire/Melt), aplica o dano.
+- **Ritmo:** 1 tick a cada 32 quadros em que a frame de luta roda (GS 0x44). NÃO é por volta nem por segundo.
+  Medido em rec_2: fi+0x56 anda a cada quadro em GS 0x44 (2381..2400), fica parado durante a espera (GS 4..9, 2401..2574),
+  e vira 0 em 2576 — o mesmo quadro em que fi+0x57 cai de 38 para 37 e em que o bot sai para a nova carga.
+  Logo: **zero ticks durante a espera em casa**; a duração de Stop/Bind/Burn congela enquanto o bot está em casa.
+- Efeito do porte: `M.tick` agora segue a ROM (expira antes do efeito); Wave/Hold/Drain não somam medidor no tick
+  (a ROM soma +CC por quadro em 0x0801922C, já em `timing.meterOfFrame`). Duração 5 → 2 ticks; 20 → 5 ticks (4 com dano).
+- Chute antigo do porte ("1 tick por volta", "1 por segundo no Stop") está **errado**: o tick é 1/32 quadros de GS 0x44.
+
+### 9.2 Espera em casa: o que o watch mostrou (GS 0x0300137C)
+- Chegada: GS 4 em 2405 (rec_2). Sequência medida em rec_2 (quadros): 4..6 = 22 | **7 = 108** | 8 = 20 | 9 = 16 |
+  0x38, 0x0D, 0x0E, 0x45, 0x44 = 6 → nova carga em 2576. Soma 22+108+20+16+6 = **172**.
+- Os 20 q do estado 8 e os 16 q do estado 9 aparecem no ctx T +0x84 (0x030004C4): byte que anda 1 por quadro e
+  zera ao passar de 0x13 (estado 8), e chega a 0x10 no fim do estado 9. O contador de 16 em +0x86 (0x030004C6,
+  `Fight_CountWaitTimerUp16ThenAdvanceStep` 0x08014AB4 / `Fight_WaitTimerDownThenAdvanceStep` 0x08014E54) **não** anda
+  nessa janela: o contador 0x08014AB4/0x08014E54 não é o da espera.
+- **Não é constante entre bots:** rec_5 mostra 4..6 = 21 | 7 = 101 | 8 = 20 | 9 = 16 e, antes da carga, 0x40..0x42
+  (94 q) que não aparece em rec_2 (evento a mais, não explicado). O estado 7 é o que muda (108 vs 101). Hipótese (não
+  testada): o estado 7 espera uma animação/pose do bot (duração de script), porque o estado 7 não gasta tick nem medidor.
+- Não foi achado o quadro de chegada/ida do estado 7 nem quem escreve 0x38/0x0D/0x0E no GS (são escritos por handlers
+  de cena compartilhados com outras telas). **ABERTO**: fórmula da espera. `cooldownFrames` continua 172 (medido, rec_2).
+- Radiação (+9) e carga (+8) não entram nesses números: o medidor não governa a espera (confirmado pelo watch: bot
+  fica com X fixo, D7 segue andando sem efeito).
+
+### 9.3 Para o Opus (integração em battle.lua, não editado)
+- Chamar `status.tick(bot)` **uma vez por cada 32 quadros de GS 0x44** (contador próprio por luta, não por volta).
+  Enquanto o bot está em casa (estados 4..9), não chamar.
+- Duração do pendente em ticks: `status.ticksToEnd(bot.pending.duration)`.
+- Espera: `timing.cooldownFrames(bot, k)` (172) até fechar o estado 7.
