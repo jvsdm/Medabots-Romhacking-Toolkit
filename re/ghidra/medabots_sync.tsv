@@ -2911,7 +2911,7 @@ F	0x0805424C	Scene_DispatchStateHandler
 L	0x08054280	Scene_DispatchStateHandlerTail
 L	0x080542A2	Scene_DispatchStateHandlerTail_Jump
 L	0x080542B0	Scene_DispatchStateHandler_CodeTable
-L	0x080544E0	SceneState_01_SetViewParams
+L	0x080544E0	SceneState_01_Setup
 L	0x080545B4	SceneState_02_UpdateActorLoop
 L	0x080550E4	SceneState_03_SetActorRecord
 L	0x0805513C	SceneState_05_CondSetPos
@@ -4016,6 +4016,9 @@ L	0x083D2B26	Table_DmaSource_Provavel
 L	0x083D2B6B	gMapArea
 L	0x083D2C5D	gObjectField0BByPoseTable
 L	0x083D2D0D	gObjectShadowFlagTable
+L	0x083D33F0	Scene_StateScript_01
+L	0x083D35C0	Scene_StateScript_02
+L	0x083D5F70	Scene_StateScriptPtrTable
 L	0x083D5FF4	Overworld_ChoiceSubstateTable
 L	0x083D6298	unknown_ChapterLiteralPool
 L	0x083D6A2C	gArcHeightTable

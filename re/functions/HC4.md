@@ -45,7 +45,7 @@ Subpasso = `gCurrentEventOpcodeSubstate` (0x03006473). Args = `gEventScriptArgum
 - Corpo vazio. Opcode 0x62 (Equip_Starter_Parts, HE3) chama `site_StarterBot` e nao grava estado 1: continuacao morta.
 - Usa: so o opcode 0x62. Confianca: confirmado (decompile + HE3).
 
-## 0x0804F6E0 Event_Op63_Cont_ShowEffect
+## 0x0804F6E0 Event_Op63_Cont_ShowEffect (corrigido em SCN63: espera o despachante de cena 0x0805424C; ver SCN63.md)
 - Subpasso 0: `Map_ModeDispatch` (0x08050BC8) ate retornar != 0. Se `gOverworldUiState & 0x3F` (0x03005350+0x1D4) nao for 0xD/0x16, termina (`FUN_08050290`, Event_EndOpcode). Se for, avanca.
 - Subpasso 1: `FUN_08051940(0x2F)`, grava `16 / resultado` em 0x03006D20 (significado chute); `FUN_08050124(0x2F, (args[0]<<4)|args[1], 0)` cria o objeto de render 0x2F. Avanca.
 - Subpasso 2: grava 2 (se modo 0xD) ou 3 em +0xC67 e espera `FUN_0804F188(+0xC67)` != 0; depois marca +0xC5B=1, converte x/y do objeto (+0xC52/+0xC54) para tile (+0xC56/+0xC57), chama `Map_ClampCameraToLoadedMap`, `Map_ApplySceneVariantScrollPreset`, `Overworld_SetPlayerFacingAndRefreshFollower`, `Map_UpdatePlayerMarkerScreenPosition`, `Overworld_ResetUiRenderState` (0x08050C94) e termina.

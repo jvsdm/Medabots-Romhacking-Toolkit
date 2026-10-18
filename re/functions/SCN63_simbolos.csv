@@ -1,0 +1,13 @@
+endereco,nome,tipo,comentario
+0x0805424C,Scene_DispatchStateHandler,func_thumb,"[SCN63] confirmado: estado=gOverworldUiState&0x3F; passo=+0xFC; codigo=sub[passo]; >0x8B -> Overworld_EnterSceneState"
+0x08054280,Scene_DispatchStateHandlerTail,label,"[SCN63] mov pc para tabela 0x080542B0 (140 ptrs)"
+0x080542B0,Scene_DispatchStateHandler_CodeTable,data,"[SCN63] 0x8C ptrs de codigo (0..0x8B)"
+0x083D5F70,Scene_StateScriptPtrTable,data,"[SCN63] 64 ptrs para sub-scripts por estado (estado&0x3F)"
+0x083D33F0,Scene_StateScript_01,data,"[SCN63] script do estado 1 (palavras u32)"
+0x083D35C0,Scene_StateScript_02,data,"[SCN63] script do estado 2 (palavras u32)"
+0x080544E0,SceneState_01_Setup,label,"[SCN63] codigo 1: le palavras do script, grava campos +0x214..0x220 (GUESS: escala/viewport)"
+0x080545B4,SceneState_02_UpdateActorLoop,label,"[SCN63] codigo 2: chama tween de viewport 0x08056F24; nome do RF7 e chute"
+0x080560BC,SceneState_80_FadeReset,label,"[SCN63] confirmado: chama Overworld_ResetAndStartScreenTransitionEffect 0x08049D90"
+0x08056F24,Viewport_TweenAdvanceCheckDone,func_thumb,"[SCN63] usado pelo codigo 2 (float vs constante)"
+0x0804B6E0,Overworld_IsUiSceneStateComplete,func_thumb,"[SCN63] 1 quando despachante devolve 4"
+0x080567F0,Overworld_EnterSceneState,func_thumb,"[SCN63] zera +0xF4/+0xFC/+0xF0; affine 32 entradas fora de 0xD/0x16"

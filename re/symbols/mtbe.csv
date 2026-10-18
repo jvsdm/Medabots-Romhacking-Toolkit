@@ -3304,7 +3304,7 @@ address,name,kind,count,comment
 0x08054280,Scene_DispatchStateHandlerTail,label,,[R3] (mtbe) entrada alternativa do despacho [RF7] provavel (antes: dado): chamado por BL de 0x08056818 e 0x080568C0 (FUN_080567FE); Ghidra agora cria funcao 0x08054280-0x080542A3; sem prologo B5
 0x080542A2,Scene_DispatchStateHandlerTail_Jump,label,,"[JT5] mov pc: tabela real 0x8C ptrs em 0x080542B0 (literal 0x080542AC); JT5 [RF7] confirmado: sitio 'mov pc,r0' (87 46) com tabela 0x080542B0, 0x8C entradas x 4 B (JT5)"
 0x080542B0,Scene_DispatchStateHandler_CodeTable,data,,[JT5] tabela real 0x8C ptrs (codigo 0..0x8B); JT5 [RD2] confirmado: 140 x 4 B ponteiros de codigo (0x8C); tabela termina em 0x080544E0; xref DATA em Scene_DispatchStateHandlerTail
-0x080544E0,SceneState_01_SetViewParams,label,,[SC4] [SC4] provavel (estado 0x01): le 4 palavras para gOverworldUiState+0x9C..0xA8 e 2 valores sf32 em +0x90/+0x94; escreve +0x214=0x80. Parametros de camera/vista. Corpo sem fim lido (45 linhas).
+0x080544E0,SceneState_01_Setup,label,,[SC4] [SC4] provavel (estado 0x01): le 4 palavras para gOverworldUiState+0x9C..0xA8 e 2 valores sf32 em +0x90/+0x94; escreve +0x214=0x80. Parametros de camera/vista. Corpo sem fim lido (45 linhas). (antes: SceneState_01_SetViewParams)
 0x080545B4,SceneState_02_UpdateActorLoop,label,,"[SC4] [SC4] chute (estado 0x02): laco sobre buffer de atores (ptr 0x03006D30, stride 0x300) com tabelas 0x03005490/0x030054D4; zera locais de pilha. Nao lido ate o fim."
 0x080550E4,SceneState_03_SetActorRecord,label,,"[SC4] [SC4] provavel (estado 0x03): grava 4 palavras do stream no registro do ator (ptr 0x03006D30 + idx*0x300 + 0x...), depois chama 0x08056796 (consome 1 palavra e avanca)."
 0x0805513C,SceneState_05_CondSetPos,label,,[SC4] [SC4] chute (estado 0x05): cadeia condicional (bne 0x080551A0) com sf32_from_i32 e 0x080567FE. Escrita de posicao/param de ator.
@@ -4409,6 +4409,9 @@ address,name,kind,count,comment
 0x083D2B6B,gMapArea,data,192,area/regiao por mapa [RD5] confirmado: 192 x 1 B (DT3; gMapArea[mapa])
 0x083D2C5D,gObjectField0BByPoseTable,data,,[CS2] tabela de bytes indexada por pose (+0x30); os 32 primeiros sao zero [RD5] provavel: indexada por pose (+0x30); 32 primeiros = 0; tamanho aberto (CS2)
 0x083D2D0D,gObjectShadowFlagTable,data,,"[CU] indexada pela pose (+0x30); != 0 cria objeto de sombra no slot 0x79+id (Map_InitObjectSprite, GH-CU) [RD5] provavel: indexada por pose (+0x30); !=0 cria sombra (CU); tamanho aberto"
+0x083D33F0,Scene_StateScript_01,data,,[SCN63] [SCN63] script do estado 1 (palavras u32)
+0x083D35C0,Scene_StateScript_02,data,,[SCN63] [SCN63] script do estado 2 (palavras u32)
+0x083D5F70,Scene_StateScriptPtrTable,data,,[SCN63] [SCN63] 64 ptrs para sub-scripts por estado (estado&0x3F)
 0x083D5FF4,Overworld_ChoiceSubstateTable,table,,[FM] [FM] tabela de sub-estados do menu de escolha (base do despachante 0x0805716C): 0=Overworld_InitChoiceMenuScreen 0x0805718D; 1=0x08057441; 2=0x080574D5 [RD5] confirmado: 6 x 4 B (FM3; sub-estados 0..5 do menu de escolha)
 0x083D6298,unknown_ChapterLiteralPool,data,,"[PR] literal 0x03005FDF sem leitor de funcao conhecido; perto de CBC/CBD (0x083D6274/78); pendente [RD5] chute: pool de literais RAM (0x03005FDF, 0x03006413, 0x030057B1); sem leitor conhecido (PR); nome mantido"
 0x083D6A2C,gArcHeightTable,data,,"[CU] 16 linhas de 0x10 B; valor (short) de cada linha = altura do arco em 1/16 px (Map_ObjectArcStep, GH-CU) [RD5] confirmado: 16 x 16 B = 256 (CU; altura do arco, forma simetrica no byte de cada linha)"
