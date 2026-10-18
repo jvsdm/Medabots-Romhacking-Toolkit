@@ -21,6 +21,39 @@ Parcial. Estrutura confirmada no decompile; efeito visual por estado ainda não 
 - Código 0x80 (0x080560BC = SceneState_80_FadeReset, confirmado): chama `Overworld_ResetAndStartScreenTransitionEffect` 0x08049D90 e termina em 0x080567FE. Fade de tela (escurece/clareia) = a parte visual mais próxima já identificada; o estado 1 o usa no passo 3.
 - Código 0x8B (0x080567D4): entrada final tratada por Overworld_EnterSceneState.
 
+## SCN63b (2026-10-18): argumentos do 0x63 e códigos da tabela 0x080542B0
+- Argumentos (decompile Ghidra `Event_Op63_Show_Effect` 0x0804D024, confirmado; literais 0x0804D070..80 = E 0x030057E0,
+  offsets 0xC94/0xC95/0xC96/0xC48/0xC4A): são 3 bytes lidos em E+0xC94..0xC96.
+  - id = E+0xC94 (estado de cena);
+  - x = (E+0xC95 & 0x7F)*16 + u16(E+0xC48); y = (E+0xC96 & 0x7F)*16 + u16(E+0xC4A).
+  - Ou seja: `tx`/`ty` são deslocamentos em tiles (16 px) a partir de uma origem u16 em pixels, em 0x03006428 (= E+0xC48,
+    e 0x0300642A = E+0xC4A) que o extrator não lê. Quem grava essa origem não foi achado (GUESS: posição do evento).
+    O porte guarda só `tx`/`ty` no cache.
+- Porte: op renomeado para `ui_scene` (extract_events.py), `script.lua` chama `host.uiScene(id)`, `world.lua` só registra
+  o id (sem efeito, sem espera). O foco de câmera de 60 quadros que existia era GUESS e foi removido.
+- Tabela 0x080542B0 (140 ponteiros, lidos do ROM; Ghidra não tem função nos alvos, então o disasm é capstone via
+  Python 3.12 do projeto, sem decompile):
+  - 0x00 e 0x04 -> 0x080567FE: fim de passo (zera +0xFC, confere +0xF4 e a fase; GUESS "volta ao despachante").
+  - 0x01 -> 0x080544E0: lê 3 palavras do script (estado 1: 0x400, 0x400, 0x80; estado 2: 0x400, 0x400, 0) para campos
+    de viewport (+0x9C/+0xA0 como inteiro, +0x90/+0x94 via sf32), e grava +0x214=0x80, +0x218=0, +0x21C=0x400,
+    +0x220=0x800. GUESS: enquadramento/escala inicial da cena.
+  - 0x02 -> 0x080545B4: laço por quadro (tween de viewport via 0x08056F24). GUESS.
+  - 0x18 -> 0x08055618: lê 5 palavras do script e grava no registro de 0x300 bytes do slot em +0x184 (base em
+    0x0300xxxx de tabela de ponteiros): +0x178 = palavra 1, +0x180 = f32(palavra 2), +0x184 = palavra 3 e +0x188 =
+    palavra 4 (GUESS nos nomes; o campo +0x184 é o índice do slot).
+  - 0x22 -> 0x08055ED4: acrescenta 2 palavras a uma lista da cena (ponteiro de contador em +0x140, itens a partir de
+    +0x188 + n*4; GUESS: lista de keyframes/posições). Termina chamando 0x080567FE. Não fechado.
+  - 0x1B -> 0x08055A28: mesmo prólogo do 0x22 (lê 4 palavras do script depois do código, guardadas na pilha), depois
+    indexa uma tabela ROM por uma variável e chama 0x0807CCD8 (GUESS: criar sprite/objeto). Não fechado.
+  - 0x80 -> 0x080560BC: fade de tela (`Overworld_ResetAndStartScreenTransitionEffect` 0x08049D90), confirmado antes.
+  - 0x8B: entrada final (Overworld_EnterSceneState).
+- Estados (scripts lidos do ROM): estado 1 = `1,0x400,0x400,0x80, 0x18,...,0x22,...,0x22,...,0x04,0x1B,...`; estado 2 =
+  `1,0x400,0x400,0, 0,0x22,...,0x04,0x1B,..., 0x8BC4,0x100,0, 6,...`. Os códigos usados são 0x01, 0x18, 0x22, 0x1B, 0x04,
+  0x00 e 0x02 (o código 0x02 é o laço por quadro e não aparece no script, só no despachante).
+- Efeito final por estado: NÃO FECHADO. Sabe-se que o estado mexe no viewport (0x01/0x02) e monta uma lista de itens
+  (0x22) com um sprite/objeto (0x1B), mas não se o HUD some, quanto dura, nem se trava o jogador. Não se deve portar um
+  efeito por estado sem ver o print do jogo no mapa 24 ev 200 (estado 2) e no ev 26 do mapa 0.
+
 ## O que ainda não está confirmado
 - Se o HUD some, se o jogador trava (trava por `Map_ModeDispatch`?), duração em quadros e a música (não visto no trecho).
 - Saída: o script chega a 0 (fim) e a cena volta sozinha (estado 4) ou outro opcode desliga; não verificado.
