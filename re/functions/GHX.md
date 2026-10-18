@@ -138,3 +138,11 @@ sequência de GS. O sentido de 0x0300058C bits 0x01/0x02 NÃO foi decodificado (
 confirmado no porte até agora; o modeByte fica salvo e aparece no log como "modo de campo 0x5D".
 
 E+0xCBA (0x0300649A) recebe 2 nesse ramo; nome não confirmado.
+
+## 5. Música por mapa e por evento (CHAPENC, 2026-10-18, Ghidra + ROM)
+- `Event_Op49_Play_Map_Music` 0x0804C9C4 = política 4 → `FUN_080483F8` (0x080483F8, confirmado no decompile): se
+  E+0xC30 (0x03006410) == 0xFF devolve E+0xC31 (0x03006411, id da música persistente do 0x48); senão devolve
+  `gMapMusic[E+0x7FE]` (ROM 0x0847E644). **Sem entrada de capítulo.** A troca de música por capítulo não existe.
+- 0x45 Play_Music = id direto (política 1). 0x48 Play_Persistent_Music grava E+0xC31 e marca E+0xC30 = 0xFF.
+- Porte: `world.loadMap` → `music.playMap(n)` = `gMapMusic[n]` (cache `mapMusic[23] = 26`, confere). Divergência aberta:
+  o porte não aplica o override persistente (E+0xC30 == 0xFF) depois de um 0x48. Não alterado.

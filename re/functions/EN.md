@@ -89,3 +89,8 @@ Entrada: k (0..2) = registro. Bot inimigo = slot 3+k; bloco RAM = 0x03000590 + (
 - Fight_UpdateBotActiveFlagCount (origem de fight+0x5B) e o significado de ctx+0x89 == 1 em Fight_SetupBattleBotStates.
 - Recompensa e dinheiro (§6).
 - Ghidra: nenhum nome novo confirmado neste passo (os nomes de §5 e §2 já existem); nada foi renomeado.
+
+## 8. CHAPENC (2026-10-18): E+0xC2D na história
+- Quem põe E+0xC2D = 1: `GameState_StartFlowByCommand` (cmd 0x20 via Op33). Quem zera: cmd 0x21 e resets de tela
+  (`Gfx_ResetBgLayersAndSong`, `Gfx_ResetScreenBgAndBlend`, `Menu_TickSingleCountSelector`). Detalhe em OW.md §8.
+- Porte: `world.lua` liga `encState.roll_suppressed` em `host.battle` e desliga em `world.resume` (provável).

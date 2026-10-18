@@ -103,3 +103,27 @@ Ordem de troca: warp → transição (`Overworld_StartScreenTransitionEffect` 0x
 - Quem grava o id de mapa antes da troca de mapa (warp).
 - Câmera: `Map_CenterCameraForSmallMaps` 0x080528F8 e `Map_ClampCameraToLoadedMap` 0x08052AA4 não decompilados nesta rodada.
 - Ghidra: nenhum rename feito; a função de `Overworld_CheckMovementCollision` (0x08052CC0) não testa tile e sim a borda do mapa; o nome atual serve, mas o comentário do `mtbe.csv` deve ser corrigido (W2 dizia o contrário).
+
+## 8. CHAPENC (2026-10-18): quem grava cada flag de encontro, e se depende de capítulo (Ghidra xref + ROM + events.lua)
+
+- **E+0xC29 (0x03006409)**: único escritor = `Overworld_ResetEncounterStepState` 0x0804387C (xref 0x0804389E). Grava
+  `gMapEncounters[gCurrentMapId].+0`. Só o mapa decide: sem capítulo, sem flag.
+- **E+0xC2C (0x0300640C)**: escritores = `Event_Op5F` 0x0804CF40 (WRITE 0x0804CF4C, byte inteiro) e `Debug_RndTkScreen`
+  (debug, inverte bit 0). Único leitor de encontro = `Overworld_ShouldTriggerRandomEncounter` (0x080438EA), e só o bit 0.
+  Não é zerado na carga de mapa: vale até o próximo 0x5F. Opcode 0x5F: 19 usos em 16 eventos de `pc/cache/events.lua` (ids 40, 271,
+  774, 780, 1182, 1207, 1813, 1823, 1828, 1829, 1830, 1902, 2061, 2062, 2063, 2072),
+  valores só **0 ou 1**: bit 0 = bloqueado. Bits 1..7 nunca são lidos por encontro.
+- **E+0xC2D (0x0300640D)**: escritores = `GameState_StartFlowByCommand` (0x080479AA, 0x080479D8: 1 no cmd 0x20 = história,
+  0 no 0x21 = aleatório) e resets de tela `Gfx_ResetBgLayersAndSong` 0x0801156E, `Gfx_ResetScreenBgAndBlend` 0x08011C20,
+  `Menu_TickSingleCountSelector` 0x0800D392 (valor gravado pelos resets não conferido). Com != 0 o encontro inteiro
+  fica desligado (ShouldTrigger), não só o sorteio.
+- **E+0xC5F**: sem novo escritor de encontro; já documentado em EV.md (passo de cena).
+- **gMapEncounters +1 (área)**: gravado em `fight+0x38` (0x03001838) por `Fight_CopyEncounterTemplateEntry` (0x08011E04).
+  Leitores de `fight+0x38` (Ghidra xref): `Fight_DispatchOnSubstateAA_G_03_BuildBattleBackground` 0x0801E10C,
+  `Fight_AddBotMeterFromTable` 0x080191FC, `Fight_InitBotPartPanel` 0x0801187C, `Fight_StoreBotLabelText` 0x080121B0 e
+  outros. Provável: índice de cenário/área da batalha. NÃO confirmado.
+- **gMapEncounters e gMapEncountersExtra** (0x083BEC10 / 0x083BF210): índice = só `gCurrentMapId` (E+0x7FE). Nenhum
+  leitor depende de capítulo ou de flag. Os leitores são por literal (sem xref estática): `Fight_CopyEncounterTemplateEntry`
+  0x08011E14, `Overworld_ResetEncounterStepState` 0x080438B4, `Fight_SelectTemplateForCurrentEncounter` 0x08011E64.
+- **Porte**: `encounter.enterMap` (C29 = map_encounter[n].flag); `encounter.step(state, rng, C2C)` lê o bit 0 de
+  `script.save.encounterFlags`; C2D é ligado em `host.battle` e zerado em `world.resume` (provável, reset de tela).
