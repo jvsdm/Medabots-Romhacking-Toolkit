@@ -104,6 +104,7 @@ Marca **[USE]** = ponto de partida obrigatório para o assunto.
 | `render_map.py`, `render_bot.py` | mapa em PNG (Core e Shingata); bot de batalha + peças | `render_map.py`; `render_bot.py BOT [rom] [out]` |
 | `save_edit.py` | edita .sav EEPROM 8 KB (blocos de 8 B invertidos; checksum u16 em +0xFF4) | args na docstring |
 | `build.py`, `patches.py`, `export_manifest.py`, `export_patch_sites.py`, `gfx_port.py`, `port_shingata.py`, `shingata.py`, `shingata_names.py`, `extract.py`, `mini_palette.py` | pipeline de expansão (ROM 16 MB, bots novos, sítios de código, gráficos do Shingata) | `build.py [--shop SHOP:SLOT:BOT] [--out]` |
+| **[USE]** `story_graph.py` | grafo da história por capítulo: virada (op chapter), estado/registro exigidos, quem grava/esconde, rota de mapas/tiles e avisos; sai `pc/research/STORY_GRAPH.md` (`--dot` = Graphviz) | `python -I tools/story_graph.py [--dot ARQ] [--chapters 0,1]` (lê `pc/cache`, só leitura) |
 | `export_template.py`, `check_template.py`, `navi_*.py`, `navi.py`, `mold_lab.py`, `custom_lab.py`, `medarot9.py` | modelos de desenho de peças, moldes novos, Navi, Medarot 9 | `export_template.py BOT_ID` |
 
 ### 3.3 `T/re/tools/` (Toolkit)
