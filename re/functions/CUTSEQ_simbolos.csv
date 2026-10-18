@@ -1,0 +1,11 @@
+# address,name,kind,comment
+0x080395E8,ObjectOpcode08_SetMotionFromTable,function,opcode 0x08 argc 7: a1..a3 lado 1 por peca, a4..a6 lado 2
+0x083CE164,TechniqueActionRowPtrTable,data,u32[132] ponteiros de linha por tecnica (sel = fight+0xF9)
+0x083CE374,TechniqueRowArgcTable,data,u8 argc por opcode (indexado pelo halfword do cursor)
+0x0803D450,FightPreview_UnpackSequenceEntry,function,copia argc halfwords para fight+0x102
+0x0803D4AC,FightPreview_AdvanceSequenceCursor,function,cursor += 1 + argc[op]
+0x0803BBE0,FightPreview_ApplyObjectMotionKind,function,copia slot+0x2C para fight+0x112/0x113
+0x08044A3C,MotionPlayStep,function,r = gMoveScriptTable[kind*7+gMoveStyle[bot]]
+0x0807E8EC,gMoveScriptTable,data,indice kind*7+estilo
+0x083CAD78,gMoveStyle,data,1 byte por bot (0..6)
+0x08047428,MotionInterpolateKeyframe,function,interpolador de keyframe
