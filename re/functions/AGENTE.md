@@ -1,3 +1,4 @@
+Antes de escrever ferramenta, extrator ou formato novo, procure no REFKIT.md (WPF + scripts que já existem).
 # Resumo para agentes (ler só isto)
 
 Medabots Metabee (EU), GBA Thumb. Ghidra MCP aberto: NÃO fechar nem salvar (outros agentes em paralelo).
