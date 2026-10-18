@@ -1,0 +1,6 @@
+0x080283C0,Fight_DispatchOnSubstateAA_AU_08_SetActorReactionFlag2,func_thumb,"MF8 (AS5 §AU, confirmado antes): seta bit 0x02 em bot_ativo+0xC0. Usado pelo id 0x0B (op 0x53)"
+0x08029600,Fight_DispatchOnSubstateAA_AX_02_FlagAlliesWithStatus,func_thumb,"MF8 (AS5 §AX): marca aliados com +0xC9 != 0. Usado pelo id 0x15 (op 0x56)"
+0x080297EC,Fight_DispatchOnSubstateAA_AX_06_ClearAllyStatus,func_thumb,"MF8 (MF4 0x56): para aliado marcado chama FightPreview_ClearPartFields (zera +0xC9..+0xCC)"
+0x0802B184,Fight_BE_SelectTargets,func_thumb,"MF8 (HN4/MF7 §5.3): marca adversarios vivos com cabeca e sem Stability; id 0x1E marca perna 0x64, senao 0x6A. Ids que chamam: 0x1E e 0x20"
+0x0803496C,ActionScript_Op4A_CountBrokenAllyParts,func_thumb,"MF8 (AS6 §4 / MF4): aliados com bot+0xBA != 0; cada peca com armadura 0 soma 10 em fi+0x8C. Usado pelo id 0x1D"
+0x0802EAD8,Fight_DispatchOnSubstateAA_BM_0F_DrainMedaforceAsDamage,func_thumb,"MF8: repetido de MF7 para referencia. Origem das marcas do 0x2C continua aberta (roteiro 2C = 42 65 21 45, sem BE)"

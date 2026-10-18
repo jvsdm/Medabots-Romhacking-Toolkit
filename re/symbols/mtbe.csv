@@ -1753,7 +1753,7 @@ address,name,kind,count,comment
 0x08028270,Fight_DispatchOnSubstateAA_AU_LoadIconSprite,func_thumb,,"[HN2] HN2 AU(op 0x53) 0x04: gfx 0x084DD368, tile 0x6A00; confirmado"
 0x080282E0,Fight_DispatchOnSubstateAA_AU_SlideIcon,func_thumb,,"[HN2] HN2 AU 0x06: desliza 16 frames, sfx 0x28; confirmado"
 0x08028350,Fight_DispatchOnSubstateAA_AU_BlinkThenClear,func_thumb,,[HN2] HN2 AU 0x07: pisca 0x3C frames e limpa slot; confirmado
-0x080283C0,Fight_DispatchOnSubstateAA_AU_SetActorReactionFlag2,func_thumb,,[HN2] HN2 AU 0x08: bot+0xC0 |= 2; confirmado
+0x080283C0,Fight_DispatchOnSubstateAA_AU_08_SetActorReactionFlag2,func_thumb,,[HN2] HN2 AU 0x08: bot+0xC0 |= 2; confirmado (antes: Fight_DispatchOnSubstateAA_AU_SetActorReactionFlag2)
 0x080283EC,Fight_DispatchOnSubstateAA_AU_SetStepCode64,func_thumb,,[HN2] HN2 AU 0x09: +0xA6 = 0x64; confirmado
 0x08028404,Fight_DispatchOnSubstateAA_AV,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0802842C,Fight_DispatchOnSubstateAA_AV_SelectVariantByTechnique,func_thumb,,[HN2] HN2 AV(op 0x54) 0x00: +0x51 = 0..4 para tec 0x0C/0E/10/12/28; confirmado
@@ -1845,7 +1845,7 @@ address,name,kind,count,comment
 0x0802B000,Fight_DispatchOnSubstateAA_BE,func_thumb,,[R1] Despachante por +AA (mesmo padrao); provavel
 0x0802B028,Fight_DispatchOnSubstateAA_BE_LoadEffectGfx,func_thumb,,[HN4] BE 0x02; variante por tecnica +0xA8==0x1E; provavel
 0x0802B0FC,Fight_DispatchOnSubstateAA_BE_LoadEffectGfx,label,,[TA] carga de gfx do efeito; B+0xA8==0x1E escolhe variante; som 0x4C
-0x0802B184,Fight_DispatchOnSubstateAA_BE_SelectTargets,func_thumb,,[HN4] BE 0x05; marca oponentes por +0x91 (0x64/0x6A); nenhum -> fim; confirmado
+0x0802B184,Fight_BE_SelectTargets,func_thumb,,[HN4] BE 0x05; marca oponentes por +0x91 (0x64/0x6A); nenhum -> fim; confirmado (antes: Fight_DispatchOnSubstateAA_BE_SelectTargets)
 0x0802B1DA,Fight_DispatchOnSubstateAA_BE_SelectTargets,label,,[TA] B+0xA8==0x1E marca alvo perna 'd' (+0xD2=1) senao 'j' (+0xD2=2)
 0x0802B258,Fight_DispatchOnSubstateAA_BE_SetupTargetBeams,func_thumb,,[HN4] BE 0x07; objetos do ativo ate cada alvo; provavel
 0x0802B388,Fight_DispatchOnSubstateAA_BE_StepBeamsToTargets,func_thumb,,[HN4] BE 0x08; Fight_StepSlotTowardTarget ate todos chegarem; confirmado
