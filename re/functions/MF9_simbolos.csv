@@ -1,0 +1,8 @@
+0x08026FF8,Fight_DispatchOnSubstateAA_AR_00_DamageRandomPartsOfOpponentTeam,func_thumb,"MF9 (decompile): zera fi+0xD2..D4 e fi+0xD6..DB; grava peca sorteada (Fight_RollStatusRowRandomEntry) | quebra<<7 em fi+0xD2+k para adversarios vivos. Roteiro 0x50 = id 0x01"
+0x0802B184,Fight_DispatchOnSubstateAA_BE_SelectTargets,func_thumb,"MF9 (decompile): grava fi+0xD2+k = 1 (id 0x1E, perna 0x64) ou 2 (demais, perna 0x6A) nos adversarios que passam; nao zera os outros"
+0x0802B4D8,Fight_DispatchOnSubstateAA_BE_RollRandomStatus,func_thumb,"MF9 (decompile): por alvo com fi+0xD2+k != 0, r = randbyte()&7 -> 0 Bug 0D, 1 Wave 11, 2 Fire 13, 3 Freeze 10 (protegido vira 5), 4 Impair 2B, 5 Confusion 2C, 6 2E, 7 2F. Grava fi+0xD6+2k. Rotulo 0x0802B550 = checagem de protecao (nao e funcao)"
+0x0802B5AC,Fight_DispatchOnSubstateAA_BE_ApplyRandomStatus,func_thumb,"MF9: aplicacao do status sorteado por BE (ref.; corpo nao lido nesta rodada)"
+0x08036D64,Fight_IsPartStatusProtected,func_thumb,"MF9 (RV9/SS2, confirmado): bit de protecao por codigo de status 0D..0E->01, 0F..10->08, 11..12->02, 13..14->04 em bot+0xCF"
+0x08036CCC,Fight_ClampRepairToMissingArmor,func_thumb,"MF9: nome conflitante (R2 diz FightPreview_SplitCountByCapacity). Helper dos SplitCount para 0x16/0x1A/0x1C: aberto"
+0x08028130,Fight_DispatchOnSubstateAA_AT_ApplyTeamSupportBonus,func_thumb,"MF9: id 0x0A (op 0x52), registro de suporte fi+0x2A+8k (TR.md). Nao portado"
+0x080155A8,Fight_TrySelectMedaforceAction,func_thumb,"MF9 (MD.md): le bot+5 (nivel) em 10/30/60 para os slots 0/1/2"

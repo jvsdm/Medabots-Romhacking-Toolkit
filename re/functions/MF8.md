@@ -53,3 +53,23 @@ antes) e dos roteiros da ROM. Os itens marcados "Ghidra pendente" precisam de de
 
 `lua D:/claude-brain/Medabots/pc/game/tests/test_medaforce.lua` → `OK 77` (era 71). Casos novos: bloco 8 (0x0B, 0x15, 0x1D).
 Sem emulador: nenhum efeito foi visto no jogo.
+
+## 5. MF9: fechamento parcial com Ghidra (2026-10-18)
+
+Ghidra MCP, decompile único por função (sem salvar). Porte: `pc/game/src/fight/medaforce.lua` (`M.protectBit`,
+`M.BE_STATUS`, `M.rollBEStatus`; BE 1E/20 passa a sortear em `statuses`). Teste: `OK 89`.
+
+Correção de endereço: `0x0802B550` NÃO é função; é um rótulo interno de `Fight_DispatchOnSubstateAA_BE_RollRandomStatus`
+0x0802B4D8 (decompile). A "marca em bot+0xD2" da tarefa é **fi+0xD2+k** (campo da luta, `targetPartFlags`), não do bot.
+
+| item | situação | evidência |
+|------|----------|-----------|
+| (1) quem grava fi+0xD2 | **parcial**. AR_00 `0x08026FF8` (roteiro 0x50 = id 0x01) zera fi+0xD2..D4 e fi+0xD6..DB e, para cada adversário vivo com cabeça, grava `Fight_RollStatusRowRandomEntry(alvo)` (peça) \| (quebra<<7). BE_SelectTargets `0x0802B184` grava 1 (id 0x1E, perna 0x64) ou 2 (demais, perna 0x6A) sem zerar os outros. Nenhuma escrita vem do roteiro 0x2C, 0x27, 0x29, 0x2A ou 0x2F. | decompile AR_00 e BE_SelectTargets |
+| (1b) marcas de 0x2C/0x27/0x29/0x2A/0x2F | **ABERTO**. Sobra da marca de um AR_00 ou BE anterior na mesma ação? Não confirmado. `Fight_RollStatusRowRandomEntry` não lido. | — |
+| (2) rolagem de 0x1E/0x20 | **fechado** (rolagem). BE_RollRandomStatus `0x0802B4D8`: por alvo marcado (k=0..2), `r = randbyte() & 7`: 0 Bug 0x0D, 1 Wave 0x11, 2 Fire 0x13, 3 Freeze 0x10; se o alvo tem o bit de proteção, vira 5. 4 Impair 0x2B (direto), 5 Confusion 0x2C, 6 0x2E, 7 0x2F. Protecão = `Fight_IsPartStatusProtected` (0D..0E→01, 0F..10→08, 11..12→02, 13..14→04). **Aberto**: a aplicação (`BE_ApplyRandomStatus` `0x0802B5AC`) não foi decompilada; o porte chama `status.setPending` como AV, e o 0x2B direto não é aplicado. | decompile 0x0802B4D8; RV9/SS2 |
+| (3) SplitCount* para 0x16/0x1A/0x1C | **não fechado**. `0x08036CCC` tem dois nomes nos docs: `FightPreview_SplitCountByCapacity` (R2, prévia, grava +0xC8/+0xCC) e `Fight_ClampRepairToMissingArmor` (HA4/HN1). SplitCountByFree (BA_08, 0x16) e SplitCountByMax (AZ, 0x1C) não localizados nos docs. Fica para a próxima rodada. | R2.md, SUP.md §4 |
+| (4) id 0x00 e 0x0A | **não fechado**. 0x00 (06 08 1A 1B 1C 40 20 45 21) depende de ler os handlers de AS1 (ops 0x06..0x21), sem decompile. 0x0A (op 0x52) = `Fight_DispatchOnSubstateAA_AT_ApplyTeamSupportBonus` 0x08028130 (TR.md), registro fi+0x2A+8k; não portado. | TR.md |
+| (5) bot+5 é o nível (0x2E) | **fechado (por doc)**. `Fight_TrySelectMedaforceAction` 0x080155A8 lê bot+5 (≥10/30/60), e `Level_ComputeReferenceFromSlots` grava bot+5 (MD.md). O porte já usa `bot.level`. Não decompilado de novo nesta rodada. Para o 0x2E (BO, bot+5 += EC) continua não portado: escrever no nível é efeito grande. | MD.md, MD2.md |
+
+Pendências que o porte mantém: o dano do id 0x01 usa `rng % 3` para a peça; o correto é `Fight_RollStatusRowRandomEntry`
+(item 1b). `markBE` usa `headOk` (parts[0].hp > 0); o decompile testa `parts[0].currentArmor != 0`. Ver se são iguais.
