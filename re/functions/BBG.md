@@ -64,8 +64,8 @@ Nomes pelo que se vê na imagem (conferido na luta, LÖVE headless, `--bgBank K`
 | 1 | quase branco/amarelo (brilho ou transição; a conferir) |
 | 2 | céu com nuvens |
 | 3 | costa rochosa / penhasco com água |
-| 4 | **Floresta**: campo verde, árvores ao fundo, flores (é o banco da área 4 de gMapEncounters) |
-| 5 | cachoeira / água com pedras |
+| 4 | campo/planície: grama verde, árvores só ao fundo, flores (área 4: mapas 0 cidade e 1 pátio da escola) |
+| 5 | **Forest**: troncos e mato azulado (área 5: interior da escola, mapas 2..15; usuário confirmou "Forest" na escola) |
 | 6 | rua (asfalto, prédios, ônibus) |
 | 7 | interior (piso de tacos, paredes, mobília) |
 | 8 | praia (areia, pedras, mar) |
@@ -98,3 +98,9 @@ Teste: banco 4 e banco 6 dão imagens diferentes na luta (diferença em toda a t
 3. Confirmar o mapa da escola (1, 46 ou 173?) lendo 0x03005FDE em rec_7 sem janela do mGBA.
 4. Tiles de HUD x cenário na BG3 (aviso da HUD): o banco cobre só o cenário; HUD vem de outro carregamento.
 5. Rolagem (scroll) da BG não medida; o recorte de campo usa o canto sup. esq. (0,0).
+
+## Correção (2026-10-18, coordenador)
+- O nome "Floresta" do banco 4 estava errado: a floresta de troncos é o **banco 5**. Em battle_tables.map_encounter os
+  mapas 2..30 têm área 5 e os mapas 0/1 área 4. O interior da escola (mapas 2..15) cai no banco 5 = Forest, o que bate
+  com o usuário. O mapa 1 é o pátio (pista de corrida), não o interior.
+- Luta de história no porte: GUESS = área do mapa atual (mesmo byte do encontro), em world.lua host.battle.
