@@ -1,7 +1,7 @@
 # BBG - Fundos (cenário) da Robattle: tabela por id de banco
 
-Status: PARCIAL (2026-10-18). Confirmado: formato da tabela, quem a lê, de onde vem o id. Aberto: nomes por id, quantidade
-exata de bancos, id usado nas batalhas de história, mapa da escola, tiles de HUD x cenário na tela.
+Status: PARCIAL (2026-10-18). Confirmado: formato da tabela, quem a lê, de onde vem o id, mapas 0..10 decodificados e
+vistos na luta (LÖVE headless). Aberto: id nas batalhas de história, id do mapa da escola, tiles de HUD x cenário na BG3.
 
 ## Quem escolhe o id
 - `fight_information+0x38` (0x03001838, bloco 0x03001800) é o id de banco do cenário.
@@ -49,17 +49,36 @@ exata de bancos, id usado nas batalhas de história, mapa da escola, tiles de HU
   | 13 | 0x08552E6C | 0x0855404C | 0x08542188 | 0x08551384 |
   | 14 | 0x08556800 | 0x08552FF8 | 0x08554484 | 0x0854407C |
   | 15 | 0x085516B0 | 0x08556900 | 0x085532B0 | 0x085548E0 |
-  Tabela termina depois de 15 (não medido até onde vai). Lida direto da ROM original (EU), não confirmada em tempo de execução.
+  **Válidos: 0..10.** Nos bancos 11..15 o bloco de mapa (+8/+12) não decodifica como Malias de 4096 B: não são fundos
+  deste formato (ver também 0x08553ECB0 etc.). Lida direto da ROM original (EU).
 - Banco 4 bate com o extrator de corte (`extract_battle_bg.py`, spec "cut": tiles 0x52A2E8, pal 0x53E5B0, mapas
   0x53C3A4 e 0x5388A4). Confirmado pela tabela; o R5 já tinha visto esses endereços no f1417/f1423 da rec_2.
 - Mapas de banco 0..10 (encontro aleatório) ainda não batem com o extrator de campo (tiles 0x545CD4, pal 0x556A00):
   esses endereços não aparecem na tabela acima. Conferir antes de usar o campo.
 
+## Mapas dos bancos 0..10 (cut, 512x160 gerado por pc/extract/extract_battle_bg.py; 8 bancos de paleta x 16 cores)
+Nomes pelo que se vê na imagem (conferido na luta, LÖVE headless, `--bgBank K`):
+| k | cena |
+|---|---|
+| 0 | deserto (areia, mesas de rocha) |
+| 1 | quase branco/amarelo (brilho ou transição; a conferir) |
+| 2 | céu com nuvens |
+| 3 | costa rochosa / penhasco com água |
+| 4 | **Floresta**: campo verde, árvores ao fundo, flores (é o banco da área 4 de gMapEncounters) |
+| 5 | cachoeira / água com pedras |
+| 6 | rua (asfalto, prédios, ônibus) |
+| 7 | interior (piso de tacos, paredes, mobília) |
+| 8 | praia (areia, pedras, mar) |
+| 9 | mar (degradê azul, sem objetos) |
+| 10 | base/laboratório metálico |
+Teste: banco 4 e banco 6 dão imagens diferentes na luta (diferença em toda a tela).
+
 ## Nomes (Forest, City...) e id da escola
 - Nomes de terreno (Forest, Street, Inside, Plains, Valley, Haunted House) vêm só do GameFAQs em `ref/gamefaqs/`
   ("Forest (inside the school)"). Não há nome de cenário na ROM achado. NÃO mapeado a banco ainda.
-- Mapa da escola: não identificado. `rec_7/start.ss0` é "mapa livre, escola" (A1_motion_kinds.md); o id de mapa ficaria
-  em 0x03005FDE (gCurrentMapId), mas não foi lido.
+- Mapas com encontro aleatório e área 4 (= banco 4, Floresta): **1, 46, 173** (battle_tables.map_encounter). Qual é a
+  escola ainda não confirmado: o layer0 do mapa 1 sai quase vazio. Falta ler gCurrentMapId (0x03005FDE) em rec_7 (escola).
+  Replay headless do tools/replay_record.py abre janela do mGBA: não usado (o usuário joga no mGBA).
 
 ## Tiles de HUD x cenário (aviso do coordenador)
 - Na luta, BG3 (tela 0xD800, char 0x8000) mistura cenário (grama/fundo) com tiles de HUD (molduras, ícones, barras).
@@ -67,8 +86,15 @@ exata de bancos, id usado nas batalhas de história, mapa da escola, tiles de HU
   (ex.: `Fight_InitBotPartPanel`, `Overlay_CopyBufferAndLayoutText`). Quais linhas/tiles da BG3 são cenário ainda não medido:
   o porte deve desenhar o cenário e deixar o HUD por cima (battle.drawHud depois do fundo).
 
+## Porte (pc/game)
+- Encontro aleatório: `encState.area` (= +1 de gMapEncounters, copiado em `encounter.enterMap`) vai como `bgBank` em
+  `switchScene("battle", ...)` (world.lua, randomBattle). `battle.lua` configure carrega `battle/bg/<k>_field.png` e
+  `_cut.png`; sem banco (luta de história) fica o desenho à mão. Teste: `pc/game/tests/test_bgbank.lua` OK.
+- Cache: `pc/cache/battle/bg/<k>_{field,cut}.png` (bancos 0..10), gerado por extract_battle_bg.py; registrado em extract_all.py.
+
 ## Abertos
-1. Escritor de +0x38 nas batalhas de história (watch 0x03001838 no replay).
+1. Escritor de +0x38 nas batalhas de história (watch 0x03001838 no replay). Hoje a luta de história fica sem fundo ROM.
 2. Quem põe 0x03006F84 (scene_init_b).
-3. Nomes e mapeamento id de banco -> terreno; id da escola (gCurrentMapId).
-4. Fim da tabela (quantos bancos) e tiles de HUD x cenário na BG3.
+3. Confirmar o mapa da escola (1, 46 ou 173?) lendo 0x03005FDE em rec_7 sem janela do mGBA.
+4. Tiles de HUD x cenário na BG3 (aviso da HUD): o banco cobre só o cenário; HUD vem de outro carregamento.
+5. Rolagem (scroll) da BG não medida; o recorte de campo usa o canto sup. esq. (0,0).
