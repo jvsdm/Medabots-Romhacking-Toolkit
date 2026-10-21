@@ -104,3 +104,38 @@ Teste: banco 4 e banco 6 dão imagens diferentes na luta (diferença em toda a t
   mapas 2..30 têm área 5 e os mapas 0/1 área 4. O interior da escola (mapas 2..15) cai no banco 5 = Forest, o que bate
   com o usuário. O mapa 1 é o pátio (pista de corrida), não o interior.
 - Luta de história no porte: GUESS = área do mapa atual (mesmo byte do encontro), em world.lua host.battle.
+
+## Escritor de +0x38 nas lutas de história (2026-10-21, replay + Ghidra) — CONFIRMADO
+- `Fight_CopyEncounterTemplateEntry` 0x08011DE4 (chamada por `Fight_BeginEncounterTemplateSelection` 0x08011DC0, que é
+  chamada por `Fight_ResetTemplateAndPalette` 0x08010540): lê `gMapEncounters[gCurrentMapId]` (gCurrentMapId = E+0x7FE =
+  0x03005FDE) e grava o byte +1 em `fight+0x38`. Esse caminho roda ANTES do sorteio/escolha de template, então vale
+  para toda luta que passa por ele.
+- Medido: rec_2 (Ikki x Erika, história, savestate sem luta): watch LEN 4 em 0x03001838 mostra escrita no quadro 122 por
+  PC 0x08011E08. Dump no quadro 130: mapa 0x03005FDE = 0, fight+0x38 = 0x04. `gMapEncounters[0]` = flag 0, área 4 (mapa
+  SEM encontro aleatório, mas área 4). Conclusão: a luta de história usa a área do mapa atual, mesmo sem encontro.
+- rec_7 (LEN 4): quadro 365 = mesma escrita (PC 0x08011E08), valor 0x04. Não é luta história no mapa 0 de origem, só
+  confirma o caminho comum.
+- Escritas por outros caminhos (não usados por essas lutas):
+  - `Link_RollTableEntryAndAdvance` 0x0803D730 (WRITE): tabela do link (já conhecida).
+  - `scene_init_c` (escrita em 0x08069552; chamada por `Scene_EnterSetupB`, que tem a chamada em 0x08069196; sem chamador por xref) e
+    `Scene_LoadBankAAndResetFx` 0x08069490 (chamada em 0x08068E20 por `Scene_EnterSetupA`, sem chamador por xref): leem o banco de
+    RAM 0x03006F84 (literal 0x08069648) e gravam +0x38, depois `GfxBankB/A_LoadTilesAndPalette`.
+  - 0x03006F84 é escrito SÓ por `Hud_UpdateCursorIdx` (escritas em 0x0806A03E e 0x0806A062; Ghidra: WRITE em 0x0806A03E e 0x0806A062). Dois ramos:
+    (a) se a entrada `0x08485C00[*0x03006FDC]` (registro de 12 B) tem byte0 == 0, grava `(0x083F7D80[*0x03001780]) % 11`
+    (valor 0..10); (b) senão grava o byte +1 do registro. Quem chama `Hud_UpdateCursorIdx` (cursor de tela de
+    estado, `dispatch_scene_state` 0x0806A362 via tabela) ainda NÃO confirmado. Não é o caminho de luta medido acima.
+- Tabela de registros 0x08485C00 (12 B, 12 entradas): NÃO identificada (não é tabela de bancos de luta). Não usar sem
+  achar o uso.
+- Watch de 1 byte não dispara (mGBA 0.11): usar `--watch 0x03001838:4` (BT7).
+
+## Porte (2026-10-21)
+- `encounter.enterMap` já copia `area` de `battle_tables.map_encounter[mapa]` para TODO mapa (inclusive flag 0), e
+  `world.lua` usa `encState.area` nas lutas de história. Isso bate com a regra medida acima, e o chute virou regra.
+- Teste novo em `pc/game/tests/test_bgbank.lua`: mapa 0 (flag 0) -> bgBank 4 com enabled 0; toda área de mapa em 0..10.
+  `lua pc/game/tests/test_bgbank.lua` -> OK.
+
+## Abertos (atualizado 2026-10-21)
+- Tabela luta de história -> banco para TODAS as lutas das gravações live (só rec_2 e rec_7 medidas). Falta savestate
+  antes de cada luta; as gravações `live/*.log` não têm savestate (só teclas), então não dá para repetir com watch.
+- Quem chama `Hud_UpdateCursorIdx` e se alguma luta passa por `Scene_EnterSetupA/B` (0x03006F84).
+- Rolagem do fundo (scroll) e HUD x cenário: não medidos nesta rodada.
