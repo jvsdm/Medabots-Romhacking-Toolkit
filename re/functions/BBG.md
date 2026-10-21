@@ -149,3 +149,12 @@ Teste: banco 4 e banco 6 dão imagens diferentes na luta (diferença em toda a t
 - Abertura/fim da luta: só a BG3 anda (-1/4 q). Tela do time "MEDABOTS": BG3 x,y +1 a cada 2 quadros.
 - Extrator: `pc/extract/extract_battle_bg.py` grava também `<k>_bg2.png` e `<k>_bg3.png` (512x256). Conferido por
   pixel: 95% (f1470) e 92% (f1640) do print, resto = sprite. Detalhe: `pc/research/BINTRO.md` (BSCN).
+
+## Fundo do campo (tela da HUD): GfxBankB 0x08043BE0 (BSCN2, 2026-10-21, CONFIRMADO)
+- Tabela 0x083B2628 (literal 0x08043C64), 20 B por banco: +0 tiles Malias (-> 0x06008000), +4 bloco de 1792 B (uso não
+  visto), +8 paleta (0x100 B, cpufastset 0x40 palavras; com param2 != 0 vai para um buffer), +12 mapa BG2 e +16 mapa BG3
+  (`LoadTilesWithMalias` pelo BGxCNT 0x0400000C/0x0400000E; 32x32 + 16 B de cabeçalho). Bancos 0..10 iguais aos do corte.
+- rec_2 (banco 4): f374 tiles 0x08545CD4, f380 mapas 0x08553374/0x08554D1C, f382 0x08488200 por cima da BG3 (+0x200).
+  Mapa BG2 1024/1024 e BG3 980/1024 entradas iguais à VRAM de f1000; paleta = ROM 0x08556A00.
+- Escurecer do campo no op 0x30 (despachante Z, passos 06/09): `Palette_FadeRowsToColorA` 0x0803F684 com cor 0x1084,
+  c' = ((32-k)c + k*0x1084) >> 5, k 0..16 um por quadro (rec_2 f926..941 e f1010..1025).
