@@ -139,3 +139,13 @@ Teste: banco 4 e banco 6 dão imagens diferentes na luta (diferença em toda a t
   antes de cada luta; as gravações `live/*.log` não têm savestate (só teclas), então não dá para repetir com watch.
 - Quem chama `Hud_UpdateCursorIdx` e se alguma luta passa por `Scene_EnterSetupA/B` (0x03006F84).
 - Rolagem do fundo (scroll) e HUD x cenário: não medidos nesta rodada.
+
+## Rolagem das camadas na luta (BSCN, 2026-10-21, replay rec_2 + Ghidra, CONFIRMADO)
+- `VBlankIrqHandler` 0x0800065C escreve BGxHOFS/VOFS = base 0x03002C2C (x,y) + sombra por camada: BG0 0x03005000,
+  BG1 0x03004C30, BG2 0x0300057C, BG3 0x03001C04 (pula se bit0 de 0x03000434). Literais em 0x08000760..0x0800077C.
+- Campo (HUD): tudo 0. Corte: BG2 = mapA (frente) e BG3 = mapB (fundo) começam em 0 (atacante do jogador) ou 272
+  (atacante inimigo); BG3 anda -1 px a cada 4 quadros; na panorâmica a BG2 anda 4 px/quadro até o outro lado e a
+  BG3 a metade (rec_2 banco 4; o deslocamento por banco vem de 0x083AFC2C, ver CUTCAM.md).
+- Abertura/fim da luta: só a BG3 anda (-1/4 q). Tela do time "MEDABOTS": BG3 x,y +1 a cada 2 quadros.
+- Extrator: `pc/extract/extract_battle_bg.py` grava também `<k>_bg2.png` e `<k>_bg3.png` (512x256). Conferido por
+  pixel: 95% (f1470) e 92% (f1640) do print, resto = sprite. Detalhe: `pc/research/BINTRO.md` (BSCN).
