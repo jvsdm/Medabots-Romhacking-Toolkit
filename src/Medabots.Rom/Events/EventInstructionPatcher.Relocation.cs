@@ -7,7 +7,7 @@ public sealed partial class EventInstructionPatcher
 {
     private IReadOnlyList<RomPatchAction> BuildRelocatedEventActions(RomFile romFile, MedabotsRomTextProfile profile, short eventId, byte[] serializedScript, string instructionName, FreeSpaceAllocator allocator)
     {
-        var destination = ReserveEventSpace(romFile, eventId, serializedScript.Length, allocator);
+        var destination = ReserveEventSpace(profile, eventId, serializedScript.Length, allocator);
         var actions = new List<RomPatchAction>
         {
             RomPatchAction.Create(destination, serializedScript, $"Rewrite event {eventId} for {instructionName}")
@@ -37,9 +37,10 @@ public sealed partial class EventInstructionPatcher
         return ([(byte)(storedAddress & 0xFF), (byte)((storedAddress >> 8) & 0xFF)], (byte)bank);
     }
 
-    private int ReserveEventSpace(RomFile romFile, short eventId, int requiredLength, FreeSpaceAllocator allocator)
+    private int ReserveEventSpace(MedabotsRomTextProfile profile, short eventId, int requiredLength, FreeSpaceAllocator allocator)
     {
-        if (_eventAllocations.TryGetValue(eventId, out var allocation) && requiredLength <= allocation.Length)
+        if (_eventAllocations.TryGetValue(eventId, out var allocation) && requiredLength <= allocation.Length &&
+            EventDatabaseRelocator.Reaches(profile.EventTableOffset, allocation.Offset))
         {
             return allocation.Offset;
         }

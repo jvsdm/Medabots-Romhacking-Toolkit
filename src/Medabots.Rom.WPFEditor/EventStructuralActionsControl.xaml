@@ -4,23 +4,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
-    <WrapPanel Margin="0,10,0,0">
-        <Button Margin="0,0,8,8" Click="OnInsertNopBeforeClicked">Insert Nop Before</Button>
-        <Button Margin="0,0,8,8" Click="OnInsertNopAfterClicked">Insert Nop After</Button>
-        <TextBlock Margin="0,4,0,0"
-                   VerticalAlignment="Center"
-                   Foreground="#FF6B7280"
-                   Text="Right-click for more actions" />
-        <WrapPanel.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Insert Selected Operation Before" Click="OnInsertSelectedOperationBeforeClicked" />
-                <MenuItem Header="Insert Selected Operation After" Click="OnInsertSelectedOperationAfterClicked" />
-                <Separator />
-                <MenuItem Header="Move Up" Click="OnMoveUpClicked" />
-                <MenuItem Header="Move Down" Click="OnMoveDownClicked" />
-                <Separator />
-                <MenuItem Header="Delete" Click="OnDeleteClicked" />
-            </ContextMenu>
-        </WrapPanel.ContextMenu>
-    </WrapPanel>
+    <!-- every action is a visible button (they used to hide in a right-click menu) -->
+    <UserControl.Resources>
+        <Style x:Key="ActionButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="0,0,4,4" />
+            <Setter Property="Padding" Value="6,1" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="0,6,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Margin="0,0,6,4" VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource Theme.TextMuted}" Text="Nop" />
+        <WrapPanel Grid.Row="0" Grid.Column="1">
+            <Button Style="{StaticResource ActionButton}" Click="OnInsertNopBeforeClicked" Content="before" ToolTip="Insert an empty action (Nop) before the selected one" />
+            <Button Style="{StaticResource ActionButton}" Click="OnInsertNopAfterClicked" Content="after" ToolTip="Insert an empty action (Nop) after the selected one" />
+        </WrapPanel>
+        <TextBlock Grid.Row="1" Margin="0,0,6,4" VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource Theme.TextMuted}" Text="Picked op" />
+        <WrapPanel Grid.Row="1" Grid.Column="1">
+            <Button Style="{StaticResource ActionButton}" Click="OnInsertSelectedOperationBeforeClicked" Content="before" ToolTip="Insert the operation picked in the list above, before the selected action" />
+            <Button Style="{StaticResource ActionButton}" Click="OnInsertSelectedOperationAfterClicked" Content="after" ToolTip="Insert the operation picked in the list above, after the selected action" />
+        </WrapPanel>
+        <TextBlock Grid.Row="2" Margin="0,0,6,4" VerticalAlignment="Center" FontSize="11" Foreground="{DynamicResource Theme.TextMuted}" Text="Action" />
+        <WrapPanel Grid.Row="2" Grid.Column="1">
+            <Button Style="{StaticResource ActionButton}" Click="OnMoveUpClicked" Content="&#x25B2; up" ToolTip="Move the selected action up" />
+            <Button Style="{StaticResource ActionButton}" Click="OnMoveDownClicked" Content="&#x25BC; down" ToolTip="Move the selected action down" />
+            <Button Style="{StaticResource ActionButton}" Click="OnDeleteClicked" Content="delete" ToolTip="Delete the selected action" />
+        </WrapPanel>
+    </Grid>
 </UserControl>

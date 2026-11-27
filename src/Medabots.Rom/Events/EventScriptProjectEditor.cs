@@ -127,7 +127,7 @@ public sealed class EventScriptProjectEditor
         var overlayRepository = new MapOverlayRepository();
         var referencedEventIds = new HashSet<short>();
 
-        for (var mapId = 0; mapId < MedabotsRomSchema.MapCount; mapId++)
+        for (var mapId = 0; mapId < romFile.Layout.MapCount; mapId++)
         {
             var overlay = overlayRepository.ReadMap(romFile, mapId);
             foreach (var spawn in overlay.EntitySpawns)

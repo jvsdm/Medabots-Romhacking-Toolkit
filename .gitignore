@@ -7,4 +7,5 @@ docs/
 python/
 *.gba
 *.sav
-.tmp*
+.tmp*TestResults/
+__pycache__/

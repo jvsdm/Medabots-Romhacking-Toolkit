@@ -11,8 +11,8 @@ public sealed partial class ImageAssetRepository
         ArgumentOutOfRangeException.ThrowIfNegative(characterId);
         ArgumentOutOfRangeException.ThrowIfNegative(portraitIndex);
 
-        var imagePointerOffset = PortraitPointerTableOffset + ((characterId * PortraitsPerCharacter) + portraitIndex) * sizeof(uint);
-        var palettePointerOffset = PortraitPaletteTableOffset + (characterId * sizeof(uint));
+        var imagePointerOffset = romFile.Layout.PortraitPointerTableOffset + ((characterId * PortraitsPerCharacter) + portraitIndex) * sizeof(uint);
+        var palettePointerOffset = romFile.Layout.PortraitPaletteTableOffset + (characterId * sizeof(uint));
         var imageOffset = ReadRequiredPointer(romFile, imagePointerOffset);
         var paletteOffset = ReadRequiredPointer(romFile, palettePointerOffset);
 
@@ -38,8 +38,8 @@ public sealed partial class ImageAssetRepository
         ArgumentNullException.ThrowIfNull(romFile);
         ArgumentOutOfRangeException.ThrowIfNegative(spriteId);
 
-        var imagePointerOffset = SpritePointerTableOffset + (spriteId * sizeof(uint));
-        var palettePointerOffset = SpritePaletteTableOffset + (spriteId * sizeof(uint));
+        var imagePointerOffset = romFile.Layout.SpritePointerTableOffset + (spriteId * sizeof(uint));
+        var palettePointerOffset = romFile.Layout.SpritePaletteTableOffset + (spriteId * sizeof(uint));
         var imageOffset = ReadRequiredPointer(romFile, imagePointerOffset);
         var paletteOffset = ReadRequiredPointer(romFile, palettePointerOffset);
 
@@ -62,11 +62,11 @@ public sealed partial class ImageAssetRepository
     {
         ArgumentNullException.ThrowIfNull(romFile);
         ArgumentOutOfRangeException.ThrowIfNegative(medabotId);
-        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(medabotId, CompositeBattleSpritePartCount);
+        ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(medabotId, romFile.Layout.BotCount);
         ArgumentOutOfRangeException.ThrowIfNegative(componentIndex);
         ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(componentIndex, CompositeBattleSpritePointersPerPart);
 
-        var imagePointerOffset = CompositeBattleSpritePointerTableOffset +
+        var imagePointerOffset = romFile.Layout.CompositeBattleSpritePointerTableOffset +
                                  ((medabotId * CompositeBattleSpritePointersPerPart) + componentIndex) * sizeof(uint);
         var imageOffset = ReadRequiredPointer(romFile, imagePointerOffset);
         var compressed = Malias2.Decompress(romFile.Data, imageOffset)
@@ -76,7 +76,7 @@ public sealed partial class ImageAssetRepository
         var tileWidth = GuessCompositeComponentTileWidth(componentIndex, tileCount);
         var paletteFamily = ReadCompositePaletteFamily(romFile, medabotId);
         var paletteBank = (byte)(paletteFamily + 4);
-        var paletteOffset = ResolvePartSelectionPaletteOffset(paletteFamily);
+        var paletteOffset = ResolvePartSelectionPaletteOffset(romFile, paletteFamily);
         var palette = romFile.ReadBytes(paletteOffset, PaletteSize).ToArray();
 
         return new BattleCompositeSpriteComponentAsset(
@@ -84,7 +84,7 @@ public sealed partial class ImageAssetRepository
             componentIndex,
             imagePointerOffset,
             imageOffset,
-            CompositeBattleSpritePaletteFamilyTableOffset + medabotId,
+            romFile.Layout.CompositeBattleSpritePaletteFamilyTableOffset + medabotId,
             paletteOffset,
             paletteFamily,
             0,
@@ -95,7 +95,7 @@ public sealed partial class ImageAssetRepository
     public byte[] ReadBattleCompositePaletteBytesForFamily(RomFile romFile, byte family)
     {
         ArgumentNullException.ThrowIfNull(romFile);
-        return romFile.ReadBytes(ResolvePartSelectionPaletteOffset(family), PaletteSize).ToArray();
+        return romFile.ReadBytes(ResolvePartSelectionPaletteOffset(romFile, family), PaletteSize).ToArray();
     }
 
     public SharedSpriteSheetAsset ReadSharedPartSpriteSheet(RomFile romFile, string key)
@@ -105,14 +105,14 @@ public sealed partial class ImageAssetRepository
 
         var (name, imageOffset, tileWidth) = key switch
         {
-            "part-screen-main" => ("Shared Part Screen Tile Sheet", MedabotsRomSchema.SharedPartScreenTileSheetOffset, MedabotsRomSchema.SharedPartScreenTileSheetTileWidth),
-            "part-detail-a" => ("Part Detail Tile Sheet A", MedabotsRomSchema.SharedPartDetailTileSheetAOffset, 8),
-            "part-detail-b" => ("Part Detail Tile Sheet B", MedabotsRomSchema.SharedPartDetailTileSheetBOffset, 8),
-            "part-detail-c" => ("Part Detail Tile Sheet C", MedabotsRomSchema.SharedPartDetailTileSheetCOffset, 4),
-            "part-detail-d" => ("Part Detail Tile Sheet D", MedabotsRomSchema.SharedPartDetailTileSheetDOffset, 4),
-            "part-detail-e" => ("Part Detail Tile Sheet E", MedabotsRomSchema.SharedPartDetailTileSheetEOffset, 8),
-            "part-detail-f" => ("Part Detail Tile Sheet F", MedabotsRomSchema.SharedPartDetailTileSheetFOffset, 4),
-            "part-detail-g" => ("Part Detail Tile Sheet G", MedabotsRomSchema.SharedPartDetailTileSheetGOffset, 4),
+            "part-screen-main" => ("Shared Part Screen Tile Sheet", romFile.Layout.SharedPartScreenTileSheetOffset, MedabotsRomSchema.SharedPartScreenTileSheetTileWidth),
+            "part-detail-a" => ("Part Detail Tile Sheet A", romFile.Layout.SharedPartDetailTileSheetAOffset, 8),
+            "part-detail-b" => ("Part Detail Tile Sheet B", romFile.Layout.SharedPartDetailTileSheetBOffset, 8),
+            "part-detail-c" => ("Part Detail Tile Sheet C", romFile.Layout.SharedPartDetailTileSheetCOffset, 4),
+            "part-detail-d" => ("Part Detail Tile Sheet D", romFile.Layout.SharedPartDetailTileSheetDOffset, 4),
+            "part-detail-e" => ("Part Detail Tile Sheet E", romFile.Layout.SharedPartDetailTileSheetEOffset, 8),
+            "part-detail-f" => ("Part Detail Tile Sheet F", romFile.Layout.SharedPartDetailTileSheetFOffset, 4),
+            "part-detail-g" => ("Part Detail Tile Sheet G", romFile.Layout.SharedPartDetailTileSheetGOffset, 4),
             _ => throw new InvalidOperationException($"Unsupported shared sprite sheet key '{key}'.")
         };
 
@@ -146,14 +146,14 @@ public sealed partial class ImageAssetRepository
 
     private static byte ReadCompositePaletteFamily(RomFile romFile, int medabotId)
     {
-        var familyOffset = CompositeBattleSpritePaletteFamilyTableOffset + medabotId;
+        var familyOffset = romFile.Layout.CompositeBattleSpritePaletteFamilyTableOffset + medabotId;
         if (familyOffset < 0 || familyOffset >= romFile.Length)
         {
             throw new InvalidDataException($"Composite battle sprite palette family table offset 0x{familyOffset:X} is out of range.");
         }
 
         var family = romFile.Data[familyOffset];
-        if (CompositeBattleSpritePaletteDataOffset + ((family + 4) * PaletteSize) + PaletteSize > romFile.Length)
+        if (romFile.Layout.CompositeBattleSpritePaletteDataOffset + ((family + 4) * PaletteSize) + PaletteSize > romFile.Length)
         {
             throw new InvalidDataException($"Composite battle sprite palette family {family} for medabot {medabotId} is out of range.");
         }
@@ -161,10 +161,10 @@ public sealed partial class ImageAssetRepository
         return family;
     }
 
-    private static int ResolvePartSelectionPaletteOffset(byte family) =>
+    private static int ResolvePartSelectionPaletteOffset(RomFile romFile, byte family) =>
         family >= 8
-            ? CompositeBattleSpritePaletteDataOffset + (family * PaletteSize)
-            : PartSelectionComponentPaletteSetOffset + (family * PaletteSize);
+            ? romFile.Layout.CompositeBattleSpritePaletteDataOffset + (family * PaletteSize)
+            : romFile.Layout.PartSelectionComponentPaletteSetOffset + (family * PaletteSize);
 
     private static byte[] BuildPlaceholderCompositePalette()
     {

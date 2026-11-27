@@ -8,14 +8,14 @@ public sealed class MapOverlayRepository
     {
         ArgumentNullException.ThrowIfNull(romFile);
         ArgumentOutOfRangeException.ThrowIfNegative(mapId);
-        if (mapId >= MedabotsRomSchema.MapCount)
+        if (mapId >= romFile.Layout.MapCount)
         {
             throw new ArgumentOutOfRangeException(nameof(mapId));
         }
 
-        var warpPointerOffset = MedabotsRomSchema.MapWarpPointerTableOffset + (mapId * sizeof(uint));
+        var warpPointerOffset = romFile.Layout.MapWarpPointerTableOffset + (mapId * sizeof(uint));
         var warpDataOffset = ReadPointerOffset(romFile, warpPointerOffset);
-        var entityPointerOffset = MedabotsRomSchema.MapEntitySpawnPointerTableOffset + (mapId * sizeof(uint));
+        var entityPointerOffset = romFile.Layout.MapEntitySpawnPointerTableOffset + (mapId * sizeof(uint));
         var entityDataOffset = ReadPointerOffset(romFile, entityPointerOffset);
 
         return new MapOverlayAsset(

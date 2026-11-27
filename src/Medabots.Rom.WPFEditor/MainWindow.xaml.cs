@@ -169,6 +169,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        Closing += OnMainWindowClosing;
+        _workspace.ProjectRootChanged += (_, _) => FollowProjectRoot();
+        _workspace.BuildChanged += (_, _) => OnProjectBuildChanged();
+        Loaded += (_, _) => UpdateBotsTabsForMode(); // no ROM yet: Parts, or the Bot set when a decomp project is saved
         PatchCollectionView.ItemsSource = _visiblePatchItems;
         EventCollectionView.ItemsSource = _visibleEventItems;
         EventInstructionCollectionView.ItemsSource = _visibleEventInstructions;
@@ -182,11 +186,11 @@ public partial class MainWindow : Window
         ChangesCollectionView.ItemsSource = _visibleChangeItems;
         SpritePaletteFamilyComboBox.SelectedValuePath = nameof(SpritePaletteFamilyOption.Value);
         RefreshSpritePaletteFamilyOptions();
-        _partMedalOptions.AddRange(Enumerable.Range(0, 27).Select(id => new BrowserItem(id, $"{id:D3}  {_metadata.GetPartAttributeName(id)}")));
-        _partSpecialityOptions.AddRange(Enumerable.Range(0, _metadata.Catalog.Specialities.Count).Select(id => new BrowserItem(id, $"{id:D3}  {_metadata.GetSpecialityName(id)}")));
-        _partTechniqueOptions.AddRange(Enumerable.Range(0, _metadata.Catalog.Techniques.Count).Select(id => new BrowserItem(id, $"{id:D3}  {_metadata.GetTechniqueName(id)}")));
-        _partGenderOptions.Add(new BrowserItem(0, "000  Male / Default"));
-        _partGenderOptions.Add(new BrowserItem(1, "001  Female / Alternate"));
+        _partMedalOptions.AddRange(Enumerable.Range(0, FieldCatalog.MedalClassCount).Select(id => new BrowserItem(id, $"{id:D3}  {FieldNames.MedalClassLabel(id)}")));
+        _partSpecialityOptions.AddRange(Enumerable.Range(0, FieldNames.SpecialityCount).Select(id => new BrowserItem(id, $"{id:D3}  {FieldNames.SpecialityName(id)}")));
+        _partTechniqueOptions.AddRange(Enumerable.Range(0, FieldNames.TechniqueCount).Select(id => new BrowserItem(id, $"{id:D3}  {FieldNames.TechniqueName(id)}")));
+        _partGenderOptions.Add(new BrowserItem(0, $"000  {FieldNames.GenderName(0)}"));
+        _partGenderOptions.Add(new BrowserItem(1, $"001  {FieldNames.GenderName(1)}"));
         _battleCharacterOptions.AddRange(Enumerable.Range(0, _metadata.Catalog.Characters.Count).Select(id => new BrowserItem(id, $"{id:D3}  {_metadata.GetCharacterName(id)}")));
         _battleBotCountOptions.AddRange(Enumerable.Range(1, MedabotsRomSchema.BattleBotCount).Select(count => new BrowserItem(count, count.ToString())));
         _battleInitializationModeOptions.Add(new BrowserItem(0, "No"));
@@ -198,7 +202,7 @@ public partial class MainWindow : Window
         _battleLevelOptions.AddRange(Enumerable.Range(0, 101).Select(level => new BrowserItem(level, level.ToString())));
         _shopSlotOptions.Add(new BrowserItem(MedabotsRomSchema.EmptyShopSlot, "Empty / end of visible shop list"));
         _shopSlotOptions.AddRange(Enumerable.Range(0, ImageAssetRepository.CompositeBattleSpritePartCount).Select(id => new BrowserItem(id, BuildShopSlotOptionTitle(id))));
-        _starterBotOptions.AddRange(Enumerable.Range(0, Math.Min(_metadata.Catalog.Bots.Count, MedabotsRomSchema.PartCount / 4)).Select(id => new BrowserItem(id, $"{id:D3}  {_metadata.GetBotName(id)}")));
+        _starterBotOptions.AddRange(Enumerable.Range(0, Math.Min(_metadata.Catalog.Bots.Count, MedabotsRomSchema.PartCount / 4)).Select(id => new BrowserItem(id, BotLabel(id))));
         _starterMedalOptions.AddRange(Enumerable.Range(0, _metadata.Catalog.Medals.Count).Select(id => new BrowserItem(id, $"{id:D3}  {_metadata.GetMedalName(id)}")));
         _botBattleFacingOptions.Add(new BrowserItem(0, "Facing Right / Default"));
         _botBattleFacingOptions.Add(new BrowserItem(1, "Facing Left / Mirrored"));
@@ -267,6 +271,7 @@ public partial class MainWindow : Window
             loadedProject.ProjectFilePath = projectPath;
 
             _session = projectSession.Value.Session;
+            RegisterEventArgumentNames();
             _project = loadedProject;
             _project.SourceRomPath = projectSession.Value.RomPath;
             _project.TextProfileId = projectSession.Value.Profile.Id;
@@ -319,18 +324,31 @@ public partial class MainWindow : Window
             return;
         }
 
+        await OpenRomPathAsync(romPath);
+    }
+
+    private async Task OpenRomPathAsync(string romPath)
+    {
         try
         {
             SetLoadingState(true, "Opening ROM...", 0.02);
-            var session = await RomHackSession.OpenAsync(romPath);
+            // a decomp build: the tabs read its pure base/ ROM and edit the folder's project (MainWindow.DecompEdits.cs)
+            var (sessionPath, decompRoot, project) = await ResolveDecompOpenAsync(romPath);
+            var session = await RomHackSession.OpenAsync(sessionPath);
             _session = session;
-            _project = CreateInMemoryProject(romPath);
+            RegisterEventArgumentNames();
+            _project = project;
             PrepareProjectForEditing();
+            if (decompRoot is not null)
+            {
+                _session.ApplyPatches(_project.PendingActions);
+            }
             SetLoadingState(true, "Detecting profile...", 0.08);
             TryDetectTextProfile();
             await LoadBrowsableDataAsync();
             SetLoadingState(false, string.Empty, 0);
             UpdateStatus();
+            SyncWorkspace();
         }
         catch (Exception ex)
         {
@@ -340,6 +358,7 @@ public partial class MainWindow : Window
     }
     private async Task LoadBrowsableDataAsync()
     {
+        UpdateBotsTabsForMode();
         if (_session is null)
         {
             return;
@@ -355,12 +374,18 @@ public partial class MainWindow : Window
         _eventCache.Clear();
         _eventViewCache.Clear();
         _shopCache.Clear();
+        _shopMiniCache.Clear();
         _sourceShopDefinitions.Clear();
         _sourceBattleDefinitions.Clear();
         _sourcePartDefinitions.Clear();
 
         SetLoadingState(true, "Preloading text...", 0.12);
-        _loadedMessages = await Task.Run(() => _messageTableReader.ReadAll(_session.RomFile, profile.TextPointerTableOffset));
+        // A decomp build may add project text banks (data/story/text, bank 16+): its layout file says how many.
+        var bankCount = _session.RomFile.Layout.ProfileAddresses is { } layoutAddresses
+            && layoutAddresses.TryGetValue("TextBankCount", out var layoutBanks) && layoutBanks > 0
+            ? layoutBanks
+            : Medabots.Rom.Metadata.MedabotsRomSchema.MessageBankCount;
+        _loadedMessages = await Task.Run(() => _messageTableReader.ReadAll(_session.RomFile, profile.TextPointerTableOffset, bankCount));
         foreach (var pair in _loadedMessages)
         {
             _originalMessages[pair.Key] = pair.Value;
@@ -383,6 +408,7 @@ public partial class MainWindow : Window
 
         _loadedBattles = OverlayProjectBattleEdits(_loadedBattles);
         _loadedParts = OverlayProjectPartEdits(_loadedParts);
+        ApplyRomRoster();
         RefreshPartLegTypeOptions(_loadedParts);
         RefreshBattleLoadoutOptions();
         _loadedEncounters = _encounterTableReader.ReadAll(_session.RomFile);
@@ -392,6 +418,8 @@ public partial class MainWindow : Window
         _battleCompositeComponentCache.Clear();
         _largePartDisplayAssetCache.Clear();
         _mapTilesetCache.Clear();
+        _tilesetPreviewRom = null;
+        _mapAdditionsRom = null;
         _editedOverworldSpriteAssets.Clear();
         _editedPortraitAssets.Clear();
         _editedBattleCompositeComponentAssets.Clear();
@@ -408,12 +436,21 @@ public partial class MainWindow : Window
         _allPartItems.AddRange(_loadedParts.Select(part => new BrowserItem(part.Id, $"{part.Id:D3}  {_metadata.GetPartName(part.Id)}  ({part.Kind})")));
         RefreshPartBrowserChangeState();
         _allMapItems.Clear();
-        _allMapItems.AddRange(Enumerable.Range(0, Math.Min(MedabotsRomSchema.MapCount, _metadata.Catalog.Maps.Count)).Select(mapId => new BrowserItem(mapId, $"{mapId:D3}  {_metadata.GetMapName(mapId)}")));
+        _allMapItems.AddRange(Enumerable.Range(0, _session is null ? Math.Min(MedabotsRomSchema.MapCount, _metadata.Catalog.Maps.Count) : MapSourceRom().Layout.MapCount).Select(mapId => new BrowserItem(mapId, $"{mapId:D3}  {MapDisplayName(mapId)}")));
         _allSpriteNodes.Clear();
         _allSpriteNodes.AddRange(BuildSpriteTreeNodes());
         _allEncounterItems.Clear();
         _allEncounterItems.AddRange(_loadedEncounters.Select(encounter => new BrowserItem(encounter.Id, $"{encounter.Id:D3}  Battles {encounter.Battle1}/{encounter.Battle2}/{encounter.Battle3}/{encounter.Battle4}")));
         RebuildEventBrowserItems(profile);
+        try
+        {
+            LoadDecompEventOverrides(profile);
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or IOException or System.Text.Json.JsonException or System.ComponentModel.Win32Exception)
+        {
+            await DisplayAlertAsync("Event Scripts", "Could not read data/events: " + ex.Message, "OK");
+        }
+
         UpdateEventBrowserPatchStatuses();
 
         RefreshMessageFilter();
@@ -447,7 +484,8 @@ public partial class MainWindow : Window
         }
 
         var sourcePath = _session.RomFile.FilePath;
-        var destinationPath = Path.Combine(Path.GetDirectoryName(sourcePath) ?? Environment.CurrentDirectory, $"{Path.GetFileNameWithoutExtension(sourcePath)}.hack.gba");
+        // Decomp mode: base/ ROM + edits over the build's playable ROM, and the edits kept in the folder's project
+        var destinationPath = _decompPlayRom ?? Path.Combine(Path.GetDirectoryName(sourcePath) ?? Environment.CurrentDirectory, $"{Path.GetFileNameWithoutExtension(sourcePath)}.hack.gba");
 
         try
         {
@@ -458,10 +496,12 @@ public partial class MainWindow : Window
             }
 
             PopulateProjectFromEditor(_project.ProjectFilePath);
+            await SaveDecompProjectAsync();
             var exportSession = await RomHackSession.OpenAsync(sourcePath);
             _projectApplicator.Apply(_project, exportSession);
             await exportSession.SaveAsAsync(destinationPath);
-            await DisplayAlertAsync("ROM Exported", $"Exported patched ROM to:{Environment.NewLine}{destinationPath}", "OK");
+            await DisplayAlertAsync("ROM Exported", $"Exported patched ROM to:{Environment.NewLine}{destinationPath}" +
+                (_decompPlayRom is null ? "" : $"{Environment.NewLine}{Environment.NewLine}Edits kept in {_project.ProjectFilePath}: every Build ROM applies them again."), "OK");
         }
         catch (Exception ex)
         {
@@ -792,6 +832,8 @@ public partial class MainWindow : Window
             _project.MapEventObjectResourcePatches.Count +
             _project.MapDimensionPatches.Count +
             _project.MapLayerPatches.Count +
+            _project.MapTilesetPatches.Count +
+            _project.MapAdditions.Count +
             _project.MapCollisionPatches.Count +
             _project.MapEntitySpawnPatches.Count +
             _project.MapWarpPatches.Count +
@@ -849,7 +891,12 @@ public partial class MainWindow : Window
             return;
         }
 
-        foreach (var change in _projectApplicator.BuildChanges(_project, _session.RomFile))
+        foreach (var addition in _project.MapAdditions)
+        {
+            _allChangeItems.Add(new BrowserItem(_allChangeItems.Count, $"New map: copy of map {addition.SourceMapId}{(addition.CopyWarpsAndPeople ? " (with warps and people)" : "")}"));
+        }
+
+        foreach (var change in _projectApplicator.BuildChanges(_project, MapAdditionsRom()))
         {
             _allChangeItems.Add(new BrowserItem(_allChangeItems.Count, $"{change.Owner}: {change.Description}"));
             foreach (var action in change.Actions)
@@ -922,6 +969,17 @@ public partial class MainWindow : Window
         {
             errorMessage = "Message text cannot be empty.";
             return false;
+        }
+
+        // Edited text gets the line/box breaks the game would make by itself, written out (originals stay as they are).
+        if (text != _selectedPatch.Text)
+        {
+            var wrapped = ApplyMessageLineBreaks(text, _session?.RomFile.Data);
+            if (wrapped != text)
+            {
+                text = wrapped;
+                MessageTextEditor.Text = text;
+            }
         }
 
         _selectedPatch.Bank = bank;
@@ -1010,6 +1068,7 @@ public partial class MainWindow : Window
         PatchCollectionView.SelectedItem = null;
         ClearPatchEditor();
         ClearPartEditor();
+        RefreshFontSection();
     }
 
     private async Task<string?> ResolveProjectRomPathAsync(string? configuredRomPath)
@@ -1353,8 +1412,8 @@ public partial class MainWindow : Window
     {
         var isActive = botIndex < activeBotCount;
         label.Text = string.Empty;
-        label.Foreground = isActive ? WpfBrushes.Black : WpfBrushes.DarkRed;
-        panel.Background = isActive ? WpfBrushes.White : new SolidColorBrush(WpfColor.FromRgb(0xFF, 0xF7, 0xED));
+        ThemeManager.SetBrush(label, WpfTextBlock.ForegroundProperty, isActive ? "Theme.TextPrimary" : "Theme.Warning");
+        ThemeManager.SetBrush(panel, Border.BackgroundProperty, isActive ? "Theme.PanelBackground" : "Theme.InactivePanelBackground");
         panel.Opacity = 1.0;
     }
 
@@ -1408,21 +1467,14 @@ public partial class MainWindow : Window
         SetBattleControlChanged(cycleReset, current.SpecialityCycleResetValue != source.SpecialityCycleResetValue);
 
         var changed = !current.Equals(source);
-        summaryLabel.Foreground = changed ? WpfBrushes.Red : WpfBrushes.Black;
-        if (changed)
-        {
-            panel.BorderBrush = WpfBrushes.Red;
-        }
-        else
-        {
-            panel.BorderBrush = new SolidColorBrush(WpfColor.FromRgb(0xE5, 0xE7, 0xEB));
-        }
+        ThemeManager.SetBrush(summaryLabel, WpfTextBlock.ForegroundProperty, changed ? "Theme.Changed" : "Theme.TextPrimary");
+        ThemeManager.SetBrush(panel, Border.BorderBrushProperty, changed ? "Theme.Changed" : "Theme.SubtleBorder");
     }
 
     private static void SetBattleControlChanged(System.Windows.Controls.Control control, bool changed)
     {
-        control.Foreground = changed ? WpfBrushes.Red : WpfBrushes.Black;
-        control.BorderBrush = changed ? WpfBrushes.Red : new SolidColorBrush(WpfColor.FromRgb(0xAB, 0xAD, 0xB3));
+        ThemeManager.SetBrush(control, System.Windows.Controls.Control.ForegroundProperty, changed ? "Theme.Changed" : "Theme.TextPrimary");
+        ThemeManager.SetBrush(control, System.Windows.Controls.Control.BorderBrushProperty, changed ? "Theme.Changed" : "Theme.InputBorder");
     }
 
     private void RefreshBattleBrowserItem(BattleDefinition battle)
@@ -1627,7 +1679,7 @@ public partial class MainWindow : Window
             PartValue4Label.Text = "Defense";
             PartValue5Label.Text = "Proximity";
             PartUnknown2Label.Text = "Remoteness";
-            PartUnknown4Label.Text = "Price (x100)";
+            PartUnknown4Label.Text = "Price";
             PartUnknown5Label.Text = "Attack Scalar";
             return;
         }
@@ -1643,7 +1695,7 @@ public partial class MainWindow : Window
         PartValue4Label.Text = "Chain Reaction";
         PartValue5Label.Text = kind == PartKind.Head ? "Uses" : "Charge";
         PartUnknown2Label.Text = "Radiation";
-        PartUnknown4Label.Text = "Price (x100)";
+        PartUnknown4Label.Text = "Price";
         PartUnknown5Label.Text = "Attack Scalar";
     }
 
@@ -1667,7 +1719,7 @@ public partial class MainWindow : Window
             PartValue4HintLabel.Text = "Defense affects how well the legs absorb or mitigate hits.";
             PartValue5HintLabel.Text = "Proximity is the legs-derived bonus used for close-range specialities.";
             PartUnknown2HintLabel.Text = "Remoteness is the legs-derived bonus used for ranged specialities.";
-            PartUnknown45HintLabel.Text = "Price is stored in units of 100 currency. The attack-scalar slot is still present in the raw record, but its battle meaning is not proven for legs yet.";
+            PartUnknown45HintLabel.Text = "Price is the shop price in whole units (11 is shown in-game as 11,00). The attack-scalar slot is still present in the raw record, but its battle meaning is not proven for legs yet.";
             PartUnknown3HintLabel.Text = "Bot Shared Value is duplicated across the full 4-part set for each Medabot, but its exact gameplay meaning is still unresolved.";
             return;
         }
@@ -1681,7 +1733,7 @@ public partial class MainWindow : Window
             ? "Uses is the head ammo / remaining-use count. Battle code clamps head consumption against this byte."
             : "Charge is the arm action charge value. This shares the same raw record byte that heads use for Uses.";
         PartUnknown2HintLabel.Text = "Radiation is a per-part scalar used by combat logic for radiation-type interactions.";
-        PartUnknown45HintLabel.Text = "Price is stored in units of 100 currency. Attack Scalar is the per-part coefficient used by battle damage/attack scaling code.";
+        PartUnknown45HintLabel.Text = "Price is the shop price in whole units (11 is shown in-game as 11,00). Attack Scalar is the per-part coefficient used by battle damage/attack scaling code.";
         PartUnknown3HintLabel.Text = "Bot Shared Value is duplicated across the full 4-part set for each Medabot, but its exact gameplay meaning is still unresolved.";
     }
 
@@ -1831,7 +1883,7 @@ public partial class MainWindow : Window
                      .Distinct()
                      .OrderBy(value => value))
         {
-            _partLegTypeOptions.Add(new BrowserItem(legType, $"{legType:D3}  {_metadata.GetLegTypeName(legType)}"));
+            _partLegTypeOptions.Add(new BrowserItem(legType, $"{legType:D3}  {FieldNames.LegTypeName(legType)}"));
         }
     }
 
@@ -2010,7 +2062,7 @@ public partial class MainWindow : Window
         SetBattleControlChanged(ShopSlot4Entry, currentContents[3] != sourceContents[3]);
         var changed = !currentContents.SequenceEqual(sourceContents);
         ShopSummaryLabel.Text = $"Shop {current.Id:D3} @ 0x{current.DataOffset:X}. The game reads four Medabot part-set slots and stops at the first empty slot (0xFF).";
-        ShopSummaryLabel.Foreground = changed ? WpfBrushes.Red : WpfBrushes.Black;
+        ThemeManager.SetBrush(ShopSummaryLabel, WpfTextBlock.ForegroundProperty, changed ? "Theme.Changed" : "Theme.TextPrimary");
     }
 
     private ShopDefinition BuildShopFromEditor(ShopDefinition source)
@@ -2052,6 +2104,10 @@ public partial class MainWindow : Window
         RefreshShopSlotLabel(2, contents[2], ShopSlot3DetailLabel, slot3Ignored);
         var slot4Ignored = slot3Ignored || contents[2] == MedabotsRomSchema.EmptyShopSlot;
         RefreshShopSlotLabel(3, contents[3], ShopSlot4DetailLabel, slot4Ignored);
+        RefreshShopSlotMini(ShopSlot1Mini, contents[0], isIgnored: false);
+        RefreshShopSlotMini(ShopSlot2Mini, contents[1], slot2Ignored);
+        RefreshShopSlotMini(ShopSlot3Mini, contents[2], slot3Ignored);
+        RefreshShopSlotMini(ShopSlot4Mini, contents[3], slot4Ignored);
     }
 
     private void RefreshShopSlotLabel(int slotIndex, byte itemId, WpfTextBlock label, bool isIgnored)
@@ -2059,7 +2115,7 @@ public partial class MainWindow : Window
         if (itemId == MedabotsRomSchema.EmptyShopSlot)
         {
             label.Text = isIgnored ? "Ignored after an earlier empty slot." : "Empty; later slots are not displayed in-game.";
-            label.Foreground = WpfBrushes.Gray;
+            ThemeManager.SetBrush(label, WpfTextBlock.ForegroundProperty, "Theme.TextMuted");
             return;
         }
 
@@ -2067,20 +2123,20 @@ public partial class MainWindow : Window
         var conditionalText = itemId == MedabotsRomSchema.ConditionalShopSlot
             ? " Hidden unless the game state byte checked by the shop routine equals 3."
             : string.Empty;
-        label.Text = $"{_metadata.GetBotName(itemId)} part set. Display price: {price:N0}.{conditionalText}{(isIgnored ? " Ignored because an earlier slot is empty." : string.Empty)}";
-        label.Foreground = isIgnored ? WpfBrushes.Gray : WpfBrushes.Black;
+        label.Text = $"{_metadata.GetBotName(itemId)} part set. Display price: {price},00.{conditionalText}{(isIgnored ? " Ignored because an earlier slot is empty." : string.Empty)}";
+        ThemeManager.SetBrush(label, WpfTextBlock.ForegroundProperty, isIgnored ? "Theme.TextMuted" : "Theme.TextPrimary");
     }
 
     private int GetShopItemPrice(byte itemId)
     {
         var head = _loadedParts.FirstOrDefault(part => part.MedabotId == itemId && part.Kind == PartKind.Head);
-        return (head?.Unknown4 ?? 0) * 100;
+        return head?.Unknown4 ?? 0;
     }
 
     private string BuildShopSlotOptionTitle(int id)
     {
         var conditional = id == MedabotsRomSchema.ConditionalShopSlot ? "  (conditional stock)" : string.Empty;
-        return $"{id:D3}  {_metadata.GetBotName(id)}{conditional}";
+        return $"{BotLabel(id)}{conditional}";
     }
 
     private void RefreshShopBrowserItem(int shopId)
@@ -2335,15 +2391,15 @@ public partial class MainWindow : Window
     {
         var bitmap = CreateBattleLoadoutThumbnail(part, componentIndex);
         var title = _metadata.GetPartName(part.Id);
-        var subtitle = part.MedabotId < ImageAssetRepository.CompositeBattleSpritePartCount
-            ? $"Bot {part.MedabotId:D3}  Part {part.Id:D3}"
+        var subtitle = part.MedabotId < RosterBotCount
+            ? $"{BotLabel(part.MedabotId)}  Part {part.Id:D3}"
             : $"Uninitialized family {part.MedabotId:D3}  Part {part.Id:D3}";
         return new BattleLoadoutOption(part.MedabotId, part.Id, title, subtitle, bitmap);
     }
 
     private BitmapSource CreateBattleLoadoutThumbnail(PartDefinition part, int componentIndex)
     {
-        if (part.MedabotId < 0 || part.MedabotId >= ImageAssetRepository.CompositeBattleSpritePartCount)
+        if (part.MedabotId < 0 || part.MedabotId >= RosterBotCount)
         {
             return CreateBattleLoadoutPlaceholderBitmap();
         }

@@ -16,7 +16,7 @@ public sealed class MapOverlayPatcher
         ArgumentNullException.ThrowIfNull(patch);
         ArgumentException.ThrowIfNullOrWhiteSpace(description);
 
-        session.ApplyPatches(BuildEntitySpawnActions(session.RomFile, patch, description, new FreeSpaceAllocator(FreeSpaceAllocator.AlignUp(Math.Max(session.RomFile.Length, 0x800000), 4))));
+        session.ApplyPatches(BuildEntitySpawnActions(session.RomFile, patch, description, FreeSpaceAllocator.ForRom(session.RomFile.Data)));
     }
 
     public void RewriteWarps(RomHackSession session, MapWarpPatch patch, string description)
@@ -25,7 +25,7 @@ public sealed class MapOverlayPatcher
         ArgumentNullException.ThrowIfNull(patch);
         ArgumentException.ThrowIfNullOrWhiteSpace(description);
 
-        session.ApplyPatches(BuildWarpActions(session.RomFile, patch, description, new FreeSpaceAllocator(FreeSpaceAllocator.AlignUp(Math.Max(session.RomFile.Length, 0x800000), 4))));
+        session.ApplyPatches(BuildWarpActions(session.RomFile, patch, description, FreeSpaceAllocator.ForRom(session.RomFile.Data)));
     }
 
     public void RewriteCollisionAttributes(RomHackSession session, MapCollisionPatch patch, string description)
@@ -34,7 +34,7 @@ public sealed class MapOverlayPatcher
         ArgumentNullException.ThrowIfNull(patch);
         ArgumentException.ThrowIfNullOrWhiteSpace(description);
 
-        session.ApplyPatches(BuildCollisionActions(session.RomFile, patch, description, new FreeSpaceAllocator(FreeSpaceAllocator.AlignUp(Math.Max(session.RomFile.Length, 0x800000), 4))));
+        session.ApplyPatches(BuildCollisionActions(session.RomFile, patch, description, FreeSpaceAllocator.ForRom(session.RomFile.Data)));
     }
 
     public void RewriteEventObjectResources(RomHackSession session, MapEventObjectResourcePatch patch, string description)
@@ -43,7 +43,7 @@ public sealed class MapOverlayPatcher
         ArgumentNullException.ThrowIfNull(patch);
         ArgumentException.ThrowIfNullOrWhiteSpace(description);
 
-        session.ApplyPatches(BuildEventObjectResourceActions(session.RomFile, patch, description, new FreeSpaceAllocator(FreeSpaceAllocator.AlignUp(Math.Max(session.RomFile.Length, 0x800000), 4))));
+        session.ApplyPatches(BuildEventObjectResourceActions(session.RomFile, patch, description, FreeSpaceAllocator.ForRom(session.RomFile.Data)));
     }
 
     public IReadOnlyList<RomPatchAction> BuildEntitySpawnActions(RomFile romFile, MapEntitySpawnPatch patch, string description, FreeSpaceAllocator allocator)
@@ -52,7 +52,7 @@ public sealed class MapOverlayPatcher
         var destination = ReserveEntitySpawnSpace(romFile, patch.MapId, payload.Length, allocator);
         Span<byte> pointerBytes = stackalloc byte[sizeof(uint)];
         GbaPointer.WriteFileOffset(pointerBytes, 0, destination);
-        var pointerOffset = MedabotsRomSchema.MapEntitySpawnPointerTableOffset + (patch.MapId * sizeof(uint));
+        var pointerOffset = romFile.Layout.MapEntitySpawnPointerTableOffset + (patch.MapId * sizeof(uint));
         return
         [
             RomPatchAction.Create(destination, payload, description),
@@ -66,7 +66,7 @@ public sealed class MapOverlayPatcher
         var destination = ReserveWarpSpace(romFile, patch.MapId, payload.Length, allocator);
         Span<byte> pointerBytes = stackalloc byte[sizeof(uint)];
         GbaPointer.WriteFileOffset(pointerBytes, 0, destination);
-        var pointerOffset = MedabotsRomSchema.MapWarpPointerTableOffset + (patch.MapId * sizeof(uint));
+        var pointerOffset = romFile.Layout.MapWarpPointerTableOffset + (patch.MapId * sizeof(uint));
         return
         [
             RomPatchAction.Create(destination, payload, description),
@@ -80,7 +80,7 @@ public sealed class MapOverlayPatcher
         var destination = ReserveCollisionSpace(romFile, patch.MapId, payload.Length, allocator);
         Span<byte> pointerBytes = stackalloc byte[sizeof(uint)];
         GbaPointer.WriteFileOffset(pointerBytes, 0, destination);
-        var pointerOffset = MedabotsRomSchema.MapCollisionPointerTableOffset + (patch.MapId * sizeof(uint));
+        var pointerOffset = romFile.Layout.MapCollisionPointerTableOffset + (patch.MapId * sizeof(uint));
         return
         [
             RomPatchAction.Create(destination, payload, description),
@@ -94,7 +94,7 @@ public sealed class MapOverlayPatcher
         var destination = ReserveEventObjectResourceSpace(romFile, patch.MapId, payload.Length, allocator);
         Span<byte> pointerBytes = stackalloc byte[sizeof(uint)];
         GbaPointer.WriteFileOffset(pointerBytes, 0, destination);
-        var pointerOffset = MedabotsRomSchema.MapEventObjectResourcePointerTableOffset + (patch.MapId * sizeof(uint));
+        var pointerOffset = romFile.Layout.MapEventObjectResourcePointerTableOffset + (patch.MapId * sizeof(uint));
         return
         [
             RomPatchAction.Create(destination, payload, description),

@@ -76,7 +76,7 @@ internal sealed class MapDimensionProjectEditSystem : IProjectEditSystem
             .OrderBy(patch => patch.MapId)
             .Select(patch =>
             {
-                var offset = MedabotsRomSchema.MapDimensionsInMetaTilesTableOffset + (patch.MapId * 2);
+                var offset = context.SourceRom.Layout.MapDimensionsInMetaTilesTableOffset + (patch.MapId * 2);
                 return new ProjectChange(DisplayName, $"Map {patch.MapId} dimension patch", [RomPatchAction.Create(offset, [patch.WidthInTiles, patch.HeightInTiles], $"Apply map {patch.MapId} dimension patch")]);
             })
             .ToArray();
@@ -96,7 +96,7 @@ internal sealed class MapEncounterStateProjectEditSystem : IProjectEditSystem
             .OrderBy(patch => patch.MapId)
             .Select(patch =>
             {
-                var offset = MedabotsRomSchema.MapEncounterSettingsTableOffset + (patch.MapId * 8);
+                var offset = context.SourceRom.Layout.MapEncounterSettingsTableOffset + (patch.MapId * 8);
                 return new ProjectChange(DisplayName, $"Map {patch.MapId} encounter state patch", [RomPatchAction.Create(offset, [patch.EncounterEnabledByte], $"Apply map {patch.MapId} encounter enable patch")]);
             })
             .ToArray();
@@ -146,7 +146,7 @@ internal sealed class MapMusicProjectEditSystem : IProjectEditSystem
             .OrderBy(patch => patch.MapId)
             .Select(patch =>
             {
-                var offset = MedabotsRomSchema.MapMusicTableOffset + patch.MapId;
+                var offset = context.SourceRom.Layout.MapMusicTableOffset + patch.MapId;
                 return new ProjectChange(DisplayName, $"Map {patch.MapId} music patch", [RomPatchAction.Create(offset, [patch.MusicId], $"Apply map {patch.MapId} music patch")]);
             })
             .ToArray();

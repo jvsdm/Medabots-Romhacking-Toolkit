@@ -38,6 +38,9 @@ public sealed class EventInstructionItem
 
     public bool HasDetail => !string.IsNullOrWhiteSpace(Detail);
 
+    /// <summary>The whole action (the list shows one trimmed line per action).</summary>
+    public string ToolTipText => HasDetail ? $"{Summary}\n{Detail}" : Summary;
+
     public bool IsEditable { get; init; }
 
     public IReadOnlyList<EventArgumentValue> Arguments { get; init; } = [];

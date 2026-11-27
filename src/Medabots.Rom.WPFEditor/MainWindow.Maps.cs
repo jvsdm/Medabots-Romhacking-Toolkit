@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -165,14 +165,19 @@ public partial class MainWindow
         {
             if (!_mapTilesetCache.TryGetValue(item.Id, out var asset))
             {
-                asset = _mapTilesetRepository.ReadMap(_session.RomFile, item.Id, _metadata.GetMapName(item.Id));
+                asset = _mapTilesetRepository.ReadMap(MapSourceRom(), item.Id, MapDisplayName(item.Id));
                 _mapTilesetCache[item.Id] = asset;
             }
 
             if (!_mapOverlayCache.TryGetValue(item.Id, out var overlays))
             {
-                overlays = _mapOverlayRepository.ReadMap(_session.RomFile, item.Id);
+                overlays = _mapOverlayRepository.ReadMap(MapSourceRom(), item.Id);
                 _mapOverlayCache[item.Id] = overlays;
+            }
+
+            if (_loadedMapTileset?.MapId != asset.MapId)
+            {
+                ClearMapHistory();
             }
 
             _loadedMapTileset = asset;
@@ -259,11 +264,12 @@ public partial class MainWindow
         }
 
         var seen = new HashSet<(int GraphicsOffset, int PaletteOffset, int ColorOffset)>();
-        for (var mapId = 0; mapId < MedabotsRomSchema.MapCount; mapId++)
+        var mapRom = MapSourceRom();
+        for (var mapId = 0; mapId < mapRom.Layout.MapCount; mapId++)
         {
-            var graphicsPointerOffset = MedabotsRomSchema.MapTilesetGraphicsPointerTableOffset + (mapId * sizeof(uint));
-            var palettePointerOffset = MedabotsRomSchema.MapTilesetPalettePointerTableOffset + (mapId * sizeof(uint));
-            var colorPointerOffset = MedabotsRomSchema.MapColorAttributePointerTableOffset + (mapId * sizeof(uint));
+            var graphicsPointerOffset = mapRom.Layout.MapTilesetGraphicsPointerTableOffset + (mapId * sizeof(uint));
+            var palettePointerOffset = mapRom.Layout.MapTilesetPalettePointerTableOffset + (mapId * sizeof(uint));
+            var colorPointerOffset = mapRom.Layout.MapColorAttributePointerTableOffset + (mapId * sizeof(uint));
             var graphicsOffset = TryReadMapPointerOffset(graphicsPointerOffset);
             var paletteOffset = TryReadMapPointerOffset(palettePointerOffset);
             var colorOffset = TryReadMapPointerOffset(colorPointerOffset);
@@ -277,7 +283,7 @@ public partial class MainWindow
                 graphicsOffset,
                 paletteOffset,
                 colorOffset,
-                $"{mapId:D3}  {_metadata.GetMapName(mapId)}"));
+                $"{mapId:D3}  {MapDisplayName(mapId)}"));
         }
     }
 
@@ -372,14 +378,25 @@ public partial class MainWindow
             return;
         }
 
-        var editLayerKey = (MapEditLayerComboBox?.SelectedItem as MapLayerOption)?.Key ?? "layer1";
-        if (editLayerKey is "layer1" or "layer2" or "layer3" && _selectedMapTileX.HasValue && _selectedMapTileY.HasValue)
+        // double click on a warp: open the area it leads to (map connections, as in the HMA)
+        if (e.ClickCount == 2 && _mapOverlayCache.TryGetValue(_loadedMapTileset.MapId, out var clicked) &&
+            clicked.Warps.FirstOrDefault(w => w.TileX == _selectedMapTileX && w.TileY == _selectedMapTileY) is { } warpHit &&
+            GoToMap(warpHit.DestinationMapId))
         {
-            TryPaintSelectedMapTile(editLayerKey, _selectedMapTileX.Value, _selectedMapTileY.Value);
+            e.Handled = true;
+            return;
         }
-        else if (editLayerKey == "collision" && _selectedMapTileX.HasValue && _selectedMapTileY.HasValue)
+
+        var editLayerKey = (MapEditLayerComboBox?.SelectedItem as MapLayerOption)?.Key ?? "layer1";
+        if (_selectedMapTileX.HasValue && _selectedMapTileY.HasValue && BeginMapTool(editLayerKey, _selectedMapTileX.Value, _selectedMapTileY.Value))
         {
-            TryPaintSelectedCollisionCell(_selectedMapTileX.Value, _selectedMapTileY.Value);
+            if (_mapToolDragging)
+            {
+                image.CaptureMouse();
+            }
+
+            e.Handled = true;
+            return;
         }
 
         UpdateMapOverlayStatus();
@@ -480,6 +497,7 @@ public partial class MainWindow
             foreach (var warp in overlays.Warps)
             {
                 DrawOverlayMarker(pixels, width, height, warp.TileX, warp.TileY, Colors.Magenta, overlayOffset);
+                DrawWarpArrow(pixels, width, height, warp.TileX, warp.TileY, overlayOffset);
             }
         }
 
@@ -514,6 +532,7 @@ public partial class MainWindow
         }
 
         DrawMapTilePlacementPreview(pixels, width, height);
+        DrawMapToolPreview(pixels, width, height);
 
         var bitmap = BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgra32, null, pixels, width * 4);
         bitmap.Freeze();
@@ -757,8 +776,11 @@ public partial class MainWindow
             var visibleEventCount = overlays.EntitySpawns.Count(spawn => (MapEventChapterFilterComboBox?.SelectedItem as MapChapterFilterOption)?.ChapterIndex is not int chapter || spawn.IsVisibleInChapter(chapter));
             var selectedOverlay = _selectedMapOverlayRecord is null ? "none" : _selectedMapOverlayRecord.DisplayName;
             MapOverlayStatusLabel.Text = $"Edit layer: {selectedEditLayerName}  |  Visible: {(visibleLayers.Count == 0 ? "none" : string.Join(", ", visibleLayers))}{Environment.NewLine}Warps: {overlays.Warps.Count}  Events/Spawns: {visibleEventCount}  |  Event chapter filter: {chapterFilter}{Environment.NewLine}Selected overlay: {selectedOverlay}";
+            UpdateMapWarpLinks(overlays.Warps);
             return;
         }
+
+        UpdateMapWarpLinks([]);
 
         MapOverlayStatusLabel.Text = $"Edit layer: {selectedEditLayerName}  |  Visible: {(visibleLayers.Count == 0 ? "none" : string.Join(", ", visibleLayers))}{Environment.NewLine}Event chapter filter: {chapterFilter}";
     }
@@ -1060,7 +1082,7 @@ public partial class MainWindow
         }
 
         var romFile = new RomFile(sourcePath, File.ReadAllBytes(sourcePath));
-        var asset = _mapTilesetRepository.ReadMap(romFile, mapId, _metadata.GetMapName(mapId));
+        var asset = _mapTilesetRepository.ReadMap(romFile, mapId, MapDisplayName(mapId));
         _sourceMapTilesetCache[mapId] = asset;
         return asset;
     }
@@ -1595,9 +1617,9 @@ public partial class MainWindow
             return;
         }
 
-        if (widthInTiles < 1 || heightInTiles < 1 || widthInTiles > byte.MaxValue || heightInTiles > byte.MaxValue)
+        if (widthInTiles < 1 || heightInTiles < 1 || widthInTiles > Medabots.Rom.Maps.MapExpander.MaxMapSize || heightInTiles > Medabots.Rom.Maps.MapExpander.MaxMapSize)
         {
-            MapResizeHintLabel.Text = $"Size must be between 1 and {byte.MaxValue} tiles.";
+            MapResizeHintLabel.Text = $"Size must be between 1 and {Medabots.Rom.Maps.MapExpander.MaxMapSize} tiles (the game shows up to 64 x 64).";
             return;
         }
 
@@ -1993,6 +2015,11 @@ public partial class MainWindow
         }
 
         var mapId = _loadedMapTileset.MapId;
+        if (await TryRemoveStagedNewMapAsync(mapId))
+        {
+            return;
+        }
+
         RemovePatchForMap(_project.MapEncounterPatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapEncounterStatePatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapMusicPatches, mapId, patch => patch.MapId);
@@ -2000,10 +2027,11 @@ public partial class MainWindow
         RemovePatchForMap(_project.MapDimensionPatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapLayerPatches, mapId, patch => patch.MapId);
         RemovePatchForMap(_project.MapCollisionPatches, mapId, patch => patch.MapId);
+        RemoveTilesetPatchesForMap(mapId);
         ClearCurrentMapMetadataDraft();
         _mapSpriteSlotEditorMapId = null;
 
-        var freshAsset = _mapTilesetRepository.ReadMap(_session.RomFile, mapId, _metadata.GetMapName(mapId));
+        var freshAsset = _mapTilesetRepository.ReadMap(MapSourceRom(), mapId, MapDisplayName(mapId));
         _mapTilesetCache[mapId] = freshAsset;
         _loadedMapTileset = freshAsset;
         UpdateMapMetadataEditor();
@@ -2129,6 +2157,11 @@ public partial class MainWindow
             return;
         }
 
+        if (_decompPlayRom is not null && TryOpenDecompEventText(eventId))
+        {
+            return;      // Decomp mode: the script is a text file of data/events (plan M6)
+        }
+
         OpenDetailedEventScriptEditor(eventId);
     }
 
@@ -2141,9 +2174,10 @@ public partial class MainWindow
             return false;
         }
 
-        var installedTable = EventScriptReader.ResolveInstalledEventTable(_session.RomFile.Data, profile);
+        var installedTable = EventScriptReader.ResolveInstalledEventTable(_session.RomFile, profile);
         var isInstalledEvent = spawn.EventOrObjectId >= 0 && spawn.EventOrObjectId < installedTable.EventCount;
         var isProjectStagedEvent = _eventProjectScriptPatches.ContainsKey((short)spawn.EventOrObjectId) ||
+                                   _decompEventBytes.ContainsKey((short)spawn.EventOrObjectId) ||
                                    _project.EventScriptPatches.Any(patch => patch.EventId == (short)spawn.EventOrObjectId);
         if (!isInstalledEvent && !isProjectStagedEvent)
         {
@@ -2391,17 +2425,25 @@ public partial class MainWindow
                 return;
             }
 
-            var eventId = _eventScriptProjectEditor.AddFreshEventScript(_project, _session.RomFile, profile, [MedabotsRomSchema.EventEndOpcode]);
-            SyncEventScriptPatchFromProject(eventId);
+            // decomp mode: a new data/events/NNNN.evt (the same id the Event scripts window would make); otherwise an
+            // "End" script stored in the project
+            var eventId = NewDecompEventScript() ??
+                          _eventScriptProjectEditor.AddFreshEventScript(_project, _session.RomFile, profile, [MedabotsRomSchema.EventEndOpcode]);
+            if (DecompEventsFolder() is null)
+            {
+                SyncEventScriptPatchFromProject(eventId);
+            }
+
             EnsureEventBrowserItemExists(eventId);
             UpdateEventBrowserPatchStatus(eventId);
             RefreshEventFilter();
+            // spawn group 16: what the game uses for almost every record (it never uses 0)
             var record = new MapEntitySpawnRecord(
                 (byte)_selectedMapTileX.Value,
                 (byte)_selectedMapTileY.Value,
                 (ushort)(0x4000 | (ushort)eventId),
                 0xFF,
-                0,
+                16,
                 0xFFFF);
 
             var patch = _mapEntitySpawnProjectEditor.AddEntitySpawnRecord(_project, overlay, record);
@@ -2642,7 +2684,7 @@ public partial class MainWindow
 
         if (!_mapTilesetCache.TryGetValue(sourceMapId, out var asset))
         {
-            asset = _mapTilesetRepository.ReadMap(_session.RomFile, sourceMapId, _metadata.GetMapName(sourceMapId));
+            asset = _mapTilesetRepository.ReadMap(MapSourceRom(), sourceMapId, MapDisplayName(sourceMapId));
             _mapTilesetCache[sourceMapId] = asset;
         }
 
@@ -2930,7 +2972,7 @@ public partial class MainWindow
             return -1;
         }
 
-        return GbaPointer.TryReadFileOffset(_session.RomFile.Data, pointerOffset, out var dataOffset)
+        return GbaPointer.TryReadFileOffset(MapSourceRom().Data, pointerOffset, out var dataOffset)
             ? dataOffset
             : -1;
     }
@@ -3014,6 +3056,12 @@ public partial class MainWindow
 
         if (TrySelectMapHoverCell(image, e.GetPosition(image)))
         {
+            if (_mapToolDragging && e.LeftButton == System.Windows.Input.MouseButtonState.Pressed && _hoveredMapTileX is { } hx && _hoveredMapTileY is { } hy)
+            {
+                UpdateMapTool(hx, hy);
+                return;
+            }
+
             DrawMapOverlays();
         }
     }
@@ -3193,6 +3241,93 @@ public partial class MainWindow
         return System.Windows.Media.Color.FromArgb(255, r, g, b);
     }
 
+    /// <summary>
+    /// Connection arrow (as the HMA draws map connections): a white arrow inside the warp marker pointing to the nearest
+    /// edge of the map, the way out. Double click the warp (or Go to destination map) opens the area it leads to.
+    /// </summary>
+    private static void DrawWarpArrow(byte[] pixels, int bitmapWidth, int bitmapHeight, int tileX, int tileY, System.Windows.Point offset)
+    {
+        var cx = tileX * 16 + (int)offset.X + 8;
+        var cy = tileY * 16 + (int)offset.Y + 8;
+        var mapW = bitmapWidth - 2 * (int)offset.X;
+        var mapH = bitmapHeight - 2 * (int)offset.Y;
+        var px = cx - (int)offset.X;
+        var py = cy - (int)offset.Y;
+        var toEdge = new[] { py, mapH - py, px, mapW - px };       // up, down, left, right
+        var dir = Array.IndexOf(toEdge, toEdge.Min());
+        void Put(int x, int y)
+        {
+            if ((uint)x < (uint)bitmapWidth && (uint)y < (uint)bitmapHeight)
+            {
+                var i = (y * bitmapWidth + x) * 4;
+                pixels[i] = pixels[i + 1] = pixels[i + 2] = 0xFF;
+                pixels[i + 3] = 0xFF;
+            }
+        }
+
+        for (var k = -5; k <= 5; k++)          // shaft
+        {
+            if (dir < 2) Put(cx, cy + k); else Put(cx + k, cy);
+        }
+
+        for (var k = 1; k <= 4; k++)           // head
+        {
+            switch (dir)
+            {
+                case 0: Put(cx - k, cy - 5 + k); Put(cx + k, cy - 5 + k); break;
+                case 1: Put(cx - k, cy + 5 - k); Put(cx + k, cy + 5 - k); break;
+                case 2: Put(cx - 5 + k, cy - k); Put(cx - 5 + k, cy + k); break;
+                default: Put(cx + 5 - k, cy - k); Put(cx + 5 - k, cy + k); break;
+            }
+        }
+    }
+
+    /// <summary>Selects map <paramref name="mapId"/> in the list (the destination of a warp); false if it is not listed.</summary>
+    private bool GoToMap(int mapId)
+    {
+        var item = _visibleMapItems.FirstOrDefault(i => i.Id == mapId);
+        if (item is null)
+        {
+            return false;
+        }
+
+        MapCollectionView.SelectedItem = item;
+        MapCollectionView.ScrollIntoView(item);
+        return true;
+    }
+
+    /// <summary>Connections panel under the map (as the HMA's): one button per warp, "(x,y) → NNN title"; click opens it.</summary>
+    private void UpdateMapWarpLinks(IEnumerable<MapWarpRecord> warps)
+    {
+        if (MapWarpLinksPanel is null)
+        {
+            return;
+        }
+
+        MapWarpLinksPanel.Children.Clear();
+        foreach (var warp in warps)
+        {
+            var target = _visibleMapItems.FirstOrDefault(i => i.Id == warp.DestinationMapId);
+            var button = new System.Windows.Controls.Button
+            {
+                Content = $"({warp.TileX},{warp.TileY}) → {(target?.Title ?? $"{warp.DestinationMapId:D3}")}",
+                Margin = new System.Windows.Thickness(0, 0, 6, 4),
+                Padding = new System.Windows.Thickness(6, 1, 6, 1),
+                Tag = (int)warp.DestinationMapId,
+            };
+            button.Click += (_, _) => GoToMap((int)button.Tag);
+            MapWarpLinksPanel.Children.Add(button);
+        }
+    }
+
+    private void OnMapWarpGoToClicked(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (int.TryParse(MapWarpDestinationMapEntry.Text, out var id) && !GoToMap(id))
+        {
+            System.Windows.MessageBox.Show(this, $"Map {id} is not in the list (clear the map filter).", Title);
+        }
+    }
+
     private static void DrawOverlayMarker(byte[] pixels, int bitmapWidth, int bitmapHeight, int tileX, int tileY, System.Windows.Media.Color color, System.Windows.Point offset)
     {
         var startX = tileX * 16 + (int)offset.X;
@@ -3327,6 +3462,33 @@ public partial class MainWindow
             UpdateMapPreviewLayout(bitmap.PixelWidth, bitmap.PixelHeight);
             UpdateMapGridOverlay(bitmap.PixelWidth, bitmap.PixelHeight);
         }
+
+        // A newly opened map starts centred in the view (later redraws keep the user's scroll).
+        if (_loadedMapTileset is { } map && map.MapId != _centeredMapId)
+        {
+            _centeredMapId = map.MapId;
+            CenterMapPreview();
+        }
+    }
+
+    private int _centeredMapId = -1;
+
+    // The surface is larger than the view with the map in its middle: scroll to the middle of the surface.
+    private void CenterMapPreview()
+    {
+        // After layout settles (ContextIdle): the surface is symmetric around the map, so the middle of
+        // the scrollable range centres it.
+        Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.ContextIdle, () =>
+        {
+            if (MapPreviewScrollViewer is not { } viewer)
+            {
+                return;
+            }
+
+            viewer.UpdateLayout();
+            viewer.ScrollToHorizontalOffset(viewer.ScrollableWidth / 2);
+            viewer.ScrollToVerticalOffset(viewer.ScrollableHeight / 2);
+        });
     }
 
     private void OnMapPreviewViewportSizeChanged(object sender, SizeChangedEventArgs e)
@@ -3335,6 +3497,7 @@ public partial class MainWindow
         {
             UpdateMapPreviewLayout(bitmap.PixelWidth, bitmap.PixelHeight);
             UpdateMapGridOverlay(bitmap.PixelWidth, bitmap.PixelHeight);
+            CenterMapPreview();
         }
     }
 

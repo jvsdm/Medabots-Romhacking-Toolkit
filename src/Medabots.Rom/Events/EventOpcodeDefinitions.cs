@@ -75,8 +75,8 @@ internal static class EventOpcodeDefinitions
                 new EventArgumentDefinition[]
                 {
                     new("map_id", EventArgumentType.Byte),
-                    new("unk1", EventArgumentType.Byte),
-                    new("unk2", EventArgumentType.Byte),
+                    new("unused1", EventArgumentType.Byte),
+                    new("unused2", EventArgumentType.Byte),
                     new("x", EventArgumentType.Byte),
                     new("y", EventArgumentType.Byte),
                 }),
@@ -86,8 +86,8 @@ internal static class EventOpcodeDefinitions
                 new EventArgumentDefinition[]
                 {
                     new("map_id", EventArgumentType.Byte),
-                    new("unk1", EventArgumentType.Byte),
-                    new("unk2", EventArgumentType.Byte),
+                    new("unused1", EventArgumentType.Byte),
+                    new("unused2", EventArgumentType.Byte),
                     new("x", EventArgumentType.Byte),
                     new("y", EventArgumentType.Byte),
                 }),
@@ -788,18 +788,18 @@ internal static class EventOpcodeDefinitions
                 Array.Empty<EventArgumentDefinition>()),
             [0x78] = new EventOperationDefinition(
                 0x78,
-                "Run_Scene_Command_10_If_At_Least_Three_Complete_Part_Sets",
+                "Start_Race_If_Three_Bots",
                 new EventArgumentDefinition[]
                 {
-                    new("scene_arg", EventArgumentType.Byte),
-                    new("jump_if_fewer_than_three_complete_sets", EventArgumentType.Byte),
+                    new("race_id", EventArgumentType.Byte),
+                    new("jump_if_fewer_than_three_bots", EventArgumentType.Byte),
                 }),
             [0x79] = new EventOperationDefinition(
                 0x79,
-                "Run_Scene_Command_12",
+                "Show_Event_Picture",
                 new EventArgumentDefinition[]
                 {
-                    new("scene_arg", EventArgumentType.Byte),
+                    new("picture_id", EventArgumentType.Byte),
                 }),
             [0x7A] = new EventOperationDefinition(
                 0x7A,
@@ -831,17 +831,17 @@ internal static class EventOpcodeDefinitions
                 Array.Empty<EventArgumentDefinition>()),
             [0x81] = new EventOperationDefinition(
                 0x81,
-                "Queue_Batched_Object_Command",
+                "Queue_Object_Moves",
                 new EventArgumentDefinition[]
                 {
-                    new("record_type", EventArgumentType.Byte),
-                    new("object_id_high", EventArgumentType.Byte),
-                    new("object_id_low", EventArgumentType.Byte),
-                    new("arg4", EventArgumentType.Byte),
-                    new("arg5", EventArgumentType.Byte),
-                    new("arg6", EventArgumentType.Byte),
-                    new("arg7", EventArgumentType.Byte),
-                    new("arg8", EventArgumentType.Byte),
+                    new("step1_kind", EventArgumentType.Byte),
+                    new("step1_object", EventArgumentType.Byte),
+                    new("step1_value", EventArgumentType.Byte),
+                    new("step1_unused", EventArgumentType.Byte),
+                    new("step2_kind", EventArgumentType.Byte),
+                    new("step2_object", EventArgumentType.Byte),
+                    new("step2_value", EventArgumentType.Byte),
+                    new("step2_unused", EventArgumentType.Byte),
                 }),
             [0x82] = new EventOperationDefinition(
                 0x82,
@@ -868,17 +868,17 @@ internal static class EventOpcodeDefinitions
                 Array.Empty<EventArgumentDefinition>()),
             [0x86] = new EventOperationDefinition(
                 0x86,
-                "Queue_Event_Object_Facing_Cycle",
+                "Queue_Object_Anim",
                 new EventArgumentDefinition[]
                 {
-                    new("cycle_type", EventArgumentType.Byte),
-                    new("packed_object_id_high", EventArgumentType.Byte),
-                    new("packed_object_id_low", EventArgumentType.Byte),
-                    new("arg4", EventArgumentType.Byte),
-                    new("arg5", EventArgumentType.Byte),
-                    new("arg6", EventArgumentType.Byte),
-                    new("arg7", EventArgumentType.Byte),
-                    new("arg8", EventArgumentType.Byte),
+                    new("kind", EventArgumentType.Byte),
+                    new("object_id_high", EventArgumentType.Byte),
+                    new("object_id_low", EventArgumentType.Byte),
+                    new("warp_sound", EventArgumentType.Byte),
+                    new("unused1", EventArgumentType.Byte),
+                    new("unused2", EventArgumentType.Byte),
+                    new("unused3", EventArgumentType.Byte),
+                    new("unused4", EventArgumentType.Byte),
                 }),
             [0x87] = new EventOperationDefinition(
                 0x87,

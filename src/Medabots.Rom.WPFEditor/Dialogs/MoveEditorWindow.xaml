@@ -1,0 +1,193 @@
+<Window x:Class="Medabots.Rom.WPFEditor.Dialogs.MoveEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Move Editor"
+        Width="1360"
+        Height="840"
+        MinWidth="1000"
+        MinHeight="600"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource Theme.WindowBackground}"
+        Foreground="{DynamicResource Theme.TextPrimary}">
+    <Window.Resources>
+        <!-- Small number box without the Fluent theme's clear button (it covered the digits) -->
+        <Style x:Key="NumBox" TargetType="TextBox">
+            <Setter Property="Width" Value="72" />
+            <Setter Property="Padding" Value="6,4" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{DynamicResource Theme.TextPrimary}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource Theme.TextPrimary}" />
+            <Setter Property="Background" Value="{DynamicResource Theme.PanelAltBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Theme.InputBorder}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="Frame" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1" CornerRadius="4">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Frame" Property="BorderBrush" Value="{DynamicResource Theme.Accent}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="430" />
+            </Grid.ColumnDefinitions>
+
+            <!-- move scripts -->
+            <DockPanel Grid.Column="0">
+                <TextBlock DockPanel.Dock="Top" Text="Move scripts (data/anim/seq)" Margin="0,0,0,4" />
+                <Button DockPanel.Dock="Bottom" Content="Import effect PNG..." Padding="8,3" Margin="0,6,0,0" Click="OnImportEffectClicked"
+                        ToolTip="A strip of frames (e.g. 4 frames of 32x32 = 128x32) becomes a new effect: data/anim/effects/NAME.png + .json; the build turns it into game graphics" />
+                <Button DockPanel.Dock="Bottom" Content="New move (copy of selected)" Padding="8,3" Margin="0,6,0,0" Click="OnNewMoveClicked"
+                        ToolTip="Takes the first free id (60-79 are unused in the game, then 132+) and copies the selected script into it" />
+                <ListBox x:Name="MoveList" DisplayMemberPath="Display" SelectionChanged="OnMoveSelected" />
+            </DockPanel>
+
+            <!-- commands -->
+            <DockPanel Grid.Column="2">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
+                    <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0,0,6,0" />
+                    <TextBox x:Name="MoveNameBox" Width="200" VerticalContentAlignment="Center" LostFocus="OnMoveNameEdited" />
+                    <Button x:Name="DetachButton" Content="Make its own copy" Padding="8,2" Margin="8,0,0,0" Click="OnDetachClicked" Visibility="Collapsed"
+                            ToolTip="This id points at another script in the game; edit it as a script of its own" />
+                    <TextBlock x:Name="SharedText" VerticalAlignment="Center" Margin="8,0,0,0" Foreground="{DynamicResource Theme.TextMuted}" />
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom" Margin="0,6,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Add" Padding="10,2" Margin="0,0,6,0" Click="OnAddOpClicked" />
+                        <Button Content="Delete" Padding="10,2" Margin="0,0,6,0" Click="OnDeleteOpClicked" />
+                        <Button Content="Up" Padding="10,2" Margin="0,0,6,0" Click="OnMoveUpClicked" />
+                        <Button Content="Down" Padding="10,2" Margin="0,0,6,0" Click="OnMoveDownClicked" />
+                    </StackPanel>
+                    <TextBlock x:Name="ProblemsText" TextWrapping="Wrap" Margin="0,6,0,0" Foreground="{DynamicResource Theme.Changed}" />
+                    <TextBlock TextWrapping="Wrap" Margin="0,6,0,0" Foreground="{DynamicResource Theme.TextMuted}"
+                               Text="One command per row; operands separated by commas. label = a jump target (goto / branch). actor_pose / target_pose: delay, then 3 pose lines for the left side (head, right arm, left arm) and 3 for the right side; select one to preview it." />
+                </StackPanel>
+                <DataGrid x:Name="OpGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                          HeadersVisibility="Column" SelectionMode="Single" SelectionChanged="OnOpSelected"
+                          CellEditEnding="OnOpCellEditEnding">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#" Binding="{Binding Index, Mode=OneWay}" IsReadOnly="True" Width="40" />
+                        <DataGridComboBoxColumn x:Name="CommandColumn" Header="Command" SelectedItemBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="170" />
+                        <DataGridTextColumn Header="Operands" Binding="{Binding ArgsText, UpdateSourceTrigger=LostFocus}" Width="200" />
+                        <DataGridTextColumn Header="Meaning" Binding="{Binding Meaning, Mode=OneWay}" IsReadOnly="True" Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="ToolTip" Value="{Binding Meaning}" />
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+
+            <!-- preview + parts -->
+            <DockPanel Grid.Column="4">
+                <GroupBox DockPanel.Dock="Bottom" Header="Who plays this move" Margin="0,8,0,0" Padding="6">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Bot:" VerticalAlignment="Center" Margin="0,0,6,4" />
+                        <ComboBox x:Name="BotBox" Grid.Row="0" Grid.Column="1" Margin="0,0,0,4" SelectionChanged="OnTargetChanged" />
+                        <TextBlock Grid.Row="1" Text="Part:" VerticalAlignment="Center" Margin="0,0,6,4" />
+                        <ComboBox x:Name="SlotBox" Grid.Row="1" Grid.Column="1" Margin="0,0,0,4" SelectionChanged="OnTargetChanged">
+                            <ComboBoxItem Content="Head" IsSelected="True" />
+                            <ComboBoxItem Content="Right arm" />
+                            <ComboBoxItem Content="Left arm" />
+                            <ComboBoxItem Content="Legs" />
+                            <ComboBoxItem Content="Drive A (form head)" />
+                            <ComboBoxItem Content="Drive B (form right arm)" />
+                            <ComboBoxItem Content="Drive C (form left arm)" />
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Text="Plays move:" VerticalAlignment="Center" Margin="0,0,6,4" />
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBox x:Name="PlaysBox" Style="{StaticResource NumBox}"
+                                     ToolTip="Move script id this part plays instead of its skill's own. Empty = the skill's own." />
+                            <TextBlock x:Name="PlaysName" VerticalAlignment="Center" Margin="8,0,0,0" Foreground="{DynamicResource Theme.TextMuted}" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="3" Text="Fires from:" VerticalAlignment="Center" Margin="0,0,6,4" />
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,4">
+                            <TextBlock Text="forward" VerticalAlignment="Center" Margin="0,0,4,0" />
+                            <TextBox x:Name="EmitXBox" Style="{StaticResource NumBox}" TextChanged="OnEmitChanged" PreviewKeyDown="OnEmitKeyDown" ToolTip="Pixels toward the enemy (negative = backward). Up/Down arrows: ±1 (Shift: ±5)" />
+                            <TextBlock Text="down" VerticalAlignment="Center" Margin="10,0,4,0" />
+                            <TextBox x:Name="EmitYBox" Style="{StaticResource NumBox}" TextChanged="OnEmitChanged" PreviewKeyDown="OnEmitKeyDown" ToolTip="Pixels down (negative = up). Up/Down arrows: ±1 (Shift: ±5)" />
+                            <TextBlock Text="px" VerticalAlignment="Center" Margin="8,0,0,0" Foreground="{DynamicResource Theme.TextMuted}" />
+                        </StackPanel>
+                        <Button x:Name="ApplyPartButton" Grid.Row="4" Grid.Column="1" Content="Apply to this part" HorizontalAlignment="Left" Padding="10,2" Click="OnApplyPartClicked" />
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox DockPanel.Dock="Bottom" Header="Pose of the selected command" Margin="0,8,0,0" Padding="6">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <ComboBox x:Name="PosePartBox" Width="104" SelectionChanged="OnPoseViewChanged">
+                                <ComboBoxItem Content="Head" IsSelected="True" />
+                                <ComboBoxItem Content="Right arm" />
+                                <ComboBoxItem Content="Left arm" />
+                            </ComboBox>
+                            <ComboBox x:Name="PoseSideBox" Width="112" Margin="6,0,0,0" SelectionChanged="OnPoseViewChanged">
+                                <ComboBoxItem Content="Left side" IsSelected="True" />
+                                <ComboBoxItem Content="Right side" />
+                            </ComboBox>
+                            <TextBlock Text="legs" VerticalAlignment="Center" Margin="8,0,4,0" />
+                            <ComboBox x:Name="PoseColBox" Width="56" SelectionChanged="OnPoseViewChanged" />
+                            <Button x:Name="PlayButton" Content="Play" Width="52" Margin="6,0,0,0" Click="OnPlayClicked" />
+                        </StackPanel>
+                        <TextBlock x:Name="PoseInfo" TextWrapping="Wrap" Foreground="{DynamicResource Theme.TextMuted}" />
+                        <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                            <TextBlock Text="Line poses:" VerticalAlignment="Center" Margin="0,0,6,0" />
+                            <TextBox x:Name="LineBox" Width="170" VerticalContentAlignment="Center" LostFocus="OnLineEdited"
+                                     ToolTip="The 7 pose scripts of this animation line, one per leg column (0-6)" />
+                            <Button Content="New line" Padding="8,2" Margin="8,0,0,0" Click="OnNewLineClicked"
+                                    ToolTip="Adds a line to data/anim/pose_anims.json (all 7 columns = the pose you type) and points this command at it" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <Border BorderBrush="{DynamicResource Theme.Border}" BorderThickness="1" Background="#FF303040">
+                    <Viewbox Stretch="Uniform">
+                        <Image x:Name="Preview" Width="240" Height="160" RenderOptions.BitmapScalingMode="NearestNeighbor" Cursor="Cross"
+                               ToolTip="Click or drag to put the blue cross (where the shot leaves: Fires from) on the barrel"
+                               MouseLeftButtonDown="OnPreviewDown" MouseMove="OnPreviewMove" MouseLeftButtonUp="OnPreviewUp" />
+                    </Viewbox>
+                </Border>
+            </DockPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <TextBlock x:Name="StatusText" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="{DynamicResource Theme.TextMuted}" />
+            <Button Content="Pose Viewer..." Padding="12,3" Margin="0,0,18,0" Click="OnPoseViewerClicked" />
+            <Button Content="Save all" Padding="12,3" Margin="0,0,6,0" Click="OnSaveClicked"
+                    ToolTip="Writes the edited move scripts, pose lines, part settings; Build ROM in the Decomp Project window puts them in the game" />
+            <Button x:Name="CloseWindowButton" Content="Close" Padding="12,3" Click="OnCloseClicked" />
+        </StackPanel>
+    </Grid>
+</Window>

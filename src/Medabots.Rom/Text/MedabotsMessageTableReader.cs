@@ -31,7 +31,17 @@ public sealed class MedabotsMessageTableReader
             var messagesForBank = new List<KeyValuePair<MessageId, string>>();
             for (var index = 0; ; index++)
             {
-                if (!GbaPointer.TryReadFileOffset(romData.AsSpan(), bankTableOffset + (index * sizeof(uint)), out var messageOffset))
+                // a bank's pointer list ends at a zero entry; anything that is not a ROM address also ends it (a list
+                // written without the zero, e.g. an older decomp build's project bank, is followed by its text bytes)
+                var entryOffset = bankTableOffset + (index * sizeof(uint));
+                if (entryOffset + sizeof(uint) > romData.Length ||
+                    System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(romData.AsSpan(entryOffset)) is var raw &&
+                    raw != 0 && (raw < GbaPointer.BaseAddress || raw - GbaPointer.BaseAddress >= (uint)romData.Length))
+                {
+                    break;
+                }
+
+                if (!GbaPointer.TryReadFileOffset(romData.AsSpan(), entryOffset, out var messageOffset))
                 {
                     break;
                 }

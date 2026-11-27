@@ -12,7 +12,10 @@ internal sealed class SpriteBrowserTreeBuilder(
     IReadOnlyList<PartDefinition> loadedParts,
     MedabotsMetadata metadata,
     ImageAssetRepository imageAssetRepository,
-    MapTilesetRepository? mapTilesetRepository = null)
+    MapTilesetRepository? mapTilesetRepository = null,
+    int portraitCharacterCount = MedabotsRomSchema.PortraitCharacterCount,
+    IReadOnlyDictionary<int, string>? portraitNames = null,
+    int originalPortraitCount = MedabotsRomSchema.PortraitCharacterCount)
 {
     private readonly MapTilesetRepository _mapTilesetRepository = mapTilesetRepository ?? new MapTilesetRepository();
 
@@ -116,8 +119,8 @@ internal sealed class SpriteBrowserTreeBuilder(
 
     private static bool HasValidOverworldSheetPointers(RomFile romFile, int spriteId)
     {
-        var imagePointerOffset = MedabotsRomSchema.SpritePointerTableOffset + (spriteId * sizeof(uint));
-        var palettePointerOffset = MedabotsRomSchema.SpritePaletteTableOffset + (spriteId * sizeof(uint));
+        var imagePointerOffset = romFile.Layout.SpritePointerTableOffset + (spriteId * sizeof(uint));
+        var palettePointerOffset = romFile.Layout.SpritePaletteTableOffset + (spriteId * sizeof(uint));
         return GbaPointer.TryReadFileOffset(romFile.Data, imagePointerOffset, out var imageOffset) &&
                GbaPointer.TryReadFileOffset(romFile.Data, palettePointerOffset, out var paletteOffset) &&
                imageOffset > 0 &&
@@ -126,7 +129,7 @@ internal sealed class SpriteBrowserTreeBuilder(
                paletteOffset + MedabotsRomSchema.PaletteSize <= romFile.Length;
     }
 
-    private static SpriteBrowserNode BuildPortraitRoot()
+    private SpriteBrowserNode BuildPortraitRoot()
     {
         const int groupSize = 16;
         var root = new SpriteBrowserNode
@@ -134,9 +137,9 @@ internal sealed class SpriteBrowserTreeBuilder(
             Title = "Portraits",
             FilterText = "Portraits"
         };
-        for (var start = 0; start < MedabotsRomSchema.PortraitCharacterCount; start += groupSize)
+        for (var start = 0; start < portraitCharacterCount; start += groupSize)
         {
-            var end = Math.Min(start + groupSize - 1, MedabotsRomSchema.PortraitCharacterCount - 1);
+            var end = Math.Min(start + groupSize - 1, portraitCharacterCount - 1);
             var group = new SpriteBrowserNode
             {
                 Title = $"Characters {start:D3}-{end:D3}",
@@ -145,10 +148,14 @@ internal sealed class SpriteBrowserTreeBuilder(
 
             for (var characterId = start; characterId <= end; characterId++)
             {
+                // Editor name (project) and a mark on characters added by this project.
+                var name = portraitNames is not null && portraitNames.TryGetValue(characterId, out var given) ? $"  {given}" : "";
+                var added = characterId >= originalPortraitCount ? "  (new)" : "";
                 var character = new SpriteBrowserNode
                 {
-                    Title = $"Character {characterId:D3}",
-                    FilterText = $"Portrait Character {characterId:D3}"
+                    Title = $"Character {characterId:D3}{name}{added}",
+                    FilterText = $"Portrait Character {characterId:D3}{name}",
+                    PrimaryId = characterId
                 };
                 for (var portraitIndex = 0; portraitIndex < MedabotsRomSchema.PortraitsPerCharacter; portraitIndex++)
                 {
@@ -184,7 +191,7 @@ internal sealed class SpriteBrowserTreeBuilder(
             return root;
         }
 
-        var groups = Enumerable.Range(0, Math.Min(MedabotsRomSchema.MapCount, metadata.Catalog.Maps.Count))
+        var groups = Enumerable.Range(0, romFile.Layout.MapCount)
             .Select(mapId => _mapTilesetRepository.ReadMap(romFile, mapId, metadata.GetMapName(mapId)))
             .GroupBy(asset => (asset.GraphicsDataOffset, asset.PaletteDataOffset, asset.ColorAttributeDataOffset))
             .OrderBy(group => group.First().GraphicsDataOffset)

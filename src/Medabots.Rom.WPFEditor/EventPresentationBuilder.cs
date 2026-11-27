@@ -382,7 +382,7 @@ internal sealed class EventPresentationBuilder(
             case InitiateActorInstruction initiateActor:
                 return $"Initiate Actor (slot: {initiateActor.PackedActorId.TrackedObjectSlot}, flags: 0x{initiateActor.PackedActorId.Flags:X2}, sprite: {initiateActor.SpriteId}, x: {initiateActor.X}, y: {initiateActor.Y})";
             case MoveActorInstruction moveActor:
-                return $"Move Actor ({moveActor.TrackedObjectSlot.Value}: {moveActor.Move.Direction.Name}, {moveActor.Move.Distance})";
+                return $"Move Actor ({moveActor.TrackedObjectSlot.Value}: {moveActor.Move.Direction.Name} {moveActor.Move.Distance})";
             case RotateActorInstruction rotateActor:
                 return $"Rotate Actor ({rotateActor.TrackedObjectSlot.Value}: {rotateActor.Direction.Name})";
             case UnloadActorInstruction unloadActor:

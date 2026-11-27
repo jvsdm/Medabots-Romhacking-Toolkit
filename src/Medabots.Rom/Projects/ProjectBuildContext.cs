@@ -8,7 +8,7 @@ public sealed class ProjectBuildContext
     {
         SourceRom = sourceRom ?? throw new ArgumentNullException(nameof(sourceRom));
         Layout = layout ?? throw new ArgumentNullException(nameof(layout));
-        Allocator = new FreeSpaceAllocator(FreeSpaceAllocator.AlignUp(Math.Max(sourceRom.Length, 0x800000), 4));
+        Allocator = FreeSpaceAllocator.ForRom(sourceRom.Data);
     }
 
     public RomFile SourceRom { get; }

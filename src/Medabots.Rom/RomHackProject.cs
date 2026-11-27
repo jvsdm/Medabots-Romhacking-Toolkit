@@ -56,5 +56,31 @@ public sealed class RomHackProject
 
     public IList<Maps.MapLayerPatch> MapLayerPatches { get; } = new List<Maps.MapLayerPatch>();
 
+    public IList<Maps.MapTilesetPatch> MapTilesetPatches { get; } = new List<Maps.MapTilesetPatch>();
+
+    /// <summary>New maps, added in order before every other edit (they take IDs from the ROM's map count).</summary>
+    public IList<Maps.MapAddition> MapAdditions { get; } = new List<Maps.MapAddition>();
+
+    /// <summary>Editor names for maps (the game stores none); replaces the catalog name in the map list.</summary>
+    public IDictionary<int, string> MapNames { get; } = new Dictionary<int, string>();
+
+    /// <summary>New portrait characters, added in order after the new maps (IDs from the ROM's portrait count).</summary>
+    public IList<Images.PortraitAddition> PortraitAdditions { get; } = new List<Images.PortraitAddition>();
+
+    /// <summary>Editor names for portrait characters (the game stores none).</summary>
+    public IDictionary<int, string> PortraitNames { get; } = new Dictionary<int, string>();
+
     public IList<int> SplitLargeDisplayPartIds { get; } = new List<int>();
+
+    /// <summary>Writes the PT-BR font extension (Text.ExtendedFont) on build. On by default.</summary>
+    public bool UseExtendedFont { get; set; } = true;
+
+    /// <summary>Writes the PT-BR fonts (Text.PtBrFont) on build, in place of the extended font. Off by default.</summary>
+    public bool UsePtBrFont { get; set; }
+
+    /// <summary>Font imported from a TrueType/OpenType file (Text.ImportedFont), kept with the project.</summary>
+    public Text.ImportedFont? ImportedFont { get; set; }
+
+    /// <summary>Writes <see cref="ImportedFont"/> on build, in place of the PT-BR and extended fonts.</summary>
+    public bool UseImportedFont { get; set; }
 }

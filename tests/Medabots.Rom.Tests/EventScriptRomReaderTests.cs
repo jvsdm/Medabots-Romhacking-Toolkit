@@ -213,11 +213,11 @@ public sealed class EventScriptRomReaderTests
         var instruction = script.Instructions.Single(eventInstruction => eventInstruction.Offset == 0x77BB6A);
 
         Assert.Equal(0x78, instruction.Opcode);
-        Assert.Equal("Run_Scene_Command_10_If_At_Least_Three_Complete_Part_Sets", instruction.Name);
+        Assert.Equal("Start_Race_If_Three_Bots", instruction.Name);
         Assert.Collection(
             instruction.Arguments,
-            argument => Assert.Equal("scene_arg", argument.Name),
-            argument => Assert.Equal("jump_if_fewer_than_three_complete_sets", argument.Name));
+            argument => Assert.Equal("race_id", argument.Name),
+            argument => Assert.Equal("jump_if_fewer_than_three_bots", argument.Name));
         Assert.Equal(4, instruction.Arguments[0].RawValue);
         Assert.Equal(0x41, instruction.Arguments[1].RawValue);
     }
@@ -240,17 +240,17 @@ public sealed class EventScriptRomReaderTests
         Assert.Equal("Begin_Batched_Object_Command_Block", beginInstruction.Name);
         Assert.Empty(beginInstruction.Arguments);
 
-        Assert.Equal("Queue_Batched_Object_Command", queueInstruction.Name);
+        Assert.Equal("Queue_Object_Moves", queueInstruction.Name);
         Assert.Collection(
             queueInstruction.Arguments,
-            argument => Assert.Equal("record_type", argument.Name),
-            argument => Assert.Equal("object_id_high", argument.Name),
-            argument => Assert.Equal("object_id_low", argument.Name),
-            argument => Assert.Equal("arg4", argument.Name),
-            argument => Assert.Equal("arg5", argument.Name),
-            argument => Assert.Equal("arg6", argument.Name),
-            argument => Assert.Equal("arg7", argument.Name),
-            argument => Assert.Equal("arg8", argument.Name));
+            argument => Assert.Equal("step1_kind", argument.Name),
+            argument => Assert.Equal("step1_object", argument.Name),
+            argument => Assert.Equal("step1_value", argument.Name),
+            argument => Assert.Equal("step1_unused", argument.Name),
+            argument => Assert.Equal("step2_kind", argument.Name),
+            argument => Assert.Equal("step2_object", argument.Name),
+            argument => Assert.Equal("step2_value", argument.Name),
+            argument => Assert.Equal("step2_unused", argument.Name));
         Assert.Equal(1, queueInstruction.Arguments[0].RawValue);
         Assert.Equal(0, queueInstruction.Arguments[1].RawValue);
         Assert.Equal(3, queueInstruction.Arguments[2].RawValue);
@@ -511,17 +511,17 @@ public sealed class EventScriptRomReaderTests
         var instruction = script.Instructions.Single(eventInstruction => eventInstruction.Offset == 0x785984);
 
         Assert.Equal(0x86, instruction.Opcode);
-        Assert.Equal("Queue_Event_Object_Facing_Cycle", instruction.Name);
+        Assert.Equal("Queue_Object_Anim", instruction.Name);
         Assert.Collection(
             instruction.Arguments,
-            argument => Assert.Equal("cycle_type", argument.Name),
-            argument => Assert.Equal("packed_object_id_high", argument.Name),
-            argument => Assert.Equal("packed_object_id_low", argument.Name),
-            argument => Assert.Equal("arg4", argument.Name),
-            argument => Assert.Equal("arg5", argument.Name),
-            argument => Assert.Equal("arg6", argument.Name),
-            argument => Assert.Equal("arg7", argument.Name),
-            argument => Assert.Equal("arg8", argument.Name));
+            argument => Assert.Equal("kind", argument.Name),
+            argument => Assert.Equal("object_id_high", argument.Name),
+            argument => Assert.Equal("object_id_low", argument.Name),
+            argument => Assert.Equal("warp_sound", argument.Name),
+            argument => Assert.Equal("unused1", argument.Name),
+            argument => Assert.Equal("unused2", argument.Name),
+            argument => Assert.Equal("unused3", argument.Name),
+            argument => Assert.Equal("unused4", argument.Name));
         Assert.Equal(1, instruction.Arguments[0].RawValue);
         Assert.Equal(1, instruction.Arguments[1].RawValue);
         Assert.Equal(46, instruction.Arguments[2].RawValue);

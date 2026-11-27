@@ -48,9 +48,9 @@ public static class BattleSpecialityTemplateHelper
             return Enumerable.Repeat((byte)1, CycleSlotCount).ToArray();
         }
 
-        var medalInfoOffset = MedabotsRomSchema.MedalInfoTableOffset + (medalId * MedabotsRomSchema.MedalInfoSize);
+        var medalInfoOffset = romFile.Layout.MedalInfoTableOffset + (medalId * MedabotsRomSchema.MedalInfoSize);
         var medalClass = romFile.Data[medalInfoOffset + 1];
-        var baseOffset = MedabotsRomSchema.MedalClassSpecialityBaseTableOffset + (medalClass * CycleSlotCount);
+        var baseOffset = romFile.Layout.MedalClassSpecialityBaseTableOffset + (medalClass * CycleSlotCount);
         var multiplier = medalLevel >> 1;
         var values = new byte[CycleSlotCount];
 

@@ -31,7 +31,8 @@ public readonly record struct EventMove(byte RawValue)
 {
     public int Distance => RawValue & MedabotsRomSchema.EventMoveDistanceMask;
 
-    public EventDirection Direction => new((byte)(RawValue & MedabotsRomSchema.EventMoveMask));
+    // the direction is the high nibble (0x10 = south): shift it down so EventDirection.Name reads north/south/west/east
+    public EventDirection Direction => new((byte)((RawValue & MedabotsRomSchema.EventMoveMask) >> 4));
 }
 
 public readonly record struct BattleId(byte Value);
